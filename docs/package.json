@@ -1,0 +1,13 @@
+{
+  "name": "@blackwell-systems/gcf-docs",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "docs:dev": "vitepress dev",
+    "docs:build": "vitepress build",
+    "docs:preview": "vitepress preview"
+  },
+  "devDependencies": {
+    "vitepress": "^2.0.0"
+  }
+}

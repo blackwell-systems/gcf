@@ -1,0 +1,156 @@
+# Delta Encoding
+
+When a tool is queried twice and the context pack changed only slightly between queries, retransmitting the full payload wastes tokens on content the LLM already has. Delta encoding sends only what changed.
+
+## The protocol
+
+The consumer (LLM) sends back the `pack_root` from a prior response. The server compares it to the current result and returns one of three outcomes:
+
+```
+Consumer sends: pack_root=a1b2c3d4
+
+Server checks:
+  1. Same root?     → "unchanged pack_root=a1b2c3d4 symbols=N" (zero cost)
+  2. Known prior?   → Delta payload (only added/removed)
+  3. Unknown prior? → Full payload (fallback)
+```
+
+## Delta format
+
+```
+GCF tool=context_for_task delta=true base_root=a1b2c3 new_root=d4e5f6 tokens=30 savings=81%
+## removed
+fn github.com/org/repo/pkg.OldHandler
+method github.com/org/repo/pkg.Server.Deprecated
+## added
+@0 fn github.com/org/repo/pkg.NewHandler 0.85 rwr
+@1 fn github.com/org/repo/pkg.UpdatedAuth 0.79 lsp_resolved
+## edges_removed
+github.com/org/repo/pkg.Router -> github.com/org/repo/pkg.OldHandler calls
+## edges_added
+github.com/org/repo/pkg.Router -> github.com/org/repo/pkg.NewHandler calls
+```
+
+### Sections
+
+| Section | Content | Format |
+|---------|---------|--------|
+| `## removed` | Symbols in prior pack but not current | Short refs: `{kind} {qname}` |
+| `## added` | Symbols in current pack but not prior | Full node lines: `@{id} {kind} {qname} {score} {prov}` |
+| `## edges_removed` | Edges in prior but not current | `{source} -> {target} {type}` |
+| `## edges_added` | Edges in current but not prior | `{source} -> {target} {type}` |
+
+Removed symbols use short references (kind + qualified name only) because the consumer already has the full declaration from the prior response. Added symbols use full declarations because they're new.
+
+## When to use delta
+
+Delta encoding is most effective when:
+- The user edits a file and re-queries (a few symbols shift in/out of relevance)
+- Time passes and recency scores change (some symbols promote, others demote)
+- A dependency is added/removed (edge topology shifts slightly)
+
+Rule of thumb: if the delta is less than 60% of the full payload size, use delta. Otherwise, retransmit in full (the overhead of tracking the diff isn't worth it).
+
+## Implementation
+
+::: code-group
+
+```python [Python]
+from gcf import encode_delta, DeltaPayload, Symbol, Edge
+
+delta = DeltaPayload(
+    tool="context_for_task",
+    base_root="a1b2c3",
+    new_root="d4e5f6",
+    removed=[
+        Symbol(qualified_name="pkg.OldFunc", kind="function"),
+    ],
+    added=[
+        Symbol(qualified_name="pkg.NewFunc", kind="function", score=0.85, provenance="rwr"),
+    ],
+    removed_edges=[
+        Edge(source="pkg.Router", target="pkg.OldFunc", edge_type="calls"),
+    ],
+    added_edges=[
+        Edge(source="pkg.Router", target="pkg.NewFunc", edge_type="calls"),
+    ],
+    delta_tokens=30,
+    full_tokens=200,
+)
+
+print(encode_delta(delta))
+```
+
+```typescript [TypeScript]
+import { encodeDelta, type DeltaPayload } from '@blackwell-systems/gcf';
+
+const delta: DeltaPayload = {
+  tool: 'context_for_task',
+  baseRoot: 'a1b2c3',
+  newRoot: 'd4e5f6',
+  removed: [{ qualifiedName: 'pkg.OldFunc', kind: 'function', score: 0, provenance: '', distance: 0 }],
+  added: [{ qualifiedName: 'pkg.NewFunc', kind: 'function', score: 0.85, provenance: 'rwr', distance: 0 }],
+  removedEdges: [{ source: 'pkg.Router', target: 'pkg.OldFunc', edgeType: 'calls' }],
+  addedEdges: [{ source: 'pkg.Router', target: 'pkg.NewFunc', edgeType: 'calls' }],
+  deltaTokens: 30,
+  fullTokens: 200,
+};
+
+console.log(encodeDelta(delta));
+```
+
+```go [Go]
+delta := &gcf.DeltaPayload{
+    Tool:     "context_for_task",
+    BaseRoot: "a1b2c3",
+    NewRoot:  "d4e5f6",
+    Removed:  []gcf.Symbol{{QualifiedName: "pkg.OldFunc", Kind: "function"}},
+    Added:    []gcf.Symbol{{QualifiedName: "pkg.NewFunc", Kind: "function", Score: 0.85, Provenance: "rwr"}},
+    RemovedEdges: []gcf.Edge{{Source: "pkg.Router", Target: "pkg.OldFunc", EdgeType: "calls"}},
+    AddedEdges:   []gcf.Edge{{Source: "pkg.Router", Target: "pkg.NewFunc", EdgeType: "calls"}},
+    DeltaTokens: 30,
+    FullTokens:  200,
+}
+
+fmt.Println(gcf.EncodeDelta(delta))
+```
+
+:::
+
+**Output:**
+
+```
+GCF tool=context_for_task delta=true base_root=a1b2c3 new_root=d4e5f6 tokens=30 savings=85%
+## removed
+fn pkg.OldFunc
+## added
+@0 fn pkg.NewFunc 0.85 rwr
+## edges_removed
+pkg.Router -> pkg.OldFunc calls
+## edges_added
+pkg.Router -> pkg.NewFunc calls
+```
+
+## pack_root: how it works
+
+The `pack_root` is a content-addressed hash (SHA-256) of the packed context. It's computed from the sorted set of symbol qualified names and edge tuples. Two identical context packs always produce the same hash regardless of when they were generated.
+
+This means:
+- If the user hasn't changed anything and re-queries, the root is unchanged (outcome 1: zero cost)
+- If one file was edited, a few symbols shift, and the root changes slightly (outcome 2: delta)
+- If the user switched branches entirely, the root is unrecognizable (outcome 3: full retransmit)
+
+## Savings in practice
+
+On the knowing MCP server (production usage):
+- **81.2% of re-queries** hit delta encoding
+- Average delta size: 18.8% of full payload
+- Combined with session dedup: 95%+ savings on repeated interactions
+
+## Combining session + delta
+
+Session dedup and delta encoding are orthogonal. A response can be both:
+- A delta (only changed symbols) AND
+- Session-aware (new symbols that overlap with prior responses become bare refs)
+
+In practice, most servers use one or the other per response, not both simultaneously.
