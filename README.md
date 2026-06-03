@@ -8,16 +8,50 @@
 **Token-optimized wire format for LLM tool responses.**
 
 ```
-Workflow:   Your data  ───▶  encode()  ───▶  GCF  ───▶  LLM
-
-Tokens:     JSON   ████████████████████████████  53,341
-            TOON   ████████░░░░░░░░░░░░░░░░░░░░  16,378  (69% less)
-            GCF    ██████░░░░░░░░░░░░░░░░░░░░░░  11,090  (79% less)
-
-Accuracy:   JSON   66.7%  ✗ miscounts at scale
-            TOON   100%   ✓
-            GCF    100%   ✓  (32% fewer tokens than TOON)
+Your data  ───▶  encode()  ───▶  GCF  ───▶  LLM
 ```
+
+### vs JSON: 79% fewer tokens, JSON can't even count at scale
+
+```
+Tokens (500 symbols):
+
+  JSON   ████████████████████████████████████████████████████  53,341
+  TOON   ████████████████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  16,378
+  GCF    ███████████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  11,090  ◀ winner
+```
+
+### vs TOON: 34% fewer tokens on their own benchmark
+
+```
+Token efficiency (TOON's datasets, TOON's tokenizer):
+
+  Mixed-structure data:
+  TOON   ████████████████████████████████████████████████████  227,896
+  GCF    ██████████████████████████████████░░░░░░░░░░░░░░░░░  169,554  ◀ 34% smaller
+
+  Semi-uniform data (most common real-world pattern):
+  TOON   ████████████████████████████████████████████████████  154,032
+  GCF    ████████████████████████████████████░░░░░░░░░░░░░░░  107,269  ◀ 44% smaller
+
+  Flat tabular data:
+  TOON   ████████████████████████████████████████████████████   67,837
+  GCF    ██████████████████████████████████████████████████░░   66,026  ◀ 3% smaller
+```
+
+### LLM comprehension: JSON breaks, GCF and TOON don't
+
+```
+Accuracy at 500 symbols (6 structured extraction questions):
+
+  GCF    ████████████████████████████████████████████████████  100%  ✓
+  TOON   ████████████████████████████████████████████████████  100%  ✓
+  JSON   █████████████████████████████████░░░░░░░░░░░░░░░░░░  66.7% ✗ miscounts records
+```
+
+GCF matches TOON's accuracy in 32% fewer tokens. JSON fails because field-name repetition at scale overwhelms the model's counting.
+
+---
 
 ### Try it
 
