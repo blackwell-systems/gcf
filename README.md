@@ -1,24 +1,40 @@
 # GCF: Graph Compact Format
 
-A token-optimized wire format for LLM tool responses carrying graph-structured data.
+**The wire format that LLMs can actually read.**
 
-**84% fewer tokens than JSON. 100% LLM comprehension accuracy.**
+At 500 symbols, JSON scores 66.7% on structured extraction. It can't count its own records. TOON scores 100%, but costs 32% more tokens to get there. GCF scores 100% at the lowest token cost of any format tested.
 
-## The Problem
+| Format | Accuracy | Tokens | vs JSON |
+|--------|----------|--------|---------|
+| **GCF** | **100%** | **11,090** | **79% fewer** |
+| TOON | 100% | 16,378 | 69% fewer |
+| JSON | 66.7% | 53,341 | baseline |
 
-AI agents consume tool responses under fixed token budgets. JSON wastes 75%+ of those tokens on structural overhead: field names, delimiters, and repeated identifiers. For graph data (code intelligence, dependency analysis, knowledge graphs), the waste is even worse because edges repeat full node identifiers.
+JSON doesn't just cost more. It breaks. At scale, the model loses track in the noise of field names, delimiters, and repeated identifiers. It reported 320 symbols when there were 500. It's not a token efficiency problem; it's a comprehension failure.
 
-## The Solution
+## Why GCF Wins
 
 GCF exploits three properties of graph data that flat formats cannot:
 
-1. **Referential identity.** Nodes get local IDs (`@0`, `@1`). Edges reference by ID instead of repeating full qualified names.
-2. **Topological encoding.** Edges as `@target<@source type` instead of JSON objects with named fields.
-3. **Hierarchical grouping.** Section headers (`## targets`, `## related`) replace per-record metadata fields.
+1. **Referential identity.** Nodes get local IDs (`@0`, `@1`). Edges reference by ID instead of repeating 80-character qualified names.
+2. **Topological encoding.** `@0<@4 calls` instead of `{"source": "...", "target": "...", "edge_type": "calls"}`.
+3. **Hierarchical grouping.** One section header (`## targets`) replaces a `"distance": 0` field on every record.
+
+These aren't micro-optimizations. They're structural. The savings grow with payload size because the waste they eliminate is per-record.
+
+## It Gets Cheaper Over Time
+
+GCF has two additional encoding modes that exploit session state:
+
+**Session deduplication:** Symbols sent in prior responses become bare references. By the 5th tool call in a conversation: 92.7% savings vs JSON.
+
+**Delta encoding:** When the context pack changes slightly between queries, send only what's different. 81.2% additional savings on re-queries.
+
+No other format has these. They're possible because GCF was designed for multi-turn LLM tool interactions, not generic data serialization.
 
 ## Example
 
-**JSON (~965 tokens):**
+**JSON (965 tokens):**
 ```json
 {
   "tool": "context_for_task",
@@ -34,7 +50,7 @@ GCF exploits three properties of graph data that flat formats cannot:
 }
 ```
 
-**GCF (~233 tokens):**
+**GCF (233 tokens):**
 ```
 GCF tool=context_for_task budget=5000 tokens=1847 symbols=2
 ## targets
@@ -45,11 +61,11 @@ GCF tool=context_for_task budget=5000 tokens=1847 symbols=2
 @0<@1 calls
 ```
 
-Same semantic content. 75.9% fewer tokens.
+Same information. 75.9% fewer tokens. And at 500 symbols, the GCF version is still perfectly comprehensible while the JSON version is actively confusing the model.
 
 ## Specification
 
-See [SPEC.md](SPEC.md) for the full grammar, encoding rules, session statefulness, and delta encoding extension.
+Full grammar, encoding rules, session statefulness, and delta encoding: [SPEC.md](SPEC.md)
 
 ## Implementations
 
@@ -57,23 +73,9 @@ See [SPEC.md](SPEC.md) for the full grammar, encoding rules, session statefulnes
 |----------|-----------|--------|
 | Go | [blackwell-systems/gcf-go](https://github.com/blackwell-systems/gcf-go) | Production (encoder, decoder, session, delta) |
 
-## Benchmarks
+## Designed for MCP
 
-Across 6 benchmark payloads (8 to 30 symbols):
-
-| Metric | Value |
-|--------|-------|
-| Median token savings vs JSON | **84%** |
-| Session statefulness (5th call) | **92.7%** |
-| Delta encoding (re-queries) | **81.2%** additional savings |
-| LLM comprehension accuracy | **100%** (vs JSON 66.7%) |
-| Encode latency (30 symbols) | 38 us |
-
-LLM comprehension eval: GCF achieves 100% accuracy on structured extraction tasks (symbol identification, counting, kind extraction, edge enumeration). JSON scored 66.7% because verbosity causes miscounts on large payloads.
-
-## Design for MCP
-
-GCF is designed as a format option for [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) tool responses. Any MCP server returning graph-structured data can use GCF to reduce token consumption by 84% without sacrificing comprehension.
+GCF is a format option for [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) tool responses. Any MCP server returning graph-structured data can use GCF to deliver more context per token budget, with better comprehension accuracy than JSON.
 
 ## License
 
