@@ -4,7 +4,7 @@ sidebar: false
 hero:
   name: GCF
   text: Graph Compact Format
-  tagline: Token-optimized wire format for LLM tool responses. 84% fewer tokens than JSON. 100% comprehension accuracy.
+  tagline: Token-optimized wire format for LLM tool responses. 84% fewer tokens than JSON, 34% fewer than TOON. 100% comprehension accuracy at scale.
   actions:
     - theme: brand
       text: Get Started
