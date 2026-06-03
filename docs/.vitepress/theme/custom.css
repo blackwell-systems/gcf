@@ -1,5 +1,6 @@
 :root {
   --vp-layout-max-width: 1440px;
+  --vp-sidebar-width: 240px;
 }
 
 .VPDoc .container {
@@ -8,4 +9,9 @@
 
 .VPDoc .content {
   max-width: 900px !important;
+  padding-left: 32px !important;
+}
+
+.VPDoc.has-aside .content-container {
+  max-width: 100% !important;
 }
