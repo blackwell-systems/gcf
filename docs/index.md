@@ -1,5 +1,6 @@
 ---
 layout: home
+sidebar: false
 hero:
   name: GCF
   text: Graph Compact Format
