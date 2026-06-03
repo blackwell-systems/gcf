@@ -5,37 +5,63 @@
 
 # GCF: Graph Compact Format
 
-**The wire format that LLMs can actually read.**
+**Token-optimized wire format for LLM tool responses.**
 
-At 500 symbols, JSON scores 66.7% on structured extraction. It can't count its own records. TOON scores 100%, but costs 32% more tokens to get there. GCF scores 100% at the lowest token cost of any format tested.
+```
+Workflow:   Your data  ───▶  encode()  ───▶  GCF  ───▶  LLM
 
-| Format | Accuracy | Tokens | vs JSON |
-|--------|----------|--------|---------|
-| **GCF** | **100%** | **11,090** | **79% fewer** |
-| TOON | 100% | 16,378 | 69% fewer |
-| JSON | 66.7% | 53,341 | baseline |
+Tokens:     JSON   ████████████████████████████  53,341
+            TOON   ████████░░░░░░░░░░░░░░░░░░░░  16,378  (69% less)
+            GCF    ██████░░░░░░░░░░░░░░░░░░░░░░  11,090  (79% less)
 
-JSON doesn't just cost more. It breaks. At scale, the model loses track in the noise of field names, delimiters, and repeated identifiers. It reported 320 symbols when there were 500. It's not a token efficiency problem; it's a comprehension failure.
+Accuracy:   JSON   66.7%  ✗ miscounts at scale
+            TOON   100%   ✓
+            GCF    100%   ✓  (32% fewer tokens than TOON)
+```
 
-## Why GCF Wins
+### Try it
 
-GCF exploits three properties of graph data that flat formats cannot:
+```bash
+pip install gcf-py                    # Python
+npm install @blackwell-systems/gcf    # TypeScript
+go get github.com/blackwell-systems/gcf-go  # Go
+```
 
-1. **Referential identity.** Nodes get local IDs (`@0`, `@1`). Edges reference by ID instead of repeating 80-character qualified names.
-2. **Topological encoding.** `@0<@4 calls` instead of `{"source": "...", "target": "...", "edge_type": "calls"}`.
-3. **Hierarchical grouping.** One section header (`## targets`) replaces a `"distance": 0` field on every record.
+```python
+from gcf import encode, Payload, Symbol, Edge
 
-These aren't micro-optimizations. They're structural. The savings grow with payload size because the waste they eliminate is per-record.
+output = encode(Payload(
+    tool="context_for_task",
+    token_budget=5000,
+    tokens_used=1847,
+    symbols=[Symbol(qualified_name="pkg.Auth", kind="function", score=0.78, provenance="lsp", distance=0)],
+))
+```
 
-## It Gets Cheaper Over Time
+---
 
-GCF has two additional encoding modes that exploit session state:
+### At a glance
 
-**Session deduplication:** Symbols sent in prior responses become bare references. By the 5th tool call in a conversation: 92.7% savings vs JSON.
+| | GCF | TOON | JSON |
+|---|---|---|---|
+| **Tokens (500 symbols)** | 11,090 | 16,378 | 53,341 |
+| **Comprehension accuracy** | 100% | 100% | 66.7% |
+| **Session dedup (5th call)** | 92.7% savings | N/A | N/A |
+| **Delta encoding** | 81.2% savings | N/A | N/A |
+| **Semi-uniform data** | native | falls back | verbose |
+| **Best for** | graph data, MCP tools, multi-turn | flat tables | nothing at scale |
 
-**Delta encoding:** When the context pack changes slightly between queries, send only what's different. 81.2% additional savings on re-queries.
+---
 
-No other format has these. They're possible because GCF was designed for multi-turn LLM tool interactions, not generic data serialization.
+## How it works
+
+GCF exploits three properties of structured data:
+
+1. **Positional fields.** One header declares field names. Rows are values only.
+2. **Local IDs.** `@0`, `@1`. Edges reference by ID, not by repeating full identifiers.
+3. **Hierarchical grouping.** Section headers (`## targets`) replace per-record metadata.
+
+These are structural savings. They grow with payload size because the waste they eliminate is per-record.
 
 ## Example
 
@@ -66,7 +92,15 @@ GCF tool=context_for_task budget=5000 tokens=1847 symbols=2
 @0<@1 calls
 ```
 
-Same information. 75.9% fewer tokens. And at 500 symbols, the GCF version is still perfectly comprehensible while the JSON version is actively confusing the model.
+Same information. 75.9% fewer tokens. At 500 symbols, GCF remains perfectly comprehensible while JSON is actively confusing the model.
+
+## It gets cheaper over time
+
+**Session deduplication:** Symbols sent in prior responses become bare references. By the 5th tool call: 92.7% savings vs JSON.
+
+**Delta encoding:** When the context changes slightly between queries, send only the diff. 81.2% additional savings on re-queries.
+
+No other format has these. They're possible because GCF was designed for multi-turn LLM tool interactions, not generic data serialization.
 
 ## Benchmarks
 
@@ -88,8 +122,6 @@ Eval: [gcf-go/eval](https://github.com/blackwell-systems/gcf-go/tree/main/eval)
 | Flat-only (tabular) | 66,026 | 67,837 | **GCF 3% smaller** |
 | Semi-uniform event logs | 107,269 | 154,032 | **GCF 44% smaller** |
 
-GCF wins on every dataset except deeply nested config (75 tokens difference on a 618-token payload). On semi-uniform data (the most common real-world pattern), GCF uses 44% fewer tokens than TOON.
-
 Fork with reproducible results: [blackwell-systems/toon@gcf-comparison](https://github.com/blackwell-systems/toon/tree/gcf-comparison)
 
 ## Specification
@@ -98,11 +130,13 @@ Full grammar, encoding rules, session statefulness, and delta encoding: [SPEC.md
 
 ## Implementations
 
-| Language | Repository | Status |
-|----------|-----------|--------|
-| Go | [blackwell-systems/gcf-go](https://github.com/blackwell-systems/gcf-go) | Production (encoder, decoder, session, delta) |
-| TypeScript | [blackwell-systems/gcf-typescript](https://github.com/blackwell-systems/gcf-typescript) | Production (encoder, decoder, session, delta) |
-| Python | [blackwell-systems/gcf-python](https://github.com/blackwell-systems/gcf-python) | Production (encoder, decoder, session, delta) |
+| Language | Package | Repository |
+|----------|---------|-----------|
+| Go | `go get github.com/blackwell-systems/gcf-go` | [gcf-go](https://github.com/blackwell-systems/gcf-go) |
+| TypeScript | `npm install @blackwell-systems/gcf` | [gcf-typescript](https://github.com/blackwell-systems/gcf-typescript) |
+| Python | `pip install gcf-py` | [gcf-python](https://github.com/blackwell-systems/gcf-python) |
+
+Zero runtime dependencies. MIT licensed. Spec is stable.
 
 ## Designed for MCP
 
