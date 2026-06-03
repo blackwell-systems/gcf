@@ -101,6 +101,8 @@ Full grammar, encoding rules, session statefulness, and delta encoding: [SPEC.md
 | Language | Repository | Status |
 |----------|-----------|--------|
 | Go | [blackwell-systems/gcf-go](https://github.com/blackwell-systems/gcf-go) | Production (encoder, decoder, session, delta) |
+| TypeScript | [blackwell-systems/gcf-typescript](https://github.com/blackwell-systems/gcf-typescript) | Production (encoder, decoder, session, delta) |
+| Python | [blackwell-systems/gcf-python](https://github.com/blackwell-systems/gcf-python) | Production (encoder, decoder, session, delta) |
 
 ## Designed for MCP
 
