@@ -28,6 +28,7 @@ export default defineConfig({
         items: [
           { text: 'Specification', link: '/reference/spec' },
           { text: 'Syntax Cheatsheet', link: '/reference/cheatsheet' },
+          { text: 'Token Savings Proof', link: '/reference/token-savings-proof' },
           { text: 'API (Go)', link: '/reference/api-go' },
           { text: 'API (TypeScript)', link: '/reference/api-typescript' },
           { text: 'API (Python)', link: '/reference/api-python' },
