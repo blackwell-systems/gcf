@@ -1,5 +1,6 @@
 <p align="center">
   <a href="https://github.com/blackwell-systems"><img src="https://raw.githubusercontent.com/blackwell-systems/blackwell-docs-theme/main/badge-trademark.svg" alt="Blackwell Systems"></a>
+  <a href="https://blackwell-systems.github.io/gcf/"><img src="https://img.shields.io/badge/docs-gcf-brightgreen.svg" alt="Documentation"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a>
 </p>
 
@@ -171,6 +172,19 @@ Full grammar, encoding rules, session statefulness, and delta encoding: [SPEC.md
 | Python | `pip install gcf-py` | [gcf-python](https://github.com/blackwell-systems/gcf-python) |
 
 Zero runtime dependencies. MIT licensed. Spec is stable.
+
+## Documentation
+
+Full guides, API reference, benchmarks, and integration patterns: **[blackwell-systems.github.io/gcf](https://blackwell-systems.github.io/gcf/)**
+
+- [Getting Started](https://blackwell-systems.github.io/gcf/guide/getting-started.html)
+- [Format Overview](https://blackwell-systems.github.io/gcf/guide/format-overview.html)
+- [Session Deduplication](https://blackwell-systems.github.io/gcf/guide/sessions.html)
+- [Delta Encoding](https://blackwell-systems.github.io/gcf/guide/delta.html)
+- [MCP Integration](https://blackwell-systems.github.io/gcf/guide/mcp.html)
+- [Benchmarks](https://blackwell-systems.github.io/gcf/guide/benchmarks.html)
+- [Syntax Cheatsheet](https://blackwell-systems.github.io/gcf/reference/cheatsheet.html)
+- [Token Savings Proof](https://blackwell-systems.github.io/gcf/reference/token-savings-proof.html)
 
 ## Designed for MCP
 
