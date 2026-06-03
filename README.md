@@ -63,6 +63,30 @@ GCF tool=context_for_task budget=5000 tokens=1847 symbols=2
 
 Same information. 75.9% fewer tokens. And at 500 symbols, the GCF version is still perfectly comprehensible while the JSON version is actively confusing the model.
 
+## Benchmarks
+
+### Comprehension accuracy (500 symbols, 6 extraction questions)
+
+| Format | Accuracy | Tokens | vs JSON |
+|--------|----------|--------|---------|
+| **GCF** | **100%** (6/6) | **11,090** | **79% fewer** |
+| TOON | 100% (6/6) | 16,378 | 69% fewer |
+| JSON | 66.7% (4/6) | 53,341 | baseline |
+
+Eval: [gcf-go/eval](https://github.com/blackwell-systems/gcf-go/tree/main/eval)
+
+### Token efficiency ([TOON's own benchmark](https://github.com/blackwell-systems/toon/tree/gcf-comparison), their datasets, their tokenizer)
+
+| Track | GCF | TOON | Result |
+|-------|-----|------|--------|
+| Mixed-structure (nested, semi-uniform) | 169,554 | 227,896 | **GCF 34% smaller** |
+| Flat-only (tabular) | 66,026 | 67,837 | **GCF 3% smaller** |
+| Semi-uniform event logs | 107,269 | 154,032 | **GCF 44% smaller** |
+
+GCF wins on every dataset except deeply nested config (75 tokens difference on a 618-token payload). On semi-uniform data (the most common real-world pattern), GCF uses 44% fewer tokens than TOON.
+
+Fork with reproducible results: [blackwell-systems/toon@gcf-comparison](https://github.com/blackwell-systems/toon/tree/gcf-comparison)
+
 ## Specification
 
 Full grammar, encoding rules, session statefulness, and delta encoding: [SPEC.md](SPEC.md)
