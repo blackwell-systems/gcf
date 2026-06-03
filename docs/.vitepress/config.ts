@@ -3,6 +3,7 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: 'GCF',
   description: 'Token-optimized wire format for LLM tool responses',
+  base: '/gcf/',
   themeConfig: {
     nav: [
       { text: 'Guide', link: '/guide/getting-started' },
