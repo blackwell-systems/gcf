@@ -1,0 +1,15 @@
+{
+  "name": "comments_ignored",
+  "description": "Lines starting with '# ' are ignored by the parser",
+  "input": "GCF tool=test budget=0 tokens=0 symbols=1\n# This is a comment\n## targets\n# Another comment\n@0 fn a.Foo 0.90 lsp\n",
+  "expected": {
+    "tool": "test",
+    "tokenBudget": 0,
+    "tokensUsed": 0,
+    "packRoot": "",
+    "symbols": [
+      {"qualifiedName": "a.Foo", "kind": "function", "score": 0.90, "provenance": "lsp", "distance": 0}
+    ],
+    "edges": []
+  }
+}

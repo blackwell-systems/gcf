@@ -1,0 +1,13 @@
+{
+  "name": "empty_payload",
+  "description": "Empty payload produces header only",
+  "input": {
+    "tool": "test",
+    "tokenBudget": 100,
+    "tokensUsed": 0,
+    "packRoot": "",
+    "symbols": [],
+    "edges": []
+  },
+  "expected": "GCF tool=test budget=100 tokens=0 symbols=0\n"
+}

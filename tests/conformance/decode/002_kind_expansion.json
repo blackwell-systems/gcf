@@ -1,0 +1,18 @@
+{
+  "name": "kind_expansion",
+  "description": "Abbreviated kinds are expanded to full form on decode",
+  "input": "GCF tool=test budget=0 tokens=0 symbols=4\n## targets\n@0 fn a.Func 0.90 x\n@1 iface a.Handler 0.80 x\n@2 ext a.Dep 0.70 x\n@3 svc a.API 0.60 x\n",
+  "expected": {
+    "tool": "test",
+    "tokenBudget": 0,
+    "tokensUsed": 0,
+    "packRoot": "",
+    "symbols": [
+      {"qualifiedName": "a.Func", "kind": "function", "score": 0.90, "provenance": "x", "distance": 0},
+      {"qualifiedName": "a.Handler", "kind": "interface", "score": 0.80, "provenance": "x", "distance": 0},
+      {"qualifiedName": "a.Dep", "kind": "external", "score": 0.70, "provenance": "x", "distance": 0},
+      {"qualifiedName": "a.API", "kind": "service", "score": 0.60, "provenance": "x", "distance": 0}
+    ],
+    "edges": []
+  }
+}

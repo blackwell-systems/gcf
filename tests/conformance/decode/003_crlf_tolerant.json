@@ -1,0 +1,15 @@
+{
+  "name": "crlf_tolerant",
+  "description": "Decoder tolerates CRLF line endings",
+  "input": "GCF tool=test budget=0 tokens=0 symbols=1\r\n## targets\r\n@0 fn a.Foo 0.90 lsp\r\n",
+  "expected": {
+    "tool": "test",
+    "tokenBudget": 0,
+    "tokensUsed": 0,
+    "packRoot": "",
+    "symbols": [
+      {"qualifiedName": "a.Foo", "kind": "function", "score": 0.90, "provenance": "lsp", "distance": 0}
+    ],
+    "edges": []
+  }
+}

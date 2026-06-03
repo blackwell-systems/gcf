@@ -1,0 +1,30 @@
+{
+  "name": "kind_abbreviations",
+  "description": "All 16 standard kinds are abbreviated correctly",
+  "input": {
+    "tool": "test",
+    "tokenBudget": 0,
+    "tokensUsed": 0,
+    "packRoot": "",
+    "symbols": [
+      {"qualifiedName": "a.Fn", "kind": "function", "score": 0.99, "provenance": "x", "distance": 0},
+      {"qualifiedName": "a.Ty", "kind": "type", "score": 0.98, "provenance": "x", "distance": 0},
+      {"qualifiedName": "a.Me", "kind": "method", "score": 0.97, "provenance": "x", "distance": 0},
+      {"qualifiedName": "a.If", "kind": "interface", "score": 0.96, "provenance": "x", "distance": 0},
+      {"qualifiedName": "a.Va", "kind": "var", "score": 0.95, "provenance": "x", "distance": 0},
+      {"qualifiedName": "a.Co", "kind": "const", "score": 0.94, "provenance": "x", "distance": 0},
+      {"qualifiedName": "a.Cl", "kind": "class", "score": 0.93, "provenance": "x", "distance": 0},
+      {"qualifiedName": "a.Fi", "kind": "field", "score": 0.92, "provenance": "x", "distance": 0},
+      {"qualifiedName": "a.Ro", "kind": "route_handler", "score": 0.91, "provenance": "x", "distance": 0},
+      {"qualifiedName": "a.Ex", "kind": "external", "score": 0.90, "provenance": "x", "distance": 0},
+      {"qualifiedName": "a.Fl", "kind": "file", "score": 0.89, "provenance": "x", "distance": 0},
+      {"qualifiedName": "a.Pk", "kind": "package", "score": 0.88, "provenance": "x", "distance": 0},
+      {"qualifiedName": "a.Sv", "kind": "service", "score": 0.87, "provenance": "x", "distance": 0},
+      {"qualifiedName": "a.Ta", "kind": "table", "score": 0.86, "provenance": "x", "distance": 0},
+      {"qualifiedName": "a.Re", "kind": "resource", "score": 0.85, "provenance": "x", "distance": 0},
+      {"qualifiedName": "a.Se", "kind": "selector", "score": 0.84, "provenance": "x", "distance": 0}
+    ],
+    "edges": []
+  },
+  "expected": "GCF tool=test budget=0 tokens=0 symbols=16\n## targets\n@0 fn a.Fn 0.99 x\n@1 type a.Ty 0.98 x\n@2 method a.Me 0.97 x\n@3 iface a.If 0.96 x\n@4 var a.Va 0.95 x\n@5 const a.Co 0.94 x\n@6 class a.Cl 0.93 x\n@7 field a.Fi 0.92 x\n@8 route a.Ro 0.91 x\n@9 ext a.Ex 0.90 x\n@10 file a.Fl 0.89 x\n@11 pkg a.Pk 0.88 x\n@12 svc a.Sv 0.87 x\n@13 table a.Ta 0.86 x\n@14 resource a.Re 0.85 x\n@15 selector a.Se 0.84 x\n"
+}

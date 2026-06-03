@@ -1,0 +1,15 @@
+{
+  "name": "with_pack_root",
+  "description": "Header includes pack_root when non-empty",
+  "input": {
+    "tool": "context_for_task",
+    "tokenBudget": 5000,
+    "tokensUsed": 800,
+    "packRoot": "a1b2c3d4e5f6",
+    "symbols": [
+      {"qualifiedName": "pkg.Foo", "kind": "function", "score": 0.90, "provenance": "lsp_resolved", "distance": 0}
+    ],
+    "edges": []
+  },
+  "expected": "GCF tool=context_for_task budget=5000 tokens=800 symbols=1 pack_root=a1b2c3d4e5f6\n## targets\n@0 fn pkg.Foo 0.90 lsp_resolved\n"
+}

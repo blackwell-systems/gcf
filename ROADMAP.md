@@ -3,12 +3,12 @@
 ## Adoption blockers (next)
 
 - [ ] **CLI tool**: `npx @blackwell-systems/gcf` for encode/decode from stdin/files. Zero-friction try-it experience. Supports `encode < input.json`, `decode < input.gcf`, `stats` (token count comparison vs JSON).
-- [ ] **Conformance test suite**: Language-agnostic JSON fixtures with expected GCF output. Any implementation can validate correctness by running the fixtures. Lives in `tests/conformance/`.
+- [x] **Conformance test suite**: Language-agnostic JSON fixtures with expected GCF output. Any implementation can validate correctness by running the fixtures. Lives in `tests/conformance/`. 14 fixtures across encode (8), decode (4), session (1), delta (1), errors (3).
 - [ ] **npm/PyPI publish**: Publish `@blackwell-systems/gcf` to npm and `gcf-py` to PyPI so install commands actually work.
 
 ## Documentation depth
 
-- [ ] **Efficiency formalization**: Mathematical proof of byte/token savings per structure type (symbols, edges, headers). Formal model like TOON's but with graph-specific analysis showing why edges compound savings.
+- [x] **Token savings proof**: Mathematical model of byte/token savings per structure type (symbols, edges, headers). Proves GCF saves `55 + 66n + 121e - 12g` bytes over JSON and `5n + 84e` bytes over TOON. Empirically validated. Lives in `docs/reference/token-savings-proof.md`.
 - [ ] **Per-model benchmark breakdown**: Run comprehension eval across Claude, Gemini, GPT, Grok individually. Prove GCF works across all frontier models, not just one.
 - [ ] **Migration guide**: Step-by-step for converting existing JSON MCP tool responses to GCF. Before/after for common patterns.
 

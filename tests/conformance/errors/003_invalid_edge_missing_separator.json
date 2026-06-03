@@ -1,0 +1,6 @@
+{
+  "name": "invalid_edge_missing_separator",
+  "description": "Edge line without '<' separator should error",
+  "input": "GCF tool=test\n## targets\n@0 fn a.A 0.90 x\n@1 fn a.B 0.80 x\n## edges\n@0@1 calls\n",
+  "expectedError": true
+}

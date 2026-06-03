@@ -1,0 +1,15 @@
+{
+  "name": "unknown_kind_passthrough",
+  "description": "Unknown kinds pass through verbatim without abbreviation",
+  "input": {
+    "tool": "test",
+    "tokenBudget": 0,
+    "tokensUsed": 0,
+    "packRoot": "",
+    "symbols": [
+      {"qualifiedName": "a.Custom", "kind": "widget", "score": 0.50, "provenance": "custom", "distance": 0}
+    ],
+    "edges": []
+  },
+  "expected": "GCF tool=test budget=0 tokens=0 symbols=1\n## targets\n@0 widget a.Custom 0.50 custom\n"
+}

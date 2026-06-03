@@ -1,0 +1,38 @@
+{
+  "name": "session_dedup",
+  "description": "Second call with overlapping symbol emits bare reference",
+  "calls": [
+    {
+      "input": {
+        "tool": "test",
+        "tokenBudget": 1000,
+        "tokensUsed": 100,
+        "packRoot": "",
+        "symbols": [
+          {"qualifiedName": "pkg.Auth", "kind": "function", "score": 0.90, "provenance": "lsp", "distance": 0},
+          {"qualifiedName": "pkg.Server", "kind": "function", "score": 0.70, "provenance": "lsp", "distance": 1}
+        ],
+        "edges": [
+          {"source": "pkg.Server", "target": "pkg.Auth", "edgeType": "calls", "status": ""}
+        ]
+      },
+      "expected": "GCF tool=test budget=1000 tokens=100 symbols=2 session=true\n## targets\n@0 fn pkg.Auth 0.90 lsp\n## related\n@1 fn pkg.Server 0.70 lsp\n## edges\n@0<@1 calls\n"
+    },
+    {
+      "input": {
+        "tool": "test",
+        "tokenBudget": 1000,
+        "tokensUsed": 80,
+        "packRoot": "",
+        "symbols": [
+          {"qualifiedName": "pkg.Auth", "kind": "function", "score": 0.90, "provenance": "lsp", "distance": 0},
+          {"qualifiedName": "pkg.Handler", "kind": "function", "score": 0.65, "provenance": "ast", "distance": 0}
+        ],
+        "edges": [
+          {"source": "pkg.Handler", "target": "pkg.Auth", "edgeType": "calls", "status": ""}
+        ]
+      },
+      "expected": "GCF tool=test budget=1000 tokens=80 symbols=2 session=true\n## targets\n@0  # previously transmitted\n@1 fn pkg.Handler 0.65 ast\n## edges\n@0<@1 calls\n"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "name": "invalid_symbol_too_few_fields",
+  "description": "Symbol line with fewer than 5 fields should error",
+  "input": "GCF tool=test\n## targets\n@0 fn pkg.Foo\n",
+  "expectedError": true
+}

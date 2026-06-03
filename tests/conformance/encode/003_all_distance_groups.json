@@ -1,0 +1,18 @@
+{
+  "name": "all_distance_groups",
+  "description": "Symbols across targets, related, extended, and distance_5",
+  "input": {
+    "tool": "test",
+    "tokenBudget": 1000,
+    "tokensUsed": 200,
+    "packRoot": "",
+    "symbols": [
+      {"qualifiedName": "a.Target", "kind": "function", "score": 0.90, "provenance": "lsp", "distance": 0},
+      {"qualifiedName": "b.Related", "kind": "type", "score": 0.70, "provenance": "ast", "distance": 1},
+      {"qualifiedName": "c.Extended", "kind": "method", "score": 0.50, "provenance": "lsp", "distance": 2},
+      {"qualifiedName": "d.Far", "kind": "interface", "score": 0.30, "provenance": "structural", "distance": 5}
+    ],
+    "edges": []
+  },
+  "expected": "GCF tool=test budget=1000 tokens=200 symbols=4\n## targets\n@0 fn a.Target 0.90 lsp\n## related\n@1 type b.Related 0.70 ast\n## extended\n@2 method c.Extended 0.50 lsp\n## distance_5\n@3 iface d.Far 0.30 structural\n"
+}

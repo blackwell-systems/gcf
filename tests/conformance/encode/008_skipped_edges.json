@@ -1,0 +1,17 @@
+{
+  "name": "skipped_edges_header_emitted",
+  "description": "Edges section header emitted even when all edges reference unknown symbols",
+  "input": {
+    "tool": "test",
+    "tokenBudget": 0,
+    "tokensUsed": 0,
+    "packRoot": "",
+    "symbols": [
+      {"qualifiedName": "a.A", "kind": "function", "score": 0.90, "provenance": "x", "distance": 0}
+    ],
+    "edges": [
+      {"source": "unknown.B", "target": "a.A", "edgeType": "calls", "status": ""}
+    ]
+  },
+  "expected": "GCF tool=test budget=0 tokens=0 symbols=1\n## targets\n@0 fn a.A 0.90 x\n## edges\n"
+}

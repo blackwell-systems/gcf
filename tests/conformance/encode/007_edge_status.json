@@ -1,0 +1,22 @@
+{
+  "name": "edge_status",
+  "description": "Edge status 'added'/'removed' is appended; empty and 'unchanged' are omitted",
+  "input": {
+    "tool": "test",
+    "tokenBudget": 0,
+    "tokensUsed": 0,
+    "packRoot": "",
+    "symbols": [
+      {"qualifiedName": "a.A", "kind": "function", "score": 0.90, "provenance": "x", "distance": 0},
+      {"qualifiedName": "a.B", "kind": "function", "score": 0.80, "provenance": "x", "distance": 0},
+      {"qualifiedName": "a.C", "kind": "function", "score": 0.70, "provenance": "x", "distance": 0}
+    ],
+    "edges": [
+      {"source": "a.B", "target": "a.A", "edgeType": "calls", "status": "added"},
+      {"source": "a.C", "target": "a.A", "edgeType": "imports", "status": "removed"},
+      {"source": "a.C", "target": "a.B", "edgeType": "calls", "status": "unchanged"},
+      {"source": "a.B", "target": "a.C", "edgeType": "references", "status": ""}
+    ]
+  },
+  "expected": "GCF tool=test budget=0 tokens=0 symbols=3\n## targets\n@0 fn a.A 0.90 x\n@1 fn a.B 0.80 x\n@2 fn a.C 0.70 x\n## edges\n@0<@1 calls added\n@0<@2 imports removed\n@1<@2 calls\n@2<@1 references\n"
+}

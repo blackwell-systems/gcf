@@ -1,0 +1,6 @@
+{
+  "name": "invalid_header",
+  "description": "Missing GCF prefix should error",
+  "input": "INVALID tool=test\n@0 fn pkg.Foo 0.9 lsp\n",
+  "expectedError": true
+}
