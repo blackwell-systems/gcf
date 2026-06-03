@@ -39,7 +39,7 @@ Token efficiency (TOON's datasets, TOON's tokenizer):
   GCF    ██████████████████████████████████████████████████░░   66,026  ◀ 3% smaller
 ```
 
-### LLM comprehension: JSON breaks, GCF and TOON don't
+### LLM comprehension: 100% accuracy at the lowest token cost
 
 ```
 Accuracy at 500 symbols (6 structured extraction questions):
