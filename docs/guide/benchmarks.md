@@ -120,12 +120,16 @@ Fork: [blackwell-systems/toon@gcf-comparison](https://github.com/blackwell-syste
 | Metric | GCF | TOON | JSON |
 |--------|-----|------|------|
 | Comprehension accuracy (500 sym) | 100% | 100% | 66.7% |
-| Tokens (500 symbols) | 11,090 | 16,378 | 53,341 |
-| vs JSON savings | 79% | 69% | baseline |
-| vs TOON savings | 32% | baseline | n/a |
+| Input tokens (500 symbols) | 11,090 | 16,378 | 53,341 |
+| Output tokens (100 symbols) | 5,619 | 11,650 | 22,180 |
+| Generation validity | 5/5 | 5/5 | N/A |
+| vs JSON input savings | 79% | 69% | baseline |
+| vs TOON input savings | 32% | baseline | n/a |
+| vs JSON output savings | 75% | 40% | baseline |
+| vs TOON output savings | 52% | baseline | n/a |
 | Mixed-structure efficiency | best | 34% larger | 72% larger |
 | Flat-data efficiency | best | 3% larger | 149% larger |
 | Session dedup (5th call) | 92.7% | unavailable | unavailable |
 | Delta encoding | 81.2% | unavailable | unavailable |
 
-GCF wins on token efficiency, matches on comprehension accuracy, and offers session/delta features no competitor has.
+GCF wins on input efficiency, output efficiency, and offers session/delta features no competitor has. See the [generation eval](https://github.com/blackwell-systems/gcf/tree/main/eval) for output token methodology.

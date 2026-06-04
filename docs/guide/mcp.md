@@ -1,6 +1,6 @@
 # MCP Integration
 
-GCF is designed as a response format for [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) tool servers. Any MCP tool that returns structured data can use GCF to deliver more context per token budget.
+GCF is a wire format for [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) tool interactions. Tools encode responses in GCF to deliver more context per token budget. LLMs can also produce GCF output for agent-to-agent communication and structured returns (see [LLM Integration](/guide/llm-integration)).
 
 ## Why MCP tools need GCF
 

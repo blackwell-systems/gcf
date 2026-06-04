@@ -240,9 +240,12 @@ Full guides, API reference, benchmarks, and integration patterns: **[blackwell-s
 - [Syntax Cheatsheet](https://blackwell-systems.github.io/gcf/reference/cheatsheet.html)
 - [Token Savings Proof](https://blackwell-systems.github.io/gcf/reference/token-savings-proof.html)
 
-## Designed for MCP
+## Use cases
 
-GCF is a format option for [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) tool responses. Any MCP server returning structured data can use GCF to deliver more context per token budget, with better comprehension accuracy than JSON.
+- **MCP tool responses.** Any [MCP](https://modelcontextprotocol.io/) server returning structured data. GCF delivers more context per token budget with better comprehension accuracy than JSON.
+- **Agent-to-agent communication.** Agents passing context in multi-agent workflows. 75% fewer tokens per handoff.
+- **LLM structured output.** LLMs produce valid GCF with a 3-line primer. 52% fewer output tokens than TOON.
+- **Code intelligence.** Graph profile with local IDs, edges, and distance grouping for symbols, call hierarchies, and dependency graphs.
 
 ## License
 
