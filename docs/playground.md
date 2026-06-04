@@ -1,5 +1,14 @@
 # Playground
 
+<!-- Implementation notes for the playground:
+- Use @blackwell-systems/gcf (TypeScript library) bundled for browser via VitePress custom component
+- Two-pane layout: JSON input (left) → GCF output (right)
+- Live token count bar below (JSON tokens vs GCF tokens, visual bar like gcf stats)
+- Include decode tab: paste GCF, see parsed JSON
+- Reference: toonformat.dev/playground.html for UX pattern (but our token bar is the differentiator)
+- VitePress custom Vue component in docs/.vitepress/theme/components/Playground.vue
+-->
+
 ::: info Coming Soon
 An interactive playground for encoding/decoding GCF in the browser is planned.
 :::
