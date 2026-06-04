@@ -142,6 +142,36 @@ GCF encodes how far each record is from the query center:
 
 The LLM immediately knows what's most relevant without scanning the entire payload. TOON encodes all records in a flat list with no semantic grouping.
 
+## LLM output generation: GCF is 52% smaller
+
+Both formats can be produced by LLMs given a short primer. Tested with the same model (Claude), same data (5 to 100 symbols), validated through real decoders:
+
+| Symbols | Edges | GCF output | TOON output | GCF vs TOON |
+|---------|-------|-----------|-------------|-------------|
+| 5 | 3 | 379 B | 782 B | **52% smaller** |
+| 10 | 6 | 643 B | 1,377 B | **53% smaller** |
+| 20 | 12 | 1,217 B | 2,629 B | **54% smaller** |
+| 50 | 25 | 2,845 B | 5,898 B | **52% smaller** |
+| 100 | 50 | 5,619 B | 11,650 B | **52% smaller** |
+
+Both achieved 5/5 validity with a format example. Both achieved 3/5 without one (tied cold-start). GCF is not just cheaper to read; it's cheaper to write.
+
+TOON's [LLM integration guide](https://toonformat.dev/guide/llm-prompts.html) positions TOON as bidirectional (LLMs read and write it). But their guide doesn't publish a generation eval. We tested both formats head-to-head, and GCF produces valid output in half the tokens.
+
+## TOON's benchmarks don't test at scale
+
+TOON's retrieval accuracy benchmark uses datasets of 100 rows or fewer and reports a 1.4 percentage point accuracy improvement over JSON (76.4% vs 75.0%). At this scale, all formats perform similarly because JSON's structural noise hasn't yet overwhelmed the model's attention.
+
+GCF's [comprehension eval](https://github.com/blackwell-systems/gcf-go/tree/main/eval) tests at 500 symbols with 200 edges. At this scale:
+
+| Format | Accuracy | Tokens |
+|--------|----------|--------|
+| **GCF** | **100%** | **11,090** |
+| TOON | 100% | 16,378 |
+| JSON | **66.7%** | 53,341 |
+
+JSON doesn't just use more tokens; it actively miscounts records (guessed 320 instead of 500). The difference between formats is invisible at 100 rows and undeniable at 500. TOON's benchmarks stay in the comfort zone.
+
 ## Where TOON wins
 
 TOON is 75 tokens smaller on one benchmark dataset: deeply nested configuration with single-key wrapper chains. That's an 11% advantage on a 618-token payload. TOON's key folding (`data.metadata.items` dotted paths) is marginally more compact for this specific shape.
