@@ -163,9 +163,59 @@ fmt.Println(p.Edges[0].Source)  // "pkg.NewServer"
 
 :::
 
+## Encode any data (generic profile)
+
+GCF also encodes arbitrary structured data, not just graph payloads:
+
+::: code-group
+
+```python [Python]
+from gcf import encode_generic
+
+output = encode_generic({
+    "employees": [
+        {"id": 1, "name": "Alice", "department": "Engineering", "salary": 95000},
+        {"id": 2, "name": "Bob", "department": "Sales", "salary": 72000},
+    ],
+})
+```
+
+```typescript [TypeScript]
+import { encodeGeneric } from '@blackwell-systems/gcf';
+
+const output = encodeGeneric({
+  employees: [
+    { id: 1, name: 'Alice', department: 'Engineering', salary: 95000 },
+    { id: 2, name: 'Bob', department: 'Sales', salary: 72000 },
+  ],
+});
+```
+
+```go [Go]
+output := gcf.EncodeGeneric(map[string]any{
+    "employees": []map[string]any{
+        {"id": 1, "name": "Alice", "department": "Engineering", "salary": 95000},
+        {"id": 2, "name": "Bob", "department": "Sales", "salary": 72000},
+    },
+})
+```
+
+:::
+
+**Output:**
+
+```
+## employees [2]{id,name,department,salary}
+1|Alice|Engineering|95000
+2|Bob|Sales|72000
+```
+
+Arrays of uniform objects become tabular rows. One header replaces all field name repetitions. Pipe separators with no spaces for maximum density.
+
 ## What's next
 
 - [Format Overview](/guide/format-overview) to understand the encoding structure
 - [Sessions](/guide/sessions) for multi-turn deduplication (92.7% savings)
 - [Delta Encoding](/guide/delta) for incremental updates (81.2% savings)
 - [Benchmarks](/guide/benchmarks) for the full competitive data
+- [Playground](/playground) to try it live in the browser

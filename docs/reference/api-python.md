@@ -65,6 +65,26 @@ output = encode_delta(DeltaPayload(
 ))
 ```
 
+### `encode_generic(data: Any) -> str`
+
+Encode any Python value into GCF tabular format. Unlike `encode` (which handles the graph `Payload` type), `encode_generic` works on arbitrary dicts, lists, and primitives.
+
+```python
+from gcf import encode_generic
+
+output = encode_generic({
+    "employees": [
+        {"id": 1, "name": "Alice", "department": "Engineering", "salary": 95000},
+        {"id": 2, "name": "Bob", "department": "Sales", "salary": 72000},
+    ],
+})
+# ## employees [2]{id,name,department,salary}
+# 1|Alice|Engineering|95000
+# 2|Bob|Sales|72000
+```
+
+Arrays of uniform dicts get tabular encoding (header + positional rows). Nested dicts use `## key` section headers. Primitives use `key=value`.
+
 ## Types
 
 All types are `@dataclass` instances from `gcf.types`.

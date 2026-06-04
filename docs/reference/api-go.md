@@ -59,6 +59,25 @@ output := gcf.EncodeDelta(&gcf.DeltaPayload{
 })
 ```
 
+### `EncodeGeneric(data any) string`
+
+Encode any Go value into GCF tabular format. Unlike `Encode` (which handles the graph `Payload` type), `EncodeGeneric` works on arbitrary maps, slices, structs, and primitives.
+
+```go
+data := map[string]any{
+    "employees": []map[string]any{
+        {"id": 1, "name": "Alice", "department": "Engineering", "salary": 95000},
+        {"id": 2, "name": "Bob", "department": "Sales", "salary": 72000},
+    },
+}
+output := gcf.EncodeGeneric(data)
+// ## employees [2]{id,name,department,salary}
+// 1|Alice|Engineering|95000
+// 2|Bob|Sales|72000
+```
+
+Arrays of uniform objects get tabular encoding (header + positional rows). Nested objects use `## key` section headers. Primitives use `key=value`.
+
 ### `NewSession() *Session`
 
 Create a new empty session tracker. Thread-safe.

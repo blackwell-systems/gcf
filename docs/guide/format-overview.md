@@ -187,11 +187,28 @@ GCF tool=context_for_task budget=5000 tokens=1847 symbols=2
 
 965 tokens vs 233 tokens. Same information.
 
+## Tabular encoding (generic profile)
+
+The elements above (Sections 1-5) form the **graph profile** for code graph payloads. GCF also supports a **tabular profile** for encoding arbitrary structured data:
+
+```
+## employees [3]{id,name,department,salary}
+1|Alice Smith|Engineering|95000
+2|Bob Jones|Sales|72000
+3|Carol Wu|Marketing|85000
+```
+
+One header declares field names. Rows are positional values separated by pipes. No field names repeated per record. This is the same principle as the graph profile (positional fields eliminate per-record overhead), generalized to any data shape.
+
+For nested objects: `key=value` pairs and `## section` headers. For records with sub-objects: `@N` prefixes on rows with `.fieldname` inline nested blocks.
+
+See the [Specification (Section 6a)](/reference/spec) and [Syntax Cheatsheet](/reference/cheatsheet) for full details.
+
 ## Design constraints
 
 - **Text-only.** No binary framing.
 - **Line-oriented.** One semantic unit per line.
-- **No nesting.** The format is flat.
+- **Shallow nesting.** The graph profile is flat. The tabular profile supports indented nested fields for records with sub-objects.
 - **Deterministic.** Same input produces same output.
 - **Human-readable.** No tooling required to understand it.
 - **LLM-parseable.** Validated at 100% accuracy on structured extraction tasks.
