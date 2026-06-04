@@ -192,4 +192,4 @@ On TOON's own benchmark with their own tokenizer, GCF uses fewer tokens on 5 of 
 
 The gap widens over time. On the first tool call, GCF saves 34% vs TOON. By the fifth call in a session, GCF saves 92.7% vs JSON while TOON is stuck at 69%. No format change can close that gap without adding session state, which requires local IDs, which requires a fundamental redesign of TOON.
 
-**[Try both formats in the playground](https://blackwell-systems.github.io/gcf/playground.html)** with your own data.
+**[Try both formats in the playground](https://gcformat.com/playground.html)** with your own data.

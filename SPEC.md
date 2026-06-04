@@ -354,7 +354,7 @@ Combined: 84% median token savings across 6 benchmark payloads (8 to 30 symbols)
 | Array framing | `[`, `]`, commas | `[count]` in header | fixed |
 | Nesting | braces + indentation + field names | `.fieldname` + `key=value` | ~50% per nested object |
 
-On TOON's own benchmark datasets: 34% fewer tokens on mixed-structure data, 44% fewer on semi-uniform event logs, 3% fewer on flat tabular data. See [benchmarks](https://blackwell-systems.github.io/gcf/guide/benchmarks.html).
+On TOON's own benchmark datasets: 34% fewer tokens on mixed-structure data, 44% fewer on semi-uniform event logs, 3% fewer on flat tabular data. See [benchmarks](https://gcformat.com/guide/benchmarks.html).
 
 ## 11. Design Constraints
 
