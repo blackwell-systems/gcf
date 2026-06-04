@@ -1,8 +1,13 @@
 # Format Overview
 
-GCF is a line-oriented, text-based format. Each line is one semantic unit: a header, a symbol declaration, an edge reference, a group marker, or a comment.
+GCF is a line-oriented, text-based format with two encoding profiles:
 
-## Structure at a glance
+- **Graph profile** (`encode`): code graph payloads with symbols, edges, and distance groups
+- **Tabular profile** (`encodeGeneric`): any structured data with arrays, nested objects, and primitives
+
+Both profiles share the same primitives: `##` section headers, `@` local IDs, positional fields.
+
+## Graph profile at a glance
 
 ```
 GCF tool=context_for_task budget=5000 tokens=1847 symbols=10 pack_root=a1b2c3
@@ -17,7 +22,7 @@ GCF tool=context_for_task budget=5000 tokens=1847 symbols=10 pack_root=a1b2c3
 @1<@0 references
 ```
 
-Five elements. That's all there is.
+Five elements in the graph profile. Four more in the tabular profile (see [below](#tabular-encoding-generic-profile)).
 
 ## 1. Header
 
@@ -189,7 +194,18 @@ GCF tool=context_for_task budget=5000 tokens=1847 symbols=2
 
 ## Tabular encoding (generic profile)
 
-The elements above (Sections 1-5) form the **graph profile** for code graph payloads. GCF also supports a **tabular profile** for encoding arbitrary structured data:
+The elements above (Sections 1-5) form the **graph profile** for code graph payloads. GCF also supports a **tabular profile** for encoding arbitrary structured data. This is what `encodeGeneric` / `EncodeGeneric` / `encode_generic` produces.
+
+Four elements:
+
+### 6. Tabular arrays
+
+```
+## {name} [{count}]{{field1},{field2},{field3}}
+value1|value2|value3
+```
+
+The header declares the section name, record count, and field names in one line. Rows contain only values, separated by pipe (`|`). No field names repeated per record.
 
 ```
 ## employees [3]{id,name,department,salary}
@@ -198,11 +214,117 @@ The elements above (Sections 1-5) form the **graph profile** for code graph payl
 3|Carol Wu|Marketing|85000
 ```
 
-One header declares field names. Rows are positional values separated by pipes. No field names repeated per record. This is the same principle as the graph profile (positional fields eliminate per-record overhead), generalized to any data shape.
+**Why this saves tokens:** JSON repeats `"id":`, `"name":`, `"department":`, `"salary":` on every record. That's 3 x 4 = 12 field name repetitions for 3 records. GCF declares them once. The savings scale linearly: 1,000 records = 999 avoided repetitions per field.
 
-For nested objects: `key=value` pairs and `## section` headers. For records with sub-objects: `@N` prefixes on rows with `.fieldname` inline nested blocks.
+Pipe separator with no spaces maximizes density. Each row is a single line of values in field-declaration order.
 
-See the [Specification (Section 6a)](/reference/spec) and [Syntax Cheatsheet](/reference/cheatsheet) for full details.
+### 7. Key-value pairs (object fields)
+
+```
+key=value
+```
+
+Primitive fields use `key=value` with no quoting for numbers and booleans:
+
+```
+config=production
+version=2.1.0
+port=5432
+active=true
+max_retries=3
+```
+
+**Why this saves tokens:** JSON wraps every key in quotes, adds a colon and space, and wraps string values in quotes: `"config": "production"`. GCF: `config=production`. Half the characters.
+
+### 8. Section headers (nested objects)
+
+```
+## key
+```
+
+Nested objects use `## key` section headers with indented key-value pairs:
+
+```
+## database
+  host=db.example.com
+  port=5432
+  pool_size=10
+## cache
+  ttl=3600
+  max_size=1000
+## logging
+  level=info
+  format=json
+```
+
+**Why this saves tokens:** JSON uses `"database": { ... }` with braces, quotes on every key, and structural delimiters. GCF uses one header line per section and flat key-value pairs inside.
+
+Sections can nest:
+
+```
+## server
+  host=0.0.0.0
+  port=8080
+  ## tls
+    cert=/etc/ssl/cert.pem
+    key=/etc/ssl/key.pem
+```
+
+### 9. Nested fields in tabular rows
+
+When records contain both primitive fields and nested objects, rows use `@{id}` prefixes and `.fieldname` for inline nested data:
+
+```
+## orders [2]{id,total,status}
+@0 1001|249.99|shipped
+  .customer
+    name=Alice Smith
+    tier=premium
+@1 1002|89.50|pending
+  .customer
+    name=Bob Jones
+    tier=standard
+```
+
+- `@{id}` prefix appears only when the row has nested fields (flat rows have no prefix)
+- `.fieldname` introduces an inline nested object
+- Nested fields are indented and use `key=value` pairs
+
+**Why this saves tokens:** JSON repeats the entire `"customer": {"name": "...", "tier": "..."}` structure on every record. GCF's primitive fields go in the tabular row (positional), and only the nested portion is expanded.
+
+### Value formatting
+
+| Type | Format | Example |
+|------|--------|---------|
+| String | bare text | `Alice Smith` |
+| Number | unquoted | `95000`, `3.14` |
+| Boolean | lowercase | `true` / `false` |
+| Null | dash | `-` |
+| Empty string | quoted | `""` |
+| String with `\|` or newline | quoted | `"value\|pipes"` |
+
+### Comparison: the same data in JSON
+
+```json
+{
+  "employees": [
+    {"id": 1, "name": "Alice Smith", "department": "Engineering", "salary": 95000},
+    {"id": 2, "name": "Bob Jones", "department": "Sales", "salary": 72000},
+    {"id": 3, "name": "Carol Wu", "department": "Marketing", "salary": 85000}
+  ]
+}
+```
+
+vs GCF:
+
+```
+## employees [3]{id,name,department,salary}
+1|Alice Smith|Engineering|95000
+2|Bob Jones|Sales|72000
+3|Carol Wu|Marketing|85000
+```
+
+292 bytes vs 122 bytes. Same information. 58% smaller. On TOON's own benchmark with 2,000 employee records, GCF is 34% smaller than TOON and 60% smaller than JSON.
 
 ## Design constraints
 
