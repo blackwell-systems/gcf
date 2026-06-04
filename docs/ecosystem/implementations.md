@@ -69,3 +69,17 @@ GCF is simple enough to implement in a weekend. The spec is 229 lines of EBNF + 
 4. Add Delta (needed for high-frequency re-queries)
 
 Test against the [comprehension eval](https://github.com/blackwell-systems/gcf-go/tree/main/eval) to verify your output is LLM-comprehensible at scale.
+
+## MCP Proxy
+
+Don't want to modify your server? Use [gcf-proxy](https://github.com/blackwell-systems/gcf-proxy) as a transparent wrapper:
+
+```bash
+go install github.com/blackwell-systems/gcf-proxy@latest
+```
+
+```json
+{"mcpServers": {"yours": {"command": "gcf-proxy", "args": ["your-mcp-server"]}}}
+```
+
+Zero code changes. JSON responses are re-encoded as GCF mid-flight.

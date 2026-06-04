@@ -170,8 +170,9 @@ Full grammar, encoding rules, session statefulness, and delta encoding: [SPEC.md
 | Go | `go get github.com/blackwell-systems/gcf-go` | [gcf-go](https://github.com/blackwell-systems/gcf-go) |
 | TypeScript | `npm install @blackwell-systems/gcf` | [gcf-typescript](https://github.com/blackwell-systems/gcf-typescript) |
 | Python | `pip install gcf-python` | [gcf-python](https://github.com/blackwell-systems/gcf-python) |
+| MCP Proxy | `go install github.com/blackwell-systems/gcf-proxy@latest` | [gcf-proxy](https://github.com/blackwell-systems/gcf-proxy) |
 
-Zero runtime dependencies. MIT licensed. Spec is stable.
+Zero runtime dependencies. MIT licensed. Spec is stable. The proxy is a drop-in wrapper for any existing MCP server (zero code changes).
 
 ## Documentation
 
