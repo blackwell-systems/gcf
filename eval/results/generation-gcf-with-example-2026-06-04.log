@@ -1,0 +1,21 @@
+======================================================================
+  GCF Generation Eval v4 (explicit edge direction)
+======================================================================
+
+Testing 5 symbols, 3 edges... VALID  5 sym, 3 edges  (379B GCF, 1307B JSON, 71%, 9.7s)
+Testing 10 symbols, 6 edges... VALID  10 sym, 6 edges  (643B GCF, 2443B JSON, 74%, 11.5s)
+Testing 20 symbols, 12 edges... VALID  20 sym, 12 edges  (1217B GCF, 4778B JSON, 75%, 14.6s)
+Testing 50 symbols, 25 edges... VALID  50 sym, 25 edges  (2845B GCF, 11154B JSON, 74%, 18.6s)
+Testing 100 symbols, 50 edges... VALID  100 sym, 50 edges  (5619B GCF, 22180B JSON, 75%, 38.7s)
+
+======================================================================
+   Symbols  Edges  Valid      GCF     JSON  Savings
+----------------------------------------------------------------------
+         5      3    YES      379     1307      71%
+        10      6    YES      643     2443      74%
+        20     12    YES     1217     4778      75%
+        50     25    YES     2845    11154      74%
+       100     50    YES     5619    22180      75%
+======================================================================
+
+  5/5 valid. LLMs CAN produce GCF at scale.

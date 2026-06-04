@@ -1,0 +1,21 @@
+======================================================================
+  TOON Generation Eval (same data, same model, same prompt style)
+======================================================================
+
+Testing 5 symbols, 3 edges... VALID  (782B TOON, 1130B JSON, 31%, 10.2s)
+Testing 10 symbols, 6 edges... VALID  (1377B TOON, 2134B JSON, 35%, 12.1s)
+Testing 20 symbols, 12 edges... VALID  (2629B TOON, 4205B JSON, 37%, 16.1s)
+Testing 50 symbols, 25 edges... VALID  (5898B TOON, 9759B JSON, 40%, 30.1s)
+Testing 100 symbols, 50 edges... VALID  (11650B TOON, 19435B JSON, 40%, 54.8s)
+
+======================================================================
+   Symbols  Edges  Valid     TOON     JSON  Savings
+----------------------------------------------------------------------
+         5      3    YES      782     1130      31%
+        10      6    YES     1377     2134      35%
+        20     12    YES     2629     4205      37%
+        50     25    YES     5898     9759      40%
+       100     50    YES    11650    19435      40%
+======================================================================
+
+  5/5 valid.

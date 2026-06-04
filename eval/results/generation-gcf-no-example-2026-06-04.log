@@ -1,0 +1,22 @@
+=================================================================
+  GCF Generation Eval: Can LLMs produce valid GCF at scale?
+=================================================================
+
+Testing 5 symbols, 3 edges... INVALID  decode error: error: gcf: invalid header, expected 'GCF ...' got "Good, I have all the information I need. Now let me construct the GCF output."
+exit status 1  (37.6s)
+Testing 10 symbols, 6 edges... VALID  10 symbols, 6 edges  (814 bytes GCF, 2861 bytes JSON, 72% savings, 15.1s)
+Testing 20 symbols, 12 edges... VALID  20 symbols, 12 edges  (1617 bytes GCF, 5658 bytes JSON, 71% savings, 105.7s)
+Testing 50 symbols, 25 edges... VALID  50 symbols, 25 edges  (3845 bytes GCF, 13154 bytes JSON, 71% savings, 72.7s)
+Testing 100 symbols, 50 edges... TIMEOUT
+
+=================================================================
+   Symbols  Edges  Valid  GCF bytes  JSON bytes  Savings
+-----------------------------------------------------------------
+         5      3     NO       1395        4185       0%
+        10      6    YES        814        2861      72%
+        20     12    YES       1617        5658      71%
+        50     25    YES       3845       13154      71%
+       100     50     NO          0           0       0%
+=================================================================
+
+  3/5 valid. LLMs PARTIALLY can produce GCF.

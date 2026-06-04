@@ -1,0 +1,21 @@
+======================================================================
+  TOON Generation Eval (NO example, description only)
+======================================================================
+
+Testing 5 symbols, 3 edges... INVALID  Line 3: Missing colon after key  (13.7s)
+Testing 10 symbols, 6 edges... INVALID  Line 1: Top-level document must start with a key-value or array-header line  (11.0s)
+Testing 20 symbols, 12 edges... VALID  (2715B TOON, 3944B JSON, 31%, 17.2s)
+Testing 50 symbols, 25 edges... VALID  (4122B TOON, 7690B JSON, 46%, 66.9s)
+Testing 100 symbols, 50 edges... VALID  (11638B TOON, 19326B JSON, 40%, 138.5s)
+
+======================================================================
+   Symbols  Edges  Valid     TOON     JSON  Savings
+----------------------------------------------------------------------
+         5      3     NO      796        0       0%
+        10      6     NO      648        0       0%
+        20     12    YES     2715     3944      31%
+        50     25    YES     4122     7690      46%
+       100     50    YES    11638    19326      40%
+======================================================================
+
+  3/5 valid.
