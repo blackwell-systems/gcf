@@ -1,8 +1,18 @@
 # Syntax Cheatsheet
 
-Quick reference for GCF encoding. Every example is a complete, valid GCF fragment.
+GCF has two encoding profiles that share the same grammar primitives (`##`, `@`, `|`, `=`).
 
-## Header
+::: tip Two profiles, one format
+**Graph profile** (`encode`): code graph payloads with symbols, edges, and distance groups. For MCP tools returning code intelligence data.
+
+**Tabular profile** (`encodeGeneric`): any structured data with arrays, nested objects, and primitives. For everything else.
+:::
+
+---
+
+## Graph Profile
+
+### Header
 
 ```
 GCF tool=<name> budget=<int> tokens=<int> symbols=<int> pack_root=<hex>
@@ -18,7 +28,7 @@ GCF tool=context_for_task tokens=800 symbols=5 session=true
 GCF tool=context_for_task delta=true base_root=aaa111 new_root=bbb222 tokens=30 savings=81%
 ```
 
-## Symbol lines
+### Symbol lines
 
 ```
 @{id} {kind} {qualified_name} {score} {provenance}
@@ -38,7 +48,7 @@ GCF tool=context_for_task delta=true base_root=aaa111 new_root=bbb222 tokens=30 
 - `score`: 2 decimal places (e.g., `0.78`)
 - `provenance`: no whitespace allowed
 
-## Edge lines
+### Edge lines
 
 ```
 @{target}<@{source} {edge_type} [{status}]
@@ -55,7 +65,7 @@ GCF tool=context_for_task delta=true base_root=aaa111 new_root=bbb222 tokens=30 
 - `<` arrow points toward target
 - Status is optional: `added` or `removed` (omit for normal payloads)
 
-## Group headers
+### Distance groups
 
 ```
 ## targets       # distance 0 (direct matches)
@@ -65,7 +75,7 @@ GCF tool=context_for_task delta=true base_root=aaa111 new_root=bbb222 tokens=30 
 ## edges         # relationship section
 ```
 
-## Kind abbreviations
+### Kind abbreviations
 
 | Short | Full | Short | Full |
 |-------|------|-------|------|
@@ -80,7 +90,7 @@ GCF tool=context_for_task delta=true base_root=aaa111 new_root=bbb222 tokens=30 
 
 Unknown kinds pass through verbatim.
 
-## Session bare references
+### Session bare references
 
 ```
 @7  # previously transmitted
@@ -88,7 +98,7 @@ Unknown kinds pass through verbatim.
 
 Two spaces before `#`. Used when `session=true` in header.
 
-## Delta payload
+### Delta payload
 
 ```
 GCF tool=context_for_task delta=true base_root=aaa new_root=bbb tokens=30 savings=85%
@@ -108,13 +118,33 @@ pkg.Router -> pkg.NewFunc calls
 - `## added`: full symbol lines with sequential IDs from 0
 - `## edges_removed` / `## edges_added`: `source -> target type` format
 
-## Tabular encoding (generic profile)
+### Complete graph example
 
-### Tabular array
+```
+GCF tool=context_for_task budget=5000 tokens=1847 symbols=5 pack_root=a1b2c3d4
+## targets
+@0 fn github.com/org/repo/internal/auth.Middleware 0.78 lsp_resolved
+@1 type github.com/org/repo/internal/auth.Config 0.71 ast_inferred
+## related
+@2 fn github.com/org/repo/internal/server.New 0.54 lsp_resolved
+@3 method github.com/org/repo/internal/server.Server.Start 0.48 lsp_resolved
+## extended
+@4 iface github.com/org/repo/internal/handler.Handler 0.32 structural
+## edges
+@0<@2 calls
+@1<@0 references
+@4<@2 implements
+@3<@2 calls
+```
+
+---
+
+## Tabular Profile
+
+### Tabular arrays
 
 ```
 ## {name} [{count}]{{field1},{field2},{field3}}
-value1|value2|value3
 value1|value2|value3
 ```
 
@@ -156,6 +186,9 @@ version=2.1.0
   host=db.example.com
   port=5432
   pool_size=10
+## cache
+  ttl=3600
+  max_size=1000
 ```
 
 - Primitives: `key=value` (no quotes for numbers/booleans)
@@ -172,36 +205,7 @@ version=2.1.0
 | Null | dash | `-` |
 | String with `\|` or newline | quoted | `"value\|with\|pipes"` |
 
-## Comments
-
-```
-# This is a comment (ignored by parsers)
-```
-
-Must start with `# ` (hash + space). Group headers (`##`) are NOT comments.
-
-## Complete examples
-
-### Graph profile
-
-```
-GCF tool=context_for_task budget=5000 tokens=1847 symbols=5 pack_root=a1b2c3d4
-## targets
-@0 fn github.com/org/repo/internal/auth.Middleware 0.78 lsp_resolved
-@1 type github.com/org/repo/internal/auth.Config 0.71 ast_inferred
-## related
-@2 fn github.com/org/repo/internal/server.New 0.54 lsp_resolved
-@3 method github.com/org/repo/internal/server.Server.Start 0.48 lsp_resolved
-## extended
-@4 iface github.com/org/repo/internal/handler.Handler 0.32 structural
-## edges
-@0<@2 calls
-@1<@0 references
-@4<@2 implements
-@3<@2 calls
-```
-
-### Tabular profile
+### Complete tabular example
 
 ```
 name=Acme Corp
@@ -220,3 +224,15 @@ region=us-east-1
     priority=medium
     deadline=2026-Q4
 ```
+
+---
+
+## Shared
+
+### Comments
+
+```
+# This is a comment (ignored by parsers)
+```
+
+Must start with `# ` (hash + space). Group headers (`##`) are NOT comments.
