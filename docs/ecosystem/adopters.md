@@ -11,6 +11,15 @@
 
 GCF was designed for knowing's use case and extracted into a standalone format once the efficiency gains were proven.
 
+## agent-lsp
+
+[agent-lsp](https://github.com/blackwell-systems/agent-lsp) is an MCP server that orchestrates existing LSP servers (gopls, rust-analyzer, jdtls, etc.) into agent-native workflows. 66 tools, 30 CI-verified languages, 24 agent workflows.
+
+- All tool handlers support GCF tabular output via `EncodeResult`
+- 34-44% token savings on structured tool responses (symbol lists, references, diagnostics, call hierarchies)
+- JSON remains the default; GCF is opt-in via session configuration
+- Uses `gcf-go` `EncodeGeneric` for tabular profile encoding
+
 ## Your project here
 
 If you're using GCF in production, [open an issue](https://github.com/blackwell-systems/gcf/issues) to be listed here.
