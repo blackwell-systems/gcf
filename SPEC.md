@@ -13,17 +13,23 @@ GCF achieves 84% median token savings versus JSON by eliminating three sources o
 ```
 payload       = header LF { section } ;
 section       = group-header LF { line LF } ;
-line          = node-line | edge-line | ref-line | comment ;
+line          = node-line | edge-line | ref-line | tabular-row
+              | kv-line | nested-ref | comment ;
 
 header        = "GCF" SP key-value { SP key-value } ;
-group-header  = "##" SP group-name ;
+group-header  = "##" SP group-name [ SP "[" count "]" field-decl ] ;
+field-decl    = "{" field-name { "," field-name } "}" ;
 node-line     = "@" id SP kind SP qname SP score SP provenance ;
 edge-line     = "@" target-id "<" "@" source-id SP edge-type [ SP status ] ;
 ref-line      = "@" id SP SP "# previously transmitted" ;
+tabular-row   = [ "@" id SP ] value { "|" value } ;
+kv-line       = key "=" value ;
+nested-ref    = "." field-name ;
 comment       = "#" SP text ;
 
 key-value     = key "=" value ;
 id            = DIGIT { DIGIT } ;
+count         = DIGIT { DIGIT } ;
 kind          = "fn" | "type" | "method" | "iface" | "var" | "const"
               | "resource" | "table" | "class" | "selector" | "field"
               | "route" | "ext" | "file" | "pkg" | "svc" ;
@@ -32,9 +38,11 @@ score         = <decimal float> ;
 provenance    = <non-whitespace text> ;
 edge-type     = <non-whitespace text> ;
 status        = "added" | "removed" ;
+field-name    = <identifier> ;
 group-name    = "targets" | "related" | "extended" | "edges"
               | "distance_" DIGIT { DIGIT }
-              | "removed" | "added" | "edges_removed" | "edges_added" ;
+              | "removed" | "added" | "edges_removed" | "edges_added"
+              | <identifier> ;
 ```
 
 Line terminator is `LF` (`\n`). Implementations must tolerate trailing `\r` (CRLF input).
@@ -137,6 +145,84 @@ Group headers partition the payload into semantic sections. The group a node app
 | `distance_N` | N | Explicit distance for N > 2 |
 
 Group headers eliminate per-node distance fields. One header replaces N repeated fields.
+
+## 6a. Tabular Encoding (Generic Profile)
+
+The graph profile (Sections 4-6) encodes symbol/edge payloads. The tabular profile extends GCF's grammar to encode arbitrary structured data: arrays of objects, nested records, and mixed types.
+
+### Tabular array header
+
+```
+## {name} [{count}]{{field1},{field2},{field3}}
+```
+
+The header declares the section name, record count, and field names. Subsequent lines contain positional values only, separated by pipe (`|`).
+
+### Example: flat tabular
+
+```
+## employees [3]{id,name,department,salary}
+1|Alice Smith|Engineering|95000
+2|Bob Jones|Sales|72000
+3|Carol Wu|Marketing|85000
+```
+
+One header replaces 3 x 4 = 12 field name repetitions. Pipe separator with no spaces for maximum density.
+
+### Example: with nested fields
+
+When records contain nested objects, rows use `@{id}` prefixes for cross-referencing:
+
+```
+## orders [2]{id,total,status}
+@0 1001|249.99|shipped
+  .customer
+    name=Alice Smith
+    tier=premium
+@1 1002|89.50|pending
+  .customer
+    name=Bob Jones
+    tier=standard
+```
+
+Primitive fields go in the tabular row. Nested fields are indented below with `.fieldname` prefix.
+
+### Object encoding
+
+Non-array objects use `key=value` for primitives and `## key` section headers for nested objects:
+
+```
+config=production
+version=2.1.0
+## database
+  host=db.example.com
+  port=5432
+  pool_size=10
+## cache
+  ttl=3600
+  max_size=1000
+```
+
+### Encoding rules
+
+| Input type | Encoding |
+|-----------|----------|
+| Array of uniform objects | Tabular: header with field declaration + positional rows |
+| Array of non-uniform items | `## name [count]` + `@{id}` per item |
+| Nested object | `## key` section header + indented key=value pairs |
+| Primitive field | `key=value` (no quotes for numbers/booleans) |
+| Null/missing | `-` |
+| Empty array | `## name [0]` |
+
+### Uniformity detection
+
+An array is considered uniform (eligible for tabular encoding) if the first 5 elements are objects with at least 70% key overlap with the first element. This accommodates semi-uniform data where some records have optional fields.
+
+### Relationship to graph profile
+
+The graph profile (Sections 4-6) is a specialized application of the tabular profile for code graph data. The `@{id} {kind} {qname} {score} {provenance}` node line format is a tabular row with implicit field names. The tabular profile generalizes this to arbitrary field sets.
+
+Both profiles use the same grammar primitives: `##` headers, `@` IDs, positional fields. Implementations may support one or both profiles.
 
 ## 7. Session Statefulness
 
