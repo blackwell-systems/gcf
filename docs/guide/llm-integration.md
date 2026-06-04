@@ -1,6 +1,6 @@
 # Using GCF with LLMs
 
-GCF is a **tool-to-LLM format**. Tools produce GCF; LLMs consume it. The LLM never needs to generate GCF, only understand what it reads. This is a deliberate design choice: encoding correctness is the tool's responsibility, not the model's.
+GCF works in both directions: tools produce it, LLMs read it, and LLMs can produce it too. Reading requires no primer (proven at 500 symbols). Writing requires a 3-line example and produces valid output with **75% fewer tokens than JSON** and **52% fewer than TOON**.
 
 ## No primer needed (proven)
 
@@ -32,17 +32,39 @@ Edges are @target<@source type. Sections marked with ##.
 
 That's sufficient. Don't over-explain.
 
-## Why not bidirectional?
+## LLM output generation (proven)
 
-TOON positions itself as bidirectional: LLMs read and write TOON. This means TOON must worry about output validation, strict mode, count mismatches, and model-generated formatting errors.
+LLMs can produce valid GCF given a short format example. Tested with Claude (`claude -p`, zero prior context), validated through the real Go decoder at 5 to 100 symbols:
 
-GCF avoids this entirely. The tool encodes; the LLM reads. Benefits:
+| Symbols | Edges | Valid | GCF output | JSON equivalent | Savings |
+|---------|-------|-------|-----------|----------------|---------|
+| 5 | 3 | YES | 379 B | 1,307 B | **71%** |
+| 10 | 6 | YES | 643 B | 2,443 B | **74%** |
+| 20 | 12 | YES | 1,217 B | 4,778 B | **75%** |
+| 50 | 25 | YES | 2,845 B | 11,154 B | **74%** |
+| 100 | 50 | YES | 5,619 B | 22,180 B | **75%** |
 
-- **No output validation needed.** The tool produces correct GCF every time. No strict mode, no count checking, no error recovery.
-- **No generation prompts needed.** You never need to teach the model TOON's syntax rules, indentation, or delimiter conventions.
-- **Simpler integration.** One function call (`encode()`) on the tool side. Nothing on the LLM side.
+**5/5 valid. 71-75% fewer output tokens than JSON. 52% fewer than TOON** on the same data with the same model.
 
-If the LLM needs to return structured data, it returns JSON (which every model already knows). GCF handles the expensive direction: tool responses that consume context window tokens.
+The primer is 3 lines:
+
+```
+GCF format: header starts with "GCF tool=", symbols are @id kind qname score provenance,
+edges are @target<@source type (< not >), sections are ## targets/related/extended/edges.
+Kind abbreviations: function=fn, type=type, method=method, interface=iface.
+```
+
+### When to use GCF for output
+
+- **Agent-to-agent communication.** Agents passing context to each other in multi-agent workflows. 75% fewer tokens per handoff.
+- **Structured output.** When you need the model to return structured data and want to minimize output tokens.
+- **Tool responses.** An agent returning results to a tool. The tool parses with `decode()`.
+
+### When to use JSON for output
+
+- **Schema validation.** JSON schema validators are mature. GCF doesn't have a schema system.
+- **Interoperability.** If the consumer is a non-LLM system that expects JSON.
+- **Provider structured output modes.** If you're using a provider's built-in JSON mode.
 
 ## Prompt patterns
 

@@ -118,13 +118,14 @@ One header declares field names. Rows are positional values only. No field names
 
 | | GCF | TOON | JSON |
 |---|---|---|---|
-| **Tokens (500 symbols)** | 11,090 | 16,378 | 53,341 |
+| **Input tokens (500 symbols)** | 11,090 | 16,378 | 53,341 |
+| **Output tokens (100 symbols)** | 5,619 | 11,650 | 22,180 |
 | **Comprehension accuracy** | 100% | 100% | 66.7% |
+| **Generation validity** | 5/5 | 5/5 | N/A |
 | **Session dedup (5th call)** | 92.7% savings | N/A | N/A |
 | **Delta encoding** | 81.2% savings | N/A | N/A |
 | **Semi-uniform data** | native | falls back | verbose |
-| **Generic data** | tabular profile | tabular only | verbose |
-| **Best for** | graph data, MCP tools, multi-turn | flat tables | nothing at scale |
+| **Best for** | graph data, MCP tools, multi-turn, agent output | flat tables | nothing at scale |
 
 ---
 
