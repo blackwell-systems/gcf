@@ -108,6 +108,70 @@ pkg.Router -> pkg.NewFunc calls
 - `## added`: full symbol lines with sequential IDs from 0
 - `## edges_removed` / `## edges_added`: `source -> target type` format
 
+## Tabular encoding (generic profile)
+
+### Tabular array
+
+```
+## {name} [{count}]{{field1},{field2},{field3}}
+value1|value2|value3
+value1|value2|value3
+```
+
+```
+## employees [3]{id,name,department,salary}
+1|Alice Smith|Engineering|95000
+2|Bob Jones|Sales|72000
+3|Carol Wu|Marketing|85000
+```
+
+- One header declares field names; rows are positional values only
+- Pipe `|` separator, no spaces
+- No `@id` on flat rows (only when nested fields need cross-referencing)
+
+### Tabular with nested fields
+
+```
+## orders [2]{id,total,status}
+@0 1001|249.99|shipped
+  .customer
+    name=Alice Smith
+    tier=premium
+@1 1002|89.50|pending
+  .customer
+    name=Bob Jones
+    tier=standard
+```
+
+- `@{id}` prefix when rows have nested sub-objects
+- `.fieldname` introduces an inline nested object
+- Nested fields use `key=value` pairs, indented
+
+### Object encoding
+
+```
+config=production
+version=2.1.0
+## database
+  host=db.example.com
+  port=5432
+  pool_size=10
+```
+
+- Primitives: `key=value` (no quotes for numbers/booleans)
+- Nested objects: `## key` section header + indented key=value
+- Null/missing: `-`
+
+### Value formatting
+
+| Type | Format | Example |
+|------|--------|---------|
+| String | bare text | `Alice Smith` |
+| Number | unquoted | `95000` |
+| Boolean | lowercase | `true` / `false` |
+| Null | dash | `-` |
+| String with `\|` or newline | quoted | `"value\|with\|pipes"` |
+
 ## Comments
 
 ```
@@ -116,7 +180,9 @@ pkg.Router -> pkg.NewFunc calls
 
 Must start with `# ` (hash + space). Group headers (`##`) are NOT comments.
 
-## Complete example
+## Complete examples
+
+### Graph profile
 
 ```
 GCF tool=context_for_task budget=5000 tokens=1847 symbols=5 pack_root=a1b2c3d4
@@ -133,4 +199,24 @@ GCF tool=context_for_task budget=5000 tokens=1847 symbols=5 pack_root=a1b2c3d4
 @1<@0 references
 @4<@2 implements
 @3<@2 calls
+```
+
+### Tabular profile
+
+```
+name=Acme Corp
+region=us-east-1
+## employees [3]{id,name,department,salary,active}
+1|Alice Smith|Engineering|95000|true
+2|Bob Jones|Sales|72000|true
+3|Carol Wu|Marketing|85000|false
+## projects [2]{id,title,lead}
+@0 101|Auth Rewrite|Alice Smith
+  .tags
+    priority=high
+    deadline=2026-Q3
+@1 102|Dashboard|Bob Jones
+  .tags
+    priority=medium
+    deadline=2026-Q4
 ```
