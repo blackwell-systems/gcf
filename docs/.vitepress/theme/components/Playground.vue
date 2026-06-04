@@ -321,7 +321,7 @@ function shareUrl() {
   const params = new URLSearchParams()
   params.set('tab', activeTab.value)
   if (activeTab.value === 'compare') {
-    params.set('preset', selectedPreset.value)
+    params.set('input', inputText.value)
     if (showSession.value) params.set('session', '1')
   } else {
     params.set('gcf', decodeInput.value)
@@ -336,10 +336,6 @@ function shareUrl() {
 // Watchers & Init
 // ---------------------------------------------------------------------------
 
-watch(selectedPreset, (key) => {
-  if (key && PRESETS[key]) loadPreset(key)
-})
-
 onMounted(() => {
   const params = new URLSearchParams(window.location.search)
   if (params.get('tab') === 'decode') {
@@ -347,9 +343,18 @@ onMounted(() => {
     const gcf = params.get('gcf')
     if (gcf) decodeInput.value = gcf
   } else {
-    const preset = params.get('preset')
-    if (preset && PRESETS[preset]) selectedPreset.value = preset
-    else loadPreset('blast_radius')
+    const input = params.get('input')
+    if (input) {
+      inputText.value = input
+    } else {
+      const preset = params.get('preset')
+      if (preset && PRESETS[preset]) {
+        selectedPreset.value = preset
+        loadPreset(preset)
+      } else {
+        loadPreset('blast_radius')
+      }
+    }
     if (params.get('session') === '1') showSession.value = true
   }
 })
@@ -359,7 +364,7 @@ onMounted(() => {
   <div class="pg">
     <header class="pg-header">
       <h1>Playground</h1>
-      <p class="pg-subtitle">See how GCF compares to JSON and TOON on real MCP tool responses.</p>
+      <p class="pg-subtitle">Paste any JSON and see how GCF compares to JSON and TOON, in real time.</p>
     </header>
 
     <!-- Tab bar -->
@@ -375,7 +380,8 @@ onMounted(() => {
 
       <div class="pg-controls-right">
         <template v-if="activeTab === 'compare'">
-          <select v-model="selectedPreset" class="pg-select">
+          <select v-model="selectedPreset" class="pg-select" @change="loadPreset(selectedPreset)">
+            <option value="" disabled>Load example...</option>
             <option v-for="(p, key) in PRESETS" :key="key" :value="key">{{ p.label }}</option>
           </select>
           <label class="pg-checkbox">
@@ -391,8 +397,25 @@ onMounted(() => {
     <!-- COMPARE TAB: Three-column layout                                  -->
     <!-- ================================================================= -->
     <template v-if="activeTab === 'compare'">
-      <div class="triple-pane">
-        <!-- JSON -->
+      <!-- JSON input -->
+      <div class="input-section">
+        <div class="pane pane-input">
+          <div class="pane-head">
+            <span class="pane-label">JSON Input</span>
+            <span class="pane-tokens">{{ jsonTokens.toLocaleString() }} tokens</span>
+          </div>
+          <textarea
+            class="input-textarea"
+            v-model="inputText"
+            spellcheck="false"
+            placeholder='Paste any JSON here, or load an example above...'
+          ></textarea>
+          <div class="input-error" v-if="inputText.trim() && !parsedObj">Invalid JSON</div>
+        </div>
+      </div>
+
+      <div class="triple-pane" v-if="parsedObj">
+        <!-- JSON (formatted) -->
         <div class="pane pane-json">
           <div class="pane-head">
             <span class="pane-label">JSON</span>
@@ -430,7 +453,7 @@ onMounted(() => {
       </div>
 
       <!-- Session dedup pane -->
-      <div v-if="showSession" class="session-section">
+      <div v-if="showSession && parsedObj" class="session-section">
         <div class="session-header">
           <h3>Session Deduplication: 2nd tool call</h3>
           <p class="session-desc">
@@ -648,6 +671,43 @@ onMounted(() => {
 .pg-share:hover {
   background: var(--vp-c-bg-soft);
   color: var(--vp-c-text-1);
+}
+
+/* JSON input */
+.input-section {
+  margin-bottom: 12px;
+}
+
+.pane-input {
+  max-width: 100%;
+}
+
+.input-textarea {
+  width: 100%;
+  min-height: 180px;
+  max-height: 400px;
+  padding: 10px 12px;
+  font-family: var(--vp-font-family-mono);
+  font-size: 12px;
+  line-height: 1.55;
+  border: none;
+  outline: none;
+  resize: vertical;
+  background: var(--vp-c-bg);
+  color: var(--vp-c-text-1);
+  tab-size: 2;
+}
+
+.input-textarea::placeholder {
+  color: var(--vp-c-text-3);
+}
+
+.input-error {
+  padding: 4px 12px 6px;
+  font-size: 12px;
+  color: var(--vp-c-danger-1);
+  background: var(--vp-c-bg-soft);
+  border-top: 1px solid var(--vp-c-border);
 }
 
 /* Three-column panes */
