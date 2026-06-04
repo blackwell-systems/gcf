@@ -2,7 +2,37 @@
 
 GCF works in both directions: tools produce it, LLMs read it, and LLMs can produce it too. Reading requires no primer (proven at 500 symbols). Writing requires a 3-line example and produces valid output with **75% fewer tokens than JSON** and **52% fewer than TOON**.
 
-## No primer needed (proven)
+## Designed for agent comprehension, not human scanning
+
+GCF looks dense to human eyes. `@0<@1 calls` is not as immediately obvious as `{"source": "pkg.Server", "target": "pkg.Auth", "edge_type": "calls"}`. That's deliberate.
+
+Human-readability and LLM-readability are different things, and they diverge at scale. At 8 records, both JSON and GCF are easy for humans and LLMs alike. At 500 records, JSON's field-name repetition creates enough structural noise that the LLM loses count (66.7% accuracy). GCF's dense, positional format cuts through that noise (100% accuracy).
+
+Here's what JSON at 500 symbols looks like to an LLM. Every record repeats five field names:
+
+```json
+{"qualified_name":"github.com/org/repo/internal/auth.Middleware","kind":"function","score":0.78,"provenance":"lsp_resolved","distance":0},
+{"qualified_name":"github.com/org/repo/internal/auth.ValidateToken","kind":"function","score":0.87,"provenance":"lsp_resolved","distance":0},
+{"qualified_name":"github.com/org/repo/internal/auth.Config","kind":"type","score":0.71,"provenance":"ast_inferred","distance":0},
+... 497 more records identical in structure ...
+```
+
+The model sees `"qualified_name":` 500 times, `"kind":` 500 times, `"score":` 500 times. That's 2,500 structurally identical tokens competing for attention. The model asked "how many symbols?" answered 320. Asked "how many targets?" answered 240 (correct: 166). It's not hallucinating; it's losing count in repetitive noise.
+
+The same data in GCF:
+
+```
+@0 fn github.com/org/repo/internal/auth.Middleware 0.78 lsp_resolved
+@1 fn github.com/org/repo/internal/auth.ValidateToken 0.87 lsp_resolved
+@2 type github.com/org/repo/internal/auth.Config 0.71 ast_inferred
+... 497 more, each one line, no repeated field names ...
+```
+
+No noise. Every token is content. The model counts 500 correctly, identifies 166 targets correctly, extracts all edge types correctly. 6/6.
+
+The format is optimized for the actual consumer. Every character carries meaning. No decoration, no repeated field names, no structural tokens that exist only for human scanners. The result is a format that agents understand perfectly and costs a fraction of the "readable" alternative.
+
+## No primer needed for reading (proven)
 
 GCF payloads are immediately comprehensible to frontier models without any format description in the prompt. This isn't a claim; it's measured.
 

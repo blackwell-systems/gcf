@@ -21,8 +21,8 @@ features:
     details: Positional fields, local IDs, and hierarchical grouping eliminate per-record overhead. At 500 symbols, JSON uses 53,341 tokens. GCF uses 11,090.
   - title: 75% fewer output tokens
     details: LLMs produce valid GCF with a 3-line primer. 52% smaller output than TOON. Proven at 5 to 100 symbols with 100% decoder validity.
-  - title: 100% comprehension, where JSON fails
-    details: At 500 symbols, JSON drops to 66.7% accuracy (it miscounts records). GCF and TOON both score 100%. GCF does it in 32% fewer tokens.
+  - title: Optimized for the reader that matters
+    details: At 500 symbols, JSON (the "readable" format) drops to 66.7% accuracy. The LLM miscounts records, drowning in structural noise. GCF scores 100%. Human-readability and LLM-readability diverge at scale. GCF optimized for the one that matters.
   - title: Gets cheaper every call
     details: Session deduplication (92.7% savings by 5th call) and delta encoding (81.2% on re-queries). No other format has these. They compound.
   - title: Beats TOON on TOON's benchmark

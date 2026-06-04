@@ -23,6 +23,8 @@ This page compares the two formats honestly, using TOON's own benchmark data and
 | Streaming encode | No (planned) | Yes |
 | Key folding (dotted paths) | No | Yes |
 | LLM comprehension at 500 symbols | 100% | 100% |
+| **LLM generation (output tokens)** | **75% fewer than JSON** | **40% fewer than JSON** |
+| Human-readable | Dense, agent-optimized | YAML-like, human-friendly |
 | Zero dependencies | Yes | Yes |
 | Language support | Go, TypeScript, Python | TypeScript, Go |
 | MCP proxy (zero-code adoption) | Yes | Yes ("Tooner") |
