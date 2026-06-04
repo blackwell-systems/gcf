@@ -14,7 +14,7 @@
 
 ## Tooling
 
-- [ ] **Interactive playground**: Browser-based encode/decode with live token comparison. VitePress custom component or standalone page.
+- [x] **Interactive playground**: Browser-based three-way comparison (JSON vs TOON vs GCF) with live encoding, token bars, savings breakdown, session dedup demo, and decode tab. Uses real `@toon-format/toon` library. Lives at `/playground` on the docs site.
 - [ ] **VS Code extension**: Syntax highlighting for `.gcf` files. TextMate grammar.
 - [ ] **Tree-sitter grammar**: Enables Neovim, Helix, Zed, Emacs highlighting.
 - [ ] **MCP proxy**: Middleware that intercepts JSON tool responses and re-encodes as GCF (like TOON's "Tooner" proxy). Drop-in upgrade for existing MCP servers.
