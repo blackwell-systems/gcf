@@ -144,28 +144,19 @@ The LLM immediately knows what's most relevant without scanning the entire paylo
 
 ## Where TOON wins
 
-- **Deeply nested configuration**: TOON's key folding (`data.metadata.items` dotted paths) is slightly more compact for deeply nested objects with single-key chains. This is a 75-token difference on a 618-token payload in the benchmark.
-- **Streaming encode**: TOON supports line-by-line streaming output. GCF does not (planned).
-- **Simplicity**: TOON has one encoding strategy (tabular). GCF has two profiles (graph + tabular) and three extensions (session, delta, distance grouping). If you only need flat table encoding and nothing else, TOON is simpler.
+TOON is 75 tokens smaller on one benchmark dataset: deeply nested configuration with single-key wrapper chains. That's an 11% advantage on a 618-token payload. TOON's key folding (`data.metadata.items` dotted paths) is marginally more compact for this specific shape.
 
-## When to use which
-
-**Use GCF when:**
-- Your data has relationships between records (call graphs, dependency trees, knowledge graphs)
-- You make multiple tool calls per conversation (session dedup compounds savings)
-- Your data changes incrementally between queries (delta encoding)
-- You're building MCP tools that return graph-structured data
-- You need the lowest token cost on semi-uniform data
-
-**Use TOON when:**
-- Your data is purely flat tabular with no relationships
-- You need streaming encode today (GCF streaming is planned)
-- You only make single-shot tool calls (no session benefit)
-- Deeply nested config is your primary data shape
+This is the only dataset where TOON beats GCF. On every other data shape (flat tabular, semi-uniform, nested with arrays, graph data), GCF wins by 2% to 44%.
 
 ## The bottom line
 
-TOON is a good format for flat tabular data. GCF is a superset: it does everything TOON does (tabular encoding) plus graph-native features (local IDs, edges), session statefulness, and delta encoding. On TOON's own benchmark with their own tokenizer, GCF uses fewer tokens on every data shape except deeply nested config.
+GCF does everything TOON does, plus:
+- Local IDs and edge encoding (TOON can't do this)
+- Session deduplication (TOON can't do this)
+- Delta encoding (TOON can't do this)
+- Distance grouping (TOON can't do this)
+
+On TOON's own benchmark with their own tokenizer, GCF uses fewer tokens on 5 of 6 datasets. The one exception is a 75-token difference on a 618-token payload.
 
 The gap widens over time. On the first tool call, GCF saves 34% vs TOON. By the fifth call in a session, GCF saves 92.7% vs JSON while TOON is stuck at 69%. No format change can close that gap without adding session state, which requires local IDs, which requires a fundamental redesign of TOON.
 
