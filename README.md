@@ -1,12 +1,18 @@
 <p align="center">
   <a href="https://github.com/blackwell-systems"><img src="https://raw.githubusercontent.com/blackwell-systems/blackwell-docs-theme/main/badge-trademark.svg" alt="Blackwell Systems"></a>
   <a href="https://blackwell-systems.github.io/gcf/"><img src="https://img.shields.io/badge/docs-gcf-brightgreen.svg" alt="Documentation"></a>
+  <a href="https://blackwell-systems.github.io/gcf/playground.html"><img src="https://img.shields.io/badge/playground-live-blue.svg" alt="Playground"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a>
 </p>
 
 # GCF: Graph Compact Format
 
-**Token-optimized wire format for LLM tool responses.**
+**Token-optimized wire format for structured LLM tool responses.**
+
+Two encoding profiles, one grammar:
+
+- **Graph profile**: code graph payloads (symbols, edges, distance groups). 84% fewer tokens than JSON.
+- **Tabular profile**: any structured data (arrays, nested objects, mixed types). 34% fewer tokens than TOON.
 
 ```
 Your data  ───▶  encode()  ───▶  GCF  ───▶  LLM
@@ -62,6 +68,8 @@ npm install @blackwell-systems/gcf    # TypeScript
 go get github.com/blackwell-systems/gcf-go  # Go
 ```
 
+### Graph profile (code intelligence, MCP tools)
+
 ```python
 from gcf import encode, Payload, Symbol, Edge
 
@@ -72,6 +80,37 @@ output = encode(Payload(
     symbols=[Symbol(qualified_name="pkg.Auth", kind="function", score=0.78, provenance="lsp", distance=0)],
 ))
 ```
+
+```
+GCF tool=context_for_task budget=5000 tokens=1847 symbols=1
+## targets
+@0 fn pkg.Auth 0.78 lsp
+```
+
+### Tabular profile (any structured data)
+
+```python
+from gcf import encode_generic
+
+output = encode_generic({
+    "employees": [
+        {"id": 1, "name": "Alice", "department": "Engineering", "salary": 95000},
+        {"id": 2, "name": "Bob", "department": "Sales", "salary": 72000},
+        {"id": 3, "name": "Carol", "department": "Marketing", "salary": 85000},
+    ],
+})
+```
+
+```
+## employees [3]{id,name,department,salary}
+1|Alice|Engineering|95000
+2|Bob|Sales|72000
+3|Carol|Marketing|85000
+```
+
+One header declares field names. Rows are positional values only. No field names repeated per record.
+
+**[Try it live in the playground](https://blackwell-systems.github.io/gcf/playground.html)** with real-time three-way comparison (JSON vs TOON vs GCF).
 
 ---
 
@@ -84,21 +123,31 @@ output = encode(Payload(
 | **Session dedup (5th call)** | 92.7% savings | N/A | N/A |
 | **Delta encoding** | 81.2% savings | N/A | N/A |
 | **Semi-uniform data** | native | falls back | verbose |
+| **Generic data** | tabular profile | tabular only | verbose |
 | **Best for** | graph data, MCP tools, multi-turn | flat tables | nothing at scale |
 
 ---
 
 ## How it works
 
-GCF exploits three properties of structured data:
+### Graph profile
+
+Exploits three properties of graph-structured data:
 
 1. **Positional fields.** One header declares field names. Rows are values only.
 2. **Local IDs.** `@0`, `@1`. Edges reference by ID, not by repeating full identifiers.
 3. **Hierarchical grouping.** Section headers (`## targets`) replace per-record metadata.
 
-These are structural savings. They grow with payload size because the waste they eliminate is per-record.
+### Tabular profile
 
-## Example
+Exploits two properties of structured data:
+
+1. **Tabular headers.** `## name [count]{field1,field2}` declares field names once. Rows are pipe-separated values.
+2. **Section headers.** `## key` for nested objects. `key=value` for primitives.
+
+Both profiles share the same grammar: `##` headers, `@` IDs, positional fields. The savings are structural and grow with payload size.
+
+## Example (graph profile)
 
 **JSON (965 tokens):**
 ```json
@@ -127,7 +176,7 @@ GCF tool=context_for_task budget=5000 tokens=1847 symbols=2
 @0<@1 calls
 ```
 
-Same information. 75.9% fewer tokens. At 500 symbols, GCF remains perfectly comprehensible while JSON is actively confusing the model.
+Same information. 75.9% fewer tokens.
 
 ## It gets cheaper over time
 
@@ -161,7 +210,7 @@ Fork with reproducible results: [blackwell-systems/toon@gcf-comparison](https://
 
 ## Specification
 
-Full grammar, encoding rules, session statefulness, and delta encoding: [SPEC.md](SPEC.md)
+Full grammar, encoding rules, session statefulness, delta encoding, and tabular profile: [SPEC.md](SPEC.md)
 
 ## Implementations
 
@@ -174,6 +223,8 @@ Full grammar, encoding rules, session statefulness, and delta encoding: [SPEC.md
 
 Zero runtime dependencies. MIT licensed. Spec is stable. The proxy is a drop-in wrapper for any existing MCP server (zero code changes).
 
+All implementations support both graph profile (`encode`/`Encode`) and tabular profile (`encode_generic`/`encodeGeneric`/`EncodeGeneric`).
+
 ## Documentation
 
 Full guides, API reference, benchmarks, and integration patterns: **[blackwell-systems.github.io/gcf](https://blackwell-systems.github.io/gcf/)**
@@ -184,12 +235,13 @@ Full guides, API reference, benchmarks, and integration patterns: **[blackwell-s
 - [Delta Encoding](https://blackwell-systems.github.io/gcf/guide/delta.html)
 - [MCP Integration](https://blackwell-systems.github.io/gcf/guide/mcp.html)
 - [Benchmarks](https://blackwell-systems.github.io/gcf/guide/benchmarks.html)
+- [Playground](https://blackwell-systems.github.io/gcf/playground.html)
 - [Syntax Cheatsheet](https://blackwell-systems.github.io/gcf/reference/cheatsheet.html)
 - [Token Savings Proof](https://blackwell-systems.github.io/gcf/reference/token-savings-proof.html)
 
 ## Designed for MCP
 
-GCF is a format option for [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) tool responses. Any MCP server returning graph-structured data can use GCF to deliver more context per token budget, with better comprehension accuracy than JSON.
+GCF is a format option for [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) tool responses. Any MCP server returning structured data can use GCF to deliver more context per token budget, with better comprehension accuracy than JSON.
 
 ## License
 
