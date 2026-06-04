@@ -27,7 +27,7 @@ GCF is most effective when:
 ::: code-group
 
 ```bash [Python]
-pip install gcf-py
+pip install gcf-python
 ```
 
 ```bash [TypeScript]

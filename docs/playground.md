@@ -9,7 +9,7 @@ In the meantime, try it locally:
 ## Python (quickest)
 
 ```bash
-pip install gcf-py
+pip install gcf-python
 python -c "
 from gcf import encode, Payload, Symbol, Edge
 

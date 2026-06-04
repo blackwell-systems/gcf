@@ -57,7 +57,7 @@ GCF matches TOON's accuracy in 32% fewer tokens. JSON fails because field-name r
 ### Try it
 
 ```bash
-pip install gcf-py                    # Python
+pip install gcf-python                    # Python
 npm install @blackwell-systems/gcf    # TypeScript
 go get github.com/blackwell-systems/gcf-go  # Go
 ```
@@ -169,7 +169,7 @@ Full grammar, encoding rules, session statefulness, and delta encoding: [SPEC.md
 |----------|---------|-----------|
 | Go | `go get github.com/blackwell-systems/gcf-go` | [gcf-go](https://github.com/blackwell-systems/gcf-go) |
 | TypeScript | `npm install @blackwell-systems/gcf` | [gcf-typescript](https://github.com/blackwell-systems/gcf-typescript) |
-| Python | `pip install gcf-py` | [gcf-python](https://github.com/blackwell-systems/gcf-python) |
+| Python | `pip install gcf-python` | [gcf-python](https://github.com/blackwell-systems/gcf-python) |
 
 Zero runtime dependencies. MIT licensed. Spec is stable.
 

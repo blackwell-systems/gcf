@@ -1,7 +1,7 @@
 # API Reference (Python)
 
 ```bash
-pip install gcf-py
+pip install gcf-python
 ```
 
 ## Functions

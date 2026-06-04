@@ -39,7 +39,7 @@ Repository: [blackwell-systems/gcf-typescript](https://github.com/blackwell-syst
 ## Python
 
 ```bash
-pip install gcf-py
+pip install gcf-python
 ```
 
 | Feature | Status |
