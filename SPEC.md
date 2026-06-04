@@ -1,12 +1,17 @@
-# GCF Specification v1.0
+# GCF Specification v1.1
 
-**Graph Compact Format: a token-optimized wire format for graph-structured tool responses.**
+**Graph Compact Format: a token-optimized wire format for structured LLM tool responses.**
 
 ## 1. Overview
 
-GCF is a text-based, line-oriented wire format for encoding graph-structured data (nodes and edges) in a token-efficient manner. It is designed for consumption by large language models (LLMs) operating under fixed token budgets.
+GCF is a text-based, line-oriented wire format for encoding structured data in a token-efficient manner. It is designed for consumption by large language models (LLMs) operating under fixed token budgets.
 
-GCF achieves 84% median token savings versus JSON by eliminating three sources of waste: field name repetition (positional encoding), identifier repetition in edges (local IDs), and per-record metadata fields (hierarchical grouping).
+GCF supports two encoding profiles:
+
+- **Graph profile** (Sections 3-6): Encodes code graph payloads (symbols, edges, distance groups) for MCP tool responses. 84% median token savings versus JSON.
+- **Tabular profile** (Section 6a): Encodes arbitrary structured data (arrays of objects, nested records, mixed types) using positional rows and pipe separators. 34% fewer tokens than TOON on mixed-structure benchmarks.
+
+Both profiles share the same grammar primitives: `##` section headers, `@` local IDs, positional fields. The savings come from eliminating three sources of waste: field name repetition (positional encoding), identifier repetition (local IDs), and per-record metadata (hierarchical grouping).
 
 ## 2. Grammar
 
@@ -47,15 +52,15 @@ group-name    = "targets" | "related" | "extended" | "edges"
 
 Line terminator is `LF` (`\n`). Implementations must tolerate trailing `\r` (CRLF input).
 
-## 3. Header
+## 3. Header (Graph Profile)
 
-The first line identifies the format version and carries payload metadata:
+The graph profile begins with a header line identifying the format and carrying payload metadata. The tabular profile (Section 6a) does not require a header line.
 
 ```
 GCF tool=context_for_task budget=5000 tokens=1847 symbols=10 pack_root=a1b2c3d4...
 ```
 
-### Required fields
+### Required fields (graph profile)
 
 | Field | Type | Description |
 |-------|------|-------------|
@@ -75,7 +80,7 @@ GCF tool=context_for_task budget=5000 tokens=1847 symbols=10 pack_root=a1b2c3d4.
 | `new_root` | string | Pack root of the current payload (delta mode only) |
 | `savings` | string | Token savings percentage (delta mode only, e.g. `81%`) |
 
-## 4. Node Lines
+## 4. Node Lines (Graph Profile)
 
 ```
 @{id} {kind} {qualified_name} {score} {provenance}
@@ -112,7 +117,7 @@ Fields are positional, separated by whitespace. No field names, no delimiters, n
 
 Implementations may extend this table. Unknown abbreviations must be passed through verbatim (no error).
 
-## 5. Edge Lines
+## 5. Edge Lines (Graph Profile)
 
 ```
 @{target}<@{source} {edge_type} [{status}]
@@ -124,7 +129,7 @@ Implementations may extend this table. Unknown abbreviations must be passed thro
 
 Source and target IDs must reference symbols declared earlier in the payload.
 
-## 6. Group Headers
+## 6. Group Headers (Graph Profile)
 
 ```
 ## targets
@@ -286,6 +291,8 @@ Lines starting with `#` (single hash, space) are comments and must be ignored by
 
 ## 10. Token Savings Analysis
 
+### Graph profile
+
 | Source | JSON cost | GCF cost | Savings |
 |--------|-----------|----------|---------|
 | Field names | ~18 tokens/symbol | 0 (positional) | ~18/symbol |
@@ -296,11 +303,22 @@ Lines starting with `#` (single hash, space) are comments and must be ignored by
 
 Combined: 84% median token savings across 6 benchmark payloads (8 to 30 symbols).
 
+### Tabular profile
+
+| Source | JSON cost | GCF cost | Savings |
+|--------|-----------|----------|---------|
+| Field names | repeated per record | declared once in header | ~(N-1) x fields per array |
+| Structural delimiters | `{`, `}`, `:`, `,`, `"` per record | `\|` between values | ~6 tokens/record |
+| Array framing | `[`, `]`, commas | `[count]` in header | fixed |
+| Nesting | braces + indentation + field names | `.fieldname` + `key=value` | ~50% per nested object |
+
+On TOON's own benchmark datasets: 34% fewer tokens on mixed-structure data, 44% fewer on semi-uniform event logs, 3% fewer on flat tabular data. See [benchmarks](https://blackwell-systems.github.io/gcf/guide/benchmarks.html).
+
 ## 11. Design Constraints
 
-- **Text-only.** GCF is plain text. No binary framing, no special characters beyond `@`, `<`, `#`, and `##`.
-- **Line-oriented.** Each semantic unit (header, node, edge, group, comment) occupies exactly one line.
-- **No nesting.** The format is flat. There are no nested objects or arrays.
+- **Text-only.** GCF is plain text. No binary framing, no special characters beyond `@`, `<`, `#`, `##`, `|`, `.`, and `=`.
+- **Line-oriented.** Each semantic unit (header, node, edge, group, tabular row, key-value pair, comment) occupies exactly one line.
+- **Shallow nesting.** The graph profile is flat. The tabular profile supports indented nested fields (`.fieldname`) for records with sub-objects, but nesting depth is typically 1-2 levels.
 - **Deterministic.** Same input produces same output. No randomness, no ordering ambiguity (symbols ordered by score descending, edges ordered by source then target).
 - **Human-readable.** The format can be read and understood by a human without tooling.
 - **LLM-parseable.** The format can be parsed by an LLM without special instructions. Validated: 100% accuracy on structured extraction tasks.
