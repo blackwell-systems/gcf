@@ -4,29 +4,29 @@ sidebar: false
 hero:
   name: GCF
   text: Graph Compact Format
-  tagline: Token-optimized wire format for structured LLM tool responses. 84% fewer tokens than JSON, 34% fewer than TOON. Encodes any data, not just graphs.
+  tagline: The most token-efficient wire format for LLMs. 79% fewer input tokens than JSON. 75% fewer output tokens. 100% comprehension accuracy at scale.
   actions:
     - theme: brand
       text: Get Started
       link: /guide/getting-started
     - theme: alt
-      text: View Benchmarks
-      link: /guide/benchmarks
+      text: Try the Playground
+      link: /playground
     - theme: alt
-      text: GitHub
-      link: https://github.com/blackwell-systems/gcf
+      text: GCF vs TOON
+      link: /guide/vs-toon
 
 features:
-  - title: 79% fewer tokens than JSON
-    details: Positional fields, local IDs, and hierarchical grouping eliminate per-record overhead. Savings grow with payload size.
-  - title: 34% fewer tokens than TOON
-    details: Tested on TOON's own benchmark with their datasets and tokenizer. GCF wins on mixed-structure, flat, and semi-uniform data.
-  - title: 100% LLM comprehension
-    details: At 500 symbols, JSON scores 66.7% on structured extraction (it miscounts). GCF scores 100% at the lowest token cost.
-  - title: Gets cheaper over time
-    details: Session deduplication (92.7% savings by 5th call) and delta encoding (81.2% savings on re-queries). No other format has these.
-  - title: 75% cheaper output tokens
-    details: LLMs produce valid GCF with a 3-line primer. 75% fewer output tokens than JSON, 52% fewer than TOON. Proven at 100 symbols.
-  - title: Zero dependencies
-    details: Go, TypeScript, and Python implementations. Each is a single package with no runtime dependencies.
+  - title: 79% fewer input tokens
+    details: Positional fields, local IDs, and hierarchical grouping eliminate per-record overhead. At 500 symbols, JSON uses 53,341 tokens. GCF uses 11,090.
+  - title: 75% fewer output tokens
+    details: LLMs produce valid GCF with a 3-line primer. 52% smaller output than TOON. Proven at 5 to 100 symbols with 100% decoder validity.
+  - title: 100% comprehension, where JSON fails
+    details: At 500 symbols, JSON drops to 66.7% accuracy (it miscounts records). GCF and TOON both score 100%. GCF does it in 32% fewer tokens.
+  - title: Gets cheaper every call
+    details: Session deduplication (92.7% savings by 5th call) and delta encoding (81.2% on re-queries). No other format has these. They compound.
+  - title: Beats TOON on TOON's benchmark
+    details: 34% fewer tokens on mixed-structure data, 44% on semi-uniform, 3% on flat tabular. Tested with their datasets, their tokenizer, their library.
+  - title: Three languages, zero dependencies
+    details: Go, TypeScript, and Python. Graph profile (encode) and tabular profile (encodeGeneric). CLI included. MCP proxy for zero-code adoption.
 ---
