@@ -11,6 +11,7 @@
     "vitepress": "^1.6.0"
   },
   "dependencies": {
-    "@blackwell-systems/gcf": "^0.1.0"
+    "@blackwell-systems/gcf": "^0.1.0",
+    "@toon-format/toon": "^2.3.0"
   }
 }

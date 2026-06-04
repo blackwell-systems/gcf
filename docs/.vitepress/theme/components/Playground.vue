@@ -2,40 +2,16 @@
 import { ref, computed, watch, onMounted } from 'vue'
 import { encode, decode } from '@blackwell-systems/gcf'
 import type { Payload } from '@blackwell-systems/gcf'
+import { encode as toonEncode } from '@toon-format/toon'
 
 // ---------------------------------------------------------------------------
-// TOON simulation: tabular encoding of the same payload.
-// TOON has no edge encoding, no local IDs, no grouping. Edges repeat full
-// qualified names in a flat table, just like JSON but with CSV-like rows.
+// TOON encoding: uses the real @toon-format/toon library (same one used
+// in the comprehension eval). We pass the raw JSON object to toon's encode()
+// with keyFolding: 'safe' (TOON's recommended setting for structured data).
 // ---------------------------------------------------------------------------
 
 function encodeTOON(obj: any): string {
-  const lines: string[] = []
-  const syms: any[] = obj.symbols ?? []
-  const edges: any[] = obj.edges ?? []
-
-  // Header metadata as key/value block
-  lines.push(`tool: ${obj.tool}`)
-  if (obj.tokenBudget) lines.push(`tokenBudget: ${obj.tokenBudget}`)
-  if (obj.tokensUsed) lines.push(`tokensUsed: ${obj.tokensUsed}`)
-
-  // Symbols as tabular array (TOON's strength)
-  if (syms.length > 0) {
-    lines.push(`symbols[${syms.length}]{qualifiedName,kind,score,provenance,distance}:`)
-    for (const s of syms) {
-      lines.push(`  ${s.qualifiedName},${s.kind},${s.score},${s.provenance},${s.distance}`)
-    }
-  }
-
-  // Edges: TOON has no local-ID system. Must repeat full qualified names.
-  if (edges.length > 0) {
-    lines.push(`edges[${edges.length}]{source,target,edgeType}:`)
-    for (const e of edges) {
-      lines.push(`  ${e.source},${e.target},${e.edgeType}`)
-    }
-  }
-
-  return lines.join('\n') + '\n'
+  return toonEncode(obj, { keyFolding: 'safe' })
 }
 
 // ---------------------------------------------------------------------------
