@@ -9,6 +9,7 @@ export default defineConfig({
       { text: 'Guide', link: '/guide/getting-started' },
       { text: 'Reference', link: '/reference/spec' },
       { text: 'Benchmarks', link: '/guide/benchmarks' },
+      { text: 'GCF vs TOON', link: '/guide/vs-toon' },
       { text: 'Playground', link: '/playground' },
     ],
     sidebar: [
@@ -22,6 +23,7 @@ export default defineConfig({
           { text: 'Using GCF with LLMs', link: '/guide/llm-integration' },
           { text: 'MCP Integration', link: '/guide/mcp' },
           { text: 'Benchmarks', link: '/guide/benchmarks' },
+          { text: 'GCF vs TOON', link: '/guide/vs-toon' },
         ],
       },
       {
