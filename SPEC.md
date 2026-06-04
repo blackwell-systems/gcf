@@ -1,6 +1,30 @@
-# GCF Specification v1.1
+# GCF Specification
 
-**Graph Compact Format: a token-optimized wire format for structured LLM tool responses.**
+## Graph Compact Format
+
+**Version:** 1.1
+
+**Date:** 2026-06-04
+
+**Status:** Stable
+
+**Authors:** Blackwell Systems
+
+**License:** MIT
+
+---
+
+## Normative References
+
+**[RFC2119]** Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, March 1997.
+
+**[RFC5234]** Crocker, D., Ed., and P. Overell, "Augmented BNF for Syntax Specifications: ABNF", STD 68, RFC 5234, January 2008.
+
+## Terminology and Conventions
+
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [RFC2119] when they appear in all capitals.
+
+All sections in this specification are normative unless explicitly marked informative.
 
 ## 1. Overview
 
@@ -50,7 +74,7 @@ group-name    = "targets" | "related" | "extended" | "edges"
               | <identifier> ;
 ```
 
-Line terminator is `LF` (`\n`). Implementations must tolerate trailing `\r` (CRLF input).
+Line terminator is `LF` (U+000A). Encoders MUST use `LF`. Decoders MUST tolerate trailing `\r` (CRLF input).
 
 ## 3. Header (Graph Profile)
 
@@ -88,11 +112,11 @@ GCF tool=context_for_task budget=5000 tokens=1847 symbols=10 pack_root=a1b2c3d4.
 
 Fields are positional, separated by whitespace. No field names, no delimiters, no quoting.
 
-- **id**: Zero-based integer, unique within this payload. Assigned sequentially.
+- **id**: Zero-based integer, unique within this payload. MUST be assigned sequentially starting from 0.
 - **kind**: Abbreviated node type (see Kind Abbreviations).
-- **qualified_name**: Full identifier. Must not contain whitespace.
-- **score**: Relevance score as a decimal float (e.g., `0.78`).
-- **provenance**: Discovery method (e.g., `lsp_resolved`, `ast_inferred`).
+- **qualified_name**: Full identifier. MUST NOT contain whitespace.
+- **score**: Relevance score as a decimal float (e.g., `0.78`). Encoders MUST emit exactly 2 decimal places.
+- **provenance**: Discovery method (e.g., `lsp_resolved`, `ast_inferred`). MUST NOT contain whitespace.
 
 ### Kind Abbreviations
 
@@ -115,7 +139,7 @@ Fields are positional, separated by whitespace. No field names, no delimiters, n
 | `pkg` | package |
 | `svc` | service |
 
-Implementations may extend this table. Unknown abbreviations must be passed through verbatim (no error).
+Implementations MAY extend this table. Decoders MUST pass unknown abbreviations through verbatim without error.
 
 ## 5. Edge Lines (Graph Profile)
 
@@ -127,7 +151,7 @@ Implementations may extend this table. Unknown abbreviations must be passed thro
 - **edge_type**: Relationship type (e.g., `calls`, `imports`, `implements`). Unrestricted.
 - **status**: Optional. `added` or `removed` for diff payloads.
 
-Source and target IDs must reference symbols declared earlier in the payload.
+Source and target IDs MUST reference symbols declared earlier in the payload. Encoders MUST NOT emit edges referencing undeclared IDs. Decoders MUST reject edges with unknown IDs.
 
 ## 6. Group Headers (Graph Profile)
 
@@ -271,7 +295,7 @@ github.com/org/repo/pkg.Router -> github.com/org/repo/pkg.NewHandler calls
 | `## edges_removed` | Edges in the prior pack but not in the current. `source -> target type` format. |
 | `## edges_added` | Edges in the current pack but not in the prior. `source -> target type` format. |
 
-A server should only use delta encoding when it saves significantly over full retransmission. A threshold of 60% (delta must be less than 60% of full size) is recommended.
+A server SHOULD only use delta encoding when it saves significantly over full retransmission. A threshold of 60% (delta MUST be less than 60% of full size) is RECOMMENDED.
 
 ### Three-outcome protocol
 
@@ -282,7 +306,7 @@ When a consumer sends `pack_root`:
 
 ## 9. Comments
 
-Lines starting with `#` (single hash, space) are comments and must be ignored by parsers.
+Lines starting with `#` (single hash, space) are comments. Decoders MUST ignore comment lines. Encoders MAY emit comments.
 
 ```
 # This is a comment
@@ -323,10 +347,83 @@ On TOON's own benchmark datasets: 34% fewer tokens on mixed-structure data, 44% 
 - **Human-readable.** The format can be read and understood by a human without tooling.
 - **LLM-parseable.** The format can be parsed by an LLM without special instructions. Validated: 100% accuracy on structured extraction tasks.
 
-## 12. MIME Type
+## 12. Conformance
+
+### 12.1 Encoder Conformance (Graph Profile)
+
+Conforming graph-profile encoders MUST:
+
+- Emit UTF-8 output with LF line endings
+- Emit a header line beginning with `GCF` containing at least the `tool` field
+- Assign symbol IDs sequentially starting from 0
+- Emit scores with exactly 2 decimal places
+- Emit kind abbreviations from the standard table (Section 4) when available
+- Emit edges only between previously declared symbol IDs
+- Order symbols by score descending within each distance group
+- Order edges by source ID then target ID
+- Produce deterministic output (same input produces same output)
+- NOT emit trailing whitespace on any line
+
+### 12.2 Encoder Conformance (Tabular Profile)
+
+Conforming tabular-profile encoders MUST:
+
+- Emit tabular headers with accurate record counts matching the number of rows
+- Use pipe (`|`) as the value separator in tabular rows
+- NOT emit field names in data rows (positional encoding only)
+- Emit `key=value` for primitive object fields
+- Emit `## key` section headers for nested objects
+- Use `@{id}` prefixes on tabular rows only when nested fields are present
+- Emit `-` for null or missing values
+- NOT quote numbers or booleans
+
+### 12.3 Decoder Conformance (Graph Profile)
+
+Conforming graph-profile decoders MUST:
+
+- Reject payloads not beginning with `GCF`
+- Parse header key-value pairs separated by whitespace
+- Parse node lines with exactly 5 positional fields
+- Expand kind abbreviations from the standard table
+- Pass unknown kind abbreviations through verbatim
+- Parse edge lines with the `@target<@source type` format
+- Reject edges referencing undeclared symbol IDs
+- Ignore comment lines (starting with `# `)
+- Tolerate trailing `\r` on lines (CRLF input)
+
+### 12.4 Decoder Conformance (Tabular Profile)
+
+Conforming tabular-profile decoders MUST:
+
+- Parse tabular headers with `[count]{fields}` syntax
+- Split tabular rows on pipe (`|`)
+- Validate row value count against field count in the header
+- Parse `key=value` lines as primitive fields
+- Parse `## key` lines as section headers
+- Parse `.fieldname` lines as nested object references
+- Parse `@{id}` prefixes on rows with nested fields
+
+## 13. Security Considerations
+
+- GCF is a text format with no executable content. Parsers SHOULD NOT evaluate GCF content as code.
+- Qualified names in graph-profile payloads may contain file paths or URLs. Consumers MUST NOT treat these as actionable references without validation.
+- The `pack_root` field contains a content hash. Implementations MUST NOT use `pack_root` values as filesystem paths or database keys without sanitization.
+- Session state (Section 7) requires server-side tracking of transmitted symbols. Implementations SHOULD bound session size to prevent memory exhaustion.
+- Delta payloads (Section 8) reference a prior state. Implementations MUST handle the case where the prior state is unknown (fallback to full payload).
+- Tabular rows may contain user-generated content. Implementations that render GCF output into HTML, terminals, or other display contexts MUST sanitize values to prevent injection.
+
+## 14. MIME Type
 
 Suggested: `application/vnd.gcf+text`
 
-## 13. Versioning
+File extension: `.gcf`
 
-The format version is implicit in the header prefix `GCF`. Future versions would use `GCF2`, `GCF3`, etc. Parsers encountering an unknown version prefix should reject the payload with an error rather than attempting best-effort parsing.
+Charset: always UTF-8.
+
+## 15. Versioning
+
+The format version is implicit in the header prefix `GCF`. Future versions would use `GCF2`, `GCF3`, etc. Parsers encountering an unknown version prefix MUST reject the payload with an error rather than attempting best-effort parsing.
+
+## 16. Intellectual Property
+
+This specification is released under the MIT License. No patent disclosures are known at the time of publication. The authors intend this specification to be freely implementable without royalty requirements.
