@@ -2,9 +2,9 @@
 
 ## Adoption blockers (next)
 
-- [ ] **CLI tool**: `npx @blackwell-systems/gcf` for encode/decode from stdin/files. Zero-friction try-it experience. Supports `encode < input.json`, `decode < input.gcf`, `stats` (token count comparison vs JSON).
+- [x] **CLI tool**: `gcf encode`, `gcf decode`, `gcf stats`. Bundled with each language library (Go: `cmd/gcf/`, Python: `gcf.cli`, TypeScript: `bin`). No separate install needed.
 - [x] **Conformance test suite**: Language-agnostic JSON fixtures with expected GCF output. Any implementation can validate correctness by running the fixtures. Lives in `tests/conformance/`. 14 fixtures across encode (8), decode (4), session (1), delta (1), errors (3).
-- [ ] **npm/PyPI publish**: Publish `@blackwell-systems/gcf` to npm and `gcf-py` to PyPI so install commands actually work.
+- [x] **npm/PyPI/Go publish**: All three live. `npm install @blackwell-systems/gcf`, `pip install gcf-python`, `go install github.com/blackwell-systems/gcf-go/cmd/gcf@latest`. v0.1.0 released 2026-06-03.
 
 ## Documentation depth
 
