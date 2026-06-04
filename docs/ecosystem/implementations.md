@@ -17,7 +17,7 @@ go get github.com/blackwell-systems/gcf-go
 | Thread-safe Session | ✓ (sync.Mutex) |
 | Tests | 100% coverage |
 
-Repository: [blackwell-systems/gcf-go](https://github.com/blackwell-systems/gcf-go)
+[GitHub](https://github.com/blackwell-systems/gcf-go) · [pkg.go.dev](https://pkg.go.dev/github.com/blackwell-systems/gcf-go) · [CLI](https://github.com/blackwell-systems/gcf-go/tree/main/cmd/gcf)
 
 ## TypeScript
 
@@ -34,7 +34,7 @@ npm install @blackwell-systems/gcf
 | ESM module | ✓ |
 | Tests | 34 passing |
 
-Repository: [blackwell-systems/gcf-typescript](https://github.com/blackwell-systems/gcf-typescript)
+[GitHub](https://github.com/blackwell-systems/gcf-typescript) · [npm](https://www.npmjs.com/package/@blackwell-systems/gcf) · [CLI](https://github.com/blackwell-systems/gcf-typescript#cli)
 
 ## Python
 
@@ -53,7 +53,23 @@ pip install gcf-python
 | Python 3.9+ | ✓ |
 | Tests | 43 passing |
 
-Repository: [blackwell-systems/gcf-python](https://github.com/blackwell-systems/gcf-python)
+[GitHub](https://github.com/blackwell-systems/gcf-python) · [PyPI](https://pypi.org/project/gcf-python/) · [CLI](https://github.com/blackwell-systems/gcf-python#cli)
+
+## MCP Proxy
+
+Drop-in wrapper for any existing MCP server. Zero code changes required.
+
+```bash
+go install github.com/blackwell-systems/gcf-proxy@latest
+```
+
+```json
+{"mcpServers": {"yours": {"command": "gcf-proxy", "args": ["your-mcp-server"]}}}
+```
+
+JSON responses are re-encoded as GCF mid-flight. Your server keeps outputting JSON; the LLM receives GCF.
+
+[GitHub](https://github.com/blackwell-systems/gcf-proxy) · [pkg.go.dev](https://pkg.go.dev/github.com/blackwell-systems/gcf-proxy)
 
 ## Output compatibility
 
@@ -68,18 +84,4 @@ GCF is simple enough to implement in a weekend. The spec is 229 lines of EBNF + 
 3. Add Session (needed for production MCP servers)
 4. Add Delta (needed for high-frequency re-queries)
 
-Test against the [comprehension eval](https://github.com/blackwell-systems/gcf-go/tree/main/eval) to verify your output is LLM-comprehensible at scale.
-
-## MCP Proxy
-
-Don't want to modify your server? Use [gcf-proxy](https://github.com/blackwell-systems/gcf-proxy) as a transparent wrapper:
-
-```bash
-go install github.com/blackwell-systems/gcf-proxy@latest
-```
-
-```json
-{"mcpServers": {"yours": {"command": "gcf-proxy", "args": ["your-mcp-server"]}}}
-```
-
-Zero code changes. JSON responses are re-encoded as GCF mid-flight.
+Validate against the [conformance test suite](https://github.com/blackwell-systems/gcf/tree/main/tests/conformance) (14 fixtures across encode, decode, session, delta, and error cases). Test against the [comprehension eval](https://github.com/blackwell-systems/gcf-go/tree/main/eval) to verify your output is LLM-comprehensible at scale.
