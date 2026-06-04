@@ -243,6 +243,24 @@ version=2.1.0
 | Null/missing | `-` |
 | Empty array | `## name [0]` |
 
+### Value encoding (tabular profile)
+
+Encoders MUST format values in tabular rows according to the following rules:
+
+| Value type | Encoding | Example |
+|-----------|----------|---------|
+| String | Bare text | `Alice Smith` |
+| Number | Unquoted decimal | `95000`, `3.14` |
+| Boolean | Lowercase literal | `true`, `false` |
+| Null / missing | Dash literal | `-` |
+| String containing `\|` | Quoted with escaped pipe | `"value\|with\|pipes"` |
+| String containing `\n` | Quoted with escaped newline | `"line1\nline2"` |
+| Empty string | Quoted empty | `""` |
+
+Encoders MUST NOT quote numbers or booleans. Encoders MUST quote strings that contain the pipe character (`|`), newline (`\n`), or are empty. Within quoted strings, encoders MUST escape `"` as `\"` and `\` as `\\`.
+
+Decoders MUST interpret unquoted `-` as null. Decoders MUST interpret unquoted `true` and `false` as booleans. Decoders MUST interpret unquoted tokens matching `/^-?\d+(\.\d+)?$/` as numbers. All other unquoted tokens MUST be interpreted as strings.
+
 ### Uniformity detection
 
 An array is considered uniform (eligible for tabular encoding) if the first 5 elements are objects with at least 70% key overlap with the first element. This accommodates semi-uniform data where some records have optional fields.
@@ -402,6 +420,40 @@ Conforming tabular-profile decoders MUST:
 - Parse `## key` lines as section headers
 - Parse `.fieldname` lines as nested object references
 - Parse `@{id}` prefixes on rows with nested fields
+
+### 12.5 Decoder Errors
+
+Decoders MUST reject (return an error, not silently ignore) the following conditions:
+
+#### Graph profile errors
+
+| Error | Condition |
+|-------|-----------|
+| Invalid header | First line does not begin with `GCF` |
+| Missing tool | Header has no `tool=` field |
+| Malformed header field | Key-value pair missing `=` |
+| Invalid node line | Symbol line has fewer than 5 positional fields |
+| Invalid symbol ID | `@` prefix followed by non-integer |
+| Invalid score | 4th field of node line is not a valid decimal float |
+| Invalid edge syntax | Edge line missing `<` separator |
+| Unknown edge reference | Edge references a symbol ID not declared earlier in the payload |
+| Malformed delta section | Delta payload contains unrecognized section headers |
+
+#### Tabular profile errors
+
+| Error | Condition |
+|-------|-----------|
+| Row width mismatch | Number of pipe-separated values in a row does not match field count in header |
+| Invalid count | `[count]` in tabular header is not a non-negative integer |
+| Count mismatch | Number of data rows does not match `[count]` declared in header |
+| Unterminated quote | Quoted value missing closing `"` |
+| Invalid escape | Escape sequence other than `\"` or `\\` inside quoted value |
+
+Decoders MAY issue warnings (without rejecting) for:
+
+- Header fields with unknown keys (forward compatibility)
+- Trailing whitespace on lines
+- Empty sections (group header with no subsequent lines)
 
 ## 13. Security Considerations
 
