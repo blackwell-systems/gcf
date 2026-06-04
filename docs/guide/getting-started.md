@@ -1,26 +1,32 @@
 # Getting Started
 
-GCF (Graph Compact Format) is a wire format for encoding structured data in LLM tool responses. It achieves 84% fewer tokens than JSON while maintaining 100% LLM comprehension accuracy at scale.
+GCF (Graph Compact Format) is a wire format for encoding structured data that LLMs read and produce. It achieves 84% fewer tokens than JSON on input and 75% fewer on output, with 100% comprehension accuracy at scale.
 
 ## When to use GCF
 
-Use GCF when your tool returns structured data to an LLM:
+**Tool responses** (input to LLM):
 - Code intelligence results (symbols, call graphs, dependencies)
 - Knowledge graph queries (nodes, edges, relationships)
 - API responses with repeated record structures
 - Any MCP tool response with arrays of objects
+
+**Agent output** (produced by LLM):
+- Agent-to-agent communication in multi-agent workflows
+- Structured output where you want to minimize output tokens
+- Any case where the model returns tabular or graph data
 
 GCF is most effective when:
 - Payloads contain **repeated structures** (arrays of similar objects)
 - Records have **relationships** between them (edges, references)
 - You're operating under a **token budget** (context windows are finite)
 - You make **multiple calls** in a session (session dedup compounds savings)
+- You want **cheaper output** (75% fewer tokens than JSON, 52% fewer than TOON)
 
 ## When NOT to use GCF
 
 - Single scalar values (just return the value)
 - Deeply nested configuration with no repeated structures (YAML/JSON is fine)
-- Data the LLM must generate (GCF is for tool *output*, not LLM *input*)
+- Systems that require JSON schema validation (GCF has no schema system yet)
 
 ## Install
 
@@ -214,8 +220,10 @@ Arrays of uniform objects become tabular rows. One header replaces all field nam
 
 ## What's next
 
-- [Format Overview](/guide/format-overview) to understand the encoding structure
+- [Format Overview](/guide/format-overview) to understand both encoding profiles
+- [Using GCF with LLMs](/guide/llm-integration) for comprehension and generation results
 - [Sessions](/guide/sessions) for multi-turn deduplication (92.7% savings)
 - [Delta Encoding](/guide/delta) for incremental updates (81.2% savings)
-- [Benchmarks](/guide/benchmarks) for the full competitive data
+- [GCF vs TOON](/guide/vs-toon) for the full competitive comparison
+- [Benchmarks](/guide/benchmarks) for input and output token data
 - [Playground](/playground) to try it live in the browser
