@@ -532,45 +532,31 @@ onMounted(() => {
     <!-- COMPARE TAB: Three-column layout                                  -->
     <!-- ================================================================= -->
     <template v-if="activeTab === 'compare'">
-      <!-- JSON input -->
-      <div class="input-section">
-        <div class="pane pane-input">
-          <div class="pane-head">
-            <span class="pane-label">JSON Input</span>
-            <span class="pane-tokens">{{ jsonTokens.toLocaleString() }} tokens</span>
-          </div>
-          <textarea
-            class="input-textarea"
-            v-model="inputText"
-            spellcheck="false"
-            placeholder='Paste any JSON here, or load an example above...'
-          ></textarea>
-          <div class="input-error" v-if="inputText.trim() && !parsedObj">Invalid JSON</div>
-        </div>
-      </div>
-
-      <div class="triple-pane" v-if="parsedObj">
-        <!-- JSON (formatted) -->
+      <div class="triple-pane">
+        <!-- JSON (editable) -->
         <div class="pane pane-json">
           <div class="pane-head">
             <span class="pane-label">JSON</span>
             <span class="pane-tokens">{{ jsonTokens.toLocaleString() }} tokens</span>
           </div>
-          <div class="pane-body-wrap">
-            <button class="pane-copy" @click="copyText(jsonOutput, 'json')">{{ copied === 'json' ? 'Copied!' : 'Copy' }}</button>
-            <pre class="pane-code">{{ jsonOutput }}</pre>
-          </div>
+          <textarea
+            class="pane-textarea"
+            v-model="inputText"
+            spellcheck="false"
+            placeholder="Paste any JSON here, or load an example above..."
+          ></textarea>
+          <div class="input-error" v-if="inputText.trim() && !parsedObj">Invalid JSON</div>
         </div>
 
         <!-- TOON -->
         <div class="pane pane-toon">
           <div class="pane-head">
             <span class="pane-label">TOON</span>
-            <span class="pane-tokens">{{ toonTokens.toLocaleString() }} tokens</span>
+            <span class="pane-tokens" v-if="toonOutput">{{ toonTokens.toLocaleString() }} tokens</span>
           </div>
           <div class="pane-body-wrap">
-            <button class="pane-copy" @click="copyText(toonOutput, 'toon')">{{ copied === 'toon' ? 'Copied!' : 'Copy' }}</button>
-            <pre class="pane-code">{{ toonOutput }}</pre>
+            <button v-if="toonOutput" class="pane-copy" @click="copyText(toonOutput, 'toon')">{{ copied === 'toon' ? 'Copied!' : 'Copy' }}</button>
+            <pre class="pane-code">{{ toonOutput || 'TOON output will appear here...' }}</pre>
           </div>
         </div>
 
@@ -578,17 +564,17 @@ onMounted(() => {
         <div class="pane pane-gcf">
           <div class="pane-head pane-head-gcf">
             <span class="pane-label">GCF</span>
-            <span class="pane-tokens">{{ gcfTokens.toLocaleString() }} tokens</span>
+            <span class="pane-tokens" v-if="gcfOutput">{{ gcfTokens.toLocaleString() }} tokens</span>
           </div>
           <div class="pane-body-wrap">
-            <button class="pane-copy" @click="copyText(gcfOutput, 'gcf')">{{ copied === 'gcf' ? 'Copied!' : 'Copy' }}</button>
-            <pre class="pane-code">{{ gcfOutput }}</pre>
+            <button v-if="gcfOutput" class="pane-copy" @click="copyText(gcfOutput, 'gcf')">{{ copied === 'gcf' ? 'Copied!' : 'Copy' }}</button>
+            <pre class="pane-code">{{ gcfOutput || 'GCF output will appear here...' }}</pre>
           </div>
         </div>
       </div>
 
       <!-- Session dedup pane -->
-      <div v-if="showSession && parsedObj" class="session-section">
+      <div v-if="showSession && gcfOutput" class="session-section">
         <div class="session-header">
           <h3>Session Deduplication: 2nd tool call</h3>
           <p class="session-desc">
@@ -808,32 +794,24 @@ onMounted(() => {
   color: var(--vp-c-text-1);
 }
 
-/* JSON input */
-.input-section {
-  margin-bottom: 12px;
-}
-
-.pane-input {
-  max-width: 100%;
-}
-
-.input-textarea {
+/* Editable JSON pane */
+.pane-textarea {
+  flex: 1;
   width: 100%;
-  min-height: 180px;
-  max-height: 400px;
+  min-height: 300px;
   padding: 10px 12px;
   font-family: var(--vp-font-family-mono);
   font-size: 12px;
   line-height: 1.55;
   border: none;
   outline: none;
-  resize: vertical;
+  resize: none;
   background: var(--vp-c-bg);
   color: var(--vp-c-text-1);
   tab-size: 2;
 }
 
-.input-textarea::placeholder {
+.pane-textarea::placeholder {
   color: var(--vp-c-text-3);
 }
 
