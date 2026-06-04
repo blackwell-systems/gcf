@@ -17,7 +17,8 @@
 - [x] **Interactive playground**: Browser-based three-way comparison (JSON vs TOON vs GCF) with live encoding, token bars, savings breakdown, session dedup demo, and decode tab. Uses real `@toon-format/toon` library. Lives at `/playground` on the docs site.
 - [ ] **VS Code extension**: Syntax highlighting for `.gcf` files. TextMate grammar.
 - [ ] **Tree-sitter grammar**: Enables Neovim, Helix, Zed, Emacs highlighting.
-- [ ] **MCP proxy**: Middleware that intercepts JSON tool responses and re-encodes as GCF (like TOON's "Tooner" proxy). Drop-in upgrade for existing MCP servers.
+- [x] **MCP proxy**: `gcf-proxy` wraps any MCP server, re-encodes JSON tool responses as GCF mid-flight. Zero code changes. Published at `go install github.com/blackwell-systems/gcf-proxy@latest`.
+- [x] **Generic encoding**: `encodeGeneric` / `EncodeGeneric` / `encode_generic` shipped in all three libraries. Encodes arbitrary structured data (not just graph payloads) using GCF tabular format. Spec Section 6a documents the grammar.
 
 ## Format extensions (future, backwards-compatible)
 
