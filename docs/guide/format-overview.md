@@ -325,7 +325,7 @@ vs GCF:
 3|Carol Wu|Marketing|85000
 ```
 
-292 bytes vs 122 bytes. Same information. 58% smaller. On TOON's own benchmark with 2,000 employee records, GCF is 34% smaller than TOON and 60% smaller than JSON.
+292 bytes vs 122 bytes. Same information. 58% smaller. On TOON's own benchmark with 2,000 employee records, GCF is 2% smaller than TOON and 61% smaller than JSON.
 
 ## Design constraints
 
