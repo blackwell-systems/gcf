@@ -39,6 +39,7 @@ export default defineConfig({
           { text: 'Delta Encoding', link: '/guide/delta' },
           { text: 'Using GCF with LLMs', link: '/guide/llm-integration' },
           { text: 'MCP Integration', link: '/guide/mcp' },
+          { text: 'MCP Proxy (Zero-Code)', link: '/guide/proxy' },
           { text: 'Benchmarks', link: '/guide/benchmarks' },
           { text: 'GCF vs TOON', link: '/guide/vs-toon' },
         ],
