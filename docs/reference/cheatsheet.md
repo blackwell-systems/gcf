@@ -24,7 +24,7 @@ Only `tool` is required. All other fields are optional.
 GCF tool=context_for_task
 GCF tool=context_for_task budget=5000 tokens=1847 symbols=10 edges=8
 GCF tool=context_for_task budget=5000 tokens=1847 symbols=10 edges=8 pack_root=a1b2c3d4
-GCF tool=context_for_task tokens=800 symbols=5 session=true
+GCF tool=context_for_task tokens=800 symbols=5 edges=3 session=true
 GCF tool=context_for_task delta=true base_root=aaa111 new_root=bbb222 tokens=30 savings=81%
 ```
 

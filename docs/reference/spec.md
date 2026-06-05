@@ -60,4 +60,4 @@ Validated by [55 conformance fixtures](https://github.com/blackwell-systems/gcf/
 
 ## Stability guarantee
 
-The v1.1 format is stable. Existing payloads will always parse correctly with future decoders. New features (if any) will be additive and backwards-compatible.
+The v1.2 format is stable. Existing payloads will always parse correctly with future decoders. New features (if any) will be additive and backwards-compatible.

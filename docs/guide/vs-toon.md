@@ -82,7 +82,7 @@ In multi-turn LLM interactions, the same data appears across multiple tool respo
 
 **Call 1: full declarations**
 ```
-GCF tool=context_for_task symbols=15 session=true
+GCF tool=context_for_task symbols=15 edges=10 session=true
 ## targets
 @0 fn pkg.AuthMiddleware 0.78 lsp_resolved
 @1 fn pkg.ValidateToken 0.72 lsp_resolved
@@ -91,7 +91,7 @@ GCF tool=context_for_task symbols=15 session=true
 
 **Call 5: 92% bare references**
 ```
-GCF tool=context_for_task symbols=22 session=true
+GCF tool=context_for_task symbols=22 edges=16 session=true
 ## targets
 @0  # previously transmitted
 @1  # previously transmitted
@@ -168,11 +168,11 @@ GCF's [comprehension eval](https://github.com/blackwell-systems/gcf-go/tree/main
 
 | Format | Accuracy | Tokens |
 |--------|----------|--------|
-| **GCF** | **100%** | **11,090** |
-| TOON | 100% | 16,378 |
-| JSON | **66.7%** | 53,341 |
+| **GCF** | **100%** (13/13) | **11,090** |
+| TOON | 92.3% (12/13) | 16,378 |
+| JSON | 76.9% (10/13) | 53,341 |
 
-JSON doesn't just use more tokens; it actively miscounts records (guessed 320 instead of 500). The difference between formats is invisible at 100 rows and undeniable at 500. TOON's benchmarks stay in the comfort zone.
+JSON doesn't just use more tokens; it actively miscounts records (guessed 320 instead of 500). TOON fails on distance grouping (no section headers). The difference between formats is invisible at 100 rows and undeniable at 500. TOON's benchmarks stay in the comfort zone.
 
 ## "But GCF isn't human-readable"
 

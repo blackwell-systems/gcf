@@ -6,7 +6,7 @@ GCF works in both directions: tools produce it, LLMs read it, and LLMs can produ
 
 GCF looks dense to human eyes. `@0<@1 calls` is not as immediately obvious as `{"source": "pkg.Server", "target": "pkg.Auth", "edge_type": "calls"}`. That's deliberate.
 
-Human-readability and LLM-readability are different things, and they diverge at scale. At 8 records, both JSON and GCF are easy for humans and LLMs alike. At 500 records, JSON's field-name repetition creates enough structural noise that the LLM loses count (66.7% accuracy). GCF's dense, positional format cuts through that noise (100% accuracy).
+Human-readability and LLM-readability are different things, and they diverge at scale. At 8 records, both JSON and GCF are easy for humans and LLMs alike. At 500 records, JSON's field-name repetition creates enough structural noise that the LLM loses count (76.9% accuracy). GCF's dense, positional format cuts through that noise (100% accuracy).
 
 Here's what JSON at 500 symbols looks like to an LLM. Every record repeats five field names:
 
@@ -28,7 +28,7 @@ The same data in GCF:
 ... 497 more, each one line, no repeated field names ...
 ```
 
-No noise. Every token is content. The model counts 500 correctly, identifies 166 targets correctly, extracts all edge types correctly. 6/6.
+No noise. Every token is content. The model counts 500 correctly, identifies 166 targets correctly, extracts all edge types correctly. 13/13.
 
 The format is optimized for the actual consumer. Every character carries meaning. No decoration, no repeated field names, no structural tokens that exist only for human scanners. The result is a format that agents understand perfectly and costs a fraction of the "readable" alternative.
 
@@ -57,20 +57,21 @@ The gcf-proxy proves this pattern works in reverse: the MCP server outputs JSON,
 
 GCF payloads are immediately comprehensible to frontier models without any format description in the prompt. This isn't a claim; it's measured.
 
-The [comprehension eval](https://github.com/blackwell-systems/gcf-go/tree/main/eval) sends a 500-symbol, 200-edge GCF payload to an LLM with **zero format instructions**, only the raw payload and a question. Results:
+The [comprehension eval](https://github.com/blackwell-systems/gcf-go/tree/main/eval) sends a 500-symbol, 200-edge GCF payload to an LLM with **zero format instructions**, only the raw payload and a question. 13 questions, all deterministic. Selected results:
 
 | Question | What the LLM must extract | GCF | TOON | JSON |
 |----------|--------------------------|-----|------|------|
 | How many symbols? | Count all records | **500** | 500 | 320 |
 | How many edges? | Count relationships | **200** | 200 | 200 |
-| Highest-scored symbol name? | Find max by 4th field | **Correct** | Correct | Correct |
-| Kind of highest-scored symbol? | Read 2nd field of top record | **Correct** | Correct | Correct |
 | How many targets (distance 0)? | Count records in first section | **166** | 166 | 240 |
+| How many extended (distance 2)? | Count records in third section | **Correct** | Wrong | Correct |
+| How many functions? | Filter by kind | **Correct** | Correct | Wrong |
+| Highest-scored symbol name? | Find max by 4th field | **Correct** | Correct | Correct |
 | All unique edge types? | Deduplicate 3rd field of edges | **Correct** | Correct | Correct |
 
-**GCF: 6/6. TOON: 6/6. JSON: 4/6.**
+**GCF: 13/13. TOON: 12/13. JSON: 10/13.**
 
-JSON fails on counting tasks at scale because field-name repetition creates noise that overwhelms the model's counting circuits. GCF and TOON both score 100%, but GCF does it in **32% fewer tokens** than TOON and **79% fewer** than JSON.
+JSON fails on counting tasks at scale because field-name repetition creates noise that overwhelms the model's counting circuits. TOON fails on distance grouping (it has no `## targets`/`## related`/`## extended` sections). GCF is the only format that achieves 100% accuracy, and does it in **32% fewer tokens** than TOON and **79% fewer** than JSON.
 
 The model was never told what `@0`, `##`, or `<` mean. It figured it out from the structure. The format is regular enough (positional fields, consistent prefixes, section headers) that pattern recognition handles it.
 
@@ -195,7 +196,7 @@ If the LLM receives truncated GCF (response cut off):
 ```bash
 git clone https://github.com/blackwell-systems/gcf-go
 cd gcf-go/eval
-GOWORK=off go test -run TestComprehension -v -timeout 15m
+GOWORK=off go test -run TestComprehension -v -timeout 0
 ```
 
-The eval generates a 500-symbol, 200-edge payload, encodes it in GCF, TOON, and JSON, sends each to an LLM, and measures accuracy on the 6 questions above. Deterministic ground truth, no LLM judge.
+The eval generates a 500-symbol, 200-edge payload, encodes it in GCF, TOON, and JSON, sends each to an LLM, and measures accuracy on 13 structured extraction questions. Deterministic ground truth, no LLM judge.

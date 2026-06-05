@@ -4,13 +4,13 @@ Two independent evaluations prove GCF's superiority: a comprehension accuracy te
 
 ## LLM Comprehension Accuracy
 
-**Setup:** 500 symbols, 200 edges. Same payload encoded in GCF, TOON, and JSON. Six structured extraction questions sent to an LLM. Deterministic ground truth, no LLM judge.
+**Setup:** 500 symbols, 200 edges. Same payload encoded in GCF, TOON, and JSON. 13 structured extraction questions sent to an LLM with zero format instructions. Deterministic ground truth, no LLM judge.
 
 | Format | Accuracy | Tokens | vs JSON |
 |--------|----------|--------|---------|
-| **GCF** | **100%** (6/6) | **11,090** | **79% fewer** |
-| TOON | 100% (6/6) | 16,378 | 69% fewer |
-| JSON | 66.7% (4/6) | 53,341 | baseline |
+| **GCF** | **100%** (13/13) | **11,090** | **79% fewer** |
+| TOON | 92.3% (12/13) | 16,378 | 69% fewer |
+| JSON | 76.9% (10/13) | 53,341 | baseline |
 
 ### What JSON got wrong
 
@@ -18,26 +18,38 @@ Two independent evaluations prove GCF's superiority: a comprehension accuracy te
 |----------|----------|---------------|
 | "How many symbols?" | 500 | 320 |
 | "How many targets (distance 0)?" | 166 | 240 |
+| "How many functions?" | 250 | incorrect |
 
 At 500 records, JSON's field-name repetition creates enough noise that the model loses count. It's not hallucinating; it's drowning in structural tokens that carry no semantic content.
 
+### What TOON got wrong
+
+| Question | Expected | TOON answered |
+|----------|----------|---------------|
+| "How many extended (distance 2+)?" | correct count | incorrect |
+
+TOON has no distance grouping. The model must scan all 500 rows and filter by a column value, which fails at scale.
+
 ### What GCF got right
 
-All six questions answered correctly:
-1. Symbol count: 500 ✓
-2. Edge count: 200 ✓
-3. Highest-scored symbol name ✓
-4. Kind of highest-scored symbol ✓
-5. Target count (distance 0): 166 ✓
-6. All unique edge types (alphabetical) ✓
+All 13 questions answered correctly, including:
+1. Symbol count: 500 ✓ (from `symbols=500` header)
+2. Edge count: 200 ✓ (from `## edges [200]` section header)
+3. Target count (distance 0): ✓ (count lines in `## targets` section)
+4. Related count (distance 1): ✓ (count lines in `## related` section)
+5. Extended count (distance 2): ✓ (count lines in `## extended` section)
+6. Function count: ✓ (filter by `fn` kind abbreviation)
+7. Calls edge count: ✓ (filter by edge type)
+8. Highest-scored symbol name ✓
+9. All unique edge types ✓
 
-GCF achieves this at 32% fewer tokens than TOON, which also scored 100%.
+GCF achieves 100% at 32% fewer tokens than TOON, which scored 92.3%.
 
 ### Reproduce
 
 ```bash
 git clone https://github.com/blackwell-systems/gcf-go
-cd gcf-go/eval && GOWORK=off go test -run TestComprehension -v -timeout 15m
+cd gcf-go/eval && GOWORK=off go test -run TestComprehension -v -timeout 0
 ```
 
 Eval source: [gcf-go/eval](https://github.com/blackwell-systems/gcf-go/tree/main/eval)
@@ -119,7 +131,7 @@ Fork: [blackwell-systems/toon@gcf-comparison](https://github.com/blackwell-syste
 
 | Metric | GCF | TOON | JSON |
 |--------|-----|------|------|
-| Comprehension accuracy (500 sym) | 100% | 100% | 66.7% |
+| Comprehension accuracy (500 sym, 13 questions) | 100% (13/13) | 92.3% (12/13) | 76.9% (10/13) |
 | Input tokens (500 symbols) | 11,090 | 16,378 | 53,341 |
 | Output tokens (100 symbols) | 5,619 | 11,650 | 22,180 |
 | Generation validity | 5/5 | 5/5 | N/A |

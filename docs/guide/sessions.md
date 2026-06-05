@@ -35,7 +35,7 @@ The LLM already has `@7` in its context window from the prior response. No need 
 
 **Call 1:** Full declarations (same as non-session)
 ```
-GCF tool=context_for_task budget=5000 tokens=2100 symbols=15
+GCF tool=context_for_task budget=5000 tokens=2100 symbols=15 edges=12
 ## targets
 @0 fn pkg.AuthMiddleware 0.78 lsp_resolved
 @1 fn pkg.ValidateToken 0.72 lsp_resolved
@@ -44,7 +44,7 @@ GCF tool=context_for_task budget=5000 tokens=2100 symbols=15
 
 **Call 2:** 12 of 18 symbols are bare refs
 ```
-GCF tool=context_for_task budget=5000 tokens=800 symbols=18 session=true
+GCF tool=context_for_task budget=5000 tokens=800 symbols=18 edges=14 session=true
 ## targets
 @0  # previously transmitted
 @1  # previously transmitted
@@ -54,7 +54,7 @@ GCF tool=context_for_task budget=5000 tokens=800 symbols=18 session=true
 
 **Call 3:** 18 of 22 symbols are bare refs
 ```
-GCF tool=context_for_task budget=5000 tokens=400 symbols=22 session=true
+GCF tool=context_for_task budget=5000 tokens=400 symbols=22 edges=18 session=true
 ## targets
 @0  # previously transmitted
 @1  # previously transmitted
