@@ -1,8 +1,6 @@
 # GCF vs TOON
 
-TOON (Token-Oriented Object Notation) is a tabular encoding format for JSON. GCF was designed to solve the same problem (LLM token efficiency) but takes it further with graph-native features, session statefulness, and delta encoding.
-
-This page compares the two formats honestly, using TOON's own benchmark data and their own tokenizer.
+GCF is smaller on 5 of 6 datasets, more accurate at scale (100% vs 92.3%), and has four features TOON structurally cannot add. TOON's one win is a 75-token difference on a 618-token payload. All claims below are tested on TOON's own benchmark with their datasets and their tokenizer.
 
 ## Feature comparison
 
@@ -20,7 +18,7 @@ This page compares the two formats honestly, using TOON's own benchmark data and
 | **Distance grouping** | **Yes (`## targets`, `## related`)** | **No** |
 | Graph-native (nodes + edges) | Yes (graph profile) | No |
 | Generic data (any JSON) | Yes (tabular profile) | Yes |
-| Streaming encode | No (planned) | Yes |
+| Streaming encode | No | Yes |
 | Key folding (dotted paths) | No | Yes |
 | LLM comprehension at 500 symbols | 100% (13/13) | 92.3% (12/13) |
 | **LLM generation (output tokens)** | **75% fewer than JSON** | **40% fewer than JSON** |
@@ -174,6 +172,8 @@ GCF's [comprehension eval](https://github.com/blackwell-systems/gcf-go/tree/main
 
 JSON doesn't just use more tokens; it actively miscounts records (guessed 320 instead of 500). TOON fails on distance grouping (no section headers). The difference between formats is invisible at 100 rows and undeniable at 500. TOON's benchmarks stay in the comfort zone.
 
+Reproduce it yourself: `git clone github.com/blackwell-systems/gcf-go && cd gcf-go/eval && GOWORK=off go test -run TestComprehension -v -timeout 0`
+
 ## "But GCF isn't human-readable"
 
 Neither is protobuf. Neither are HTTP headers. Readability is a last-mile rendering concern, not a wire format property.
@@ -190,14 +190,17 @@ This is the only dataset where TOON beats GCF. On every other data shape (flat t
 
 ## The bottom line
 
-GCF does everything TOON does, plus:
-- Local IDs and edge encoding (TOON can't do this)
-- Session deduplication (TOON can't do this)
-- Delta encoding (TOON can't do this)
-- Distance grouping (TOON can't do this)
+GCF does everything TOON does, plus four things TOON structurally cannot add without becoming a different format:
 
-On TOON's own benchmark with their own tokenizer, GCF uses fewer tokens on 5 of 6 datasets. The one exception is a 75-token difference on a 618-token payload.
+- **Local IDs and edge encoding** (requires `@N` references)
+- **Session deduplication** (requires bare references, which require local IDs)
+- **Delta encoding** (requires content-addressed identity)
+- **Distance grouping** (requires semantic section headers)
 
-The gap widens over time. On the first tool call, GCF saves 34% vs TOON. By the fifth call in a session, GCF saves 92.7% vs JSON while TOON is stuck at 69%. No format change can close that gap without adding session state, which requires local IDs, which requires a fundamental redesign of TOON.
+On TOON's own benchmark, GCF wins 5 of 6 datasets. The one exception: 75 tokens on a 618-token payload.
+
+The gap widens over time. First call: GCF saves 34% vs TOON. Fifth call: GCF saves 92.7% vs JSON while TOON is stuck at 69%. No format change can close that gap without adding session state, which requires local IDs, which requires a fundamental redesign.
 
 **[Try both formats in the playground](https://gcformat.com/playground.html)** with your own data.
+
+**[Get started in 5 minutes](https://gcformat.com/guide/getting-started.html)** with any of 6 languages.
