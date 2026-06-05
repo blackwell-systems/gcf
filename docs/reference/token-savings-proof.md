@@ -142,7 +142,7 @@ Total_gcf(edges)  = e * L_gcf(edge) + 15 ("## edges [N]\n")
 For e=200:
 ```
 Total_json = 200 * 135 + 10 = 27,010 bytes
-Total_gcf  = 200 * 14 + 9   = 2,809 bytes
+Total_gcf  = 200 * 14 + 15  = 2,815 bytes
 Savings: 89.6%
 ```
 
@@ -192,7 +192,7 @@ Typical header: ~120 bytes (field names + values + delimiters).
 GCF tool=context_for_task budget=5000 tokens=1847 symbols=500 edges=200 pack_root=a1b2c3\n
 ```
 
-Typical header: ~80 bytes.
+Typical header: ~90 bytes.
 
 ### Savings
 
@@ -212,16 +212,16 @@ L_json(payload) = L_json(header) + Total_json(symbols) + Total_json(edges)
                 = 144 + 136n + 135e
 
 L_gcf(payload)  = L_gcf(header) + Total_gcf(symbols) + Total_gcf(edges)
-                = 80 + (n * 70 + g * 12) + (e * 14 + 9)
-                = 89 + 70n + 12g + 14e
+                = 90 + (n * 70 + g * 12) + (e * 14 + 15)
+                = 105 + 70n + 12g + 14e
 ```
 
 ### Savings formula
 
 ```
 Δ(n, e, g) = L_json - L_gcf
-           = (144 + 136n + 135e) - (89 + 70n + 12g + 14e)
-           = 55 + 66n + 121e - 12g
+           = (144 + 136n + 135e) - (105 + 70n + 12g + 14e)
+           = 39 + 66n + 121e - 12g
 ```
 
 Savings grow linearly with both symbol count and edge count. Edge savings dominate because Δ_edge (121 bytes) > Δ_symbol (66 bytes).
@@ -229,7 +229,7 @@ Savings grow linearly with both symbol count and edge count. Edge savings domina
 ### Savings percentage
 
 ```
-Savings% = Δ / L_json = (55 + 66n + 121e - 12g) / (144 + 136n + 135e)
+Savings% = Δ / L_json = (39 + 66n + 121e - 12g) / (144 + 136n + 135e)
 ```
 
 For typical payloads (g << n):
