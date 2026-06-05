@@ -1,0 +1,11 @@
+{
+  "name": "primitive_array_inline",
+  "description": "Primitive arrays are inlined as comma-separated values on one line",
+  "input": {
+    "name": "my-service",
+    "tags": ["production", "us-east-1", "critical"],
+    "ports": [8080, 8443, 9090],
+    "flags": [true, false, true]
+  },
+  "expected": "flags[3]: true,false,true\nname=my-service\nports[3]: 8080,8443,9090\ntags[3]: production,us-east-1,critical\n"
+}
