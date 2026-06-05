@@ -222,6 +222,7 @@ Full grammar, encoding rules, session statefulness, delta encoding, and tabular 
 | Python | `pip install gcf-python` | [gcf-python](https://github.com/blackwell-systems/gcf-python) |
 | Rust | `cargo add gcf` | [gcf-rust](https://github.com/blackwell-systems/gcf-rust) |
 | Swift | Swift Package Manager | [gcf-swift](https://github.com/blackwell-systems/gcf-swift) |
+| Kotlin | JitPack (`com.github.blackwell-systems:gcf-kotlin`) | [gcf-kotlin](https://github.com/blackwell-systems/gcf-kotlin) |
 | MCP Proxy | `pip install gcf-proxy` | [gcf-proxy](https://github.com/blackwell-systems/gcf-proxy) |
 
 Zero runtime dependencies. MIT licensed. Spec is stable. The proxy is a drop-in wrapper for any existing MCP server (zero code changes).
