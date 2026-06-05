@@ -1,5 +1,5 @@
-npm=?
+npm=0
 pypi=1192
 gh_go=5
 gh_proxy=12
-crates=0
+crates=10
