@@ -174,6 +174,14 @@ GCF's [comprehension eval](https://github.com/blackwell-systems/gcf-go/tree/main
 
 JSON doesn't just use more tokens; it actively miscounts records (guessed 320 instead of 500). The difference between formats is invisible at 100 rows and undeniable at 500. TOON's benchmarks stay in the comfort zone.
 
+## "But GCF isn't human-readable"
+
+Neither is protobuf. Neither are HTTP headers. Readability is a last-mile rendering concern, not a wire format property.
+
+The agent reads GCF (cheap, 79% fewer tokens in the context window), does its work, then calls `decode()` at the end if a human needs to see the result. The context window savings are already banked. The decode costs one function call.
+
+TOON optimizes for the case where a human is scanning the raw wire format. GCF optimizes for the case where an agent is consuming it and a human can view the decoded output if they need to. The second case is the common case. The first case is debugging.
+
 ## Where TOON wins
 
 TOON is 75 tokens smaller on one benchmark dataset: deeply nested configuration with single-key wrapper chains. That's an 11% advantage on a 618-token payload. TOON's key folding (`data.metadata.items` dotted paths) is marginally more compact for this specific shape.

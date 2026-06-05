@@ -32,6 +32,27 @@ No noise. Every token is content. The model counts 500 correctly, identifies 166
 
 The format is optimized for the actual consumer. Every character carries meaning. No decoration, no repeated field names, no structural tokens that exist only for human scanners. The result is a format that agents understand perfectly and costs a fraction of the "readable" alternative.
 
+## Readability is a last-mile rendering concern
+
+If a human needs to see the data, the agent calls `decode()` and outputs JSON. One function call. The context window savings are already banked.
+
+```python
+from gcf import decode
+import json
+
+# Agent reads GCF (cheap: 11,090 tokens for 500 symbols)
+payload = decode(gcf_text)
+
+# Agent does its work using the parsed data...
+
+# Human wants to see it? Render as JSON at the end (one call, no context cost)
+print(json.dumps(payload, indent=2))
+```
+
+You don't make HTTP headers human-readable. You don't make protobuf human-readable. You use a viewer. GCF is the wire format; JSON is the viewer format. They serve different roles. The expensive direction (filling the context window with tool responses) should use the cheapest encoding. The cheap direction (one final output for a human) can use whatever the human prefers.
+
+The gcf-proxy proves this pattern works in reverse: the MCP server outputs JSON, the proxy re-encodes to GCF mid-flight, the LLM reads GCF. Same principle, both directions: use the right format for each leg of the journey.
+
 ## No primer needed for reading (proven)
 
 GCF payloads are immediately comprehensible to frontier models without any format description in the prompt. This isn't a claim; it's measured.

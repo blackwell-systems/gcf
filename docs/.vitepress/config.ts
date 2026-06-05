@@ -23,11 +23,11 @@ export default defineConfig({
   ],
   themeConfig: {
     nav: [
-      { text: 'Guide', link: '/guide/getting-started' },
-      { text: 'Reference', link: '/reference/spec' },
-      { text: 'Benchmarks', link: '/guide/benchmarks' },
-      { text: 'GCF vs TOON', link: '/guide/vs-toon' },
       { text: 'Playground', link: '/playground' },
+      { text: 'Guide', link: '/guide/getting-started' },
+      { text: 'GCF vs TOON', link: '/guide/vs-toon' },
+      { text: 'Benchmarks', link: '/guide/benchmarks' },
+      { text: 'Reference', link: '/reference/spec' },
     ],
     sidebar: [
       {

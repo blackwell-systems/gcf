@@ -28,6 +28,10 @@ GCF is most effective when:
 - Deeply nested configuration with no repeated structures (YAML/JSON is fine)
 - Systems that require JSON schema validation (GCF has no schema system yet)
 
+## "But I need human-readable output"
+
+Use GCF for the wire format and JSON for the display format. The agent reads GCF (cheap: 79% fewer tokens in the context window), does its work, then calls `decode()` at the end to render JSON for a human. The context window savings are already banked. Readability is a last-mile rendering concern, not a wire format property.
+
 ## Install
 
 ::: code-group
