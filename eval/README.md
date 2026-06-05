@@ -85,9 +85,7 @@ The same LLM (Claude via `claude -p`, zero prior context) is asked to produce st
 | 50 | 25 | YES | 74% | YES | 40% | **52% smaller** |
 | 100 | 50 | YES | 75% | YES | 40% | **52% smaller** |
 
-Both formats achieve 5/5 validity with a primer. **GCF output is 52% smaller than TOON output at every scale.**
-
-Without a primer (cold-start): both achieve 3/5 (tied).
+Both formats achieve 5/5 validity. **GCF output is 52% smaller than TOON output at every scale.**
 
 ---
 
