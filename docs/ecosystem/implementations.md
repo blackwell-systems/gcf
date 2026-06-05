@@ -22,8 +22,10 @@ All four support both encoding profiles:
 | Delta encoding | ✓ | ✓ | ✓ | ✓ |
 | Thread-safe Session | ✓ | n/a | ✓ | ✓ |
 | CLI | ✓ | ✓ | ✓ | — |
-
-Source: [gcf-go](https://github.com/blackwell-systems/gcf-go) · [gcf-typescript](https://github.com/blackwell-systems/gcf-typescript) · [gcf-python](https://github.com/blackwell-systems/gcf-python) · [gcf-rust](https://github.com/blackwell-systems/gcf-rust)
+| | | | | |
+| **GitHub** | [gcf-go](https://github.com/blackwell-systems/gcf-go) | [gcf-typescript](https://github.com/blackwell-systems/gcf-typescript) | [gcf-python](https://github.com/blackwell-systems/gcf-python) | [gcf-rust](https://github.com/blackwell-systems/gcf-rust) |
+| **Registry** | [pkg.go.dev](https://pkg.go.dev/github.com/blackwell-systems/gcf-go) | [npm](https://www.npmjs.com/package/@blackwell-systems/gcf) | [PyPI](https://pypi.org/project/gcf-python/) | [crates.io](https://crates.io/crates/gcf) |
+| **API Docs** | [Go API](/reference/api-go) | [TypeScript API](/reference/api-typescript) | [Python API](/reference/api-python) | [README](https://github.com/blackwell-systems/gcf-rust#api) |
 
 ## MCP Proxy
 
