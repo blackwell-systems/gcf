@@ -22,7 +22,7 @@ features:
   - title: 75% fewer output tokens
     details: LLMs produce valid GCF with a 3-line primer. 52% smaller output than TOON. Proven at 5 to 100 symbols with 100% decoder validity.
   - title: Optimized for the reader that matters
-    details: At 500 symbols, JSON (the "readable" format) drops to 76.9% accuracy. The LLM miscounts records, drowning in structural noise. GCF scores 100% (13/13). Human-readability and LLM-readability diverge at scale. GCF optimized for the one that matters.
+    details: At 500 symbols, JSON drops to 76.9% accuracy and TOON to 92.3%. GCF scores 100% (13/13). TOON fails on distance grouping (no section headers). JSON drowns in structural noise. GCF is the only format with perfect comprehension at scale, and does it in 32% fewer tokens than TOON.
   - title: Gets cheaper every call
     details: Session deduplication (92.7% savings by 5th call) and delta encoding (81.2% on re-queries). No other format has these. They compound.
   - title: Beats TOON on TOON's benchmark
