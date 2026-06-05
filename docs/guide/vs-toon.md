@@ -22,7 +22,7 @@ This page compares the two formats honestly, using TOON's own benchmark data and
 | Generic data (any JSON) | Yes (tabular profile) | Yes |
 | Streaming encode | No (planned) | Yes |
 | Key folding (dotted paths) | No | Yes |
-| LLM comprehension at 500 symbols | 100% | 100% |
+| LLM comprehension at 500 symbols | 100% (13/13) | 92.3% (12/13) |
 | **LLM generation (output tokens)** | **75% fewer than JSON** | **40% fewer than JSON** |
 | Human-readable | Dense, agent-optimized | YAML-like, human-friendly |
 | Zero dependencies | Yes | Yes |
@@ -43,7 +43,7 @@ Tested on [TOON's own benchmark](https://github.com/blackwell-systems/toon/tree/
 | Analytics time-series (365 days, flat) | 8,398 | 9,127 | **GCF 8% smaller** |
 | GitHub repos (100 rows, flat) | 8,576 | 8,744 | **GCF 2% smaller** |
 | Deeply nested config (small) | 698 | 618 | TOON 11% smaller |
-| **Mixed-structure total** | **170,449** | **227,896** | **GCF 34% smaller** |
+| **Mixed-structure total** | **169,554** | **227,896** | **GCF 34% smaller** |
 | **Flat-only total** | **66,029** | **67,837** | **GCF 3% smaller** |
 
 GCF wins on 5 of 6 datasets. TOON's only advantage: deeply nested configuration (a 75-token difference on a 618-token payload).
