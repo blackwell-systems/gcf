@@ -6,10 +6,10 @@ Four official implementations, all production-ready, all MIT licensed, all zero 
 
 | Language | Package | Install | Registry | Status |
 |----------|---------|---------|----------|--------|
-| Go | `gcf-go` | `go get github.com/blackwell-systems/gcf-go` | [pkg.go.dev](https://pkg.go.dev/github.com/blackwell-systems/gcf-go) | ✅ Stable |
-| TypeScript | `@blackwell-systems/gcf` | `npm install @blackwell-systems/gcf` | [npm](https://www.npmjs.com/package/@blackwell-systems/gcf) | ✅ Stable |
-| Python | `gcf-python` | `pip install gcf-python` | [PyPI](https://pypi.org/project/gcf-python/) | ✅ Stable |
-| Rust | `gcf` | `cargo add gcf` | [crates.io](https://crates.io/crates/gcf) | ✅ Stable |
+| Go | `gcf-go` | `go get github.com/blackwell-systems/gcf-go` | [pkg.go.dev](https://pkg.go.dev/github.com/blackwell-systems/gcf-go) | Stable |
+| TypeScript | `@blackwell-systems/gcf` | `npm install @blackwell-systems/gcf` | [npm](https://www.npmjs.com/package/@blackwell-systems/gcf) | Stable |
+| Python | `gcf-python` | `pip install gcf-python` | [PyPI](https://pypi.org/project/gcf-python/) | Stable |
+| Rust | `gcf` | `cargo add gcf` | [crates.io](https://crates.io/crates/gcf) | Stable |
 
 All four support both encoding profiles:
 
