@@ -157,7 +157,7 @@ if [[ "$cumulative" != "?" ]]; then
   "schemaVersion": 1,
   "label": "downloads",
   "message": "${cumulative_fmt}",
-  "color": "00e5ff"
+  "color": "1e3a5f"
 }
 BADGEEOF
 fi
