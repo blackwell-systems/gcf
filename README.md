@@ -7,15 +7,15 @@
 
 # GCF: Graph Compact Format
 
-**Token-optimized wire format for structured LLM tool responses.**
+**The most token-efficient wire format for LLMs. Bidirectional: cheaper to read and cheaper to write.**
 
 Two encoding profiles, one grammar:
 
-- **Graph profile**: code graph payloads (symbols, edges, distance groups). 84% fewer tokens than JSON.
+- **Graph profile**: code graph payloads (symbols, edges, distance groups). 79% fewer tokens than JSON.
 - **Tabular profile**: any structured data (arrays, nested objects, mixed types). 34% fewer tokens than TOON.
 
 ```
-Your data  ───▶  encode()  ───▶  GCF  ───▶  LLM
+Tool  ───▶  encode()  ───▶  GCF  ───▶  LLM  ───▶  GCF  ───▶  Agent/Tool
 ```
 
 ### vs JSON: 79% fewer tokens, JSON can't even count at scale
@@ -49,14 +49,14 @@ Token efficiency (TOON's datasets, TOON's tokenizer):
 ### LLM comprehension: 100% accuracy at the lowest token cost
 
 ```
-Accuracy at 500 symbols (6 structured extraction questions):
+Accuracy at 500 symbols (13 structured extraction questions):
 
-  GCF    ████████████████████████████████████████████████████  100%  ✓
-  TOON   ████████████████████████████████████████████████████  100%  ✓
-  JSON   █████████████████████████████████░░░░░░░░░░░░░░░░░░  66.7% ✗ miscounts records
+  GCF    ████████████████████████████████████████████████████  100%   ✓ (13/13)
+  TOON   ████████████████████████████████████████████████░░░░  92.3%  (12/13)
+  JSON   ██████████████████████████████████████░░░░░░░░░░░░░░  76.9%  ✗ (10/13)
 ```
 
-GCF matches TOON's accuracy in 32% fewer tokens. JSON fails because field-name repetition at scale overwhelms the model's counting.
+GCF beats TOON on accuracy AND uses 32% fewer tokens. JSON fails on counting tasks because field-name repetition at scale overwhelms the model's attention.
 
 ---
 
@@ -120,7 +120,7 @@ One header declares field names. Rows are positional values only. No field names
 |---|---|---|---|
 | **Input tokens (500 symbols)** | 11,090 | 16,378 | 53,341 |
 | **Output tokens (100 symbols)** | 5,619 | 11,650 | 22,180 |
-| **Comprehension accuracy** | 100% | 100% | 66.7% |
+| **Comprehension accuracy** | 100% (13/13) | 92.3% (12/13) | 76.9% (10/13) |
 | **Generation validity** | 5/5 | 5/5 | N/A |
 | **Session dedup (5th call)** | 92.7% savings | N/A | N/A |
 | **Delta encoding** | 81.2% savings | N/A | N/A |
@@ -168,12 +168,12 @@ Both profiles share the same grammar: `##` headers, `@` IDs, positional fields. 
 
 **GCF (233 tokens):**
 ```
-GCF tool=context_for_task budget=5000 tokens=1847 symbols=2
+GCF tool=context_for_task budget=5000 tokens=1847 symbols=2 edges=1
 ## targets
 @0 fn github.com/org/repo/pkg.AuthMiddleware 0.78 lsp_resolved
 ## related
 @1 fn github.com/org/repo/pkg.NewServer 0.54 lsp_resolved
-## edges
+## edges [1]
 @0<@1 calls
 ```
 
@@ -189,13 +189,13 @@ No other format has these. They're possible because GCF was designed for multi-t
 
 ## Benchmarks
 
-### Comprehension accuracy (500 symbols, 6 extraction questions)
+### Comprehension accuracy (500 symbols, 13 extraction questions)
 
 | Format | Accuracy | Tokens | vs JSON |
 |--------|----------|--------|---------|
-| **GCF** | **100%** (6/6) | **11,090** | **79% fewer** |
-| TOON | 100% (6/6) | 16,378 | 69% fewer |
-| JSON | 66.7% (4/6) | 53,341 | baseline |
+| **GCF** | **100%** (13/13) | **11,090** | **79% fewer** |
+| TOON | 92.3% (12/13) | 16,378 | 69% fewer |
+| JSON | 76.9% (10/13) | 53,341 | baseline |
 
 Eval: [gcf-go/eval](https://github.com/blackwell-systems/gcf-go/tree/main/eval)
 
@@ -239,6 +239,8 @@ Full guides, API reference, benchmarks, and integration patterns: **[gcformat.co
 - [Delta Encoding](https://gcformat.com/guide/delta.html)
 - [MCP Integration](https://gcformat.com/guide/mcp.html)
 - [Benchmarks](https://gcformat.com/guide/benchmarks.html)
+- [GCF vs TOON](https://gcformat.com/guide/vs-toon.html)
+- [MCP Proxy Guide](https://gcformat.com/guide/proxy.html)
 - [Playground](https://gcformat.com/playground.html)
 - [Syntax Cheatsheet](https://gcformat.com/reference/cheatsheet.html)
 - [Token Savings Proof](https://gcformat.com/reference/token-savings-proof.html)
