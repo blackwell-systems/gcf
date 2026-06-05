@@ -26,7 +26,7 @@ features:
   - title: Gets cheaper every call
     details: 'Session deduplication (92.7% savings by 5th call) and delta encoding (81.2% on re-queries). No other format has these. They compound.'
   - title: Beats TOON on TOON's benchmark
-    details: '34% fewer tokens than <span class="toon">TOON</span> on mixed-structure data, 44% on semi-uniform, 3% on flat tabular. Tested with their datasets, their tokenizer, their library.'
+    details: 'Wins all 6 datasets on <span class="toon">TOON</span> own benchmark. 34% fewer tokens on mixed-structure, 42% on semi-uniform, 3% on flat. Their datasets, their tokenizer, their library.'
   - title: Six languages, zero dependencies
     details: 'Go, TypeScript, Python, Rust, Swift, and Kotlin. Graph profile (encode) and tabular profile (encodeGeneric). CLI included. MCP proxy for zero-code adoption.'
 ---

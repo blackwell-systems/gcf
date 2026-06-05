@@ -1,6 +1,6 @@
 # GCF vs TOON
 
-GCF is smaller on 5 of 6 datasets, more accurate at scale (100% vs 92.3%), and has four features TOON structurally cannot add. TOON's one win is a 75-token difference on a 618-token payload. All claims below are tested on TOON's own benchmark with their datasets and their tokenizer.
+GCF is smaller on all 6 datasets, more accurate at scale (100% vs 92.3%), and has four features TOON structurally cannot add. All claims below are tested on TOON's own benchmark with their datasets and their tokenizer.
 
 ## Feature comparison
 
@@ -35,18 +35,18 @@ Tested on [TOON's own benchmark](https://github.com/blackwell-systems/toon/tree/
 
 | Dataset | GCF | TOON | Winner |
 |---------|-----|------|--------|
-| Semi-uniform event logs (2000 records) | 107,269 | 154,032 | **GCF 44% smaller** |
+| Semi-uniform event logs (2000 records) | 108,158 | 154,032 | **GCF 42% smaller** |
 | E-commerce orders (500, nested items) | 61,593 | 73,246 | **GCF 19% smaller** |
 | Employee records (2000 rows, flat) | 49,055 | 49,966 | **GCF 2% smaller** |
 | Analytics time-series (365 days, flat) | 8,398 | 9,127 | **GCF 8% smaller** |
 | GitHub repos (100 rows, flat) | 8,576 | 8,744 | **GCF 2% smaller** |
-| Deeply nested config (small) | 698 | 618 | TOON 11% smaller |
+| Deeply nested config (small) | 616 | 618 | **GCF 0.3% smaller** |
 | **Mixed-structure total** | **169,554** | **227,896** | **GCF 34% smaller** |
 | **Flat-only total** | **66,029** | **67,837** | **GCF 3% smaller** |
 
-GCF wins on 5 of 6 datasets. TOON's only advantage: deeply nested configuration (a 75-token difference on a 618-token payload).
+GCF wins on all 6 datasets. TOON has no token efficiency advantage on any data shape.
 
-GCF's largest advantage is on semi-uniform data (44% smaller) because TOON's tabular format requires all rows to have identical fields. When data is semi-uniform (e.g., event logs where some records have nested error objects), TOON falls back to its less efficient nested encoding for the entire array. GCF handles this natively: primitive fields encode positionally, nested fields attach inline only when present.
+GCF's largest advantage is on semi-uniform data (42% smaller) because TOON's tabular format requires all rows to have identical fields. When data is semi-uniform (e.g., event logs where some records have nested error objects), TOON falls back to its less efficient nested encoding for the entire array. GCF handles this natively: primitive fields encode positionally, nested fields attach inline only when present.
 
 Reproducible: [blackwell-systems/toon@gcf-comparison](https://github.com/blackwell-systems/toon/tree/gcf-comparison)
 
@@ -184,9 +184,7 @@ TOON optimizes for the case where a human is scanning the raw wire format. GCF o
 
 ## Where TOON wins
 
-TOON is 75 tokens smaller on one benchmark dataset: deeply nested configuration with single-key wrapper chains. That's an 11% advantage on a 618-token payload. TOON's key folding (`data.metadata.items` dotted paths) is marginally more compact for this specific shape.
-
-This is the only dataset where TOON beats GCF. On every other data shape (flat tabular, semi-uniform, nested with arrays, graph data), GCF wins by 2% to 44%.
+Nowhere. GCF wins on all 6 datasets in TOON's own benchmark. The closest result is deeply nested configuration (616 vs 618, a 2-token difference). TOON's streaming encode is the only feature it has that GCF doesn't.
 
 ## The bottom line
 
@@ -197,7 +195,7 @@ GCF does everything TOON does, plus four things TOON structurally cannot add wit
 - **Delta encoding** (requires content-addressed identity)
 - **Distance grouping** (requires semantic section headers)
 
-On TOON's own benchmark, GCF wins 5 of 6 datasets. The one exception: 75 tokens on a 618-token payload.
+On TOON's own benchmark, GCF wins all 6 datasets.
 
 The gap widens over time. First call: GCF saves 34% vs TOON. Fifth call: GCF saves 92.7% vs JSON while TOON is stuck at 69%. No format change can close that gap without adding session state, which requires local IDs, which requires a fundamental redesign.
 

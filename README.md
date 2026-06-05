@@ -39,7 +39,7 @@ Token efficiency (TOON's datasets, TOON's tokenizer):
 
   Semi-uniform data (most common real-world pattern):
   TOON   ████████████████████████████████████████████████████  154,032
-  GCF    ████████████████████████████████████░░░░░░░░░░░░░░░  107,269  ◀ 44% smaller
+  GCF    ████████████████████████████████████░░░░░░░░░░░░░░░  108,158  ◀ 42% smaller
 
   Flat tabular data:
   TOON   ████████████████████████████████████████████████████   67,837
@@ -214,7 +214,7 @@ Eval: [gcf-go/eval](https://github.com/blackwell-systems/gcf-go/tree/main/eval)
 |-------|-----|------|--------|
 | Mixed-structure (nested, semi-uniform) | 169,554 | 227,896 | **GCF 34% smaller** |
 | Flat-only (tabular) | 66,026 | 67,837 | **GCF 3% smaller** |
-| Semi-uniform event logs | 107,269 | 154,032 | **GCF 44% smaller** |
+| Semi-uniform event logs | 108,158 | 154,032 | **GCF 42% smaller** |
 
 Fork with reproducible results: [blackwell-systems/toon@gcf-comparison](https://github.com/blackwell-systems/toon/tree/gcf-comparison)
 

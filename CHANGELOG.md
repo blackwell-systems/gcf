@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.3 (2026-06-05)
+
+- Primitive array inlining in tabular profile: `tags[3]: read,write,admin` (was 4 lines)
+- GCF now wins all 6 datasets on TOON's benchmark (was 5/6)
+- Deeply nested config: 616 tokens (was 698, TOON: 618)
+- New conformance fixture: 018_primitive_array_inline.json
+
 ## v1.2 (2026-06-05)
 
 - Edge count in header: `edges=N` field added to graph profile header

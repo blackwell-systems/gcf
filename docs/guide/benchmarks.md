@@ -67,7 +67,7 @@ Datasets with nested or semi-uniform structures. This is where most real-world d
 ```
 Semi-uniform event logs (2000 records):
   TOON   ████████████████████████████████████████████████████  154,032
-  GCF    ████████████████████████████████████░░░░░░░░░░░░░░░  107,269  ◀ 44% smaller
+  GCF    ████████████████████████████████████░░░░░░░░░░░░░░░  108,158  ◀ 42% smaller
 
 E-commerce orders (500 orders, nested items):
   TOON   ████████████████████████████████████████████████████   73,246
@@ -100,14 +100,14 @@ Flat-only total:
 
 | Dataset | Structure | GCF | TOON | CSV | JSON |
 |---------|-----------|-----|------|-----|------|
-| Event logs | Semi-uniform | **107,269** | 154,032 | n/a | 181,141 |
+| Event logs | Semi-uniform | **108,158** | 154,032 | n/a | 181,141 |
 | E-commerce | Nested | **61,592** | 73,246 | n/a | 109,574 |
-| Nested config | Deep | 693 | **618** | n/a | 905 |
+| Nested config | Deep | **616** | 618 | n/a | 905 |
 | Employees | Flat | **49,054** | 49,966 | 47,137 | 127,050 |
 | Analytics | Flat | **8,397** | 9,127 | 8,395 | 22,257 |
 | GitHub repos | Flat | **8,575** | 8,744 | 8,512 | 15,144 |
 
-TOON's only win: deeply nested configuration. A 75-token difference on a 618-token payload.
+GCF wins all 6 datasets. The closest result: deeply nested configuration (616 vs 618, a 2-token difference).
 
 ### Why GCF wins on semi-uniform data
 
