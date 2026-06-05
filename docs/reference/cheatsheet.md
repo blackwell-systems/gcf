@@ -15,15 +15,15 @@ GCF has two encoding profiles that share the same grammar primitives (`##`, `@`,
 ### Header
 
 ```
-GCF tool=<name> budget=<int> tokens=<int> symbols=<int> pack_root=<hex>
+GCF tool=<name> budget=<int> tokens=<int> symbols=<int> edges=<int> pack_root=<hex>
 ```
 
 Only `tool` is required. All other fields are optional.
 
 ```
 GCF tool=context_for_task
-GCF tool=context_for_task budget=5000 tokens=1847 symbols=10
-GCF tool=context_for_task budget=5000 tokens=1847 symbols=10 pack_root=a1b2c3d4
+GCF tool=context_for_task budget=5000 tokens=1847 symbols=10 edges=8
+GCF tool=context_for_task budget=5000 tokens=1847 symbols=10 edges=8 pack_root=a1b2c3d4
 GCF tool=context_for_task tokens=800 symbols=5 session=true
 GCF tool=context_for_task delta=true base_root=aaa111 new_root=bbb222 tokens=30 savings=81%
 ```
@@ -72,7 +72,7 @@ GCF tool=context_for_task delta=true base_root=aaa111 new_root=bbb222 tokens=30 
 ## related       # distance 1 (one hop)
 ## extended      # distance 2 (broader context)
 ## distance_5    # explicit distance N
-## edges         # relationship section
+## edges [N]     # relationship section (N = edge count)
 ```
 
 ### Kind abbreviations
@@ -121,7 +121,7 @@ pkg.Router -> pkg.NewFunc calls
 ### Complete graph example
 
 ```
-GCF tool=context_for_task budget=5000 tokens=1847 symbols=5 pack_root=a1b2c3d4
+GCF tool=context_for_task budget=5000 tokens=1847 symbols=5 edges=4 pack_root=a1b2c3d4
 ## targets
 @0 fn github.com/org/repo/internal/auth.Middleware 0.78 lsp_resolved
 @1 type github.com/org/repo/internal/auth.Config 0.71 ast_inferred
@@ -130,7 +130,7 @@ GCF tool=context_for_task budget=5000 tokens=1847 symbols=5 pack_root=a1b2c3d4
 @3 method github.com/org/repo/internal/server.Server.Start 0.48 lsp_resolved
 ## extended
 @4 iface github.com/org/repo/internal/handler.Handler 0.32 structural
-## edges
+## edges [4]
 @0<@2 calls
 @1<@0 references
 @4<@2 implements

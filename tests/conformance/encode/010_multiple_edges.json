@@ -19,5 +19,5 @@
       {"source": "pkg.Server", "target": "pkg.Logger", "edgeType": "references", "status": ""}
     ]
   },
-  "expected": "GCF tool=blast_radius budget=10000 tokens=500 symbols=4\n## targets\n@0 fn pkg.Auth 0.95 lsp_resolved\n## related\n@1 type pkg.Server 0.80 lsp_resolved\n@2 type pkg.Config 0.60 ast_inferred\n## extended\n@3 iface pkg.Logger 0.40 structural\n## edges\n@0<@1 calls\n@2<@0 references\n@3<@0 implements\n@3<@1 references\n"
+  "expected": "GCF tool=blast_radius budget=10000 tokens=500 symbols=4 edges=4\n## targets\n@0 fn pkg.Auth 0.95 lsp_resolved\n## related\n@1 type pkg.Server 0.80 lsp_resolved\n@2 type pkg.Config 0.60 ast_inferred\n## extended\n@3 iface pkg.Logger 0.40 structural\n## edges [4]\n@0<@1 calls\n@2<@0 references\n@3<@0 implements\n@3<@1 references\n"
 }

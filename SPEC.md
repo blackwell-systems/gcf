@@ -2,9 +2,9 @@
 
 ## Graph Compact Format
 
-**Version:** 1.1
+**Version:** 1.2
 
-**Date:** 2026-06-04
+**Date:** 2026-06-05
 
 **Status:** Stable
 
@@ -46,7 +46,7 @@ line          = node-line | edge-line | ref-line | tabular-row
               | kv-line | nested-ref | comment ;
 
 header        = "GCF" SP key-value { SP key-value } ;
-group-header  = "##" SP group-name [ SP "[" count "]" field-decl ] ;
+group-header  = "##" SP group-name [ SP "[" count "]" [ field-decl ] ] ;
 field-decl    = "{" field-name { "," field-name } "}" ;
 node-line     = "@" id SP kind SP qname SP score SP provenance ;
 edge-line     = "@" target-id "<" "@" source-id SP edge-type [ SP status ] ;
@@ -81,7 +81,7 @@ Line terminator is `LF` (U+000A). Encoders MUST use `LF`. Decoders MUST tolerate
 The graph profile begins with a header line identifying the format and carrying payload metadata. The tabular profile (Section 6a) does not require a header line.
 
 ```
-GCF tool=context_for_task budget=5000 tokens=1847 symbols=10 pack_root=a1b2c3d4...
+GCF tool=context_for_task budget=5000 tokens=1847 symbols=10 edges=8 pack_root=a1b2c3d4...
 ```
 
 ### Required fields (graph profile)
@@ -97,6 +97,7 @@ GCF tool=context_for_task budget=5000 tokens=1847 symbols=10 pack_root=a1b2c3d4.
 | `budget` | integer | Token budget requested by the consumer |
 | `tokens` | integer | Actual tokens used in this payload |
 | `symbols` | integer | Number of symbols in this payload |
+| `edges` | integer | Number of edges in this payload |
 | `pack_root` | string | Content-addressed identity of this payload (hex hash). Enables deduplication and delta encoding. |
 | `session` | boolean | `true` if session statefulness is active |
 | `delta` | boolean | `true` if this is a delta payload (see Section 8) |
@@ -159,7 +160,7 @@ Source and target IDs MUST reference symbols declared earlier in the payload. En
 ## targets
 ## related
 ## extended
-## edges
+## edges [N]
 ## distance_N
 ```
 
@@ -170,10 +171,10 @@ Group headers partition the payload into semantic sections. The group a node app
 | `targets` | 0 | Direct matches for the query |
 | `related` | 1 | One hop away from targets |
 | `extended` | 2+ | Broader structural context |
-| `edges` | n/a | Relationship section (contains edge lines) |
+| `edges [N]` | n/a | Relationship section (contains edge lines); `N` is the edge count |
 | `distance_N` | N | Explicit distance for N > 2 |
 
-Group headers eliminate per-node distance fields. One header replaces N repeated fields.
+Group headers eliminate per-node distance fields. One header replaces N repeated fields. The `[N]` suffix on the edges header provides an explicit count, enabling LLMs to verify edge totals without scanning.
 
 ## 6a. Tabular Encoding (Generic Profile)
 
@@ -276,11 +277,11 @@ Both profiles use the same grammar primitives: `##` headers, `@` IDs, positional
 When the header contains `session=true`, previously-transmitted symbols can be referenced without retransmission:
 
 ```
-GCF tool=context_for_files tokens=800 symbols=5 session=true
+GCF tool=context_for_files tokens=800 symbols=5 edges=1 session=true
 ## targets
 @0  # previously transmitted
 @7 fn github.com/org/repo/pkg.NewHandler 0.62 lsp_resolved
-## edges
+## edges [1]
 @0<@7 calls
 ```
 
@@ -373,9 +374,11 @@ Conforming graph-profile encoders MUST:
 
 - Emit UTF-8 output with LF line endings
 - Emit a header line beginning with `GCF` containing at least the `tool` field
+- Emit the `edges` field in the header with an accurate count of edges in the payload
 - Assign symbol IDs sequentially starting from 0
 - Emit scores with exactly 2 decimal places
 - Emit kind abbreviations from the standard table (Section 4) when available
+- Emit the edges section header as `## edges [N]` where N matches the number of edge lines
 - Emit edges only between previously declared symbol IDs
 - Order symbols by score descending within each distance group
 - Order edges by source ID then target ID
@@ -404,6 +407,7 @@ Conforming graph-profile decoders MUST:
 - Parse node lines with exactly 5 positional fields
 - Expand kind abbreviations from the standard table
 - Pass unknown kind abbreviations through verbatim
+- Parse the edges section header `## edges [N]` (stripping the `[N]` suffix to identify the group)
 - Parse edge lines with the `@target<@source type` format
 - Reject edges referencing undeclared symbol IDs
 - Ignore comment lines (starting with `# `)

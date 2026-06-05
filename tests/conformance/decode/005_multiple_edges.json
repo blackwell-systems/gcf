@@ -1,7 +1,7 @@
 {
   "name": "decode_multiple_edges",
   "description": "Decode payload with multiple symbols and edges",
-  "input": "GCF tool=test budget=5000 tokens=300 symbols=3\n## targets\n@0 fn pkg.A 0.90 lsp\n## related\n@1 type pkg.B 0.70 ast\n@2 method pkg.C 0.50 lsp\n## edges\n@0<@1 calls\n@1<@2 references\n@0<@2 implements\n",
+  "input": "GCF tool=test budget=5000 tokens=300 symbols=3 edges=3\n## targets\n@0 fn pkg.A 0.90 lsp\n## related\n@1 type pkg.B 0.70 ast\n@2 method pkg.C 0.50 lsp\n## edges [3]\n@0<@1 calls\n@1<@2 references\n@0<@2 implements\n",
   "expected": {
     "tool": "test",
     "tokenBudget": 5000,

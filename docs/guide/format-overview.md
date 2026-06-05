@@ -10,14 +10,14 @@ Both profiles share the same primitives: `##` section headers, `@` local IDs, po
 ## Graph profile at a glance
 
 ```
-GCF tool=context_for_task budget=5000 tokens=1847 symbols=10 pack_root=a1b2c3
+GCF tool=context_for_task budget=5000 tokens=1847 symbols=10 edges=2 pack_root=a1b2c3
 ## targets
 @0 fn pkg.AuthMiddleware 0.78 lsp_resolved
 @1 type pkg.AuthConfig 0.71 ast_inferred
 ## related
 @2 fn pkg.NewServer 0.54 lsp_resolved
 @3 method pkg.Server.Start 0.48 lsp_resolved
-## edges
+## edges [2]
 @0<@2 calls
 @1<@0 references
 ```
@@ -29,7 +29,7 @@ Five elements in the graph profile. Four more in the tabular profile (see [below
 The first line identifies the format and carries payload metadata:
 
 ```
-GCF tool=context_for_task budget=5000 tokens=1847 symbols=10 pack_root=a1b2c3d4
+GCF tool=context_for_task budget=5000 tokens=1847 symbols=10 edges=8 pack_root=a1b2c3d4
 ```
 
 | Field | Required | Description |
@@ -38,6 +38,7 @@ GCF tool=context_for_task budget=5000 tokens=1847 symbols=10 pack_root=a1b2c3d4
 | `budget` | No | Token budget requested by consumer |
 | `tokens` | No | Actual tokens used in this payload |
 | `symbols` | No | Number of symbols (informational) |
+| `edges` | No | Number of edges (informational) |
 | `pack_root` | No | Content-addressed identity (hex hash). Enables delta encoding. |
 | `session` | No | `true` if session statefulness is active |
 | `delta` | No | `true` if this is a delta payload |
@@ -96,7 +97,7 @@ Optional status field for diff payloads:
 ## targets
 ## related
 ## extended
-## edges
+## edges [N]
 ## distance_N
 ```
 
@@ -108,9 +109,9 @@ Groups partition the payload into semantic sections. The group a symbol appears 
 | `## related` | 1 | One hop from targets |
 | `## extended` | 2 | Broader context |
 | `## distance_N` | N | Explicit distance for N > 2 |
-| `## edges` | n/a | Relationship section |
+| `## edges [N]` | n/a | Relationship section; `N` is the edge count |
 
-**Why this saves tokens:** Instead of a `"distance": 0` field on every record, one header replaces N fields.
+**Why this saves tokens:** Instead of a `"distance": 0` field on every record, one header replaces N fields. The `[N]` on the edges header gives an explicit count so the model doesn't have to scan and count.
 
 ## 5. Comments
 
@@ -181,12 +182,12 @@ Unknown kinds are passed through verbatim (no error).
 vs GCF:
 
 ```
-GCF tool=context_for_task budget=5000 tokens=1847 symbols=2
+GCF tool=context_for_task budget=5000 tokens=1847 symbols=2 edges=1
 ## targets
 @0 fn github.com/org/repo/pkg.AuthMiddleware 0.78 lsp_resolved
 ## related
 @1 fn github.com/org/repo/pkg.NewServer 0.54 lsp_resolved
-## edges
+## edges [1]
 @0<@1 calls
 ```
 

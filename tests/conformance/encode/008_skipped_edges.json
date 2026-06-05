@@ -13,5 +13,5 @@
       {"source": "unknown.B", "target": "a.A", "edgeType": "calls", "status": ""}
     ]
   },
-  "expected": "GCF tool=test budget=0 tokens=0 symbols=1\n## targets\n@0 fn a.A 0.90 x\n## edges\n"
+  "expected": "GCF tool=test budget=0 tokens=0 symbols=1 edges=0\n## targets\n@0 fn a.A 0.90 x\n## edges [0]\n"
 }

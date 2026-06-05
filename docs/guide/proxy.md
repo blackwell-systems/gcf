@@ -87,7 +87,7 @@ The proxy looks for JSON-RPC responses with `result.content[].text` fields conta
 **The LLM receives (GCF, 916 bytes):**
 
 ```
-GCF tool=context_for_task budget=10000 tokens=3200 symbols=10
+GCF tool=context_for_task budget=10000 tokens=3200 symbols=10 edges=6
 ## targets
 @0 fn github.com/org/repo/pkg.AuthMiddleware 0.92 lsp_resolved
 @1 fn github.com/org/repo/pkg.ValidateToken 0.87 lsp_resolved
@@ -99,7 +99,7 @@ GCF tool=context_for_task budget=10000 tokens=3200 symbols=10
 ## extended
 @6 type github.com/org/repo/internal.TokenCache 0.41 structural
 @7 iface github.com/org/repo/internal.Logger 0.35 structural
-## edges
+## edges [6]
 @0<@3 calls
 @1<@0 calls
 @6<@1 references

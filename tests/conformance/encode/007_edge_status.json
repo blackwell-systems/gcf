@@ -18,5 +18,5 @@
       {"source": "a.B", "target": "a.C", "edgeType": "references", "status": ""}
     ]
   },
-  "expected": "GCF tool=test budget=0 tokens=0 symbols=3\n## targets\n@0 fn a.A 0.90 x\n@1 fn a.B 0.80 x\n@2 fn a.C 0.70 x\n## edges\n@0<@1 calls added\n@0<@2 imports removed\n@1<@2 calls\n@2<@1 references\n"
+  "expected": "GCF tool=test budget=0 tokens=0 symbols=3 edges=4\n## targets\n@0 fn a.A 0.90 x\n@1 fn a.B 0.80 x\n@2 fn a.C 0.70 x\n## edges [4]\n@0<@1 calls added\n@0<@2 imports removed\n@1<@2 calls\n@2<@1 references\n"
 }

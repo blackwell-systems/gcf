@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.2 (2026-06-05)
+
+- Edge count in header: `edges=N` field added to graph profile header
+- Edge section header now includes count: `## edges [N]` (e.g. `## edges [200]`)
+- Comprehension eval expanded to 13 questions (from 6), GCF achieves 100% (13/13)
+- Swift implementation added (SPM distribution)
+- Kotlin implementation added (JitPack distribution)
+- Conformance fixtures updated to reflect new edge count format
+- Spec bumped to v1.2
+
 ## v1.1 (2026-06-03)
 
 - Tabular encoding profile (Section 6a): generic encoding for arbitrary structured data

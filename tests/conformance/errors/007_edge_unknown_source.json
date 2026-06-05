@@ -1,6 +1,6 @@
 {
   "name": "edge_unknown_source",
   "description": "Edge referencing undeclared source ID must error",
-  "input": "GCF tool=test budget=5000 tokens=100 symbols=1\n## targets\n@0 fn pkg.Foo 0.90 lsp\n## edges\n@0<@99 calls\n",
+  "input": "GCF tool=test budget=5000 tokens=100 symbols=1 edges=1\n## targets\n@0 fn pkg.Foo 0.90 lsp\n## edges [1]\n@0<@99 calls\n",
   "expectedError": true
 }

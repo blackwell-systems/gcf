@@ -128,12 +128,12 @@ fmt.Println(gcf.Encode(p))
 **Output:**
 
 ```
-GCF tool=context_for_task budget=5000 tokens=1847 symbols=2
+GCF tool=context_for_task budget=5000 tokens=1847 symbols=2 edges=1
 ## targets
 @0 fn pkg.AuthMiddleware 0.78 lsp_resolved
 ## related
 @1 fn pkg.NewServer 0.54 lsp_resolved
-## edges
+## edges [1]
 @0<@1 calls
 ```
 

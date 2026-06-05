@@ -57,7 +57,7 @@ cd gcf-python && pytest tests/test_conformance.py
       {"source": "pkg.Server", "target": "pkg.Auth", "edgeType": "calls", "status": ""}
     ]
   },
-  "expected": "GCF tool=context_for_task budget=5000 tokens=1847 symbols=2\n## targets\n@0 fn pkg.Auth 0.78 lsp_resolved\n## related\n@1 fn pkg.Server 0.54 lsp_resolved\n## edges\n@0<@1 calls\n"
+  "expected": "GCF tool=context_for_task budget=5000 tokens=1847 symbols=2 edges=1\n## targets\n@0 fn pkg.Auth 0.78 lsp_resolved\n## related\n@1 fn pkg.Server 0.54 lsp_resolved\n## edges [1]\n@0<@1 calls\n"
 }
 ```
 
@@ -67,7 +67,7 @@ cd gcf-python && pytest tests/test_conformance.py
 {
   "name": "basic_decode",
   "description": "Parse a simple GCF payload",
-  "input": "GCF tool=context_for_task budget=5000 tokens=1847 symbols=2\n## targets\n@0 fn pkg.Auth 0.78 lsp_resolved\n## related\n@1 fn pkg.Server 0.54 lsp_resolved\n## edges\n@0<@1 calls\n",
+  "input": "GCF tool=context_for_task budget=5000 tokens=1847 symbols=2 edges=1\n## targets\n@0 fn pkg.Auth 0.78 lsp_resolved\n## related\n@1 fn pkg.Server 0.54 lsp_resolved\n## edges [1]\n@0<@1 calls\n",
   "expected": {
     "tool": "context_for_task",
     "tokenBudget": 5000,

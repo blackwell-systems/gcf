@@ -16,7 +16,7 @@
           {"source": "pkg.Server", "target": "pkg.Auth", "edgeType": "calls", "status": ""}
         ]
       },
-      "expected": "GCF tool=test budget=5000 tokens=200 symbols=2 session=true\n## targets\n@0 fn pkg.Auth 0.90 lsp\n## related\n@1 fn pkg.Server 0.60 lsp\n## edges\n@0<@1 calls\n"
+      "expected": "GCF tool=test budget=5000 tokens=200 symbols=2 edges=1 session=true\n## targets\n@0 fn pkg.Auth 0.90 lsp\n## related\n@1 fn pkg.Server 0.60 lsp\n## edges [1]\n@0<@1 calls\n"
     },
     {
       "input": {
@@ -34,7 +34,7 @@
           {"source": "pkg.Auth", "target": "pkg.Config", "edgeType": "references", "status": ""}
         ]
       },
-      "expected": "GCF tool=test budget=5000 tokens=100 symbols=3 session=true\n## targets\n@0  # previously transmitted\n## related\n@1  # previously transmitted\n## extended\n@2 type pkg.Config 0.40 ast\n## edges\n@0<@1 calls\n@2<@0 references\n"
+      "expected": "GCF tool=test budget=5000 tokens=100 symbols=3 edges=2 session=true\n## targets\n@0  # previously transmitted\n## related\n@1  # previously transmitted\n## extended\n@2 type pkg.Config 0.40 ast\n## edges [2]\n@0<@1 calls\n@2<@0 references\n"
     }
   ]
 }

@@ -66,7 +66,7 @@ edges[3]{source,target,type}:
 
 **GCF edges (local IDs):**
 ```
-## edges
+## edges [3]
 @0<@3 calls
 @1<@0 calls
 @6<@1 references

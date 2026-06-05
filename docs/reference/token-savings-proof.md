@@ -135,8 +135,8 @@ For `e` edges:
 Total_json(edges) = e * L_json(edge) + 2e (commas) + 10 ("edges":[...])
                   = e * 135 + 10
 
-Total_gcf(edges)  = e * L_gcf(edge) + 9 ("## edges\n")
-                  = e * 14 + 9
+Total_gcf(edges)  = e * L_gcf(edge) + 15 ("## edges [N]\n")
+                  = e * 14 + 15
 ```
 
 For e=200:

@@ -27,7 +27,7 @@ It covers:
 
 ## Version
 
-Current: **GCF v1.1** (stable, 2026-06-04)
+Current: **GCF v1.2** (stable, 2026-06-05)
 
 ## Conventions
 
@@ -40,7 +40,7 @@ GCF supports two encoding profiles that share the same grammar primitives (`##` 
 - **Graph profile** (Sections 3-6): Encodes code graph payloads (symbols, edges, distance groups) for MCP tool responses.
 - **Tabular profile** (Section 6a): Encodes arbitrary structured data (arrays of objects, nested records, mixed types) using positional rows and pipe separators.
 
-Implementations MAY support one or both profiles. All four official implementations (Go, TypeScript, Python, Rust) support both.
+Implementations MAY support one or both profiles. All six official implementations (Go, TypeScript, Python, Rust, Swift, Kotlin) support both.
 
 ## Conformance
 

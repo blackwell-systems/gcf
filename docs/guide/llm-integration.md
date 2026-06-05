@@ -178,16 +178,16 @@ For the tabular profile:
 GCF payloads include `budget` and `tokens` in the header:
 
 ```
-GCF tool=context_for_task budget=5000 tokens=1847 symbols=10
+GCF tool=context_for_task budget=5000 tokens=1847 symbols=10 edges=8
 ```
 
-The producing tool packs symbols up to the budget. The consumer can verify how much budget was consumed. This enables multi-tool orchestration where each tool gets a share of the total context budget.
+The producing tool packs symbols up to the budget. The consumer can verify how much budget was consumed. The `edges=N` field lets the model verify edge count without scanning. This enables multi-tool orchestration where each tool gets a share of the total context budget.
 
 ## Error handling
 
 If the LLM receives truncated GCF (response cut off):
 - The `symbols=N` header field lets it verify completeness
-- Group headers are self-describing (missing `## edges` means no edges were included)
+- Group headers are self-describing (missing `## edges [N]` means no edges were included)
 - Each line is independent (a truncated line doesn't break parsing of prior lines)
 
 ## Reproduce the eval
