@@ -55,6 +55,7 @@ export default defineConfig({
           { text: 'API (Python)', link: '/reference/api-python' },
           { text: 'API (Rust)', link: '/reference/api-rust' },
           { text: 'API (Swift)', link: '/reference/api-swift' },
+          { text: 'API (Kotlin)', link: '/reference/api-kotlin' },
         ],
       },
       {
