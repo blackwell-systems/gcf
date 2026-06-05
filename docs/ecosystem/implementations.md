@@ -75,13 +75,21 @@ JSON responses are re-encoded as GCF mid-flight. Your server keeps outputting JS
 
 All three implementations produce byte-for-byte identical output for the same input. The format is the product, not the implementation. Token efficiency numbers are independent of which library you use.
 
+## Community Implementations
+
+| Language | Repository | Maintainer | Status |
+|----------|-----------|------------|--------|
+| | *Your implementation here* | | |
+
+[Add yours](https://github.com/blackwell-systems/gcf/blob/main/CONTRIBUTING.md)
+
 ## Contributing an implementation
 
-GCF is simple enough to implement in a weekend. The spec is 229 lines of EBNF + prose. If you're building an implementation:
+GCF is simple enough to implement in a weekend. The spec is ~480 lines. Create your own repo, implement against the spec, run the conformance tests, and PR a link here.
 
-1. Start with Encode (most useful, simplest)
-2. Add Decode (needed for testing)
-3. Add Session (needed for production MCP servers)
-4. Add Delta (needed for high-frequency re-queries)
+1. **Create your repo** (e.g. `yourname/gcf-rust`). You own it.
+2. **Pick a profile**: graph (`encode`/`decode`) or tabular (`encodeGeneric`) or both.
+3. **Run the conformance tests**: [29 fixtures](https://github.com/blackwell-systems/gcf/tree/main/tests/conformance) across both profiles.
+4. **PR a link** to this page with your language, repo, name, and status.
 
-Validate against the [conformance test suite](https://github.com/blackwell-systems/gcf/tree/main/tests/conformance) (14 fixtures across encode, decode, session, delta, and error cases). Test against the [comprehension eval](https://github.com/blackwell-systems/gcf-go/tree/main/eval) to verify your output is LLM-comprehensible at scale.
+Full guide: [CONTRIBUTING.md](https://github.com/blackwell-systems/gcf/blob/main/CONTRIBUTING.md)
