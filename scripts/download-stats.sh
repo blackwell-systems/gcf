@@ -27,9 +27,8 @@ gh_go_total=$(gh api "repos/${GCF_GO_REPO}/releases" --jq '[.[].assets[].downloa
 
 gh_proxy_total=$(gh api "repos/${GCF_PROXY_REPO}/releases" --jq '[.[].assets[].download_count] | add // 0' 2>/dev/null || echo "?")
 
-# Go modules: use proxy.golang.org for download estimates (no official API,
-# but pkg.go.dev badge gives a rough signal). Fall back to 0.
-go_proxy_total="--"
+crates_total=$(curl -sf -A "$UA" --max-time 10 "https://crates.io/api/v1/crates/gcf" \
+  | python3 -c "import json,sys; print(json.load(sys.stdin)['crate']['downloads'])" 2>/dev/null || echo "?")
 
 # ── High-water mark: never regress displayed totals ────────────────
 read_cache() {
@@ -63,17 +62,19 @@ npm_total=$(use_or_cache npm "$npm_total")
 pypi_total=$(use_or_cache pypi "$pypi_total")
 gh_go_total=$(use_or_cache gh_go "$gh_go_total")
 gh_proxy_total=$(use_or_cache gh_proxy "$gh_proxy_total")
+crates_total=$(use_or_cache crates "$crates_total")
 
 cat > "$CACHE" << CACHEEOF
 npm=${npm_total}
 pypi=${pypi_total}
 gh_go=${gh_go_total}
 gh_proxy=${gh_proxy_total}
+crates=${crates_total}
 CACHEEOF
 
 # ── Calculate cumulative total ──────────────────────────────────────
 cumulative=0
-for v in "$npm_total" "$pypi_total" "$gh_go_total" "$gh_proxy_total"; do
+for v in "$npm_total" "$pypi_total" "$gh_go_total" "$gh_proxy_total" "$crates_total"; do
   if [[ "$v" != "?" && "$v" != "--" ]]; then
     cumulative=$((cumulative + v))
   fi
@@ -87,6 +88,7 @@ npm_fmt=$(fmt "$npm_total" 2>/dev/null || echo "$npm_total")
 pypi_fmt=$(fmt "$pypi_total" 2>/dev/null || echo "$pypi_total")
 gh_go_fmt=$(fmt "$gh_go_total" 2>/dev/null || echo "$gh_go_total")
 gh_proxy_fmt=$(fmt "$gh_proxy_total" 2>/dev/null || echo "$gh_proxy_total")
+crates_fmt=$(fmt "$crates_total" 2>/dev/null || echo "$crates_total")
 cumulative_fmt=$(fmt "$cumulative" 2>/dev/null || echo "$cumulative")
 
 date_str=$(date +"%Y-%m-%d")
@@ -108,10 +110,11 @@ add_row() {
   row_count=$((row_count + 1))
 }
 
-has_downloads "$npm_total"       && add_row "npm (@blackwell-systems/gcf)" "$npm_fmt"
-has_downloads "$pypi_total"      && add_row "pypi (gcf-python)"            "$pypi_fmt"
-has_downloads "$gh_go_total"     && add_row "github releases (gcf-go)"     "$gh_go_fmt"
-has_downloads "$gh_proxy_total"  && add_row "github releases (gcf-proxy)"  "$gh_proxy_fmt"
+has_downloads "$npm_total"       && add_row "npm (gcf library)"        "$npm_fmt"
+has_downloads "$pypi_total"      && add_row "pypi (gcf-python)"         "$pypi_fmt"
+has_downloads "$crates_total"    && add_row "crates.io (gcf)"           "$crates_fmt"
+has_downloads "$gh_go_total"     && add_row "github (gcf-go)"           "$gh_go_fmt"
+has_downloads "$gh_proxy_total"  && add_row "github (gcf-proxy)"        "$gh_proxy_fmt"
 
 svg_height=$(( 48 + row_count * 22 + 16 + 28 + 20 ))
 divider_y=$(( 48 + row_count * 22 + 8 ))
@@ -163,4 +166,4 @@ BADGEEOF
 fi
 
 echo "Generated ${OUT}"
-echo "  npm: ${npm_total}  pypi: ${pypi_total}  gh-go: ${gh_go_total}  gh-proxy: ${gh_proxy_total}  total: ${cumulative}"
+echo "  npm: ${npm_total}  pypi: ${pypi_total}  crates: ${crates_total}  gh-go: ${gh_go_total}  gh-proxy: ${gh_proxy_total}  total: ${cumulative}"
