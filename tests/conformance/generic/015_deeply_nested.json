@@ -1,0 +1,16 @@
+{
+  "name": "deeply_nested",
+  "description": "Three levels of object nesting",
+  "input": {
+    "server": {
+      "host": "0.0.0.0",
+      "tls": {
+        "enabled": true,
+        "certs": {
+          "path": "/etc/ssl"
+        }
+      }
+    }
+  },
+  "expected": "  ## server\n  host=0.0.0.0\n    ## tls\n    enabled=true\n      ## certs\n      path=/etc/ssl\n"
+}

@@ -1,0 +1,16 @@
+{
+  "name": "decode_distance_n",
+  "description": "Decode distance_N groups for N > 2",
+  "input": "GCF tool=test budget=5000 tokens=100 symbols=2\n## targets\n@0 fn pkg.A 0.90 lsp\n## distance_4\n@1 fn pkg.B 0.50 lsp\n",
+  "expected": {
+    "tool": "test",
+    "tokenBudget": 5000,
+    "tokensUsed": 100,
+    "packRoot": "",
+    "symbols": [
+      {"qualifiedName": "pkg.A", "kind": "function", "score": 0.90, "provenance": "lsp", "distance": 0},
+      {"qualifiedName": "pkg.B", "kind": "function", "score": 0.50, "provenance": "lsp", "distance": 4}
+    ],
+    "edges": []
+  }
+}

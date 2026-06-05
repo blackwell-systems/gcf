@@ -1,0 +1,15 @@
+{
+  "name": "session_header",
+  "description": "Header with session=true flag",
+  "input": {
+    "tool": "context_for_task",
+    "tokenBudget": 5000,
+    "tokensUsed": 100,
+    "packRoot": "",
+    "symbols": [
+      {"qualifiedName": "pkg.Foo", "kind": "function", "score": 0.90, "provenance": "lsp", "distance": 0}
+    ],
+    "edges": []
+  },
+  "note": "This fixture tests header format only. Session bare refs are tested in session/001."
+}

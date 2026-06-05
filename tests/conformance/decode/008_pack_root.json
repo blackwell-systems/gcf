@@ -1,0 +1,15 @@
+{
+  "name": "decode_pack_root",
+  "description": "Decode header with pack_root field",
+  "input": "GCF tool=test budget=5000 tokens=100 symbols=1 pack_root=abc123def456\n## targets\n@0 fn pkg.A 0.90 lsp\n",
+  "expected": {
+    "tool": "test",
+    "tokenBudget": 5000,
+    "tokensUsed": 100,
+    "packRoot": "abc123def456",
+    "symbols": [
+      {"qualifiedName": "pkg.A", "kind": "function", "score": 0.90, "provenance": "lsp", "distance": 0}
+    ],
+    "edges": []
+  }
+}

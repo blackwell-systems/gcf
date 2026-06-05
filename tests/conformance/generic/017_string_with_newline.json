@@ -1,0 +1,11 @@
+{
+  "name": "string_with_newline",
+  "description": "Strings containing newlines must be quoted",
+  "input": {
+    "rows": [
+      {"id": 1, "msg": "line1\nline2"},
+      {"id": 2, "msg": "ok"}
+    ]
+  },
+  "expected": "## rows [2]{id,msg}\n1|\"line1\\nline2\"\n2|ok\n"
+}

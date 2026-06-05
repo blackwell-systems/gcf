@@ -1,0 +1,11 @@
+{
+  "name": "string_with_quotes_and_pipe",
+  "description": "String with both pipe and quotes must escape quotes inside quoting",
+  "input": {
+    "rows": [
+      {"id": 1, "msg": "say \"hi\" | bye"},
+      {"id": 2, "msg": "normal"}
+    ]
+  },
+  "expected": "## rows [2]{id,msg}\n1|\"say \\\"hi\\\" | bye\"\n2|normal\n"
+}

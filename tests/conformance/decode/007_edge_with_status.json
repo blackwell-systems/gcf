@@ -1,0 +1,18 @@
+{
+  "name": "decode_edge_with_status",
+  "description": "Decode edges with added/removed status",
+  "input": "GCF tool=test budget=5000 tokens=100 symbols=2\n## targets\n@0 fn pkg.A 0.90 lsp\n@1 fn pkg.B 0.70 lsp\n## edges\n@0<@1 calls added\n",
+  "expected": {
+    "tool": "test",
+    "tokenBudget": 5000,
+    "tokensUsed": 100,
+    "packRoot": "",
+    "symbols": [
+      {"qualifiedName": "pkg.A", "kind": "function", "score": 0.90, "provenance": "lsp", "distance": 0},
+      {"qualifiedName": "pkg.B", "kind": "function", "score": 0.70, "provenance": "lsp", "distance": 0}
+    ],
+    "edges": [
+      {"source": "pkg.B", "target": "pkg.A", "edgeType": "calls", "status": "added"}
+    ]
+  }
+}

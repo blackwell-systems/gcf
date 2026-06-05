@@ -1,0 +1,17 @@
+{
+  "name": "distance_n_groups",
+  "description": "Symbols at distance > 2 use distance_N group headers",
+  "input": {
+    "tool": "test",
+    "tokenBudget": 5000,
+    "tokensUsed": 200,
+    "packRoot": "",
+    "symbols": [
+      {"qualifiedName": "pkg.A", "kind": "function", "score": 0.90, "provenance": "lsp", "distance": 0},
+      {"qualifiedName": "pkg.B", "kind": "function", "score": 0.70, "provenance": "lsp", "distance": 3},
+      {"qualifiedName": "pkg.C", "kind": "function", "score": 0.50, "provenance": "lsp", "distance": 5}
+    ],
+    "edges": []
+  },
+  "expected": "GCF tool=test budget=5000 tokens=200 symbols=3\n## targets\n@0 fn pkg.A 0.90 lsp\n## distance_3\n@1 fn pkg.B 0.70 lsp\n## distance_5\n@2 fn pkg.C 0.50 lsp\n"
+}

@@ -136,13 +136,13 @@ cd gcf-python && pytest tests/test_conformance.py
 
 | Directory | Fixtures | Profile |
 |-----------|----------|---------|
-| encode/ | 8 | Graph |
-| decode/ | 4 | Graph |
+| encode/ | 11 | Graph |
+| decode/ | 8 | Graph |
 | session/ | 1 | Graph |
-| delta/ | 1 | Graph |
-| generic/ | 12 | Tabular |
-| errors/ | 3 | Both |
-| **Total** | **29** | |
+| delta/ | 3 | Graph |
+| generic/ | 17 | Tabular |
+| errors/ | 10 | Both |
+| **Total** | **50** | |
 
 ## Contributing fixtures
 

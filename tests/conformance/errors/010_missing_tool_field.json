@@ -1,0 +1,6 @@
+{
+  "name": "missing_tool_field",
+  "description": "Header without tool= field must error",
+  "input": "GCF budget=5000 tokens=100 symbols=1\n## targets\n@0 fn pkg.Foo 0.90 lsp\n",
+  "expectedError": true
+}

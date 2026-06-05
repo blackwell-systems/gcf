@@ -1,0 +1,11 @@
+{
+  "name": "negative_numbers",
+  "description": "Negative numbers and floats encode unquoted",
+  "input": {
+    "data": [
+      {"id": 1, "value": -42, "rate": -3.14},
+      {"id": 2, "value": 0, "rate": 0.001}
+    ]
+  },
+  "expected": "## data [2]{id,value,rate}\n1|-42|-3.14\n2|0|0.001\n"
+}

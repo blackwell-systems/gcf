@@ -1,0 +1,19 @@
+{
+  "name": "large_tabular",
+  "description": "10-row tabular array to test count accuracy",
+  "input": {
+    "items": [
+      {"id": 1, "name": "a", "val": 10},
+      {"id": 2, "name": "b", "val": 20},
+      {"id": 3, "name": "c", "val": 30},
+      {"id": 4, "name": "d", "val": 40},
+      {"id": 5, "name": "e", "val": 50},
+      {"id": 6, "name": "f", "val": 60},
+      {"id": 7, "name": "g", "val": 70},
+      {"id": 8, "name": "h", "val": 80},
+      {"id": 9, "name": "i", "val": 90},
+      {"id": 10, "name": "j", "val": 100}
+    ]
+  },
+  "expected": "## items [10]{id,name,val}\n1|a|10\n2|b|20\n3|c|30\n4|d|40\n5|e|50\n6|f|60\n7|g|70\n8|h|80\n9|i|90\n10|j|100\n"
+}

@@ -1,0 +1,6 @@
+{
+  "name": "invalid_score",
+  "description": "Non-numeric score field must error",
+  "input": "GCF tool=test budget=5000 tokens=100 symbols=1\n## targets\n@0 fn pkg.Foo abc lsp\n",
+  "expectedError": true
+}

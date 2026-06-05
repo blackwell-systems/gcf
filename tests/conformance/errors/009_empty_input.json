@@ -1,0 +1,6 @@
+{
+  "name": "empty_input",
+  "description": "Empty input must error",
+  "input": "",
+  "expectedError": true
+}

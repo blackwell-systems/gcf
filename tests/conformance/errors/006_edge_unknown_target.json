@@ -1,0 +1,6 @@
+{
+  "name": "edge_unknown_target",
+  "description": "Edge referencing undeclared target ID must error",
+  "input": "GCF tool=test budget=5000 tokens=100 symbols=1\n## targets\n@0 fn pkg.Foo 0.90 lsp\n## edges\n@99<@0 calls\n",
+  "expectedError": true
+}

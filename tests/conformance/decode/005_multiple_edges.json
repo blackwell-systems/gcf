@@ -1,0 +1,21 @@
+{
+  "name": "decode_multiple_edges",
+  "description": "Decode payload with multiple symbols and edges",
+  "input": "GCF tool=test budget=5000 tokens=300 symbols=3\n## targets\n@0 fn pkg.A 0.90 lsp\n## related\n@1 type pkg.B 0.70 ast\n@2 method pkg.C 0.50 lsp\n## edges\n@0<@1 calls\n@1<@2 references\n@0<@2 implements\n",
+  "expected": {
+    "tool": "test",
+    "tokenBudget": 5000,
+    "tokensUsed": 300,
+    "packRoot": "",
+    "symbols": [
+      {"qualifiedName": "pkg.A", "kind": "function", "score": 0.90, "provenance": "lsp", "distance": 0},
+      {"qualifiedName": "pkg.B", "kind": "type", "score": 0.70, "provenance": "ast", "distance": 1},
+      {"qualifiedName": "pkg.C", "kind": "method", "score": 0.50, "provenance": "lsp", "distance": 1}
+    ],
+    "edges": [
+      {"source": "pkg.B", "target": "pkg.A", "edgeType": "calls", "status": ""},
+      {"source": "pkg.C", "target": "pkg.B", "edgeType": "references", "status": ""},
+      {"source": "pkg.C", "target": "pkg.A", "edgeType": "implements", "status": ""}
+    ]
+  }
+}

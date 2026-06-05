@@ -1,0 +1,6 @@
+{
+  "name": "invalid_symbol_id",
+  "description": "Non-integer symbol ID must error",
+  "input": "GCF tool=test budget=5000 tokens=100 symbols=1\n## targets\n@abc fn pkg.Foo 0.90 lsp\n",
+  "expectedError": true
+}
