@@ -71,9 +71,27 @@ JSON responses are re-encoded as GCF mid-flight. Your server keeps outputting JS
 
 [GitHub](https://github.com/blackwell-systems/gcf-proxy) · [pkg.go.dev](https://pkg.go.dev/github.com/blackwell-systems/gcf-proxy)
 
+## Rust
+
+```bash
+cargo add gcf
+```
+
+| Feature | Status |
+|---------|--------|
+| Encode | ✓ |
+| Decode | ✓ |
+| Session deduplication | ✓ |
+| Delta encoding | ✓ |
+| Generic encoding | ✓ |
+| Thread-safe Session | ✓ (Mutex) |
+| Tests | 34 passing |
+
+[GitHub](https://github.com/blackwell-systems/gcf-rust) · [crates.io](https://crates.io/crates/gcf)
+
 ## Output compatibility
 
-All three implementations produce byte-for-byte identical output for the same input. The format is the product, not the implementation. Token efficiency numbers are independent of which library you use.
+All implementations produce byte-for-byte identical output for the same input. The format is the product, not the implementation. Token efficiency numbers are independent of which library you use.
 
 ## Community Implementations
 
