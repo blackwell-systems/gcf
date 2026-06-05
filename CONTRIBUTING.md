@@ -8,7 +8,7 @@ GCF is simple enough to implement in a weekend. The spec is ~480 lines. Here's h
 
 - **Graph profile** (`encode`/`decode`): symbols, edges, distance groups, session dedup, delta encoding. Start here if you're building for MCP tool responses.
 - **Tabular profile** (`encodeGeneric`): any structured data. Pipe-separated rows, section headers, key-value pairs. Start here if you want the broadest use case.
-- **Both**: the official Go, TypeScript, and Python implementations support both.
+- **Both**: the official Go, TypeScript, Python, and Rust implementations support both.
 
 ### 2. Create your repo and implement
 

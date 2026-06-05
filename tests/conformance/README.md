@@ -146,4 +146,4 @@ cd gcf-python && pytest tests/test_conformance.py
 
 ## Contributing fixtures
 
-Add a JSON file to the appropriate directory. Run all three implementations against it to confirm they agree on the output.
+Add a JSON file to the appropriate directory. Run all implementations against it to confirm they agree on the output.
