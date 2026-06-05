@@ -62,6 +62,7 @@ export default defineConfig({
         ],
       },
     ],
+    logo: '/favicon-32x32.png',
     socialLinks: [
       { icon: 'github', link: 'https://github.com/blackwell-systems/gcf' },
     ],
