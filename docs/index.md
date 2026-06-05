@@ -18,15 +18,15 @@ hero:
 
 features:
   - title: 79% fewer input tokens
-    details: Positional fields, local IDs, and hierarchical grouping eliminate per-record overhead. At 500 symbols, JSON uses 53,341 tokens. GCF uses 11,090.
+    details: '<span class="json">JSON</span> uses 53,341 tokens at 500 symbols. <span class="gcf">GCF</span> uses 11,090. Positional fields, local IDs, and hierarchical grouping eliminate per-record overhead.'
   - title: 75% fewer output tokens
-    details: LLMs produce valid GCF with a 3-line primer. 52% smaller output than TOON. Proven at 5 to 100 symbols with 100% decoder validity.
+    details: 'LLMs produce valid <span class="gcf">GCF</span> with a 3-line primer. 52% smaller output than <span class="toon">TOON</span>. Proven at 5 to 100 symbols with 100% decoder validity.'
   - title: Optimized for the reader that matters
-    details: At 500 symbols, JSON drops to 76.9% accuracy and TOON to 92.3%. GCF scores 100% (13/13). TOON fails on distance grouping (no section headers). JSON drowns in structural noise. GCF is the only format with perfect comprehension at scale, and does it in 32% fewer tokens than TOON.
+    details: 'At 500 symbols, <span class="json">JSON</span> drops to 76.9% accuracy and <span class="toon">TOON</span> to 92.3%. <span class="gcf">GCF</span> scores 100% (13/13). <span class="toon">TOON</span> fails on distance grouping. <span class="json">JSON</span> drowns in structural noise. <span class="gcf">GCF</span> is the only format with perfect comprehension at scale, at 32% fewer tokens than <span class="toon">TOON</span>.'
   - title: Gets cheaper every call
-    details: Session deduplication (92.7% savings by 5th call) and delta encoding (81.2% on re-queries). No other format has these. They compound.
+    details: 'Session deduplication (92.7% savings by 5th call) and delta encoding (81.2% on re-queries). No other format has these. They compound.'
   - title: Beats TOON on TOON's benchmark
-    details: 34% fewer tokens on mixed-structure data, 44% on semi-uniform, 3% on flat tabular. Tested with their datasets, their tokenizer, their library.
+    details: '34% fewer tokens than <span class="toon">TOON</span> on mixed-structure data, 44% on semi-uniform, 3% on flat tabular. Tested with their datasets, their tokenizer, their library.'
   - title: Six languages, zero dependencies
-    details: Go, TypeScript, Python, Rust, Swift, and Kotlin. Graph profile (encode) and tabular profile (encodeGeneric). CLI included. MCP proxy for zero-code adoption.
+    details: 'Go, TypeScript, Python, Rust, Swift, and Kotlin. Graph profile (encode) and tabular profile (encodeGeneric). CLI included. MCP proxy for zero-code adoption.'
 ---

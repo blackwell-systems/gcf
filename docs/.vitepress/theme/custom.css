@@ -1,7 +1,14 @@
 :root {
   --vp-layout-max-width: 1440px;
   --vp-sidebar-width: 220px;
+  --gcf-color: var(--vp-c-brand-1);
+  --toon-color: #e5a00d;
+  --json-color: #6b7280;
 }
+
+.gcf { color: var(--gcf-color); font-weight: 600; }
+.toon { color: var(--toon-color); font-weight: 600; }
+.json { color: var(--json-color); font-weight: 600; }
 
 .VPSidebar {
   padding-left: 16px !important;
