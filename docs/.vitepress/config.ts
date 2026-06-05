@@ -10,6 +10,15 @@ export default defineConfig({
     ['link', { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' }],
     ['link', { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' }],
     ['link', { rel: 'manifest', href: '/site.webmanifest' }],
+    ['meta', { property: 'og:title', content: 'GCF - Graph Compact Format' }],
+    ['meta', { property: 'og:description', content: 'Token-optimized wire format for LLMs. 79% fewer input tokens than JSON. 75% fewer output tokens. 100% comprehension accuracy.' }],
+    ['meta', { property: 'og:type', content: 'website' }],
+    ['meta', { property: 'og:url', content: 'https://gcformat.com/' }],
+    ['meta', { name: 'twitter:card', content: 'summary' }],
+    ['meta', { name: 'twitter:title', content: 'GCF - Graph Compact Format' }],
+    ['meta', { name: 'twitter:description', content: 'Token-optimized wire format for LLMs. 79% fewer input tokens than JSON. 75% fewer output tokens.' }],
+    ['meta', { name: 'keywords', content: 'GCF, graph compact format, LLM, tokens, wire format, MCP, TOON, JSON alternative, token efficiency, agent communication' }],
+    ['link', { rel: 'canonical', href: 'https://gcformat.com/' }],
   ],
   themeConfig: {
     nav: [
