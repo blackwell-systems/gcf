@@ -53,6 +53,7 @@ export default defineConfig({
           { text: 'API (Go)', link: '/reference/api-go' },
           { text: 'API (TypeScript)', link: '/reference/api-typescript' },
           { text: 'API (Python)', link: '/reference/api-python' },
+          { text: 'API (Rust)', link: '/reference/api-rust' },
         ],
       },
       {
