@@ -18,7 +18,7 @@ hero:
 
 features:
   - title: 79% fewer input tokens
-    details: '<span class="json">JSON</span> uses 53,341 tokens at 500 symbols. <span class="gcf">GCF</span> uses 11,090. Positional fields, local IDs, and hierarchical grouping eliminate per-record overhead.'
+    details: '<span class="json">JSON</span> uses 53,341 tokens at 500 symbols.<br><span class="gcf">GCF</span> uses 11,090. Positional fields, local IDs, and hierarchical grouping eliminate per-record overhead.'
   - title: 75% fewer output tokens
     details: 'LLMs produce valid <span class="gcf">GCF</span> with a 3-line primer. 52% smaller output than <span class="toon">TOON</span>. Proven at 5 to 100 symbols with 100% decoder validity.'
   - title: Optimized for the reader that matters
