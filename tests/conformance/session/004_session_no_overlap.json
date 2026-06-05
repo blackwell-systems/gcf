@@ -1,0 +1,32 @@
+{
+  "name": "session_no_overlap",
+  "description": "Second call with entirely new symbols (no dedup)",
+  "calls": [
+    {
+      "input": {
+        "tool": "test",
+        "tokenBudget": 5000,
+        "tokensUsed": 200,
+        "packRoot": "",
+        "symbols": [
+          {"qualifiedName": "pkg.A", "kind": "function", "score": 0.90, "provenance": "lsp", "distance": 0}
+        ],
+        "edges": []
+      },
+      "expected": "GCF tool=test budget=5000 tokens=200 symbols=1 session=true\n## targets\n@0 fn pkg.A 0.90 lsp\n"
+    },
+    {
+      "input": {
+        "tool": "test",
+        "tokenBudget": 5000,
+        "tokensUsed": 150,
+        "packRoot": "",
+        "symbols": [
+          {"qualifiedName": "pkg.X", "kind": "type", "score": 0.80, "provenance": "ast", "distance": 0}
+        ],
+        "edges": []
+      },
+      "expected": "GCF tool=test budget=5000 tokens=150 symbols=1 session=true\n## targets\n@0 type pkg.X 0.80 ast\n"
+    }
+  ]
+}

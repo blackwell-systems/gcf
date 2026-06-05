@@ -1,0 +1,21 @@
+{
+  "name": "delta_remove_only",
+  "description": "Delta payload with only removals",
+  "input": {
+    "tool": "test",
+    "baseRoot": "aaa",
+    "newRoot": "bbb",
+    "removed": [
+      {"qualifiedName": "pkg.OldA", "kind": "function"},
+      {"qualifiedName": "pkg.OldB", "kind": "type"}
+    ],
+    "added": [],
+    "removedEdges": [
+      {"source": "pkg.OldA", "target": "pkg.OldB", "edgeType": "calls"}
+    ],
+    "addedEdges": [],
+    "deltaTokens": 20,
+    "fullTokens": 200
+  },
+  "expected": "GCF tool=test delta=true base_root=aaa new_root=bbb tokens=20 savings=90%\n## removed\nfn pkg.OldA\ntype pkg.OldB\n## edges_removed\npkg.OldA -> pkg.OldB calls\n"
+}

@@ -1,0 +1,49 @@
+{
+  "name": "session_three_calls",
+  "description": "Three calls with progressive deduplication",
+  "calls": [
+    {
+      "input": {
+        "tool": "test",
+        "tokenBudget": 5000,
+        "tokensUsed": 200,
+        "packRoot": "",
+        "symbols": [
+          {"qualifiedName": "pkg.A", "kind": "function", "score": 0.90, "provenance": "lsp", "distance": 0},
+          {"qualifiedName": "pkg.B", "kind": "type", "score": 0.70, "provenance": "ast", "distance": 1}
+        ],
+        "edges": []
+      },
+      "expected": "GCF tool=test budget=5000 tokens=200 symbols=2 session=true\n## targets\n@0 fn pkg.A 0.90 lsp\n## related\n@1 type pkg.B 0.70 ast\n"
+    },
+    {
+      "input": {
+        "tool": "test",
+        "tokenBudget": 5000,
+        "tokensUsed": 150,
+        "packRoot": "",
+        "symbols": [
+          {"qualifiedName": "pkg.B", "kind": "type", "score": 0.70, "provenance": "ast", "distance": 0},
+          {"qualifiedName": "pkg.C", "kind": "method", "score": 0.50, "provenance": "lsp", "distance": 1}
+        ],
+        "edges": []
+      },
+      "expected": "GCF tool=test budget=5000 tokens=150 symbols=2 session=true\n## targets\n@0  # previously transmitted\n## related\n@1 method pkg.C 0.50 lsp\n"
+    },
+    {
+      "input": {
+        "tool": "test",
+        "tokenBudget": 5000,
+        "tokensUsed": 100,
+        "packRoot": "",
+        "symbols": [
+          {"qualifiedName": "pkg.A", "kind": "function", "score": 0.90, "provenance": "lsp", "distance": 0},
+          {"qualifiedName": "pkg.B", "kind": "type", "score": 0.70, "provenance": "ast", "distance": 0},
+          {"qualifiedName": "pkg.C", "kind": "method", "score": 0.50, "provenance": "lsp", "distance": 1}
+        ],
+        "edges": []
+      },
+      "expected": "GCF tool=test budget=5000 tokens=100 symbols=3 session=true\n## targets\n@0  # previously transmitted\n@1  # previously transmitted\n## related\n@2  # previously transmitted\n"
+    }
+  ]
+}
