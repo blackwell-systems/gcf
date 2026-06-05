@@ -26,7 +26,7 @@ This page compares the two formats honestly, using TOON's own benchmark data and
 | **LLM generation (output tokens)** | **75% fewer than JSON** | **40% fewer than JSON** |
 | Human-readable | Dense, agent-optimized | YAML-like, human-friendly |
 | Zero dependencies | Yes | Yes |
-| Language support | Go, TypeScript, Python, Rust, Swift | TypeScript, Go |
+| Language support | Go, TypeScript, Python, Rust, Swift, Kotlin | TypeScript, Go |
 | MCP proxy (zero-code adoption) | Yes | Yes ("Tooner") |
 
 ## Where GCF wins
