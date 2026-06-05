@@ -1,0 +1,11 @@
+{
+  "name": "pipe_quoting",
+  "description": "Strings containing pipe characters must be quoted",
+  "input": {
+    "rows": [
+      {"id": 1, "value": "hello|world"},
+      {"id": 2, "value": "normal"}
+    ]
+  },
+  "expected": "## rows [2]{id,value}\n1|\"hello|world\"\n2|normal\n"
+}

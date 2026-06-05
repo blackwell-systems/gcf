@@ -1,0 +1,11 @@
+{
+  "name": "key_value_object",
+  "description": "Flat object with primitive values becomes key=value pairs",
+  "input": {
+    "config": "production",
+    "version": "2.1.0",
+    "port": 5432,
+    "active": true
+  },
+  "expected": "config=production\nversion=2.1.0\nport=5432\nactive=true\n"
+}

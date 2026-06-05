@@ -1,0 +1,11 @@
+{
+  "name": "null_values",
+  "description": "Null values encode as dash (-)",
+  "input": {
+    "items": [
+      {"id": 1, "name": "Alice", "email": null},
+      {"id": 2, "name": null, "email": "bob@co.com"}
+    ]
+  },
+  "expected": "## items [2]{id,name,email}\n1|Alice|-\n2|-|bob@co.com\n"
+}

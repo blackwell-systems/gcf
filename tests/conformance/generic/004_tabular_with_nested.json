@@ -1,0 +1,11 @@
+{
+  "name": "tabular_with_nested",
+  "description": "Tabular rows with nested fields use @id prefixes and .fieldname for inline objects",
+  "input": {
+    "orders": [
+      {"id": 1001, "total": 249.99, "customer": {"name": "Alice", "tier": "premium"}},
+      {"id": 1002, "total": 89.50, "customer": {"name": "Bob", "tier": "standard"}}
+    ]
+  },
+  "expected": "## orders [2]{id,total}\n@0 1001|249.99\n  ## customer\n  name=Alice\n  tier=premium\n@1 1002|89.5\n  ## customer\n  name=Bob\n  tier=standard\n"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "empty_array",
+  "description": "Empty arrays encode as ## name [0]",
+  "input": {
+    "items": []
+  },
+  "expected": "## items [0]\n"
+}

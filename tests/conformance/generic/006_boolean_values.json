@@ -1,0 +1,11 @@
+{
+  "name": "boolean_values",
+  "description": "Booleans encode as lowercase true/false, numbers unquoted",
+  "input": {
+    "flags": [
+      {"name": "debug", "enabled": true, "priority": 1},
+      {"name": "verbose", "enabled": false, "priority": 0}
+    ]
+  },
+  "expected": "## flags [2]{name,enabled,priority}\ndebug|true|1\nverbose|false|0\n"
+}

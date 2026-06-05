@@ -1,0 +1,12 @@
+{
+  "name": "nested_object",
+  "description": "Nested objects use ## section headers with indented key=value pairs",
+  "input": {
+    "name": "myapp",
+    "database": {
+      "host": "db.example.com",
+      "port": 5432
+    }
+  },
+  "expected": "name=myapp\n  ## database\n  host=db.example.com\n  port=5432\n"
+}

@@ -1,0 +1,11 @@
+{
+  "name": "non_uniform_array",
+  "description": "Arrays with <70% key overlap use @id per item instead of tabular encoding",
+  "input": {
+    "mixed": [
+      {"type": "user", "name": "Alice"},
+      {"code": 404, "message": "not found", "retry": false}
+    ]
+  },
+  "expected": "## mixed [2]\n@0\n  type=user\n  name=Alice\n@1\n  code=404\n  message=not found\n  retry=false\n"
+}

@@ -1,0 +1,6 @@
+{
+  "name": "primitive_input",
+  "description": "Primitive values pass through as-is",
+  "input": "hello world",
+  "expected": "hello world"
+}

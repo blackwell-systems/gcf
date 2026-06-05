@@ -1,0 +1,11 @@
+{
+  "name": "empty_string",
+  "description": "Empty strings must be quoted as \"\"",
+  "input": {
+    "rows": [
+      {"id": 1, "name": "Alice", "note": ""},
+      {"id": 2, "name": "Bob", "note": "ok"}
+    ]
+  },
+  "expected": "## rows [2]{id,name,note}\n1|Alice|\"\"\n2|Bob|ok\n"
+}

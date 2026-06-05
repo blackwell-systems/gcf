@@ -1,0 +1,12 @@
+{
+  "name": "flat_tabular",
+  "description": "Uniform array of objects becomes tabular rows with pipe separators",
+  "input": {
+    "employees": [
+      {"id": 1, "name": "Alice", "department": "Engineering", "salary": 95000},
+      {"id": 2, "name": "Bob", "department": "Sales", "salary": 72000},
+      {"id": 3, "name": "Carol", "department": "Marketing", "salary": 85000}
+    ]
+  },
+  "expected": "## employees [3]{id,name,department,salary}\n1|Alice|Engineering|95000\n2|Bob|Sales|72000\n3|Carol|Marketing|85000\n"
+}

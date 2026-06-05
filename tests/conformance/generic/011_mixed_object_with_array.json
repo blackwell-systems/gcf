@@ -1,0 +1,12 @@
+{
+  "name": "mixed_object_with_array",
+  "description": "Object with both primitive fields and a tabular array",
+  "input": {
+    "company": "Acme",
+    "employees": [
+      {"id": 1, "name": "Alice"},
+      {"id": 2, "name": "Bob"}
+    ]
+  },
+  "expected": "company=Acme\n## employees [2]{id,name}\n1|Alice\n2|Bob\n"
+}
