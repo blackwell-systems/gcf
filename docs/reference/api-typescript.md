@@ -83,7 +83,7 @@ const output = encodeGeneric({
 // 2|Bob|Sales|72000
 ```
 
-Arrays of uniform objects get tabular encoding (header + positional rows). Nested objects use `## key` section headers. Primitives use `key=value`.
+Arrays of uniform objects get tabular encoding (header + positional rows). Primitive arrays are inlined (`tags[3]: a,b,c`). Nested objects use `## key` section headers. Primitives use `key=value`.
 
 ## Types
 

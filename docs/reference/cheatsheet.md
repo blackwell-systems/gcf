@@ -177,6 +177,22 @@ value1|value2|value3
 - `.fieldname` introduces an inline nested object
 - Nested fields use `key=value` pairs, indented
 
+### Primitive arrays (inline)
+
+```
+{name}[{count}]: val1,val2,val3
+```
+
+```
+tags[3]: production,us-east-1,critical
+ports[3]: 8080,8443,9090
+scopes[2]: read,write
+```
+
+- All-primitive arrays (strings, numbers, booleans) encode on one line
+- Comma-separated, no spaces
+- Empty arrays use `## name [0]` instead
+
 ### Object encoding
 
 ```

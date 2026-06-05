@@ -70,7 +70,7 @@ let output = encodeDelta(delta)
 
 ### `encodeGeneric(_ data: Any) -> String`
 
-Encode any value into GCF tabular format.
+Encode any value into GCF tabular format. Uniform object arrays get tabular rows. Primitive arrays are inlined (`tags[3]: a,b,c`). Nested objects use `## key` section headers.
 
 ```swift
 import GCF

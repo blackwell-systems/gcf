@@ -83,7 +83,7 @@ output = encode_generic({
 # 2|Bob|Sales|72000
 ```
 
-Arrays of uniform dicts get tabular encoding (header + positional rows). Nested dicts use `## key` section headers. Primitives use `key=value`.
+Arrays of uniform dicts get tabular encoding (header + positional rows). Primitive arrays are inlined (`tags[3]: a,b,c`). Nested dicts use `## key` section headers. Primitives use `key=value`.
 
 ## Types
 

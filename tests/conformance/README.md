@@ -140,9 +140,9 @@ cd gcf-python && pytest tests/test_conformance.py
 | decode/ | 8 | Graph |
 | session/ | 4 | Graph |
 | delta/ | 5 | Graph |
-| generic/ | 17 | Tabular |
+| generic/ | 18 | Tabular |
 | errors/ | 10 | Both |
-| **Total** | **55** | |
+| **Total** | **56** | |
 
 ## Contributing fixtures
 

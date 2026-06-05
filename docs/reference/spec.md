@@ -56,7 +56,7 @@ The specification defines conformance requirements in three areas:
 
 **Decoder error taxonomy** (Section 12.5): 14 normative error conditions that decoders MUST reject, including invalid headers, unknown edge references, row width mismatches, and unterminated quotes.
 
-Validated by [55 conformance fixtures](https://github.com/blackwell-systems/gcf/tree/main/tests/conformance) across both profiles.
+Validated by [56 conformance fixtures](https://github.com/blackwell-systems/gcf/tree/main/tests/conformance) across both profiles.
 
 ## Stability guarantee
 
