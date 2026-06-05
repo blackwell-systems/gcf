@@ -1,6 +1,6 @@
 # Implementations
 
-Four official implementations, all production-ready, all MIT licensed, all zero runtime dependencies. Validated against [55 conformance fixtures](https://github.com/blackwell-systems/gcf/tree/main/tests/conformance).
+Five official implementations, all production-ready, all MIT licensed, all zero runtime dependencies. Validated against [55 conformance fixtures](https://github.com/blackwell-systems/gcf/tree/main/tests/conformance).
 
 ## Official Implementations
 
@@ -10,22 +10,23 @@ Four official implementations, all production-ready, all MIT licensed, all zero 
 | TypeScript | `@blackwell-systems/gcf` | `npm install @blackwell-systems/gcf` | [npm](https://www.npmjs.com/package/@blackwell-systems/gcf) | Stable |
 | Python | `gcf-python` | `pip install gcf-python` | [PyPI](https://pypi.org/project/gcf-python/) | Stable |
 | Rust | `gcf` | `cargo add gcf` | [crates.io](https://crates.io/crates/gcf) | Stable |
+| Swift | `GCF` | `.package(url: "https://github.com/blackwell-systems/gcf-swift", from: "0.1.0")` | [GitHub](https://github.com/blackwell-systems/gcf-swift) | Stable |
 
-All four support both encoding profiles:
+All five support both encoding profiles:
 
-| Feature | Go | TypeScript | Python | Rust |
-|---------|:--:|:----------:|:------:|:----:|
-| Graph encode (`encode`) | ✓ | ✓ | ✓ | ✓ |
-| Graph decode (`decode`) | ✓ | ✓ | ✓ | ✓ |
-| Generic encode (`encodeGeneric`) | ✓ | ✓ | ✓ | ✓ |
-| Session deduplication | ✓ | ✓ | ✓ | ✓ |
-| Delta encoding | ✓ | ✓ | ✓ | ✓ |
-| Thread-safe Session | ✓ | n/a | ✓ | ✓ |
-| CLI | ✓ | ✓ | ✓ | — |
+| Feature | Go | TypeScript | Python | Rust | Swift |
+|---------|:--:|:----------:|:------:|:----:|:-----:|
+| Graph encode (`encode`) | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Graph decode (`decode`) | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Generic encode (`encodeGeneric`) | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Session deduplication | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Delta encoding | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Thread-safe Session | ✓ | n/a | ✓ | ✓ | ✓ |
+| CLI | ✓ | ✓ | ✓ | — | — |
 | | | | | |
-| **GitHub** | [gcf-go](https://github.com/blackwell-systems/gcf-go) | [gcf-typescript](https://github.com/blackwell-systems/gcf-typescript) | [gcf-python](https://github.com/blackwell-systems/gcf-python) | [gcf-rust](https://github.com/blackwell-systems/gcf-rust) |
-| **Registry** | [pkg.go.dev](https://pkg.go.dev/github.com/blackwell-systems/gcf-go) | [npm](https://www.npmjs.com/package/@blackwell-systems/gcf) | [PyPI](https://pypi.org/project/gcf-python/) | [crates.io](https://crates.io/crates/gcf) |
-| **API Docs** | [Go API](/reference/api-go) | [TypeScript API](/reference/api-typescript) | [Python API](/reference/api-python) | [README](https://github.com/blackwell-systems/gcf-rust#api) |
+| **GitHub** | [gcf-go](https://github.com/blackwell-systems/gcf-go) | [gcf-typescript](https://github.com/blackwell-systems/gcf-typescript) | [gcf-python](https://github.com/blackwell-systems/gcf-python) | [gcf-rust](https://github.com/blackwell-systems/gcf-rust) | [gcf-swift](https://github.com/blackwell-systems/gcf-swift) |
+| **Registry** | [pkg.go.dev](https://pkg.go.dev/github.com/blackwell-systems/gcf-go) | [npm](https://www.npmjs.com/package/@blackwell-systems/gcf) | [PyPI](https://pypi.org/project/gcf-python/) | [crates.io](https://crates.io/crates/gcf) | [SPM](https://github.com/blackwell-systems/gcf-swift) |
+| **API Docs** | [Go API](/reference/api-go) | [TypeScript API](/reference/api-typescript) | [Python API](/reference/api-python) | [Rust API](/reference/api-rust) | [README](https://github.com/blackwell-systems/gcf-swift#api) |
 
 ## MCP Proxy
 
