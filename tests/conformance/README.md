@@ -6,10 +6,11 @@ Language-agnostic test fixtures for validating GCF implementations. Each fixture
 
 ```
 tests/conformance/
-├── encode/           # Input payload → expected GCF output
-├── decode/           # GCF input → expected parsed payload
-├── session/          # Multi-call session sequences
-├── delta/            # Delta payload encoding
+├── encode/           # Graph profile: input payload → expected GCF output
+├── decode/           # Graph profile: GCF input → expected parsed payload
+├── session/          # Graph profile: multi-call session sequences
+├── delta/            # Graph profile: delta payload encoding
+├── generic/          # Tabular profile: arbitrary JSON → expected GCF output
 └── errors/           # Malformed input → expected error
 ```
 
@@ -112,6 +113,36 @@ cd gcf-python && pytest tests/test_conformance.py
   "expectedError": true
 }
 ```
+
+### Generic fixtures (tabular profile)
+
+```json
+{
+  "name": "flat_tabular",
+  "description": "Uniform array of objects becomes tabular rows with pipe separators",
+  "input": {
+    "employees": [
+      {"id": 1, "name": "Alice", "department": "Engineering", "salary": 95000},
+      {"id": 2, "name": "Bob", "department": "Sales", "salary": 72000}
+    ]
+  },
+  "expected": "## employees [2]{id,name,department,salary}\n1|Alice|Engineering|95000\n2|Bob|Sales|72000\n"
+}
+```
+
+**Note on field ordering:** Generic fixtures use insertion order (matching JavaScript/Python dict behavior). Go implementations use sorted map keys, which produces different field ordering. Go should validate structural correctness (correct headers, correct row counts, correct values) rather than byte-exact matching against these fixtures.
+
+## Fixture counts
+
+| Directory | Fixtures | Profile |
+|-----------|----------|---------|
+| encode/ | 8 | Graph |
+| decode/ | 4 | Graph |
+| session/ | 1 | Graph |
+| delta/ | 1 | Graph |
+| generic/ | 12 | Tabular |
+| errors/ | 3 | Both |
+| **Total** | **29** | |
 
 ## Contributing fixtures
 
