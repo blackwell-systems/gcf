@@ -64,8 +64,9 @@ GCF beats TOON on accuracy AND uses 32% fewer tokens. JSON fails on counting tas
 
 ```bash
 pip install gcf-python                    # Python
-npm install @blackwell-systems/gcf    # TypeScript
+npm install @blackwell-systems/gcf        # TypeScript
 go get github.com/blackwell-systems/gcf-go  # Go
+cargo add gcf                             # Rust
 ```
 
 ### Graph profile (code intelligence, MCP tools)
@@ -77,14 +78,22 @@ output = encode(Payload(
     tool="context_for_task",
     token_budget=5000,
     tokens_used=1847,
-    symbols=[Symbol(qualified_name="pkg.Auth", kind="function", score=0.78, provenance="lsp", distance=0)],
+    symbols=[
+        Symbol(qualified_name="pkg.Auth", kind="function", score=0.78, provenance="lsp", distance=0),
+        Symbol(qualified_name="pkg.Server", kind="function", score=0.54, provenance="lsp", distance=1),
+    ],
+    edges=[Edge(source="pkg.Server", target="pkg.Auth", edge_type="calls")],
 ))
 ```
 
 ```
-GCF tool=context_for_task budget=5000 tokens=1847 symbols=1
+GCF tool=context_for_task budget=5000 tokens=1847 symbols=2 edges=1
 ## targets
 @0 fn pkg.Auth 0.78 lsp
+## related
+@1 fn pkg.Server 0.54 lsp
+## edges [1]
+@0<@1 calls
 ```
 
 ### Tabular profile (any structured data)
