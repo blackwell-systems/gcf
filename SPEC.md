@@ -2,7 +2,7 @@
 
 ## Graph Compact Format
 
-**Version:** 1.2
+**Version:** 1.3
 
 **Date:** 2026-06-05
 
@@ -43,7 +43,7 @@ Both profiles share the same grammar primitives: `##` section headers, `@` local
 payload       = header LF { section } ;
 section       = group-header LF { line LF } ;
 line          = node-line | edge-line | ref-line | tabular-row
-              | kv-line | nested-ref | comment ;
+              | kv-line | nested-ref | inline-array | comment ;
 
 header        = "GCF" SP key-value { SP key-value } ;
 group-header  = "##" SP group-name [ SP "[" count "]" [ field-decl ] ] ;
@@ -53,6 +53,7 @@ edge-line     = "@" target-id "<" "@" source-id SP edge-type [ SP status ] ;
 ref-line      = "@" id SP SP "# previously transmitted" ;
 tabular-row   = [ "@" id SP ] value { "|" value } ;
 kv-line       = key "=" value ;
+inline-array  = key "[" count "]" ":" SP value { "," value } ;
 nested-ref    = "." field-name ;
 comment       = "#" SP text ;
 
@@ -217,6 +218,20 @@ When records contain nested objects, rows use `@{id}` prefixes for cross-referen
 
 Primitive fields go in the tabular row. Nested fields are indented below with `.fieldname` prefix.
 
+### Primitive array encoding (inline)
+
+Arrays where every element is a primitive (string, number, boolean, null) are encoded inline on a single line:
+
+```
+tags[3]: production,us-east-1,critical
+ports[3]: 8080,8443,9090
+flags[2]: true,false
+```
+
+The format is `name[count]: value1,value2,...`. Values are comma-separated with no spaces. This avoids the overhead of a `##` section header and `@N` prefix per element.
+
+Encoders MUST use inline encoding for arrays where all elements are primitives. Encoders MUST NOT use inline encoding for arrays containing objects or nested arrays (use tabular or per-item encoding instead). Empty arrays MUST use `## name [0]`.
+
 ### Object encoding
 
 Non-array objects use `key=value` for primitives and `## key` section headers for nested objects:
@@ -238,7 +253,8 @@ version=2.1.0
 | Input type | Encoding |
 |-----------|----------|
 | Array of uniform objects | Tabular: header with field declaration + positional rows |
-| Array of non-uniform items | `## name [count]` + `@{id}` per item |
+| Array of primitives | Inline: `name[count]: val1,val2,val3` |
+| Array of non-uniform items (mixed) | `## name [count]` + `@{id}` per item |
 | Nested object | `## key` section header + indented key=value pairs |
 | Primitive field | `key=value` (no quotes for numbers/booleans) |
 | Null/missing | `-` |
@@ -392,6 +408,7 @@ Conforming tabular-profile encoders MUST:
 - Emit tabular headers with accurate record counts matching the number of rows
 - Use pipe (`|`) as the value separator in tabular rows
 - NOT emit field names in data rows (positional encoding only)
+- Emit primitive arrays inline as `name[count]: val1,val2,val3` (comma-separated, no spaces)
 - Emit `key=value` for primitive object fields
 - Emit `## key` section headers for nested objects
 - Use `@{id}` prefixes on tabular rows only when nested fields are present
@@ -420,6 +437,7 @@ Conforming tabular-profile decoders MUST:
 - Parse tabular headers with `[count]{fields}` syntax
 - Split tabular rows on pipe (`|`)
 - Validate row value count against field count in the header
+- Parse inline primitive arrays with `name[count]: val1,val2,...` syntax
 - Parse `key=value` lines as primitive fields
 - Parse `## key` lines as section headers
 - Parse `.fieldname` lines as nested object references

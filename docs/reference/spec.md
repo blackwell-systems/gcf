@@ -27,7 +27,7 @@ It covers:
 
 ## Version
 
-Current: **GCF v1.2** (stable, 2026-06-05)
+Current: **GCF v1.3** (stable, 2026-06-05)
 
 ## Conventions
 
@@ -60,4 +60,4 @@ Validated by [55 conformance fixtures](https://github.com/blackwell-systems/gcf/
 
 ## Stability guarantee
 
-The v1.2 format is stable. Existing payloads will always parse correctly with future decoders. New features (if any) will be additive and backwards-compatible.
+The v1.3 format is stable. Existing payloads will always parse correctly with future decoders. New features (if any) will be additive and backwards-compatible.
