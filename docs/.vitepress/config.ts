@@ -14,6 +14,7 @@ export default defineConfig({
     ['meta', { property: 'og:description', content: 'Token-optimized wire format for LLMs. 79% fewer input tokens than JSON. 75% fewer output tokens. 100% comprehension accuracy.' }],
     ['meta', { property: 'og:type', content: 'website' }],
     ['meta', { property: 'og:url', content: 'https://gcformat.com/' }],
+    ['meta', { property: 'og:image', content: 'https://gcformat.com/og.png' }],
     ['meta', { name: 'twitter:card', content: 'summary' }],
     ['meta', { name: 'twitter:title', content: 'GCF - Graph Compact Format' }],
     ['meta', { name: 'twitter:description', content: 'Token-optimized wire format for LLMs. 79% fewer input tokens than JSON. 75% fewer output tokens.' }],
