@@ -1,0 +1,79 @@
+=== RUN   TestComprehension
+    comprehension_test.go:491: Backend: openai (gpt-5.5)
+    comprehension_test.go:492: Fixture: 500 symbols, 200 edges
+    comprehension_test.go:493: 
+    comprehension_test.go:495: gcf   tokens (est): 11094
+    comprehension_test.go:495: toon  tokens (est): 16378
+    comprehension_test.go:495: json  tokens (est): 53341
+    comprehension_test.go:497: GCF vs JSON savings: 79%
+    comprehension_test.go:498: GCF vs TOON savings: 32%
+    comprehension_test.go:499: 
+    comprehension_test.go:555:   PASS symbol_count    toon  [exact] expected="500" got="500"
+    comprehension_test.go:555:   PASS symbol_count    gcf   [exact] expected="500" got="500"
+    comprehension_test.go:555:   FAIL symbol_count    json  [got ""] expected="500" got=""
+    comprehension_test.go:555:   PASS edge_count      toon  [exact] expected="200" got="200"
+    comprehension_test.go:555:   PASS edge_count      gcf   [exact] expected="200" got="200"
+    comprehension_test.go:555:   FAIL edge_count      json  [got ""] expected="200" got=""
+    comprehension_test.go:555:   PASS top_symbol      json  [match] expected="HandleRequest" got="HandleRequest"
+    comprehension_test.go:555:   PASS top_symbol      gcf   [match] expected="HandleRequest" got="HandleRequest"
+    comprehension_test.go:555:   PASS top_symbol      toon  [match] expected="HandleRequest" got="HandleRequest"
+    comprehension_test.go:555:   PASS top_kind        gcf   [match] expected="function" got="function"
+    comprehension_test.go:555:   PASS top_kind        toon  [match] expected="function" got="function"
+    comprehension_test.go:555:   PASS top_kind        json  [match] expected="function" got="function"
+    comprehension_test.go:555:   PASS target_count    gcf   [exact] expected="166" got="166"
+    comprehension_test.go:555:   FAIL target_count    toon  [got ""] expected="166" got=""
+    comprehension_test.go:555:   FAIL target_count    json  [got ""] expected="166" got=""
+    comprehension_test.go:555:   PASS edge_types      toon  [exact] expected="calls, implements, imports, references" got="calls, implements, imports, references"
+    comprehension_test.go:555:   PASS edge_types      gcf   [exact] expected="calls, implements, imports, references" got="calls, implements, imports, references"
+    comprehension_test.go:555:   PASS edge_types      json  [exact] expected="calls, implements, imports, references" got="calls, implements, imports, references"
+    comprehension_test.go:555:   PASS related_count   gcf   [exact] expected="167" got="167"
+    comprehension_test.go:555:   FAIL related_count   json  [got ""] expected="167" got=""
+    comprehension_test.go:555:   FAIL related_count   toon  [got ""] expected="167" got=""
+    comprehension_test.go:555:   PASS extended_count  gcf   [exact] expected="167" got="167"
+    comprehension_test.go:555:   FAIL extended_count  toon  [got ""] expected="167" got=""
+    comprehension_test.go:555:   FAIL extended_count  json  [got ""] expected="167" got=""
+    comprehension_test.go:555:   FAIL function_count  toon  [got ""] expected="125" got=""
+    comprehension_test.go:555:   FAIL function_count  json  [got ""] expected="125" got=""
+    comprehension_test.go:555:   FAIL function_count  gcf   [got ""] expected="125" got=""
+    comprehension_test.go:555:   FAIL calls_edge_count gcf   [got ""] expected="50" got=""
+    comprehension_test.go:555:   FAIL calls_edge_count json  [got ""] expected="50" got=""
+    comprehension_test.go:555:   PASS calls_edge_count toon  [exact] expected="50" got="50"
+    comprehension_test.go:555:   PASS last_symbol_kind toon  [match] expected="interface" got="interface"
+    comprehension_test.go:555:   PASS last_symbol_kind json  [match] expected="interface" got="interface"
+    comprehension_test.go:555:   PASS last_symbol_kind gcf   [match] expected="interface" got="interface"
+    comprehension_test.go:555:   PASS has_edges_section toon  [exact] expected="yes" got="yes"
+    comprehension_test.go:555:   PASS has_edges_section gcf   [exact] expected="yes" got="yes"
+    comprehension_test.go:544:   SKIP has_edges_section json  error: Post "https://api.openai.com/v1/chat/completions": remote error: tls: bad record MAC
+    comprehension_test.go:544:   SKIP tool_name       toon  error: OpenAI API 429: {
+            "error": {
+                "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+                "type": "insufficient_quota",
+                "param": null,
+                "code": "insufficient_quota"
+            }
+        }
+    comprehension_test.go:544:   SKIP tool_name       gcf   error: OpenAI API 429: {
+            "error": {
+                "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+                "type": "insufficient_quota",
+                "param": null,
+                "code": "insufficient_quota"
+            }
+        }
+    comprehension_test.go:544:   SKIP tool_name       json  error: OpenAI API 429: {
+            "error": {
+                "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+                "type": "insufficient_quota",
+                "param": null,
+                "code": "insufficient_quota"
+            }
+        }
+    comprehension_test.go:560: 
+    comprehension_test.go:561: === Summary ===
+    comprehension_test.go:562: Format Accuracy Est Tokens    vs JSON
+    comprehension_test.go:574: gcf       83.3%      11094        21%
+    comprehension_test.go:574: toon      66.7%      16378        31%
+    comprehension_test.go:574: json      36.4%      53341   baseline
+--- PASS: TestComprehension (249.24s)
+PASS
+ok  	github.com/blackwell-systems/gcf-go/eval	249.573s
