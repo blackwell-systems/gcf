@@ -6,6 +6,24 @@
 
 ## Functions
 
+### `encodeGeneric(_ data: Any) -> String`
+
+Encode any value into GCF tabular format. Uniform object arrays get tabular rows. Primitive arrays are inlined (`tags[3]: a,b,c`). Nested objects use `## key` section headers.
+
+```swift
+import GCF
+
+let output = encodeGeneric([
+    "employees": [
+        ["id": 1, "name": "Alice", "department": "Engineering", "salary": 95000],
+        ["id": 2, "name": "Bob", "department": "Sales", "salary": 72000],
+    ]
+])
+// ## employees [2]{department,id,name,salary}
+// Engineering|1|Alice|95000
+// Sales|2|Bob|72000
+```
+
 ### `encode(_ payload: Payload) -> String`
 
 Encode a Payload into GCF text format.
@@ -66,24 +84,6 @@ let delta = DeltaPayload(
 )
 
 let output = encodeDelta(delta)
-```
-
-### `encodeGeneric(_ data: Any) -> String`
-
-Encode any value into GCF tabular format. Uniform object arrays get tabular rows. Primitive arrays are inlined (`tags[3]: a,b,c`). Nested objects use `## key` section headers.
-
-```swift
-import GCF
-
-let output = encodeGeneric([
-    "employees": [
-        ["id": 1, "name": "Alice", "department": "Engineering", "salary": 95000],
-        ["id": 2, "name": "Bob", "department": "Sales", "salary": 72000],
-    ]
-])
-// ## employees [2]{department,id,name,salary}
-// Engineering|1|Alice|95000
-// Sales|2|Bob|72000
 ```
 
 ### `StreamEncoder(writer:tool:options:)`

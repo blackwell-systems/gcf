@@ -12,6 +12,21 @@ dependencies {
 
 ## Functions
 
+### `encodeGeneric(data: Any?): String`
+
+Encode any value into GCF tabular format. Uniform object arrays get tabular rows. Primitive arrays are inlined (`tags[3]: a,b,c`). Nested objects use `## key` section headers.
+
+```kotlin
+import com.blackwellsystems.gcf.*
+
+val output = encodeGeneric(mapOf(
+    "employees" to listOf(
+        mapOf("id" to 1, "name" to "Alice", "department" to "Engineering", "salary" to 95000),
+        mapOf("id" to 2, "name" to "Bob", "department" to "Sales", "salary" to 72000),
+    )
+))
+```
+
 ### `encode(payload: Payload): String`
 
 Encode a Payload into GCF text format.
@@ -72,21 +87,6 @@ val delta = DeltaPayload(
 )
 
 val output = encodeDelta(delta)
-```
-
-### `encodeGeneric(data: Any?): String`
-
-Encode any value into GCF tabular format. Uniform object arrays get tabular rows. Primitive arrays are inlined (`tags[3]: a,b,c`). Nested objects use `## key` section headers.
-
-```kotlin
-import com.blackwellsystems.gcf.*
-
-val output = encodeGeneric(mapOf(
-    "employees" to listOf(
-        mapOf("id" to 1, "name" to "Alice", "department" to "Engineering", "salary" to 95000),
-        mapOf("id" to 2, "name" to "Bob", "department" to "Sales", "salary" to 72000),
-    )
-))
 ```
 
 ### `StreamEncoder(writer, tool, options?)`

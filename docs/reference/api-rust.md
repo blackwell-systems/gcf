@@ -6,6 +6,27 @@ cargo add gcf
 
 ## Functions
 
+### `encode_generic(data: &serde_json::Value) -> String`
+
+Encode any JSON value into GCF tabular format. Unlike `encode` (which handles the graph `Payload` type), `encode_generic` works on arbitrary `serde_json::Value` input.
+
+```rust
+use gcf::encode_generic;
+use serde_json::json;
+
+let output = encode_generic(&json!({
+    "employees": [
+        {"id": 1, "name": "Alice", "department": "Engineering", "salary": 95000},
+        {"id": 2, "name": "Bob", "department": "Sales", "salary": 72000},
+    ],
+}));
+// ## employees [2]{department,id,name,salary}
+// Engineering|1|Alice|95000
+// Sales|2|Bob|72000
+```
+
+Arrays of uniform objects get tabular encoding (header + positional rows). Primitive arrays are inlined (`tags[3]: a,b,c`). Nested objects use `## key` section headers. Primitives use `key=value`.
+
 ### `encode(p: &Payload) -> String`
 
 Encode a Payload into GCF text format.
@@ -76,31 +97,6 @@ let delta = DeltaPayload {
 let output = encode_delta(&delta);
 ```
 
-### `encode_generic(data: &serde_json::Value) -> String`
-
-Encode any JSON value into GCF tabular format. Unlike `encode` (which handles the graph `Payload` type), `encode_generic` works on arbitrary `serde_json::Value` input.
-
-```rust
-use gcf::encode_generic;
-use serde_json::json;
-
-let output = encode_generic(&json!({
-    "employees": [
-        {"id": 1, "name": "Alice", "department": "Engineering", "salary": 95000},
-        {"id": 2, "name": "Bob", "department": "Sales", "salary": 72000},
-    ],
-}));
-// ## employees [2]{department,id,name,salary}
-// Engineering|1|Alice|95000
-// Sales|2|Bob|72000
-```
-
-Arrays of uniform objects get tabular encoding (header + positional rows). Primitive arrays are inlined (`tags[3]: a,b,c`). Nested objects use `## key` section headers. Primitives use `key=value`.
-
-### `Session::new() -> Session`
-
-Create a new empty session tracker. Thread-safe.
-
 ### `StreamEncoder::new(w: impl Write, tool, opts) -> StreamEncoder`
 
 Create a streaming encoder that writes GCF incrementally. Zero buffering, thread-safe via Mutex.
@@ -111,6 +107,10 @@ enc.write_symbol(&sym);  // emitted immediately
 enc.write_edge(&edge);   // emitted immediately
 enc.close();             // emits ## _summary trailer
 ```
+
+### `Session::new() -> Session`
+
+Create a new empty session tracker. Thread-safe.
 
 ## Types
 

@@ -6,6 +6,26 @@ npm install @blackwell-systems/gcf
 
 ## Functions
 
+### `encodeGeneric(data: unknown): string`
+
+Encode any JS value into GCF tabular format. Unlike `encode` (which handles the graph `Payload` type), `encodeGeneric` works on arbitrary objects, arrays, and primitives.
+
+```typescript
+import { encodeGeneric } from '@blackwell-systems/gcf';
+
+const output = encodeGeneric({
+  employees: [
+    { id: 1, name: 'Alice', department: 'Engineering', salary: 95000 },
+    { id: 2, name: 'Bob', department: 'Sales', salary: 72000 },
+  ],
+});
+// ## employees [2]{id,name,department,salary}
+// 1|Alice|Engineering|95000
+// 2|Bob|Sales|72000
+```
+
+Arrays of uniform objects get tabular encoding (header + positional rows). Primitive arrays are inlined (`tags[3]: a,b,c`). Nested objects use `## key` section headers. Primitives use `key=value`.
+
 ### `encode(p: Payload): string`
 
 Encode a Payload into GCF text format.
@@ -64,26 +84,6 @@ const output = encodeDelta({
   fullTokens: 200,
 });
 ```
-
-### `encodeGeneric(data: unknown): string`
-
-Encode any JS value into GCF tabular format. Unlike `encode` (which handles the graph `Payload` type), `encodeGeneric` works on arbitrary objects, arrays, and primitives.
-
-```typescript
-import { encodeGeneric } from '@blackwell-systems/gcf';
-
-const output = encodeGeneric({
-  employees: [
-    { id: 1, name: 'Alice', department: 'Engineering', salary: 95000 },
-    { id: 2, name: 'Bob', department: 'Sales', salary: 72000 },
-  ],
-});
-// ## employees [2]{id,name,department,salary}
-// 1|Alice|Engineering|95000
-// 2|Bob|Sales|72000
-```
-
-Arrays of uniform objects get tabular encoding (header + positional rows). Primitive arrays are inlined (`tags[3]: a,b,c`). Nested objects use `## key` section headers. Primitives use `key=value`.
 
 ### `new StreamEncoder(writer, tool, opts?)`
 
