@@ -145,7 +145,12 @@ comprehension/
 ├── comprehension-13q-gpt54-run3-2026-06-06.log         # GPT-5.4 run 3: 76.9%
 ├── comprehension-13q-gpt54-run4-2026-06-06.log         # GPT-5.4 run 4: 76.9%
 ├── comprehension-13q-gpt54-mini-run1-2026-06-06.log    # GPT-5.4-mini run 1: 76.9%
-└── comprehension-13q-gpt54-mini-run2-2026-06-06.log    # GPT-5.4-mini run 2: 66.7%
+├── comprehension-13q-gpt54-mini-run2-2026-06-06.log    # GPT-5.4-mini run 2: 66.7%
+├── comprehension-500sym-3way-2026-06-03.log            # Original Claude eval (pre-edge fix)
+└── haiku-4.5-run2.txt                                  # Claude Haiku 4.5 run 2: 100%
+
+artifacts/
+└── opus-json-enumeration-failure.md                    # Opus enumerates 143 symbols, gets wrong answer
 ```
 
 ---
