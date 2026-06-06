@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.4 (2026-06-06)
+
+- Streaming encoding extension (Section 6b): true zero-buffering encode
+- `[?]` deferred count marker for section headers
+- `## _summary` trailer provides counts after data
+- Backward compatible (old decoders treat `_summary` as empty section)
+- Grammar additions: `count-or-deferred`, `summary` production
+- 5 streaming conformance fixtures (61 total)
+- TOON cannot add this (their spec mandates upfront `[N]`, no trailer mechanism)
+
 ## v1.3 (2026-06-05)
 
 - Primitive array inlining in tabular profile: `tags[3]: read,write,admin` (was 4 lines)
