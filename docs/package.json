@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@blackwell-systems/gcf": "^0.5.0",
-    "@toon-format/toon": "^2.3.0"
+    "@toon-format/toon": "^2.3.0",
+    "medium-zoom": "^1.1.0"
   }
 }

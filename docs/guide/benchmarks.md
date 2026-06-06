@@ -1,6 +1,10 @@
 # Benchmarks
 
-17 comprehension runs across 6 models and 2 providers. GCF wins 16, ties 1. 19 generation runs across 7 models and 3 providers. GCF is the only format every model can produce validly from a 3-line primer, with zero prior training. TOON fails generation on 5 of 7 models. JSON is too verbose for models to generate at scale.
+We measured two dimensions: **comprehension** (can models extract information from a format?) and **generation** (can models produce valid output in a format?). Both use the same data, the same models, and the same prompt structure across all three formats (GCF, TOON, JSON). No model has been trained on GCF.
+
+**Comprehension:** 17 runs across 6 models and 2 providers. GCF wins 16, ties 1. At 500 symbols, GCF averages 88% accuracy where TOON averages 71% and JSON averages 55%.
+
+**Generation:** 19 runs across 7 models and 3 providers. GCF is the only format every model can produce validly from a 3-line primer. TOON fails on 5 of 7 models because its flat tabular design requires semantic-to-integer mappings that models don't perform unprompted. JSON is too verbose for some models to generate at scale.
 
 All results reproducible. All raw logs in [eval/results](https://github.com/blackwell-systems/gcf/tree/main/eval/results).
 
