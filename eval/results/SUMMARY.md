@@ -194,20 +194,24 @@ Same data, same model, same prompt structure. Only the target format differs.
 
 **GCF: 5/5 valid. JSON: 5/5 valid. TOON: 0/5 valid.** (Identical on both GPT-5.4 and GPT-5.4-mini.)
 
-When given natural-language descriptions (e.g. "target", "related", "extended"), the model fails to map them back to integers for TOON's flat distance column. It writes the label directly ("target" instead of 0), producing invalid TOON. GCF works perfectly with natural descriptions because distance is structural (separate `## targets`, `## related`, `## extended` sections), not a column value.
+TOON's flat tabular design requires column values to be pre-encoded as integers. When a model is told "this symbol is a target" (natural language), it writes `target` in the distance column. TOON's decoder rejects this because it expects `0`. The model has to know that "target" means 0, "related" means 1, "extended" means 2, and perform that mapping before writing. Every model tested (GPT-5.4, GPT-5.4-mini) fails to do this mapping unprompted.
 
-### TOON with integer-coded distances (accommodation test)
+GCF never has this problem. Distance is expressed through section placement: a target goes in `## targets`, a related symbol goes in `## related`. The model writes the symbol in the section that matches the label. No integer mapping required. The format aligns with how LLMs naturally express grouped data.
 
-When the prompt explicitly provides distances as integers ("distance 0", "distance 1", "distance 2") instead of natural labels, TOON passes:
+This is a structural design flaw in flat tabular formats: any time a column encodes a semantic category as an integer or enum, the model must perform an extra encoding step that it may silently get wrong. GCF eliminates this entire failure class by making categories structural.
 
-| Format | Valid | 100 sym output | vs JSON |
-|--------|-------|---------------|---------|
-| **GCF** (natural descriptions) | **5/5** | **5,984 B** | **78% fewer** |
-| TOON (integer-coded distances) | 5/5 | 8,336 B | 69% fewer |
-| TOON (natural descriptions) | 0/5 | - | - |
-| JSON (natural descriptions) | 5/5 | 16,121 B | baseline |
+### TOON with pre-encoded integer distances
 
-TOON requires the caller to pre-encode semantic labels as integers. GCF works with either representation. Even with this accommodation, GCF output is 28% smaller than TOON.
+When the prompt explicitly says "distance 0" instead of "target", TOON passes. This confirms the failure is in the label-to-integer mapping, not in TOON syntax generation itself.
+
+| Format | Prompt | Valid | 100 sym output | vs JSON |
+|--------|--------|-------|---------------|---------|
+| **GCF** | natural labels | **5/5** | **5,984 B** | **78% fewer** |
+| TOON | pre-encoded integers | 5/5 | 8,336 B | 69% fewer |
+| TOON | natural labels | 0/5 | - | - |
+| JSON | natural labels | 5/5 | 16,121 B | baseline |
+
+Even when TOON is given pre-encoded integers (doing the model's work for it), GCF output is still 28% smaller.
 
 ### Cold-start (no example in prompt)
 
