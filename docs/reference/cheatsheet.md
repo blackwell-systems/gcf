@@ -243,6 +243,44 @@ region=us-east-1
 
 ---
 
+## Streaming Mode
+
+### Deferred counts
+
+```
+## edges [?]                    # count unknown at emit time
+## employees [?]{id,name,salary}  # tabular with deferred count
+```
+
+Use `[?]` instead of `[N]` when encoding incrementally.
+
+### Trailer summary
+
+```
+## _summary symbols=4 edges=3 sections=targets:2,related:1,edges:3
+```
+
+Emitted after all data. Provides counts deferred from headers.
+
+### Streaming example
+
+```
+GCF tool=context_for_task budget=5000
+## targets
+@0 fn pkg.Auth 0.95 lsp
+@1 fn pkg.Handler 0.88 lsp
+## related
+@2 type pkg.Config 0.72 ast
+## edges [?]
+@0<@1 calls
+@2<@0 references
+## _summary symbols=3 edges=2 sections=targets:2,related:1,edges:2
+```
+
+Standard `decode()` handles streaming output with no changes.
+
+---
+
 ## Shared
 
 ### Comments
