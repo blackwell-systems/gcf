@@ -183,7 +183,7 @@ Same data, same prompt structure per format. GCF and JSON use natural-language d
 | Model | GCF | TOON (natural) | JSON | Runs |
 |-------|-----|----------------|------|------|
 | Claude (Opus/default) | 5/5 | 5/5* | - | 1 |
-| Claude Sonnet 4.6 | 5/5 | 3/5 | 5/5 | 1 |
+| Claude Sonnet 4.6 | 5/5 | 2-3/5 | 5/5 | 2 |
 | Claude Haiku 4.5 | 5/5 | 1-3/5 | 5/5 | 2 |
 | GPT-5.5 | 4-5/5 | 1-2/5 | 5/5 | 2 |
 | GPT-5.4 | 5/5 | 0/5 | 5/5 | 1 |
@@ -252,7 +252,8 @@ generation/
 ├── generation-gpt55-run2-2026-06-06.log              # GPT-5.5 run 2: GCF 5/5, TOON 2/5, JSON 5/5
 ├── generation-haiku45-run1-2026-06-06.log            # Haiku 4.5 run 1: GCF 5/5, TOON 1/5, JSON 5/5
 ├── generation-haiku45-run2-2026-06-06.log            # Haiku 4.5 run 2: GCF 5/5, TOON 3/5, JSON 5/5
-├── generation-sonnet46-run1-2026-06-06.log           # Sonnet 4.6: GCF 5/5, TOON 3/5, JSON 5/5
+├── generation-sonnet46-run1-2026-06-06.log           # Sonnet 4.6 run 1: GCF 5/5, TOON 3/5, JSON 5/5
+├── generation-sonnet46-run2-2026-06-06.log           # Sonnet 4.6 run 2: GCF 5/5, TOON 2/5, JSON 5/5
 ├── generation-gcf-with-example-2026-06-04.log        # Claude GCF, with primer: 5/5 valid
 ├── generation-gcf-no-example-2026-06-04.log          # Claude GCF, cold-start: 3/5 valid
 ├── generation-toon-with-example-2026-06-04.log       # Claude TOON, with primer: 5/5 valid
