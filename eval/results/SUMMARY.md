@@ -9,23 +9,26 @@
 | Model | Run | GCF | TOON | JSON | GCF wins? |
 |-------|-----|-----|------|------|-----------|
 | Claude Opus 4.6 | 1 | **100%** | 92.3% | 76.9% | ✓ |
+| Claude Sonnet 4.6 | 1 | **100%** | 76.9% | 53.8% | ✓ |
 | GPT-5.5 | 1 | **91.7%** | 66.7% | 50.0% | ✓ |
 | GPT-5.5 | 2 | **76.9%** | 69.2% | 46.2% | ✓ |
 | GPT-5.5 | 3 | **76.9%** | 69.2% | 46.2% | ✓ |
+| GPT-5.5 | 4 | **91.7%** | 66.7% | 50.0% | ✓ |
 | GPT-5.4 | 1 | **75.0%** | 58.3% | 41.7% | ✓ |
 | GPT-5.4 | 2 | **76.9%** | 53.8% | 46.2% | ✓ |
 | GPT-5.4 | 3 | **76.9%** | 53.8% | 38.5% | ✓ |
 | GPT-5.4-mini | 1 | **76.9%** | 61.5% | 58.3% | ✓ |
 | GPT-5.4-mini | 2 | **66.7%** | **66.7%** | 50.0% | tied |
 
-**9 runs, 4 models. GCF wins 8, ties 1, loses 0.**
+**11 runs, 5 models, 2 providers. GCF wins 10, ties 1, loses 0.**
 
 ### Averages by model
 
 | Model | Runs | GCF avg | TOON avg | JSON avg | GCF margin |
 |-------|------|---------|----------|----------|------------|
 | Claude Opus 4.6 | 1 | **100%** | 92.3% | 76.9% | +7.7 vs TOON |
-| GPT-5.5 | 3 | **81.8%** | 68.4% | 47.5% | +13.4 vs TOON |
+| Claude Sonnet 4.6 | 1 | **100%** | 76.9% | 53.8% | +23.1 vs TOON |
+| GPT-5.5 | 4 | **84.3%** | 67.9% | 48.1% | +16.4 vs TOON |
 | GPT-5.4 | 3 | **76.3%** | 55.3% | 42.1% | +21.0 vs TOON |
 | GPT-5.4-mini | 2 | **71.8%** | 64.1% | 54.2% | +7.7 vs TOON |
 
@@ -37,7 +40,7 @@
 
 ### Key findings
 
-1. **GCF wins on every model.** The ordering GCF > TOON > JSON holds across Claude, GPT-5.5, GPT-5.4, and GPT-5.4-mini. 9 runs, 0 losses.
+1. **GCF wins on every model.** The ordering GCF > TOON > JSON holds across Claude Opus, Claude Sonnet, GPT-5.5, GPT-5.4, and GPT-5.4-mini. 11 runs, 0 losses. Both Claude models achieve 100%.
 2. **JSON breaks at scale.** GPT-5.5 returned empty strings on counting questions for JSON (unable to even produce an answer at 500 records). GPT-5.4 miscounted symbols (328 vs 500). Every model struggles with JSON's field-name repetition at scale.
 3. **TOON fails on distance grouping.** Without `## targets`/`## related`/`## extended` section headers, models must scan all 500 rows and filter by a column value. This fails consistently across models.
 4. **GCF is stable.** GPT-5.4 scored 75.0%, 76.9%, 76.9% across 3 runs. Low variance on the winning format.
@@ -49,6 +52,7 @@
 ```
 comprehension/
 ├── comprehension-14q-claude-edges-fix-2026-06-05.log   # Claude Opus 4.6: 100%
+├── comprehension-13q-sonnet46-run1-2026-06-06.log      # Claude Sonnet 4.6: 100%
 ├── comprehension-13q-gpt55-run1-2026-06-06.log         # GPT-5.5 run 1: 91.7%
 ├── comprehension-13q-gpt55-run2-2026-06-06.log         # GPT-5.5 run 2: 76.9%
 ├── comprehension-13q-gpt55-run3-2026-06-06.log         # GPT-5.5 run 3: 76.9%
