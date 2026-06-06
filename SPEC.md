@@ -32,7 +32,7 @@ GCF is a text-based, line-oriented wire format for encoding structured data in a
 
 GCF supports two encoding profiles:
 
-- **Tabular profile** (Section 6a): Encodes arbitrary structured data (arrays of objects, nested records, mixed types) using positional rows and pipe separators. Drop-in replacement for JSON in any AI pipeline. 34% fewer tokens than TOON on mixed-structure benchmarks.
+- **Generic profile** (Section 6a): Encodes arbitrary structured data (arrays of objects, nested records, mixed types) using positional rows and pipe separators. Drop-in replacement for JSON in any AI pipeline. 34% fewer tokens than TOON on mixed-structure benchmarks.
 - **Graph profile** (Sections 3-6): Specialized encoding for code graph payloads (symbols, edges, distance groups) with local IDs and distance-based grouping. 79% fewer tokens than JSON at 500 symbols.
 
 Both profiles share the same grammar primitives: `##` section headers, `@` local IDs, positional fields. The savings come from eliminating three sources of waste: field name repetition (positional encoding), identifier repetition (local IDs), and per-record metadata (hierarchical grouping).
@@ -81,7 +81,7 @@ Line terminator is `LF` (U+000A). Encoders MUST use `LF`. Decoders MUST tolerate
 
 ## 3. Header (Graph Profile)
 
-The graph profile begins with a header line identifying the format and carrying payload metadata. The tabular profile (Section 6a) does not require a header line.
+The graph profile begins with a header line identifying the format and carrying payload metadata. The generic profile (Section 6a) does not require a header line.
 
 ```
 GCF tool=context_for_task budget=5000 tokens=1847 symbols=10 edges=8 pack_root=a1b2c3d4...
@@ -179,11 +179,11 @@ Group headers partition the payload into semantic sections. The group a node app
 
 Group headers eliminate per-node distance fields. One header replaces N repeated fields. The `[N]` suffix on the edges header provides an explicit count, enabling LLMs to verify edge totals without scanning.
 
-## 6a. Tabular Encoding (Generic Profile)
+## 6a. Generic Encoding (Generic Profile)
 
-The graph profile (Sections 4-6) encodes symbol/edge payloads. The tabular profile extends GCF's grammar to encode arbitrary structured data: arrays of objects, nested records, and mixed types.
+The graph profile (Sections 4-6) encodes symbol/edge payloads. The generic profile extends GCF's grammar to encode arbitrary structured data: arrays of objects, nested records, and mixed types.
 
-### Tabular array header
+### Generic array header
 
 ```
 ## {name} [{count}]{{field1},{field2},{field3}}
@@ -262,9 +262,9 @@ version=2.1.0
 | Null/missing | `-` |
 | Empty array | `## name [0]` |
 
-### Value encoding (tabular profile)
+### Value encoding (generic profile)
 
-Encoders MUST format values in tabular rows according to the following rules:
+Encoders MUST format values in generic rows according to the following rules:
 
 | Value type | Encoding | Example |
 |-----------|----------|---------|
@@ -286,7 +286,7 @@ An array is considered uniform (eligible for tabular encoding) if the first 5 el
 
 ### Relationship to graph profile
 
-The graph profile (Sections 4-6) is a specialized application of the tabular profile for code graph data. The `@{id} {kind} {qname} {score} {provenance}` node line format is a tabular row with implicit field names. The tabular profile generalizes this to arbitrary field sets.
+The graph profile (Sections 4-6) is a specialized application of the generic profile for code graph data. The `@{id} {kind} {qname} {score} {provenance}` node line format is a tabular row with implicit field names. The generic profile generalizes this to arbitrary field sets.
 
 Both profiles use the same grammar primitives: `##` headers, `@` IDs, positional fields. Implementations may support one or both profiles.
 
@@ -329,7 +329,7 @@ The `## _summary` line provides the counts that were deferred from headers. It u
 |-------|------|-------------|
 | `symbols` | graph profile | Total symbol count |
 | `edges` | graph profile | Total edge count |
-| `rows` | tabular profile (single section) | Total row count |
+| `rows` | generic profile (single section) | Total row count |
 | `sections` | always | Comma-separated `name:count` pairs for each data section |
 
 ### Example: graph profile (streaming)
@@ -348,7 +348,7 @@ GCF tool=context_for_task budget=5000
 ## _summary symbols=3 edges=3 sections=targets:2,related:1,edges:3
 ```
 
-### Example: tabular profile (streaming)
+### Example: generic profile (streaming)
 
 ```
 ## employees [?]{id,name,department,salary}
@@ -466,7 +466,7 @@ Lines starting with `#` (single hash, space) are comments. Decoders MUST ignore 
 
 Combined: 84% median token savings across 6 benchmark payloads (8 to 30 symbols).
 
-### Tabular profile
+### Generic profile
 
 | Source | JSON cost | GCF cost | Savings |
 |--------|-----------|----------|---------|
@@ -481,7 +481,7 @@ On TOON's own benchmark datasets: 34% fewer tokens on mixed-structure data, 44% 
 
 - **Text-only.** GCF is plain text. No binary framing, no special characters beyond `@`, `<`, `#`, `##`, `|`, `.`, and `=`.
 - **Line-oriented.** Each semantic unit (header, node, edge, group, tabular row, key-value pair, comment) occupies exactly one line.
-- **Shallow nesting.** The graph profile is flat. The tabular profile supports indented nested fields (`.fieldname`) for records with sub-objects, but nesting depth is typically 1-2 levels.
+- **Shallow nesting.** The graph profile is flat. The generic profile supports indented nested fields (`.fieldname`) for records with sub-objects, but nesting depth is typically 1-2 levels.
 - **Deterministic.** Same input produces same output. No randomness, no ordering ambiguity (symbols ordered by score descending, edges ordered by source then target).
 - **Human-readable.** The format can be read and understood by a human without tooling.
 - **LLM-parseable.** The format can be parsed by an LLM without special instructions. Validated: 100% accuracy on structured extraction tasks.
@@ -505,17 +505,17 @@ Conforming graph-profile encoders MUST:
 - Produce deterministic output (same input produces same output)
 - NOT emit trailing whitespace on any line
 
-### 12.2 Encoder Conformance (Tabular Profile)
+### 12.2 Encoder Conformance (Generic Profile)
 
-Conforming tabular-profile encoders MUST:
+Conforming generic-profile encoders MUST:
 
-- Emit tabular headers with accurate record counts matching the number of rows (buffered mode), OR `[?]` with counts in `## _summary` (streaming mode)
-- Use pipe (`|`) as the value separator in tabular rows
+- Emit generic headers with accurate record counts matching the number of rows (buffered mode), OR `[?]` with counts in `## _summary` (streaming mode)
+- Use pipe (`|`) as the value separator in generic rows
 - NOT emit field names in data rows (positional encoding only)
 - Emit primitive arrays inline as `name[count]: val1,val2,val3` (comma-separated, no spaces)
 - Emit `key=value` for primitive object fields
 - Emit `## key` section headers for nested objects
-- Use `@{id}` prefixes on tabular rows only when nested fields are present
+- Use `@{id}` prefixes on generic rows only when nested fields are present
 - Emit `-` for null or missing values
 - NOT quote numbers or booleans
 
@@ -535,13 +535,13 @@ Conforming graph-profile decoders MUST:
 - Ignore comment lines (starting with `# `)
 - Tolerate trailing `\r` on lines (CRLF input)
 
-### 12.4 Decoder Conformance (Tabular Profile)
+### 12.4 Decoder Conformance (Generic Profile)
 
-Conforming tabular-profile decoders MUST:
+Conforming generic-profile decoders MUST:
 
-- Parse tabular headers with `[count]{fields}` or `[?]{fields}` syntax
+- Parse generic headers with `[count]{fields}` or `[?]{fields}` syntax
 - Accept `?` as a valid deferred count (streaming mode); defer validation to `## _summary`
-- Split tabular rows on pipe (`|`)
+- Split generic rows on pipe (`|`)
 - Validate row value count against field count in the header
 - Parse inline primitive arrays with `name[count]: val1,val2,...` syntax
 - Parse `key=value` lines as primitive fields
@@ -567,12 +567,12 @@ Decoders MUST reject (return an error, not silently ignore) the following condit
 | Unknown edge reference | Edge references a symbol ID not declared earlier in the payload |
 | Malformed delta section | Delta payload contains unrecognized section headers |
 
-#### Tabular profile errors
+#### Generic profile errors
 
 | Error | Condition |
 |-------|-----------|
 | Row width mismatch | Number of pipe-separated values in a row does not match field count in header |
-| Invalid count | `[count]` in tabular header is not a non-negative integer |
+| Invalid count | `[count]` in generic header is not a non-negative integer |
 | Count mismatch | Number of data rows does not match `[count]` declared in header |
 | Unterminated quote | Quoted value missing closing `"` |
 | Invalid escape | Escape sequence other than `\"` or `\\` inside quoted value |
@@ -590,7 +590,7 @@ Decoders MAY issue warnings (without rejecting) for:
 - The `pack_root` field contains a content hash. Implementations MUST NOT use `pack_root` values as filesystem paths or database keys without sanitization.
 - Session state (Section 7) requires server-side tracking of transmitted symbols. Implementations SHOULD bound session size to prevent memory exhaustion.
 - Delta payloads (Section 8) reference a prior state. Implementations MUST handle the case where the prior state is unknown (fallback to full payload).
-- Tabular rows may contain user-generated content. Implementations that render GCF output into HTML, terminals, or other display contexts MUST sanitize values to prevent injection.
+- Generic rows may contain user-generated content. Implementations that render GCF output into HTML, terminals, or other display contexts MUST sanitize values to prevent injection.
 
 ## 14. MIME Type
 
