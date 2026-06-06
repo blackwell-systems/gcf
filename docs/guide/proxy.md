@@ -1,6 +1,6 @@
 # MCP Proxy (Zero-Code Adoption)
 
-gcf-proxy wraps any existing MCP server and re-encodes JSON tool responses as GCF. Your server keeps outputting JSON. The LLM receives GCF. Zero code changes.
+gcf-proxy wraps any existing MCP server and re-encodes JSON tool responses as GCF. Your server keeps outputting JSON. The LLM receives GCF. Zero code changes. For large graph payloads, the proxy streams GCF fragments via progress notifications for immediate partial context delivery.
 
 ## Install
 
@@ -110,6 +110,32 @@ GCF tool=context_for_task budget=10000 tokens=3200 symbols=10 edges=6
 
 63% fewer tokens. Same information. Zero code changes.
 
+## Streaming progress (large payloads)
+
+When a client sends a `progressToken` with a tool call and the response contains a large graph payload (5+ symbols by default), the proxy streams GCF fragments via MCP progress notifications:
+
+```
+Client                    Proxy                     Upstream
+  |--tools/call----------->|--forward--------------->|
+  |  progressToken: "abc"  |                         |
+  |                        |<--JSON response (50 sym)|
+  |                        |                         |
+  |<--progress(5/50)-------|  "## targets\n@0 fn..." |
+  |<--progress(10/50)------|  "@5 fn...\n@6..."      |
+  |<--progress(50/50)------|  "## _summary..."       |
+  |                        |                         |
+  |<--tools/call result----|  complete GCF payload   |
+```
+
+The LLM gets the first symbols in its context within milliseconds. Without `progressToken`, the proxy behaves as before (no streaming, backward compatible).
+
+### Flags
+
+| Flag | Default | Description |
+|------|---------|-------------|
+| `--stream-threshold N` | 5 | Min symbols before streaming activates |
+| `--no-progress` | false | Disable progress notifications entirely |
+
 ## Test it
 
 Run the built-in savings test:
@@ -150,10 +176,22 @@ The proxy only converts `text` content blocks in JSON-RPC responses that contain
 | You want maximum control over encoding | Library |
 | You want zero-effort adoption | Proxy |
 
-The proxy gives you the baseline GCF savings (positional encoding, tabular rows) without session dedup or delta encoding. For those features, use the [GCF libraries](/ecosystem/implementations) directly.
+The proxy gives you GCF savings (positional encoding, tabular rows, primitive array inlining) plus streaming progress on large payloads. For session dedup and delta encoding, use the [GCF libraries](/ecosystem/implementations) directly.
+
+## Roadmap
+
+| Phase | Status | Description |
+|-------|--------|-------------|
+| 1. Streaming progress (stdio) | Done | Progress notifications with GCF fragments |
+| 2. HTTP/SSE frontend | Planned | Proxy becomes a Streamable HTTP server (`--http :9090`) |
+| 3. HTTP backend + session | Planned | Connect to upstream via HTTP, cross-request session dedup |
+| 4. Production hardening | Planned | Graceful shutdown, metrics, resume support |
+
+Phase 2 will upgrade any stdio MCP server into a remote Streamable HTTP service with SSE streaming. No upstream changes needed.
 
 ## Links
 
 - [GitHub](https://github.com/blackwell-systems/gcf-proxy)
+- [Roadmap](https://github.com/blackwell-systems/gcf-proxy/blob/main/ROADMAP.md)
 - [PyPI](https://pypi.org/project/gcf-proxy/)
 - [npm](https://www.npmjs.com/package/@blackwell-systems/gcf-proxy)
