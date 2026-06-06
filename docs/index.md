@@ -4,7 +4,7 @@ sidebar: false
 hero:
   name: GCF
   text: Drop-in JSON replacement for all AI pipelines, with superpowers for graph-shaped data.
-  tagline: 'The most token-efficient wire format for LLMs. 79% fewer input tokens than <span class="json">JSON</span>. 63% fewer output tokens. <span class="gcf">GCF</span> averages <strong>90.5% comprehension accuracy</strong> across 10 models and 3 providers where <span class="json">JSON</span> averages 53.6% and <span class="toon">TOON</span> averages 68.5%. No model has been trained on GCF.'
+  tagline: 'The most token-efficient wire format for LLMs. 79% fewer input tokens than <span class="json">JSON</span>. 63% fewer output tokens. <span class="gcf">GCF</span> averages <strong>90.5% comprehension accuracy</strong> across 10 models and 3 providers where <span class="json">JSON</span> averages 53.6% and <span class="toon">TOON</span> averages 68.5%.'
   actions:
     - theme: brand
       text: Get Started
