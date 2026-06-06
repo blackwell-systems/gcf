@@ -69,6 +69,40 @@ function encodeSessionCall2(obj: any): string {
 // ---------------------------------------------------------------------------
 
 const PRESETS: Record<string, { label: string; json: any }> = {
+  employees: {
+    label: 'Employee records (tabular)',
+    json: {
+      employees: [
+        { id: 1, name: 'Alice Smith', department: 'Engineering', salary: 95000, active: true },
+        { id: 2, name: 'Bob Jones', department: 'Sales', salary: 72000, active: true },
+        { id: 3, name: 'Carol Wu', department: 'Marketing', salary: 85000, active: false },
+        { id: 4, name: 'Dan Lee', department: 'Engineering', salary: 91000, active: true },
+        { id: 5, name: 'Eve Park', department: 'Design', salary: 78000, active: true },
+      ],
+    },
+  },
+  config: {
+    label: 'App config (nested objects)',
+    json: {
+      name: 'my-service',
+      version: '2.1.0',
+      environment: 'production',
+      database: { host: 'db.example.com', port: 5432, pool_size: 10 },
+      cache: { ttl: 3600, max_size: 1000 },
+      features: ['dark_mode', 'new_checkout', 'beta_api'],
+      regions: ['us-east-1', 'eu-west-1', 'ap-south-1'],
+    },
+  },
+  orders: {
+    label: 'Orders with nested items (mixed)',
+    json: {
+      orders: [
+        { id: 1001, total: 249.99, status: 'shipped', customer: { name: 'Alice', tier: 'premium' } },
+        { id: 1002, total: 89.50, status: 'pending', customer: { name: 'Bob', tier: 'standard' } },
+        { id: 1003, total: 512.00, status: 'delivered', customer: { name: 'Carol', tier: 'premium' } },
+      ],
+    },
+  },
   blast_radius: {
     label: 'Blast radius (8 symbols, 6 edges)',
     json: {
@@ -165,7 +199,7 @@ type Tab = 'compare' | 'decode'
 
 const activeTab = ref<Tab>('compare')
 const inputText = ref('')
-const selectedPreset = ref('blast_radius')
+const selectedPreset = ref('employees')
 const copied = ref<string>('')
 const shareText = ref('')
 const showSession = ref(false)
