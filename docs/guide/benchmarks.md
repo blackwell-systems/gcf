@@ -38,7 +38,48 @@ All results [reproducible](https://github.com/blackwell-systems/gcf/tree/main/ev
 
 **GCF wins on every model. The ordering GCF > TOON > JSON never flips.**
 
-When GCF gets an answer wrong, it's off by 1-2 (median error: 4). When TOON and JSON get answers wrong, they're off by 50-140 (median error: 53 and 56). GCF fails on precision. TOON and JSON fail on comprehension. See the [failure taxonomy](https://github.com/blackwell-systems/gcf/tree/main/eval/results/SUMMARY.md#failure-taxonomy) for the full analysis.
+### Example: "How many related symbols?"
+
+The answer is 167. Here's what each format gives the model:
+
+**GCF:** The answer is in the section header.
+```
+## related [167]{qualifiedName|kind|score}
+@0 handler.Response.Notify|fn|0.82
+@1 model.SubscribeConfig|type|0.81
+...
+```
+The model reads `167`. Done.
+
+**TOON:** All 500 symbols in one flat table. The model must scan every row, filter by the `distance` column, and count.
+```
+symbols[500]{name,kind,score,distance}:
+  handler.Response.Notify,function,0.82,1
+  model.SubscribeConfig,type,0.81,1
+  ...
+```
+Answers across runs: 100, 115, 165, 172, 190, 214. Wildly inconsistent.
+
+**JSON:** Same as TOON but with 53,000 tokens of repeated field names. Claude Opus, the most capable model on earth, responded by enumerating symbols one by one:
+
+> *"Let me count precisely by going through the list:*
+> *1. handler.Response.Notify*
+> *2. model.SubscribeConfig*
+> *3. service.PublishOptions*
+> *...*
+> *143. store.DispatchConfig*
+>
+> *So: 143."*
+
+143 lines of output. Wrong answer. The correct answer was 167. ([Full artifact](https://github.com/blackwell-systems/gcf/tree/main/eval/results/artifacts/opus-json-enumeration-failure.md))
+
+### Error magnitude
+
+When GCF gets an answer wrong, it's off by 1-2 (median error: 4). When TOON and JSON get answers wrong, they're off by 50-140 (median error: 53 and 56). GCF fails on precision. TOON and JSON fail on comprehension.
+
+![Error Magnitude](/charts/error-magnitude.png)
+
+See the [full failure taxonomy](/guide/eval-results#failure-taxonomy) for the complete analysis.
 
 ---
 
