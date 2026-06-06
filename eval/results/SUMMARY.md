@@ -42,15 +42,16 @@
 | Claude Haiku 4.5 | 2 | **100%** | 69.2% | 53.8% | ✓ |
 | GPT-5.4 | 4 | **76.9%** | 58.3% | 50.0% | ✓ |
 | GPT-5.5 | 5 | **83.3%** | 66.7% | 36.4% | ✓ |
+| Claude Opus 4.6 | 2 | **92.3%** | 76.9% | 69.2% | ✓ |
 | Claude Sonnet 4.6 | 2 | **100%** | 69.2% | 53.8% | ✓ |
 
-**16 runs, 6 models, 2 providers. GCF wins 15, ties 1, loses 0.**
+**17 runs, 6 models, 2 providers. GCF wins 16, ties 1, loses 0.**
 
 ### Averages by model
 
 | Model | Runs | GCF avg | TOON avg | JSON avg | GCF margin |
 |-------|------|---------|----------|----------|------------|
-| Claude Opus 4.6 | 1 | **100%** | 92.3% | 76.9% | +7.7 vs TOON |
+| Claude Opus 4.6 | 2 | **96.2%** | 84.6% | 73.1% | +11.6 vs TOON |
 | Claude Sonnet 4.6 | 2 | **100%** | 73.1% | 53.8% | +26.9 vs TOON |
 | GPT-5.5 | 5 | **84.1%** | 67.7% | 45.8% | +16.4 vs TOON |
 | GPT-5.4 | 4 | **76.4%** | 56.0% | 44.1% | +20.4 vs TOON |
@@ -65,7 +66,7 @@
 
 ### Key findings
 
-1. **GCF wins on every model.** The ordering GCF > TOON > JSON holds across Claude Opus, Claude Sonnet, Claude Haiku, GPT-5.5, GPT-5.4, and GPT-5.4-mini. 16 runs, 0 losses. Opus and Sonnet achieve 100% on every run. Haiku averages 96.2%.
+1. **GCF wins on every model.** The ordering GCF > TOON > JSON holds across Claude Opus, Claude Sonnet, Claude Haiku, GPT-5.5, GPT-5.4, and GPT-5.4-mini. 17 runs, 0 losses. Sonnet achieves 100% on every run. Opus and Haiku average 96.2%.
 2. **JSON breaks at scale.** GPT-5.5 returned empty strings on counting questions for JSON (unable to even produce an answer at 500 records). GPT-5.4 miscounted symbols (328 vs 500). Every model struggles with JSON's field-name repetition at scale.
 3. **TOON fails on distance grouping.** Without `## targets`/`## related`/`## extended` section headers, models must scan all 500 rows and filter by a column value. This fails consistently across models.
 4. **GCF is stable.** GPT-5.4 scored 75.0%, 76.9%, 76.9% across 3 runs. Low variance on the winning format.
@@ -133,7 +134,8 @@ GCF median error: 4. TOON median error: 53. JSON median error: 56. GCF encodes a
 
 ```
 comprehension/
-├── comprehension-14q-claude-edges-fix-2026-06-05.log   # Claude Opus 4.6: 100%
+├── comprehension-14q-claude-edges-fix-2026-06-05.log   # Claude Opus 4.6 run 1: 100%
+├── comprehension-13q-opus46-run2-2026-06-06.log        # Claude Opus 4.6 run 2: 92.3%
 ├── comprehension-13q-sonnet46-run1-2026-06-06.log      # Claude Sonnet 4.6 run 1: 100%
 ├── comprehension-13q-sonnet46-run2-2026-06-06.log      # Claude Sonnet 4.6 run 2: 100%
 ├── comprehension-13q-haiku45-run1-2026-06-06.log       # Claude Haiku 4.5 run 1: 92.3%
