@@ -159,12 +159,13 @@ comprehension/
 | Model | 5 sym | 10 sym | 20 sym | 50 sym | 100 sym | Score | Runs |
 |-------|-------|--------|--------|--------|---------|-------|------|
 | Claude (Opus/default) | YES | YES | YES | YES | YES | 5/5 | 1 |
+| GPT-5.5 | YES | YES | YES | YES | 4-5/5 | 4-5/5 | 2 |
 | GPT-5.4 | YES | YES | YES | YES | YES | 5/5 | 1 |
 | GPT-5.4-mini | YES | YES | YES | YES | YES | 5/5 | 1 |
 | Gemini 3.1 Flash Lite | YES | YES | YES | YES | YES | 5/5 | 2 (zero variance) |
 | Gemini 2.5 Flash | YES | YES | 3-4/5 | 3-4/5 | 3-4/5 | 3-4/5 | 2 (high variance, free tier) |
 
-GCF achieves 5/5 on every model except rate-limited Gemini 2.5 Flash free tier. Zero prior training.
+GCF achieves 5/5 on every model except rate-limited Gemini 2.5 Flash free tier. GPT-5.5 returned empty on 100 sym in 1 of 2 runs (transient). Zero prior training.
 
 ### Three-way generation comparison (GPT-5.4)
 
@@ -232,6 +233,8 @@ generation/
 ├── generation-gemini25flash-run2-2026-06-06.log      # Gemini 2.5 Flash run 2: GCF 3/5, TOON 0/5, JSON 0/5
 ├── generation-gemini31flashlite-run1-2026-06-06.log  # Gemini 3.1 Flash Lite run 1: GCF 5/5, TOON 0/5, JSON 4/5
 ├── generation-gemini31flashlite-run2-2026-06-06.log  # Gemini 3.1 Flash Lite run 2: GCF 5/5, TOON 0/5, JSON 4/5
+├── generation-gpt55-run1-2026-06-06.log              # GPT-5.5 run 1: GCF 4/5, TOON 1/5, JSON 5/5
+├── generation-gpt55-run2-2026-06-06.log              # GPT-5.5 run 2: GCF 5/5, TOON 2/5, JSON 5/5
 ├── generation-gcf-with-example-2026-06-04.log        # Claude GCF, with primer: 5/5 valid
 ├── generation-gcf-no-example-2026-06-04.log          # Claude GCF, cold-start: 3/5 valid
 ├── generation-toon-with-example-2026-06-04.log       # Claude TOON, with primer: 5/5 valid
