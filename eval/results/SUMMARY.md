@@ -172,19 +172,22 @@ artifacts/
 
 GCF achieves 5/5 on every model except rate-limited Gemini 2.5 Flash free tier. GPT-5.5 returned empty on 100 sym in 1 of 2 runs (transient). Zero prior training.
 
-### Three-way generation comparison (GPT-5.4)
+### Three-way generation comparison (all models)
 
-Same data, same model, same prompt structure. Only the target format differs.
+Same data, same prompt structure per format. GCF and JSON use natural-language descriptions. TOON uses the same natural descriptions (not pre-encoded integers).
 
-| Symbols | GCF (bytes) | GCF valid | TOON (bytes) | TOON valid | JSON (bytes) | JSON valid |
-|---------|-------------|-----------|--------------|------------|--------------|------------|
-| 5 | 411 | YES | 590 | NO | 916 | YES |
-| 10 | 695 | YES | 1,039 | NO | 1,744 | YES |
-| 20 | 1,309 | YES | 1,995 | NO | 3,458 | YES |
-| 50 | 3,031 | YES | 4,524 | NO | 8,089 | YES |
-| 100 | 5,976 | YES | 8,937 | NO | 16,121 | YES |
+| Model | GCF | TOON (natural) | JSON | Runs |
+|-------|-----|----------------|------|------|
+| Claude (Opus/default) | 5/5 | 5/5* | - | 1 |
+| GPT-5.5 | 4-5/5 | 1-2/5 | 5/5 | 2 |
+| GPT-5.4 | 5/5 | 0/5 | 5/5 | 1 |
+| GPT-5.4-mini | 5/5 | 0/5 | 5/5 | 1 |
+| Gemini 3.1 Flash Lite | 5/5 | 0/5 | 4/5 | 2 |
+| Gemini 2.5 Flash | 3-4/5 | 0-4/5 | 0-2/5 | 2 |
 
-**GPT-5.4/mini: GCF 5/5, JSON 5/5, TOON 0/5. Gemini 3.1 Flash Lite: GCF 5/5, TOON 0/5, JSON 4/5.**
+\* Claude's TOON run used a different prompt that explicitly provided integer distances.
+
+**GCF is the only format that achieves consistent 5/5 validity across all models (3 providers, 5 models).** TOON fails on 4 of 5 models when given natural-language descriptions. JSON fails on Gemini at scale (output truncation).
 
 TOON's flat tabular design requires column values to be pre-encoded as integers. When a model is told "this symbol is a target" (natural language), it writes `target` in the distance column. TOON's decoder rejects this because it expects `0`. The model has to know that "target" means 0, "related" means 1, "extended" means 2, and perform that mapping before writing. Every model tested (GPT-5.4, GPT-5.4-mini) fails to do this mapping unprompted.
 
