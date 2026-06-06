@@ -1,6 +1,10 @@
 # Benchmarks
 
-1,300+ LLM evaluations across 10 models, 3 providers, and 51 independent test runs. No model has ever been trained on GCF. Every model reads it better and writes it better than the formats they were trained on.
+1,300+ LLM evaluations across 10 models, 3 providers, and 51 independent test runs.
+
+No model has ever been trained on GCF.
+
+Every model reads it better and writes it better than the formats they were trained on.
 
 | | GCF | TOON | JSON |
 |---|---|---|---|
