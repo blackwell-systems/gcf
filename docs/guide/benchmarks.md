@@ -43,7 +43,7 @@ All results [reproducible](https://github.com/blackwell-systems/gcf/tree/main/ev
 
 All answers are deterministic (computed from the payload). No LLM judge.
 
-When an agent receives data in JSON at this scale, it gets the wrong answer 45% of the time. With TOON, 29% of the time. With GCF, 12%.
+When an agent receives data in JSON at this scale, it gets the wrong answer 46% of the time. With TOON, 32% of the time. With GCF, 10%.
 
 ![Comprehension Accuracy by Model](/charts/accuracy-by-model.png)
 

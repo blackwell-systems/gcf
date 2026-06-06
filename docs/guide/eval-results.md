@@ -4,7 +4,7 @@ Complete data from all eval runs. For the summary, see [Benchmarks](/guide/bench
 
 ---
 
-## Comprehension: All 17 Runs
+## Comprehension: All 23 Runs
 
 500 symbols, 200 edges, 13 structured extraction questions, zero format instructions. Each run generates a fresh random payload.
 
@@ -27,8 +27,14 @@ Complete data from all eval runs. For the summary, see [Benchmarks](/guide/bench
 | GPT-5.4 | 4 | **76.9%** | 58.3% | 50.0% | ✓ |
 | GPT-5.4-mini | 1 | **76.9%** | 61.5% | 58.3% | ✓ |
 | GPT-5.4-mini | 2 | **66.7%** | **66.7%** | 50.0% | tied |
+| Gemini 2.5 Flash | 1 | **76.9%** | 58.3% | 53.8% | ✓ |
+| Gemini 2.5 Flash | 2 | **75.0%** | 50.0% | 57.1% | ✓ |
+| Gemini 2.5 Flash | 3 | **90.0%** | 55.6% | 60.0% | ✓ |
+| Gemini 3.5 Flash | 1 | **100%** | 61.5% | 46.2% | ✓ |
+| Gemini 2.5 Pro | 1 | **100%** | 76.9% | 58.3% | ✓ |
+| Gemini 3.1 Pro | 1 | **100%** | 76.9% | 46.2% | ✓ |
 
-**17 runs, 6 models, 2 providers. GCF wins 16, ties 1, loses 0.**
+**23 runs, 10 models, 3 providers. GCF wins 22, ties 1, loses 0. Four models achieve 100%: Sonnet, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash.**
 
 ### Score variance
 
@@ -52,7 +58,7 @@ GCF is in the top-left: fewer tokens, higher accuracy.
 
 ## Failure Taxonomy
 
-Classified from all FAIL lines across 17 runs (39 questions per run, 3 formats each).
+Classified from all FAIL lines across 23 runs (39 questions per run, 3 formats each).
 
 ![Error Magnitude](/charts/error-magnitude.png)
 
@@ -125,7 +131,9 @@ GCF failures on Claude are near-zero. GCF failures on OpenAI are deterministic a
 | GPT-5.5 | YES | YES | YES | YES | 4-5/5 | 4-5/5 | 2 |
 | GPT-5.4 | YES | YES | YES | YES | YES | 5/5 | 1 |
 | GPT-5.4-mini | YES | YES | YES | YES | YES | 5/5 | 2 (zero variance) |
-| Gemini 3.1 Flash Lite | YES | YES | YES | YES | YES | 5/5 | 2 (zero variance) |
+| Gemini 2.5 Pro | YES | YES | YES | YES | YES | 5/5 | 2 (zero variance) |
+| Gemini 3.1 Pro | YES | YES | YES | YES | YES | 5/5 | 1 |
+| Gemini 3.1 Flash Lite | YES | YES | YES | YES | 4-5/5 | 4-5/5 | 3 |
 
 ### Three-way comparison
 
@@ -137,7 +145,9 @@ GCF failures on Claude are near-zero. GCF failures on OpenAI are deterministic a
 | GPT-5.5 | 4-5/5 | 1-2/5 | 5/5 | 2 |
 | GPT-5.4 | 5/5 | 0/5 | 5/5 | 1 |
 | GPT-5.4-mini | 5/5 | 0/5 | 5/5 | 2 (zero variance) |
-| Gemini 3.1 Flash Lite | 5/5 | 0/5 | 4/5 | 2 (zero variance) |
+| Gemini 2.5 Pro | 5/5 | 1/5 | 5/5 | 2 (zero variance) |
+| Gemini 3.1 Pro | 5/5 | 0/5 | 5/5 | 1 |
+| Gemini 3.1 Flash Lite | 4-5/5 | 0/5 | 4-5/5 | 3 |
 
 ### TOON generation heatmap
 
