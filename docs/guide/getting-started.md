@@ -5,15 +5,15 @@ GCF is a drop-in replacement for JSON in AI pipelines. Encode any structured dat
 ## When to use GCF
 
 **Tool responses** (input to LLM):
-- Code intelligence results (symbols, call graphs, dependencies)
-- Knowledge graph queries (nodes, edges, relationships)
-- API responses with repeated record structures
 - Any MCP tool response with arrays of objects
+- API responses, database query results, search results
+- Log entries, telemetry, event streams
+- Code intelligence results (symbols, call graphs, dependencies)
 
 **Agent output** (produced by LLM):
 - Agent-to-agent communication in multi-agent workflows
 - Structured output where you want to minimize output tokens
-- Any case where the model returns tabular or graph data
+- Any case where the model returns structured data
 
 GCF is most effective when:
 - Payloads contain **repeated structures** (arrays of similar objects)
