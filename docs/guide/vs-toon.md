@@ -1,6 +1,6 @@
 # GCF vs TOON
 
-GCF is smaller on all 6 datasets, more accurate at scale (100% vs 92.3%), and has five features TOON structurally cannot add. All claims below are tested on TOON's own benchmark with their datasets and their tokenizer.
+GCF is smaller on all 6 datasets, more accurate at scale (90.5% vs 68.5% across 10 models and 3 providers), and has five features TOON structurally cannot add. TOON's own official decoder rejects LLM-generated TOON output on 7 of 9 models tested. All token claims tested on TOON's own benchmark with their datasets and their tokenizer.
 
 ## Feature comparison
 
@@ -20,7 +20,7 @@ GCF is smaller on all 6 datasets, more accurate at scale (100% vs 92.3%), and ha
 | Generic data (any JSON) | Yes (generic profile) | Yes |
 | **Streaming encode** | **Yes (true zero-buffering, O(1) memory, `[?]` + trailer)** | **Output-side only (requires full value in memory)** |
 | Key folding (dotted paths) | No | Yes |
-| LLM comprehension at 500 symbols | 100% (13/13) | 92.3% (12/13) |
+| LLM comprehension at 500 symbols | **90.5%** avg (23 runs, 10 models) | 68.5% avg |
 | **LLM generation (output tokens)** | **75% fewer than JSON** | **40% fewer than JSON** |
 | Human-readable | Dense, agent-optimized | YAML-like, human-friendly |
 | Zero dependencies | Yes | Yes |
@@ -142,35 +142,42 @@ GCF encodes how far each record is from the query center:
 
 The LLM immediately knows what's most relevant without scanning the entire payload. TOON encodes all records in a flat list with no semantic grouping.
 
-## LLM output generation: GCF is 52% smaller
+## LLM generation: TOON fails, GCF doesn't
 
-Both formats can be produced by LLMs given a short primer. Tested with the same model (Claude), same data (5 to 100 symbols), validated through real decoders:
+28 generation runs across 9 models and 3 providers. Same data, same prompt structure, output validated through real decoders (including TOON's official [toon-go](https://github.com/toon-format/toon-go) library).
 
-| Symbols | Edges | GCF output | TOON output | GCF vs TOON |
-|---------|-------|-----------|-------------|-------------|
-| 5 | 3 | 379 B | 782 B | **52% smaller** |
-| 10 | 6 | 643 B | 1,377 B | **53% smaller** |
-| 20 | 12 | 1,217 B | 2,629 B | **54% smaller** |
-| 50 | 25 | 2,845 B | 5,898 B | **52% smaller** |
-| 100 | 50 | 5,619 B | 11,650 B | **52% smaller** |
+| Model | GCF | TOON | JSON |
+|-------|-----|------|------|
+| Claude Opus 4.6 | **5/5** | 0/5 | 5/5 |
+| Claude Sonnet 4.6 | **5/5** | 2-3/5 | 5/5 |
+| GPT-5.5 | **4-5/5** | 1-2/5 | 5/5 |
+| GPT-5.4 | **5/5** | 0/5 | 5/5 |
+| Gemini 2.5 Pro | **5/5** | 1/5 | 5/5 |
+| Gemini 3.1 Pro | **5/5** | 0/5 | 5/5 |
 
-Both achieved 5/5 validity with a format example. Both achieved 3/5 without one (tied cold-start). GCF is not just cheaper to read; it's cheaper to write.
+**TOON's official decoder rejects the output on 7 of 9 models.** The failure is structural: TOON's flat columns require the model to encode semantic categories as integers. When told "this symbol is a target," the model writes `target` in the distance column. TOON's decoder expects `0`. Every model fails to perform this mapping unprompted.
 
-TOON's [LLM integration guide](https://toonformat.dev/guide/llm-prompts.html) positions TOON as bidirectional (LLMs read and write it). But their guide doesn't publish a generation eval. We tested both formats head-to-head, and GCF produces valid output in half the tokens.
+GCF expresses distance through section placement (`## targets`, `## related`). No integer mapping required. The format aligns with how LLMs naturally express grouped data.
 
-## TOON's benchmarks don't test at scale
+When TOON is given pre-encoded integers (hand-holding the model through the mapping), it passes but still produces 28% more output than GCF.
+
+GCF output is 63% smaller than JSON and 33% smaller than TOON at 100 symbols. See the [full generation data](/guide/eval-results#generation-all-runs) for all runs.
+
+## TOON's comprehension benchmarks don't test at scale
 
 TOON's retrieval accuracy benchmark uses datasets of 100 rows or fewer and reports a 1.4 percentage point accuracy improvement over JSON (76.4% vs 75.0%). At this scale, all formats perform similarly because JSON's structural noise hasn't yet overwhelmed the model's attention.
 
-GCF's [comprehension eval](https://github.com/blackwell-systems/gcf-go/tree/main/eval) tests at 500 symbols with 200 edges. At this scale:
+GCF's [comprehension eval](https://github.com/blackwell-systems/gcf-go/tree/main/eval) tests at 500 symbols with 200 edges across 10 models and 3 providers (Anthropic, OpenAI, Google):
 
-| Format | Accuracy | Tokens |
-|--------|----------|--------|
-| **GCF** | **100%** (13/13) | **11,090** |
-| TOON | 92.3% (12/13) | 16,378 |
-| JSON | 76.9% (10/13) | 53,341 |
+| Format | Avg accuracy (10 models) | Tokens |
+|--------|--------------------------|--------|
+| **GCF** | **90.5%** | **11,090** |
+| TOON | 68.5% | 16,378 |
+| JSON | 53.6% | 53,341 |
 
-JSON doesn't just use more tokens; it actively miscounts records (guessed 320 instead of 500). TOON fails on distance grouping (no section headers). The difference between formats is invisible at 100 rows and undeniable at 500. TOON's benchmarks stay in the comfort zone.
+23 runs. GCF wins 22, ties 1, loses 0. Four models achieve 100% on GCF (Sonnet, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash). TOON never hits 100%. The difference between formats is invisible at 100 rows and undeniable at 500.
+
+TOON publishes zero multi-model comprehension data and zero generation validity data.
 
 Reproduce it yourself: `git clone github.com/blackwell-systems/gcf-go && cd gcf-go/eval && GOWORK=off go test -run TestComprehension -v -timeout 0`
 
