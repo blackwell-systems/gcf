@@ -18,7 +18,7 @@ GCF is smaller on all 6 datasets, more accurate at scale (100% vs 92.3%), and ha
 | **Distance grouping** | **Yes (`## targets`, `## related`)** | **No** |
 | Graph-native (nodes + edges) | Yes (graph profile) | No |
 | Generic data (any JSON) | Yes (tabular profile) | Yes |
-| Streaming encode | No | Yes |
+| **Streaming encode** | **Yes (true zero-buffering, O(1) memory, `[?]` + trailer)** | **Output-side only (requires full value in memory)** |
 | Key folding (dotted paths) | No | Yes |
 | LLM comprehension at 500 symbols | 100% (13/13) | 92.3% (12/13) |
 | **LLM generation (output tokens)** | **75% fewer than JSON** | **40% fewer than JSON** |
@@ -184,16 +184,17 @@ TOON optimizes for the case where a human is scanning the raw wire format. GCF o
 
 ## Where TOON wins
 
-Nowhere. GCF wins on all 6 datasets in TOON's own benchmark. The closest result is deeply nested configuration (616 vs 618, a 2-token difference). TOON's streaming encode is the only feature it has that GCF doesn't.
+Nowhere. GCF wins on all 6 datasets in TOON's own benchmark. The closest result is deeply nested configuration (616 vs 618, a 2-token difference). TOON's `encodeLines()` is output-side streaming only (the full value must be in memory before encoding starts). GCF's `StreamEncoder` is true input-side streaming with zero buffering and O(1) memory per row. See the [streaming guide](/guide/streaming) for the full comparison.
 
 ## The bottom line
 
-GCF does everything TOON does, plus four things TOON structurally cannot add without becoming a different format:
+GCF does everything TOON does, plus five things TOON structurally cannot add without becoming a different format:
 
 - **Local IDs and edge encoding** (requires `@N` references)
 - **Session deduplication** (requires bare references, which require local IDs)
 - **Delta encoding** (requires content-addressed identity)
 - **Distance grouping** (requires semantic section headers)
+- **True streaming encode** (requires deferred counts + trailer; TOON spec mandates upfront `[N]`)
 
 On TOON's own benchmark, GCF wins all 6 datasets.
 
