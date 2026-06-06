@@ -40,8 +40,9 @@
 | GPT-5.4-mini | 2 | **66.7%** | **66.7%** | 50.0% | tied |
 | Claude Haiku 4.5 | 1 | **92.3%** | 69.2% | 61.5% | ✓ |
 | Claude Haiku 4.5 | 2 | **100%** | 69.2% | 53.8% | ✓ |
+| GPT-5.4 | 4 | **76.9%** | 58.3% | 50.0% | ✓ |
 
-**13 runs, 6 models, 2 providers. GCF wins 12, ties 1, loses 0.**
+**14 runs, 6 models, 2 providers. GCF wins 13, ties 1, loses 0.**
 
 ### Averages by model
 
@@ -131,6 +132,7 @@ Each model tier has a distinct failure signature.
 - GCF: **deterministic, repeatable errors** across all 3 runs: `edge_count`=198 (always), `function_count`=84 (always). Not random; consistent tokenization/parsing bug.
 - TOON: distance grouping wildly inconsistent (169, 229, 200 vs 166). Round-number guessing.
 - JSON: symbol_count 326-404, massive undercounts everywhere
+- **Experiment (run 4):** Added kind counts to section headers (`fn=42 type=41 method=42 iface=41`) and edge type counts (`calls=50`). Result: `calls_edge_count` **fixed** (50 correct, was 42). `function_count` still 84 (model ignores `fn=N` metadata, continues scanning rows). `edge_count` regressed (read `[166]` from targets header instead of `[200]` from edges header).
 
 **GPT-5.4-mini (cheapest tier):**
 - GCF: same deterministic patterns as 5.4 (198, 84) plus occasional larger misses (250, 100)
@@ -157,6 +159,7 @@ comprehension/
 ├── comprehension-13q-gpt54-run1-2026-06-06.log         # GPT-5.4 run 1: 75.0%
 ├── comprehension-13q-gpt54-run2-2026-06-06.log         # GPT-5.4 run 2: 76.9%
 ├── comprehension-13q-gpt54-run3-2026-06-06.log         # GPT-5.4 run 3: 76.9%
+├── comprehension-13q-gpt54-run4-kindcounts-2026-06-06.log  # GPT-5.4 run 4: 76.9%
 ├── comprehension-13q-gpt54-mini-run1-2026-06-06.log    # GPT-5.4-mini run 1: 76.9%
 └── comprehension-13q-gpt54-mini-run2-2026-06-06.log    # GPT-5.4-mini run 2: 66.7%
 ```
