@@ -578,6 +578,12 @@ onMounted(() => {
           </div>
         </div>
 
+        <!-- Comprehension note -->
+        <div class="comprehension-note">
+          <strong>GCF is more readable for agents than JSON.</strong> At 500 records with zero format instructions: GCF scores <strong>100% accuracy</strong> (13/13). JSON drops to 76.9% because field-name repetition overwhelms counting. The "readable" format is the one that breaks. The "dense" format is the one that works.
+          <a href="/guide/llm-integration">See the eval &rarr;</a>
+        </div>
+
         <!-- Breakdown -->
         <div class="breakdown" v-if="edgeCount > 0">
           <h4 class="breakdown-title">Where the savings come from</h4>
@@ -990,6 +996,30 @@ onMounted(() => {
 }
 
 /* Breakdown */
+.comprehension-note {
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: var(--vp-c-bg-soft);
+  border-radius: 8px;
+  font-size: 0.9em;
+  line-height: 1.5;
+  color: var(--vp-c-text-2);
+}
+.comprehension-note strong {
+  color: var(--vp-c-text-1);
+}
+.comprehension-note a {
+  color: var(--vp-c-brand-1);
+  text-decoration: none;
+  font-weight: 500;
+}
+.comprehension-note code {
+  background: var(--vp-c-bg-mute);
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
 .breakdown {
   margin-top: 20px;
   padding-top: 18px;
