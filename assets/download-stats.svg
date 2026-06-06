@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="320" height="200" viewBox="0 0 320 200">
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="222" viewBox="0 0 320 222">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#1a1a2e"/>
@@ -10,25 +10,27 @@
     </linearGradient>
   </defs>
 
-  <rect width="320" height="200" rx="12" fill="url(#bg)"/>
-  <rect x="1" y="1" width="318" height="198" rx="11" fill="none" stroke="#334155" stroke-width="1"/>
+  <rect width="320" height="222" rx="12" fill="url(#bg)"/>
+  <rect x="1" y="1" width="318" height="220" rx="11" fill="none" stroke="#334155" stroke-width="1"/>
 
   <text x="24" y="36" fill="#e2e8f0" font-family="system-ui,-apple-system,sans-serif" font-size="14" font-weight="600">GCF ecosystem downloads</text>
   <text x="296" y="36" fill="#64748b" font-family="system-ui,-apple-system,sans-serif" font-size="10" text-anchor="end">2026-06-06</text>
 
   <line x1="24" y1="48" x2="296" y2="48" stroke="#334155" stroke-width="1"/>
 
-  <text x="24" y="74" fill="#94a3b8" font-family="ui-monospace,monospace" font-size="12">pypi (gcf-python)</text>
-  <text x="296" y="74" fill="#e2e8f0" font-family="ui-monospace,monospace" font-size="13" font-weight="600" text-anchor="end">2066</text>
-  <text x="24" y="96" fill="#94a3b8" font-family="ui-monospace,monospace" font-size="12">crates.io (gcf)</text>
-  <text x="296" y="96" fill="#e2e8f0" font-family="ui-monospace,monospace" font-size="13" font-weight="600" text-anchor="end">23</text>
-  <text x="24" y="118" fill="#94a3b8" font-family="ui-monospace,monospace" font-size="12">github (gcf-go)</text>
-  <text x="296" y="118" fill="#e2e8f0" font-family="ui-monospace,monospace" font-size="13" font-weight="600" text-anchor="end">15</text>
-  <text x="24" y="140" fill="#94a3b8" font-family="ui-monospace,monospace" font-size="12">github (gcf-proxy)</text>
-  <text x="296" y="140" fill="#e2e8f0" font-family="ui-monospace,monospace" font-size="13" font-weight="600" text-anchor="end">12</text>
+  <text x="24" y="74" fill="#94a3b8" font-family="ui-monospace,monospace" font-size="12">npm (gcf library)</text>
+  <text x="296" y="74" fill="#e2e8f0" font-family="ui-monospace,monospace" font-size="13" font-weight="600" text-anchor="end">269</text>
+  <text x="24" y="96" fill="#94a3b8" font-family="ui-monospace,monospace" font-size="12">pypi (gcf-python)</text>
+  <text x="296" y="96" fill="#e2e8f0" font-family="ui-monospace,monospace" font-size="13" font-weight="600" text-anchor="end">2066</text>
+  <text x="24" y="118" fill="#94a3b8" font-family="ui-monospace,monospace" font-size="12">crates.io (gcf)</text>
+  <text x="296" y="118" fill="#e2e8f0" font-family="ui-monospace,monospace" font-size="13" font-weight="600" text-anchor="end">60</text>
+  <text x="24" y="140" fill="#94a3b8" font-family="ui-monospace,monospace" font-size="12">github (gcf-go)</text>
+  <text x="296" y="140" fill="#e2e8f0" font-family="ui-monospace,monospace" font-size="13" font-weight="600" text-anchor="end">16</text>
+  <text x="24" y="162" fill="#94a3b8" font-family="ui-monospace,monospace" font-size="12">github (gcf-proxy)</text>
+  <text x="296" y="162" fill="#e2e8f0" font-family="ui-monospace,monospace" font-size="13" font-weight="600" text-anchor="end">24</text>
 
-  <line x1="24" y1="144" x2="296" y2="144" stroke="#334155" stroke-width="1"/>
+  <line x1="24" y1="166" x2="296" y2="166" stroke="#334155" stroke-width="1"/>
 
-  <text x="24" y="172" fill="url(#accent)" font-family="system-ui,-apple-system,sans-serif" font-size="16" font-weight="700">2116 total</text>
-  <text x="296" y="172" fill="#64748b" font-family="system-ui,-apple-system,sans-serif" font-size="10" text-anchor="end">cumulative downloads</text>
+  <text x="24" y="194" fill="url(#accent)" font-family="system-ui,-apple-system,sans-serif" font-size="16" font-weight="700">2435 total</text>
+  <text x="296" y="194" fill="#64748b" font-family="system-ui,-apple-system,sans-serif" font-size="10" text-anchor="end">cumulative downloads</text>
 </svg>
