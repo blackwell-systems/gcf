@@ -44,8 +44,9 @@
 | GPT-5.5 | 5 | **83.3%** | 66.7% | 36.4% | ✓ |
 | Claude Opus 4.6 | 2 | **92.3%** | 76.9% | 69.2% | ✓ |
 | Claude Sonnet 4.6 | 2 | **100%** | 69.2% | 53.8% | ✓ |
+| Gemini 2.5 Flash | 1 | **76.9%** | 58.3% | 53.8% | ✓ |
 
-**17 runs, 6 models, 2 providers. GCF wins 16, ties 1, loses 0.**
+**18 runs, 7 models, 3 providers. GCF wins 17, ties 1, loses 0.**
 
 ### Averages by model
 
@@ -57,6 +58,7 @@
 | GPT-5.4 | 4 | **76.4%** | 56.0% | 44.1% | +20.4 vs TOON |
 | Claude Haiku 4.5 | 2 | **96.2%** | 69.2% | 57.7% | +27.0 vs TOON |
 | GPT-5.4-mini | 2 | **71.8%** | 64.1% | 54.2% | +7.7 vs TOON |
+| Gemini 2.5 Flash | 1 | **76.9%** | 58.3% | 53.8% | +18.6 vs TOON |
 
 ### Methodology notes
 
@@ -66,7 +68,7 @@
 
 ### Key findings
 
-1. **GCF wins on every model.** The ordering GCF > TOON > JSON holds across Claude Opus, Claude Sonnet, Claude Haiku, GPT-5.5, GPT-5.4, and GPT-5.4-mini. 17 runs, 0 losses. Sonnet achieves 100% on every run. Opus and Haiku average 96.2%.
+1. **GCF wins on every model.** The ordering GCF > TOON > JSON holds across Claude Opus, Claude Sonnet, Claude Haiku, GPT-5.5, GPT-5.4, GPT-5.4-mini, and Gemini 2.5 Flash. 18 runs across 3 providers, 0 losses. Sonnet achieves 100% on every run. Opus and Haiku average 96.2%.
 2. **JSON breaks at scale.** GPT-5.5 returned empty strings on counting questions for JSON (unable to even produce an answer at 500 records). GPT-5.4 miscounted symbols (328 vs 500). Every model struggles with JSON's field-name repetition at scale.
 3. **TOON fails on distance grouping.** Without `## targets`/`## related`/`## extended` section headers, models must scan all 500 rows and filter by a column value. This fails consistently across models.
 4. **GCF is stable.** GPT-5.4 scored 75.0%, 76.9%, 76.9% across 3 runs. Low variance on the winning format.
