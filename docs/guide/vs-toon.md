@@ -159,7 +159,7 @@ The LLM immediately knows what's most relevant without scanning the entire paylo
 
 GCF expresses distance through section placement (`## targets`, `## related`). No integer mapping required. The format aligns with how LLMs naturally express grouped data.
 
-When TOON is given pre-encoded integers (hand-holding the model through the mapping), it passes but still produces 28% more output than GCF.
+When TOON is given pre-encoded integers (hand-holding the model through the mapping), performance improves on some models but is still inconsistent. Even in the best case, TOON output is 28% larger than GCF.
 
 GCF output is 63% smaller than JSON and 33% smaller than TOON at 100 symbols. See the [full generation data](/guide/eval-results#generation-all-runs) for all runs.
 
