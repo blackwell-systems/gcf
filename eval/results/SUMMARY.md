@@ -137,7 +137,7 @@ Each model tier has a distinct failure signature.
 - TOON: worst distance grouping failures (26, 28 vs 166). Defaults to round-number guessing.
 - JSON: 300 vs 500 symbol_count. Consistent failure across all question types.
 
-**Key observation:** GCF failures on Claude models are near-zero. GCF failures on OpenAI models are deterministic and repeatable (same wrong number every run), suggesting a tokenizer-level parsing difference rather than a comprehension issue.
+GCF failures on Claude are near-zero. GCF failures on OpenAI are deterministic and repeatable (same wrong number every run), suggesting a tokenizer-level parsing difference rather than a comprehension issue.
 
 #### Summary
 
