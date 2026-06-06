@@ -69,34 +69,7 @@ go get github.com/blackwell-systems/gcf-go  # Go
 cargo add gcf                             # Rust
 ```
 
-### Graph profile (code intelligence, MCP tools)
-
-```python
-from gcf import encode, Payload, Symbol, Edge
-
-output = encode(Payload(
-    tool="context_for_task",
-    token_budget=5000,
-    tokens_used=1847,
-    symbols=[
-        Symbol(qualified_name="pkg.Auth", kind="function", score=0.78, provenance="lsp", distance=0),
-        Symbol(qualified_name="pkg.Server", kind="function", score=0.54, provenance="lsp", distance=1),
-    ],
-    edges=[Edge(source="pkg.Server", target="pkg.Auth", edge_type="calls")],
-))
-```
-
-```
-GCF tool=context_for_task budget=5000 tokens=1847 symbols=2 edges=1
-## targets
-@0 fn pkg.Auth 0.78 lsp
-## related
-@1 fn pkg.Server 0.54 lsp
-## edges [1]
-@0<@1 calls
-```
-
-### Tabular profile (any structured data)
+### Encode any structured data (tabular profile)
 
 ```python
 from gcf import encode_generic
@@ -117,7 +90,36 @@ output = encode_generic({
 3|Carol|Marketing|85000
 ```
 
-One header declares field names. Rows are positional values only. No field names repeated per record.
+One header declares field names. Rows are positional values only. No field names repeated per record. Works on any JSON: arrays, nested objects, primitives.
+
+### Graph profile (code intelligence, MCP tools)
+
+For data with nodes, edges, and distance groups:
+
+```python
+from gcf import encode, Payload, Symbol, Edge
+
+output = encode(Payload(
+    tool="context_for_task", token_budget=5000, tokens_used=1847,
+    symbols=[
+        Symbol(qualified_name="pkg.Auth", kind="function", score=0.78, provenance="lsp", distance=0),
+        Symbol(qualified_name="pkg.Server", kind="function", score=0.54, provenance="lsp", distance=1),
+    ],
+    edges=[Edge(source="pkg.Server", target="pkg.Auth", edge_type="calls")],
+))
+```
+
+```
+GCF tool=context_for_task budget=5000 tokens=1847 symbols=2 edges=1
+## targets
+@0 fn pkg.Auth 0.78 lsp
+## related
+@1 fn pkg.Server 0.54 lsp
+## edges [1]
+@0<@1 calls
+```
+
+Local IDs (`@0`, `@1`) replace full names in edges. 233 tokens instead of 965 for JSON.
 
 **[Try it live in the playground](https://gcformat.com/playground.html)** with real-time three-way comparison (JSON vs TOON vs GCF).
 
