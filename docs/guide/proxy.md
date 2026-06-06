@@ -1,6 +1,6 @@
 # MCP Proxy (Zero-Code Adoption)
 
-gcf-proxy wraps any existing MCP server and re-encodes JSON tool responses as GCF. Your server keeps outputting JSON. The LLM receives GCF. Zero code changes. For large graph payloads, the proxy streams GCF fragments via progress notifications for immediate partial context delivery.
+gcf-proxy wraps any existing MCP server and re-encodes JSON tool responses as GCF. Your server keeps outputting JSON. The LLM receives GCF. Zero code changes. For large payloads, the proxy streams GCF fragments via progress notifications for immediate partial context delivery.
 
 ## Install
 
