@@ -2,7 +2,7 @@
 
 **Dayna Blackwell, Blackwell Systems**
 
-**Date:** 2026-06-06 (revised; original: 2026-05-28)
+**Date:** 2026-06-06
 
 ---
 
@@ -429,25 +429,7 @@ On two separate runs, Claude Opus responded to a JSON counting question by manua
 - TOON encoding uses the official `toon-go` library from the `toon-format` GitHub organization.
 - All raw logs in `eval/results/comprehension/`.
 
-### 6.2 Byte Comparison
-
-| Codec | Bytes (10-sym payload) | vs JSON |
-|-------|----------------------|---------|
-| JSON | 4,153 | baseline |
-| GCF | 1,079 | -74% |
-| GCB (binary) | 448 | -89% |
-
-### 6.3 Encode Performance
-
-| Codec | p50 latency | p99 latency | Payload size |
-|-------|-------------|-------------|-------------|
-| GCF | 38 us | 64 us | 30 symbols |
-| GCB | 12 us | 22 us | 30 symbols |
-| JSON | 45 us | 78 us | 30 symbols |
-
-GCF encodes faster than JSON (no escaping, no nested object construction). GCB is fastest (direct byte writes, no text formatting). All codecs encode a 30-symbol payload in under 100 microseconds; encoding latency is negligible compared to the graph query that produces the data.
-
-### 6.4 Session Statefulness Savings
+### 6.2 Session Statefulness Savings
 
 | Call | New symbols | Reused symbols | GCF tokens | Cumulative savings vs JSON |
 |------|-------------|---------------|------------|--------------------------|
@@ -461,69 +443,27 @@ By the fifth tool call in a session, GCF achieves 92.7% token savings versus JSO
 
 ---
 
-## 7. GCB: Companion Binary Format
-
-GCB (Graph Compact Binary) optimizes for machine-to-machine paths where the consumer is not an LLM: daemon IPC, response caching, cross-service transport.
-
-### 7.1 Wire Layout
-
-```
-[magic:4 "GCB1"][version:1]
-[header]
-  tool        : length-prefixed string
-  tokens_used : varint
-  token_budget: varint
-  num_symbols : varint
-  num_edges   : varint
-[symbols x num_symbols]
-  qname       : length-prefixed string
-  kind        : uint8 (enum)
-  score       : float32 (little-endian)
-  provenance  : uint8 (enum)
-  distance    : uint8
-  signature   : length-prefixed string
-  blast_radius: float32
-  confidence  : float32
-  recency     : float32
-  distance_c  : float32
-[edges x num_edges]
-  source_idx  : varint (index into symbols array)
-  target_idx  : varint (index into symbols array)
-  edge_type   : uint8 (enum)
-  status      : uint8 (enum)
-```
-
-### 7.2 When to Use Each Format
-
-| Path | Format | Reason |
-|------|--------|--------|
-| MCP tool -> LLM | GCF | Token-optimized, LLM-readable |
-| Daemon -> client | GCB | Byte-efficient, fast decode |
-| Cache -> disk | GCB | Smallest on-disk footprint |
-| Debug/human inspection | JSON | Readable, pipeable to jq |
-| Service -> service | GCB | Compact, schema-stable |
-
 ---
 
-## 8. Comparison to Alternatives
+## 7. Comparison to Alternatives
 
-### 8.1 Columnar/TSV
+### 7.1 Columnar/TSV
 
 Column headers with tab-separated values eliminate field name repetition, achieving ~27% token savings. But TSV treats graph data as flat tables: edge references still require full identifier strings in each row. TSV cannot exploit referential identity (local IDs) or topological encoding (edge arrows). GCF triples the savings.
 
-### 8.2 Binary Formats (Protobuf, MessagePack, FlatBuffers)
+### 7.2 Binary Formats (Protobuf, MessagePack, FlatBuffers)
 
 These optimize for machine parsing and byte size. An LLM cannot read a protobuf payload; it must be decoded to text first, and the decoded text is typically JSON, eliminating the savings at the point of consumption. Binary formats solve a different problem (machine efficiency) than GCF (LLM token efficiency).
 
-### 8.3 JSON-LD / RDF
+### 7.3 JSON-LD / RDF
 
 Verbose by design: full URIs, type annotations, `@context` declarations. Optimizes for semantic interoperability across systems, not token-constrained consumption. JSON-LD is worse than JSON for LLM tool responses.
 
-### 8.4 Markdown / Freeform Text
+### 7.4 Markdown / Freeform Text
 
 Some tools return markdown-formatted text. This is human-optimized, not LLM-optimized. Markdown uses whitespace for structure (indentation, line breaks, headers) which tokenizers handle inconsistently. GCF's positional format produces consistent, predictable token counts regardless of tokenizer implementation.
 
-### 8.5 TOON (Token-Oriented Object Notation)
+### 7.5 TOON (Token-Oriented Object Notation)
 
 TOON is a tabular encoding format for JSON that declares array fields once and uses comma-separated rows. It achieves 30-60% savings versus JSON on flat tabular data.
 
@@ -542,19 +482,19 @@ TOON is a tabular encoding format for JSON that declares array fields once and u
 
 TOON has no local-ID system, no edge encoding, no session deduplication, no delta encoding, and no streaming mode. These are structural limitations that cannot be added without a fundamental redesign. TOON edges must repeat the full qualified name of both source and target (~100 tokens per edge vs ~4 for GCF). TOON retransmits every record on every call; GCF tracks what's been sent. TOON's spec mandates upfront `[N]` counts with no deferred mechanism; GCF streams with zero buffering.
 
-**TOON is fundamentally fragile for generation.** Its official decoder rejects LLM-generated output on 7 of 9 models tested. The failure is always the same: models write semantic labels where TOON expects integers. This is a structural design flaw in flat tabular formats that encode categories as column values. GCF solves this by expressing categories through section placement. See Section 10.1 for the full analysis.
+**TOON is fundamentally fragile for generation.** Its official decoder rejects LLM-generated output on 7 of 9 models tested. The failure is always the same: models write semantic labels where TOON expects integers. This is a structural design flaw in flat tabular formats that encode categories as column values. GCF solves this by expressing categories through section placement. See Section 9.1 for the full analysis.
 
 On output, GCF produces 63% smaller output than JSON and 33% smaller than TOON at 100 symbols.
 
 Fork with reproducible results: github.com/blackwell-systems/toon (branch: gcf-comparison).
 
-### 8.6 Custom Compressed JSON
+### 7.6 Custom Compressed JSON
 
 JSON with shortened field names (`"qn"` instead of `"qualified_name"`) achieves 15-25% savings. This preserves JSON's structural overhead (delimiters, quoting, nesting) while reducing readability. GCF eliminates the structural overhead entirely rather than shortening the labels on it.
 
 ---
 
-## 9. Limitations and Validation
+## 8. Limitations and Validation
 
 **LLM comprehension.** 23 runs across 10 models and 3 providers validate this design. GCF averages 90.5% accuracy where JSON averages 53.6% and TOON averages 68.5%. Four models achieve 100% on GCF. The concern that LLMs might struggle with GCF's dense positional format was unfounded; the format improves comprehension by eliminating structural noise. GCF's `@N` local IDs, `##` section headers, and `|` pipe separators are more comprehensible to an LLM than JSON's `"qualified_name":` repeated 500 times.
 
@@ -568,7 +508,7 @@ JSON with shortened field names (`"qn"` instead of `"qualified_name"`) achieves 
 
 ---
 
-## 10. Implications for MCP and Agent Tooling
+## 9. Implications for MCP and Agent Tooling
 
 The MCP specification does not define a standard for tool response encoding beyond "the response is a JSON-RPC result." This means every MCP server independently decides how to format its output. The result is that agents receive verbose JSON from every tool, with no mechanism to request compact encoding.
 
@@ -576,7 +516,7 @@ We propose that MCP tool responses should support format negotiation: the client
 
 The token savings are too large to ignore. A 79% reduction in tool response tokens translates directly to: lower API costs, faster time-to-first-token, more room in the context window for source code and reasoning, and fewer multi-turn loops caused by context window exhaustion.
 
-### 10.1 LLM Generation: GCF as a Bidirectional Format
+### 9.1 LLM Generation: GCF as a Bidirectional Format
 
 GCF is bidirectional: LLMs can produce it, not just consume it. 28 generation runs across 9 models and 3 providers, validated through real decoders (including TOON's official `toon-go` library).
 
@@ -622,19 +562,19 @@ When TOON is given pre-encoded integers (hand-holding the model through the mapp
 
 **Implications.** GCF generation enables: (1) agent-to-agent communication at 63% fewer tokens per handoff, (2) structured output mode as an alternative to JSON mode, and (3) system prompt encoding where context packs are encoded as GCF to maximize context window utilization.
 
-### 10.2 Streaming: Progressive Context Delivery
+### 9.2 Streaming: Progressive Context Delivery
 
 The streaming encoding extension (Section 3.8) enables a new interaction pattern: **progressive context delivery**. An MCP proxy can emit GCF fragments as MCP progress notifications while the upstream server is still processing. The LLM receives partial context immediately, reducing perceived latency from seconds to milliseconds on large graph traversals.
 
 Combined with MCP's Streamable HTTP transport (Server-Sent Events), this creates a pipeline where graph data flows from the server through the proxy to the LLM token by token, with the trailer summary providing count verification at the end.
 
-### 10.3 Delta Encoding
+### 9.3 Delta Encoding
 
 GCF's token savings compound with delta encoding: when the agent passes a `pack_root` from a prior call and the pack changed, the server sends only added/removed symbols instead of the full payload. Measured: 81.2% additional token savings at 96.6% symbol overlap on re-query scenarios. Combined with GCF's baseline savings and session deduplication, the three-level stack achieves over 97% cumulative token reduction on warm sessions versus stateless JSON.
 
 ---
 
-## 11. Conclusion
+## 10. Conclusion
 
 JSON is the default encoding for LLM interactions because it is universal, not because it is efficient. For structured data, JSON wastes more than three-quarters of its tokens on structural overhead that carries no semantic content.
 
