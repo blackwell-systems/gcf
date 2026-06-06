@@ -166,7 +166,8 @@ artifacts/
 | Model | 5 sym | 10 sym | 20 sym | 50 sym | 100 sym | Score | Runs |
 |-------|-------|--------|--------|--------|---------|-------|------|
 | Claude (Opus/default) | YES | YES | YES | YES | YES | 5/5 | 1 |
-| Claude Haiku 4.5 | YES | YES | YES | YES | YES | 5/5 | 1 |
+| Claude Sonnet 4.6 | YES | YES | YES | YES | YES | 5/5 | 1 |
+| Claude Haiku 4.5 | YES | YES | YES | YES | YES | 5/5 | 2 |
 | GPT-5.5 | YES | YES | YES | YES | 4-5/5 | 4-5/5 | 2 |
 | GPT-5.4 | YES | YES | YES | YES | YES | 5/5 | 1 |
 | GPT-5.4-mini | YES | YES | YES | YES | YES | 5/5 | 2 (zero variance) |
@@ -182,7 +183,8 @@ Same data, same prompt structure per format. GCF and JSON use natural-language d
 | Model | GCF | TOON (natural) | JSON | Runs |
 |-------|-----|----------------|------|------|
 | Claude (Opus/default) | 5/5 | 5/5* | - | 1 |
-| Claude Haiku 4.5 | 5/5 | 1/5 | 5/5 | 1 |
+| Claude Sonnet 4.6 | 5/5 | 3/5 | 5/5 | 1 |
+| Claude Haiku 4.5 | 5/5 | 1-3/5 | 5/5 | 2 |
 | GPT-5.5 | 4-5/5 | 1-2/5 | 5/5 | 2 |
 | GPT-5.4 | 5/5 | 0/5 | 5/5 | 1 |
 | GPT-5.4-mini | 5/5 | 0/5 | 5/5 | 2 (zero variance) |
@@ -191,7 +193,7 @@ Same data, same prompt structure per format. GCF and JSON use natural-language d
 
 \* Claude Opus TOON run used a different prompt that explicitly provided integer distances.
 
-**GCF is the only format that achieves consistent 5/5 validity across all models (3 providers, 6 models).** TOON fails on 5 of 6 models when given natural-language descriptions. JSON fails on Gemini at scale (output truncation).
+**GCF is the only format that achieves consistent 5/5 validity across all models (3 providers, 7 models).** TOON fails on 5 of 7 models when given natural-language descriptions (Claude Sonnet/Haiku partially pass with variance). JSON fails on Gemini at scale (output truncation).
 
 TOON's flat tabular design requires column values to be pre-encoded as integers. When a model is told "this symbol is a target" (natural language), it writes `target` in the distance column. TOON's decoder rejects this because it expects `0`. The model has to know that "target" means 0, "related" means 1, "extended" means 2, and perform that mapping before writing. Every model tested (GPT-5.4, GPT-5.4-mini) fails to do this mapping unprompted.
 
@@ -248,7 +250,9 @@ generation/
 ├── generation-gemini31flashlite-run2-2026-06-06.log  # Gemini 3.1 Flash Lite run 2: GCF 5/5, TOON 0/5, JSON 4/5
 ├── generation-gpt55-run1-2026-06-06.log              # GPT-5.5 run 1: GCF 4/5, TOON 1/5, JSON 5/5
 ├── generation-gpt55-run2-2026-06-06.log              # GPT-5.5 run 2: GCF 5/5, TOON 2/5, JSON 5/5
-├── generation-haiku45-run1-2026-06-06.log            # Haiku 4.5: GCF 5/5, TOON 1/5, JSON 5/5
+├── generation-haiku45-run1-2026-06-06.log            # Haiku 4.5 run 1: GCF 5/5, TOON 1/5, JSON 5/5
+├── generation-haiku45-run2-2026-06-06.log            # Haiku 4.5 run 2: GCF 5/5, TOON 3/5, JSON 5/5
+├── generation-sonnet46-run1-2026-06-06.log           # Sonnet 4.6: GCF 5/5, TOON 3/5, JSON 5/5
 ├── generation-gcf-with-example-2026-06-04.log        # Claude GCF, with primer: 5/5 valid
 ├── generation-gcf-no-example-2026-06-04.log          # Claude GCF, cold-start: 3/5 valid
 ├── generation-toon-with-example-2026-06-04.log       # Claude TOON, with primer: 5/5 valid
