@@ -200,18 +200,18 @@ GCF never has this problem. Distance is expressed through section placement: a t
 
 This is a structural design flaw in flat tabular formats: any time a column encodes a semantic category as an integer or enum, the model must perform an extra encoding step that it may silently get wrong. GCF eliminates this entire failure class by making categories structural.
 
-### TOON with pre-encoded integer distances
+### TOON with hand-holding (pre-encoded integer distances)
 
-When the prompt explicitly says "distance 0" instead of "target", TOON passes. This confirms the failure is in the label-to-integer mapping, not in TOON syntax generation itself.
+When the prompt explicitly says "distance 0" instead of "target" (hand-holding the model through the label-to-integer mapping that TOON requires), TOON passes. 2 runs, zero variance, identical byte counts both times.
 
 | Format | Prompt | Valid | 100 sym output | vs JSON |
 |--------|--------|-------|---------------|---------|
 | **GCF** | natural labels | **5/5** | **5,984 B** | **78% fewer** |
-| TOON | pre-encoded integers | 5/5 | 8,336 B | 69% fewer |
+| TOON | hand-held (integers) | 5/5 | 8,336 B | 69% fewer |
 | TOON | natural labels | 0/5 | - | - |
 | JSON | natural labels | 5/5 | 16,121 B | baseline |
 
-Even when TOON is given pre-encoded integers (doing the model's work for it), GCF output is still 28% smaller.
+GCF works with natural-language descriptions. TOON requires the caller to pre-encode semantic labels as integers before the model can produce valid output. Even with this hand-holding, GCF output is still 28% smaller.
 
 ### Cold-start (no example in prompt)
 
