@@ -1,12 +1,12 @@
 # Using GCF with LLMs
 
-GCF works in both directions: tools produce it, LLMs read it, and LLMs can produce it too. Reading requires no primer (proven at 500 symbols). Writing requires a 3-line example and produces valid output with **75% fewer tokens than JSON** and **52% fewer than TOON**.
+GCF works in both directions: tools produce it, LLMs read it, and LLMs can produce it too. No model has ever been trained on GCF. Reading requires no primer (proven across 10 models and 3 providers at 500 symbols). Writing requires a 3-line example and produces valid output with **63% fewer tokens than JSON** and **33% fewer than TOON**.
 
 ## Designed for agent comprehension, not human scanning
 
 GCF looks dense to human eyes. `@0<@1 calls` is not as immediately obvious as `{"source": "pkg.Server", "target": "pkg.Auth", "edge_type": "calls"}`. That's deliberate.
 
-Human-readability and LLM-readability are different things, and they diverge at scale. At 8 records, both JSON and GCF are easy for humans and LLMs alike. At 500 records, JSON's field-name repetition creates enough structural noise that the LLM loses count (76.9% accuracy). GCF's dense, positional format cuts through that noise (100% accuracy).
+Human-readability and LLM-readability are different things, and they diverge at scale. At 8 records, both JSON and GCF are easy for humans and LLMs alike. At 500 records, JSON's field-name repetition creates enough structural noise that LLMs lose count (53.6% average accuracy across 10 models). GCF's dense, positional format cuts through that noise (90.5% accuracy, four models at 100%).
 
 Here's what JSON at 500 symbols looks like to an LLM. Every record repeats five field names:
 
@@ -28,7 +28,7 @@ The same data in GCF:
 ... 497 more, each one line, no repeated field names ...
 ```
 
-No noise. Every token is content. The model counts 500 correctly, identifies 166 targets correctly, extracts all edge types correctly. 13/13.
+No noise. Every token is content. Across 23 runs and 10 models, GCF averages 90.5% accuracy. Four models (Sonnet, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash) achieve 100%.
 
 The format is optimized for the actual consumer. Every character carries meaning. No decoration, no repeated field names, no structural tokens that exist only for human scanners. The result is a format that agents understand perfectly and costs a fraction of the "readable" alternative.
 
@@ -57,21 +57,15 @@ The gcf-proxy proves this pattern works in reverse: the MCP server outputs JSON,
 
 GCF payloads are immediately comprehensible to frontier models without any format description in the prompt. This isn't a claim; it's measured.
 
-The [comprehension eval](https://github.com/blackwell-systems/gcf-go/tree/main/eval) sends a 500-symbol, 200-edge GCF payload to an LLM with **zero format instructions**, only the raw payload and a question. 13 questions, all deterministic. Selected results:
+The [comprehension eval](https://github.com/blackwell-systems/gcf-go/tree/main/eval) sends a 500-symbol, 200-edge payload to an LLM with **zero format instructions**: only the raw payload and a question. 13 questions, all deterministic. 23 runs across 10 models and 3 providers (Anthropic, OpenAI, Google).
 
-| Question | What the LLM must extract | GCF | TOON | JSON |
-|----------|--------------------------|-----|------|------|
-| How many symbols? | Count all records | **500** | 500 | 320 |
-| How many edges? | Count relationships | **200** | 200 | 200 |
-| How many targets (distance 0)? | Count records in first section | **166** | 166 | 240 |
-| How many extended (distance 2)? | Count records in third section | **Correct** | Wrong | Correct |
-| How many functions? | Filter by kind | **Correct** | Correct | Wrong |
-| Highest-scored symbol name? | Find max by 4th field | **Correct** | Correct | Correct |
-| All unique edge types? | Deduplicate 3rd field of edges | **Correct** | Correct | Correct |
+| Format | Avg accuracy (10 models) | Tokens |
+|--------|--------------------------|--------|
+| **GCF** | **90.5%** | **11,090** |
+| TOON | 68.5% | 16,378 |
+| JSON | 53.6% | 53,341 |
 
-**GCF: 13/13. TOON: 12/13. JSON: 10/13.**
-
-JSON fails on counting tasks at scale because field-name repetition creates noise that overwhelms the model's counting circuits. TOON fails on distance grouping (it has no `## targets`/`## related`/`## extended` sections). GCF is the only format that achieves 100% accuracy, and does it in **32% fewer tokens** than TOON and **79% fewer** than JSON.
+**GCF wins 22 of 23 runs (1 tie, 0 losses).** Four models achieve 100%. JSON fails on counting tasks because field-name repetition overwhelms attention. TOON fails on distance grouping (no section headers). GCF answers structurally. See the [full benchmarks](/guide/benchmarks) for per-model results.
 
 The model was never told what `@0`, `##`, or `<` mean. It figured it out from the structure. The format is regular enough (positional fields, consistent prefixes, section headers) that pattern recognition handles it.
 
@@ -86,17 +80,17 @@ That's sufficient. Don't over-explain.
 
 ## LLM output generation (proven)
 
-LLMs can produce valid GCF given a short format example. Tested with Claude (`claude -p`, zero prior context), validated through the real Go decoder at 5 to 100 symbols:
+LLMs can produce valid GCF given a short format example. 28 runs across 9 models and 3 providers, validated through real decoders (including TOON's official [toon-go](https://github.com/toon-format/toon-go) library):
 
-| Symbols | Edges | Valid | GCF output | JSON equivalent | Savings |
-|---------|-------|-------|-----------|----------------|---------|
-| 5 | 3 | YES | 379 B | 1,307 B | **71%** |
-| 10 | 6 | YES | 643 B | 2,443 B | **74%** |
-| 20 | 12 | YES | 1,217 B | 4,778 B | **75%** |
-| 50 | 25 | YES | 2,845 B | 11,154 B | **74%** |
-| 100 | 50 | YES | 5,619 B | 22,180 B | **75%** |
+| Model | GCF | TOON | JSON |
+|-------|-----|------|------|
+| Claude Opus 4.6 | **5/5** | 0/5 | 5/5 |
+| Claude Sonnet 4.6 | **5/5** | 2-3/5 | 5/5 |
+| GPT-5.5 | **4-5/5** | 1-2/5 | 5/5 |
+| Gemini 2.5 Pro | **5/5** | 1/5 | 5/5 |
+| Gemini 3.1 Pro | **5/5** | 0/5 | 5/5 |
 
-**5/5 valid. 71-75% fewer output tokens than JSON. 52% fewer than TOON** on the same data with the same model.
+**GCF 5/5 on every frontier model. TOON fails on 7 of 9 models.** GCF output is 63% smaller than JSON and 33% smaller than TOON. See the [full benchmarks](/guide/benchmarks) for the complete generation analysis.
 
 The primer is 3 lines:
 
@@ -108,7 +102,7 @@ Kind abbreviations: function=fn, type=type, method=method, interface=iface.
 
 ### When to use GCF for output
 
-- **Agent-to-agent communication.** Agents passing context to each other in multi-agent workflows. 75% fewer tokens per handoff.
+- **Agent-to-agent communication.** Agents passing context to each other in multi-agent workflows. 63% fewer tokens per handoff.
 - **Structured output.** When you need the model to return structured data and want to minimize output tokens.
 - **Tool responses.** An agent returning results to a tool. The tool parses with `decode()`.
 
