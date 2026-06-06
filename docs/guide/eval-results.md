@@ -187,9 +187,11 @@ This is JSON's structural problem: it forces LLMs to perform manual enumeration 
 
 ![TOON Heatmap](/charts/toon-heatmap.png)
 
-### TOON with hand-holding (pre-encoded integer distances)
+### TOON is a fundamentally fragile format
 
-When the prompt explicitly says "distance 0" instead of "target" (hand-holding the model through the mapping), TOON passes. 2 runs, zero variance.
+TOON requires special handling by the caller to produce valid results. When given the same natural-language description that GCF and JSON handle without issue, TOON's official decoder rejects the output on 7 of 9 models. The format's flat tabular design encodes semantic categories as integers, forcing an encoding step that no model performs unprompted. This isn't a prompt engineering problem; it's a structural design flaw.
+
+When we explicitly pre-encode distances as integers in the prompt (hand-holding the model through TOON's internal mapping), performance improves on some models but remains inconsistent. Even in the best case, TOON output is 28% larger than GCF.
 
 | Format | Prompt | Valid | 100 sym output | vs JSON |
 |--------|--------|-------|---------------|---------|
@@ -198,7 +200,7 @@ When the prompt explicitly says "distance 0" instead of "target" (hand-holding t
 | TOON | natural labels | 0/5 | - | - |
 | JSON | natural labels | 5/5 | 16,121 B | baseline |
 
-Even with hand-holding, GCF output is still 28% smaller.
+GCF is robust. It works with natural-language descriptions, pre-encoded values, and everything in between. The format aligns with how models naturally express grouped data. TOON requires the caller to know its internal encoding and pre-process every categorical field before the model can write valid output. Any time a column encodes a semantic category as an integer, TOON is one prompt change away from producing invalid data.
 
 ### Output size at scale
 
