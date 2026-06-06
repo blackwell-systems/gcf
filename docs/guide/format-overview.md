@@ -22,7 +22,7 @@ GCF tool=context_for_task budget=5000 tokens=1847 symbols=10 edges=2 pack_root=a
 @1<@0 references
 ```
 
-Five elements in the graph profile. Four more in the tabular profile (see [below](#tabular-encoding-generic-profile)).
+Five elements in the graph profile. Five more in the tabular profile (see [below](#tabular-encoding-generic-profile)).
 
 ## 1. Header
 
@@ -197,7 +197,7 @@ GCF tool=context_for_task budget=5000 tokens=1847 symbols=2 edges=1
 
 The elements above (Sections 1-5) form the **graph profile** for code graph payloads. GCF also supports a **tabular profile** for encoding arbitrary structured data. This is what `encodeGeneric` / `EncodeGeneric` / `encode_generic` produces.
 
-Four elements:
+Five elements:
 
 ### 6. Tabular arrays
 
@@ -292,6 +292,22 @@ When records contain both primitive fields and nested objects, rows use `@{id}` 
 - Nested fields are indented and use `key=value` pairs
 
 **Why this saves tokens:** JSON repeats the entire `"customer": {"name": "...", "tier": "..."}` structure on every record. GCF's primitive fields go in the tabular row (positional), and only the nested portion is expanded.
+
+### 10. Primitive arrays (inline)
+
+```
+{name}[{count}]: val1,val2,val3
+```
+
+Arrays where every element is a primitive (string, number, boolean) are encoded on a single line:
+
+```
+tags[3]: production,us-east-1,critical
+ports[3]: 8080,8443,9090
+scopes[2]: read,write
+```
+
+**Why this saves tokens:** JSON encodes `"tags": ["production", "us-east-1", "critical"]` with brackets, quotes, and commas. TOON uses `tags[3]: production,us-east-1,critical` (same as GCF). But prior to this encoding, GCF expanded each element to its own line (`## tags [3]` + `@0 production` + `@1 us-east-1` + `@2 critical`), costing 4 lines where 1 suffices. Inline encoding matches TOON's density on this shape.
 
 ### Value formatting
 
