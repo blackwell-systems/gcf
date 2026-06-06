@@ -115,6 +115,40 @@ JSON fails on structure (empty responses, massive undercounts, chain-of-thought 
 
 GCF failures on Claude are near-zero. GCF failures on OpenAI are deterministic and repeatable (same wrong number every run), suggesting a tokenizer-level parsing difference rather than a comprehension issue.
 
+### Artifacts: What JSON failure looks like in practice
+
+When asked "how many symbols have distance 1 (related)?", the answer is 167. GCF encodes it in the section header: `## related [167]`. The model reads it directly.
+
+JSON has no structural grouping. The model must scan 500 JSON objects, filter by `"Distance": 1`, and count. On two separate runs, Claude Opus (the most capable model on earth) responded by manually enumerating every symbol:
+
+**Run 1** ([full artifact](https://github.com/blackwell-systems/gcf/tree/main/eval/results/artifacts/opus-json-enumeration-failure.md)):
+
+> *"Let me count precisely by going through the list:*
+> *1. handler.Response.Notify*
+> *2. model.SubscribeConfig*
+> *3. service.PublishOptions*
+> *...*
+> *143. store.DispatchConfig*
+>
+> *So: 143."*
+
+143 lines of output tokens. Wrong answer (expected 167).
+
+**Run 2** ([full artifact](https://github.com/blackwell-systems/gcf/tree/main/eval/results/artifacts/opus-json-enumeration-failure-run2.md)):
+
+> *"Let me count systematically. The symbols list transitions from Distance 0 to Distance 1 at handler.Response.Notify...*
+> *1. handler.Response.Notify*
+> *2. model.SubscribeConfig*
+> *...*
+> *119. store.DispatchConfig*
+> *120. cache.ExecuteOptions -- wait, this is Distance 2.*
+>
+> *So: 119."*
+
+119 lines. Wrong again (expected 167). Different random payload, same failure mode. The model even caught itself mid-count ("wait, this is Distance 2") and still got it wrong.
+
+This is JSON's structural problem: it forces LLMs to perform manual enumeration at scale, burning output tokens on a task the format should have answered structurally. GCF answers the same question from a 3-character header lookup.
+
 ---
 
 ## Generation: All Runs
