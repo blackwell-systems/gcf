@@ -137,6 +137,26 @@ p := &gcf.Payload{
 fmt.Println(gcf.Encode(p))
 ```
 
+```rust [Rust]
+use gcf::{Payload, Symbol, Edge, encode};
+
+let p = Payload {
+    tool: "context_for_task".into(),
+    token_budget: 5000,
+    tokens_used: 1847,
+    symbols: vec![
+        Symbol { qualified_name: "pkg.AuthMiddleware".into(), kind: "function".into(), score: 0.78, provenance: "lsp_resolved".into(), distance: 0, ..Default::default() },
+        Symbol { qualified_name: "pkg.NewServer".into(), kind: "function".into(), score: 0.54, provenance: "lsp_resolved".into(), distance: 1, ..Default::default() },
+    ],
+    edges: vec![
+        Edge { source: "pkg.NewServer".into(), target: "pkg.AuthMiddleware".into(), edge_type: "calls".into(), ..Default::default() },
+    ],
+    ..Default::default()
+};
+
+println!("{}", encode(&p));
+```
+
 :::
 
 **Output:**
