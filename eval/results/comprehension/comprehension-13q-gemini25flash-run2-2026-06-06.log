@@ -1,0 +1,142 @@
+=== RUN   TestComprehension
+    comprehension_test.go:491: Backend: google (gemini-2.5-flash)
+    comprehension_test.go:492: Fixture: 500 symbols, 200 edges
+    comprehension_test.go:493: 
+    comprehension_test.go:495: gcf   tokens (est): 11094
+    comprehension_test.go:495: toon  tokens (est): 16378
+    comprehension_test.go:495: json  tokens (est): 53341
+    comprehension_test.go:497: GCF vs JSON savings: 79%
+    comprehension_test.go:498: GCF vs TOON savings: 32%
+    comprehension_test.go:499: 
+    comprehension_test.go:555:   FAIL symbol_count    toon  [got "400"] expected="500" got="400"
+    comprehension_test.go:555:   PASS symbol_count    gcf   [exact] expected="500" got="500"
+    comprehension_test.go:544:   SKIP symbol_count    json  error: Google API 503: {
+          "error": {
+            "code": 503,
+            "message": "This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+            "status": "UNAVAILABLE"
+          }
+        }
+    comprehension_test.go:544:   SKIP edge_count      toon  error: Google API 503: {
+          "error": {
+            "code": 503,
+            "message": "This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+            "status": "UNAVAILABLE"
+          }
+        }
+    comprehension_test.go:555:   FAIL edge_count      json  [got "190"] expected="200" got="190"
+    comprehension_test.go:544:   SKIP edge_count      gcf   error: Google API 503: {
+          "error": {
+            "code": 503,
+            "message": "This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+            "status": "UNAVAILABLE"
+          }
+        }
+    comprehension_test.go:544:   SKIP top_symbol      json  error: Google API 503: {
+          "error": {
+            "code": 503,
+            "message": "This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+            "status": "UNAVAILABLE"
+          }
+        }
+    comprehension_test.go:555:   PASS top_symbol      toon  [match] expected="HandleRequest" got="HandleRequest"
+    comprehension_test.go:555:   PASS top_symbol      gcf   [match] expected="HandleRequest" got="HandleRequest"
+    comprehension_test.go:555:   PASS top_kind        toon  [match] expected="function" got="function"
+    comprehension_test.go:555:   PASS top_kind        gcf   [match] expected="function" got="fn"
+    comprehension_test.go:555:   PASS top_kind        json  [match] expected="function" got="function"
+    comprehension_test.go:555:   FAIL target_count    toon  [got "46"] expected="166" got="46"
+    comprehension_test.go:555:   FAIL target_count    gcf   [got "165"] expected="166" got="165"
+    comprehension_test.go:555:   FAIL target_count    json  [got "53"] expected="166" got="53"
+    comprehension_test.go:555:   PASS edge_types      toon  [exact] expected="calls, implements, imports, references" got="calls,implements,imports,references"
+    comprehension_test.go:555:   PASS edge_types      json  [exact] expected="calls, implements, imports, references" got="calls,implements,imports,references"
+    comprehension_test.go:555:   PASS edge_types      gcf   [exact] expected="calls, implements, imports, references" got="calls, implements, imports, references"
+    comprehension_test.go:555:   FAIL related_count   toon  [got "245"] expected="167" got="245"
+    comprehension_test.go:555:   FAIL related_count   gcf   [got "135"] expected="167" got="135"
+    comprehension_test.go:555:   FAIL related_count   json  [got "68"] expected="167" got="68"
+    comprehension_test.go:544:   SKIP extended_count  gcf   error: Google API 503: {
+          "error": {
+            "code": 503,
+            "message": "This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+            "status": "UNAVAILABLE"
+          }
+        }
+    comprehension_test.go:555:   FAIL extended_count  toon  [got "50"] expected="167" got="50"
+    comprehension_test.go:544:   SKIP extended_count  json  error: Google API 503: {
+          "error": {
+            "code": 503,
+            "message": "This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+            "status": "UNAVAILABLE"
+          }
+        }
+    comprehension_test.go:544:   SKIP function_count  json  error: Google API 503: {
+          "error": {
+            "code": 503,
+            "message": "This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+            "status": "UNAVAILABLE"
+          }
+        }
+    comprehension_test.go:544:   SKIP function_count  gcf   error: Google API 503: {
+          "error": {
+            "code": 503,
+            "message": "This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+            "status": "UNAVAILABLE"
+          }
+        }
+    comprehension_test.go:555:   FAIL function_count  toon  [got "51"] expected="125" got="51"
+    comprehension_test.go:544:   SKIP calls_edge_count gcf   error: Google API 503: {
+          "error": {
+            "code": 503,
+            "message": "This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+            "status": "UNAVAILABLE"
+          }
+        }
+    comprehension_test.go:544:   SKIP calls_edge_count toon  error: Google API 503: {
+          "error": {
+            "code": 503,
+            "message": "This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+            "status": "UNAVAILABLE"
+          }
+        }
+    comprehension_test.go:544:   SKIP calls_edge_count json  error: Google API 503: {
+          "error": {
+            "code": 503,
+            "message": "This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+            "status": "UNAVAILABLE"
+          }
+        }
+    comprehension_test.go:544:   SKIP last_symbol_kind gcf   error: Google API 503: {
+          "error": {
+            "code": 503,
+            "message": "This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+            "status": "UNAVAILABLE"
+          }
+        }
+    comprehension_test.go:544:   SKIP last_symbol_kind toon  error: Google API 503: {
+          "error": {
+            "code": 503,
+            "message": "This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+            "status": "UNAVAILABLE"
+          }
+        }
+    comprehension_test.go:544:   SKIP last_symbol_kind json  error: Google API 503: {
+          "error": {
+            "code": 503,
+            "message": "This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+            "status": "UNAVAILABLE"
+          }
+        }
+    comprehension_test.go:555:   PASS has_edges_section toon  [exact] expected="yes" got="yes"
+    comprehension_test.go:555:   PASS has_edges_section gcf   [exact] expected="yes" got="yes"
+    comprehension_test.go:555:   PASS has_edges_section json  [exact] expected="yes" got="yes"
+    comprehension_test.go:555:   PASS tool_name       toon  [exact] expected="context_for_task" got="context_for_task"
+    comprehension_test.go:555:   PASS tool_name       gcf   [exact] expected="context_for_task" got="context_for_task"
+    comprehension_test.go:555:   PASS tool_name       json  [exact] expected="context_for_task" got="context_for_task"
+    comprehension_test.go:560: 
+    comprehension_test.go:561: === Summary ===
+    comprehension_test.go:562: Format Accuracy Est Tokens    vs JSON
+    comprehension_test.go:574: gcf       75.0%      11094        21%
+    comprehension_test.go:574: toon      50.0%      16378        31%
+    comprehension_test.go:574: json      57.1%      53341   baseline
+--- PASS: TestComprehension (191.66s)
+PASS
+ok  	github.com/blackwell-systems/gcf-go/eval	191.944s
