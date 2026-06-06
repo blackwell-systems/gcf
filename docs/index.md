@@ -31,4 +31,4 @@ features:
     details: 'Go, TypeScript, Python, Rust, Swift, and Kotlin. Graph profile (encode) and generic profile (encodeGeneric). CLI included. MCP proxy for zero-code adoption.'
 ---
 
-<RotatingText />
+<!-- <RotatingText /> -->
