@@ -27,6 +27,7 @@ export default defineConfig({
       { text: 'Guide', link: '/guide/getting-started' },
       { text: 'GCF vs TOON', link: '/guide/vs-toon' },
       { text: 'Benchmarks', link: '/guide/benchmarks' },
+      { text: 'Whitepaper', link: '/whitepaper' },
       { text: 'Reference', link: '/reference/spec' },
     ],
     sidebar: [
@@ -43,6 +44,7 @@ export default defineConfig({
           { text: 'Streaming Encoding', link: '/guide/streaming' },
           { text: 'Benchmarks', link: '/guide/benchmarks' },
           { text: 'Benchmarks (Full Data)', link: '/guide/eval-results' },
+          { text: 'Whitepaper', link: '/whitepaper' },
           { text: 'GCF vs TOON', link: '/guide/vs-toon' },
         ],
       },
