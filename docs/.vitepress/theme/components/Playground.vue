@@ -564,7 +564,7 @@ onMounted(() => {
         <div class="comprehension-note">
           <strong>GCF is a wire format optimized for agentic comprehension and token compression.</strong> Human readability is a last-mile concern: call <code>decode()</code> when a human needs to see it. Across 10 models and 3 providers, GCF averages <strong>90.5% accuracy</strong> where JSON averages 53.6%.
           <div class="comprehension-punchline">The "readable" format is the one that breaks.</div>
-          <a href="/guide/llm-integration">See the eval &rarr;</a>
+          <a href="/guide/benchmarks">See the benchmarks &rarr;</a>
         </div>
 
         <!-- Breakdown -->
