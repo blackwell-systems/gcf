@@ -69,92 +69,96 @@ implementation("com.github.blackwell-systems:gcf-kotlin:0.4.0")
 ::: code-group
 
 ```python [Python]
+from gcf import encode_generic
+
+output = encode_generic({
+    "employees": [
+        {"id": 1, "name": "Alice", "department": "Engineering", "salary": 95000},
+        {"id": 2, "name": "Bob", "department": "Sales", "salary": 72000},
+    ],
+})
+print(output)
+```
+
+```typescript [TypeScript]
+import { encodeGeneric } from '@blackwell-systems/gcf';
+
+const output = encodeGeneric({
+  employees: [
+    { id: 1, name: 'Alice', department: 'Engineering', salary: 95000 },
+    { id: 2, name: 'Bob', department: 'Sales', salary: 72000 },
+  ],
+});
+console.log(output);
+```
+
+```go [Go]
+output := gcf.EncodeGeneric(map[string]any{
+    "employees": []map[string]any{
+        {"id": 1, "name": "Alice", "department": "Engineering", "salary": 95000},
+        {"id": 2, "name": "Bob", "department": "Sales", "salary": 72000},
+    },
+})
+fmt.Println(output)
+```
+
+:::
+
+**Output:**
+
+```
+## employees [2]{id,name,department,salary}
+1|Alice|Engineering|95000
+2|Bob|Sales|72000
+```
+
+One header declares field names. Rows are positional values only. No field names repeated per record. Works on any structured JSON.
+
+## Graph profile (code intelligence, MCP tools)
+
+For code graph data with symbols, edges, and distance groups, use the graph profile:
+
+::: code-group
+
+```python [Python]
 from gcf import encode, Payload, Symbol, Edge
 
-p = Payload(
+output = encode(Payload(
     tool="context_for_task",
     token_budget=5000,
     tokens_used=1847,
     symbols=[
-        Symbol(
-            qualified_name="pkg.AuthMiddleware",
-            kind="function",
-            score=0.78,
-            provenance="lsp_resolved",
-            distance=0,
-        ),
-        Symbol(
-            qualified_name="pkg.NewServer",
-            kind="function",
-            score=0.54,
-            provenance="lsp_resolved",
-            distance=1,
-        ),
+        Symbol(qualified_name="pkg.Auth", kind="function", score=0.78, provenance="lsp", distance=0),
+        Symbol(qualified_name="pkg.Server", kind="function", score=0.54, provenance="lsp", distance=1),
     ],
-    edges=[
-        Edge(source="pkg.NewServer", target="pkg.AuthMiddleware", edge_type="calls"),
-    ],
-)
-
-print(encode(p))
+    edges=[Edge(source="pkg.Server", target="pkg.Auth", edge_type="calls")],
+))
 ```
 
 ```typescript [TypeScript]
 import { encode, type Payload } from '@blackwell-systems/gcf';
 
-const p: Payload = {
+const output = encode({
   tool: 'context_for_task',
   tokenBudget: 5000,
   tokensUsed: 1847,
   symbols: [
-    { qualifiedName: 'pkg.AuthMiddleware', kind: 'function', score: 0.78, provenance: 'lsp_resolved', distance: 0 },
-    { qualifiedName: 'pkg.NewServer', kind: 'function', score: 0.54, provenance: 'lsp_resolved', distance: 1 },
+    { qualifiedName: 'pkg.Auth', kind: 'function', score: 0.78, provenance: 'lsp', distance: 0 },
+    { qualifiedName: 'pkg.Server', kind: 'function', score: 0.54, provenance: 'lsp', distance: 1 },
   ],
-  edges: [
-    { source: 'pkg.NewServer', target: 'pkg.AuthMiddleware', edgeType: 'calls' },
-  ],
-};
-
-console.log(encode(p));
+  edges: [{ source: 'pkg.Server', target: 'pkg.Auth', edgeType: 'calls' }],
+});
 ```
 
 ```go [Go]
-import gcf "github.com/blackwell-systems/gcf-go"
-
-p := &gcf.Payload{
-    Tool:        "context_for_task",
-    TokenBudget: 5000,
-    TokensUsed:  1847,
+output := gcf.Encode(&gcf.Payload{
+    Tool: "context_for_task", TokenBudget: 5000, TokensUsed: 1847,
     Symbols: []gcf.Symbol{
-        {QualifiedName: "pkg.AuthMiddleware", Kind: "function", Score: 0.78, Provenance: "lsp_resolved", Distance: 0},
-        {QualifiedName: "pkg.NewServer", Kind: "function", Score: 0.54, Provenance: "lsp_resolved", Distance: 1},
+        {QualifiedName: "pkg.Auth", Kind: "function", Score: 0.78, Provenance: "lsp", Distance: 0},
+        {QualifiedName: "pkg.Server", Kind: "function", Score: 0.54, Provenance: "lsp", Distance: 1},
     },
-    Edges: []gcf.Edge{
-        {Source: "pkg.NewServer", Target: "pkg.AuthMiddleware", EdgeType: "calls"},
-    },
-}
-
-fmt.Println(gcf.Encode(p))
-```
-
-```rust [Rust]
-use gcf::{Payload, Symbol, Edge, encode};
-
-let p = Payload {
-    tool: "context_for_task".into(),
-    token_budget: 5000,
-    tokens_used: 1847,
-    symbols: vec![
-        Symbol { qualified_name: "pkg.AuthMiddleware".into(), kind: "function".into(), score: 0.78, provenance: "lsp_resolved".into(), distance: 0, ..Default::default() },
-        Symbol { qualified_name: "pkg.NewServer".into(), kind: "function".into(), score: 0.54, provenance: "lsp_resolved".into(), distance: 1, ..Default::default() },
-    ],
-    edges: vec![
-        Edge { source: "pkg.NewServer".into(), target: "pkg.AuthMiddleware".into(), edge_type: "calls".into(), ..Default::default() },
-    ],
-    ..Default::default()
-};
-
-println!("{}", encode(&p));
+    Edges: []gcf.Edge{{Source: "pkg.Server", Target: "pkg.Auth", EdgeType: "calls"}},
+})
 ```
 
 :::
@@ -164,14 +168,14 @@ println!("{}", encode(&p));
 ```
 GCF tool=context_for_task budget=5000 tokens=1847 symbols=2 edges=1
 ## targets
-@0 fn pkg.AuthMiddleware 0.78 lsp_resolved
+@0 fn pkg.Auth 0.78 lsp
 ## related
-@1 fn pkg.NewServer 0.54 lsp_resolved
+@1 fn pkg.Server 0.54 lsp
 ## edges [1]
 @0<@1 calls
 ```
 
-That's it. 233 tokens instead of 965 for the JSON equivalent.
+233 tokens instead of 965 for the JSON equivalent. Local IDs (`@0`, `@1`) replace full qualified names in edges. Distance groups (`## targets`, `## related`) replace per-record `"distance": N` fields.
 
 ## Decode
 
@@ -207,54 +211,6 @@ fmt.Println(p.Edges[0].Source)  // "pkg.NewServer"
 
 :::
 
-## Encode any data (generic profile)
-
-GCF also encodes arbitrary structured data, not just graph payloads:
-
-::: code-group
-
-```python [Python]
-from gcf import encode_generic
-
-output = encode_generic({
-    "employees": [
-        {"id": 1, "name": "Alice", "department": "Engineering", "salary": 95000},
-        {"id": 2, "name": "Bob", "department": "Sales", "salary": 72000},
-    ],
-})
-```
-
-```typescript [TypeScript]
-import { encodeGeneric } from '@blackwell-systems/gcf';
-
-const output = encodeGeneric({
-  employees: [
-    { id: 1, name: 'Alice', department: 'Engineering', salary: 95000 },
-    { id: 2, name: 'Bob', department: 'Sales', salary: 72000 },
-  ],
-});
-```
-
-```go [Go]
-output := gcf.EncodeGeneric(map[string]any{
-    "employees": []map[string]any{
-        {"id": 1, "name": "Alice", "department": "Engineering", "salary": 95000},
-        {"id": 2, "name": "Bob", "department": "Sales", "salary": 72000},
-    },
-})
-```
-
-:::
-
-**Output:**
-
-```
-## employees [2]{id,name,department,salary}
-1|Alice|Engineering|95000
-2|Bob|Sales|72000
-```
-
-Arrays of uniform objects become tabular rows. One header replaces all field name repetitions. Pipe separators with no spaces for maximum density.
 
 ## What's next
 
