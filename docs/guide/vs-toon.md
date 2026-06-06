@@ -41,7 +41,7 @@ Tested on [TOON's own benchmark](https://github.com/blackwell-systems/toon/tree/
 | Analytics time-series (365 days, flat) | 8,398 | 9,127 | **GCF 8% smaller** |
 | GitHub repos (100 rows, flat) | 8,576 | 8,744 | **GCF 2% smaller** |
 | Deeply nested config (small) | 616 | 618 | **GCF 0.3% smaller** |
-| **Mixed-structure total** | **169,554** | **227,896** | **GCF 34% smaller** |
+| **Mixed-structure total** | **170,367** | **227,896** | **GCF 34% smaller** |
 | **Flat-only total** | **66,029** | **67,837** | **GCF 3% smaller** |
 
 GCF wins on all 6 datasets. TOON has no token efficiency advantage on any data shape.

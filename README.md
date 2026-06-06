@@ -35,7 +35,7 @@ Token efficiency (TOON's datasets, TOON's tokenizer):
 
   Mixed-structure data:
   TOON   ████████████████████████████████████████████████████  227,896
-  GCF    ██████████████████████████████████░░░░░░░░░░░░░░░░░  169,554  ◀ 34% smaller
+  GCF    ██████████████████████████████████░░░░░░░░░░░░░░░░░  170,367  ◀ 34% smaller
 
   Semi-uniform data (most common real-world pattern):
   TOON   ████████████████████████████████████████████████████  154,032
@@ -212,7 +212,7 @@ Eval: [gcf-go/eval](https://github.com/blackwell-systems/gcf-go/tree/main/eval)
 
 | Track | GCF | TOON | Result |
 |-------|-----|------|--------|
-| Mixed-structure (nested, semi-uniform) | 169,554 | 227,896 | **GCF 34% smaller** |
+| Mixed-structure (nested, semi-uniform) | 170,367 | 227,896 | **GCF 34% smaller** |
 | Flat-only (tabular) | 66,026 | 67,837 | **GCF 3% smaller** |
 | Semi-uniform event logs | 108,158 | 154,032 | **GCF 42% smaller** |
 
