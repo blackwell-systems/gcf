@@ -170,48 +170,63 @@ comprehension/
 
 5 to 100 symbols, validated through real `gcf.Decode()`, 3-line format primer.
 
-### Multi-model results
+### Multi-model results (GCF validity)
 
 | Model | 5 sym | 10 sym | 20 sym | 50 sym | 100 sym | Score |
 |-------|-------|--------|--------|--------|---------|-------|
 | Claude (Opus/default) | YES | YES | YES | YES | YES | 5/5 |
 | GPT-5.4 | YES | YES | YES | YES | YES | 5/5 |
 
-All models produce valid, decoder-parseable GCF at every scale tested.
+All models produce valid, decoder-parseable GCF at every scale tested with a 3-line primer. Zero prior training on GCF.
 
-### Token savings (GCF vs JSON on output)
+### Three-way generation comparison (GPT-5.4)
 
-| Symbols | Edges | GCF bytes | JSON bytes | Savings |
-|---------|-------|-----------|------------|---------|
-| 5 | 3 | 411 | 1,463 | 72% |
-| 10 | 6 | 695 | 2,842 | 76% |
-| 20 | 12 | 1,309 | 5,632 | 77% |
-| 50 | 25 | 3,031 | 13,427 | 77% |
-| 100 | 50 | 5,976 | 26,771 | 78% |
+Same data, same model, same prompt structure. Only the target format differs.
+
+| Symbols | GCF (bytes) | GCF valid | TOON (bytes) | TOON valid | JSON (bytes) | JSON valid |
+|---------|-------------|-----------|--------------|------------|--------------|------------|
+| 5 | 411 | YES | 590 | NO | 916 | YES |
+| 10 | 695 | YES | 1,039 | NO | 1,744 | YES |
+| 20 | 1,309 | YES | 1,995 | NO | 3,458 | YES |
+| 50 | 3,031 | YES | 4,524 | NO | 8,089 | YES |
+| 100 | 5,976 | YES | 8,937 | NO | 16,121 | YES |
+
+**GCF: 5/5 valid. JSON: 5/5 valid. TOON: 0/5 valid.**
+
+GCF output is 55-63% smaller than JSON. TOON fails because the model writes distance labels ("target", "related") instead of integers (0, 1, 2) in the flat column. GCF handles this structurally: distance is expressed through section placement (`## targets`, `## related`), not column values.
+
+### Output token savings
+
+| Format | 100 sym output | vs JSON |
+|--------|---------------|---------|
+| GCF | 5,976 B | **63% fewer** |
+| TOON | 8,937 B (invalid) | 45% fewer |
+| JSON | 16,121 B | baseline |
 
 ### Cold-start (no example in prompt)
 
-| Model | Score | Notes |
-|-------|-------|-------|
-| Claude | 3/5 | Fails at small sizes (preamble text before GCF) |
-| TOON (Claude) | 3/5 | Same cold-start behavior |
+| Model | GCF | TOON |
+|-------|-----|------|
+| Claude | 3/5 | 3/5 |
 
-Neither format works reliably without a primer at small sizes. With a primer, both achieve 100%.
+Neither format works reliably without a primer at small sizes. With a primer, GCF achieves 100%. TOON achieves 0% on GPT-5.4 (distance column issue).
 
 ### Gemini (manual chat test)
 
-Gemini produced valid complex GCF (tabular arrays, nested objects, primitive arrays, nulls, booleans) from a one-line primer with zero prior exposure. Both GCF and TOON generated correctly in the same session.
+Gemini produced valid complex GCF and TOON from a short primer in the same session. Both graph and generic profiles generated correctly.
 
 ### Files
 
 ```
 generation/
-├── generation-gpt54-run1-2026-06-06.log          # GPT-5.4: 5/5 valid, 72-78% savings
-├── generation-gcf-with-example-2026-06-04.log    # Claude, with primer: 5/5 valid
-├── generation-gcf-no-example-2026-06-04.log      # Claude, cold-start: 3/5 valid
-├── generation-toon-with-example-2026-06-04.log   # TOON comparison: 5/5 valid
-├── generation-toon-no-example-2026-06-04.log     # TOON cold-start: 3/5 valid
-└── generation-summary-2026-06-04.md              # Full analysis
+├── generation-gpt54-run1-2026-06-06.log              # GPT-5.4 GCF: 5/5 valid
+├── generation-gpt54-gcf-toon-run1-2026-06-06.log     # GPT-5.4 GCF+TOON: GCF 5/5, TOON 0/5
+├── generation-gpt54-json-run1-2026-06-06.log         # GPT-5.4 JSON: 5/5 valid
+├── generation-gcf-with-example-2026-06-04.log        # Claude GCF, with primer: 5/5 valid
+├── generation-gcf-no-example-2026-06-04.log          # Claude GCF, cold-start: 3/5 valid
+├── generation-toon-with-example-2026-06-04.log       # Claude TOON, with primer: 5/5 valid
+├── generation-toon-no-example-2026-06-04.log         # Claude TOON, cold-start: 3/5 valid
+└── generation-summary-2026-06-04.md                  # Full analysis (Claude-only)
 ```
 
 ---
