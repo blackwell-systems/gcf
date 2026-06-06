@@ -2,9 +2,9 @@
 
 ## Graph Compact Format
 
-**Version:** 1.3
+**Version:** 1.4
 
-**Date:** 2026-06-05
+**Date:** 2026-06-06
 
 **Status:** Stable
 
@@ -40,20 +40,22 @@ Both profiles share the same grammar primitives: `##` section headers, `@` local
 ## 2. Grammar
 
 ```
-payload       = header LF { section } ;
+payload       = header LF { section } [ summary ] ;
 section       = group-header LF { line LF } ;
 line          = node-line | edge-line | ref-line | tabular-row
               | kv-line | nested-ref | inline-array | comment ;
+summary       = "## _summary" SP key-value { SP key-value } LF ;
 
 header        = "GCF" SP key-value { SP key-value } ;
-group-header  = "##" SP group-name [ SP "[" count "]" [ field-decl ] ] ;
+group-header  = "##" SP group-name [ SP "[" count-or-deferred "]" [ field-decl ] ] ;
+count-or-deferred = count | "?" ;
 field-decl    = "{" field-name { "," field-name } "}" ;
 node-line     = "@" id SP kind SP qname SP score SP provenance ;
 edge-line     = "@" target-id "<" "@" source-id SP edge-type [ SP status ] ;
 ref-line      = "@" id SP SP "# previously transmitted" ;
 tabular-row   = [ "@" id SP ] value { "|" value } ;
 kv-line       = key "=" value ;
-inline-array  = key "[" count "]" ":" SP value { "," value } ;
+inline-array  = key "[" count-or-deferred "]" ":" SP value { "," value } ;
 nested-ref    = "." field-name ;
 comment       = "#" SP text ;
 
@@ -288,6 +290,108 @@ The graph profile (Sections 4-6) is a specialized application of the tabular pro
 
 Both profiles use the same grammar primitives: `##` headers, `@` IDs, positional fields. Implementations may support one or both profiles.
 
+## 6b. Streaming Encoding Extension
+
+When the encoder does not know payload size upfront (data arriving incrementally from a database cursor, API pagination, graph traversal, or real-time event stream), it MAY use streaming mode. Streaming mode enables zero-buffering: rows emit the instant they are produced, with O(1) memory per row.
+
+### Streaming mode header
+
+The GCF header line MUST omit `symbols=` and `edges=` fields when their values are unknown:
+
+```
+GCF tool=context_for_task budget=5000
+```
+
+### Deferred count marker
+
+Section headers that would normally contain `[N]` MUST use `[?]` when the count is not yet known:
+
+```
+## edges [?]
+## employees [?]{id,name,department,salary}
+```
+
+The `?` marker indicates that the count will be provided in the trailer summary.
+
+### Trailer summary
+
+After the last data line, streaming encoders MUST emit a summary line:
+
+```
+## _summary symbols=4 edges=3 sections=targets:2,related:1,edges:3
+```
+
+The `## _summary` line provides the counts that were deferred from headers. It uses `##` prefix so existing decoders treat it as a section header (backward compatible).
+
+#### Summary fields
+
+| Field | When | Description |
+|-------|------|-------------|
+| `symbols` | graph profile | Total symbol count |
+| `edges` | graph profile | Total edge count |
+| `rows` | tabular profile (single section) | Total row count |
+| `sections` | always | Comma-separated `name:count` pairs for each data section |
+
+### Example: graph profile (streaming)
+
+```
+GCF tool=context_for_task budget=5000
+## targets
+@0 fn pkg.Auth 0.95 lsp_resolved
+@1 fn pkg.Handler 0.88 lsp_resolved
+## related
+@2 type pkg.Config 0.72 ast_inferred
+## edges [?]
+@0<@1 calls
+@2<@0 references
+@0<@2 imports
+## _summary symbols=3 edges=3 sections=targets:2,related:1,edges:3
+```
+
+### Example: tabular profile (streaming)
+
+```
+## employees [?]{id,name,department,salary}
+1|Alice Smith|Engineering|95000
+2|Bob Jones|Sales|72000
+3|Carol Wu|Marketing|85000
+## _summary rows=3 sections=employees:3
+```
+
+### Encoder mode selection
+
+Encoders MUST support two modes:
+
+| Mode | When to use | Header counts | Trailer |
+|------|-------------|---------------|---------|
+| Buffered (default) | Full payload known upfront | Yes (`[N]`) | Optional |
+| Streaming | Data arriving incrementally | Deferred (`[?]`) | Required |
+
+Encoders MUST default to buffered mode. Streaming mode MUST be explicitly opted into via encoder configuration or API choice. Encoders MAY emit the trailer in buffered mode for redundancy; in that case, `[N]` in headers is authoritative and `## _summary` is informational.
+
+### Decoder requirements
+
+Decoders MUST accept `?` as a valid count value in section headers. Decoders MUST NOT reject a payload solely because a count is `?`.
+
+When `[?]` is present, decoders MUST defer count validation until end of payload:
+
+- If `## _summary` is present: validate actual counts against summary values (count mismatch is an error, same as `[N]` mismatch in buffered mode).
+- If `## _summary` is absent and `[?]` was used: decoders SHOULD issue a warning but MUST NOT reject the payload. The decoder MUST use actual row counts.
+
+### Reserved prefix
+
+The leading underscore in `_summary` is reserved for format metadata. Implementations MUST NOT use `_`-prefixed section names for user data. Decoders that do not recognize `_summary` MUST treat it as an empty section (per Section 12.3, empty sections are tolerable without error).
+
+### Relationship to buffered mode
+
+Streaming mode produces semantically identical output to buffered mode. The only differences are:
+
+1. Header omits count fields (`symbols=`, `edges=`)
+2. Section headers use `[?]` instead of `[N]`
+3. Trailer `## _summary` is present and required
+
+A decoder that successfully parses streaming-mode output MUST produce the same `Payload` structure as if it had parsed the equivalent buffered-mode output. The two modes are encoding-time choices that do not affect the decoded result.
+
 ## 7. Session Statefulness
 
 When the header contains `session=true`, previously-transmitted symbols can be referenced without retransmission:
@@ -390,11 +494,11 @@ Conforming graph-profile encoders MUST:
 
 - Emit UTF-8 output with LF line endings
 - Emit a header line beginning with `GCF` containing at least the `tool` field
-- Emit the `edges` field in the header with an accurate count of edges in the payload
+- Emit the `edges` field in the header with an accurate count of edges in the payload (buffered mode), OR omit it and provide counts in `## _summary` (streaming mode)
 - Assign symbol IDs sequentially starting from 0
 - Emit scores with exactly 2 decimal places
 - Emit kind abbreviations from the standard table (Section 4) when available
-- Emit the edges section header as `## edges [N]` where N matches the number of edge lines
+- Emit the edges section header as `## edges [N]` where N matches the number of edge lines (buffered mode), OR `## edges [?]` with counts in `## _summary` (streaming mode)
 - Emit edges only between previously declared symbol IDs
 - Order symbols by score descending within each distance group
 - Order edges by source ID then target ID
@@ -405,7 +509,7 @@ Conforming graph-profile encoders MUST:
 
 Conforming tabular-profile encoders MUST:
 
-- Emit tabular headers with accurate record counts matching the number of rows
+- Emit tabular headers with accurate record counts matching the number of rows (buffered mode), OR `[?]` with counts in `## _summary` (streaming mode)
 - Use pipe (`|`) as the value separator in tabular rows
 - NOT emit field names in data rows (positional encoding only)
 - Emit primitive arrays inline as `name[count]: val1,val2,val3` (comma-separated, no spaces)
@@ -424,7 +528,8 @@ Conforming graph-profile decoders MUST:
 - Parse node lines with exactly 5 positional fields
 - Expand kind abbreviations from the standard table
 - Pass unknown kind abbreviations through verbatim
-- Parse the edges section header `## edges [N]` (stripping the `[N]` suffix to identify the group)
+- Parse the edges section header `## edges [N]` or `## edges [?]` (stripping the bracket suffix to identify the group)
+- Accept `?` as a valid deferred count (streaming mode); defer validation to `## _summary`
 - Parse edge lines with the `@target<@source type` format
 - Reject edges referencing undeclared symbol IDs
 - Ignore comment lines (starting with `# `)
@@ -434,7 +539,8 @@ Conforming graph-profile decoders MUST:
 
 Conforming tabular-profile decoders MUST:
 
-- Parse tabular headers with `[count]{fields}` syntax
+- Parse tabular headers with `[count]{fields}` or `[?]{fields}` syntax
+- Accept `?` as a valid deferred count (streaming mode); defer validation to `## _summary`
 - Split tabular rows on pipe (`|`)
 - Validate row value count against field count in the header
 - Parse inline primitive arrays with `name[count]: val1,val2,...` syntax
