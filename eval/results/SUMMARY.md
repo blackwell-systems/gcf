@@ -115,11 +115,11 @@ Each model tier has a distinct failure signature.
 
 | Model | GCF failure mode | TOON failure mode | JSON failure mode |
 |-------|-----------------|-------------------|-------------------|
-| Opus/Sonnet | None | Off-by-2 extended_count, last_symbol_kind wrong | Undercounts (356 vs 500), 143-line enumeration |
-| Haiku 4.5 | Off-by-1 (1 of 2 runs) | Distance grouping (100, 200, 214 vs 166) | Undercounts, distance filter |
-| GPT-5.5 | Empty strings (context overwhelm) | Empty strings, distance grouping | Returns nothing (53k tokens overwhelms) |
-| GPT-5.4 | Deterministic: 198, 84 every run | Distance grouping (169, 229, 200 vs 166) | symbol_count 326-404 |
-| GPT-5.4-mini | Same as 5.4 + larger misses (250) | Worst grouping (26, 28 vs 166), guesses "100" | 300 vs 500, fails everything |
+| Opus/Sonnet | None | Off-by-2 extended_count; last_symbol_kind wrong (attention decay at row 500) | Undercounts (356 vs 500); 143-line chain-of-thought enumeration, still wrong answer |
+| Haiku 4.5 | Off-by-1 (1 of 2 runs) | Distance grouping (100, 200, 214 vs 166); last_symbol_kind wrong | Undercounts; distance filter failures |
+| GPT-5.5 | Empty strings (context overwhelm at 53k input tokens) | Empty strings; distance grouping failures | Returns nothing on most questions (53k tokens of repeated field names overwhelms attention) |
+| GPT-5.4 | Deterministic: edge_count=198, function_count=84 every run | Distance grouping wildly inconsistent (169, 229, 200 vs 166); round-number guessing | symbol_count 326-404; massive undercounts everywhere |
+| GPT-5.4-mini | Same as 5.4 (198, 84) plus larger misses (250, 100) | Worst distance grouping (26, 28 vs 166); defaults to round-number guessing | 300 vs 500 symbol_count; consistent failure across all question types |
 
 GCF failures on Claude are near-zero. GCF failures on OpenAI are deterministic and repeatable (same wrong number every run), suggesting a tokenizer-level parsing difference rather than a comprehension issue.
 
