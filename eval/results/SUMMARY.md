@@ -29,6 +29,12 @@
 | GPT-5.4 | 3 | **76.3%** | 55.3% | 42.1% | +21.0 vs TOON |
 | GPT-5.4-mini | 2 | **71.8%** | 64.1% | 54.2% | +7.7 vs TOON |
 
+### Methodology notes
+
+- OpenAI runs used default temperature (non-zero). This introduces variance across runs but reflects real-world usage. Future runs should set `temperature: 0` for tighter confidence intervals.
+- Each run generates a fresh random 500-symbol payload. Different symbol names and edge distributions across runs.
+- Claude eval used `claude -p` (CLI). OpenAI evals used the chat completions API with retry logic (exponential backoff on 429s).
+
 ### Key findings
 
 1. **GCF wins on every model.** The ordering GCF > TOON > JSON holds across Claude, GPT-5.5, GPT-5.4, and GPT-5.4-mini. 9 runs, 0 losses.
