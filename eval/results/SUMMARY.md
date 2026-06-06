@@ -113,33 +113,17 @@ JSON fails on *structure* (empty responses, massive undercounts, chain-of-though
 
 Each model tier has a distinct failure signature.
 
-**Frontier Claude (Opus 4.6, Sonnet 4.6):**
-- GCF: zero failures in saved runs
-- TOON: off-by-2 on extended_count, last_symbol_kind wrong (attention decay at row 500)
-- JSON: massive undercounts (356 vs 500), chain-of-thought enumeration (143 lines, wrong answer)
-
-**Mid-tier Claude (Haiku 4.5):**
-- GCF: single off-by-1 (`related_count` 166 vs 167) in 1 of 2 runs; other run is perfect
-- TOON: distance grouping failures (100, 200, 214 vs 166/167), last_symbol_kind wrong
-- JSON: undercounts, distance filter failures
-
-**GPT-5.5 (frontier OpenAI):**
-- GCF: empty string responses on counting questions (context overwhelm at 53k input tokens)
-- TOON: same empty strings, distance grouping failures
-- JSON: returns nothing on most questions; 53k tokens of `{"qualifiedName":...}` overwhelms attention
-
-**GPT-5.4 (mid-tier OpenAI):**
-- GCF: **deterministic, repeatable errors** across all 3 runs: `edge_count`=198 (always), `function_count`=84 (always). Not random; consistent tokenization/parsing bug.
-- TOON: distance grouping wildly inconsistent (169, 229, 200 vs 166). Round-number guessing.
-- JSON: symbol_count 326-404, massive undercounts everywhere
-- **Experiment (run 4):** Added kind counts to section headers (`fn=42 type=41 method=42 iface=41`) and edge type counts (`calls=50`). Result: `calls_edge_count` **fixed** (50 correct, was 42). `function_count` still 84 (model ignores `fn=N` metadata, continues scanning rows). `edge_count` regressed (read `[166]` from targets header instead of `[200]` from edges header).
-
-**GPT-5.4-mini (cheapest tier):**
-- GCF: same deterministic patterns as 5.4 (198, 84) plus occasional larger misses (250, 100)
-- TOON: worst distance grouping failures (26, 28 vs 166). Defaults to round-number guessing.
-- JSON: 300 vs 500 symbol_count. Consistent failure across all question types.
+| Model | GCF failure mode | TOON failure mode | JSON failure mode |
+|-------|-----------------|-------------------|-------------------|
+| Opus/Sonnet | None | Off-by-2 extended_count, last_symbol_kind wrong | Undercounts (356 vs 500), 143-line enumeration |
+| Haiku 4.5 | Off-by-1 (1 of 2 runs) | Distance grouping (100, 200, 214 vs 166) | Undercounts, distance filter |
+| GPT-5.5 | Empty strings (context overwhelm) | Empty strings, distance grouping | Returns nothing (53k tokens overwhelms) |
+| GPT-5.4 | Deterministic: 198, 84 every run | Distance grouping (169, 229, 200 vs 166) | symbol_count 326-404 |
+| GPT-5.4-mini | Same as 5.4 + larger misses (250) | Worst grouping (26, 28 vs 166), guesses "100" | 300 vs 500, fails everything |
 
 GCF failures on Claude are near-zero. GCF failures on OpenAI are deterministic and repeatable (same wrong number every run), suggesting a tokenizer-level parsing difference rather than a comprehension issue.
+
+**Optimization experiment (GPT-5.4 run 4):** Added kind counts to section headers (`fn=42`, `calls=50`). `calls_edge_count` fixed. `function_count` unchanged (model ignores metadata, scans rows). Dedicated `## _counts` section jumped accuracy from 76.9% to 90.9% in a separate test (+14pp) but adds format complexity. On roadmap for potential spec v1.5.
 
 #### Summary
 
