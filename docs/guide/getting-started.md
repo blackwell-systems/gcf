@@ -228,6 +228,7 @@ Arrays of uniform objects become tabular rows. One header replaces all field nam
 - [Using GCF with LLMs](/guide/llm-integration) for comprehension and generation results
 - [Sessions](/guide/sessions) for multi-turn deduplication (92.7% savings)
 - [Delta Encoding](/guide/delta) for incremental updates (81.2% savings)
+- [Streaming Encoding](/guide/streaming) for zero-buffering incremental encode
 - [GCF vs TOON](/guide/vs-toon) for the full competitive comparison
 - [Benchmarks](/guide/benchmarks) for input and output token data
 - [Playground](/playground) to try it live in the browser
