@@ -50,6 +50,49 @@
 5. **The advantage holds on small models.** GPT-5.4-mini (cheapest current-gen model) still reads GCF better than JSON (71.8% vs 54.2% average).
 6. **Gemini confirmed via manual test.** Gemini produced valid complex GCF (tabular arrays, nested objects, primitive arrays, nulls, booleans) from a one-line primer with zero prior exposure.
 
+### Failure taxonomy
+
+Classified from all FAIL lines across 13 runs (39 questions per run, 3 formats each).
+
+#### GCF failures: precision errors
+
+GCF fails on *precision* (off by 1-2). The structure is understood; the count is slightly misread.
+
+| Type | Example | Frequency | Cause |
+|------|---------|-----------|-------|
+| Off-by-one header misread | `related_count`: 166 vs 167 | Common | Header says `[167]`, model reads 166. Rounding or tokenization artifact. |
+| Off-by-two edge count | `edge_count`: 198 vs 200 | Moderate (GPT-5.4) | Consistently 198. May misparse `edges=200` from header. |
+| Column scan miscount | `function_count`: 84 vs 125 | Moderate (GPT-5.4/mini) | Must scan `fn` kind across rows within sections. Same class of problem as TOON but within smaller groups. |
+| Field confusion | `edge_count`: 498 vs 200 | Rare (1 Opus run) | Read symbol count from header instead of edge count. |
+| Empty response | `calls_edge_count`: "" | GPT-5.5 only | Context overwhelm at 53k+ input tokens. |
+
+#### TOON failures: comprehension errors
+
+TOON fails on *comprehension* (wrong by 50-140). The model cannot filter a flat list by column value at scale.
+
+| Type | Example | Frequency | Cause |
+|------|---------|-----------|-------|
+| Distance grouping failure | `target_count`: 26, 40, 100, 200, 229 vs 166 | Every model, every run | Must scan 500 rows and filter by `distance` column. No structural grouping. Wildly inconsistent answers. |
+| Round-number guessing | `related_count`: 100 | Common (mini/Haiku) | Model gives up counting and guesses a round number. |
+| Last-row attention loss | `last_symbol_kind`: "method" vs "interface" | Common | Loses track by row 500. Attention decays on flat tabular data. |
+| Extended count failure | `extended_count`: 107, 111, 148 vs 167 | Very common | Same as distance grouping; distance=2 is hardest since it's last in the list. |
+
+#### JSON failures: structural overwhelm
+
+JSON fails on *structure* (empty responses, massive undercounts, chain-of-thought enumeration). The format itself prevents comprehension at scale.
+
+| Type | Example | Frequency | Cause |
+|------|---------|-----------|-------|
+| Empty string response | `symbol_count`: "" | GPT-5.5 (all runs) | 53k tokens of repeated `{"qualifiedName":...}` overwhelms attention. Model produces nothing. |
+| Massive undercount | `symbol_count`: 300-404 vs 500 | Every model | Field-name repetition dilutes signal. Model loses count mid-scan. |
+| Chain-of-thought enumeration | `related_count`: 143 lines of listing, wrong answer | Opus | Model manually enumerates symbols to count them, burns output tokens, still gets wrong answer. |
+| Field confusion | `target_count`: reads "200" (edge count) | Common | Nested structure makes it easy to read adjacent fields. |
+| Distance filter failure | `related_count`: 72-154 vs 167 | Every model | Same as TOON but worse. Must parse JSON objects AND filter by field value. |
+
+#### The key insight
+
+GCF errors are off by 1-2. TOON/JSON errors are off by 50-140. This is because GCF encodes the answer structurally (`## related [167]`) while TOON/JSON require the model to compute it from raw data. When GCF fails, it's a misread. When TOON/JSON fail, it's a comprehension breakdown.
+
 ### Files
 
 ```
