@@ -106,6 +106,28 @@ const PRESETS: Record<string, { label: string; json: any }> = {
       ],
     },
   },
+  event_logs: {
+    label: 'Event logs (semi-uniform, 15 records)',
+    json: {
+      events: [
+        { timestamp: '2026-06-05T18:00:01Z', level: 'info', service: 'api-gateway', message: 'Request received', method: 'POST', path: '/api/users', duration_ms: 45, status: 200 },
+        { timestamp: '2026-06-05T18:00:02Z', level: 'info', service: 'user-service', message: 'User created', method: 'POST', path: '/internal/users', duration_ms: 120, status: 201 },
+        { timestamp: '2026-06-05T18:00:03Z', level: 'error', service: 'user-service', message: 'Database timeout', method: 'POST', path: '/internal/users', duration_ms: 5003, status: 504, error: { code: 'DB_TIMEOUT', detail: 'Connection pool exhausted', retryable: true } },
+        { timestamp: '2026-06-05T18:00:04Z', level: 'warn', service: 'api-gateway', message: 'Rate limit approaching', method: 'GET', path: '/api/users/1042', duration_ms: 12, status: 200 },
+        { timestamp: '2026-06-05T18:00:05Z', level: 'info', service: 'auth-service', message: 'Token validated', method: 'GET', path: '/internal/auth/validate', duration_ms: 8, status: 200 },
+        { timestamp: '2026-06-05T18:00:06Z', level: 'error', service: 'api-gateway', message: 'Upstream unavailable', method: 'GET', path: '/api/products', duration_ms: 3001, status: 502, error: { code: 'UPSTREAM_DOWN', detail: 'product-service not responding', retryable: true } },
+        { timestamp: '2026-06-05T18:00:07Z', level: 'info', service: 'cache-service', message: 'Cache hit', method: 'GET', path: '/internal/cache/users:1042', duration_ms: 2, status: 200 },
+        { timestamp: '2026-06-05T18:00:08Z', level: 'info', service: 'api-gateway', message: 'Request received', method: 'DELETE', path: '/api/users/1043', duration_ms: 67, status: 200 },
+        { timestamp: '2026-06-05T18:00:09Z', level: 'warn', service: 'user-service', message: 'Soft delete applied', method: 'DELETE', path: '/internal/users/1043', duration_ms: 34, status: 200 },
+        { timestamp: '2026-06-05T18:00:10Z', level: 'info', service: 'event-bus', message: 'Event published', method: 'POST', path: '/internal/events', duration_ms: 5, status: 202 },
+        { timestamp: '2026-06-05T18:00:11Z', level: 'error', service: 'notification-service', message: 'Email delivery failed', method: 'POST', path: '/internal/notify', duration_ms: 2500, status: 500, error: { code: 'SMTP_ERROR', detail: 'Connection refused to mail server', retryable: false } },
+        { timestamp: '2026-06-05T18:00:12Z', level: 'info', service: 'api-gateway', message: 'Request received', method: 'GET', path: '/api/users', duration_ms: 23, status: 200 },
+        { timestamp: '2026-06-05T18:00:13Z', level: 'info', service: 'user-service', message: 'Query executed', method: 'GET', path: '/internal/users', duration_ms: 15, status: 200 },
+        { timestamp: '2026-06-05T18:00:14Z', level: 'info', service: 'cache-service', message: 'Cache miss', method: 'GET', path: '/internal/cache/products:all', duration_ms: 1, status: 404 },
+        { timestamp: '2026-06-05T18:00:15Z', level: 'info', service: 'api-gateway', message: 'Request completed', method: 'GET', path: '/api/users', duration_ms: 41, status: 200 },
+      ],
+    },
+  },
   blast_radius: {
     label: 'Blast radius (8 symbols, 6 edges)',
     json: {
@@ -202,7 +224,7 @@ type Tab = 'compare' | 'decode'
 
 const activeTab = ref<Tab>('compare')
 const inputText = ref('')
-const selectedPreset = ref('api_response')
+const selectedPreset = ref('orders')
 const copied = ref<string>('')
 const shareText = ref('')
 const showSession = ref(false)
@@ -407,7 +429,7 @@ onMounted(() => {
         selectedPreset.value = preset
         loadPreset(preset)
       } else {
-        loadPreset('api_response')
+        loadPreset('orders')
       }
     }
     if (params.get('session') === '1') showSession.value = true
