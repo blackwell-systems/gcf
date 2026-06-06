@@ -1,0 +1,27 @@
+=== RUN   TestGenerationTOON
+    generation_test.go:408: Backend: openai (gpt-5.4-mini)
+    generation_test.go:409: Tests: 5 sizes (5 to 100 symbols)
+    generation_test.go:410: 
+    generation_test.go:426: Generating 5 symbols, 3 edges...
+    generation_test.go:471:   VALID  5 symbols, 3 edges  (559 B TOON, 1463 B JSON, 62% savings)
+    generation_test.go:426: Generating 10 symbols, 6 edges...
+    generation_test.go:471:   VALID  10 symbols, 6 edges  (978 B TOON, 2842 B JSON, 66% savings)
+    generation_test.go:426: Generating 20 symbols, 12 edges...
+    generation_test.go:471:   VALID  20 symbols, 12 edges  (1874 B TOON, 5632 B JSON, 67% savings)
+    generation_test.go:426: Generating 50 symbols, 25 edges...
+    generation_test.go:471:   VALID  50 symbols, 25 edges  (4223 B TOON, 13427 B JSON, 69% savings)
+    generation_test.go:426: Generating 100 symbols, 50 edges...
+    generation_test.go:471:   VALID  100 symbols, 50 edges  (8336 B TOON, 26771 B JSON, 69% savings)
+    generation_test.go:481: 
+    generation_test.go:482: === Summary ===
+    generation_test.go:483: Symbols  Edges  Valid  TOON bytes JSON bytes Savings 
+    generation_test.go:491: 5        3      YES    559        1463       62      %
+    generation_test.go:491: 10       6      YES    978        2842       66      %
+    generation_test.go:491: 20       12     YES    1874       5632       67      %
+    generation_test.go:491: 50       25     YES    4223       13427      69      %
+    generation_test.go:491: 100      50     YES    8336       26771      69      %
+    generation_test.go:493: 
+        5/5 valid.
+--- PASS: TestGenerationTOON (24.86s)
+PASS
+ok  	github.com/blackwell-systems/gcf-go/eval	25.463s

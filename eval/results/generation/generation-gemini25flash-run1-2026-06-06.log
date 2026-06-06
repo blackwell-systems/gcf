@@ -1,0 +1,161 @@
+=== RUN   TestGeneration
+    generation_test.go:218: Backend: google (gemini-2.5-flash)
+    generation_test.go:219: Tests: 5 sizes (5 to 100 symbols)
+    generation_test.go:220: 
+    generation_test.go:237: Generating 5 symbols, 3 edges...
+    generation_test.go:264:   VALID  5 symbols, 3 edges  (411 B GCF, 1463 B JSON, 72% savings)
+    generation_test.go:237: Generating 10 symbols, 6 edges...
+    generation_test.go:264:   VALID  10 symbols, 6 edges  (695 B GCF, 2842 B JSON, 76% savings)
+    generation_test.go:237: Generating 20 symbols, 12 edges...
+    generation_test.go:264:   VALID  20 symbols, 12 edges  (1309 B GCF, 5632 B JSON, 77% savings)
+    generation_test.go:237: Generating 50 symbols, 25 edges...
+    generation_test.go:252:   INVALID: gcf: symbol line needs at least 5 fields, got 1 in "@"
+    generation_test.go:253:   Output (first 500 chars): GCF tool=context_for_task budget=50000 tokens=1750 symbols=50 edges=25
+        ## targets
+        @0 fn pkg/api.HandleRequest 0.95 lsp_resolved
+        @1 type pkg/auth.ProcessResponse 0.93 ast_inferred
+        @2 method pkg/store.ValidateConfig 0.92 structural
+        @3 iface pkg/service.CreateHandler 0.90 lsp_resolved
+        @4 fn pkg/middleware.UpdateManager 0.88 ast_inferred
+        @5 type pkg/handler.DeleteService 0.86 structural
+        @6 method pkg/model.GetStore 0.85 lsp_resolved
+        @
+    generation_test.go:237: Generating 100 symbols, 50 edges...
+    generation_test.go:264:   VALID  7 symbols, 0 edges  (433 B GCF, 26771 B JSON, 98% savings)
+    generation_test.go:277: 
+    generation_test.go:278: === Summary ===
+    generation_test.go:279: Symbols  Edges  Valid  GCF bytes  JSON bytes Savings 
+    generation_test.go:287: 5        3      YES    411        1463       72      %
+    generation_test.go:287: 10       6      YES    695        2842       76      %
+    generation_test.go:287: 20       12     YES    1309       5632       77      %
+    generation_test.go:287: 50       25     NO     434        0          0       %
+    generation_test.go:287: 100      50     YES    433        26771      98      %
+    generation_test.go:289: 
+        4/5 valid.
+--- PASS: TestGeneration (61.87s)
+=== RUN   TestGenerationTOON
+    generation_test.go:409: Backend: google (gemini-2.5-flash)
+    generation_test.go:410: Tests: 5 sizes (5 to 100 symbols)
+    generation_test.go:411: 
+    generation_test.go:427: Generating 5 symbols, 3 edges...
+    generation_test.go:461:   INVALID: symbols: index 0: distance: toon: cannot assign string to int
+    generation_test.go:462:   Output (first 500 chars): tool: context_for_task
+        symbols[5]{name,kind,score,provenance,distance}:
+          pkg/api.HandleRequest,function,0.95,lsp_resolved,target
+          pkg/auth.ProcessResponse,type,0.74,ast_inferred,related
+          pkg/store.ValidateConfig,method,0.52,structural,related
+          pkg/service.CreateHandler,interface,0.31,lsp_resolved,extended
+          pkg/middleware.UpdateManager,function,0.10,ast_inferred,extended
+        edges[3]{source,target,type}:
+          pkg/auth.ProcessResponse,pkg/api.HandleRequest,calls
+          pkg/middleware.UpdateManager,pkg/se...
+    generation_test.go:427: Generating 10 symbols, 6 edges...
+    generation_test.go:472:   VALID  10 symbols, 6 edges  (978 B TOON, 2842 B JSON, 66% savings)
+    generation_test.go:427: Generating 20 symbols, 12 edges...
+    generation_test.go:472:   VALID  20 symbols, 12 edges  (1874 B TOON, 5632 B JSON, 67% savings)
+    generation_test.go:427: Generating 50 symbols, 25 edges...
+    generation_test.go:472:   VALID  50 symbols, 25 edges  (4223 B TOON, 13427 B JSON, 69% savings)
+    generation_test.go:427: Generating 100 symbols, 50 edges...
+    generation_test.go:472:   VALID  100 symbols, 50 edges  (8336 B TOON, 26771 B JSON, 69% savings)
+    generation_test.go:482: 
+    generation_test.go:483: === Summary ===
+    generation_test.go:484: Symbols  Edges  Valid  TOON bytes JSON bytes Savings 
+    generation_test.go:492: 5        3      NO     590        0          0       %
+    generation_test.go:492: 10       6      YES    978        2842       66      %
+    generation_test.go:492: 20       12     YES    1874       5632       67      %
+    generation_test.go:492: 50       25     YES    4223       13427      69      %
+    generation_test.go:492: 100      50     YES    8336       26771      69      %
+    generation_test.go:494: 
+        4/5 valid.
+--- PASS: TestGenerationTOON (46.81s)
+=== RUN   TestGenerationJSON
+    generation_test.go:574: Backend: google (gemini-2.5-flash)
+    generation_test.go:575: Tests: 5 sizes (5 to 100 symbols)
+    generation_test.go:576: 
+    generation_test.go:589: Generating 5 symbols, 3 edges...
+    generation_test.go:632:   VALID  (1288 B JSON)
+    generation_test.go:589: Generating 10 symbols, 6 edges...
+    generation_test.go:632:   VALID  (2468 B JSON)
+    generation_test.go:589: Generating 20 symbols, 12 edges...
+    generation_test.go:626:   INVALID: unexpected end of JSON input
+    generation_test.go:627:   Output (first 500 chars): {
+          "tool": "context_for_task",
+          "symbols": [
+            {
+              "qualifiedName": "pkg/api.HandleRequest",
+              "kind": "function",
+              "score": 0.95,
+              "provenance": "lsp_resolved",
+              "distance": 0
+            },
+            {
+              "qualifiedName": "pkg/auth.ProcessResponse",
+              "kind": "type",
+              "score": 0.91,
+              "provenance": "ast_inferred",
+              "distance": 0
+            },
+            {
+              "qualifiedName": "pkg/store.ValidateConfig",
+              "kind": "method",
+              "score": 0.86,
+              "provenance": "str...
+    generation_test.go:589: Generating 50 symbols, 25 edges...
+    generation_test.go:626:   INVALID: unexpected end of JSON input
+    generation_test.go:627:   Output (first 500 chars): {
+          "tool": "context_for_task",
+          "symbols": [
+            {
+              "qualifiedName": "pkg/api.HandleRequest",
+              "kind": "function",
+              "score": 0.95,
+              "provenance": "lsp_resolved",
+              "distance": 0
+            },
+            {
+              "qualifiedName": "pkg/auth.ProcessResponse",
+              "kind": "type",
+              "score": 0.93,
+              "provenance": "ast_inferred",
+              "distance": 0
+            },
+            {
+              "qualifiedName": "pkg/store.ValidateConfig",
+              "kind": "method",
+    generation_test.go:589: Generating 100 symbols, 50 edges...
+    generation_test.go:626:   INVALID: unexpected end of JSON input
+    generation_test.go:627:   Output (first 500 chars): {
+          "tool": "context_for_task",
+          "symbols": [
+            {
+              "qualifiedName": "pkg/api.HandleRequest",
+              "kind": "function",
+              "score": 0.95,
+              "provenance": "lsp_resolved",
+              "distance": 0
+            },
+            {
+              "qualifiedName": "pkg/auth.ProcessResponse",
+              "kind": "type",
+              "score": 0.94,
+              "provenance": "ast_inferred",
+              "distance": 0
+            },
+            {
+              "qualifiedName": "pkg/store.ValidateConfig",
+              "kind": "method",
+              "score": 0.93,
+              "provenance": "str...
+    generation_test.go:637: 
+    generation_test.go:638: === Summary ===
+    generation_test.go:639: Symbols  Edges  Valid  JSON bytes
+    generation_test.go:647: 5        3      YES    1288      
+    generation_test.go:647: 10       6      YES    2468      
+    generation_test.go:647: 20       12     NO     3530      
+    generation_test.go:647: 50       25     NO     454       
+    generation_test.go:647: 100      50     NO     9805      
+    generation_test.go:649: 
+        2/5 valid.
+--- PASS: TestGenerationJSON (63.88s)
+PASS
+ok  	github.com/blackwell-systems/gcf-go/eval	172.883s

@@ -1,0 +1,27 @@
+=== RUN   TestGeneration
+    generation_test.go:217: Backend: openai (gpt-5.4)
+    generation_test.go:218: Tests: 5 sizes (5 to 100 symbols)
+    generation_test.go:219: 
+    generation_test.go:236: Generating 5 symbols, 3 edges...
+    generation_test.go:274:   VALID  5 symbols, 3 edges  (411 B GCF, 1463 B JSON, 72% savings)
+    generation_test.go:236: Generating 10 symbols, 6 edges...
+    generation_test.go:274:   VALID  10 symbols, 6 edges  (695 B GCF, 2842 B JSON, 76% savings)
+    generation_test.go:236: Generating 20 symbols, 12 edges...
+    generation_test.go:274:   VALID  20 symbols, 12 edges  (1309 B GCF, 5632 B JSON, 77% savings)
+    generation_test.go:236: Generating 50 symbols, 25 edges...
+    generation_test.go:274:   VALID  50 symbols, 25 edges  (3025 B GCF, 13427 B JSON, 77% savings)
+    generation_test.go:236: Generating 100 symbols, 50 edges...
+    generation_test.go:274:   VALID  100 symbols, 50 edges  (5951 B GCF, 26771 B JSON, 78% savings)
+    generation_test.go:287: 
+    generation_test.go:288: === Summary ===
+    generation_test.go:289: Symbols  Edges  Valid  GCF bytes  JSON bytes Savings 
+    generation_test.go:297: 5        3      YES    411        1463       72      %
+    generation_test.go:297: 10       6      YES    695        2842       76      %
+    generation_test.go:297: 20       12     YES    1309       5632       77      %
+    generation_test.go:297: 50       25     YES    3025       13427      77      %
+    generation_test.go:297: 100      50     YES    5951       26771      78      %
+    generation_test.go:299: 
+        5/5 valid.
+--- PASS: TestGeneration (38.48s)
+PASS
+ok  	github.com/blackwell-systems/gcf-go/eval	38.809s

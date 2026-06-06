@@ -1,0 +1,27 @@
+=== RUN   TestGenerationJSON
+    generation_test.go:574: Backend: openai (gpt-5.4)
+    generation_test.go:575: Tests: 5 sizes (5 to 100 symbols)
+    generation_test.go:576: 
+    generation_test.go:589: Generating 5 symbols, 3 edges...
+    generation_test.go:632:   VALID  (916 B JSON)
+    generation_test.go:589: Generating 10 symbols, 6 edges...
+    generation_test.go:632:   VALID  (1744 B JSON)
+    generation_test.go:589: Generating 20 symbols, 12 edges...
+    generation_test.go:632:   VALID  (3458 B JSON)
+    generation_test.go:589: Generating 50 symbols, 25 edges...
+    generation_test.go:632:   VALID  (8089 B JSON)
+    generation_test.go:589: Generating 100 symbols, 50 edges...
+    generation_test.go:632:   VALID  (16121 B JSON)
+    generation_test.go:637: 
+    generation_test.go:638: === Summary ===
+    generation_test.go:639: Symbols  Edges  Valid  JSON bytes
+    generation_test.go:647: 5        3      YES    916       
+    generation_test.go:647: 10       6      YES    1744      
+    generation_test.go:647: 20       12     YES    3458      
+    generation_test.go:647: 50       25     YES    8089      
+    generation_test.go:647: 100      50     YES    16121     
+    generation_test.go:649: 
+        5/5 valid.
+--- PASS: TestGenerationJSON (71.08s)
+PASS
+ok  	github.com/blackwell-systems/gcf-go/eval	71.638s

@@ -1,0 +1,448 @@
+=== RUN   TestGeneration
+    generation_test.go:218: Backend: google (gemini-2.5-flash)
+    generation_test.go:219: Tests: 5 sizes (5 to 100 symbols)
+    generation_test.go:220: 
+    generation_test.go:237: Generating 5 symbols, 3 edges...
+    generation_test.go:264:   VALID  5 symbols, 3 edges  (411 B GCF, 1463 B JSON, 72% savings)
+    generation_test.go:237: Generating 10 symbols, 6 edges...
+    generation_test.go:264:   VALID  10 symbols, 6 edges  (695 B GCF, 2842 B JSON, 76% savings)
+    generation_test.go:237: Generating 20 symbols, 12 edges...
+    generation_test.go:252:   INVALID: gcf: symbol line needs at least 5 fields, got 3 in "@7 iface pkg"
+    generation_test.go:253:   Output (first 500 chars): GCF tool=context_for_task budget=50000 tokens=700 symbols=20 edges=12
+        ## targets
+        @0 fn pkg/api.HandleRequest 0.95 lsp_resolved
+        @1 type pkg/auth.ProcessResponse 0.91 ast_inferred
+        @2 method pkg/store.ValidateConfig 0.86 structural
+        @3 iface pkg/service.CreateHandler 0.82 lsp_resolved
+        @4 fn pkg/middleware.UpdateManager 0.77 ast_inferred
+        @5 type pkg/handler.DeleteService 0.73 structural
+        ## related
+        @6 method pkg/model.GetStore 0.68 lsp_resolved
+        @7 iface pkg
+    generation_test.go:237: Generating 50 symbols, 25 edges...
+    generation_test.go:264:   VALID  7 symbols, 0 edges  (432 B GCF, 13427 B JSON, 97% savings)
+    generation_test.go:237: Generating 100 symbols, 50 edges...
+    generation_test.go:252:   INVALID: gcf: symbol line needs at least 5 fields, got 1 in "@"
+    generation_test.go:253:   Output (first 500 chars): GCF tool=context_for_task budget=50000 tokens=3500 symbols=100 edges=50
+        ## targets
+        @0 fn pkg.api.HandleRequest 0.95 lsp_resolved
+        @1 type pkg.auth.ProcessResponse 0.94 ast_inferred
+        @2 method pkg.store.ValidateConfig 0.93 structural
+        @3 iface pkg.service.CreateHandler 0.92 lsp_resolved
+        @4 fn pkg.middleware.UpdateManager 0.92 ast_inferred
+        @5 type pkg.handler.DeleteService 0.91 structural
+        @6 method pkg.model.GetStore 0.90 lsp_resolved
+        @
+    generation_test.go:277: 
+    generation_test.go:278: === Summary ===
+    generation_test.go:279: Symbols  Edges  Valid  GCF bytes  JSON bytes Savings 
+    generation_test.go:287: 5        3      YES    411        1463       72      %
+    generation_test.go:287: 10       6      YES    695        2842       76      %
+    generation_test.go:287: 20       12     NO     455        0          0       %
+    generation_test.go:287: 50       25     YES    432        13427      97      %
+    generation_test.go:287: 100      50     NO     435        0          0       %
+    generation_test.go:289: 
+        3/5 valid.
+--- PASS: TestGeneration (88.67s)
+=== RUN   TestGenerationTOON
+    generation_test.go:409: Backend: google (gemini-2.5-flash)
+    generation_test.go:410: Tests: 5 sizes (5 to 100 symbols)
+    generation_test.go:411: 
+    generation_test.go:427: Generating 5 symbols, 3 edges...
+    generation_test.go:431:   ERROR: Google API 429: {
+          "error": {
+            "code": 429,
+            "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 45.381177406s.",
+            "status": "RESOURCE_EXHAUSTED",
+            "details": [
+              {
+                "@type": "type.googleapis.com/google.rpc.Help",
+                "links": [
+                  {
+                    "description": "Learn more about Gemini API quotas",
+                    "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+                  }
+                ]
+              },
+              {
+                "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+                "violations": [
+                  {
+                    "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+                    "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+                    "quotaDimensions": {
+                      "model": "gemini-2.5-flash",
+                      "location": "global"
+                    },
+                    "quotaValue": "20"
+                  }
+                ]
+              },
+              {
+                "@type": "type.googleapis.com/google.rpc.RetryInfo",
+                "retryDelay": "45s"
+              }
+            ]
+          }
+        }
+    generation_test.go:427: Generating 10 symbols, 6 edges...
+    generation_test.go:431:   ERROR: Google API 429: {
+          "error": {
+            "code": 429,
+            "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 3.417856253s.",
+            "status": "RESOURCE_EXHAUSTED",
+            "details": [
+              {
+                "@type": "type.googleapis.com/google.rpc.Help",
+                "links": [
+                  {
+                    "description": "Learn more about Gemini API quotas",
+                    "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+                  }
+                ]
+              },
+              {
+                "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+                "violations": [
+                  {
+                    "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+                    "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+                    "quotaDimensions": {
+                      "location": "global",
+                      "model": "gemini-2.5-flash"
+                    },
+                    "quotaValue": "20"
+                  }
+                ]
+              },
+              {
+                "@type": "type.googleapis.com/google.rpc.RetryInfo",
+                "retryDelay": "3s"
+              }
+            ]
+          }
+        }
+    generation_test.go:427: Generating 20 symbols, 12 edges...
+    generation_test.go:431:   ERROR: Google API 429: {
+          "error": {
+            "code": 429,
+            "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 21.721210504s.",
+            "status": "RESOURCE_EXHAUSTED",
+            "details": [
+              {
+                "@type": "type.googleapis.com/google.rpc.Help",
+                "links": [
+                  {
+                    "description": "Learn more about Gemini API quotas",
+                    "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+                  }
+                ]
+              },
+              {
+                "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+                "violations": [
+                  {
+                    "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+                    "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+                    "quotaDimensions": {
+                      "location": "global",
+                      "model": "gemini-2.5-flash"
+                    },
+                    "quotaValue": "20"
+                  }
+                ]
+              },
+              {
+                "@type": "type.googleapis.com/google.rpc.RetryInfo",
+                "retryDelay": "21s"
+              }
+            ]
+          }
+        }
+    generation_test.go:427: Generating 50 symbols, 25 edges...
+    generation_test.go:431:   ERROR: Google API 429: {
+          "error": {
+            "code": 429,
+            "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 39.753401854s.",
+            "status": "RESOURCE_EXHAUSTED",
+            "details": [
+              {
+                "@type": "type.googleapis.com/google.rpc.Help",
+                "links": [
+                  {
+                    "description": "Learn more about Gemini API quotas",
+                    "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+                  }
+                ]
+              },
+              {
+                "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+                "violations": [
+                  {
+                    "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+                    "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+                    "quotaDimensions": {
+                      "location": "global",
+                      "model": "gemini-2.5-flash"
+                    },
+                    "quotaValue": "20"
+                  }
+                ]
+              },
+              {
+                "@type": "type.googleapis.com/google.rpc.RetryInfo",
+                "retryDelay": "39s"
+              }
+            ]
+          }
+        }
+    generation_test.go:427: Generating 100 symbols, 50 edges...
+    generation_test.go:431:   ERROR: Google API 429: {
+          "error": {
+            "code": 429,
+            "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 58.022645522s.",
+            "status": "RESOURCE_EXHAUSTED",
+            "details": [
+              {
+                "@type": "type.googleapis.com/google.rpc.Help",
+                "links": [
+                  {
+                    "description": "Learn more about Gemini API quotas",
+                    "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+                  }
+                ]
+              },
+              {
+                "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+                "violations": [
+                  {
+                    "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+                    "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+                    "quotaDimensions": {
+                      "model": "gemini-2.5-flash",
+                      "location": "global"
+                    },
+                    "quotaValue": "20"
+                  }
+                ]
+              },
+              {
+                "@type": "type.googleapis.com/google.rpc.RetryInfo",
+                "retryDelay": "58s"
+              }
+            ]
+          }
+        }
+    generation_test.go:482: 
+    generation_test.go:483: === Summary ===
+    generation_test.go:484: Symbols  Edges  Valid  TOON bytes JSON bytes Savings 
+    generation_test.go:492: 5        3      NO     0          0          0       %
+    generation_test.go:492: 10       6      NO     0          0          0       %
+    generation_test.go:492: 20       12     NO     0          0          0       %
+    generation_test.go:492: 50       25     NO     0          0          0       %
+    generation_test.go:492: 100      50     NO     0          0          0       %
+    generation_test.go:494: 
+        0/5 valid.
+--- PASS: TestGenerationTOON (1109.20s)
+=== RUN   TestGenerationJSON
+    generation_test.go:574: Backend: google (gemini-2.5-flash)
+    generation_test.go:575: Tests: 5 sizes (5 to 100 symbols)
+    generation_test.go:576: 
+    generation_test.go:589: Generating 5 symbols, 3 edges...
+    generation_test.go:614:   ERROR: Google API 429: {
+          "error": {
+            "code": 429,
+            "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 16.210820003s.",
+            "status": "RESOURCE_EXHAUSTED",
+            "details": [
+              {
+                "@type": "type.googleapis.com/google.rpc.Help",
+                "links": [
+                  {
+                    "description": "Learn more about Gemini API quotas",
+                    "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+                  }
+                ]
+              },
+              {
+                "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+                "violations": [
+                  {
+                    "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+                    "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+                    "quotaDimensions": {
+                      "location": "global",
+                      "model": "gemini-2.5-flash"
+                    },
+                    "quotaValue": "20"
+                  }
+                ]
+              },
+              {
+                "@type": "type.googleapis.com/google.rpc.RetryInfo",
+                "retryDelay": "16s"
+              }
+            ]
+          }
+        }
+    generation_test.go:589: Generating 10 symbols, 6 edges...
+    generation_test.go:614:   ERROR: Google API 429: {
+          "error": {
+            "code": 429,
+            "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 34.431107936s.",
+            "status": "RESOURCE_EXHAUSTED",
+            "details": [
+              {
+                "@type": "type.googleapis.com/google.rpc.Help",
+                "links": [
+                  {
+                    "description": "Learn more about Gemini API quotas",
+                    "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+                  }
+                ]
+              },
+              {
+                "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+                "violations": [
+                  {
+                    "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+                    "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+                    "quotaDimensions": {
+                      "location": "global",
+                      "model": "gemini-2.5-flash"
+                    },
+                    "quotaValue": "20"
+                  }
+                ]
+              },
+              {
+                "@type": "type.googleapis.com/google.rpc.RetryInfo",
+                "retryDelay": "34s"
+              }
+            ]
+          }
+        }
+    generation_test.go:589: Generating 20 symbols, 12 edges...
+    generation_test.go:614:   ERROR: Google API 429: {
+          "error": {
+            "code": 429,
+            "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 52.613506256s.",
+            "status": "RESOURCE_EXHAUSTED",
+            "details": [
+              {
+                "@type": "type.googleapis.com/google.rpc.Help",
+                "links": [
+                  {
+                    "description": "Learn more about Gemini API quotas",
+                    "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+                  }
+                ]
+              },
+              {
+                "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+                "violations": [
+                  {
+                    "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+                    "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+                    "quotaDimensions": {
+                      "location": "global",
+                      "model": "gemini-2.5-flash"
+                    },
+                    "quotaValue": "20"
+                  }
+                ]
+              },
+              {
+                "@type": "type.googleapis.com/google.rpc.RetryInfo",
+                "retryDelay": "52s"
+              }
+            ]
+          }
+        }
+    generation_test.go:589: Generating 50 symbols, 25 edges...
+    generation_test.go:614:   ERROR: Google API 429: {
+          "error": {
+            "code": 429,
+            "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 10.799980962s.",
+            "status": "RESOURCE_EXHAUSTED",
+            "details": [
+              {
+                "@type": "type.googleapis.com/google.rpc.Help",
+                "links": [
+                  {
+                    "description": "Learn more about Gemini API quotas",
+                    "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+                  }
+                ]
+              },
+              {
+                "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+                "violations": [
+                  {
+                    "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+                    "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+                    "quotaDimensions": {
+                      "model": "gemini-2.5-flash",
+                      "location": "global"
+                    },
+                    "quotaValue": "20"
+                  }
+                ]
+              },
+              {
+                "@type": "type.googleapis.com/google.rpc.RetryInfo",
+                "retryDelay": "10s"
+              }
+            ]
+          }
+        }
+    generation_test.go:589: Generating 100 symbols, 50 edges...
+    generation_test.go:614:   ERROR: Google API 429: {
+          "error": {
+            "code": 429,
+            "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 28.681633352s.",
+            "status": "RESOURCE_EXHAUSTED",
+            "details": [
+              {
+                "@type": "type.googleapis.com/google.rpc.Help",
+                "links": [
+                  {
+                    "description": "Learn more about Gemini API quotas",
+                    "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+                  }
+                ]
+              },
+              {
+                "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+                "violations": [
+                  {
+                    "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+                    "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+                    "quotaDimensions": {
+                      "location": "global",
+                      "model": "gemini-2.5-flash"
+                    },
+                    "quotaValue": "20"
+                  }
+                ]
+              },
+              {
+                "@type": "type.googleapis.com/google.rpc.RetryInfo",
+                "retryDelay": "28s"
+              }
+            ]
+          }
+        }
+    generation_test.go:637: 
+    generation_test.go:638: === Summary ===
+    generation_test.go:639: Symbols  Edges  Valid  JSON bytes
+    generation_test.go:647: 5        3      NO     0         
+    generation_test.go:647: 10       6      NO     0         
+    generation_test.go:647: 20       12     NO     0         
+    generation_test.go:647: 50       25     NO     0         
+    generation_test.go:647: 100      50     NO     0         
+    generation_test.go:649: 
+        0/5 valid.
+--- PASS: TestGenerationJSON (1109.37s)
+PASS
+ok  	github.com/blackwell-systems/gcf-go/eval	2307.581s

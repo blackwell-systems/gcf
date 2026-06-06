@@ -1,0 +1,134 @@
+=== RUN   TestGeneration
+    generation_test.go:218: Backend: google (gemini-3.1-flash-lite)
+    generation_test.go:219: Tests: 5 sizes (5 to 100 symbols)
+    generation_test.go:220: 
+    generation_test.go:237: Generating 5 symbols, 3 edges...
+    generation_test.go:264:   VALID  5 symbols, 3 edges  (411 B GCF, 1463 B JSON, 72% savings)
+    generation_test.go:237: Generating 10 symbols, 6 edges...
+    generation_test.go:264:   VALID  10 symbols, 6 edges  (695 B GCF, 2842 B JSON, 76% savings)
+    generation_test.go:237: Generating 20 symbols, 12 edges...
+    generation_test.go:264:   VALID  20 symbols, 12 edges  (1309 B GCF, 5632 B JSON, 77% savings)
+    generation_test.go:237: Generating 50 symbols, 25 edges...
+    generation_test.go:264:   VALID  50 symbols, 25 edges  (3026 B GCF, 13427 B JSON, 77% savings)
+    generation_test.go:237: Generating 100 symbols, 50 edges...
+    generation_test.go:264:   VALID  100 symbols, 50 edges  (5982 B GCF, 26771 B JSON, 78% savings)
+    generation_test.go:277: 
+    generation_test.go:278: === Summary ===
+    generation_test.go:279: Symbols  Edges  Valid  GCF bytes  JSON bytes Savings 
+    generation_test.go:287: 5        3      YES    411        1463       72      %
+    generation_test.go:287: 10       6      YES    695        2842       76      %
+    generation_test.go:287: 20       12     YES    1309       5632       77      %
+    generation_test.go:287: 50       25     YES    3026       13427      77      %
+    generation_test.go:287: 100      50     YES    5982       26771      78      %
+    generation_test.go:289: 
+        5/5 valid.
+--- PASS: TestGeneration (24.77s)
+=== RUN   TestGenerationTOON
+    generation_test.go:409: Backend: google (gemini-3.1-flash-lite)
+    generation_test.go:410: Tests: 5 sizes (5 to 100 symbols)
+    generation_test.go:411: 
+    generation_test.go:427: Generating 5 symbols, 3 edges...
+    generation_test.go:461:   INVALID: symbols: index 0: distance: toon: cannot assign string to int
+    generation_test.go:462:   Output (first 500 chars): tool: context_for_task
+        symbols[5]{name,kind,score,provenance,distance}:
+          pkg/api.HandleRequest,function,0.95,lsp_resolved,target
+          pkg/auth.ProcessResponse,type,0.74,ast_inferred,related
+          pkg/store.ValidateConfig,method,0.52,structural,related
+          pkg/service.CreateHandler,interface,0.31,lsp_resolved,extended
+          pkg/middleware.UpdateManager,function,0.10,ast_inferred,extended
+        edges[3]{source,target,type}:
+          pkg/auth.ProcessResponse,pkg/api.HandleRequest,calls
+          pkg/middleware.UpdateManager,pkg/se...
+    generation_test.go:427: Generating 10 symbols, 6 edges...
+    generation_test.go:461:   INVALID: symbols: index 0: distance: toon: cannot assign string to int
+    generation_test.go:462:   Output (first 500 chars): tool: context_for_task
+        symbols[10]{name,kind,score,provenance,distance}:
+          pkg/api.HandleRequest,function,0.95,lsp_resolved,target
+          pkg/auth.ProcessResponse,type,0.86,ast_inferred,target
+          pkg/store.ValidateConfig,method,0.76,structural,target
+          pkg/service.CreateHandler,interface,0.67,lsp_resolved,related
+          pkg/middleware.UpdateManager,function,0.57,ast_inferred,related
+          pkg/handler.DeleteService,type,0.48,structural,related
+          pkg/model.GetStore,method,0.38,lsp_resolved,extended
+          pkg/config....
+    generation_test.go:427: Generating 20 symbols, 12 edges...
+    generation_test.go:461:   INVALID: symbols: index 0: distance: toon: cannot assign string to int
+    generation_test.go:462:   Output (first 500 chars): tool: context_for_task
+        symbols[20]{name,kind,score,provenance,distance}:
+          pkg/api.HandleRequest,function,0.95,lsp_resolved,target
+          pkg/auth.ProcessResponse,type,0.91,ast_inferred,target
+          pkg/store.ValidateConfig,method,0.86,structural,target
+          pkg/service.CreateHandler,interface,0.82,lsp_resolved,target
+          pkg/middleware.UpdateManager,function,0.77,ast_inferred,target
+          pkg/handler.DeleteService,type,0.73,structural,target
+          pkg/model.GetStore,method,0.68,lsp_resolved,related
+          pkg/config.SetC...
+    generation_test.go:427: Generating 50 symbols, 25 edges...
+    generation_test.go:461:   INVALID: symbols: index 0: distance: toon: cannot assign string to int
+    generation_test.go:462:   Output (first 500 chars): tool: context_for_task
+        symbols[50]{name,kind,score,provenance,distance}:
+          pkg/api.HandleRequest,function,0.95,lsp_resolved,target
+          pkg/auth.ProcessResponse,type,0.93,ast_inferred,target
+          pkg/store.ValidateConfig,method,0.92,structural,target
+          pkg/service.CreateHandler,interface,0.90,lsp_resolved,target
+          pkg/middleware.UpdateManager,function,0.88,ast_inferred,target
+          pkg/handler.DeleteService,type,0.86,structural,target
+          pkg/model.GetStore,method,0.85,lsp_resolved,target
+          pkg/config.SetCl...
+    generation_test.go:427: Generating 100 symbols, 50 edges...
+    generation_test.go:461:   INVALID: symbols: index 0: distance: toon: cannot assign string to int
+    generation_test.go:462:   Output (first 500 chars): tool: context_for_task
+        symbols[100]{name,kind,score,provenance,distance}:
+          pkg/api.HandleRequest,function,0.95,lsp_resolved,target
+          pkg/auth.ProcessResponse,type,0.94,ast_inferred,target
+          pkg/store.ValidateConfig,method,0.93,structural,target
+          pkg/service.CreateHandler,interface,0.92,lsp_resolved,target
+          pkg/middleware.UpdateManager,function,0.92,ast_inferred,target
+          pkg/handler.DeleteService,type,0.91,structural,target
+          pkg/model.GetStore,method,0.9,lsp_resolved,target
+          pkg/config.SetCl...
+    generation_test.go:482: 
+    generation_test.go:483: === Summary ===
+    generation_test.go:484: Symbols  Edges  Valid  TOON bytes JSON bytes Savings 
+    generation_test.go:492: 5        3      NO     590        0          0       %
+    generation_test.go:492: 10       6      NO     1038       0          0       %
+    generation_test.go:492: 20       12     NO     1995       0          0       %
+    generation_test.go:492: 50       25     NO     4524       0          0       %
+    generation_test.go:492: 100      50     NO     8927       0          0       %
+    generation_test.go:494: 
+        0/5 valid.
+--- PASS: TestGenerationTOON (27.24s)
+=== RUN   TestGenerationJSON
+    generation_test.go:574: Backend: google (gemini-3.1-flash-lite)
+    generation_test.go:575: Tests: 5 sizes (5 to 100 symbols)
+    generation_test.go:576: 
+    generation_test.go:589: Generating 5 symbols, 3 edges...
+    generation_test.go:632:   VALID  (1287 B JSON)
+    generation_test.go:589: Generating 10 symbols, 6 edges...
+    generation_test.go:632:   VALID  (2467 B JSON)
+    generation_test.go:589: Generating 20 symbols, 12 edges...
+    generation_test.go:632:   VALID  (3941 B JSON)
+    generation_test.go:589: Generating 50 symbols, 25 edges...
+    generation_test.go:632:   VALID  (9063 B JSON)
+    generation_test.go:589: Generating 100 symbols, 50 edges...
+    generation_test.go:626:   INVALID: unexpected end of JSON input
+    generation_test.go:627:   Output (first 500 chars): {
+          "tool": "context_for_task",
+          "symbols": [
+            {"qualifiedName": "pkg/api.HandleRequest", "kind": "function", "score": 0.95, "provenance": "lsp_resolved", "distance": 0},
+            {"qualifiedName": "pkg/auth.ProcessResponse", "kind": "type", "score": 0.94, "provenance": "ast_inferred", "distance": 0},
+            {"qualifiedName": "pkg/store.ValidateConfig", "kind": "method", "score": 0.93, "provenance": "structural", "distance": 0},
+            {"qualifiedName": "pkg/service.CreateHandler", "kind": "interface",...
+    generation_test.go:637: 
+    generation_test.go:638: === Summary ===
+    generation_test.go:639: Symbols  Edges  Valid  JSON bytes
+    generation_test.go:647: 5        3      YES    1287      
+    generation_test.go:647: 10       6      YES    2467      
+    generation_test.go:647: 20       12     YES    3941      
+    generation_test.go:647: 50       25     YES    9063      
+    generation_test.go:647: 100      50     NO     12003     
+    generation_test.go:649: 
+        4/5 valid.
+--- PASS: TestGenerationJSON (60.41s)
+PASS
+ok  	github.com/blackwell-systems/gcf-go/eval	112.720s
