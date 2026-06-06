@@ -176,6 +176,7 @@ comprehension/
 |-------|-------|--------|--------|--------|---------|-------|
 | Claude (Opus/default) | YES | YES | YES | YES | YES | 5/5 |
 | GPT-5.4 | YES | YES | YES | YES | YES | 5/5 |
+| GPT-5.4-mini | YES | YES | YES | YES | YES | 5/5 |
 
 All models produce valid, decoder-parseable GCF at every scale tested with a 3-line primer. Zero prior training on GCF.
 
@@ -191,7 +192,7 @@ Same data, same model, same prompt structure. Only the target format differs.
 | 50 | 3,031 | YES | 4,524 | NO | 8,089 | YES |
 | 100 | 5,976 | YES | 8,937 | NO | 16,121 | YES |
 
-**GCF: 5/5 valid. JSON: 5/5 valid. TOON: 0/5 valid.**
+**GCF: 5/5 valid. JSON: 5/5 valid. TOON: 0/5 valid.** (Identical on both GPT-5.4 and GPT-5.4-mini.)
 
 GCF output is 55-63% smaller than JSON. TOON fails because the model writes distance labels ("target", "related") instead of integers (0, 1, 2) in the flat column. GCF handles this structurally: distance is expressed through section placement (`## targets`, `## related`), not column values.
 
@@ -222,6 +223,7 @@ generation/
 ├── generation-gpt54-run1-2026-06-06.log              # GPT-5.4 GCF: 5/5 valid
 ├── generation-gpt54-gcf-toon-run1-2026-06-06.log     # GPT-5.4 GCF+TOON: GCF 5/5, TOON 0/5
 ├── generation-gpt54-json-run1-2026-06-06.log         # GPT-5.4 JSON: 5/5 valid
+├── generation-gpt54-mini-run1-2026-06-06.log         # GPT-5.4-mini: GCF 5/5, TOON 0/5, JSON 5/5
 ├── generation-gcf-with-example-2026-06-04.log        # Claude GCF, with primer: 5/5 valid
 ├── generation-gcf-no-example-2026-06-04.log          # Claude GCF, cold-start: 3/5 valid
 ├── generation-toon-with-example-2026-06-04.log       # Claude TOON, with primer: 5/5 valid
