@@ -1,34 +1,57 @@
 # Roadmap
 
-## Adoption blockers (next)
+## Done
 
-- [x] **CLI tool**: `gcf encode`, `gcf decode`, `gcf stats`. Bundled with each language library (Go: `cmd/gcf/`, Python: `gcf.cli`, TypeScript: `bin`). No separate install needed.
-- [x] **Conformance test suite**: Language-agnostic JSON fixtures with expected GCF output. Any implementation can validate correctness by running the fixtures. Lives in `tests/conformance/`. 14 fixtures across encode (8), decode (4), session (1), delta (1), errors (3).
-- [x] **npm/PyPI/Go publish**: All three live. `npm install @blackwell-systems/gcf`, `pip install gcf-python`, `go install github.com/blackwell-systems/gcf-go/cmd/gcf@latest`. v0.1.0 released 2026-06-03.
+- [x] **6 language implementations**: Go, TypeScript, Python, Rust, Swift, Kotlin. All published to registries.
+- [x] **Generic profile** (`encodeGeneric`): any structured data, not just graph payloads. Spec Section 6a.
+- [x] **Graph profile** (`encode`): symbols, edges, distance groups, local IDs.
+- [x] **`decodeGeneric`**: full round-trip for generic profile across all 6 languages.
+- [x] **Streaming encode**: `StreamEncoder` (graph) and `GenericStreamEncoder` (generic). Zero-buffering, O(1) memory, `[?]` deferred counts + `## _summary` trailer. Spec v1.4.
+- [x] **Session deduplication**: 92.7% savings by 5th call. Bare references for previously-transmitted symbols.
+- [x] **Delta encoding**: 81.2% savings on re-queries.
+- [x] **MCP proxy**: `gcf-proxy` wraps any MCP server, re-encodes JSON as GCF mid-flight. npm, PyPI, Go.
+- [x] **CLI tool**: `gcf encode`, `gcf decode`, `gcf stats` in Go, Python, TypeScript.
+- [x] **Conformance test suite**: 14 language-agnostic JSON fixtures.
+- [x] **Interactive playground**: three-way live comparison (JSON/TOON/GCF) with real TOON library.
+- [x] **Comprehension eval**: 23 runs, 10 models, 3 providers. 90.5% average. Four models at 100%.
+- [x] **Generation eval**: 28 runs, 9 models, 3 providers. 5/5 on every frontier model.
+- [x] **Failure taxonomy**: precision vs comprehension vs structural overwhelm, classified by model tier.
+- [x] **Token efficiency on TOON's benchmark**: wins all 6 datasets.
+- [x] **Primitive array inlining**: `tags[3]: read,write,admin` (spec v1.3).
+- [x] **`## edges [N]` header**: edge count in section header (spec v1.2).
+- [x] **betterthanjson.com**: full benchmark landing page.
+- [x] **12 publication-quality charts**: hero, accuracy-by-model, generation-validity, error-magnitude, tokens-vs-accuracy, advantage-by-tier, output-cost-at-scale, toon-heatmap, distance-label-problem, failure-types, failure-types-pie, comprehension-variance.
 
-## Documentation depth
+## Next
 
-- [x] **Token savings proof**: Mathematical model of byte/token savings per structure type (symbols, edges, headers). Proves GCF saves `55 + 66n + 121e - 12g` bytes over JSON and `5n + 84e` bytes over TOON. Empirically validated. Lives in `docs/reference/token-savings-proof.md`.
-- [ ] **Per-model benchmark breakdown**: Run comprehension eval across Claude, Gemini, GPT, Grok individually. Prove GCF works across all frontier models, not just one.
-- [ ] **Migration guide**: Step-by-step for converting existing JSON MCP tool responses to GCF. Before/after for common patterns.
+- [ ] **Whitepaper update**: incorporate all eval data (1,300+ evaluations), failure taxonomy, generation analysis into formal paper.
+- [ ] **Temperature=0 eval runs**: deterministic OpenAI runs for tighter confidence intervals.
+- [ ] **More Opus comprehension runs**: only 2 saved, need 3-4 to confirm consistency.
+- [ ] **Gemini comprehension on newer models**: 3.1 Pro has 1 run, 3.5 Flash has 1 run.
+- [ ] **Migration guide**: step-by-step for converting JSON MCP tool responses to GCF.
+- [ ] **Blog post**: "The format LLMs understand without training" with inline data.
+- [ ] **LinkedIn content**: leverage 1,300+ evaluations, Opus enumeration artifact, TOON generation failure.
+
+## Spec v1.5 (under consideration)
+
+- [ ] **`## _counts` section**: dedicated metadata section with kind/edge-type counts. Jumped GPT-5.4 from 76.9% to 90.9% in experiment (+14pp). Adds format complexity. Needs testing on more models before committing to spec.
 
 ## Tooling
 
-- [x] **Interactive playground**: Browser-based three-way comparison (JSON vs TOON vs GCF) with live encoding, token bars, savings breakdown, session dedup demo, and decode tab. Uses real `@toon-format/toon` library. Lives at `/playground` on the docs site.
-- [ ] **VS Code extension**: Syntax highlighting for `.gcf` files. TextMate grammar.
-- [ ] **Tree-sitter grammar**: Enables Neovim, Helix, Zed, Emacs highlighting.
-- [x] **MCP proxy**: `gcf-proxy` wraps any MCP server, re-encodes JSON tool responses as GCF mid-flight. Zero code changes. Published at `go install github.com/blackwell-systems/gcf-proxy@latest`.
-- [x] **Generic encoding**: `encodeGeneric` / `EncodeGeneric` / `encode_generic` shipped in all three libraries. Encodes arbitrary structured data (not just graph payloads) using GCF tabular format. Spec Section 6a documents the grammar.
+- [ ] **Tree-sitter grammar** (`tree-sitter-gcf`): syntax highlighting for editors (VS Code, Neovim, Helix, Zed).
+- [ ] **VS Code extension**: TextMate grammar for `.gcf` files.
+- [ ] **Proxy Phase 2**: HTTP/SSE frontend for non-stdio MCP transports.
+- [ ] **Proxy Phase 3**: session deduplication in proxy (cross-call symbol tracking).
 
 ## Format extensions (future, backwards-compatible)
 
-- [ ] **Streaming encode**: Line-by-line output for large payloads without buffering the full result.
-- [ ] **Binary encoding**: Optional compact binary wire format for non-LLM consumers (server-to-server). Same data model, different serialization.
-- [ ] **Signature field**: Optional per-symbol function signature in a 6th positional field.
-- [ ] **Component scores**: Optional score breakdown (blast_radius, confidence, recency, distance) as a structured suffix.
+- [ ] **Binary encoding**: compact binary wire format for non-LLM consumers (server-to-server).
+- [ ] **Signature field**: optional per-symbol function signature.
+- [ ] **Component scores**: optional score breakdown (blast_radius, confidence, recency, distance).
 
 ## Community
 
-- [ ] **Contribution guide**: How to implement GCF in a new language, conformance requirements.
-- [ ] **Logo and branding**: Visual identity for the docs site and GitHub presence.
-- [ ] **Conference talk / blog series**: Deeper technical content on why positional encoding beats field-name repetition for LLM comprehension.
+- [ ] **Contribution guide**: how to implement GCF in a new language, conformance requirements.
+- [ ] **HuggingFace dataset**: eval results for discoverability (not for fine-tuning).
+- [ ] **Zenodo DOI**: citable reference for the whitepaper.
+- [ ] **Conference talk / blog series**: deeper technical content on structural comprehension vs flat tabular.
