@@ -11,6 +11,7 @@
     - [GCF failures: precision errors](#gcf-failures-precision-errors)
     - [TOON failures: comprehension errors](#toon-failures-comprehension-errors)
     - [JSON failures: structural overwhelm](#json-failures-structural-overwhelm)
+    - [Failures by model tier](#failures-by-model-tier)
   - [Files](#files)
 - [Generation Eval](#generation-eval-output-can-llms-write-gcf)
 - [Token Efficiency](#token-efficiency-toons-own-benchmark)
@@ -106,6 +107,37 @@ JSON fails on *structure* (empty responses, massive undercounts, chain-of-though
 | Chain-of-thought enumeration | `related_count`: 143 lines of listing, wrong answer | Opus | Model manually enumerates symbols to count them, burns output tokens, still gets wrong answer. |
 | Field confusion | `target_count`: reads "200" (edge count) | Common | Nested structure makes it easy to read adjacent fields. |
 | Distance filter failure | `related_count`: 72-154 vs 167 | Every model | Same as TOON but worse. Must parse JSON objects AND filter by field value. |
+
+#### Failures by model tier
+
+Each model tier has a distinct failure signature.
+
+**Frontier Claude (Opus 4.6, Sonnet 4.6):**
+- GCF: zero failures in saved runs
+- TOON: off-by-2 on extended_count, last_symbol_kind wrong (attention decay at row 500)
+- JSON: massive undercounts (356 vs 500), chain-of-thought enumeration (143 lines, wrong answer)
+
+**Mid-tier Claude (Haiku 4.5):**
+- GCF: single off-by-1 (`related_count` 166 vs 167) in 1 of 2 runs; other run is perfect
+- TOON: distance grouping failures (100, 200, 214 vs 166/167), last_symbol_kind wrong
+- JSON: undercounts, distance filter failures
+
+**GPT-5.5 (frontier OpenAI):**
+- GCF: empty string responses on counting questions (context overwhelm at 53k input tokens)
+- TOON: same empty strings, distance grouping failures
+- JSON: returns nothing on most questions; 53k tokens of `{"qualifiedName":...}` overwhelms attention
+
+**GPT-5.4 (mid-tier OpenAI):**
+- GCF: **deterministic, repeatable errors** across all 3 runs: `edge_count`=198 (always), `function_count`=84 (always). Not random; consistent tokenization/parsing bug.
+- TOON: distance grouping wildly inconsistent (169, 229, 200 vs 166). Round-number guessing.
+- JSON: symbol_count 326-404, massive undercounts everywhere
+
+**GPT-5.4-mini (cheapest tier):**
+- GCF: same deterministic patterns as 5.4 (198, 84) plus occasional larger misses (250, 100)
+- TOON: worst distance grouping failures (26, 28 vs 166). Defaults to round-number guessing.
+- JSON: 300 vs 500 symbol_count. Consistent failure across all question types.
+
+**Key observation:** GCF failures on Claude models are near-zero. GCF failures on OpenAI models are deterministic and repeatable (same wrong number every run), suggesting a tokenizer-level parsing difference rather than a comprehension issue.
 
 #### The key insight
 
