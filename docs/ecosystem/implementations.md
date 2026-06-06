@@ -22,6 +22,7 @@ All six support both encoding profiles:
 | Generic encode (`encodeGeneric`) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Session deduplication | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Delta encoding | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Streaming encode (`StreamEncoder`) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Thread-safe Session | ✓ | n/a | ✓ | ✓ | ✓ | ✓ |
 | CLI | ✓ | ✓ | ✓ | — | — | — |
 | | | | | |
