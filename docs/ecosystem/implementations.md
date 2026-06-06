@@ -10,8 +10,8 @@ Six official implementations, all production-ready, all MIT licensed, all zero r
 | TypeScript | `@blackwell-systems/gcf` | `npm install @blackwell-systems/gcf` | [npm](https://www.npmjs.com/package/@blackwell-systems/gcf) | Stable |
 | Python | `gcf-python` | `pip install gcf-python` | [PyPI](https://pypi.org/project/gcf-python/) | Stable |
 | Rust | `gcf` | `cargo add gcf` | [crates.io](https://crates.io/crates/gcf) | Stable |
-| Swift | `GCF` | `.package(url: "https://github.com/blackwell-systems/gcf-swift", from: "0.2.0")` | [GitHub](https://github.com/blackwell-systems/gcf-swift) | Stable |
-| Kotlin | `gcf` | `implementation("com.github.blackwell-systems:gcf-kotlin:0.2.0")` | [JitPack](https://jitpack.io/#blackwell-systems/gcf-kotlin) | Stable |
+| Swift | `GCF` | `.package(url: "https://github.com/blackwell-systems/gcf-swift", from: "0.3.0")` | [GitHub](https://github.com/blackwell-systems/gcf-swift) | Stable |
+| Kotlin | `gcf` | `implementation("com.github.blackwell-systems:gcf-kotlin:0.3.0")` | [JitPack](https://jitpack.io/#blackwell-systems/gcf-kotlin) | Stable |
 
 All six support both encoding profiles:
 

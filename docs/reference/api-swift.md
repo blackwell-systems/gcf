@@ -1,7 +1,7 @@
 # API Reference (Swift)
 
 ```swift
-.package(url: "https://github.com/blackwell-systems/gcf-swift", from: "0.1.0")
+.package(url: "https://github.com/blackwell-systems/gcf-swift", from: "0.3.0")
 ```
 
 ## Functions
