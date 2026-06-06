@@ -168,22 +168,45 @@ comprehension/
 
 ## Generation Eval (Output: Can LLMs write GCF?)
 
-5 to 100 symbols, validated through real Go decoder, 3-line format primer.
+5 to 100 symbols, validated through real `gcf.Decode()`, 3-line format primer.
 
-| Symbols | Edges | GCF Valid | GCF vs JSON | GCF vs TOON |
-|---------|-------|-----------|-------------|-------------|
-| 5 | 3 | YES | 71% fewer | 52% smaller |
-| 10 | 6 | YES | 74% fewer | 53% smaller |
-| 20 | 12 | YES | 75% fewer | 54% smaller |
-| 50 | 25 | YES | 74% fewer | 52% smaller |
-| 100 | 50 | YES | 75% fewer | 52% smaller |
+### Multi-model results
 
-5/5 valid. Tested with Claude. Gemini confirmed via manual chat test (complex mixed payload with tabular arrays, nested objects, primitive arrays, nulls, booleans).
+| Model | 5 sym | 10 sym | 20 sym | 50 sym | 100 sym | Score |
+|-------|-------|--------|--------|--------|---------|-------|
+| Claude (Opus/default) | YES | YES | YES | YES | YES | 5/5 |
+| GPT-5.4 | YES | YES | YES | YES | YES | 5/5 |
+
+All models produce valid, decoder-parseable GCF at every scale tested.
+
+### Token savings (GCF vs JSON on output)
+
+| Symbols | Edges | GCF bytes | JSON bytes | Savings |
+|---------|-------|-----------|------------|---------|
+| 5 | 3 | 411 | 1,463 | 72% |
+| 10 | 6 | 695 | 2,842 | 76% |
+| 20 | 12 | 1,309 | 5,632 | 77% |
+| 50 | 25 | 3,031 | 13,427 | 77% |
+| 100 | 50 | 5,976 | 26,771 | 78% |
+
+### Cold-start (no example in prompt)
+
+| Model | Score | Notes |
+|-------|-------|-------|
+| Claude | 3/5 | Fails at small sizes (preamble text before GCF) |
+| TOON (Claude) | 3/5 | Same cold-start behavior |
+
+Neither format works reliably without a primer at small sizes. With a primer, both achieve 100%.
+
+### Gemini (manual chat test)
+
+Gemini produced valid complex GCF (tabular arrays, nested objects, primitive arrays, nulls, booleans) from a one-line primer with zero prior exposure. Both GCF and TOON generated correctly in the same session.
 
 ### Files
 
 ```
 generation/
+├── generation-gpt54-run1-2026-06-06.log          # GPT-5.4: 5/5 valid, 72-78% savings
 ├── generation-gcf-with-example-2026-06-04.log    # Claude, with primer: 5/5 valid
 ├── generation-gcf-no-example-2026-06-04.log      # Claude, cold-start: 3/5 valid
 ├── generation-toon-with-example-2026-06-04.log   # TOON comparison: 5/5 valid
