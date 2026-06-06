@@ -10,7 +10,7 @@ For an MCP tool returning 500 records (search results, database rows, API respon
 - JSON: ~53,000 tokens
 - GCF: ~11,000 tokens
 
-That's 42,000 tokens freed for additional context, longer conversations, or more tool calls. And the LLM comprehends GCF more accurately (100% vs 76.9% on JSON at this scale).
+That's 42,000 tokens freed for additional context, longer conversations, or more tool calls. And the LLM comprehends GCF more accurately (90.5% vs 53.6% on JSON, averaged across 10 models and 3 providers).
 
 ## Basic integration
 
