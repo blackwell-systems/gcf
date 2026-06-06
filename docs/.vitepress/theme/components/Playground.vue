@@ -69,31 +69,24 @@ function encodeSessionCall2(obj: any): string {
 // ---------------------------------------------------------------------------
 
 const PRESETS: Record<string, { label: string; json: any }> = {
-  employees: {
-    label: 'Employee records (20 rows, tabular)',
+  api_response: {
+    label: 'API response (mixed: arrays, nested, primitives)',
     json: {
-      employees: [
-        { id: 1, name: 'Alice Smith', department: 'Engineering', salary: 95000, active: true, location: 'New York', title: 'Senior Engineer' },
-        { id: 2, name: 'Bob Jones', department: 'Sales', salary: 72000, active: true, location: 'Chicago', title: 'Account Executive' },
-        { id: 3, name: 'Carol Wu', department: 'Marketing', salary: 85000, active: false, location: 'San Francisco', title: 'Marketing Manager' },
-        { id: 4, name: 'Dan Lee', department: 'Engineering', salary: 91000, active: true, location: 'Austin', title: 'Staff Engineer' },
-        { id: 5, name: 'Eve Park', department: 'Design', salary: 78000, active: true, location: 'Seattle', title: 'UX Designer' },
-        { id: 6, name: 'Frank Chen', department: 'Engineering', salary: 105000, active: true, location: 'New York', title: 'Principal Engineer' },
-        { id: 7, name: 'Grace Kim', department: 'Product', salary: 88000, active: true, location: 'San Francisco', title: 'Product Manager' },
-        { id: 8, name: 'Hank Davis', department: 'Sales', salary: 68000, active: true, location: 'Chicago', title: 'Sales Rep' },
-        { id: 9, name: 'Iris Wang', department: 'Engineering', salary: 97000, active: true, location: 'Austin', title: 'Senior Engineer' },
-        { id: 10, name: 'Jack Brown', department: 'Design', salary: 82000, active: false, location: 'Seattle', title: 'Design Lead' },
-        { id: 11, name: 'Kate Moore', department: 'Engineering', salary: 93000, active: true, location: 'New York', title: 'Senior Engineer' },
-        { id: 12, name: 'Leo Patel', department: 'Marketing', salary: 76000, active: true, location: 'Chicago', title: 'Content Strategist' },
-        { id: 13, name: 'Mia Lopez', department: 'Product', salary: 92000, active: true, location: 'San Francisco', title: 'Senior PM' },
-        { id: 14, name: 'Noah Clark', department: 'Sales', salary: 71000, active: true, location: 'Austin', title: 'Account Executive' },
-        { id: 15, name: 'Olivia Scott', department: 'Engineering', salary: 99000, active: true, location: 'Seattle', title: 'Staff Engineer' },
-        { id: 16, name: 'Pete Adams', department: 'Design', salary: 80000, active: true, location: 'New York', title: 'UI Designer' },
-        { id: 17, name: 'Quinn Hall', department: 'Engineering', salary: 101000, active: true, location: 'Austin', title: 'Tech Lead' },
-        { id: 18, name: 'Rosa Diaz', department: 'Marketing', salary: 79000, active: true, location: 'Chicago', title: 'Growth Manager' },
-        { id: 19, name: 'Sam Wilson', department: 'Product', salary: 86000, active: false, location: 'San Francisco', title: 'Product Analyst' },
-        { id: 20, name: 'Tina Yang', department: 'Engineering', salary: 96000, active: true, location: 'Seattle', title: 'Senior Engineer' },
+      requestId: 'req_8f3a2c91',
+      generatedAt: '2026-06-05T18:42:17Z',
+      environment: 'development',
+      users: [
+        { id: 1042, username: 'luna_dev', active: true, roles: ['admin', 'developer'], profile: { displayName: 'Luna Hart', email: 'luna.hart@example.com', timezone: 'America/Phoenix' }, preferences: { theme: 'dark', notifications: { email: true, push: false } } },
+        { id: 1043, username: 'marco_ops', active: false, roles: ['operator'], profile: { displayName: 'Marco Vale', email: 'marco.vale@example.com', timezone: 'America/Chicago' }, preferences: { theme: 'light', notifications: { email: false, push: true } } },
       ],
+      metrics: { totalRequests: 28741, successRate: 0.982, averageLatencyMs: 143.7, errorCounts: { 400: 31, 404: 87, 500: 12 } },
+      features: [
+        { name: 'streaming', enabled: true, rolloutPercentage: 100 },
+        { name: 'experimentalParser', enabled: true, rolloutPercentage: 15 },
+        { name: 'legacyMode', enabled: false, rolloutPercentage: 0 },
+      ],
+      tags: ['sample', 'generated', 'json'],
+      metadata: { region: 'us-west-2', version: '2.4.1', nullableField: null },
     },
   },
   orders: {
@@ -209,7 +202,7 @@ type Tab = 'compare' | 'decode'
 
 const activeTab = ref<Tab>('compare')
 const inputText = ref('')
-const selectedPreset = ref('employees')
+const selectedPreset = ref('api_response')
 const copied = ref<string>('')
 const shareText = ref('')
 const showSession = ref(false)
@@ -414,7 +407,7 @@ onMounted(() => {
         selectedPreset.value = preset
         loadPreset(preset)
       } else {
-        loadPreset('employees')
+        loadPreset('api_response')
       }
     }
     if (params.get('session') === '1') showSession.value = true
