@@ -7,7 +7,7 @@
 
 # GCF
 
-**Drop-in JSON replacement for all AI pipelines. Superpowers for graph-shaped data.**
+**Drop-in JSON replacement for all AI pipelines, with superpowers for graph-shaped data.**
 
 Encode any JSON payload as GCF before sending it to an LLM. Arrays, nested objects, key-value pairs, mixed types. The model reads it natively with zero format instructions. `decode()` converts back to JSON when a human needs to see it.
 
