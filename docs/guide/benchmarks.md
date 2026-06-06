@@ -4,15 +4,15 @@ No model has ever been trained on GCF. Every model reads it better and writes it
 
 | | GCF | TOON | JSON |
 |---|---|---|---|
-| **Comprehension** (17 runs, 6 models) | **88%** | 71% | 55% |
-| **Generation** (19 runs, 7 models) | **5/5** | 1.1/5 | 4.9/5 |
+| **Comprehension** (23 runs, 10 models) | **90.5%** | 68.5% | 53.6% |
+| **Generation** (28 runs, 9 models) | **5/5** | 1.0/5 | 5.0/5 |
 | **Input tokens** (500 symbols) | **11,090** | 16,378 | 53,341 |
 | **Output tokens** (100 symbols) | **5,976** | 8,937 | 16,121 |
 
 Three benchmark suites, three providers (Anthropic, OpenAI, Google), zero training:
 
-1. **[Comprehension eval](#comprehension-can-llms-read-it)**: Can models extract information from a format? 500 symbols, 13 questions, 17 runs across 6 models.
-2. **[Generation eval](#generation-can-llms-write-it)**: Can models produce valid output in a format? 3-line primer, 19 runs across 7 models.
+1. **[Comprehension eval](#comprehension-can-llms-read-it)**: Can models extract information from a format? 500 symbols, 13 questions, 23 runs across 10 models.
+2. **[Generation eval](#generation-can-llms-write-it)**: Can models produce valid output in a format? 3-line primer, 28 runs across 9 models.
 3. **[TOON's benchmark: Token efficiency](#toons-benchmark-token-efficiency)**: How many tokens does each format cost? This is [TOON's own benchmark](https://github.com/toon-format/toon/tree/main/benchmarks), forked unmodified, with GCF added as one additional formatter.
 
 All results [reproducible](https://github.com/blackwell-systems/gcf/tree/main/eval/results).
@@ -55,6 +55,10 @@ When an agent receives data in JSON at this scale, it gets the wrong answer 45% 
 | GPT-5.5 | 5 | **84.1%** | 67.7% | 45.8% |
 | GPT-5.4 | 4 | **76.4%** | 56.0% | 44.1% |
 | GPT-5.4-mini | 2 | **71.8%** | 64.1% | 54.2% |
+| Gemini 2.5 Pro | 1 | **100%** | 76.9% | 58.3% |
+| Gemini 3.1 Pro | 1 | **100%** | 76.9% | 46.2% |
+| Gemini 3.5 Flash | 1 | **100%** | 61.5% | 46.2% |
+| Gemini 2.5 Flash | 3 | **80.6%** | 54.6% | 57.0% |
 
 **GCF wins on every model. The ordering GCF > TOON > JSON never flips.**
 
@@ -119,9 +123,11 @@ Output validated through real decoders: the official [toon-go](https://github.co
 | GPT-5.5 | **4-5/5** | 1-2/5 | 5/5 |
 | GPT-5.4 | **5/5** | 0/5 | 5/5 |
 | GPT-5.4-mini | **5/5** | 0/5 | 5/5 |
-| Gemini 3.1 Flash Lite | **5/5** | 0/5 | 4/5 |
+| Gemini 2.5 Pro | **5/5** | 1/5 | 5/5 |
+| Gemini 3.1 Pro | **5/5** | 0/5 | 5/5 |
+| Gemini 3.1 Flash Lite | **4-5/5** | 0/5 | 4-5/5 |
 
-**GCF is the only format every model can produce.** TOON's official decoder rejects the output on 5 of 7 models.
+**GCF is the only format every frontier model can produce.** TOON's official decoder rejects the output on 7 of 9 models.
 
 ### Why TOON fails
 
