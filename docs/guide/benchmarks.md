@@ -145,4 +145,4 @@ Fork: [blackwell-systems/toon@gcf-comparison](https://github.com/blackwell-syste
 | Delta encoding | 81.2% | unavailable | unavailable |
 | Streaming encode | yes (zero-buffering, O(1) memory) | output-side only (full value in memory) | n/a |
 
-GCF wins on input efficiency, output efficiency, and offers session/delta/streaming features no competitor has. See the [generation eval](https://github.com/blackwell-systems/gcf/tree/main/eval) for output token methodology.
+GCF wins every category. No competing format matches it on tokens, accuracy, or features. See the [generation eval](https://github.com/blackwell-systems/gcf/tree/main/eval) for output token methodology.
