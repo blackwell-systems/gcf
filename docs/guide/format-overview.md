@@ -307,7 +307,7 @@ ports[3]: 8080,8443,9090
 scopes[2]: read,write
 ```
 
-**Why this saves tokens:** JSON encodes `"tags": ["production", "us-east-1", "critical"]` with brackets, quotes, and commas. TOON uses `tags[3]: production,us-east-1,critical` (same as GCF). But prior to this encoding, GCF expanded each element to its own line (`## tags [3]` + `@0 production` + `@1 us-east-1` + `@2 critical`), costing 4 lines where 1 suffices. Inline encoding matches TOON's density on this shape.
+**Why this saves tokens:** JSON encodes `"tags": ["production", "us-east-1", "critical"]` with brackets, quotes on each string, and commas. GCF: one line, no quotes, no brackets. The alternative (a section header + one line per element) would cost 4 lines where 1 suffices.
 
 ### Value formatting
 
