@@ -1,6 +1,6 @@
 # GCF vs TOON
 
-GCF is smaller on all 6 datasets, more accurate at scale (100% vs 92.3%), and has four features TOON structurally cannot add. All claims below are tested on TOON's own benchmark with their datasets and their tokenizer.
+GCF is smaller on all 6 datasets, more accurate at scale (100% vs 92.3%), and has five features TOON structurally cannot add. All claims below are tested on TOON's own benchmark with their datasets and their tokenizer.
 
 ## Feature comparison
 
