@@ -56,7 +56,7 @@ Eval source: [gcf-go/eval](https://github.com/blackwell-systems/gcf-go/tree/main
 
 ---
 
-## Token Efficiency (TOON's Own Benchmark)
+## TOON's Benchmark: Token Efficiency
 
 We inserted GCF into [TOON's token efficiency benchmark](https://github.com/toon-format/toon/tree/main/benchmarks). Their datasets, their tokenizer (gpt-tokenizer, o200k_base), their methodology. The only change: one additional formatter.
 
