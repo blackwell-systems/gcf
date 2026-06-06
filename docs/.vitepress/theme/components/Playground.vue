@@ -293,6 +293,13 @@ const sessionVsJson = computed(() => jsonTokens.value > 0 ? Math.round(100 * (1 
 
 const symbolCount = computed(() => parsedObj.value?.symbols?.length ?? 0)
 const edgeCount = computed(() => parsedObj.value?.edges?.length ?? 0)
+const dataMeta = computed(() => {
+  if (!parsedObj.value) return ''
+  if (isPayload.value) return `${symbolCount.value} symbols, ${edgeCount.value} edges`
+  const json = JSON.stringify(parsedObj.value)
+  const keys = Object.keys(parsedObj.value)
+  return `${keys.length} top-level keys, ${json.length} bytes JSON`
+})
 
 // Savings breakdown
 const symbolOnlyTokensJson = computed(() => {
@@ -407,7 +414,7 @@ onMounted(() => {
         selectedPreset.value = preset
         loadPreset(preset)
       } else {
-        loadPreset('blast_radius')
+        loadPreset('employees')
       }
     }
     if (params.get('session') === '1') showSession.value = true
@@ -517,7 +524,7 @@ onMounted(() => {
       <!-- Token comparison bars -->
       <div class="bars-section" v-if="gcfOutput">
         <h3 class="bars-title">Token Comparison</h3>
-        <div class="bars-meta">{{ symbolCount }} symbols, {{ edgeCount }} edges</div>
+        <div class="bars-meta">{{ dataMeta }}</div>
 
         <div class="bar-row">
           <span class="bar-label">JSON</span>
