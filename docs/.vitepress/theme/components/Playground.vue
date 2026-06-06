@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted } from 'vue'
-import { encode, decode } from '@blackwell-systems/gcf'
+import { encode, decode, encodeGeneric } from '@blackwell-systems/gcf'
 import type { Payload } from '@blackwell-systems/gcf'
 import { encode as toonEncode } from '@toon-format/toon'
 
@@ -12,130 +12,6 @@ import { encode as toonEncode } from '@toon-format/toon'
 
 function encodeTOON(obj: any): string {
   return toonEncode(obj, { keyFolding: 'safe' })
-}
-
-// ---------------------------------------------------------------------------
-// GCF generic encoding: tabular format for arbitrary JSON.
-// Same algorithm used in the TOON benchmark (gcf-formatter.ts).
-// This will be replaced by the real library's encodeGeneric() once shipped.
-// ---------------------------------------------------------------------------
-
-function encodeGCFGeneric(data: unknown): string {
-  if (data === null || data === undefined) return ''
-  if (typeof data !== 'object') return String(data)
-  const lines: string[] = []
-  if (Array.isArray(data)) {
-    _encodeArray(data, '', lines, 0)
-  } else {
-    _encodeObject(data as Record<string, unknown>, lines, 0)
-  }
-  return lines.join('\n') + '\n'
-}
-
-function _encodeObject(obj: Record<string, unknown>, lines: string[], depth: number): void {
-  for (const [key, value] of Object.entries(obj)) {
-    if (value === null || value === undefined) continue
-    if (Array.isArray(value)) {
-      _encodeArray(value, key, lines, depth)
-    } else if (typeof value === 'object') {
-      lines.push(`${_ind(depth)}## ${key}`)
-      _encodeObject(value as Record<string, unknown>, lines, depth + 1)
-    } else {
-      lines.push(`${_ind(depth)}${key}=${_fmtVal(value)}`)
-    }
-  }
-}
-
-function _encodeArray(arr: unknown[], name: string, lines: string[], depth: number): void {
-  if (arr.length === 0) {
-    if (name) lines.push(`${_ind(depth)}## ${name} [0]`)
-    return
-  }
-  if (_isUniformObjArray(arr)) {
-    _encodeTabular(arr as Record<string, unknown>[], name, lines, depth)
-    return
-  }
-  if (name) lines.push(`${_ind(depth)}## ${name} [${arr.length}]`)
-  for (let i = 0; i < arr.length; i++) {
-    const item = arr[i]
-    if (typeof item === 'object' && item !== null && !Array.isArray(item)) {
-      lines.push(`${_ind(depth)}@${i}`)
-      _encodeObject(item as Record<string, unknown>, lines, depth + 1)
-    } else if (Array.isArray(item)) {
-      _encodeArray(item, `${i}`, lines, depth + 1)
-    } else {
-      lines.push(`${_ind(depth)}@${i} ${_fmtVal(item)}`)
-    }
-  }
-}
-
-function _encodeTabular(arr: Record<string, unknown>[], name: string, lines: string[], depth: number): void {
-  const fields = Object.keys(arr[0]!)
-  const primitiveFields: string[] = []
-  const nestedFields: string[] = []
-  for (const field of fields) {
-    const sample = arr[0]![field]
-    if (typeof sample === 'object' && sample !== null) nestedFields.push(field)
-    else primitiveFields.push(field)
-  }
-  const hdr = name
-    ? `## ${name} [${arr.length}]{${primitiveFields.join(',')}}`
-    : `## [${arr.length}]{${primitiveFields.join(',')}}`
-  lines.push(`${_ind(depth)}${hdr}`)
-  const hasNested = nestedFields.length > 0
-  for (let i = 0; i < arr.length; i++) {
-    const row = arr[i]!
-    const vals = primitiveFields.map(f => _fmtVal(row[f]))
-    if (hasNested) {
-      lines.push(`${_ind(depth)}@${i} ${vals.join('|')}`)
-    } else {
-      lines.push(`${_ind(depth)}${vals.join('|')}`)
-    }
-    if (hasNested) {
-      for (const nf of nestedFields) {
-        const nv = row[nf]
-        if (nv === null || nv === undefined) continue
-        if (Array.isArray(nv)) _encodeArray(nv, nf, lines, depth + 1)
-        else if (typeof nv === 'object') {
-          lines.push(`${_ind(depth + 1)}.${nf}`)
-          _encodeObject(nv as Record<string, unknown>, lines, depth + 2)
-        }
-      }
-    }
-  }
-}
-
-function _isUniformObjArray(arr: unknown[]): boolean {
-  if (arr.length === 0) return false
-  const first = arr[0]
-  if (typeof first !== 'object' || first === null || Array.isArray(first)) return false
-  const firstKeys = Object.keys(first).sort().join(',')
-  const checkCount = Math.min(arr.length, 5)
-  for (let i = 1; i < checkCount; i++) {
-    const item = arr[i]
-    if (typeof item !== 'object' || item === null || Array.isArray(item)) return false
-    const itemKeys = Object.keys(item).sort().join(',')
-    if (itemKeys !== firstKeys) {
-      const firstSet = new Set(Object.keys(first))
-      const itemSet = new Set(Object.keys(item as object))
-      const overlap = [...firstSet].filter(k => itemSet.has(k))
-      if (overlap.length < firstSet.size * 0.7) return false
-    }
-  }
-  return true
-}
-
-function _fmtVal(value: unknown): string {
-  if (value === null || value === undefined) return '-'
-  if (typeof value === 'number') return String(value)
-  if (typeof value === 'boolean') return value ? 'true' : 'false'
-  const str = String(value)
-  if (str.includes('|') || str.includes('\n') || str === '') return `"${str.replace(/"/g, '\\"')}"`
-  return str
-}
-
-function _ind(depth: number): string {
-  return depth > 0 ? '  '.repeat(depth) : ''
 }
 
 // Detect if an object looks like a GCF Payload (has tool + symbols)
@@ -153,7 +29,7 @@ function encodeSessionCall2(obj: any): string {
   const edges: any[] = obj.edges ?? []
   const lines: string[] = []
 
-  lines.push(`GCF tool=${obj.tool} budget=${obj.tokenBudget || 0} tokens=${obj.tokensUsed || 0} symbols=${syms.length} session=true`)
+  lines.push(`GCF tool=${obj.tool} budget=${obj.tokenBudget || 0} tokens=${obj.tokensUsed || 0} symbols=${syms.length} edges=${edges.length} session=true`)
 
   const groupNames = ['targets', 'related', 'extended']
   let currentDist: number | null = null
@@ -175,7 +51,7 @@ function encodeSessionCall2(obj: any): string {
 
   // Edges still need to be sent (topology may differ)
   if (edges.length > 0) {
-    lines.push('## edges')
+    lines.push(`## edges [${edges.length}]`)
     for (const e of edges) {
       const srcIdx = symIndex[e.source]
       const tgtIdx = symIndex[e.target]
@@ -352,7 +228,7 @@ const gcfOutput = computed(() => {
     if (isPayload.value) {
       return encode(jsonFromPayloadObj(parsedObj.value))
     }
-    return encodeGCFGeneric(parsedObj.value)
+    return encodeGeneric(parsedObj.value)
   } catch { return '' }
 })
 
