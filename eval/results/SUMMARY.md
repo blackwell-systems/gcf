@@ -198,10 +198,12 @@ Same data, same prompt structure per format. GCF and JSON use natural-language d
 | GPT-5.5 | 4-5/5 | 1-2/5 | 5/5 | 2 |
 | GPT-5.4 | 5/5 | 0/5 | 5/5 | 1 |
 | GPT-5.4-mini | 5/5 | 0/5 | 5/5 | 2 (zero variance) |
-| Gemini 3.1 Flash Lite | 5/5 | 0/5 | 4/5 | 2 (zero variance) |
-| Gemini 2.5 Flash | 3-4/5 | 0-4/5 | 0-2/5 | 2 (high variance, free tier) |
+| Gemini 2.5 Pro | 5/5 | 1/5 | 5/5 | 2 (zero variance) |
+| Gemini 3.5 Flash | 3/5 | 1/5 | 3/5 | 1 |
+| Gemini 3.1 Flash Lite | 4-5/5 | 0/5 | 4-5/5 | 3 |
+| Gemini 2.5 Flash | 2-3/5 | 0-4/5 | 0-3/5 | 3 (output truncation) |
 
-**GCF is the only format that achieves consistent 5/5 validity across all models (3 providers, 7 models).** TOON fails on every model when given natural-language descriptions (Opus 0/5, Sonnet 2-3/5, Haiku 1-3/5, all OpenAI 0/5, Gemini 0/5). JSON fails on Gemini at scale (output truncation).
+**GCF achieves 5/5 on every frontier model (Opus, Sonnet, GPT-5.5, Gemini 2.5 Pro).** TOON fails on every model when given natural-language descriptions. JSON matches GCF on Anthropic/OpenAI but truncates on some Gemini models.
 
 TOON's flat tabular design requires column values to be pre-encoded as integers. When a model is told "this symbol is a target" (natural language), it writes `target` in the distance column. TOON's decoder rejects this because it expects `0`. The model has to know that "target" means 0, "related" means 1, "extended" means 2, and perform that mapping before writing. Every model tested (GPT-5.4, GPT-5.4-mini) fails to do this mapping unprompted.
 
