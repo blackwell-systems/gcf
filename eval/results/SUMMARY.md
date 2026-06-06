@@ -159,7 +159,7 @@ comprehension/
 ├── comprehension-13q-gpt54-run1-2026-06-06.log         # GPT-5.4 run 1: 75.0%
 ├── comprehension-13q-gpt54-run2-2026-06-06.log         # GPT-5.4 run 2: 76.9%
 ├── comprehension-13q-gpt54-run3-2026-06-06.log         # GPT-5.4 run 3: 76.9%
-├── comprehension-13q-gpt54-run4-kindcounts-2026-06-06.log  # GPT-5.4 run 4: 76.9%
+├── comprehension-13q-gpt54-run4-2026-06-06.log         # GPT-5.4 run 4: 76.9%
 ├── comprehension-13q-gpt54-mini-run1-2026-06-06.log    # GPT-5.4-mini run 1: 76.9%
 └── comprehension-13q-gpt54-mini-run2-2026-06-06.log    # GPT-5.4-mini run 2: 66.7%
 ```
