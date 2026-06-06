@@ -75,7 +75,7 @@ Answers across runs: 100, 115, 165, 172, 190, 214. Wildly inconsistent.
 
 ### Error magnitude
 
-When GCF gets an answer wrong, it's off by 1-2 (median error: 4). When TOON and JSON get answers wrong, they're off by 50-140 (median error: 53 and 56). GCF fails on precision. TOON and JSON fail on comprehension.
+When GCF gets an answer wrong, it's off by 1-2 (median error: 4). When TOON and JSON get answers wrong, they're off by 50-140 (median error: 53 and 56). GCF fails on precision. TOON and JSON fail on comprehension. And when GCF does fail, the model returns a short wrong number. When JSON fails, the model burns 143 lines of output tokens on a manual enumeration and still gets it wrong. GCF fails cheaper.
 
 ![Error Magnitude](/charts/error-magnitude.png)
 
