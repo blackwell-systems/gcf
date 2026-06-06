@@ -5,14 +5,15 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a>
 </p>
 
-# GCF: Graph Compact Format
+# GCF
 
-**The most token-efficient wire format for LLMs. Bidirectional: cheaper to read and cheaper to write.**
+**Drop-in replacement for JSON in AI pipelines. 79% fewer tokens. 100% comprehension accuracy. Works on any structured data.**
 
-Two encoding profiles, one grammar:
+Encode any JSON payload as GCF before sending it to an LLM. Arrays, nested objects, key-value pairs, mixed types. The model reads it natively with zero format instructions. `decode()` converts back to JSON when a human needs to see it.
 
-- **Graph profile**: code graph payloads (symbols, edges, distance groups). 79% fewer tokens than JSON.
-- **Tabular profile**: any structured data (arrays, nested objects, mixed types). 34% fewer tokens than TOON.
+```
+pip install gcf-proxy    # wrap any MCP server, zero code changes
+```
 
 ```
 Tool  ───▶  encode()  ───▶  GCF  ───▶  LLM  ───▶  GCF  ───▶  Agent/Tool

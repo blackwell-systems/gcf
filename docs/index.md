@@ -3,7 +3,7 @@ layout: home
 sidebar: false
 hero:
   name: GCF
-  text: Graph Compact Format
+  text: Drop-in JSON replacement for AI pipelines
   tagline: 'The most token-efficient wire format for LLMs. 79% fewer input tokens than <span class="json">JSON</span>. 75% fewer output tokens. <span class="gcf">GCF</span> scores <strong>100% comprehension accuracy</strong> at 500 symbols where <span class="json">JSON</span> scores 76.9% and <span class="toon">TOON</span> scores 92.3%.'
   actions:
     - theme: brand
