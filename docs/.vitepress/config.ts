@@ -42,7 +42,7 @@ export default defineConfig({
           { text: 'MCP Proxy (Zero-Code)', link: '/guide/proxy' },
           { text: 'Streaming Encoding', link: '/guide/streaming' },
           { text: 'Benchmarks', link: '/guide/benchmarks' },
-          { text: 'Eval Results (Full Data)', link: '/guide/eval-results' },
+          { text: 'Benchmarks (Full Data)', link: '/guide/eval-results' },
           { text: 'GCF vs TOON', link: '/guide/vs-toon' },
         ],
       },

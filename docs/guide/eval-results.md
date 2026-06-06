@@ -1,4 +1,4 @@
-# Eval Results (Full Data)
+# Benchmarks (Full Data)
 
 Complete data from all eval runs. For the summary, see [Benchmarks](/guide/benchmarks).
 
