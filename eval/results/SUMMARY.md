@@ -1,5 +1,23 @@
 # Eval Results Summary
 
+## Table of Contents
+
+- [Comprehension Eval](#comprehension-eval-input-can-llms-read-gcf)
+  - [All runs](#all-runs)
+  - [Averages by model](#averages-by-model)
+  - [Methodology notes](#methodology-notes)
+  - [Key findings](#key-findings)
+  - [Failure taxonomy](#failure-taxonomy)
+    - [GCF failures: precision errors](#gcf-failures-precision-errors)
+    - [TOON failures: comprehension errors](#toon-failures-comprehension-errors)
+    - [JSON failures: structural overwhelm](#json-failures-structural-overwhelm)
+  - [Files](#files)
+- [Generation Eval](#generation-eval-output-can-llms-write-gcf)
+- [Token Efficiency](#token-efficiency-toons-own-benchmark)
+- [Reproduce](#reproduce)
+
+---
+
 ## Comprehension Eval (Input: Can LLMs read GCF?)
 
 500 symbols, 200 edges, 13 structured extraction questions, zero format instructions.
