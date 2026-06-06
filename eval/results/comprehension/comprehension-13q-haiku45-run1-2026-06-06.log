@@ -1,0 +1,58 @@
+=== RUN   TestComprehension
+    comprehension_test.go:490: Backend: cli (claude -p --model claude-haiku-4-5-20251001)
+    comprehension_test.go:491: Fixture: 500 symbols, 200 edges
+    comprehension_test.go:492: 
+    comprehension_test.go:494: gcf   tokens (est): 11090
+    comprehension_test.go:494: toon  tokens (est): 16378
+    comprehension_test.go:494: json  tokens (est): 53341
+    comprehension_test.go:496: GCF vs JSON savings: 79%
+    comprehension_test.go:497: GCF vs TOON savings: 32%
+    comprehension_test.go:498: 
+    comprehension_test.go:554:   PASS symbol_count    gcf   [exact] expected="500" got="500"
+    comprehension_test.go:554:   PASS symbol_count    toon  [exact] expected="500" got="500"
+    comprehension_test.go:554:   FAIL symbol_count    json  [got "432"] expected="500" got="432"
+    comprehension_test.go:554:   PASS edge_count      toon  [exact] expected="200" got="200"
+    comprehension_test.go:554:   PASS edge_count      json  [exact] expected="200" got="200"
+    comprehension_test.go:554:   PASS edge_count      gcf   [exact] expected="200" got="200"
+    comprehension_test.go:554:   PASS top_symbol      gcf   [match] expected="HandleRequest" got="HandleRequest"
+    comprehension_test.go:554:   PASS top_symbol      json  [match] expected="HandleRequest" got="HandleRequest"
+    comprehension_test.go:554:   PASS top_symbol      toon  [match] expected="HandleRequest" got="HandleRequest"
+    comprehension_test.go:554:   PASS top_kind        gcf   [match] expected="function" got="function"
+    comprehension_test.go:554:   PASS top_kind        json  [match] expected="function" got="function"
+    comprehension_test.go:554:   PASS top_kind        toon  [match] expected="function" got="function"
+    comprehension_test.go:554:   PASS target_count    gcf   [exact] expected="166" got="166"
+    comprehension_test.go:554:   FAIL target_count    json  [got "83"] expected="166" got="83"
+    comprehension_test.go:554:   FAIL target_count    toon  [got "200"] expected="166" got="200"
+    comprehension_test.go:554:   PASS edge_types      json  [exact] expected="calls, implements, imports, references" got="calls, implements, imports, references"
+    comprehension_test.go:554:   PASS edge_types      gcf   [exact] expected="calls, implements, imports, references" got="calls, implements, imports, references"
+    comprehension_test.go:554:   PASS edge_types      toon  [exact] expected="calls, implements, imports, references" got="calls, implements, imports, references"
+    comprehension_test.go:554:   FAIL related_count   gcf   [got "166"] expected="167" got="166"
+    comprehension_test.go:554:   FAIL related_count   json  [got "150"] expected="167" got="150"
+    comprehension_test.go:554:   FAIL related_count   toon  [got "118"] expected="167" got="118"
+    comprehension_test.go:554:   PASS extended_count  gcf   [exact] expected="167" got="167"
+    comprehension_test.go:554:   FAIL extended_count  json  [got "100"] expected="167" got="100"
+    comprehension_test.go:554:   FAIL extended_count  toon  [got "107"] expected="167" got="107"
+    comprehension_test.go:554:   PASS function_count  gcf   [exact] expected="125" got="125"
+    comprehension_test.go:554:   FAIL function_count  json  [got "79"] expected="125" got="79"
+    comprehension_test.go:554:   PASS function_count  toon  [exact] expected="125" got="125"
+    comprehension_test.go:554:   PASS calls_edge_count gcf   [exact] expected="50" got="50"
+    comprehension_test.go:554:   PASS calls_edge_count toon  [exact] expected="50" got="50"
+    comprehension_test.go:554:   PASS calls_edge_count json  [exact] expected="50" got="50"
+    comprehension_test.go:554:   PASS last_symbol_kind json  [match] expected="interface" got="interface"
+    comprehension_test.go:554:   PASS last_symbol_kind gcf   [match] expected="interface" got="interface"
+    comprehension_test.go:554:   FAIL last_symbol_kind toon  [got "method"] expected="interface" got="method"
+    comprehension_test.go:554:   PASS has_edges_section gcf   [exact] expected="yes" got="yes"
+    comprehension_test.go:554:   PASS has_edges_section json  [exact] expected="yes" got="yes"
+    comprehension_test.go:554:   PASS has_edges_section toon  [exact] expected="yes" got="yes"
+    comprehension_test.go:554:   PASS tool_name       gcf   [exact] expected="context_for_task" got="context_for_task"
+    comprehension_test.go:554:   PASS tool_name       json  [exact] expected="context_for_task" got="context_for_task"
+    comprehension_test.go:554:   PASS tool_name       toon  [exact] expected="context_for_task" got="context_for_task"
+    comprehension_test.go:559: 
+    comprehension_test.go:560: === Summary ===
+    comprehension_test.go:561: Format Accuracy Est Tokens    vs JSON
+    comprehension_test.go:573: gcf       92.3%      11090        21%
+    comprehension_test.go:573: toon      69.2%      16378        31%
+    comprehension_test.go:573: json      61.5%      53341   baseline
+--- PASS: TestComprehension (613.72s)
+PASS
+ok  	github.com/blackwell-systems/gcf-go/eval	614.101s
