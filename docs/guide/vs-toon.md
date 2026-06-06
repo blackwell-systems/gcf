@@ -17,7 +17,7 @@ GCF is smaller on all 6 datasets, more accurate at scale (100% vs 92.3%), and ha
 | **Delta encoding** | **Yes (81.2% savings on re-queries)** | **No** |
 | **Distance grouping** | **Yes (`## targets`, `## related`)** | **No** |
 | Graph-native (nodes + edges) | Yes (graph profile) | No |
-| Generic data (any JSON) | Yes (tabular profile) | Yes |
+| Generic data (any JSON) | Yes (generic profile) | Yes |
 | **Streaming encode** | **Yes (true zero-buffering, O(1) memory, `[?]` + trailer)** | **Output-side only (requires full value in memory)** |
 | Key folding (dotted paths) | No | Yes |
 | LLM comprehension at 500 symbols | 100% (13/13) | 92.3% (12/13) |

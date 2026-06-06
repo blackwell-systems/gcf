@@ -1,6 +1,6 @@
 # Token Savings Proof
 
-Mathematical proof that GCF's structural overhead is lower than both JSON and TOON for structured data. The analysis below covers the graph profile (symbols + edges). For tabular profile benchmarks on generic data, see [Benchmarks](/guide/benchmarks). For output token savings, see the [generation eval](https://github.com/blackwell-systems/gcf/tree/main/eval). All analysis uses byte length as a proxy for token count (validated: byte length correlates 0.97 with o200k_base token count for ASCII-dominant payloads).
+Mathematical proof that GCF's structural overhead is lower than both JSON and TOON for structured data. The analysis below covers the graph profile (symbols + edges). For generic profile benchmarks on generic data, see [Benchmarks](/guide/benchmarks). For output token savings, see the [generation eval](https://github.com/blackwell-systems/gcf/tree/main/eval). All analysis uses byte length as a proxy for token count (validated: byte length correlates 0.97 with o200k_base token count for ASCII-dominant payloads).
 
 ## Notation
 

@@ -8,7 +8,7 @@ It covers:
 - **Terminology and Conventions** (MUST/SHALL/SHOULD/MAY semantics)
 
 1. **Overview** (two profiles, design goals)
-2. **Grammar** (EBNF, both graph and tabular profiles)
+2. **Grammar** (EBNF, both graph and generic profiles)
 3. **Header fields** (required and optional, graph profile)
 4. **Node line format** (positional encoding, graph profile)
 5. **Edge line format** (local ID references, graph profile)
@@ -18,7 +18,7 @@ It covers:
 7. **Session statefulness** (bare reference protocol)
 8. **Delta encoding extension** (three-outcome protocol)
 9. **Comments**
-10. **Token savings analysis** (both graph and tabular profiles)
+10. **Token savings analysis** (both graph and generic profiles)
 11. **Design constraints** (text-only, line-oriented, deterministic, shallow nesting)
 12. **Conformance** (encoder/decoder checklists for both profiles, decoder error taxonomy with 14 normative error conditions)
 13. **Security considerations** (injection, memory exhaustion, sanitization)
@@ -39,7 +39,7 @@ The specification uses [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119) keywor
 GCF supports two encoding profiles that share the same grammar primitives (`##` headers, `@` IDs, positional fields):
 
 - **Graph profile** (Sections 3-6): Encodes code graph payloads (symbols, edges, distance groups) for MCP tool responses.
-- **Tabular profile** (Section 6a): Encodes arbitrary structured data (arrays of objects, nested records, mixed types) using positional rows and pipe separators.
+- **Generic profile** (Section 6a): Encodes arbitrary structured data (arrays of objects, nested records, mixed types) using positional rows and pipe separators.
 
 Implementations MAY support one or both profiles. All six official implementations (Go, TypeScript, Python, Rust, Swift, Kotlin) support both.
 

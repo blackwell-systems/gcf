@@ -2,12 +2,12 @@
 
 GCF is a line-oriented, text-based format with two encoding profiles:
 
-- **Tabular profile** (`encodeGeneric`): any structured data with arrays, nested objects, and primitives. This is what most users need.
+- **Generic profile** (`encodeGeneric`): any structured data with arrays, nested objects, and primitives. This is what most users need.
 - **Graph profile** (`encode`): code graph payloads with symbols, edges, and distance groups. For code intelligence tools.
 
 Both profiles share the same primitives: `##` section headers, `@` local IDs, positional fields.
 
-## Tabular profile at a glance
+## Generic profile at a glance
 
 ```
 ## employees [3]{id,name,department,salary}
@@ -18,7 +18,7 @@ Both profiles share the same primitives: `##` section headers, `@` local IDs, po
 
 One header declares field names. Rows are positional values. No field names repeated per record. Works on any JSON.
 
-Five elements in the tabular profile. Five more in the [graph profile](#graph-profile) below.
+Five elements in the generic profile. Five more in the [graph profile](#graph-profile) below.
 
 ## 1. Tabular arrays
 
@@ -168,7 +168,7 @@ vs GCF:
 
 ## Graph profile
 
-The tabular profile (above) handles any structured data. The graph profile adds specialized encoding for code graph payloads with typed symbols, directed edges, and distance-based grouping. This is what `encode` / `Encode` produces.
+The generic profile (above) handles any structured data. The graph profile adds specialized encoding for code graph payloads with typed symbols, directed edges, and distance-based grouping. This is what `encode` / `Encode` produces.
 
 ### Graph profile at a glance
 
@@ -185,7 +185,7 @@ GCF tool=context_for_task budget=5000 tokens=1847 symbols=10 edges=2 pack_root=a
 @1<@0 references
 ```
 
-Five additional elements beyond the tabular profile:
+Five additional elements beyond the generic profile:
 
 ## 6. Header (graph profile)
 
@@ -356,9 +356,9 @@ GCF tool=context_for_task budget=5000 tokens=1847 symbols=2 edges=1
 
 965 tokens vs 233 tokens. Same information.
 
-### Relationship to tabular profile
+### Relationship to generic profile
 
-The graph profile is a specialized application of the tabular profile for code graph data. The `@{id} {kind} {qname} {score} {provenance}` node line format is a tabular row with implicit field names. The tabular profile generalizes this to arbitrary field sets.
+The graph profile is a specialized application of the generic profile for code graph data. The `@{id} {kind} {qname} {score} {provenance}` node line format is a tabular row with implicit field names. The generic profile generalizes this to arbitrary field sets.
 
 Both profiles use the same grammar primitives: `##` headers, `@` IDs, positional fields. Implementations may support one or both profiles.
 
@@ -368,6 +368,6 @@ Both profiles use the same grammar primitives: `##` headers, `@` IDs, positional
 
 - **Text-only.** No binary framing.
 - **Line-oriented.** One semantic unit per line.
-- **Shallow nesting.** The graph profile is flat. The tabular profile supports indented nested fields for records with sub-objects.
+- **Shallow nesting.** The graph profile is flat. The generic profile supports indented nested fields for records with sub-objects.
 - **Deterministic.** Same input produces same output.
 - **LLM-parseable.** Validated at 100% accuracy on 13 structured extraction tasks at 500 symbols.

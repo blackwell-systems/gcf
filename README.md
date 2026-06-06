@@ -70,7 +70,7 @@ go get github.com/blackwell-systems/gcf-go  # Go
 cargo add gcf                             # Rust
 ```
 
-### Encode any structured data (tabular profile)
+### Encode any structured data (generic profile)
 
 ```python
 from gcf import encode_generic
@@ -151,7 +151,7 @@ Exploits three properties of graph-structured data:
 2. **Local IDs.** `@0`, `@1`. Edges reference by ID, not by repeating full identifiers.
 3. **Hierarchical grouping.** Section headers (`## targets`) replace per-record metadata.
 
-### Tabular profile
+### Generic profile
 
 Exploits two properties of structured data:
 
@@ -223,7 +223,7 @@ Fork with reproducible results: [blackwell-systems/toon@gcf-comparison](https://
 
 ## Specification
 
-Full grammar, encoding rules, session statefulness, delta encoding, and tabular profile: [SPEC.md](SPEC.md)
+Full grammar, encoding rules, session statefulness, delta encoding, and generic profile: [SPEC.md](SPEC.md)
 
 ## Implementations
 
@@ -239,7 +239,7 @@ Full grammar, encoding rules, session statefulness, delta encoding, and tabular 
 
 Zero runtime dependencies. MIT licensed. Spec is stable. The proxy is a drop-in wrapper for any existing MCP server (zero code changes).
 
-All implementations support both graph profile (`encode`/`Encode`) and tabular profile (`encode_generic`/`encodeGeneric`/`EncodeGeneric`).
+All implementations support both graph profile (`encode`/`Encode`) and generic profile (`encode_generic`/`encodeGeneric`/`EncodeGeneric`).
 
 ## Documentation
 

@@ -169,7 +169,7 @@ The format's regularity makes structured extraction reliable:
 - `## targets` is always the most relevant subset (skip to what matters)
 - Edges use `@target<@source type` (trace call paths)
 
-For the tabular profile:
+For the generic profile:
 - `## name [count]{fields}` declares the schema (one line)
 - Rows are positional values separated by `|`
 - Nested objects appear indented with `.fieldname`

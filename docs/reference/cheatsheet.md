@@ -3,9 +3,9 @@
 GCF has two encoding profiles that share the same grammar primitives (`##`, `@`, `|`, `=`).
 
 ::: tip Two profiles, one format
-**Graph profile** (`encode`): code graph payloads with symbols, edges, and distance groups. For MCP tools returning code intelligence data.
+**Generic profile** (`encodeGeneric`): any structured data with arrays, nested objects, and primitives. Drop-in JSON replacement. This is what most users need.
 
-**Tabular profile** (`encodeGeneric`): any structured data with arrays, nested objects, and primitives. For everything else.
+**Graph profile** (`encode`): code graph payloads with symbols, edges, and distance groups. Specialized for code intelligence tools.
 :::
 
 ---
@@ -139,7 +139,7 @@ GCF tool=context_for_task budget=5000 tokens=1847 symbols=5 edges=4 pack_root=a1
 
 ---
 
-## Tabular Profile
+## Generic Profile
 
 ### Tabular arrays
 

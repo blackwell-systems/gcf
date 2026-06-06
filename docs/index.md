@@ -28,5 +28,5 @@ features:
   - title: Beats TOON on TOON's benchmark
     details: 'Wins all 6 datasets on <span class="toon">TOON</span> own benchmark. 34% fewer tokens on mixed-structure, 42% on semi-uniform, 3% on flat. Their datasets, their tokenizer, their library.'
   - title: Six languages, zero dependencies
-    details: 'Go, TypeScript, Python, Rust, Swift, and Kotlin. Graph profile (encode) and tabular profile (encodeGeneric). CLI included. MCP proxy for zero-code adoption.'
+    details: 'Go, TypeScript, Python, Rust, Swift, and Kotlin. Graph profile (encode) and generic profile (encodeGeneric). CLI included. MCP proxy for zero-code adoption.'
 ---

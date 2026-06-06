@@ -18,7 +18,7 @@ GCF was designed for knowing's use case and extracted into a standalone format o
 - All tool handlers support GCF tabular output via `EncodeResult`
 - 34-44% token savings on structured tool responses (symbol lists, references, diagnostics, call hierarchies)
 - JSON remains the default; GCF is opt-in via session configuration
-- Uses `gcf-go` `EncodeGeneric` for tabular profile encoding
+- Uses `gcf-go` `EncodeGeneric` for generic profile encoding
 
 ## Your project here
 

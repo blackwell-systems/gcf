@@ -70,7 +70,7 @@ Non-convertible responses (plain text, HTML, errors) pass through untouched.
 The proxy looks for JSON-RPC responses with `result.content[].text` fields containing JSON objects. If the JSON has structured data (objects, arrays), it's converted to GCF. Specifically:
 
 - **JSON with `tool` + `symbols` fields**: encoded with the graph profile (local IDs, edges, distance groups)
-- **Any other structured JSON**: encoded with the tabular profile (pipe-separated rows, section headers)
+- **Any other structured JSON**: encoded with the generic profile (pipe-separated rows, section headers)
 - **Plain text, HTML, markdown**: passed through unchanged
 
 ## Before and after
