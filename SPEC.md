@@ -1,6 +1,6 @@
 # GCF Specification
 
-## Graph Compact Format
+## Graph Compact Format: A Token-Optimized Wire Format for LLM Interactions
 
 **Version:** 1.4
 
@@ -32,8 +32,8 @@ GCF is a text-based, line-oriented wire format for encoding structured data in a
 
 GCF supports two encoding profiles:
 
-- **Graph profile** (Sections 3-6): Encodes code graph payloads (symbols, edges, distance groups) for MCP tool responses. 84% median token savings versus JSON.
-- **Tabular profile** (Section 6a): Encodes arbitrary structured data (arrays of objects, nested records, mixed types) using positional rows and pipe separators. 34% fewer tokens than TOON on mixed-structure benchmarks.
+- **Tabular profile** (Section 6a): Encodes arbitrary structured data (arrays of objects, nested records, mixed types) using positional rows and pipe separators. Drop-in replacement for JSON in any AI pipeline. 34% fewer tokens than TOON on mixed-structure benchmarks.
+- **Graph profile** (Sections 3-6): Specialized encoding for code graph payloads (symbols, edges, distance groups) with local IDs and distance-based grouping. 79% fewer tokens than JSON at 500 symbols.
 
 Both profiles share the same grammar primitives: `##` section headers, `@` local IDs, positional fields. The savings come from eliminating three sources of waste: field name repetition (positional encoding), identifier repetition (local IDs), and per-record metadata (hierarchical grouping).
 
