@@ -580,7 +580,7 @@ onMounted(() => {
 
         <!-- Comprehension note -->
         <div class="comprehension-note">
-          <strong>GCF is more readable for agents than JSON.</strong> At 500 records with zero format instructions: GCF scores <strong>100% accuracy</strong> (13/13). JSON drops to 76.9% because field-name repetition overwhelms counting. The "readable" format is the one that breaks. The "dense" format is the one that works.
+          <strong>GCF is a wire format optimized for agentic comprehension and token compression.</strong> Human readability is a last-mile concern: call <code>decode()</code> when a human needs to see it. At 500 records, GCF scores <strong>100% accuracy</strong> (13/13) with zero format instructions. JSON scores 76.9%. The "readable" format is the one that breaks.
           <a href="/guide/llm-integration">See the eval &rarr;</a>
         </div>
 
