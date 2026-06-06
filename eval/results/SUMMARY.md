@@ -139,9 +139,9 @@ Each model tier has a distinct failure signature.
 
 **Key observation:** GCF failures on Claude models are near-zero. GCF failures on OpenAI models are deterministic and repeatable (same wrong number every run), suggesting a tokenizer-level parsing difference rather than a comprehension issue.
 
-#### The key insight
+#### Summary
 
-GCF errors are off by 1-2. TOON/JSON errors are off by 50-140. This is because GCF encodes the answer structurally (`## related [167]`) while TOON/JSON require the model to compute it from raw data. When GCF fails, it's a misread. When TOON/JSON fail, it's a comprehension breakdown.
+GCF median error: 4. TOON median error: 53. JSON median error: 56. GCF encodes answers structurally (`## related [167]`). TOON/JSON force the model to compute them from raw data.
 
 ### Files
 
