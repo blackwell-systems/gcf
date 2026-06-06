@@ -48,6 +48,20 @@ npm install @blackwell-systems/gcf
 go get github.com/blackwell-systems/gcf-go
 ```
 
+```bash [Rust]
+cargo add gcf
+```
+
+```bash [Swift]
+# Package.swift
+.package(url: "https://github.com/blackwell-systems/gcf-swift", from: "0.4.0")
+```
+
+```bash [Kotlin]
+# build.gradle.kts
+implementation("com.github.blackwell-systems:gcf-kotlin:0.4.0")
+```
+
 :::
 
 ## Encode your first payload
