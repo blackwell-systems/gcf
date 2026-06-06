@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted } from 'vue'
-import { encode, decode, encodeGeneric } from '@blackwell-systems/gcf'
+import { encode, decode, encodeGeneric, decodeGeneric } from '@blackwell-systems/gcf'
 import type { Payload } from '@blackwell-systems/gcf'
 import { encode as toonEncode } from '@toon-format/toon'
 
@@ -353,26 +353,8 @@ const decodeInput = ref('')
 const decodeOutput = computed(() => {
   if (!decodeInput.value.trim()) return ''
   try {
-    const p = decode(decodeInput.value)
-    return JSON.stringify({
-      tool: p.tool,
-      tokenBudget: p.tokenBudget,
-      tokensUsed: p.tokensUsed,
-      packRoot: p.packRoot ?? '',
-      symbols: p.symbols.map(s => ({
-        qualifiedName: s.qualifiedName,
-        kind: s.kind,
-        score: s.score,
-        provenance: s.provenance,
-        distance: s.distance,
-      })),
-      edges: p.edges.map(e => ({
-        source: e.source,
-        target: e.target,
-        edgeType: e.edgeType,
-        ...(e.status ? { status: e.status } : {}),
-      })),
-    }, null, 2)
+    const result = decodeGeneric(decodeInput.value)
+    return JSON.stringify(result, null, 2)
   } catch (e: any) {
     return `Error: ${e.message ?? e}`
   }
