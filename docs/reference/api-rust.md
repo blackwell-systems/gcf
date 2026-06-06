@@ -101,6 +101,17 @@ Arrays of uniform objects get tabular encoding (header + positional rows). Primi
 
 Create a new empty session tracker. Thread-safe.
 
+### `StreamEncoder::new(w: impl Write, tool, opts) -> StreamEncoder`
+
+Create a streaming encoder that writes GCF incrementally. Zero buffering, thread-safe via Mutex.
+
+```rust
+let enc = StreamEncoder::new(writer, "context_for_task", StreamOptions { token_budget: 5000, ..Default::default() });
+enc.write_symbol(&sym);  // emitted immediately
+enc.write_edge(&edge);   // emitted immediately
+enc.close();             // emits ## _summary trailer
+```
+
 ## Types
 
 ### `Payload`

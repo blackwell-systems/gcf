@@ -82,6 +82,17 @@ Arrays of uniform objects get tabular encoding (header + positional rows). Primi
 
 Create a new empty session tracker. Thread-safe.
 
+### `NewStreamEncoder(w io.Writer, tool string, opts StreamOptions) *StreamEncoder`
+
+Create a streaming encoder that writes GCF incrementally. Zero buffering, O(1) memory per row.
+
+```go
+enc := gcf.NewStreamEncoder(w, "context_for_task", gcf.StreamOptions{TokenBudget: 5000})
+enc.WriteSymbol(sym)  // emitted immediately
+enc.WriteEdge(edge)   // emitted immediately
+enc.Close()           // emits ## _summary trailer
+```
+
 ## Types
 
 ### `Payload`

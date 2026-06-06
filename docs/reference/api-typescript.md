@@ -85,6 +85,19 @@ const output = encodeGeneric({
 
 Arrays of uniform objects get tabular encoding (header + positional rows). Primitive arrays are inlined (`tags[3]: a,b,c`). Nested objects use `## key` section headers. Primitives use `key=value`.
 
+### `new StreamEncoder(writer, tool, opts?)`
+
+Create a streaming encoder that writes GCF incrementally. Zero buffering.
+
+```typescript
+const enc = new StreamEncoder(writer, 'context_for_task', { tokenBudget: 5000 });
+enc.writeSymbol(sym);  // emitted immediately
+enc.writeEdge(edge);   // emitted immediately
+enc.close();           // emits ## _summary trailer
+```
+
+The `writer` is any object with a `write(s: string)` method.
+
 ## Types
 
 ### `Payload`

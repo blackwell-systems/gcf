@@ -85,6 +85,17 @@ output = encode_generic({
 
 Arrays of uniform dicts get tabular encoding (header + positional rows). Primitive arrays are inlined (`tags[3]: a,b,c`). Nested dicts use `## key` section headers. Primitives use `key=value`.
 
+### `StreamEncoder(writer, tool, **opts)`
+
+Create a streaming encoder that writes GCF incrementally. Zero buffering, thread-safe.
+
+```python
+enc = StreamEncoder(sys.stdout, "context_for_task", token_budget=5000)
+enc.write_symbol(sym)  # emitted immediately
+enc.write_edge(edge)   # emitted immediately
+enc.close()            # emits ## _summary trailer
+```
+
 ## Types
 
 All types are `@dataclass` instances from `gcf.types`.

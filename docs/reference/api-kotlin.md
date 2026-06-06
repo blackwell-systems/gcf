@@ -89,6 +89,17 @@ val output = encodeGeneric(mapOf(
 ))
 ```
 
+### `StreamEncoder(writer, tool, options?)`
+
+Create a streaming encoder that writes GCF incrementally. Zero buffering, thread-safe via `@Synchronized`.
+
+```kotlin
+val enc = StreamEncoder(writer, "context_for_task", StreamOptions(tokenBudget = 5000))
+enc.writeSymbol(sym)  // emitted immediately
+enc.writeEdge(edge)   // emitted immediately
+enc.close()           // emits ## _summary trailer
+```
+
 ## Types
 
 ### `Payload`

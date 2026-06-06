@@ -86,6 +86,17 @@ let output = encodeGeneric([
 // Sales|2|Bob|72000
 ```
 
+### `StreamEncoder(writer:tool:options:)`
+
+Create a streaming encoder that writes GCF incrementally. Zero buffering, thread-safe via NSLock.
+
+```swift
+let enc = StreamEncoder(writer: myWriter, tool: "context_for_task", options: StreamOptions(tokenBudget: 5000))
+enc.writeSymbol(sym)  // emitted immediately
+enc.writeEdge(edge)   // emitted immediately
+enc.close()           // emits ## _summary trailer
+```
+
 ## Types
 
 ### `Payload`
