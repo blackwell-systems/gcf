@@ -21,8 +21,8 @@ features:
     details: '<span class="json">JSON</span> uses 53,341 tokens at 500 symbols.<br><span class="gcf">GCF</span> uses 11,090. Positional fields, local IDs, and hierarchical grouping eliminate per-record overhead.'
   - title: 63% fewer output tokens
     details: 'LLMs produce valid <span class="gcf">GCF</span> with a 3-line primer. 33% smaller output than <span class="toon">TOON</span>. 5/5 generation validity on every frontier model across 3 providers. Zero training.'
-  - title: Optimized for the reader that matters
-    details: 'At 500 symbols across 10 models, <span class="json">JSON</span> averages 53.6% accuracy and <span class="toon">TOON</span> averages 68.5%. <span class="gcf">GCF</span> averages 90.5% (four models hit 100%). 23 runs, 3 providers, zero training. <span class="toon">TOON</span> fails on distance grouping. <span class="json">JSON</span> drowns in structural noise.'
+  - title: The format LLMs understand without training
+    details: '90.5% comprehension, 5/5 generation validity across every frontier model from Anthropic, OpenAI, and Google. No model has seen GCF in training. <span class="toon">TOON</span>&apos;s own decoder rejects LLM-generated output on 7 of 9 models. 23 comprehension runs, 28 generation runs, zero losses.'
   - title: Gets cheaper every call
     details: 'Session deduplication (92.7% savings by 5th call) and delta encoding (81.2% on re-queries). No other format has these. They compound.'
   - title: Beats TOON on TOON's benchmark
