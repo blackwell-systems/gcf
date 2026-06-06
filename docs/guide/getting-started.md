@@ -1,6 +1,6 @@
 # Getting Started
 
-GCF (Graph Compact Format) is a wire format for encoding structured data that LLMs read and produce. It achieves 79% fewer tokens than JSON on input and 75% fewer on output, with 100% comprehension accuracy at scale.
+GCF is a drop-in replacement for JSON in AI pipelines. Encode any structured data as GCF before sending it to an LLM: 79% fewer tokens on input, 75% fewer on output, 100% comprehension accuracy at scale. The model reads it natively. `decode()` converts back to JSON when a human needs to see it.
 
 ## When to use GCF
 
