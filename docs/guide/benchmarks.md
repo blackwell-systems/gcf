@@ -9,7 +9,13 @@ No model has ever been trained on GCF. Every model reads it better and writes it
 | **Input tokens** (500 symbols) | **11,090** | 16,378 | 53,341 |
 | **Output tokens** (100 symbols) | **5,976** | 8,937 | 16,121 |
 
-Three providers (Anthropic, OpenAI, Google). Zero format instructions. Zero training. All results [reproducible](https://github.com/blackwell-systems/gcf/tree/main/eval/results).
+Three benchmark suites, three providers (Anthropic, OpenAI, Google), zero training:
+
+1. **[Comprehension eval](#comprehension-can-llms-read-it)**: Can models extract information from a format? 500 symbols, 13 questions, 17 runs across 6 models.
+2. **[Generation eval](#generation-can-llms-write-it)**: Can models produce valid output in a format? 3-line primer, 19 runs across 7 models.
+3. **[Token efficiency](#token-efficiency-toons-own-benchmark)**: How many tokens does each format cost? Run on [TOON's own benchmark](https://github.com/toon-format/toon/tree/main/benchmarks) (their datasets, their tokenizer, their methodology, with GCF added as one additional formatter).
+
+All results [reproducible](https://github.com/blackwell-systems/gcf/tree/main/eval/results).
 
 ![Comprehension and Generation](/charts/hero.png)
 
