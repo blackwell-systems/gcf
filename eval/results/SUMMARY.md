@@ -166,7 +166,7 @@ artifacts/
 | Claude (Opus/default) | YES | YES | YES | YES | YES | 5/5 | 1 |
 | GPT-5.5 | YES | YES | YES | YES | 4-5/5 | 4-5/5 | 2 |
 | GPT-5.4 | YES | YES | YES | YES | YES | 5/5 | 1 |
-| GPT-5.4-mini | YES | YES | YES | YES | YES | 5/5 | 1 |
+| GPT-5.4-mini | YES | YES | YES | YES | YES | 5/5 | 2 (zero variance) |
 | Gemini 3.1 Flash Lite | YES | YES | YES | YES | YES | 5/5 | 2 (zero variance) |
 | Gemini 2.5 Flash | YES | YES | 3-4/5 | 3-4/5 | 3-4/5 | 3-4/5 | 2 (high variance, free tier) |
 
@@ -181,9 +181,9 @@ Same data, same prompt structure per format. GCF and JSON use natural-language d
 | Claude (Opus/default) | 5/5 | 5/5* | - | 1 |
 | GPT-5.5 | 4-5/5 | 1-2/5 | 5/5 | 2 |
 | GPT-5.4 | 5/5 | 0/5 | 5/5 | 1 |
-| GPT-5.4-mini | 5/5 | 0/5 | 5/5 | 1 |
-| Gemini 3.1 Flash Lite | 5/5 | 0/5 | 4/5 | 2 |
-| Gemini 2.5 Flash | 3-4/5 | 0-4/5 | 0-2/5 | 2 |
+| GPT-5.4-mini | 5/5 | 0/5 | 5/5 | 2 (zero variance) |
+| Gemini 3.1 Flash Lite | 5/5 | 0/5 | 4/5 | 2 (zero variance) |
+| Gemini 2.5 Flash | 3-4/5 | 0-4/5 | 0-2/5 | 2 (high variance, free tier) |
 
 \* Claude's TOON run used a different prompt that explicitly provided integer distances.
 
@@ -236,6 +236,7 @@ generation/
 ├── generation-gpt54-json-run1-2026-06-06.log         # GPT-5.4 JSON: 5/5 valid
 ├── generation-gpt54-mini-run1-2026-06-06.log         # GPT-5.4-mini: GCF 5/5, TOON 0/5, JSON 5/5
 ├── generation-gpt54-mini-toon-integers-run1-2026-06-06.log  # GPT-5.4-mini TOON hand-holding: 5/5
+├── generation-gpt54-mini-run2-2026-06-06.log         # GPT-5.4-mini run 2: GCF 5/5, TOON 0/5, JSON 5/5
 ├── generation-gpt54-mini-toon-integers-run2-2026-06-06.log  # GPT-5.4-mini TOON hand-holding run 2: 5/5
 ├── generation-gemini25flash-run1-2026-06-06.log      # Gemini 2.5 Flash run 1: GCF 4/5, TOON 4/5, JSON 2/5
 ├── generation-gemini25flash-run2-2026-06-06.log      # Gemini 2.5 Flash run 2: GCF 3/5, TOON 0/5, JSON 0/5
