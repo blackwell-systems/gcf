@@ -562,7 +562,8 @@ onMounted(() => {
 
         <!-- Comprehension note -->
         <div class="comprehension-note">
-          <strong>GCF is a wire format optimized for agentic comprehension and token compression.</strong> Human readability is a last-mile concern: call <code>decode()</code> when a human needs to see it. Across 10 models and 3 providers, GCF averages <strong>90.5% accuracy</strong> where JSON averages 53.6%. The "readable" format is the one that breaks.
+          <strong>GCF is a wire format optimized for agentic comprehension and token compression.</strong> Human readability is a last-mile concern: call <code>decode()</code> when a human needs to see it. Across 10 models and 3 providers, GCF averages <strong>90.5% accuracy</strong> where JSON averages 53.6%.
+          <div class="comprehension-punchline">The "readable" format is the one that breaks.</div>
           <a href="/guide/llm-integration">See the eval &rarr;</a>
         </div>
 
@@ -1000,6 +1001,12 @@ onMounted(() => {
   padding: 1px 4px;
   border-radius: 3px;
   font-size: 0.9em;
+}
+.comprehension-punchline {
+  margin-top: 10px;
+  font-size: 1.1em;
+  font-weight: 800;
+  color: var(--vp-c-brand-1);
 }
 
 .breakdown {
