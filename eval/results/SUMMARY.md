@@ -49,8 +49,9 @@
 | Gemini 2.5 Flash | 3 | **90.0%** | 55.6% | 60.0% | ✓ |
 | Gemini 3.5 Flash | 1 | **100%** | 61.5% | 46.2% | ✓ |
 | Gemini 2.5 Pro | 1 | **100%** | 76.9% | 58.3% | ✓ |
+| Gemini 3.1 Pro | 1 | **100%** | 76.9% | 46.2% | ✓ |
 
-**22 runs, 9 models, 3 providers. GCF wins 21, ties 1, loses 0.**
+**23 runs, 10 models, 3 providers. GCF wins 22, ties 1, loses 0.**
 
 ### Averages by model
 
@@ -65,6 +66,9 @@
 | Gemini 2.5 Flash | 3 | **80.6%** | 54.6% | 57.0% | +26.0 vs TOON |
 | Gemini 3.5 Flash | 1 | **100%** | 61.5% | 46.2% | +38.5 vs TOON |
 | Gemini 2.5 Pro | 1 | **100%** | 76.9% | 58.3% | +23.1 vs TOON |
+| Gemini 3.1 Pro | 1 | **100%** | 76.9% | 46.2% | +23.1 vs TOON |
+| Gemini 3.5 Flash | 1 | **100%** | 61.5% | 46.2% | +38.5 vs TOON |
+| Gemini 2.5 Pro | 1 | **100%** | 76.9% | 58.3% | +23.1 vs TOON |
 
 ### Methodology notes
 
@@ -74,7 +78,7 @@
 
 ### Key findings
 
-1. **GCF wins on every model.** The ordering GCF > TOON > JSON holds across Claude Opus, Claude Sonnet, Claude Haiku, GPT-5.5, GPT-5.4, GPT-5.4-mini, and Gemini 2.5 Flash. 22 runs across 3 providers, 0 losses. Three models achieve 100%: Sonnet (Anthropic), Gemini 2.5 Pro (Google), Gemini 3.5 Flash (Google). Sonnet achieves 100% on every run. Opus and Haiku average 96.2%.
+1. **GCF wins on every model.** The ordering GCF > TOON > JSON holds across Claude Opus, Claude Sonnet, Claude Haiku, GPT-5.5, GPT-5.4, GPT-5.4-mini, and Gemini 2.5 Flash. 23 runs across 3 providers, 0 losses. Four models achieve 100%: Sonnet (Anthropic), Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash (all Google). Sonnet achieves 100% on every run. Opus and Haiku average 96.2%.
 2. **JSON breaks at scale.** GPT-5.5 returned empty strings on counting questions for JSON (unable to even produce an answer at 500 records). GPT-5.4 miscounted symbols (328 vs 500). Every model struggles with JSON's field-name repetition at scale.
 3. **TOON fails on distance grouping.** Without `## targets`/`## related`/`## extended` section headers, models must scan all 500 rows and filter by a column value. This fails consistently across models.
 4. **GCF is stable.** GPT-5.4 scored 75.0%, 76.9%, 76.9% across 3 runs. Low variance on the winning format.
@@ -199,11 +203,12 @@ Same data, same prompt structure per format. GCF and JSON use natural-language d
 | GPT-5.4 | 5/5 | 0/5 | 5/5 | 1 |
 | GPT-5.4-mini | 5/5 | 0/5 | 5/5 | 2 (zero variance) |
 | Gemini 2.5 Pro | 5/5 | 1/5 | 5/5 | 2 (zero variance) |
+| Gemini 3.1 Pro | 5/5 | 0/5 | 5/5 | 1 |
 | Gemini 3.5 Flash | 3/5 | 1/5 | 3/5 | 1 |
 | Gemini 3.1 Flash Lite | 4-5/5 | 0/5 | 4-5/5 | 3 |
 | Gemini 2.5 Flash | 2-3/5 | 0-4/5 | 0-3/5 | 3 (output truncation) |
 
-**GCF achieves 5/5 on every frontier model (Opus, Sonnet, GPT-5.5, Gemini 2.5 Pro).** TOON fails on every model when given natural-language descriptions. JSON matches GCF on Anthropic/OpenAI but truncates on some Gemini models.
+**GCF achieves 5/5 on every frontier model (Opus, Sonnet, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro).** TOON fails on every model when given natural-language descriptions. JSON matches GCF on Anthropic/OpenAI but truncates on some Gemini Flash models.
 
 TOON's flat tabular design requires column values to be pre-encoded as integers. When a model is told "this symbol is a target" (natural language), it writes `target` in the distance column. TOON's decoder rejects this because it expects `0`. The model has to know that "target" means 0, "related" means 1, "extended" means 2, and perform that mapping before writing. Every model tested (GPT-5.4, GPT-5.4-mini) fails to do this mapping unprompted.
 
