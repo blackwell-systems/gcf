@@ -6,11 +6,11 @@ GCF is a wire format for [MCP (Model Context Protocol)](https://modelcontextprot
 
 MCP tools return results that the LLM must understand within its context window. The context window is finite. Every token spent on structural overhead (JSON field names, delimiters, repeated identifiers) is a token that can't be spent on actual content.
 
-For a code intelligence tool returning 50 symbols with edges:
-- JSON: ~12,000 tokens
-- GCF: ~1,900 tokens
+For an MCP tool returning 500 records (search results, database rows, API responses):
+- JSON: ~53,000 tokens
+- GCF: ~11,000 tokens
 
-That's 10,000 tokens freed for additional context, longer conversations, or more tool calls.
+That's 42,000 tokens freed for additional context, longer conversations, or more tool calls. And the LLM comprehends GCF more accurately (100% vs 76.9% on JSON at this scale).
 
 ## Basic integration
 
