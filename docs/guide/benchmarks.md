@@ -13,7 +13,7 @@ Three benchmark suites, three providers (Anthropic, OpenAI, Google), zero traini
 
 1. **[Comprehension eval](#comprehension-can-llms-read-it)**: Can models extract information from a format? 500 symbols, 13 questions, 17 runs across 6 models.
 2. **[Generation eval](#generation-can-llms-write-it)**: Can models produce valid output in a format? 3-line primer, 19 runs across 7 models.
-3. **[Token efficiency](#token-efficiency-toons-own-benchmark)**: How many tokens does each format cost? Run on [TOON's own benchmark](https://github.com/toon-format/toon/tree/main/benchmarks) (their datasets, their tokenizer, their methodology, with GCF added as one additional formatter).
+3. **[TOON's benchmark: Token efficiency](#toons-benchmark-token-efficiency)**: How many tokens does each format cost? This is [TOON's own benchmark](https://github.com/toon-format/toon/tree/main/benchmarks), forked unmodified, with GCF added as one additional formatter.
 
 All results [reproducible](https://github.com/blackwell-systems/gcf/tree/main/eval/results).
 
@@ -78,9 +78,9 @@ GCF output is 63% smaller than JSON and 33% smaller than TOON at 100 symbols. Ev
 
 ---
 
-## Token Efficiency: TOON's Own Benchmark
+## TOON's Benchmark: Token Efficiency
 
-We inserted GCF into [TOON's token efficiency benchmark](https://github.com/toon-format/toon/tree/main/benchmarks). Their datasets, their tokenizer (gpt-tokenizer, o200k_base), their methodology. The only change: one additional formatter.
+This is not our benchmark. This is [TOON's benchmark](https://github.com/toon-format/toon/tree/main/benchmarks), forked unmodified. Their datasets, their tokenizer (gpt-tokenizer, o200k_base), their methodology. We added one line: a GCF formatter. Everything else is TOON's code measuring TOON's chosen datasets.
 
 | Dataset | Structure | GCF | TOON | JSON |
 |---------|-----------|-----|------|------|
