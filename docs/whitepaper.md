@@ -20,6 +20,8 @@ We evaluated GCF across 1,300+ LLM evaluations spanning 10 models and 3 provider
 
 Session deduplication (92.7% savings by the 5th call) and delta encoding (81.2% on re-queries) compound savings across multi-turn interactions. A streaming encoding extension enables zero-buffering encode with O(1) memory per row. The format is implemented in six languages, published to seven package registries, and deployed in production MCP servers. Specification: gcformat.com.
 
+![Comprehension and Generation across 10 models and 3 providers](public/charts/hero.png)
+
 ---
 
 ## 1. The Problem: JSON Is the Wrong Format for LLM Interactions
@@ -392,6 +394,10 @@ Savings increase with payload size because the ratio of edge references to node 
 
 **GCF wins 22 of 23 runs (1 tie, 0 losses).** Four models achieve 100%.
 
+![Comprehension Accuracy by Model](public/charts/accuracy-by-model.png)
+
+![Token Cost vs Comprehension Accuracy](public/charts/tokens-vs-accuracy.png)
+
 #### Failure taxonomy
 
 GCF, TOON, and JSON produce qualitatively different failure modes:
@@ -403,6 +409,16 @@ GCF, TOON, and JSON produce qualitatively different failure modes:
 **JSON fails on structural overwhelm** (median error: 56). Empty string responses where the model produces nothing (33), massive undercounts (9), distance filter failures (29), and field confusion (3). At 53,000 tokens of repeated field names, the format itself prevents comprehension.
 
 On two separate runs, Claude Opus responded to a JSON counting question by manually enumerating symbols one by one (143 lines on run 1, 119 on run 2), burning output tokens on a chain-of-thought enumeration and still getting the wrong answer. GCF answers the same question from a 3-character header: `[167]`.
+
+![Error Magnitude by Format](public/charts/error-magnitude.png)
+
+![Failure Types by Model Tier](public/charts/failure-types.png)
+
+![Failure Type Distribution](public/charts/failure-types-pie.png)
+
+![Comprehension Score Variance](public/charts/comprehension-variance.png)
+
+![GCF Advantage Grows on Weaker Models](public/charts/advantage-by-tier.png)
 
 #### Comprehension methodology
 
@@ -578,6 +594,8 @@ GCF is bidirectional: LLMs can produce it, not just consume it. 28 generation ru
 
 **GCF 5/5 on every frontier model. TOON fails on 7 of 9 models.**
 
+![Generation Validity by Model](public/charts/generation-validity.png)
+
 #### Why TOON fails generation
 
 TOON's flat tabular design encodes semantic categories as column values. When told "this symbol is a target," the model writes `target` in the distance column. TOON's decoder expects `0`. The model would need to know, unprompted, that "target" maps to 0, "related" maps to 1, "extended" maps to 2. No model does this. The error is always the same: `toon: cannot assign string to int`.
@@ -585,6 +603,10 @@ TOON's flat tabular design encodes semantic categories as column values. When to
 This is a structural design flaw in flat tabular formats. Any time a column encodes a semantic category as an integer, the format is one prompt change away from producing invalid data. TOON is fundamentally fragile for LLM generation.
 
 GCF expresses categories through section placement (`## targets`, `## related`). The model writes the symbol in the section matching the label. No integer mapping required. The format aligns with how LLMs naturally express grouped data.
+
+![The Distance Label Problem](public/charts/distance-label-problem.png)
+
+![TOON Generation Heatmap](public/charts/toon-heatmap.png)
 
 When TOON is given pre-encoded integers (hand-holding the model through the mapping), performance improves on some models but remains inconsistent. Even in the best case, GCF output is 28% smaller.
 
@@ -595,6 +617,8 @@ When TOON is given pre-encoded integers (hand-holding the model through the mapp
 | **GCF** | **5,976 B** | **63% fewer** |
 | TOON | 8,937 B | 45% fewer |
 | JSON | 16,121 B | baseline |
+
+![Output Size at Scale](public/charts/output-cost-at-scale.png)
 
 **Implications.** GCF generation enables: (1) agent-to-agent communication at 63% fewer tokens per handoff, (2) structured output mode as an alternative to JSON mode, and (3) system prompt encoding where context packs are encoded as GCF to maximize context window utilization.
 
