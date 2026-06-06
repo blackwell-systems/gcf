@@ -28,3 +28,8 @@
 .VPDoc.has-aside .content-container {
   max-width: 100% !important;
 }
+
+.medium-zoom-overlay,
+.medium-zoom-image--opened {
+  z-index: 999 !important;
+}
