@@ -41,8 +41,9 @@
 | Claude Haiku 4.5 | 1 | **92.3%** | 69.2% | 61.5% | ✓ |
 | Claude Haiku 4.5 | 2 | **100%** | 69.2% | 53.8% | ✓ |
 | GPT-5.4 | 4 | **76.9%** | 58.3% | 50.0% | ✓ |
+| GPT-5.5 | 5 | **83.3%** | 66.7% | 36.4% | ✓ |
 
-**14 runs, 6 models, 2 providers. GCF wins 13, ties 1, loses 0.**
+**15 runs, 6 models, 2 providers. GCF wins 14, ties 1, loses 0.**
 
 ### Averages by model
 
@@ -50,8 +51,8 @@
 |-------|------|---------|----------|----------|------------|
 | Claude Opus 4.6 | 1 | **100%** | 92.3% | 76.9% | +7.7 vs TOON |
 | Claude Sonnet 4.6 | 1 | **100%** | 76.9% | 53.8% | +23.1 vs TOON |
-| GPT-5.5 | 4 | **84.3%** | 67.9% | 48.1% | +16.4 vs TOON |
-| GPT-5.4 | 3 | **76.3%** | 55.3% | 42.1% | +21.0 vs TOON |
+| GPT-5.5 | 5 | **84.1%** | 67.7% | 45.8% | +16.4 vs TOON |
+| GPT-5.4 | 4 | **76.4%** | 56.0% | 44.1% | +20.4 vs TOON |
 | Claude Haiku 4.5 | 2 | **96.2%** | 69.2% | 57.7% | +27.0 vs TOON |
 | GPT-5.4-mini | 2 | **71.8%** | 64.1% | 54.2% | +7.7 vs TOON |
 
@@ -140,6 +141,7 @@ comprehension/
 ├── comprehension-13q-gpt55-run1-2026-06-06.log         # GPT-5.5 run 1: 91.7%
 ├── comprehension-13q-gpt55-run2-2026-06-06.log         # GPT-5.5 run 2: 76.9%
 ├── comprehension-13q-gpt55-run3-2026-06-06.log         # GPT-5.5 run 3: 76.9%
+├── comprehension-13q-gpt55-run5-2026-06-06.log         # GPT-5.5 run 5: 83.3%
 ├── comprehension-13q-gpt54-run1-2026-06-06.log         # GPT-5.4 run 1: 75.0%
 ├── comprehension-13q-gpt54-run2-2026-06-06.log         # GPT-5.4 run 2: 76.9%
 ├── comprehension-13q-gpt54-run3-2026-06-06.log         # GPT-5.4 run 3: 76.9%
