@@ -1,6 +1,6 @@
 # Getting Started
 
-GCF (Graph Compact Format) is a wire format for encoding structured data that LLMs read and produce. It achieves 84% fewer tokens than JSON on input and 75% fewer on output, with 100% comprehension accuracy at scale.
+GCF (Graph Compact Format) is a wire format for encoding structured data that LLMs read and produce. It achieves 79% fewer tokens than JSON on input and 75% fewer on output, with 100% comprehension accuracy at scale.
 
 ## When to use GCF
 
@@ -25,8 +25,8 @@ GCF is most effective when:
 ## When NOT to use GCF
 
 - Single scalar values (just return the value)
-- Deeply nested configuration with no repeated structures (YAML/JSON is fine)
 - Systems that require JSON schema validation (GCF has no schema system yet)
+- Consumers that can't parse non-JSON (use the [MCP proxy](/guide/proxy) to bridge)
 
 ## "But I need human-readable output"
 
