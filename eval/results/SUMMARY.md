@@ -156,14 +156,15 @@ comprehension/
 
 ### Multi-model results (GCF validity)
 
-| Model | 5 sym | 10 sym | 20 sym | 50 sym | 100 sym | Score |
-|-------|-------|--------|--------|--------|---------|-------|
-| Claude (Opus/default) | YES | YES | YES | YES | YES | 5/5 |
-| GPT-5.4 | YES | YES | YES | YES | YES | 5/5 |
-| GPT-5.4-mini | YES | YES | YES | YES | YES | 5/5 |
-| Gemini 2.5 Flash | YES | YES | YES | NO | YES | 4/5 |
+| Model | 5 sym | 10 sym | 20 sym | 50 sym | 100 sym | Score | Runs |
+|-------|-------|--------|--------|--------|---------|-------|------|
+| Claude (Opus/default) | YES | YES | YES | YES | YES | 5/5 | 1 |
+| GPT-5.4 | YES | YES | YES | YES | YES | 5/5 | 1 |
+| GPT-5.4-mini | YES | YES | YES | YES | YES | 5/5 | 1 |
+| Gemini 3.1 Flash Lite | YES | YES | YES | YES | YES | 5/5 | 2 (zero variance) |
+| Gemini 2.5 Flash | YES | YES | 3-4/5 | 3-4/5 | 3-4/5 | 3-4/5 | 2 (high variance, free tier) |
 
-All models produce valid GCF with a 3-line primer. Zero prior training. Gemini failed at 50 symbols (truncated output, free tier limit).
+GCF achieves 5/5 on every model except rate-limited Gemini 2.5 Flash free tier. Zero prior training.
 
 ### Three-way generation comparison (GPT-5.4)
 
@@ -177,7 +178,7 @@ Same data, same model, same prompt structure. Only the target format differs.
 | 50 | 3,031 | YES | 4,524 | NO | 8,089 | YES |
 | 100 | 5,976 | YES | 8,937 | NO | 16,121 | YES |
 
-**GPT-5.4/mini: GCF 5/5, JSON 5/5, TOON 0/5. Gemini 2.5 Flash: GCF 4/5, TOON 4/5, JSON 2/5.**
+**GPT-5.4/mini: GCF 5/5, JSON 5/5, TOON 0/5. Gemini 3.1 Flash Lite: GCF 5/5, TOON 0/5, JSON 4/5.**
 
 TOON's flat tabular design requires column values to be pre-encoded as integers. When a model is told "this symbol is a target" (natural language), it writes `target` in the distance column. TOON's decoder rejects this because it expects `0`. The model has to know that "target" means 0, "related" means 1, "extended" means 2, and perform that mapping before writing. Every model tested (GPT-5.4, GPT-5.4-mini) fails to do this mapping unprompted.
 
@@ -206,15 +207,16 @@ GCF works with natural-language descriptions. TOON requires the caller to pre-en
 
 Neither format works reliably without a primer at small sizes. With a primer, GCF achieves 100%. TOON achieves 0% on GPT-5.4 (distance column issue).
 
-### Gemini 2.5 Flash (API)
+### Gemini (API)
 
-| Format | Valid | Notes |
-|--------|-------|-------|
-| GCF | 4/5 | Failed at 50 sym (truncated output, free tier) |
-| TOON | 4/5 | Failed at 5 sym (distance label on smallest size only) |
-| JSON | 2/5 | Truncates at 20+ symbols (too verbose to complete) |
+| Model | GCF | TOON (natural) | JSON | Runs |
+|-------|-----|----------------|------|------|
+| Gemini 3.1 Flash Lite | 5/5 | 0/5 | 4/5 | 2 (zero variance) |
+| Gemini 2.5 Flash | 3-4/5 | 0-4/5 | 0-2/5 | 2 (high variance, free tier truncation) |
 
-JSON is too verbose for Gemini to generate at scale. GCF and TOON are both compact enough to fit in output limits. Gemini also confirmed via manual chat test (complex mixed payload with generic profile).
+Gemini 3.1 Flash Lite is deterministic: GCF perfect, TOON fails on distance labels, JSON truncates at 100 symbols. Gemini 2.5 Flash free tier is unreliable (rate limits cause truncation across all formats).
+
+JSON is too verbose for Gemini to generate at scale (truncates at 20-100 symbols). GCF is compact enough to always complete within output limits.
 
 ### Files
 
@@ -226,7 +228,10 @@ generation/
 ├── generation-gpt54-mini-run1-2026-06-06.log         # GPT-5.4-mini: GCF 5/5, TOON 0/5, JSON 5/5
 ├── generation-gpt54-mini-toon-integers-run1-2026-06-06.log  # GPT-5.4-mini TOON hand-holding: 5/5
 ├── generation-gpt54-mini-toon-integers-run2-2026-06-06.log  # GPT-5.4-mini TOON hand-holding run 2: 5/5
-├── generation-gemini25flash-run1-2026-06-06.log      # Gemini 2.5 Flash: GCF 4/5, TOON 4/5, JSON 2/5
+├── generation-gemini25flash-run1-2026-06-06.log      # Gemini 2.5 Flash run 1: GCF 4/5, TOON 4/5, JSON 2/5
+├── generation-gemini25flash-run2-2026-06-06.log      # Gemini 2.5 Flash run 2: GCF 3/5, TOON 0/5, JSON 0/5
+├── generation-gemini31flashlite-run1-2026-06-06.log  # Gemini 3.1 Flash Lite run 1: GCF 5/5, TOON 0/5, JSON 4/5
+├── generation-gemini31flashlite-run2-2026-06-06.log  # Gemini 3.1 Flash Lite run 2: GCF 5/5, TOON 0/5, JSON 4/5
 ├── generation-gcf-with-example-2026-06-04.log        # Claude GCF, with primer: 5/5 valid
 ├── generation-gcf-no-example-2026-06-04.log          # Claude GCF, cold-start: 3/5 valid
 ├── generation-toon-with-example-2026-06-04.log       # Claude TOON, with primer: 5/5 valid
