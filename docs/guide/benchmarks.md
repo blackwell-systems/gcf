@@ -23,7 +23,27 @@ All results [reproducible](https://github.com/blackwell-systems/gcf/tree/main/ev
 
 ## Comprehension: Can LLMs Read It?
 
-500 symbols, 200 edges, 13 structured extraction questions, zero format instructions. Each run generates a fresh random payload. When an agent receives data in JSON at this scale, it gets the wrong answer 45% of the time. With TOON, 29% of the time. With GCF, 12%.
+500 symbols, 200 edges, zero format instructions. Each run generates a fresh random payload. The model receives the payload in each format and answers 13 extraction questions:
+
+| # | Category | Question |
+|---|----------|----------|
+| 1 | Counting | How many symbols? |
+| 2 | Counting | How many edges? |
+| 3 | Counting | How many targets (distance 0)? |
+| 4 | Counting | How many related (distance 1)? |
+| 5 | Counting | How many extended (distance 2)? |
+| 6 | Counting | How many functions? |
+| 7 | Counting | How many 'calls' edges? |
+| 8 | Extraction | Highest-scored symbol name? |
+| 9 | Extraction | Kind of highest-scored symbol? |
+| 10 | Extraction | Kind of last symbol? |
+| 11 | Extraction | All unique edge types? |
+| 12 | Structure | Does it have an edges section? |
+| 13 | Structure | What is the tool name? |
+
+All answers are deterministic (computed from the payload). No LLM judge.
+
+When an agent receives data in JSON at this scale, it gets the wrong answer 45% of the time. With TOON, 29% of the time. With GCF, 12%.
 
 ![Comprehension Accuracy by Model](/charts/accuracy-by-model.png)
 
@@ -85,7 +105,9 @@ See the [full failure taxonomy](/guide/eval-results#failure-taxonomy) for the co
 
 ## Generation: Can LLMs Write It?
 
-Same data described in natural language. 3-line format primer. Output validated through real decoders: the official [toon-go](https://github.com/toon-format/toon-go) library for TOON, `gcf.Decode()` for GCF, `json.Unmarshal()` for JSON.
+The model is given a natural-language description of symbols and edges (e.g., "ProductManager, class, score 1.0, target") and a 3-line format primer. It must produce valid, decoder-parseable output. Tested at 5, 10, 20, 50, and 100 symbols.
+
+Output validated through real decoders: the official [toon-go](https://github.com/toon-format/toon-go) library for TOON, `gcf.Decode()` for GCF, `json.Unmarshal()` for JSON. Same data, same descriptions, same prompt structure across all three formats.
 
 ![Generation Validity by Model](/charts/generation-validity.png)
 
