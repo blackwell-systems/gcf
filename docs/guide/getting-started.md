@@ -1,6 +1,6 @@
 # Getting Started
 
-GCF is a drop-in replacement for JSON in AI pipelines. Encode any structured data as GCF before sending it to an LLM: 79% fewer tokens on input, 75% fewer on output, 100% comprehension accuracy at scale. The model reads it natively. `decode()` converts back to JSON when a human needs to see it.
+GCF is a drop-in replacement for JSON in AI pipelines. Encode any structured data as GCF before sending it to an LLM: 79% fewer tokens on input, 63% fewer on output, 90.5% average comprehension accuracy across 10 models and 3 providers (four models hit 100%). No model has ever been trained on GCF. `decode()` converts back to JSON when a human needs to see it.
 
 ## When to use GCF
 
@@ -20,7 +20,7 @@ GCF is most effective when:
 - Records have **relationships** between them (edges, references)
 - You're operating under a **token budget** (context windows are finite)
 - You make **multiple calls** in a session (session dedup compounds savings)
-- You want **cheaper output** (75% fewer tokens than JSON, 52% fewer than TOON)
+- You want **cheaper output** (63% fewer tokens than JSON, 33% fewer than TOON)
 
 ## When NOT to use GCF
 
@@ -54,12 +54,12 @@ cargo add gcf
 
 ```bash [Swift]
 # Package.swift
-.package(url: "https://github.com/blackwell-systems/gcf-swift", from: "0.4.0")
+.package(url: "https://github.com/blackwell-systems/gcf-swift", from: "0.5.0")
 ```
 
 ```bash [Kotlin]
 # build.gradle.kts
-implementation("com.github.blackwell-systems:gcf-kotlin:0.4.0")
+implementation("com.github.blackwell-systems:gcf-kotlin:v0.5.0")
 ```
 
 :::
