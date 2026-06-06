@@ -143,5 +143,6 @@ Fork: [blackwell-systems/toon@gcf-comparison](https://github.com/blackwell-syste
 | Flat-data efficiency | best | 3% larger | 149% larger |
 | Session dedup (5th call) | 92.7% | unavailable | unavailable |
 | Delta encoding | 81.2% | unavailable | unavailable |
+| Streaming encode | yes (zero-buffering, O(1) memory) | output-side only (full value in memory) | n/a |
 
-GCF wins on input efficiency, output efficiency, and offers session/delta features no competitor has. See the [generation eval](https://github.com/blackwell-systems/gcf/tree/main/eval) for output token methodology.
+GCF wins on input efficiency, output efficiency, and offers session/delta/streaming features no competitor has. See the [generation eval](https://github.com/blackwell-systems/gcf/tree/main/eval) for output token methodology.
