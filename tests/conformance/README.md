@@ -141,8 +141,9 @@ cd gcf-python && pytest tests/test_conformance.py
 | session/ | 4 | Graph |
 | delta/ | 5 | Graph |
 | generic/ | 18 | Tabular |
+| streaming/ | 5 | Both (streaming mode) |
 | errors/ | 10 | Both |
-| **Total** | **56** | |
+| **Total** | **61** | |
 
 ## Contributing fixtures
 

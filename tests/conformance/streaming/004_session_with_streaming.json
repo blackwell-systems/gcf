@@ -1,0 +1,16 @@
+{
+  "name": "streaming_session",
+  "description": "Streaming with session=true and bare references",
+  "input": "GCF tool=test budget=5000 session=true\n## targets\n@0  # previously transmitted\n@1 fn pkg.New 0.85 lsp\n## edges [?]\n@0<@1 calls\n## _summary symbols=2 edges=1 sections=targets:2,edges:1\n",
+  "expected": {
+    "tool": "test",
+    "tokenBudget": 5000,
+    "tokensUsed": 0,
+    "packRoot": "",
+    "symbols": [
+      {"qualifiedName": "pkg.New", "kind": "function", "score": 0.85, "provenance": "lsp", "distance": 0}
+    ],
+    "edges": []
+  },
+  "note": "Bare refs (@0) are not decoded as symbols (decoder skips them). Edge @0<@1 references a bare ref so it is also skipped."
+}

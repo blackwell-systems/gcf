@@ -1,0 +1,18 @@
+{
+  "name": "streaming_distance_n",
+  "description": "Streaming with distance_N groups beyond extended",
+  "input": "GCF tool=test\n## targets\n@0 fn a.A 1.00 x\n## distance_5\n@1 fn b.B 0.30 x\n## edges [?]\n@0<@1 calls\n## _summary symbols=2 edges=1 sections=targets:1,distance_5:1,edges:1\n",
+  "expected": {
+    "tool": "test",
+    "tokenBudget": 0,
+    "tokensUsed": 0,
+    "packRoot": "",
+    "symbols": [
+      {"qualifiedName": "a.A", "kind": "function", "score": 1.00, "provenance": "x", "distance": 0},
+      {"qualifiedName": "b.B", "kind": "function", "score": 0.30, "provenance": "x", "distance": 5}
+    ],
+    "edges": [
+      {"source": "b.B", "target": "a.A", "edgeType": "calls", "status": ""}
+    ]
+  }
+}

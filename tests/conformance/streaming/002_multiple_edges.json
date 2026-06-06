@@ -1,0 +1,23 @@
+{
+  "name": "streaming_multiple_edges",
+  "description": "Streaming with multiple symbols across distance groups and multiple edges",
+  "input": "GCF tool=blast_radius budget=10000\n## targets\n@0 fn pkg.Auth 0.95 lsp\n@1 type pkg.Config 0.80 ast\n## related\n@2 fn pkg.Server 0.60 lsp\n## extended\n@3 iface pkg.Logger 0.40 structural\n## edges [?]\n@0<@2 calls\n@1<@0 references\n@3<@0 implements\n@3<@2 references\n## _summary symbols=4 edges=4 sections=targets:2,related:1,extended:1,edges:4\n",
+  "expected": {
+    "tool": "blast_radius",
+    "tokenBudget": 10000,
+    "tokensUsed": 0,
+    "packRoot": "",
+    "symbols": [
+      {"qualifiedName": "pkg.Auth", "kind": "function", "score": 0.95, "provenance": "lsp", "distance": 0},
+      {"qualifiedName": "pkg.Config", "kind": "type", "score": 0.80, "provenance": "ast", "distance": 0},
+      {"qualifiedName": "pkg.Server", "kind": "function", "score": 0.60, "provenance": "lsp", "distance": 1},
+      {"qualifiedName": "pkg.Logger", "kind": "interface", "score": 0.40, "provenance": "structural", "distance": 2}
+    ],
+    "edges": [
+      {"source": "pkg.Server", "target": "pkg.Auth", "edgeType": "calls", "status": ""},
+      {"source": "pkg.Auth", "target": "pkg.Config", "edgeType": "references", "status": ""},
+      {"source": "pkg.Auth", "target": "pkg.Logger", "edgeType": "implements", "status": ""},
+      {"source": "pkg.Server", "target": "pkg.Logger", "edgeType": "references", "status": ""}
+    ]
+  }
+}

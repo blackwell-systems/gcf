@@ -1,0 +1,18 @@
+{
+  "name": "streaming_basic_graph",
+  "description": "Streaming graph profile: deferred counts in header and edges section, summary trailer",
+  "input": "GCF tool=context_for_task budget=5000\n## targets\n@0 fn pkg.Auth 0.78 lsp_resolved\n## related\n@1 fn pkg.Server 0.54 lsp_resolved\n## edges [?]\n@0<@1 calls\n## _summary symbols=2 edges=1 sections=targets:1,related:1,edges:1\n",
+  "expected": {
+    "tool": "context_for_task",
+    "tokenBudget": 5000,
+    "tokensUsed": 0,
+    "packRoot": "",
+    "symbols": [
+      {"qualifiedName": "pkg.Auth", "kind": "function", "score": 0.78, "provenance": "lsp_resolved", "distance": 0},
+      {"qualifiedName": "pkg.Server", "kind": "function", "score": 0.54, "provenance": "lsp_resolved", "distance": 1}
+    ],
+    "edges": [
+      {"source": "pkg.Server", "target": "pkg.Auth", "edgeType": "calls", "status": ""}
+    ]
+  }
+}

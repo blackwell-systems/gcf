@@ -1,0 +1,16 @@
+{
+  "name": "streaming_no_edges",
+  "description": "Streaming with symbols only, no edges section emitted",
+  "input": "GCF tool=test\n## targets\n@0 fn a.A 0.90 x\n@1 type a.B 0.70 x\n## _summary symbols=2 edges=0 sections=targets:2\n",
+  "expected": {
+    "tool": "test",
+    "tokenBudget": 0,
+    "tokensUsed": 0,
+    "packRoot": "",
+    "symbols": [
+      {"qualifiedName": "a.A", "kind": "function", "score": 0.90, "provenance": "x", "distance": 0},
+      {"qualifiedName": "a.B", "kind": "type", "score": 0.70, "provenance": "x", "distance": 0}
+    ],
+    "edges": []
+  }
+}
