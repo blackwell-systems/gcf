@@ -161,8 +161,9 @@ comprehension/
 | Claude (Opus/default) | YES | YES | YES | YES | YES | 5/5 |
 | GPT-5.4 | YES | YES | YES | YES | YES | 5/5 |
 | GPT-5.4-mini | YES | YES | YES | YES | YES | 5/5 |
+| Gemini 2.5 Flash | YES | YES | YES | NO | YES | 4/5 |
 
-All models produce valid, decoder-parseable GCF at every scale tested with a 3-line primer. Zero prior training on GCF.
+All models produce valid GCF with a 3-line primer. Zero prior training. Gemini failed at 50 symbols (truncated output, free tier limit).
 
 ### Three-way generation comparison (GPT-5.4)
 
@@ -176,7 +177,7 @@ Same data, same model, same prompt structure. Only the target format differs.
 | 50 | 3,031 | YES | 4,524 | NO | 8,089 | YES |
 | 100 | 5,976 | YES | 8,937 | NO | 16,121 | YES |
 
-**GCF: 5/5 valid. JSON: 5/5 valid. TOON: 0/5 valid.** (Identical on both GPT-5.4 and GPT-5.4-mini.)
+**GPT-5.4/mini: GCF 5/5, JSON 5/5, TOON 0/5. Gemini 2.5 Flash: GCF 4/5, TOON 4/5, JSON 2/5.**
 
 TOON's flat tabular design requires column values to be pre-encoded as integers. When a model is told "this symbol is a target" (natural language), it writes `target` in the distance column. TOON's decoder rejects this because it expects `0`. The model has to know that "target" means 0, "related" means 1, "extended" means 2, and perform that mapping before writing. Every model tested (GPT-5.4, GPT-5.4-mini) fails to do this mapping unprompted.
 
@@ -205,9 +206,15 @@ GCF works with natural-language descriptions. TOON requires the caller to pre-en
 
 Neither format works reliably without a primer at small sizes. With a primer, GCF achieves 100%. TOON achieves 0% on GPT-5.4 (distance column issue).
 
-### Gemini (manual chat test)
+### Gemini 2.5 Flash (API)
 
-Gemini produced valid complex GCF and TOON from a short primer in the same session. Both graph and generic profiles generated correctly.
+| Format | Valid | Notes |
+|--------|-------|-------|
+| GCF | 4/5 | Failed at 50 sym (truncated output, free tier) |
+| TOON | 4/5 | Failed at 5 sym (distance label on smallest size only) |
+| JSON | 2/5 | Truncates at 20+ symbols (too verbose to complete) |
+
+JSON is too verbose for Gemini to generate at scale. GCF and TOON are both compact enough to fit in output limits. Gemini also confirmed via manual chat test (complex mixed payload with generic profile).
 
 ### Files
 
@@ -217,6 +224,9 @@ generation/
 ├── generation-gpt54-gcf-toon-run1-2026-06-06.log     # GPT-5.4 GCF+TOON: GCF 5/5, TOON 0/5
 ├── generation-gpt54-json-run1-2026-06-06.log         # GPT-5.4 JSON: 5/5 valid
 ├── generation-gpt54-mini-run1-2026-06-06.log         # GPT-5.4-mini: GCF 5/5, TOON 0/5, JSON 5/5
+├── generation-gpt54-mini-toon-integers-run1-2026-06-06.log  # GPT-5.4-mini TOON hand-holding: 5/5
+├── generation-gpt54-mini-toon-integers-run2-2026-06-06.log  # GPT-5.4-mini TOON hand-holding run 2: 5/5
+├── generation-gemini25flash-run1-2026-06-06.log      # Gemini 2.5 Flash: GCF 4/5, TOON 4/5, JSON 2/5
 ├── generation-gcf-with-example-2026-06-04.log        # Claude GCF, with primer: 5/5 valid
 ├── generation-gcf-no-example-2026-06-04.log          # Claude GCF, cold-start: 3/5 valid
 ├── generation-toon-with-example-2026-06-04.log       # Claude TOON, with primer: 5/5 valid
