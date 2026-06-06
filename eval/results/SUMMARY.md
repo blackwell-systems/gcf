@@ -47,8 +47,10 @@
 | Gemini 2.5 Flash | 1 | **76.9%** | 58.3% | 53.8% | ✓ |
 | Gemini 2.5 Flash | 2 | **75.0%** | 50.0% | 57.1% | ✓ |
 | Gemini 2.5 Flash | 3 | **90.0%** | 55.6% | 60.0% | ✓ |
+| Gemini 3.5 Flash | 1 | **100%** | 61.5% | 46.2% | ✓ |
+| Gemini 2.5 Pro | 1 | **100%** | 76.9% | 58.3% | ✓ |
 
-**20 runs, 7 models, 3 providers. GCF wins 19, ties 1, loses 0.**
+**22 runs, 9 models, 3 providers. GCF wins 21, ties 1, loses 0.**
 
 ### Averages by model
 
@@ -61,6 +63,8 @@
 | Claude Haiku 4.5 | 2 | **96.2%** | 69.2% | 57.7% | +27.0 vs TOON |
 | GPT-5.4-mini | 2 | **71.8%** | 64.1% | 54.2% | +7.7 vs TOON |
 | Gemini 2.5 Flash | 3 | **80.6%** | 54.6% | 57.0% | +26.0 vs TOON |
+| Gemini 3.5 Flash | 1 | **100%** | 61.5% | 46.2% | +38.5 vs TOON |
+| Gemini 2.5 Pro | 1 | **100%** | 76.9% | 58.3% | +23.1 vs TOON |
 
 ### Methodology notes
 
@@ -70,7 +74,7 @@
 
 ### Key findings
 
-1. **GCF wins on every model.** The ordering GCF > TOON > JSON holds across Claude Opus, Claude Sonnet, Claude Haiku, GPT-5.5, GPT-5.4, GPT-5.4-mini, and Gemini 2.5 Flash. 20 runs across 3 providers, 0 losses. Sonnet achieves 100% on every run. Opus and Haiku average 96.2%.
+1. **GCF wins on every model.** The ordering GCF > TOON > JSON holds across Claude Opus, Claude Sonnet, Claude Haiku, GPT-5.5, GPT-5.4, GPT-5.4-mini, and Gemini 2.5 Flash. 22 runs across 3 providers, 0 losses. Three models achieve 100%: Sonnet (Anthropic), Gemini 2.5 Pro (Google), Gemini 3.5 Flash (Google). Sonnet achieves 100% on every run. Opus and Haiku average 96.2%.
 2. **JSON breaks at scale.** GPT-5.5 returned empty strings on counting questions for JSON (unable to even produce an answer at 500 records). GPT-5.4 miscounted symbols (328 vs 500). Every model struggles with JSON's field-name repetition at scale.
 3. **TOON fails on distance grouping.** Without `## targets`/`## related`/`## extended` section headers, models must scan all 500 rows and filter by a column value. This fails consistently across models.
 4. **GCF is stable.** GPT-5.4 scored 75.0%, 76.9%, 76.9% across 3 runs. Low variance on the winning format.
