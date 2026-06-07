@@ -8,7 +8,7 @@ Every model reads it better and writes it better than the formats they were trai
 
 | | GCF | TOON | JSON |
 |---|---|---|---|
-| **Comprehension** (23 runs, 10 models) | **90.5%** | 68.5% | 53.6% |
+| **Comprehension** (23 runs, 10 models) | **90.7%** | 68.5% | 53.6% |
 | **Generation** (28 runs, 9 models) | **5/5** | 1.0/5 | 5.0/5 |
 | **Input tokens** (500 symbols) | **11,090** | 16,378 | 53,341 |
 | **Output tokens** (100 symbols) | **5,976** | 8,937 | 16,121 |
@@ -57,7 +57,7 @@ When an agent receives data in JSON at this scale, it gets the wrong answer 46% 
 | Claude Sonnet 4.6 | 2 | **100%** | 73.1% | 53.8% |
 | Claude Haiku 4.5 | 2 | **96.2%** | 69.2% | 57.7% |
 | GPT-5.5 | 5 | **84.1%** | 67.7% | 45.8% |
-| GPT-5.4 | 4 | **76.4%** | 56.0% | 44.1% |
+| GPT-5.4 | 4 | **78.0%** | 56.0% | 44.1% |
 | GPT-5.4-mini | 2 | **71.8%** | 64.1% | 54.2% |
 | Gemini 2.5 Pro | 1 | **100%** | 76.9% | 58.3% |
 | Gemini 3.1 Pro | 1 | **100%** | 76.9% | 46.2% |
@@ -129,7 +129,9 @@ Output validated through real decoders: the official [toon-go](https://github.co
 | GPT-5.4-mini | **5/5** | 0/5 | 5/5 |
 | Gemini 2.5 Pro | **5/5** | 1/5 | 5/5 |
 | Gemini 3.1 Pro | **5/5** | 0/5 | 5/5 |
+| Gemini 3.5 Flash | 3/5 | 1/5 | 3/5 |
 | Gemini 3.1 Flash Lite | **4-5/5** | 0/5 | 4-5/5 |
+| Gemini 2.5 Flash | 2-3/5 | 0-4/5 | 0-3/5 |
 
 **GCF is the only format every frontier model can produce.** TOON's official decoder rejects the output on 7 of 9 models.
 
@@ -190,4 +192,4 @@ cd toon && git checkout gcf-comparison
 cd benchmarks && pnpm install && pnpm benchmark:tokens
 ```
 
-For detailed failure analysis, error taxonomy, and per-run data, see the [full eval results](https://github.com/blackwell-systems/gcf/tree/main/eval/results/SUMMARY.md).
+For detailed failure analysis, error taxonomy, and per-run data, see the [full eval results](/guide/eval-results).

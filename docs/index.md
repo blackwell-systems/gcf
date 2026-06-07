@@ -4,7 +4,7 @@ sidebar: false
 hero:
   name: GCF
   text: Drop-in JSON replacement for <span class="hero-highlight">all AI pipelines</span>, with superpowers for graph-shaped data.
-  tagline: 'The most token-efficient wire format for LLMs. 79% fewer input tokens than <span class="json">JSON</span>. 63% fewer output tokens. <span class="gcf">GCF</span> averages <strong>90.5% comprehension accuracy</strong> across 10 models and 3 providers where <span class="json">JSON</span> averages 53.6% and <span class="toon">TOON</span> averages 68.5%.'
+  tagline: 'The most token-efficient wire format for LLMs. 79% fewer input tokens than <span class="json">JSON</span>. 63% fewer output tokens. <span class="gcf">GCF</span> averages <strong>90.7% comprehension accuracy</strong> across 10 models and 3 providers where <span class="json">JSON</span> averages 53.6% and <span class="toon">TOON</span> averages 68.5%.'
   actions:
     - theme: brand
       text: Get Started
@@ -22,7 +22,7 @@ features:
   - title: 63% fewer output tokens
     details: 'LLMs produce valid <span class="gcf">GCF</span> with a 3-line primer. 33% smaller output than <span class="toon">TOON</span>. 5/5 generation validity on every frontier model across 3 providers. Zero training.'
   - title: The format LLMs understand without training
-    details: '90.5% comprehension, 5/5 generation validity across every frontier model from Anthropic, OpenAI, and Google. No model has seen GCF in training. <span class="toon">TOON</span>&apos;s own decoder rejects LLM-generated output on 7 of 9 models. 23 comprehension runs, 28 generation runs, zero losses.'
+    details: '90.7% comprehension, 5/5 generation validity across every frontier model from Anthropic, OpenAI, and Google. No model has seen GCF in training. <span class="toon">TOON</span>&apos;s own decoder rejects LLM-generated output on 7 of 9 models. 23 comprehension runs, 28 generation runs, zero losses.'
   - title: 1,300+ LLM evaluations, zero losses
     details: '23 comprehension runs and 28 generation runs across 10 models from Anthropic, OpenAI, and Google. <span class="gcf">GCF</span> wins every run. Four models achieve 100% comprehension. Every frontier model produces valid <span class="gcf">GCF</span> at 5/5. All results <a href="/guide/benchmarks">reproducible</a>.'
   - title: Beats TOON on TOON's benchmark

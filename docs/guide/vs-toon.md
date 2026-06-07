@@ -1,6 +1,6 @@
 # GCF vs TOON
 
-GCF is smaller on all 6 datasets, more accurate at scale (90.5% vs 68.5% across 10 models and 3 providers), and has five features TOON structurally cannot add. TOON's own official decoder rejects LLM-generated TOON output on 7 of 9 models tested. All token claims tested on TOON's own benchmark with their datasets and their tokenizer.
+GCF is smaller on all 6 datasets, more accurate at scale (90.7% vs 68.5% across 10 models and 3 providers), and has five features TOON structurally cannot add. TOON's own official decoder rejects LLM-generated TOON output on 7 of 9 models tested. All token claims tested on TOON's own benchmark with their datasets and their tokenizer.
 
 ## Feature comparison
 
@@ -20,7 +20,7 @@ GCF is smaller on all 6 datasets, more accurate at scale (90.5% vs 68.5% across 
 | Generic data (any JSON) | Yes (generic profile) | Yes |
 | **Streaming encode** | **Yes (true zero-buffering, O(1) memory, `[?]` + trailer)** | **Output-side only (requires full value in memory)** |
 | Key folding (dotted paths) | No | Yes |
-| LLM comprehension at 500 symbols | **90.5%** avg (23 runs, 10 models) | 68.5% avg |
+| LLM comprehension at 500 symbols | **90.7%** avg (23 runs, 10 models) | 68.5% avg |
 | **LLM generation (output tokens)** | **75% fewer than JSON** | **40% fewer than JSON** |
 | Human-readable | Dense, agent-optimized | YAML-like, human-friendly |
 | Zero dependencies | Yes | Yes |
@@ -175,7 +175,7 @@ GCF's [comprehension eval](https://github.com/blackwell-systems/gcf-go/tree/main
 
 | Format | Avg accuracy (10 models) | Tokens |
 |--------|--------------------------|--------|
-| **GCF** | **90.5%** | **11,090** |
+| **GCF** | **90.7%** | **11,090** |
 | TOON | 68.5% | 16,378 |
 | JSON | 53.6% | 53,341 |
 

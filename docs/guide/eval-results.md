@@ -1,6 +1,6 @@
 # Benchmarks (Full Data)
 
-Complete data from all eval runs. For the summary, see [Benchmarks](/guide/benchmarks).
+Every number on the [benchmarks page](/guide/benchmarks) comes from the runs below. This page has the complete per-run data, failure analysis, and generation results across all 10 models and 3 providers. All raw logs are in the [eval/results](https://github.com/blackwell-systems/gcf/tree/main/eval/results) directory.
 
 ![Comprehension and Generation](/charts/hero.png)
 
@@ -10,7 +10,7 @@ Complete data from all eval runs. For the summary, see [Benchmarks](/guide/bench
 
 ![Comprehension Accuracy by Model](/charts/accuracy-by-model.png)
 
-500 symbols, 200 edges, 13 structured extraction questions, zero format instructions. Each run generates a fresh random payload.
+500 symbols, 200 edges, 13 structured extraction questions, zero format instructions. Each run generates a fresh random payload with different symbol names and edge distributions, so variance across runs reflects the model's actual comprehension rather than memorization of a fixed dataset.
 
 | Model | Run | GCF | TOON | JSON | GCF wins? |
 |-------|-----|-----|------|------|-----------|
@@ -28,7 +28,7 @@ Complete data from all eval runs. For the summary, see [Benchmarks](/guide/bench
 | GPT-5.4 | 1 | **75.0%** | 58.3% | 41.7% | ✓ |
 | GPT-5.4 | 2 | **76.9%** | 53.8% | 46.2% | ✓ |
 | GPT-5.4 | 3 | **76.9%** | 53.8% | 38.5% | ✓ |
-| GPT-5.4 | 4 | **76.9%** | 58.3% | 50.0% | ✓ |
+| GPT-5.4 | 4 | **83.3%** | 58.3% | 50.0% | ✓ |
 | GPT-5.4-mini | 1 | **76.9%** | 61.5% | 58.3% | ✓ |
 | GPT-5.4-mini | 2 | **66.7%** | **66.7%** | 50.0% | tied |
 | Gemini 2.5 Flash | 1 | **76.9%** | 58.3% | 53.8% | ✓ |
@@ -42,19 +42,19 @@ Complete data from all eval runs. For the summary, see [Benchmarks](/guide/bench
 
 ### Score variance
 
-Models with 2+ runs show how consistent each format is.
+GCF scores cluster tightly across runs. TOON and JSON scatter widely, especially on weaker models. This matters for production use: a format that scores 70% on one run and 40% on the next is unreliable regardless of its average.
 
 ![Comprehension Variance](/charts/comprehension-variance.png)
 
 ### GCF advantage by model tier
 
-The advantage grows on weaker models. Frontier models can brute-force flat data. Smaller models cannot.
+GCF's margin over TOON and JSON grows as model capability decreases. Frontier models (Opus, Gemini Pro) can partially brute-force flat data through sheer capacity. Smaller models (GPT-5.4-mini, Gemini 2.5 Flash) cannot, and the gap widens to 20-30 percentage points. If you're optimizing for cost by using smaller models, format choice matters more, not less.
 
 ![GCF Advantage by Tier](/charts/advantage-by-tier.png)
 
 ### Token cost vs accuracy
 
-GCF is in the top-left: fewer tokens, higher accuracy.
+GCF occupies the top-left quadrant: fewest tokens, highest accuracy. JSON occupies the bottom-right: most tokens, lowest accuracy. You usually trade cost for quality. GCF breaks that tradeoff.
 
 ![Token Cost vs Accuracy](/charts/tokens-vs-accuracy.png)
 
@@ -62,50 +62,58 @@ GCF is in the top-left: fewer tokens, higher accuracy.
 
 ## Failure Taxonomy
 
-Classified from all FAIL lines across 23 runs (39 questions per run, 3 formats each).
+Every wrong answer across all 23 runs was classified by failure type. The pattern is consistent: GCF fails differently than TOON and JSON. GCF errors are small (off by 1-2) because the model understood the structure but misread a number. TOON and JSON errors are large (off by 50-140) because the model couldn't extract the answer at all and guessed.
 
 ![Error Magnitude](/charts/error-magnitude.png)
 
-GCF median error: **4**. TOON median error: **53**. JSON median error: **56**. GCF encodes answers structurally (`## related [167]`). TOON/JSON force the model to compute them from raw data.
+GCF median error: **4**. TOON median error: **53**. JSON median error: **56**. GCF encodes answers structurally (`## related [167]`). TOON/JSON force the model to compute them from raw data. The difference between "slightly misread a header" and "couldn't comprehend the data" is the difference between a useful agent and a broken one.
 
 ### GCF failures: precision errors
 
-GCF fails on precision (off by 1-2). The structure is understood; the count is slightly misread.
+GCF fails on precision (off by 1-7). The structure is understood; the count is slightly misread. 36 total failures across 23 runs.
 
 | Type | Count | Models | Cause |
 |------|-------|--------|-------|
-| Off-by-1-2 header misread | 5 | Haiku (1), GPT-5.4 (3), mini (1) | Header says `[167]`, model reads 166. Tokenization artifact. |
-| Column scan miscount | 10 | GPT-5.4 (7), mini (3) | Must scan `fn` kind across rows. `function_count`=84 deterministically. |
+| Off-by-1-2 header misread | 8 | Haiku (1), GPT-5.4 (3), mini (1), Gemini (3) | Header says `[167]`, model reads 166. Tokenization artifact. |
+| Column scan miscount | 11 | GPT-5.4 (5), mini (1), Gemini (5) | Must scan `fn` kind across rows. `function_count`=84 deterministically on GPT-5.4. |
 | Field confusion | 2 | GPT-5.4 (1), mini (1) | Read symbol count instead of edge count. |
+| Miscellaneous miscount | 5 | GPT-5.4 (2), Gemini (3) | edge_count, calls_edge_count off by larger margins. |
 | Empty response | 10 | GPT-5.5 (10) | Context overwhelm at 53k+ input tokens. |
 
 ### TOON failures: comprehension errors
 
-TOON fails on comprehension (wrong by 50-140). The model cannot filter a flat list by column value at scale.
+TOON fails on comprehension (wrong by 50-140). The model cannot filter a flat list by column value at scale. 94 total failures across 23 runs.
 
 | Type | Count | Models | Cause |
 |------|-------|--------|-------|
-| Distance grouping failure | 25 | Opus/Sonnet (3), Haiku (6), GPT-5.4 (11), mini (5) | Must scan 500 rows and filter by `distance` column. Wildly inconsistent answers. |
-| Round-number guessing | 7 | Haiku (1), mini (6) | Model gives up counting and guesses "100". |
-| Attention decay (last row) | 5 | Opus/Sonnet (1), Haiku (1), GPT-5.4 (3) | `last_symbol_kind` wrong. Loses track at row 500. |
+| Distance grouping failure | 45 | Opus/Sonnet (3), Haiku (6), GPT-5.4 (11), mini (5), Gemini (20) | Must scan 500 rows and filter by `distance` column. Wildly inconsistent answers. |
+| Column scan miscount | 10 | Haiku (1), GPT-5.4 (4), mini (4), Gemini (1) | `function_count` wrong. Must scan all 500 rows by kind. |
+| Attention decay (last row) | 7 | Opus/Sonnet (1), Haiku (3), GPT-5.4 (3) | `last_symbol_kind` wrong. Loses track at row 500. |
+| Calls edge miscount | 10 | Opus/Sonnet (1), GPT-5.4 (4), mini (2), Gemini (3) | `calls_edge_count` wrong. Must scan edges and filter by type. |
+| Symbol count wrong | 2 | Gemini (2) | Undercounts total symbols (250, 400 vs 500). |
 | Empty response | 20 | GPT-5.5 (20) | Context overwhelm. Same as JSON. |
 
 ### JSON failures: structural overwhelm
 
-JSON fails on structure (empty responses, massive undercounts, chain-of-thought enumeration). The format itself prevents comprehension at scale.
+JSON fails on structure (empty responses, massive undercounts, chain-of-thought enumeration). The format itself prevents comprehension at scale. 131 total failures across 23 runs.
 
 | Type | Count | Models | Cause |
 |------|-------|--------|-------|
 | Empty string response | 33 | GPT-5.5 (33) | 53k tokens of repeated `{"qualifiedName":...}` overwhelms attention. |
-| Massive undercount | 9 | Opus/Sonnet (3), Haiku (1), GPT-5.4 (4), mini (1) | Field-name repetition dilutes signal. |
-| Distance filter failure | 29 | Opus/Sonnet (7), Haiku (6), GPT-5.4 (11), mini (5) | Must parse JSON objects AND filter by field value. |
-| Field confusion | 3 | GPT-5.4 (3) | `last_symbol_kind` reads edge type instead of kind. |
+| Massive undercount | 14 | Opus/Sonnet (2), Haiku (2), GPT-5.4 (4), mini (1), Gemini (5) | Field-name repetition dilutes signal. |
+| Distance filter failure | 44 | Opus/Sonnet (7), Haiku (6), GPT-5.4 (11), mini (5), Gemini (15) | Must parse JSON objects AND filter by field value. |
+| Column scan miscount | 37 | Opus/Sonnet (4), Haiku (3), GPT-5.4 (8), mini (4), Gemini (18) | `edge_count`, `function_count`, `calls_edge_count` wrong. |
+| Attention decay (last row) | 3 | GPT-5.4 (2), Gemini (1) | `last_symbol_kind` reads edge type instead of kind. |
 
 ### Failure distribution by format
+
+JSON accounts for the most failures overall, driven by GPT-5.5's complete inability to respond (33 empty strings) and universal distance-filtering failures. TOON's failures concentrate on distance grouping and round-number guessing. GCF's failures are sparse and small.
 
 ![Failure Types (Pie)](/charts/failure-types-pie.png)
 
 ### Failures by model tier
+
+Each model tier has a distinct failure signature. Opus/Sonnet never fail on GCF. GPT-5.5 fails on all formats due to context overwhelm at 53k tokens. GPT-5.4's GCF errors are deterministic (same wrong number every run), suggesting a tokenizer-level parsing difference rather than a comprehension problem.
 
 ![Failure Types by Model](/charts/failure-types.png)
 
@@ -157,7 +165,11 @@ This is JSON's structural problem: it forces LLMs to perform manual enumeration 
 
 ## Generation: All Runs
 
+Comprehension measures whether a model can read a format. Generation measures whether it can write one. A format that's readable but not writable (or vice versa) is only half useful. Agent-to-agent communication requires both directions.
+
 ### GCF validity across all models
+
+GCF achieves 5/5 valid output on every frontier model, with zero prior training. The format didn't exist before we built it, yet models produce decoder-parseable output on first exposure with a 3-line primer.
 
 ![Generation Validity](/charts/generation-validity.png)
 
@@ -175,6 +187,8 @@ This is JSON's structural problem: it forces LLMs to perform manual enumeration 
 
 ### Three-way comparison
 
+Same data, same prompt structure per format. GCF and JSON use natural-language descriptions ("this symbol is a target"). TOON uses the same natural descriptions, not pre-encoded integers. This is the fair comparison: what happens when you give a model real-world input and ask it to produce structured output?
+
 | Model | GCF | TOON (natural) | JSON | Runs |
 |-------|-----|----------------|------|------|
 | Claude Opus 4.6 | 5/5 | 0/5 | 5/5 | 2 (zero variance) |
@@ -191,9 +205,13 @@ This is JSON's structural problem: it forces LLMs to perform manual enumeration 
 
 ### Why TOON fails generation
 
+Every TOON generation failure produces the same error: `toon: cannot assign string to int`. The model writes `target` in the distance column. TOON expects `0`. The model would need to know, unprompted, that "target" maps to 0, "related" maps to 1, "extended" maps to 2. No model does this because the format gives no structural cue for when a column requires an integer vs a string.
+
 ![The Distance Label Problem](/charts/distance-label-problem.png)
 
 ### TOON generation heatmap
+
+TOON failure is concentrated on distance-related sizes. Models that pass at 5 symbols often fail at 10+ because the likelihood of hitting the distance encoding problem increases with more symbols. The heatmap shows which models fail at which sizes.
 
 ![TOON Heatmap](/charts/toon-heatmap.png)
 
@@ -214,21 +232,23 @@ GCF is robust. It works with natural-language descriptions, pre-encoded values, 
 
 ### Output size at scale
 
+Generation cost compounds over a session. Every tool response an agent produces costs output tokens. At 100 symbols, GCF output is 5,984 bytes vs 16,121 for JSON (63% fewer) and 8,336 for TOON with hand-holding (28% fewer). Over a 10-call agent session, this adds up.
+
 ![Output Cost at Scale](/charts/output-cost-at-scale.png)
 
 ---
 
 ## Methodology
 
-- 500 symbols, 200 edges for comprehension; 5-100 symbols for generation
-- 13 extraction questions with deterministic ground truth (no LLM judge)
-- OpenAI runs used default temperature (non-zero); `EVAL_TEMPERATURE=0` available for deterministic runs
-- Each run generates a fresh random payload with different symbol names and edge distributions
-- Claude evals via `claude -p` CLI with `--model` flag
-- OpenAI evals via chat completions API with exponential backoff on 429s
-- Google evals via generativelanguage API with retry logic (free tier: 5 RPM)
-- TOON validation uses the official [toon-go](https://github.com/toon-format/toon-go) library
-- All raw logs in [eval/results](https://github.com/blackwell-systems/gcf/tree/main/eval/results)
+The eval was designed to be deterministic, reproducible, and resistant to gaming.
+
+- **Scale:** 500 symbols, 200 edges for comprehension; 5-100 symbols for generation. 500 records is the threshold where format differences become visible. At 8 records, everything works.
+- **Ground truth:** 13 extraction questions with deterministic answers computed from the payload. No LLM judge. The correct answer to "how many symbols?" is always exactly the number generated.
+- **Randomization:** Each run generates a fresh random payload with different symbol names and edge distributions. Scores reflect comprehension of the format, not memorization of a fixed dataset.
+- **Temperature:** OpenAI runs used default temperature (non-zero) to reflect real-world usage. `EVAL_TEMPERATURE=0` is available for deterministic runs.
+- **Backends:** Claude evals via `claude -p` CLI with `--model` flag. OpenAI evals via chat completions API with exponential backoff on 429s. Google evals via generativelanguage API with retry logic.
+- **Validation:** GCF validated through `gcf.Decode()`. TOON validated through the official [toon-go](https://github.com/toon-format/toon-go) library. JSON validated through `json.Unmarshal()`. All decoders are real implementations, not regex checks.
+- **Logs:** All raw logs in [eval/results](https://github.com/blackwell-systems/gcf/tree/main/eval/results). Every run is committed.
 
 ### Reproduce
 

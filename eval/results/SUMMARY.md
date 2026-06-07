@@ -40,7 +40,7 @@
 | GPT-5.4-mini | 2 | **66.7%** | **66.7%** | 50.0% | tied |
 | Claude Haiku 4.5 | 1 | **92.3%** | 69.2% | 61.5% | ✓ |
 | Claude Haiku 4.5 | 2 | **100%** | 69.2% | 53.8% | ✓ |
-| GPT-5.4 | 4 | **76.9%** | 58.3% | 50.0% | ✓ |
+| GPT-5.4 | 4 | **83.3%** | 58.3% | 50.0% | ✓ |
 | GPT-5.5 | 5 | **83.3%** | 66.7% | 36.4% | ✓ |
 | Claude Opus 4.6 | 2 | **92.3%** | 76.9% | 69.2% | ✓ |
 | Claude Sonnet 4.6 | 2 | **100%** | 69.2% | 53.8% | ✓ |
@@ -60,7 +60,7 @@
 | Claude Opus 4.6 | 2 | **96.2%** | 84.6% | 73.1% | +11.6 vs TOON |
 | Claude Sonnet 4.6 | 2 | **100%** | 73.1% | 53.8% | +26.9 vs TOON |
 | GPT-5.5 | 5 | **84.1%** | 67.7% | 45.8% | +16.4 vs TOON |
-| GPT-5.4 | 4 | **76.4%** | 56.0% | 44.1% | +20.4 vs TOON |
+| GPT-5.4 | 4 | **78.0%** | 56.0% | 44.1% | +22.0 vs TOON |
 | Claude Haiku 4.5 | 2 | **96.2%** | 69.2% | 57.7% | +27.0 vs TOON |
 | GPT-5.4-mini | 2 | **71.8%** | 64.1% | 54.2% | +7.7 vs TOON |
 | Gemini 2.5 Flash | 3 | **80.6%** | 54.6% | 57.0% | +26.0 vs TOON |
@@ -85,17 +85,18 @@
 
 ### Failure taxonomy
 
-Classified from all FAIL lines across 15 runs (39 questions per run, 3 formats each).
+Classified from all FAIL lines across 23 runs (up to 13 questions per run, 3 formats each). 36 GCF failures, 94 TOON failures, 131 JSON failures.
 
 #### GCF failures: precision errors
 
-GCF fails on *precision* (off by 1-2). The structure is understood; the count is slightly misread.
+GCF fails on *precision* (off by 1-7). The structure is understood; the count is slightly misread.
 
 | Type | Count | Models | Cause |
 |------|-------|--------|-------|
-| Off-by-1-2 header misread | 5 | Haiku (1), GPT-5.4 (3), mini (1) | Header says `[167]`, model reads 166. Tokenization artifact. |
-| Column scan miscount | 10 | GPT-5.4 (7), mini (3) | Must scan `fn` kind across rows. `function_count`=84 deterministically. |
+| Off-by-1-2 header misread | 8 | Haiku (1), GPT-5.4 (3), mini (1), Gemini (3) | Header says `[167]`, model reads 166. Tokenization artifact. |
+| Column scan miscount | 11 | GPT-5.4 (5), mini (1), Gemini (5) | Must scan `fn` kind across rows. `function_count`=84 deterministically on GPT-5.4. |
 | Field confusion | 2 | GPT-5.4 (1), mini (1) | Read symbol count instead of edge count. |
+| Miscellaneous miscount | 5 | GPT-5.4 (2), Gemini (3) | edge_count, calls_edge_count off by larger margins. |
 | Empty response | 10 | GPT-5.5 (10) | Context overwhelm at 53k+ input tokens. |
 
 #### TOON failures: comprehension errors
@@ -104,9 +105,11 @@ TOON fails on *comprehension* (wrong by 50-140). The model cannot filter a flat 
 
 | Type | Count | Models | Cause |
 |------|-------|--------|-------|
-| Distance grouping failure | 25 | Opus/Sonnet (3), Haiku (6), GPT-5.4 (11), mini (5) | Must scan 500 rows and filter by `distance` column. Wildly inconsistent answers. |
-| Round-number guessing | 7 | Haiku (1), mini (6) | Model gives up counting and guesses "100". |
-| Attention decay (last row) | 5 | Opus/Sonnet (1), Haiku (1), GPT-5.4 (3) | `last_symbol_kind` wrong. Loses track at row 500. |
+| Distance grouping failure | 45 | Opus/Sonnet (3), Haiku (6), GPT-5.4 (11), mini (5), Gemini (20) | Must scan 500 rows and filter by `distance` column. Wildly inconsistent answers. |
+| Column scan miscount | 10 | Haiku (1), GPT-5.4 (4), mini (4), Gemini (1) | `function_count` wrong. Must scan all 500 rows by kind. |
+| Attention decay (last row) | 7 | Opus/Sonnet (1), Haiku (3), GPT-5.4 (3) | `last_symbol_kind` wrong. Loses track at row 500. |
+| Calls edge miscount | 10 | Opus/Sonnet (1), GPT-5.4 (4), mini (2), Gemini (3) | `calls_edge_count` wrong. Must scan edges and filter by type. |
+| Symbol count wrong | 2 | Gemini (2) | Undercounts total symbols (250, 400 vs 500). |
 | Empty response | 20 | GPT-5.5 (20) | Context overwhelm. Same as JSON. |
 
 #### JSON failures: structural overwhelm
@@ -116,9 +119,10 @@ JSON fails on *structure* (empty responses, massive undercounts, chain-of-though
 | Type | Count | Models | Cause |
 |------|-------|--------|-------|
 | Empty string response | 33 | GPT-5.5 (33) | 53k tokens of repeated `{"qualifiedName":...}` overwhelms attention. Model produces nothing. |
-| Massive undercount | 9 | Opus/Sonnet (3), Haiku (1), GPT-5.4 (4), mini (1) | Field-name repetition dilutes signal. Model loses count mid-scan. |
-| Distance filter failure | 29 | Opus/Sonnet (7), Haiku (6), GPT-5.4 (11), mini (5) | Must parse JSON objects AND filter by field value. |
-| Field confusion | 3 | GPT-5.4 (3) | `last_symbol_kind` reads edge type instead of kind. |
+| Massive undercount | 14 | Opus/Sonnet (2), Haiku (2), GPT-5.4 (4), mini (1), Gemini (5) | Field-name repetition dilutes signal. Model loses count mid-scan. |
+| Distance filter failure | 44 | Opus/Sonnet (7), Haiku (6), GPT-5.4 (11), mini (5), Gemini (15) | Must parse JSON objects AND filter by field value. |
+| Column scan miscount | 37 | Opus/Sonnet (4), Haiku (3), GPT-5.4 (8), mini (4), Gemini (18) | `edge_count`, `function_count`, `calls_edge_count` wrong. |
+| Attention decay (last row) | 3 | GPT-5.4 (2), Gemini (1) | `last_symbol_kind` reads edge type instead of kind. |
 
 #### Failures by model tier
 

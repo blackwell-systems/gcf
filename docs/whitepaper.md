@@ -14,7 +14,7 @@ We evaluated GCF across 1,300+ LLM evaluations spanning 10 models and 3 provider
 
 We benchmark against JSON and TOON (Token-Oriented Object Notation), a tabular encoding format that declares array field names once and uses comma-separated rows, achieving 30-60% savings versus JSON. TOON is the closest competitor to GCF in the LLM wire format space.
 
-**Comprehension:** 23 runs across 10 models. GCF averages 90.5% accuracy where TOON averages 68.5% and JSON averages 53.6%. Four models achieve 100% (Claude Sonnet 4.6, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash). GCF wins 22 of 23 runs (1 tie, 0 losses).
+**Comprehension:** 23 runs across 10 models. GCF averages 90.7% accuracy where TOON averages 68.5% and JSON averages 53.6%. Four models achieve 100% (Claude Sonnet 4.6, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash). GCF wins 22 of 23 runs (1 tie, 0 losses).
 
 **Generation:** 28 runs across 9 models. GCF achieves 5/5 validity on every frontier model. TOON's official decoder rejects LLM-generated output on 7 of 9 models due to a structural design flaw in flat tabular encoding. GCF output is 63% smaller than JSON and 33% smaller than TOON.
 
@@ -387,7 +387,7 @@ Savings increase with payload size because the ratio of edge references to node 
 | Claude Sonnet 4.6 | 2 | **100%** | 73.1% | 53.8% |
 | Claude Haiku 4.5 | 2 | **96.2%** | 69.2% | 57.7% |
 | GPT-5.5 | 5 | **84.1%** | 67.7% | 45.8% |
-| GPT-5.4 | 4 | **76.4%** | 56.0% | 44.1% |
+| GPT-5.4 | 4 | **78.0%** | 56.0% | 44.1% |
 | GPT-5.4-mini | 2 | **71.8%** | 64.1% | 54.2% |
 | Gemini 2.5 Pro | 1 | **100%** | 76.9% | 58.3% |
 | Gemini 3.1 Pro | 1 | **100%** | 76.9% | 46.2% |
@@ -524,7 +524,7 @@ JSON with shortened field names (`"qn"` instead of `"qualified_name"`) achieves 
 
 ## 8. Limitations and Validation
 
-**LLM comprehension.** 23 runs across 10 models and 3 providers validate this design. GCF averages 90.5% accuracy where JSON averages 53.6% and TOON averages 68.5%. Four models achieve 100% on GCF. The concern that LLMs might struggle with GCF's dense positional format was unfounded; the format improves comprehension by eliminating structural noise. GCF's `@N` local IDs, `##` section headers, and `|` pipe separators are more comprehensible to an LLM than JSON's `"qualified_name":` repeated 500 times.
+**LLM comprehension.** 23 runs across 10 models and 3 providers validate this design. GCF averages 90.7% accuracy where JSON averages 53.6% and TOON averages 68.5%. Four models achieve 100% on GCF. The concern that LLMs might struggle with GCF's dense positional format was unfounded; the format improves comprehension by eliminating structural noise. GCF's `@N` local IDs, `##` section headers, and `|` pipe separators are more comprehensible to an LLM than JSON's `"qualified_name":` repeated 500 times.
 
 **LLM generation.** 28 generation runs across 9 models and 3 providers. GCF achieves 5/5 validity on every frontier model (Opus, Sonnet, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro) with a 3-line primer and zero prior training. TOON's official decoder rejects LLM-generated output on 7 of 9 models. The failure is structural: TOON's flat columns encode semantic categories as integers, and models write labels ("target") instead of the expected integer (0). GCF expresses categories through section placement (`## targets`), aligning with how models naturally express grouped data. GCF output is 63% smaller than JSON and 33% smaller than TOON.
 
@@ -608,13 +608,13 @@ JSON is the default encoding for LLM interactions because it is universal, not b
 
 GCF eliminates this waste through two encoding profiles. The graph profile uses referential identity (local IDs), topological encoding (edge arrows), and hierarchical grouping (section headers) for code graph data. The generic profile uses positional rows with pipe separators, section headers, and inline primitive arrays for arbitrary structured data. Both achieve significant savings: 79% versus JSON on graph data at 500 symbols, 34% versus TOON on TOON's own mixed-structure benchmark (winning all 6 datasets).
 
-GCF is bidirectional. 1,300+ LLM evaluations across 10 models and 3 providers prove it. Comprehension: 90.5% average accuracy (four models at 100%) where JSON averages 53.6% and TOON averages 68.5%. Generation: 5/5 validity on every frontier model where TOON fails on 7 of 9 models. Output: 63% fewer tokens than JSON, 33% fewer than TOON. Session deduplication (92.7% by the fifth call), delta encoding (81.2% on re-queries), and streaming encode (zero-buffering with trailer summary) compound savings across multi-turn interactions. No competing format offers these features.
+GCF is bidirectional. 1,300+ LLM evaluations across 10 models and 3 providers prove it. Comprehension: 90.7% average accuracy (four models at 100%) where JSON averages 53.6% and TOON averages 68.5%. Generation: 5/5 validity on every frontier model where TOON fails on 7 of 9 models. Output: 63% fewer tokens than JSON, 33% fewer than TOON. Session deduplication (92.7% by the fifth call), delta encoding (81.2% on re-queries), and streaming encode (zero-buffering with trailer summary) compound savings across multi-turn interactions. No competing format offers these features.
 
 The format is text-based, LLM-optimized, and implementable in any language. Implementations exist in six languages (Go, TypeScript, Python, Rust, Swift, Kotlin) with zero or minimal runtime dependencies. A drop-in MCP proxy enables adoption with zero code changes and adds streaming progress notifications for immediate partial context delivery.
 
 The broader point: GCF is a wire format. Wire formats are not optimized for human readability. HTTP headers are not readable. Protobuf is not readable. Nobody cares; they use a viewer. GCF is the wire format; JSON is the viewer format. The agent reads GCF (cheap, accurate), does its work, then calls `decode()` at the end if a human needs to see the result. Human readability is a last-mile rendering concern, not a wire format property.
 
-The format that looks clean to humans (JSON) is the one that breaks for agents at scale. The format optimized for agentic comprehension (GCF) achieves 90.5% average accuracy across 10 models at the lowest token cost, with four models hitting 100%. TOON, the format positioned as the compromise between human readability and machine efficiency, fails generation on 7 of 9 models and never achieves 100% comprehension on any model. This is not a tradeoff. It is a design choice validated by 1,300+ evaluations across every major AI provider.
+The format that looks clean to humans (JSON) is the one that breaks for agents at scale. The format optimized for agentic comprehension (GCF) achieves 90.7% average accuracy across 10 models at the lowest token cost, with four models hitting 100%. TOON, the format positioned as the compromise between human readability and machine efficiency, fails generation on 7 of 9 models and never achieves 100% comprehension on any model. This is not a tradeoff. It is a design choice validated by 1,300+ evaluations across every major AI provider.
 
 ---
 

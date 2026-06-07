@@ -16,7 +16,7 @@
 
 ---
 
-**79% fewer input tokens than JSON. 63% fewer output tokens. 90.5% average comprehension accuracy across 10 models and 3 providers (four models hit 100%). 1,300+ LLM evaluations. Zero training.**
+**79% fewer input tokens than JSON. 63% fewer output tokens. 90.7% average comprehension accuracy across 10 models and 3 providers (four models hit 100%). 1,300+ LLM evaluations. Zero training.**
 
 Encode any JSON payload as GCF before sending it to an LLM. Arrays, nested objects, key-value pairs, mixed types. The model reads it natively with zero format instructions. `decode()` converts back to JSON when a human needs to see it.
 
@@ -32,7 +32,7 @@ pip install gcf-proxy    # wrap any MCP server, zero code changes
 
 | | GCF | TOON | JSON |
 |---|---|---|---|
-| **Comprehension** (23 runs, 10 models) | **90.5%** | 68.5% | 53.6% |
+| **Comprehension** (23 runs, 10 models) | **90.7%** | 68.5% | 53.6% |
 | **Generation** (28 runs, 9 models) | **5/5** | 1.0/5 | 5.0/5 |
 | **Input tokens** (500 symbols) | **11,090** | 16,378 | 53,341 |
 | **Output tokens** (100 symbols) | **5,976** | 8,937 | 16,121 |

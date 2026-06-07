@@ -6,7 +6,7 @@ GCF works in both directions: tools produce it, LLMs read it, and LLMs can produ
 
 GCF looks dense to human eyes. `@0<@1 calls` is not as immediately obvious as `{"source": "pkg.Server", "target": "pkg.Auth", "edge_type": "calls"}`. That's deliberate.
 
-Human-readability and LLM-readability are different things, and they diverge at scale. At 8 records, both JSON and GCF are easy for humans and LLMs alike. At 500 records, JSON's field-name repetition creates enough structural noise that LLMs lose count (53.6% average accuracy across 10 models). GCF's dense, positional format cuts through that noise (90.5% accuracy, four models at 100%).
+Human-readability and LLM-readability are different things, and they diverge at scale. At 8 records, both JSON and GCF are easy for humans and LLMs alike. At 500 records, JSON's field-name repetition creates enough structural noise that LLMs lose count (53.6% average accuracy across 10 models). GCF's dense, positional format cuts through that noise (90.7% accuracy, four models at 100%).
 
 Here's what JSON at 500 symbols looks like to an LLM. Every record repeats five field names:
 
@@ -28,7 +28,7 @@ The same data in GCF:
 ... 497 more, each one line, no repeated field names ...
 ```
 
-No noise. Every token is content. Across 23 runs and 10 models, GCF averages 90.5% accuracy. Four models (Sonnet, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash) achieve 100%.
+No noise. Every token is content. Across 23 runs and 10 models, GCF averages 90.7% accuracy. Four models (Sonnet, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash) achieve 100%.
 
 The format is optimized for the actual consumer. Every character carries meaning. No decoration, no repeated field names, no structural tokens that exist only for human scanners. The result is a format that agents understand perfectly and costs a fraction of the "readable" alternative.
 
@@ -61,7 +61,7 @@ The [comprehension eval](https://github.com/blackwell-systems/gcf-go/tree/main/e
 
 | Format | Avg accuracy (10 models) | Tokens |
 |--------|--------------------------|--------|
-| **GCF** | **90.5%** | **11,090** |
+| **GCF** | **90.7%** | **11,090** |
 | TOON | 68.5% | 16,378 |
 | JSON | 53.6% | 53,341 |
 

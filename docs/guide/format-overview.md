@@ -370,4 +370,4 @@ Both profiles use the same grammar primitives: `##` headers, `@` IDs, positional
 - **Line-oriented.** One semantic unit per line.
 - **Shallow nesting.** The graph profile is flat. The generic profile supports indented nested fields for records with sub-objects.
 - **Deterministic.** Same input produces same output.
-- **LLM-parseable.** 90.5% average comprehension accuracy across 10 models and 3 providers (four models hit 100%). No model has been trained on GCF.
+- **LLM-parseable.** 90.7% average comprehension accuracy across 10 models and 3 providers (four models hit 100%). No model has been trained on GCF.

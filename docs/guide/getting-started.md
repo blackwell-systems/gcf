@@ -1,6 +1,6 @@
 # Getting Started
 
-GCF is a drop-in replacement for JSON in AI pipelines. Encode any structured data as GCF before sending it to an LLM: 79% fewer tokens on input, 63% fewer on output, 90.5% average comprehension accuracy across 10 models and 3 providers (four models hit 100%). No model has ever been trained on GCF. `decode()` converts back to JSON when a human needs to see it.
+GCF is a drop-in replacement for JSON in AI pipelines. Encode any structured data as GCF before sending it to an LLM: 79% fewer tokens on input, 63% fewer on output, 90.7% average comprehension accuracy across 10 models and 3 providers (four models hit 100%). No model has ever been trained on GCF. `decode()` converts back to JSON when a human needs to see it.
 
 ## When to use GCF
 

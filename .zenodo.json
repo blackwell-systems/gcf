@@ -6,7 +6,7 @@
       "affiliation": "Blackwell Systems"
     }
   ],
-  "description": "1,300+ LLM evaluations across 10 models and 3 providers demonstrate that GCF achieves 90.5% comprehension accuracy (four models at 100%) where JSON averages 53.6% and TOON averages 68.5%. GCF achieves 5/5 generation validity on every frontier model. TOON's official decoder rejects LLM-generated output on 7 of 9 models. GCF uses 79% fewer input tokens than JSON and wins all 6 datasets on TOON's own benchmark.",
+  "description": "1,300+ LLM evaluations across 10 models and 3 providers demonstrate that GCF achieves 90.7% comprehension accuracy (four models at 100%) where JSON averages 53.6% and TOON averages 68.5%. GCF achieves 5/5 generation validity on every frontier model. TOON's official decoder rejects LLM-generated output on 7 of 9 models. GCF uses 79% fewer input tokens than JSON and wins all 6 datasets on TOON's own benchmark.",
   "keywords": [
     "LLM",
     "wire format",

@@ -13,7 +13,7 @@
 - [x] **CLI tool**: `gcf encode`, `gcf decode`, `gcf stats` in Go, Python, TypeScript.
 - [x] **Conformance test suite**: 14 language-agnostic JSON fixtures.
 - [x] **Interactive playground**: three-way live comparison (JSON/TOON/GCF) with real TOON library.
-- [x] **Comprehension eval**: 23 runs, 10 models, 3 providers. 90.5% average. Four models at 100%.
+- [x] **Comprehension eval**: 23 runs, 10 models, 3 providers. 90.7% average. Four models at 100%.
 - [x] **Generation eval**: 28 runs, 9 models, 3 providers. 5/5 on every frontier model.
 - [x] **Failure taxonomy**: precision vs comprehension vs structural overwhelm, classified by model tier.
 - [x] **Token efficiency on TOON's benchmark**: wins all 6 datasets.
