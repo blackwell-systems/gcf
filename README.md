@@ -13,6 +13,7 @@
 
 <h3 align="center">Drop-in JSON replacement for all AI pipelines, with superpowers for graph-shaped data.</h3>
 
+> [!IMPORTANT]
 > **Graph Compact Format (GCF): A Token-Efficient Wire Format for LLM Tool Interactions**
 > Dayna Blackwell, 2026. DOI: [10.5281/zenodo.20579817](https://doi.org/10.5281/zenodo.20579817)
 
