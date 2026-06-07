@@ -67,8 +67,6 @@
 | Gemini 3.5 Flash | 1 | **100%** | 61.5% | 46.2% | +38.5 vs TOON |
 | Gemini 2.5 Pro | 1 | **100%** | 76.9% | 58.3% | +23.1 vs TOON |
 | Gemini 3.1 Pro | 1 | **100%** | 76.9% | 46.2% | +23.1 vs TOON |
-| Gemini 3.5 Flash | 1 | **100%** | 61.5% | 46.2% | +38.5 vs TOON |
-| Gemini 2.5 Pro | 1 | **100%** | 76.9% | 58.3% | +23.1 vs TOON |
 
 ### Methodology notes
 
@@ -151,10 +149,11 @@ comprehension/
 ├── comprehension-13q-sonnet46-run1-2026-06-06.log      # Claude Sonnet 4.6 run 1: 100%
 ├── comprehension-13q-sonnet46-run2-2026-06-06.log      # Claude Sonnet 4.6 run 2: 100%
 ├── comprehension-13q-haiku45-run1-2026-06-06.log       # Claude Haiku 4.5 run 1: 92.3%
-├── comprehension-13q-haiku45-run2-2026-06-06.log       # Claude Haiku 4.5 run 2: 100%
+├── haiku-4.5-run2.txt                                  # Claude Haiku 4.5 run 2: 100%
 ├── comprehension-13q-gpt55-run1-2026-06-06.log         # GPT-5.5 run 1: 91.7%
 ├── comprehension-13q-gpt55-run2-2026-06-06.log         # GPT-5.5 run 2: 76.9%
 ├── comprehension-13q-gpt55-run3-2026-06-06.log         # GPT-5.5 run 3: 76.9%
+├── comprehension-13q-gpt55-run4-2026-06-06.log         # GPT-5.5 run 4: 91.7%
 ├── comprehension-13q-gpt55-run5-2026-06-06.log         # GPT-5.5 run 5: 83.3%
 ├── comprehension-13q-gpt54-run1-2026-06-06.log         # GPT-5.4 run 1: 75.0%
 ├── comprehension-13q-gpt54-run2-2026-06-06.log         # GPT-5.4 run 2: 76.9%
@@ -162,11 +161,17 @@ comprehension/
 ├── comprehension-13q-gpt54-run4-2026-06-06.log         # GPT-5.4 run 4: 76.9%
 ├── comprehension-13q-gpt54-mini-run1-2026-06-06.log    # GPT-5.4-mini run 1: 76.9%
 ├── comprehension-13q-gpt54-mini-run2-2026-06-06.log    # GPT-5.4-mini run 2: 66.7%
-├── comprehension-500sym-3way-2026-06-03.log            # Original Claude eval (pre-edge fix)
-└── haiku-4.5-run2.txt                                  # Claude Haiku 4.5 run 2: 100%
+├── comprehension-13q-gemini25flash-run1-2026-06-06.log # Gemini 2.5 Flash run 1: 76.9%
+├── comprehension-13q-gemini25flash-run2-2026-06-06.log # Gemini 2.5 Flash run 2: 75.0%
+├── comprehension-13q-gemini25flash-run3-2026-06-06.log # Gemini 2.5 Flash run 3: 90.0%
+├── comprehension-13q-gemini25pro-run1-2026-06-06.log   # Gemini 2.5 Pro run 1: 100%
+├── comprehension-13q-gemini31pro-run1-2026-06-06.log   # Gemini 3.1 Pro run 1: 100%
+├── comprehension-13q-gemini35flash-run1-2026-06-06.log # Gemini 3.5 Flash run 1: 100%
+└── comprehension-500sym-3way-2026-06-03.log            # Original Claude eval (pre-edge fix)
 
 artifacts/
-└── opus-json-enumeration-failure.md                    # Opus enumerates 143 symbols, gets wrong answer
+├── opus-json-enumeration-failure.md                    # Opus enumerates 143 symbols, gets wrong answer
+└── opus-json-enumeration-failure-run2.md               # Opus run 2: 119 symbols, catches own error, still wrong
 ```
 
 ---
@@ -185,6 +190,8 @@ artifacts/
 | GPT-5.5 | YES | YES | YES | YES | 4-5/5 | 4-5/5 | 2 |
 | GPT-5.4 | YES | YES | YES | YES | YES | 5/5 | 1 |
 | GPT-5.4-mini | YES | YES | YES | YES | YES | 5/5 | 2 (zero variance) |
+| Gemini 2.5 Pro | YES | YES | YES | YES | YES | 5/5 | 2 (zero variance) |
+| Gemini 3.1 Pro | YES | YES | YES | YES | YES | 5/5 | 1 |
 | Gemini 3.1 Flash Lite | YES | YES | YES | YES | YES | 5/5 | 2 (zero variance) |
 | Gemini 2.5 Flash | YES | YES | 3-4/5 | 3-4/5 | 3-4/5 | 3-4/5 | 2 (high variance, free tier) |
 
@@ -261,8 +268,15 @@ generation/
 ├── generation-gpt54-mini-toon-integers-run2-2026-06-06.log  # GPT-5.4-mini TOON hand-holding run 2: 5/5
 ├── generation-gemini25flash-run1-2026-06-06.log      # Gemini 2.5 Flash run 1: GCF 4/5, TOON 4/5, JSON 2/5
 ├── generation-gemini25flash-run2-2026-06-06.log      # Gemini 2.5 Flash run 2: GCF 3/5, TOON 0/5, JSON 0/5
+├── generation-gemini25flash-run3-2026-06-06.log      # Gemini 2.5 Flash run 3: GCF 2/5, JSON 3/5 (truncated)
+├── generation-gemini25pro-run1-2026-06-06.log        # Gemini 2.5 Pro run 1: GCF 3/5, TOON 1/5, JSON 3/5
+├── generation-gemini25pro-run2-2026-06-06.log        # Gemini 2.5 Pro run 2: GCF 5/5, TOON 1/5, JSON 5/5
+├── generation-gemini25pro-run3-2026-06-06.log        # Gemini 2.5 Pro run 3: GCF 5/5, TOON 1/5, JSON 5/5
+├── generation-gemini31pro-run1-2026-06-06.log        # Gemini 3.1 Pro run 1: GCF 5/5, TOON 0/5, JSON 5/5
+├── generation-gemini35flash-run1-2026-06-06.log      # Gemini 3.5 Flash run 1: GCF 3/5, TOON 1/5, JSON 3/5
 ├── generation-gemini31flashlite-run1-2026-06-06.log  # Gemini 3.1 Flash Lite run 1: GCF 5/5, TOON 0/5, JSON 4/5
 ├── generation-gemini31flashlite-run2-2026-06-06.log  # Gemini 3.1 Flash Lite run 2: GCF 5/5, TOON 0/5, JSON 4/5
+├── generation-gemini31flashlite-run3-2026-06-06.log  # Gemini 3.1 Flash Lite run 3: GCF 4/5, TOON 0/5, JSON 5/5
 ├── generation-gpt55-run1-2026-06-06.log              # GPT-5.5 run 1: GCF 4/5, TOON 1/5, JSON 5/5
 ├── generation-gpt55-run2-2026-06-06.log              # GPT-5.5 run 2: GCF 5/5, TOON 2/5, JSON 5/5
 ├── generation-haiku45-run1-2026-06-06.log            # Haiku 4.5 run 1: GCF 5/5, TOON 1/5, JSON 5/5
@@ -271,7 +285,6 @@ generation/
 ├── generation-sonnet46-run2-2026-06-06.log           # Sonnet 4.6 run 2: GCF 5/5, TOON 2/5, JSON 5/5
 ├── generation-opus46-run1-2026-06-06.log              # Opus 4.6 run 1: GCF 5/5, TOON 0/5, JSON 5/5
 ├── generation-opus46-run2-2026-06-06.log              # Opus 4.6 run 2: GCF 5/5, TOON 0/5, JSON 5/5
-├── generation-sonnet46-run2-2026-06-06.log           # Sonnet 4.6 run 2: GCF 5/5, TOON 2/5, JSON 5/5
 ├── generation-gcf-with-example-2026-06-04.log        # Claude GCF, with primer: 5/5 valid
 ├── generation-gcf-no-example-2026-06-04.log          # Claude GCF, cold-start: 3/5 valid
 ├── generation-toon-with-example-2026-06-04.log       # Claude TOON, with primer: 5/5 valid

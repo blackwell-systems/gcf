@@ -185,7 +185,9 @@ This is JSON's structural problem: it forces LLMs to perform manual enumeration 
 | GPT-5.4-mini | 5/5 | 0/5 | 5/5 | 2 (zero variance) |
 | Gemini 2.5 Pro | 5/5 | 1/5 | 5/5 | 2 (zero variance) |
 | Gemini 3.1 Pro | 5/5 | 0/5 | 5/5 | 1 |
+| Gemini 3.5 Flash | 3/5 | 1/5 | 3/5 | 1 |
 | Gemini 3.1 Flash Lite | 4-5/5 | 0/5 | 4-5/5 | 3 |
+| Gemini 2.5 Flash | 2-3/5 | 0-4/5 | 0-3/5 | 3 (output truncation) |
 
 ### Why TOON fails generation
 
