@@ -102,6 +102,43 @@ output := gcf.EncodeGeneric(map[string]any{
 fmt.Println(output)
 ```
 
+```rust [Rust]
+use gcf::encode_generic;
+use serde_json::json;
+
+let output = encode_generic(&json!({
+    "employees": [
+        {"id": 1, "name": "Alice", "department": "Engineering", "salary": 95000},
+        {"id": 2, "name": "Bob", "department": "Sales", "salary": 72000},
+    ]
+}));
+println!("{}", output);
+```
+
+```swift [Swift]
+import GCF
+
+let output = GCF.encodeGeneric([
+    "employees": [
+        ["id": 1, "name": "Alice", "department": "Engineering", "salary": 95000],
+        ["id": 2, "name": "Bob", "department": "Sales", "salary": 72000],
+    ]
+])
+print(output)
+```
+
+```kotlin [Kotlin]
+import com.blackwellsystems.gcf.encodeGeneric
+
+val output = encodeGeneric(mapOf(
+    "employees" to listOf(
+        mapOf("id" to 1, "name" to "Alice", "department" to "Engineering", "salary" to 95000),
+        mapOf("id" to 2, "name" to "Bob", "department" to "Sales", "salary" to 72000),
+    )
+))
+println(output)
+```
+
 :::
 
 **Output:**
@@ -161,6 +198,48 @@ output := gcf.Encode(&gcf.Payload{
 })
 ```
 
+```rust [Rust]
+use gcf::{encode, Payload, Symbol, Edge};
+
+let output = encode(&Payload {
+    tool: "context_for_task".into(),
+    token_budget: 5000,
+    tokens_used: 1847,
+    symbols: vec![
+        Symbol { qualified_name: "pkg.Auth".into(), kind: "function".into(), score: 0.78, provenance: "lsp".into(), distance: 0, ..Default::default() },
+        Symbol { qualified_name: "pkg.Server".into(), kind: "function".into(), score: 0.54, provenance: "lsp".into(), distance: 1, ..Default::default() },
+    ],
+    edges: vec![Edge { source: "pkg.Server".into(), target: "pkg.Auth".into(), edge_type: "calls".into(), ..Default::default() }],
+    ..Default::default()
+});
+```
+
+```swift [Swift]
+import GCF
+
+let output = GCF.encode(Payload(
+    tool: "context_for_task", tokenBudget: 5000, tokensUsed: 1847,
+    symbols: [
+        Symbol(qualifiedName: "pkg.Auth", kind: "function", score: 0.78, provenance: "lsp", distance: 0),
+        Symbol(qualifiedName: "pkg.Server", kind: "function", score: 0.54, provenance: "lsp", distance: 1),
+    ],
+    edges: [Edge(source: "pkg.Server", target: "pkg.Auth", edgeType: "calls")]
+))
+```
+
+```kotlin [Kotlin]
+import com.blackwellsystems.gcf.*
+
+val output = encode(Payload(
+    tool = "context_for_task", tokenBudget = 5000, tokensUsed = 1847,
+    symbols = listOf(
+        Symbol(qualifiedName = "pkg.Auth", kind = "function", score = 0.78, provenance = "lsp", distance = 0),
+        Symbol(qualifiedName = "pkg.Server", kind = "function", score = 0.54, provenance = "lsp", distance = 1),
+    ),
+    edges = listOf(Edge(source = "pkg.Server", target = "pkg.Auth", edgeType = "calls"))
+))
+```
+
 :::
 
 **Output:**
@@ -187,7 +266,7 @@ from gcf import decode
 p = decode(gcf_text)
 print(p.tool)           # "context_for_task"
 print(len(p.symbols))   # 2
-print(p.edges[0].source)  # "pkg.NewServer"
+print(p.edges[0].source)  # "pkg.Server"
 ```
 
 ```typescript [TypeScript]
@@ -196,7 +275,7 @@ import { decode } from '@blackwell-systems/gcf';
 const p = decode(gcfText);
 console.log(p.tool);           // "context_for_task"
 console.log(p.symbols.length); // 2
-console.log(p.edges[0].source);  // "pkg.NewServer"
+console.log(p.edges[0].source);  // "pkg.Server"
 ```
 
 ```go [Go]
@@ -206,7 +285,34 @@ if err != nil {
 }
 fmt.Println(p.Tool)           // "context_for_task"
 fmt.Println(len(p.Symbols))   // 2
-fmt.Println(p.Edges[0].Source)  // "pkg.NewServer"
+fmt.Println(p.Edges[0].Source)  // "pkg.Server"
+```
+
+```rust [Rust]
+use gcf::decode;
+
+let p = decode(gcf_text)?;
+println!("{}", p.tool);           // "context_for_task"
+println!("{}", p.symbols.len());  // 2
+println!("{}", p.edges[0].source); // "pkg.Server"
+```
+
+```swift [Swift]
+import GCF
+
+let p = try GCF.decode(gcfText)
+print(p.tool)           // "context_for_task"
+print(p.symbols.count)  // 2
+print(p.edges[0].source) // "pkg.Server"
+```
+
+```kotlin [Kotlin]
+import com.blackwellsystems.gcf.decode
+
+val p = decode(gcfText)
+println(p.tool)           // "context_for_task"
+println(p.symbols.size)   // 2
+println(p.edges[0].source) // "pkg.Server"
 ```
 
 :::
