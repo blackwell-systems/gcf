@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
-  <img src="assets/gcf-logo.png" alt="GCF" width="120">
+  <img src="assets/gcf-logo.png" alt="GCF" width="360">
 </p>
 
 <h1 align="center">GCF</h1>
