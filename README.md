@@ -4,7 +4,7 @@
   <a href="https://gcformat.com/playground.html"><img src="https://img.shields.io/badge/playground-live-2563eb?style=for-the-badge" alt="Playground"></a>
   <a href="https://gcformat.com/guide/benchmarks.html"><img src="https://img.shields.io/badge/benchmarks-1%2C300%2B%20evals-22c55e?style=for-the-badge" alt="Benchmarks"></a>
   <a href="https://github.com/blackwell-systems/gcf"><img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/blackwell-systems/gcf/main/assets/downloads-badge.json&style=for-the-badge" alt="Downloads"></a>
-  <a href="https://zenodo.org/records/20579818"><img src="https://img.shields.io/badge/DOI-10.5281%2Fzenodo.20579818-blue?style=for-the-badge" alt="DOI"></a>
+  <a href="https://zenodo.org/records/20579817"><img src="https://img.shields.io/badge/DOI-10.5281%2Fzenodo.20579817-blue?style=for-the-badge" alt="DOI"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-333?style=for-the-badge" alt="License"></a>
 </p>
 
