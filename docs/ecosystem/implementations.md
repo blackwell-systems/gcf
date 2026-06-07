@@ -48,6 +48,16 @@ Your server keeps outputting JSON. The LLM receives GCF. [Full setup guide](/gui
 
 [GitHub](https://github.com/blackwell-systems/gcf-proxy) · [PyPI](https://pypi.org/project/gcf-proxy/) · [npm](https://www.npmjs.com/package/@blackwell-systems/gcf-proxy)
 
+## Editor Support
+
+Syntax highlighting for GCF files via [tree-sitter](https://github.com/blackwell-systems/tree-sitter-gcf). Supports Neovim, Helix, Zed, and any tree-sitter-compatible editor.
+
+```bash
+npm install tree-sitter-gcf
+```
+
+[GitHub](https://github.com/blackwell-systems/tree-sitter-gcf) · [npm](https://www.npmjs.com/package/tree-sitter-gcf)
+
 ## Output compatibility
 
 All implementations produce byte-for-byte identical output for the same input. The format is the product, not the implementation. Token efficiency numbers are independent of which library you use.

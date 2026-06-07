@@ -133,8 +133,9 @@ No other format has these. They compound across multi-turn agent interactions.
 | Swift | Swift Package Manager | [gcf-swift](https://github.com/blackwell-systems/gcf-swift) |
 | Kotlin | JitPack | [gcf-kotlin](https://github.com/blackwell-systems/gcf-kotlin) |
 | MCP Proxy | `pip install gcf-proxy` | [gcf-proxy](https://github.com/blackwell-systems/gcf-proxy) |
+| Tree-sitter | `npm install tree-sitter-gcf` | [tree-sitter-gcf](https://github.com/blackwell-systems/tree-sitter-gcf) |
 
-Zero runtime dependencies. MIT licensed. All implementations support both generic profile (`encodeGeneric`) and graph profile (`encode`). CLI included in Go, TypeScript, and Python.
+Zero runtime dependencies. MIT licensed. All implementations support both generic profile (`encodeGeneric`) and graph profile (`encode`). CLI included in Go, TypeScript, and Python. Syntax highlighting via tree-sitter (Neovim, Helix, Zed).
 
 ## Documentation
 
