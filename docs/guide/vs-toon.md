@@ -155,9 +155,13 @@ The LLM immediately knows what's most relevant without scanning the entire paylo
 | Gemini 2.5 Pro | **5/5** | 1/5 | 5/5 |
 | Gemini 3.1 Pro | **5/5** | 0/5 | 5/5 |
 
+![Generation Validity by Model](/charts/generation-validity.png)
+
 **TOON's official decoder rejects the output on 7 of 9 models.** The failure is structural: TOON's flat columns require the model to encode semantic categories as integers. When told "this symbol is a target," the model writes `target` in the distance column. TOON's decoder expects `0`. Every model fails to perform this mapping unprompted.
 
 GCF expresses distance through section placement (`## targets`, `## related`). No integer mapping required. The format aligns with how LLMs naturally express grouped data.
+
+![The Distance Label Problem](/charts/distance-label-problem.png)
 
 When TOON is given pre-encoded integers (hand-holding the model through the mapping to compensate for their fragile format), performance improves on some models but is still inconsistent. Even in the best case, TOON output is 28% larger than GCF.
 
