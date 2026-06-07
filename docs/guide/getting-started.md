@@ -25,7 +25,7 @@ GCF is most effective when:
 ## When NOT to use GCF
 
 - Single scalar values (just return the value)
-- Systems that require JSON schema validation (GCF has no schema system yet)
+- Systems that require JSON schema validation: call `decodeGeneric()` first, then validate the decoded object with any JSON Schema validator. The schema validates the data structure, not the wire encoding.
 - Consumers that can't parse non-JSON (use the [MCP proxy](/guide/proxy) to bridge)
 
 ## "But I need human-readable output"
