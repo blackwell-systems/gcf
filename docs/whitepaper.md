@@ -482,7 +482,7 @@ edges[1]{source,target,type}:
 
 **GCF (same data):**
 ```
-GCF tool=example budget=0 tokens=0 symbols=3 edges=1
+GCF tool=example symbols=3 edges=1
 ## targets
 @0 fn pkg.Auth 0.90 lsp
 ## related
