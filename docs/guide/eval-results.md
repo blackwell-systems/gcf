@@ -2,9 +2,13 @@
 
 Complete data from all eval runs. For the summary, see [Benchmarks](/guide/benchmarks).
 
+![Comprehension and Generation](/charts/hero.png)
+
 ---
 
-## Comprehension: All 23 Runs
+## Comprehension: All Runs
+
+![Comprehension Accuracy by Model](/charts/accuracy-by-model.png)
 
 500 symbols, 200 edges, 13 structured extraction questions, zero format instructions. Each run generates a fresh random payload.
 
@@ -182,6 +186,10 @@ This is JSON's structural problem: it forces LLMs to perform manual enumeration 
 | Gemini 2.5 Pro | 5/5 | 1/5 | 5/5 | 2 (zero variance) |
 | Gemini 3.1 Pro | 5/5 | 0/5 | 5/5 | 1 |
 | Gemini 3.1 Flash Lite | 4-5/5 | 0/5 | 4-5/5 | 3 |
+
+### Why TOON fails generation
+
+![The Distance Label Problem](/charts/distance-label-problem.png)
 
 ### TOON generation heatmap
 
