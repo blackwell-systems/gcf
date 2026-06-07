@@ -469,6 +469,32 @@ Some tools return markdown-formatted text. This is human-optimized, not LLM-opti
 
 TOON is a tabular encoding format for JSON that declares array fields once and uses comma-separated rows. It achieves 30-60% savings versus JSON on flat tabular data.
 
+**TOON:**
+```
+tool: example
+symbols[3]{name,kind,score,distance}:
+  pkg.Auth,function,0.9,0
+  pkg.Server,function,0.7,1
+  pkg.Cache,type,0.4,2
+edges[1]{source,target,type}:
+  pkg.Server,pkg.Auth,calls
+```
+
+**GCF (same data):**
+```
+GCF tool=example budget=0 tokens=0 symbols=3 edges=1
+## targets
+@0 fn pkg.Auth 0.90 lsp
+## related
+@1 fn pkg.Server 0.70 lsp
+## extended
+@2 type pkg.Cache 0.40 structural
+## edges [1]
+@0<@1 calls
+```
+
+The structural difference: TOON puts all symbols in one flat table with a `distance` column. GCF groups them into `## targets`, `## related`, `## extended` sections. This difference drives both the comprehension gap (models can't filter flat tables at scale) and the generation gap (models write "target" instead of 0 in TOON's distance column).
+
 **Methodology:** We forked TOON's benchmark repository (`github.com/toon-format/toon`), added GCF as one additional formatter (a single file importing `encodeGeneric` from the published `@blackwell-systems/gcf` npm package), and ran their benchmark harness unchanged. Datasets, tokenizer (gpt-tokenizer, o200k_base), and methodology are entirely upstream. Results:
 
 | Dataset | GCF | TOON | Result |
