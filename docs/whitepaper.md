@@ -26,7 +26,7 @@ Session deduplication (92.7% savings by the 5th call) and delta encoding (81.2% 
 
 ---
 
-## 1. The Problem: JSON Is the Wrong Format for LLM Interactions
+## 1. Why JSON Fails at Scale
 
 The Model Context Protocol (MCP) defines how AI agents interact with external tools. Tool responses are overwhelmingly encoded as JSON. This is convenient for developers but expensive for the consumer that matters most: the language model itself.
 
