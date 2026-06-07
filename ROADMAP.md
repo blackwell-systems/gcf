@@ -34,6 +34,7 @@
 
 ## Spec v1.5 (under consideration)
 
+- [ ] **Omit zero-value header fields**: `budget=0 tokens=0` wastes ~4 tokens per payload. All 6 encoders unconditionally emit them. Fix to omit when zero. No eval rerun needed (scores unchanged, only token count drops marginally).
 - [ ] **`## _counts` section**: dedicated metadata section with kind/edge-type counts. Jumped GPT-5.4 from 76.9% to 90.9% in experiment (+14pp). Adds format complexity. Needs testing on more models before committing to spec.
 
 ## Tooling
