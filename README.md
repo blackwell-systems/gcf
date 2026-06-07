@@ -101,6 +101,8 @@ GCF tool=context_for_task budget=5000 tokens=1847 symbols=2 edges=1
 
 Local IDs (`@0`, `@1`) replace full names in edges. 233 tokens instead of 965 for JSON.
 
+[![Playground](assets/playground.png)](https://gcformat.com/playground.html)
+
 **[Try it live in the playground](https://gcformat.com/playground.html)** with real-time three-way comparison (JSON vs TOON vs GCF).
 
 ---
