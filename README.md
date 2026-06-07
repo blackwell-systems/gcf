@@ -23,8 +23,17 @@
 
 Encode any JSON payload as GCF before sending it to an LLM. Arrays, nested objects, key-value pairs, mixed types. The model reads it natively with zero format instructions. `decode()` converts back to JSON when a human needs to see it.
 
+```bash
+pip install gcf-python                    # Python
+npm install @blackwell-systems/gcf        # TypeScript
+go get github.com/blackwell-systems/gcf-go  # Go
+cargo add gcf                             # Rust
 ```
-pip install gcf-proxy    # wrap any MCP server, zero code changes
+
+Or wrap any existing MCP server with zero code changes:
+
+```bash
+pip install gcf-proxy
 ```
 
 ---
@@ -43,15 +52,6 @@ pip install gcf-proxy    # wrap any MCP server, zero code changes
 GCF wins all 6 datasets on [TOON's own benchmark](https://github.com/blackwell-systems/toon/tree/gcf-comparison). Full results: [gcformat.com/guide/benchmarks](https://gcformat.com/guide/benchmarks.html)
 
 ---
-
-## Try it
-
-```bash
-pip install gcf-python                    # Python
-npm install @blackwell-systems/gcf        # TypeScript
-go get github.com/blackwell-systems/gcf-go  # Go
-cargo add gcf                             # Rust
-```
 
 ### Encode any structured data (generic profile)
 
