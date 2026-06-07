@@ -2,7 +2,7 @@
 
 **Dayna Blackwell, Blackwell Systems**
 
-**Date:** 2026-06-06 · **DOI:** [10.5281/zenodo.20579817](https://zenodo.org/records/20579818)
+**Date:** 2026-06-06 · **DOI:** [10.5281/zenodo.20579817](https://doi.org/10.5281/zenodo.20579817)
 
 ---
 
