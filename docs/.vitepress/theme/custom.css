@@ -29,6 +29,10 @@
   max-width: 100% !important;
 }
 
+.hero-highlight {
+  color: var(--vp-c-brand-1);
+}
+
 .medium-zoom-overlay,
 .medium-zoom-image--opened {
   z-index: 999 !important;
