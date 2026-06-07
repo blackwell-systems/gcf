@@ -12,6 +12,8 @@ AI agents consume and produce structured data under fixed token budgets. The dom
 
 We evaluated GCF across 1,300+ LLM evaluations spanning 10 models and 3 providers (Anthropic, OpenAI, Google). No model has been trained on GCF.
 
+We benchmark against JSON and TOON (Token-Oriented Object Notation), a tabular encoding format that declares array field names once and uses comma-separated rows, achieving 30-60% savings versus JSON. TOON is the closest competitor to GCF in the LLM wire format space.
+
 **Comprehension:** 23 runs across 10 models. GCF averages 90.5% accuracy where TOON averages 68.5% and JSON averages 53.6%. Four models achieve 100% (Claude Sonnet 4.6, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash). GCF wins 22 of 23 runs (1 tie, 0 losses).
 
 **Generation:** 28 runs across 9 models. GCF achieves 5/5 validity on every frontier model. TOON's official decoder rejects LLM-generated output on 7 of 9 models due to a structural design flaw in flat tabular encoding. GCF output is 63% smaller than JSON and 33% smaller than TOON.
@@ -696,6 +698,3 @@ Both produce identical `Payload` structures when decoded. The streaming mode ena
 
 ---
 
-## Appendix C: Hash Computation
-
-GCF is format-agnostic with respect to the underlying data model. The examples in this paper use content-addressed graph data (SHA-256 hashed nodes and edges), but GCF encodes the payload structure, not the identity scheme. A GCF encoder receiving nodes identified by database IDs, UUIDs, or string keys would produce identical output; only the `qname` field values would differ.
