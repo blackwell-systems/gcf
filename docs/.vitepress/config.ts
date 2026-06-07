@@ -36,16 +36,26 @@ export default defineConfig({
         items: [
           { text: 'Getting Started', link: '/guide/getting-started' },
           { text: 'Format Overview', link: '/guide/format-overview' },
-          { text: 'Session Deduplication', link: '/guide/sessions' },
-          { text: 'Delta Encoding', link: '/guide/delta' },
           { text: 'Using GCF with LLMs', link: '/guide/llm-integration' },
           { text: 'MCP Integration', link: '/guide/mcp' },
           { text: 'MCP Proxy (Zero-Code)', link: '/guide/proxy' },
+        ],
+      },
+      {
+        text: 'Advanced',
+        items: [
+          { text: 'Session Deduplication', link: '/guide/sessions' },
+          { text: 'Delta Encoding', link: '/guide/delta' },
           { text: 'Streaming Encoding', link: '/guide/streaming' },
+        ],
+      },
+      {
+        text: 'Evidence',
+        items: [
           { text: 'Benchmarks', link: '/guide/benchmarks' },
           { text: 'Benchmarks (Full Data)', link: '/guide/eval-results' },
-          { text: 'Whitepaper', link: '/whitepaper' },
           { text: 'GCF vs TOON', link: '/guide/vs-toon' },
+          { text: 'Whitepaper', link: '/whitepaper' },
         ],
       },
       {
