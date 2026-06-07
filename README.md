@@ -11,7 +11,9 @@
   <img src="assets/gcf-logo.png" alt="GCF" width="360">
 </p>
 
-<p align="center"><strong>Drop-in JSON replacement for all AI pipelines, with superpowers for graph-shaped data.</strong></p>
+<h3 align="center">Drop-in JSON replacement for all AI pipelines, with superpowers for graph-shaped data.</h3>
+
+---
 
 **79% fewer input tokens than JSON. 63% fewer output tokens. 90.5% average comprehension accuracy across 10 models and 3 providers (four models hit 100%). 1,300+ LLM evaluations. Zero training.**
 
