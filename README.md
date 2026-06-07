@@ -7,7 +7,7 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a>
 </p>
 
-# GCF
+<h1 align="center">GCF</h1>
 
 **Drop-in JSON replacement for all AI pipelines, with superpowers for graph-shaped data.**
 
