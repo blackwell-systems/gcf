@@ -8,7 +8,7 @@
 
 **Status:** Stable
 
-**Authors:** Blackwell Systems
+**Authors:** Dayna Blackwell, Blackwell Systems
 
 **License:** MIT
 
