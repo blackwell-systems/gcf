@@ -173,4 +173,4 @@ Zero runtime dependencies. MIT licensed. All implementations support both generi
 
 ## License
 
-MIT
+MIT - [Dayna Blackwell](https://github.com/blackwell-systems)
