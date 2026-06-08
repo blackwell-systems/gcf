@@ -26,6 +26,7 @@ These files contain hardcoded eval numbers. **All must be updated when headline 
 
 **gcf repo (spec/docs):**
 - `README.md` (headline stats, benchmark table)
+- `eval/README.md`
 - `ROADMAP.md`
 - `.zenodo.json`
 - `docs/index.md` (landing page tagline, feature cards)
