@@ -115,8 +115,12 @@ Local IDs (`@0`, `@1`) replace full names in edges. 233 tokens instead of 965 fo
 
 ### Generic profile
 
-1. **Tabular headers.** `## name [count]{field1,field2}` declares field names once. Rows are pipe-separated values.
-2. **Section headers.** `## key` for nested objects. `key=value` for primitives.
+Encodes any JSON structure. Arrays, nested objects, mixed types, primitives.
+
+1. **Arrays of objects.** `## name [count]{field1,field2}` declares field names once. Rows are pipe-separated values. Field names are never repeated per record.
+2. **Nested objects.** `## address` becomes a section. Fields inside are `key=value` pairs or further nested sections.
+3. **Primitive arrays.** Inlined: `tags[2]: admin,user`. No wrapping structure.
+4. **Scalars.** `key=value` at the top level. Nulls, booleans, and numbers are preserved as-is.
 
 ### Graph profile
 
