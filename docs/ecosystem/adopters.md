@@ -20,6 +20,15 @@ GCF was designed for knowing's use case and extracted into a standalone format o
 - JSON remains the default; GCF is opt-in via session configuration
 - Uses `gcf-go` `EncodeGeneric` for generic profile encoding
 
+## NeuroNest
+
+[NeuroNest](https://github.com/NETGVai/NeuroNest) is an agent-first IDE built by [Network Guardian](https://netgv.ai). First independent commercial adoption of GCF.
+
+- GCF used in tool executor, swarm coordinator, and MCP server manager
+- Per-provider comprehension gate: validates each LLM provider can read GCF before enabling it
+- Parallel JSON/GCF pipeline with runtime rollout control
+- Uses `@blackwell-systems/gcf` TypeScript library
+
 ## Your project here
 
 If you're using GCF in production, [open an issue](https://github.com/blackwell-systems/gcf/issues) to be listed here.
