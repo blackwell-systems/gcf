@@ -78,6 +78,15 @@ These files contain hardcoded eval numbers. **All must be updated when headline 
 | Per-model averages | Mean of that model's runs |
 | Per-model GCF margin | Model GCF avg minus model TOON avg |
 
+### Step 6: Regenerate charts
+
+If headline numbers, per-model averages, or failure counts changed:
+
+1. Update data arrays in `../gcf-charts/charts.py`
+2. Run `python3 charts.py` to regenerate PNGs in `../gcf-charts/output/`
+3. Copy updated PNGs to `docs/public/charts/` (same filenames, docs pick them up automatically)
+4. Commit both repos
+
 ### What NOT to update on every run
 
 - Whitepaper PDF on Zenodo (only republish for major changes)
