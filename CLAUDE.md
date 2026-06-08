@@ -39,9 +39,13 @@ These files contain hardcoded eval numbers. **All must be updated when headline 
 - `docs/guide/mcp.md`
 - `docs/guide/vs-toon.md`
 - `docs/whitepaper.md`
+- `docs/.vitepress/theme/components/Playground.vue`
+- `eval/OPERATIONAL-EVAL-DESIGN.md`
 
 **Other repos:**
 - `../gcf-proxy/README.md`
+- `../gcf-proxy/pypi/README.md`
+- `../gcf-proxy/npm/gcf-proxy/README.md`
 - `../gcf-go/README.md`
 - `../gcf-typescript/README.md`
 - `../gcf-python/README.md`
@@ -50,7 +54,9 @@ These files contain hardcoded eval numbers. **All must be updated when headline 
 - `../gcf-kotlin/README.md`
 - `../agent-lsp/README.md`
 - `../betterthanjson/index.html`
+- `../betterthanjson/README.md`
 - `../blog/content/posts/llm-wire-format-comprehension-benchmark.md`
+- `../blog/content/oss.md`
 - `../toon-benchmark/GCF-COMPARISON.md`
 
 ### Step 5: Commit and push
