@@ -220,7 +220,7 @@ const PRESETS: Record<string, { label: string; json: any }> = {
 // State
 // ---------------------------------------------------------------------------
 
-type Tab = 'compare' | 'decode'
+type Tab = 'compare' | 'encode' | 'decode'
 
 const activeTab = ref<Tab>('compare')
 const inputText = ref('')
@@ -346,6 +346,32 @@ const gcfBarPct = computed(() => jsonTokens.value > 0 ? Math.round((gcfTokens.va
 const sessionBarPct = computed(() => jsonTokens.value > 0 ? Math.round((sessionTokens.value / jsonTokens.value) * 100) : 0)
 
 // ---------------------------------------------------------------------------
+// Encode tab
+// ---------------------------------------------------------------------------
+
+const encodeInput = ref('')
+const encodeParsed = computed(() => {
+  try { return JSON.parse(encodeInput.value) }
+  catch { return null }
+})
+const encodeIsPayload = computed(() => encodeParsed.value ? isPayloadShaped(encodeParsed.value) : false)
+const encodeOutput = computed(() => {
+  if (!encodeParsed.value) return ''
+  try {
+    if (encodeIsPayload.value) {
+      return encode(jsonFromPayloadObj(encodeParsed.value))
+    }
+    return encodeGeneric(encodeParsed.value)
+  } catch (e: any) {
+    return `Error: ${e.message ?? e}`
+  }
+})
+const encodeError = computed(() => encodeOutput.value.startsWith('Error:'))
+const encodeJsonTokens = computed(() => encodeInput.value.trim() ? estimateTokens(encodeInput.value) : 0)
+const encodeGcfTokens = computed(() => encodeOutput.value && !encodeError.value ? estimateTokens(encodeOutput.value) : 0)
+const encodeSavings = computed(() => encodeJsonTokens.value > 0 ? Math.round(100 * (1 - encodeGcfTokens.value / encodeJsonTokens.value)) : 0)
+
+// ---------------------------------------------------------------------------
 // Decode tab
 // ---------------------------------------------------------------------------
 
@@ -382,6 +408,8 @@ function shareUrl() {
   if (activeTab.value === 'compare') {
     params.set('input', inputText.value)
     if (showSession.value) params.set('session', '1')
+  } else if (activeTab.value === 'encode') {
+    params.set('json', encodeInput.value)
   } else {
     params.set('gcf', decodeInput.value)
   }
@@ -397,7 +425,11 @@ function shareUrl() {
 
 onMounted(() => {
   const params = new URLSearchParams(window.location.search)
-  if (params.get('tab') === 'decode') {
+  if (params.get('tab') === 'encode') {
+    activeTab.value = 'encode'
+    const json = params.get('json')
+    if (json) encodeInput.value = json
+  } else if (params.get('tab') === 'decode') {
     activeTab.value = 'decode'
     const gcf = params.get('gcf')
     if (gcf) decodeInput.value = gcf
@@ -431,6 +463,9 @@ onMounted(() => {
       <div class="pg-tabs">
         <button :class="['pg-tab', { active: activeTab === 'compare' }]" @click="activeTab = 'compare'">
           Compare Formats
+        </button>
+        <button :class="['pg-tab', { active: activeTab === 'encode' }]" @click="activeTab = 'encode'">
+          Encode to GCF
         </button>
         <button :class="['pg-tab', { active: activeTab === 'decode' }]" @click="activeTab = 'decode'">
           Decode GCF
@@ -582,6 +617,37 @@ onMounted(() => {
             TOON has no local-ID system. Every edge repeats the full qualified name of both source
             and target. GCF edges cost ~4 tokens each regardless of identifier length.
           </p>
+        </div>
+      </div>
+    </template>
+
+    <!-- ================================================================= -->
+    <!-- ENCODE TAB                                                        -->
+    <!-- ================================================================= -->
+    <template v-if="activeTab === 'encode'">
+      <div class="decode-panes">
+        <div class="pane">
+          <div class="pane-head">
+            <span class="pane-label">JSON Input</span>
+            <span class="pane-tokens" v-if="encodeJsonTokens">{{ encodeJsonTokens.toLocaleString() }} tokens</span>
+          </div>
+          <textarea
+            class="decode-textarea"
+            v-model="encodeInput"
+            spellcheck="false"
+            placeholder="Paste any JSON here..."
+          ></textarea>
+          <div class="input-error" v-if="encodeInput.trim() && !encodeParsed">Invalid JSON</div>
+        </div>
+        <div class="pane">
+          <div class="pane-head pane-head-gcf">
+            <span class="pane-label">GCF Output</span>
+            <span class="pane-tokens" v-if="encodeOutput && !encodeError">{{ encodeGcfTokens.toLocaleString() }} tokens ({{ encodeSavings }}% fewer)</span>
+          </div>
+          <div class="pane-body-wrap">
+            <button v-if="encodeOutput && !encodeError" class="pane-copy" @click="copyText(encodeOutput, 'encode')">{{ copied === 'encode' ? 'Copied!' : 'Copy' }}</button>
+            <pre :class="['pane-code', { 'pane-error': encodeError }]">{{ encodeOutput || 'GCF output will appear here...' }}</pre>
+          </div>
         </div>
       </div>
     </template>
