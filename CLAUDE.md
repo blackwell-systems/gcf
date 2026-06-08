@@ -58,6 +58,7 @@ These files contain hardcoded eval numbers. **All must be updated when headline 
 - `../blog/content/posts/llm-wire-format-comprehension-benchmark.md`
 - `../blog/content/oss.md`
 - `../toon-benchmark/GCF-COMPARISON.md`
+- `../gcf-charts/charts.py` (data arrays for all charts, regenerate PNGs after updating)
 
 ### Step 5: Commit and push
 
