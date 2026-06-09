@@ -6,6 +6,16 @@ Encode any structured data as GCF before sending it to an LLM. The model reads i
 
 79% fewer input tokens. 63% fewer output tokens. 90.7% average comprehension accuracy across 10 models and 3 providers, where JSON averages 53.6%. Four models hit 100%. No model has ever been trained on GCF.
 
+## Why not just use JSON?
+
+JSON works at small scale. At 8 records, every format scores near 100%. The problems start when payloads grow.
+
+At 500 records, JSON scores [53.6% comprehension accuracy](/guide/benchmarks) across 10 models. GPT-5.5 [returns empty strings](https://github.com/blackwell-systems/gcf/tree/main/eval/results). Claude Opus spends [143 lines manually enumerating symbols](https://github.com/blackwell-systems/gcf/blob/main/eval/results/artifacts/opus-json-enumeration-failure.md) and still gets the wrong answer. The repeated field names (`"qualified_name":`, `"kind":`, `"score":` on every record) consume 53,341 tokens of structural noise that overwhelms the model's attention.
+
+GCF declares field names once in a header. Rows are positional values. The same 500-record payload uses 11,090 tokens and scores [90.7% accuracy](/guide/benchmarks). Four models hit 100%.
+
+The format designed for human readability is incomprehensible to the systems actually reading it. [Full benchmark data](/guide/eval-results).
+
 ## When to use GCF
 
 **Tool responses** (input to LLM):
