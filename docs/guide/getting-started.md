@@ -4,7 +4,11 @@ GCF is a drop-in replacement for JSON in AI pipelines.
 
 Encode any structured data as GCF before sending it to an LLM. The model reads it natively with zero format instructions. `decode()` converts back to JSON when a human needs to see it.
 
-79% fewer input tokens. 63% fewer output tokens. 90.7% average comprehension accuracy across 10 models and 3 providers, where JSON averages 53.6%. Four models hit 100%. No model has ever been trained on GCF.
+- **79% fewer input tokens.** 11,090 vs 53,341 for JSON at 500 records.
+- **63% fewer output tokens.** 5,976 bytes vs 16,121 for JSON at 100 symbols.
+- **90.7% comprehension accuracy** across 10 models and 3 providers, where JSON averages 53.6%.
+- **Four models hit 100%.** Claude Sonnet, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash.
+- **Zero training.** No model has ever seen GCF in training data. Every frontier model reads it natively.
 
 ## Why not just use JSON?
 
