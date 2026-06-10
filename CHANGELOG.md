@@ -24,8 +24,12 @@ Specification rewrite addressing 11 correctness findings from the generic profil
 ### Conformance
 
 - 133 fixtures across 10 categories (was 61)
-- Go: 133/133 fixtures, 20M round-trips, 7.9M fuzz executions
-- TypeScript: 130/133 fixtures (3 skipped: session, delta, binary UTF-8), 40M round-trips
+- Go: 133/133 fixtures, 40M round-trips, 7.9M fuzz executions
+- TypeScript: 130/133 fixtures, 40M round-trips. npm v1.0.0 published.
+- Python: 126/133 fixtures, 40M round-trips
+- Rust: 125/133 fixtures, 40M round-trips
+- Kotlin: 133/133 fixtures, 40M round-trips
+- Swift: encoder/decoder rewritten, conformance pending (needs Xcode CI)
 - Status: Draft (Stable after cross-language conformance matrix passes)
 
 ### Design documents
