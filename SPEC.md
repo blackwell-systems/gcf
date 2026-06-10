@@ -6,7 +6,7 @@
 
 **Date:** 2026-06-10
 
-**Status:** Stable
+**Status:** Stable (see Section 19 for status lifecycle)
 
 **Authors:** Dayna Blackwell, Blackwell Systems
 
@@ -1276,18 +1276,46 @@ Decoders MAY issue warnings (without rejecting) for:
 
 ## 18. MIME Type
 
-Suggested: `application/vnd.gcf+text`
+Registered type: `application/vnd.gcf+text`
 
 File extension: `.gcf`
 
 Charset: always UTF-8.
 
-## 19. Versioning
+IANA registration: pending submission to the IANA media type registry. Implementations SHOULD use `application/vnd.gcf+text` as the Content-Type for GCF payloads. Implementations MAY fall back to `text/plain; charset=utf-8` when the receiver does not recognize the GCF media type.
+
+## 19. Versioning and Status Lifecycle
+
+### 19.1 Wire version
 
 The format version is implicit in the header prefix `GCF`. Future post-adoption incompatible changes would use `GCF2`, `GCF3`, etc. Parsers encountering an unknown version prefix MUST reject the payload with an error rather than attempting best-effort parsing.
 
-This specification (v2.0) replaces all prior versions (v1.0 through v1.4). Prior versions are considered pre-stable development and are not supported. Implementations MUST NOT maintain backward compatibility with pre-v2.0 encoding behavior. All conformance fixtures, official implementations, and published packages MUST align with this specification before the Stable designation is applied.
+### 19.2 Specification status
 
-## 20. Intellectual Property
+This specification follows a three-stage lifecycle:
+
+| Status | Meaning |
+|--------|---------|
+| **Draft** | Under active development. Breaking changes may occur. Implementations should track the spec but not depend on stability. |
+| **Stable** | The grammar is frozen. No breaking changes. Additive extensions only. Implementations may depend on stability for production use. |
+| **Frozen** | No changes of any kind. The specification is archived. |
+
+Current status: **Stable** (designated 2026-06-10 after cross-language conformance verification across 6 implementations).
+
+### 19.3 Version history
+
+This specification (v2.0) replaces all prior versions (v1.0 through v1.4). Prior versions are considered pre-stable development and are not supported. Implementations MUST NOT maintain backward compatibility with pre-v2.0 encoding behavior.
+
+## 20. Internationalization
+
+GCF is a UTF-8 format. All text (keys, values, field names, qualified names) is UTF-8.
+
+- Encoders MUST emit valid UTF-8. Decoders MUST reject malformed UTF-8 (Section 2.2).
+- Implementations MUST NOT normalize Unicode. Byte-exact preservation is required for round-trip compliance. NFC, NFD, NFKC, and NFKD normalization are the application's concern, not the format's.
+- Surrogate code points (U+D800 through U+DFFF) MUST NOT appear as literal UTF-8. They may only appear as `\uXXXX` escape pairs in quoted strings (Section 2.2).
+- Bidirectional text in keys and values is preserved as-is. GCF does not insert or require directional markers.
+- String comparison for duplicate-key detection (Section 2a.2) is byte-level, not code-point-level. Two keys that differ only by Unicode normalization form are considered distinct.
+
+## 21. Intellectual Property
 
 This specification is released under the MIT License. No patent disclosures are known at the time of publication. The authors intend this specification to be freely implementable without royalty requirements.
