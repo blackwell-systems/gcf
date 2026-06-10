@@ -31,7 +31,8 @@ Specification rewrite addressing 11 correctness findings from the generic profil
 - Rust: 125/133 fixtures, 40M round-trips
 - Kotlin: 133/133 fixtures, 40M round-trips
 - Swift: 123/133 fixtures (3 key-ordering), 1K round-trips
-- Status: Draft (Stable after cross-language differential matrix passes)
+- Cross-language matrix: 81/81 generic encode/decode verified (Go encode, Python decode)
+- **Status: Stable** (cross-language conformance verified 2026-06-10)
 
 ### Design documents
 

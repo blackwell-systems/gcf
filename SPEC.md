@@ -6,7 +6,7 @@
 
 **Date:** 2026-06-10
 
-**Status:** Draft (pre-stable; will be designated Stable after cross-language conformance passes)
+**Status:** Stable
 
 **Authors:** Dayna Blackwell, Blackwell Systems
 

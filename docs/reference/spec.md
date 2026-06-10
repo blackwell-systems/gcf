@@ -28,7 +28,7 @@ It covers:
 
 ## Version
 
-Current: **GCF v2.0** (draft, 2026-06-10)
+Current: **GCF v2.0** (stable, 2026-06-10)
 
 ## Conventions
 
