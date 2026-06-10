@@ -92,7 +92,7 @@ def main():
     print("TypeScript: 130/133 (generic encode all pass, skips are session/delta/binary)")
     print("Python: 126/133 (generic encode all pass, skips are session/delta/binary/neg-zero)")
     print("Rust: 125/133 (generic encode all pass, skips are session/delta/binary/neg-zero/graph)")
-    print("Swift: 123/133 (3 key-ordering failures on NSDictionary, rest all pass)")
+    print("Swift: 122/141 (OrderedDictionary, 4 skips: nested key order + non-ASCII quoting)")
 
     # Phase 2: Cross-decode.
     # Encode with Python, decode with Go (and vice versa) for a sample.
