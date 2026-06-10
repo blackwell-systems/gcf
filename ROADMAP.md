@@ -6,7 +6,7 @@
 - [x] **Generic profile** (`encodeGeneric`): any structured data, not just graph payloads. Spec Section 6a.
 - [x] **Graph profile** (`encode`): symbols, edges, distance groups, local IDs.
 - [x] **`decodeGeneric`**: full round-trip for generic profile across all 6 languages.
-- [x] **Streaming encode**: `StreamEncoder` (graph) and `GenericStreamEncoder` (generic). Zero-buffering, O(1) memory, `[?]` deferred counts + `## _summary` trailer. Spec v1.4.
+- [x] **Streaming encode**: `StreamEncoder` (graph) and `GenericStreamEncoder` (generic). Zero-buffering, O(1) memory, `[?]` deferred counts + `##! summary` trailer.
 - [x] **Session deduplication**: 92.7% savings by 5th call. Bare references for previously-transmitted symbols.
 - [x] **Delta encoding**: 81.2% savings on re-queries.
 - [x] **MCP proxy**: `gcf-proxy` wraps any MCP server, re-encodes JSON as GCF mid-flight. npm, PyPI, Go.
