@@ -81,6 +81,35 @@ function highlightWithParser(parser: Parser, code: string, colors: Record<string
     if (node.childCount === 0) {
       const text = code.slice(node.startIndex, node.endIndex)
 
+      // Handle tabular_row (pipe-separated values, opaque token)
+      if (node.type === 'tabular_row') {
+        const text = code.slice(node.startIndex, node.endIndex).replace(/\n$/, '')
+        const parts = text.split('|')
+        let pos = node.startIndex
+        // Check for @id prefix on first part
+        const firstPart = parts[0]
+        const idMatch = firstPart.match(/^(@\d+)\s+(.*)$/)
+        if (idMatch) {
+          highlights.push({ start: pos, end: pos + idMatch[1].length, color: '#c678dd' })
+          pos += idMatch[1].length + 1
+          highlights.push({ start: pos, end: pos + idMatch[2].length, color: '#98c379' })
+          pos += idMatch[2].length
+        } else {
+          const color = /^\d+(\.\d+)?$/.test(firstPart.trim()) ? '#d19a66' : '#98c379'
+          highlights.push({ start: pos, end: pos + firstPart.length, color })
+          pos += firstPart.length
+        }
+        for (let i = 1; i < parts.length; i++) {
+          highlights.push({ start: pos, end: pos + 1, color: '#5c6370' })
+          pos += 1
+          const val = parts[i]
+          const color = /^\d+(\.\d+)?$/.test(val.trim()) ? '#d19a66' : '#98c379'
+          highlights.push({ start: pos, end: pos + val.length, color })
+          pos += val.length
+        }
+        return
+      }
+
       // Handle text_content that contains key=value or key|value patterns
       if (node.type === 'text_content') {
         if (text.includes('=')) {
