@@ -81,6 +81,9 @@ GCF unanimous on: round-trip fidelity, graph at scale, and the replacement quest
 
 ### On TOON's limitations
 
+> "TOON is too proud of that one trick."
+> -- Claude Opus 4.6
+
 > "TOON's tabular form breaks down exactly where it matters most, because it cannot represent nested values in tabular rows."
 > -- Claude Opus 4.6
 
