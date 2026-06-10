@@ -25,6 +25,30 @@ output := gcf.EncodeGeneric(data)
 
 Arrays of uniform objects get tabular encoding (header + positional rows). Primitive arrays are inlined (`tags[3]: a,b,c`). Nested objects use `## key` section headers. Primitives use `key=value`.
 
+### `DecodeGeneric(input string) (any, error)`
+
+Decode GCF generic or graph profile text back into Go values. Returns `*OrderedMap` for objects (preserving key insertion order), `[]any` for arrays, or scalar values.
+
+```go
+val, err := gcf.DecodeGeneric(gcfText)
+if err != nil {
+    log.Fatal(err)
+}
+// val is *OrderedMap, []any, string, float64, int64, bool, or nil
+```
+
+### `ParseJSONOrdered(data []byte) (any, error)`
+
+Parse JSON preserving key insertion order. Returns `*OrderedMap` instead of `map[string]any`. Use this when encoding JSON input that must preserve key order.
+
+```go
+val, err := gcf.ParseJSONOrdered(jsonBytes)
+if err != nil {
+    log.Fatal(err)
+}
+output := gcf.EncodeGeneric(val) // keys in original JSON order
+```
+
 ### `Encode(p *Payload) string`
 
 Encode a Payload into GCF text format.
@@ -179,3 +203,21 @@ var KindAbbrev = map[string]string{
 ### `KindExpand`
 
 Reverse of `KindAbbrev`. Maps abbreviations back to full forms.
+
+## CLI
+
+```bash
+go install github.com/blackwell-systems/gcf-go/cmd/gcf@latest
+
+echo '{"name":"Alice"}' | gcf encode-generic
+echo 'GCF profile=generic\nname=Alice' | gcf decode-generic
+```
+
+| Command | Description |
+|---------|-------------|
+| `gcf encode` | Encode JSON graph payload to GCF |
+| `gcf decode` | Decode GCF graph text to JSON |
+| `gcf encode-generic` | Encode any JSON to GCF generic profile |
+| `gcf decode-generic` | Decode GCF generic profile to JSON |
+| `gcf stats` | Compare token counts: JSON vs GCF |
+| `gcf version` | Print version |

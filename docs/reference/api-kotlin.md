@@ -27,6 +27,15 @@ val output = encodeGeneric(mapOf(
 ))
 ```
 
+### `decodeGeneric(input: String): Any?`
+
+Decode GCF generic or graph profile text back into Kotlin values. Returns maps, lists, or scalar values.
+
+```kotlin
+val data = decodeGeneric(gcfText)
+// data is Map, List, String, Int, Double, Boolean, or null
+```
+
 ### `encode(payload: Payload): String`
 
 Encode a Payload into GCF text format.
@@ -160,3 +169,22 @@ class Session {
 ```kotlin
 class DecodeException(message: String) : Exception(message)
 ```
+
+## CLI
+
+```bash
+# Using Gradle
+echo '{"name":"Alice"}' | ./gradlew run --args="encode-generic" -q
+
+# Using fat jar
+java -jar build/libs/gcf.jar encode-generic < data.json
+java -jar build/libs/gcf.jar decode-generic < data.gcf
+```
+
+| Command | Description |
+|---------|-------------|
+| `encode` | Encode JSON graph payload to GCF |
+| `decode` | Decode GCF graph text to JSON |
+| `encode-generic` | Encode any JSON to GCF generic profile |
+| `decode-generic` | Decode GCF generic profile to JSON |
+| `version` | Print version |

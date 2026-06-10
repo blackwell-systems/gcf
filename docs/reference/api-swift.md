@@ -24,6 +24,15 @@ let output = encodeGeneric([
 // Sales|2|Bob|72000
 ```
 
+### `decodeGeneric(_ input: String) throws -> Any`
+
+Decode GCF generic or graph profile text back into Swift values. Returns `OrderedDictionary` for objects (preserving key insertion order), `[Any]` for arrays, or scalar values.
+
+```swift
+let data = try decodeGeneric(gcfText)
+// data is OrderedDictionary, [Any], String, Int, Double, Bool, or NSNull
+```
+
 ### `encode(_ payload: Payload) -> String`
 
 Encode a Payload into GCF text format.
@@ -179,3 +188,19 @@ public enum DecodeError: Error, CustomStringConvertible {
     case unknownEdgeReference(String)
 }
 ```
+
+## CLI
+
+```bash
+# In Package.swift: .package(url: "https://github.com/blackwell-systems/gcf-swift", from: "1.0.0")
+swift run GCFCLI encode-generic < data.json
+swift run GCFCLI decode-generic < data.gcf
+```
+
+| Command | Description |
+|---------|-------------|
+| `encode` | Encode JSON graph payload to GCF |
+| `decode` | Decode GCF graph text to JSON |
+| `encode-generic` | Encode any JSON to GCF generic profile |
+| `decode-generic` | Decode GCF generic profile to JSON |
+| `version` | Print version |

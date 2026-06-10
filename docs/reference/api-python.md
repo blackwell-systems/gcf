@@ -26,6 +26,17 @@ output = encode_generic({
 
 Arrays of uniform dicts get tabular encoding (header + positional rows). Primitive arrays are inlined (`tags[3]: a,b,c`). Nested dicts use `## key` section headers. Primitives use `key=value`.
 
+### `decode_generic(input: str) -> Any`
+
+Decode GCF generic or graph profile text back into Python values. Returns dicts, lists, or scalar values.
+
+```python
+from gcf import decode_generic
+
+data = decode_generic(gcf_text)
+# data is dict, list, str, int, float, bool, or None
+```
+
 ### `encode(p: Payload) -> str`
 
 Encode a Payload into GCF text format.
@@ -211,3 +222,19 @@ KIND_ABBREV: dict[str, str] = {
 ### `KIND_EXPAND`
 
 Reverse of `KIND_ABBREV`.
+
+## CLI
+
+```bash
+pip install gcf-python
+python -m gcf encode-generic < data.json
+python -m gcf decode-generic < data.gcf
+```
+
+| Command | Description |
+|---------|-------------|
+| `encode` | Encode JSON graph payload to GCF |
+| `decode` | Decode GCF graph text to JSON |
+| `encode-generic` | Encode any JSON to GCF generic profile |
+| `decode-generic` | Decode GCF generic profile to JSON |
+| `stats` | Compare token counts: JSON vs GCF |

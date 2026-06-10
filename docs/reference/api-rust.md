@@ -27,6 +27,16 @@ let output = encode_generic(&json!({
 
 Arrays of uniform objects get tabular encoding (header + positional rows). Primitive arrays are inlined (`tags[3]: a,b,c`). Nested objects use `## key` section headers. Primitives use `key=value`.
 
+### `decode_generic(input: &str) -> Result<serde_json::Value>`
+
+Decode GCF generic or graph profile text back into a `serde_json::Value`.
+
+```rust
+use gcf::decode_generic;
+
+let data = decode_generic(gcf_text)?;
+```
+
 ### `encode(p: &Payload) -> String`
 
 Encode a Payload into GCF text format.
@@ -202,3 +212,19 @@ Maps full kind names to GCF abbreviations (`"function"` -> `"fn"`, etc.).
 ### `kind_expand(abbrev: &str) -> String`
 
 Reverse of `kind_abbrev`. Maps abbreviations back to full forms.
+
+## CLI
+
+```bash
+cargo install gcf
+gcf encode-generic < data.json
+gcf decode-generic < data.gcf
+```
+
+| Command | Description |
+|---------|-------------|
+| `encode` | Encode JSON graph payload to GCF |
+| `decode` | Decode GCF graph text to JSON |
+| `encode-generic` | Encode any JSON to GCF generic profile |
+| `decode-generic` | Decode GCF generic profile to JSON |
+| `version` | Print version |

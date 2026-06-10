@@ -26,6 +26,17 @@ const output = encodeGeneric({
 
 Arrays of uniform objects get tabular encoding (header + positional rows). Primitive arrays are inlined (`tags[3]: a,b,c`). Nested objects use `## key` section headers. Primitives use `key=value`.
 
+### `decodeGeneric(input: string): unknown`
+
+Decode GCF generic or graph profile text back into JavaScript values. Returns objects, arrays, or scalar values.
+
+```typescript
+import { decodeGeneric } from '@blackwell-systems/gcf';
+
+const data = decodeGeneric(gcfText);
+// data is object, array, string, number, boolean, or null
+```
+
 ### `encode(p: Payload): string`
 
 Encode a Payload into GCF text format.
@@ -195,3 +206,18 @@ const KIND_ABBREV: Record<string, string> = {
 ### `KIND_EXPAND`
 
 Reverse of `KIND_ABBREV`.
+
+## CLI
+
+```bash
+npx @blackwell-systems/gcf encode-generic < data.json
+npx @blackwell-systems/gcf decode-generic < data.gcf
+```
+
+| Command | Description |
+|---------|-------------|
+| `encode` | Encode JSON graph payload to GCF |
+| `decode` | Decode GCF graph text to JSON |
+| `encode-generic` | Encode any JSON to GCF generic profile |
+| `decode-generic` | Decode GCF generic profile to JSON |
+| `stats` | Compare token counts: JSON vs GCF |
