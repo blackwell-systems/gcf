@@ -23,9 +23,14 @@ Specification rewrite addressing 11 correctness findings from the generic profil
 
 ### Conformance
 
-- 131 fixtures across 10 categories (was 61)
-- Go reference implementation passes all 131
+- 133 fixtures across 10 categories (was 61)
+- Go: 133/133 fixtures, 20M round-trips, 7.9M fuzz executions
+- TypeScript: 130/133 fixtures (3 skipped: session, delta, binary UTF-8), 40M round-trips
 - Status: Draft (Stable after cross-language conformance matrix passes)
+
+### Design documents
+
+- `SESSION-DELTA-INTEROPERABILITY.md`: informative proposal for cross-implementation session/delta interoperability (capability negotiation, canonical pack roots, atomic delta application, session lifecycle)
 
 ## v1.4 (2026-06-06)
 
