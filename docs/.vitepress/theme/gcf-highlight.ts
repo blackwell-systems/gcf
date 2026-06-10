@@ -79,6 +79,33 @@ function highlightWithParser(parser: Parser, code: string, colors: Record<string
 
   function walk(node: any) {
     if (node.childCount === 0) {
+      const text = code.slice(node.startIndex, node.endIndex)
+
+      // Handle text_content that contains key=value or key|value patterns
+      if (node.type === 'text_content') {
+        if (text.includes('=')) {
+          const eqIdx = text.indexOf('=')
+          const absStart = node.startIndex
+          highlights.push({ start: absStart, end: absStart + eqIdx, color: '#e06c75' })  // key
+          highlights.push({ start: absStart + eqIdx, end: absStart + eqIdx + 1, color: '#abb2bf' })  // =
+          highlights.push({ start: absStart + eqIdx + 1, end: node.endIndex, color: '#98c379' })  // value
+          return
+        }
+        if (text.includes('|')) {
+          const parts = text.split('|')
+          let pos = node.startIndex
+          for (let i = 0; i < parts.length; i++) {
+            highlights.push({ start: pos, end: pos + parts[i].length, color: '#abb2bf' })
+            pos += parts[i].length
+            if (i < parts.length - 1) {
+              highlights.push({ start: pos, end: pos + 1, color: '#5c6370' })  // pipe
+              pos += 1
+            }
+          }
+          return
+        }
+      }
+
       const color = colors[node.type]
       if (color) {
         highlights.push({ start: node.startIndex, end: node.endIndex, color })
