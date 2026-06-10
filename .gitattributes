@@ -4,4 +4,5 @@ docs/.vitepress/**/*.ts linguist-vendored
 docs/.vitepress/**/*.vue linguist-vendored
 docs/.vitepress/**/*.css linguist-vendored
 tests/*.mjs linguist-vendored
+tests/*.py linguist-vendored
 scripts/*.sh linguist-vendored
