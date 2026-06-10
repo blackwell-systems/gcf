@@ -119,11 +119,24 @@ GCF unanimous on: round-trip fidelity, graph at scale, and the replacement quest
 > "GCF is more complex and less mature, but its complexity buys capabilities that matter in agent pipelines."
 > -- Codex
 
+## The 7 questions
+
+Every model was asked the same 7 questions in the same order:
+
+1. **Nested/mixed data**: Which format handles nested objects inside arrays of otherwise-flat records most cleanly?
+2. **JSON round-trip fidelity**: Which format preserves all JSON types (null, boolean, number, string, array, object) through an encode/decode round-trip with the fewest edge cases or lossy transforms?
+3. **Graph at scale**: For a 500-symbol code graph with 200 directed edges, which format produces the most compact, LLM-parseable representation?
+4. **Spec rigor (challengers only)**: Comparing only TOON and GCF (not JSON), which specification is more rigorous in defining encoder/decoder behavior, error handling, and edge cases?
+5. **Design gaps**: What are the most significant design gaps or risks in each format?
+6. **Missing capabilities**: What capability does each format lack that the others provide?
+7. **Replacement pick**: If you had to pick one non-JSON format to replace JSON in all AI agent tool responses, which would you choose and why?
+
 ## Methodology
 
-- **Prompt**: identical across all models (7 structured questions about design decisions, nested data, round-trip fidelity, graph support, spec rigor, gaps, and replacement pick)
+- **Prompt**: identical across all models (the 7 questions above)
 - **Context**: fresh sessions with no system prompt, no prior conversation, no priming
-- **Specs**: models reviewed specs from GitHub or local checkout (RFC 8259, TOON v3.3, GCF v2.0)
+- **Specs**: models reviewed full specifications from GitHub or local checkout (RFC 8259, TOON v3.3, GCF v2.0)
+- **Independence**: no model saw another model's answers
 - **Dates**: 2026-06-10 and 2026-06-11
 
 ## Full reviews

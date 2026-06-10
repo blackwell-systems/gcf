@@ -58,6 +58,7 @@ export default defineConfig({
           { text: 'Benchmarks (Full Data)', link: '/guide/eval-results' },
           { text: 'GCF vs TOON', link: '/guide/vs-toon' },
           { text: 'Whitepaper', link: '/whitepaper' },
+          { text: 'Independent AI Reviews', link: '/reviews/' },
         ],
       },
       {
