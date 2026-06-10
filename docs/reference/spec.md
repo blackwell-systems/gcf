@@ -14,7 +14,7 @@ It covers:
 5. **Edge line format** (local ID references, graph profile)
 6. **Group headers** (distance-based sections, graph profile)
 6a. **Tabular encoding** (generic profile: arrays, nested records, pipe rows, primitive array inlining, value encoding rules)
-6b. **Streaming encoding extension** (deferred counts `[?]`, `## _summary` trailer, zero-buffering encode)
+6b. **Streaming encoding extension** (deferred counts `[?]`, `##! summary` trailer, zero-buffering encode)
 7. **Session statefulness** (bare reference protocol)
 8. **Delta encoding extension** (three-outcome protocol)
 9. **Comments**
@@ -28,7 +28,7 @@ It covers:
 
 ## Version
 
-Current: **GCF v1.4** (stable, 2026-06-06)
+Current: **GCF v2.0** (draft, 2026-06-10)
 
 ## Conventions
 
@@ -57,8 +57,8 @@ The specification defines conformance requirements in three areas:
 
 **Decoder error taxonomy** (Section 12.5): 14 normative error conditions that decoders MUST reject, including invalid headers, unknown edge references, row width mismatches, and unterminated quotes.
 
-Validated by [61 conformance fixtures](https://github.com/blackwell-systems/gcf/tree/main/tests/conformance) across both profiles and streaming mode.
+The v2 contract is covered by [133 conformance fixtures](https://github.com/blackwell-systems/gcf/tree/main/tests/conformance) across both profiles, streaming, and normative decoder errors.
 
 ## Stability guarantee
 
-The v1.4 format is stable. Existing payloads will always parse correctly with future decoders. New features (if any) will be additive and backwards-compatible.
+Draft (pre-stable; will be designated Stable after cross-language conformance passes). Existing v1.x payloads will continue to parse correctly with v2.0 decoders.

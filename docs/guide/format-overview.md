@@ -10,6 +10,7 @@ Both profiles share the same primitives: `##` section headers, `@` local IDs, po
 ## Generic profile at a glance
 
 ```
+GCF profile=generic
 ## employees [3]{id,name,department,salary}
 1|Alice Smith|Engineering|95000
 2|Bob Jones|Sales|72000
@@ -94,22 +95,22 @@ Sections can nest:
 
 ## 4. Nested fields in tabular rows
 
-When records contain both primitive fields and nested objects, rows use `@{id}` prefixes and `.fieldname` for inline nested data:
+When records contain both primitive fields and nested objects, rows use `@{id}` prefixes and `.field {}` declarations with `^` cell markers:
 
 ```
-## orders [2]{id,total,status}
-@0 1001|249.99|shipped
-  .customer
+## orders [2]{id,total,status,customer}
+@0 1001|249.99|shipped|^
+  .customer {}
     name=Alice Smith
     tier=premium
-@1 1002|89.50|pending
-  .customer
+@1 1002|89.50|pending|^
+  .customer {}
     name=Bob Jones
     tier=standard
 ```
 
 - `@{id}` prefix appears only when the row has nested fields (flat rows have no prefix)
-- `.fieldname` introduces an inline nested object
+- `.field {}` introduces a nested object attachment (cell uses `^` marker)
 - Nested fields are indented and use `key=value` pairs
 
 **Why this saves tokens:** JSON repeats the entire `"customer": {"name": "...", "tier": "..."}` structure on every record. GCF's primitive fields go in the tabular row (positional), and only the nested portion is expanded.
@@ -156,6 +157,7 @@ scopes[2]: read,write
 vs GCF:
 
 ```
+GCF profile=generic
 ## employees [3]{id,name,department,salary}
 1|Alice Smith|Engineering|95000
 2|Bob Jones|Sales|72000
@@ -173,7 +175,7 @@ The generic profile (above) handles any structured data. The graph profile adds 
 ### Graph profile at a glance
 
 ```
-GCF tool=context_for_task budget=5000 tokens=1847 symbols=10 edges=2 pack_root=a1b2c3
+GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=10 edges=2 pack_root=a1b2c3
 ## targets
 @0 fn pkg.AuthMiddleware 0.78 lsp_resolved
 @1 type pkg.AuthConfig 0.71 ast_inferred
@@ -192,7 +194,7 @@ Five additional elements beyond the generic profile:
 The first line identifies the format and carries payload metadata:
 
 ```
-GCF tool=context_for_task budget=5000 tokens=1847 symbols=10 edges=8 pack_root=a1b2c3d4
+GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=10 edges=8 pack_root=a1b2c3d4
 ```
 
 | Field | Required | Description |
@@ -345,7 +347,7 @@ Unknown kinds are passed through verbatim (no error).
 vs GCF:
 
 ```
-GCF tool=context_for_task budget=5000 tokens=1847 symbols=2 edges=1
+GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=2 edges=1
 ## targets
 @0 fn github.com/org/repo/pkg.AuthMiddleware 0.78 lsp_resolved
 ## related

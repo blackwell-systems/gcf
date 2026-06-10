@@ -80,7 +80,7 @@ In multi-turn LLM interactions, the same data appears across multiple tool respo
 
 **Call 1: full declarations**
 ```
-GCF tool=context_for_task symbols=15 edges=10 session=true
+GCF profile=graph tool=context_for_task symbols=15 edges=10 session=true
 ## targets
 @0 fn pkg.AuthMiddleware 0.78 lsp_resolved
 @1 fn pkg.ValidateToken 0.72 lsp_resolved
@@ -89,7 +89,7 @@ GCF tool=context_for_task symbols=15 edges=10 session=true
 
 **Call 5: 92% bare references**
 ```
-GCF tool=context_for_task symbols=22 edges=16 session=true
+GCF profile=graph tool=context_for_task symbols=22 edges=16 session=true
 ## targets
 @0  # previously transmitted
 @1  # previously transmitted
@@ -114,7 +114,7 @@ This isn't a feature that can be bolted on. Session dedup requires the format to
 When the LLM re-queries and the data changed slightly, GCF sends only the diff:
 
 ```
-GCF tool=context_for_task delta=true base_root=aaa new_root=bbb savings=81%
+GCF profile=graph tool=context_for_task delta=true base_root=aaa new_root=bbb savings=81%
 ## removed
 fn pkg.OldHandler
 ## added

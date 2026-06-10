@@ -1,6 +1,6 @@
 # Implementations
 
-Six official implementations, all production-ready, all MIT licensed, all zero runtime dependencies. Validated against [56 conformance fixtures](https://github.com/blackwell-systems/gcf/tree/main/tests/conformance).
+Six official implementations, all MIT licensed and zero runtime dependencies. The current v2 contract is defined by [133 conformance fixtures](https://github.com/blackwell-systems/gcf/tree/main/tests/conformance); implementation v2 conformance must be reported independently during migration.
 
 ## Official Implementations
 
@@ -68,4 +68,4 @@ All implementations produce byte-for-byte identical output for the same input. T
 |----------|-----------|------------|--------|
 | | *Your implementation here* | | |
 
-Building an implementation? [See the contribution guide.](https://github.com/blackwell-systems/gcf/blob/main/CONTRIBUTING.md) Validate against the [56 conformance fixtures](https://github.com/blackwell-systems/gcf/tree/main/tests/conformance), then PR a link here.
+Building an implementation? [See the contribution guide.](https://github.com/blackwell-systems/gcf/blob/main/CONTRIBUTING.md) Validate against the [133 v2 conformance fixtures](https://github.com/blackwell-systems/gcf/tree/main/tests/conformance), then PR a link here.

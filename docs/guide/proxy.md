@@ -87,7 +87,7 @@ The proxy looks for JSON-RPC responses with `result.content[].text` fields conta
 **The LLM receives (GCF, 916 bytes):**
 
 ```
-GCF tool=context_for_task budget=10000 tokens=3200 symbols=10 edges=6
+GCF profile=graph tool=context_for_task budget=10000 tokens=3200 symbols=10 edges=6
 ## targets
 @0 fn github.com/org/repo/pkg.AuthMiddleware 0.92 lsp_resolved
 @1 fn github.com/org/repo/pkg.ValidateToken 0.87 lsp_resolved
@@ -122,7 +122,7 @@ Client                    Proxy                     Upstream
   |                        |                         |
   |<--progress(5/50)-------|  "## targets\n@0 fn..." |
   |<--progress(10/50)------|  "@5 fn...\n@6..."      |
-  |<--progress(50/50)------|  "## _summary..."       |
+  |<--progress(50/50)------|  "##! summary..."       |
   |                        |                         |
   |<--tools/call result----|  complete GCF payload   |
 ```

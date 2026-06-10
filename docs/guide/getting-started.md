@@ -263,7 +263,7 @@ val output = encode(Payload(
 **Output:**
 
 ```
-GCF tool=context_for_task budget=5000 tokens=1847 symbols=2 edges=1
+GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=2 edges=1
 ## targets
 @0 fn pkg.Auth 0.78 lsp
 ## related

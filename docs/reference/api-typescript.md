@@ -93,7 +93,7 @@ Create a streaming encoder that writes GCF incrementally. Zero buffering.
 const enc = new StreamEncoder(writer, 'context_for_task', { tokenBudget: 5000 });
 enc.writeSymbol(sym);  // emitted immediately
 enc.writeEdge(edge);   // emitted immediately
-enc.close();           // emits ## _summary trailer
+enc.close();           // emits ##! summary trailer
 ```
 
 The `writer` is any object with a `write(s: string)` method.

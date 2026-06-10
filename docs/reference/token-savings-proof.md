@@ -189,7 +189,7 @@ Typical header: ~120 bytes (field names + values + delimiters).
 ### GCF
 
 ```
-GCF tool=context_for_task budget=5000 tokens=1847 symbols=500 edges=200 pack_root=a1b2c3\n
+GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=500 edges=200 pack_root=a1b2c3\n
 ```
 
 Typical header: ~90 bytes.

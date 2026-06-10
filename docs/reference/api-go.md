@@ -86,7 +86,7 @@ Create a streaming encoder that writes GCF incrementally. Zero buffering, O(1) m
 enc := gcf.NewStreamEncoder(w, "context_for_task", gcf.StreamOptions{TokenBudget: 5000})
 enc.WriteSymbol(sym)  // emitted immediately
 enc.WriteEdge(edge)   // emitted immediately
-enc.Close()           // emits ## _summary trailer
+enc.Close()           // emits ##! summary trailer
 ```
 
 ### `NewSession() *Session`

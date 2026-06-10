@@ -119,7 +119,7 @@ payload       = header LF { section } [ summary ] ;
 section       = group-header LF { line LF } ;
 line          = node-line | edge-line | ref-line | tabular-row
               | kv-line | nested-ref | inline-array | comment ;
-summary       = "## _summary" SP key-value { SP key-value } LF ;
+summary       = "##! summary" SP key-value { SP key-value } LF ;
 
 header        = "GCF" SP key-value { SP key-value } ;
 group-header  = "##" SP group-name [ SP "[" count-or-deferred "]" [ field-decl ] ] ;
@@ -147,7 +147,7 @@ status        = "added" | "removed" ;
 The header line identifies the format and carries payload metadata:
 
 ```
-GCF tool=context_for_task budget=5000 tokens=1847 symbols=10 edges=8
+GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=10 edges=8
 ```
 
 `tool` identifies the MCP tool that produced this response. `budget` and `tokens` enable the consumer to assess utilization. `symbols` and `edges` give counts without scanning.
@@ -237,11 +237,11 @@ active=true
   port=5432
 ```
 
-**Nested fields in tabular rows** use `@{id}` prefixes and `.fieldname`:
+**Nested fields in tabular rows** use `@{id}` prefixes and `.field {}`:
 ```
-## orders [2]{id,total,status}
-@0 1001|249.99|shipped
-  .customer
+## orders [2]{id,total,status,customer}
+@0 1001|249.99|shipped|^
+  .customer {}
     name=Alice Smith
     tier=premium
 ```
@@ -264,7 +264,7 @@ active=true
 Across multiple tool calls in a session, previously-transmitted nodes can be referenced without retransmission:
 
 ```
-GCF tool=context_for_files tokens=800 symbols=5 edges=1 session=true
+GCF profile=graph tool=context_for_files tokens=800 symbols=5 edges=1 session=true
 ## targets
 @0  # previously transmitted
 @7 fn github.com/org/repo/internal/mcp.handleBlastRadius 0.62 lsp_resolved
@@ -281,7 +281,7 @@ This exploits a property unique to agent tool interactions: the consumer (the LL
 When the encoder does not know payload size upfront (data arriving incrementally from a database cursor, API pagination, or graph traversal), it uses streaming mode:
 
 ```
-GCF tool=context_for_task budget=5000
+GCF profile=graph tool=context_for_task budget=5000
 ## targets
 @0 fn pkg.Auth 0.95 lsp_resolved
 @1 fn pkg.Handler 0.88 lsp_resolved
@@ -290,10 +290,10 @@ GCF tool=context_for_task budget=5000
 ## edges [?]
 @0<@1 calls
 @2<@0 references
-## _summary symbols=3 edges=2 sections=targets:2,related:1,edges:2
+##! summary symbols=3 edges=2 sections=targets:2,related:1,edges:2
 ```
 
-The `[?]` deferred count marker signals that the count will be provided in the trailer. The `## _summary` line provides all counts after the data is complete. The LLM has both the data and the counts in its context window (recency bias in transformer attention means the trailer is at least as strong a signal as header counts).
+The `[?]` deferred count marker signals that the count will be provided in the trailer. The `##! summary` line provides all counts after the data is complete. The LLM has both the data and the counts in its context window (recency bias in transformer attention means the trailer is at least as strong a signal as header counts).
 
 Streaming mode enables zero-buffering encode: rows emit the instant they are produced, with O(1) memory per row. This is critical for MCP servers that walk large graphs or paginate results; the LLM starts receiving context immediately instead of waiting for the full traversal.
 
@@ -303,7 +303,7 @@ TOON cannot add streaming without a breaking spec change (their grammar mandates
 
 ## 4. Implementation Status
 
-GCF is not a speculative format proposal. It is implemented in six languages, published to seven package registries, covered by 61 conformance fixtures, and deployed in production MCP servers handling 94 combined tool endpoints.
+GCF is not a speculative format proposal. It is implemented in six languages, published to seven package registries, covered by 133 conformance fixtures, and deployed in production MCP servers handling 94 combined tool endpoints.
 
 The implementation includes:
 
@@ -314,8 +314,8 @@ The implementation includes:
 - **Swift library** (`gcf-swift` via SPM, v0.5.1): encode, decode, encodeGeneric, decodeGeneric, encodeWithSession, encodeDelta, StreamEncoder, GenericStreamEncoder. Zero dependencies.
 - **Kotlin library** (`gcf-kotlin` via JitPack, v0.5.1): encode, decode, encodeGeneric, decodeGeneric, encodeWithSession, encodeDelta, StreamEncoder, GenericStreamEncoder. Zero dependencies.
 - **MCP proxy** (`github.com/blackwell-systems/gcf-proxy`): drop-in wrapper for any MCP server, re-encodes JSON responses as GCF with streaming progress notifications. Zero code changes to upstream.
-- **Conformance test suite** (61 fixtures across both profiles): language-agnostic JSON fixtures validating encode, decode, session, delta, generic, streaming, and error cases.
-- **Specification** (gcformat.com, v1.4): RFC 2119 keywords, conformance checklists, decoder error taxonomy, streaming extension, security considerations.
+- **Conformance test suite** (133 v2 fixtures across both profiles): language-agnostic JSON fixtures validating encode, decode, session, delta, generic, streaming, and normative error cases.
+- **Specification** (gcformat.com, v2.0): RFC 2119 keywords, conformance checklists, decoder error taxonomy, streaming extension, security considerations.
 
 ### Correctness Validation
 
@@ -352,7 +352,7 @@ The generic profile achieves savings through a subset of the same mechanisms:
 | Structural delimiters | `{`, `}`, `:`, `,`, `"` per record | `|` between values | ~6 tokens/record |
 | Array framing | `[`, `]`, commas | `[count]` in header | fixed |
 | Primitive arrays | `["a","b","c"]` with brackets and quotes | `name[3]: a,b,c` | ~50% per array |
-| Nesting | braces + field names | `.fieldname` + `key=value` | ~50% per nested object |
+| Nesting | braces + field names | `.field {}` + `key=value` | ~50% per nested object |
 
 For 2,000 employee records with 6 fields: JSON ~127,050 tokens, GCF ~49,055 tokens (61% savings). On TOON's benchmark, GCF's generic profile uses 34% fewer tokens than TOON on mixed-structure data and wins all 6 datasets.
 
@@ -482,7 +482,7 @@ edges[1]{source,target,type}:
 
 **GCF (same data):**
 ```
-GCF tool=example symbols=3 edges=1
+GCF profile=graph tool=example symbols=3 edges=1
 ## targets
 @0 fn pkg.Auth 0.90 lsp
 ## related
@@ -620,7 +620,7 @@ The format that looks clean to humans (JSON) is the one that breaks for agents a
 
 ## Reference Implementation
 
-- **Specification:** gcformat.com (v1.4, RFC 2119 keywords, conformance checklists, streaming extension, error taxonomy)
+- **Specification:** gcformat.com (v2.0, RFC 2119 keywords, conformance checklists, streaming extension, error taxonomy)
 - **Go library:** `github.com/blackwell-systems/gcf-go` (v0.6.1)
 - **TypeScript library:** `@blackwell-systems/gcf` on npm (v0.6.1)
 - **Python library:** `gcf-python` on PyPI (v0.5.1)
@@ -632,7 +632,7 @@ The format that looks clean to humans (JSON) is the one that breaks for agents a
 - **Generation eval:** `github.com/blackwell-systems/gcf-go/eval` (5-100 symbols, GCF vs TOON vs JSON, 9 models, validated through real decoders)
 - **Eval results:** `github.com/blackwell-systems/gcf/eval/results` (all raw logs, failure taxonomy, artifacts)
 - **TOON benchmark fork:** `github.com/blackwell-systems/toon` (branch: gcf-comparison, their datasets, their tokenizer)
-- **Conformance test suite:** `github.com/blackwell-systems/gcf/tests/conformance` (61 fixtures across both profiles + streaming)
+- **Conformance test suite:** `github.com/blackwell-systems/gcf/tests/conformance` (133 v2 fixtures across both profiles, streaming, and normative errors)
 - **Interactive playground:** gcformat.com/playground (three-way JSON vs TOON vs GCF comparison using real @toon-format/toon library)
 - **Production deployment:** knowing (28 MCP tools), agent-lsp (66 MCP tools)
 
@@ -678,7 +678,7 @@ The format that looks clean to humans (JSON) is the one that breaks for agents a
 **GCF (233 tokens):**
 
 ```
-GCF tool=context_for_task budget=5000 tokens=1847 symbols=2 edges=1
+GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=2 edges=1
 ## targets
 @0 fn github.com/blackwell-systems/knowing/internal/mcp.requireHash 0.78 lsp_resolved
 ## related
@@ -695,7 +695,7 @@ Same semantic content. 75.9% fewer tokens.
 
 **Buffered mode** (full payload known upfront):
 ```
-GCF tool=context_for_task budget=5000 symbols=3 edges=2
+GCF profile=graph tool=context_for_task budget=5000 symbols=3 edges=2
 ## targets
 @0 fn pkg.Auth 0.95 lsp_resolved
 @1 fn pkg.Handler 0.88 lsp_resolved
@@ -708,7 +708,7 @@ GCF tool=context_for_task budget=5000 symbols=3 edges=2
 
 **Streaming mode** (data arriving incrementally):
 ```
-GCF tool=context_for_task budget=5000
+GCF profile=graph tool=context_for_task budget=5000
 ## targets
 @0 fn pkg.Auth 0.95 lsp_resolved
 @1 fn pkg.Handler 0.88 lsp_resolved
@@ -717,10 +717,9 @@ GCF tool=context_for_task budget=5000
 ## edges [?]
 @0<@1 calls
 @2<@0 references
-## _summary symbols=3 edges=2 sections=targets:2,related:1,edges:2
+##! summary symbols=3 edges=2 sections=targets:2,related:1,edges:2
 ```
 
 Both produce identical `Payload` structures when decoded. The streaming mode enables zero-buffering encode with O(1) memory per row.
 
 ---
-

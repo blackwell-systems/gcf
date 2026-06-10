@@ -20,7 +20,7 @@ If the tool takes 3 seconds to traverse a call graph, the LLM waits 3 seconds se
 With streaming encode, the server emits rows as they arrive:
 
 ```
-GCF tool=context_for_task budget=5000
+GCF profile=graph tool=context_for_task budget=5000
 ## targets
 @0 fn pkg.Auth 0.95 lsp_resolved          ← emitted at 50ms
 @1 fn pkg.Handler 0.88 lsp_resolved       ← emitted at 120ms
@@ -31,10 +31,10 @@ GCF tool=context_for_task budget=5000
 @0<@1 calls                                ← emitted at 500ms
 @2<@0 references                           ← emitted at 520ms
 @0<@3 imports                              ← emitted at 540ms
-## _summary symbols=4 edges=3 sections=targets:2,related:2,edges:3
+##! summary symbols=4 edges=3 counts=3
 ```
 
-The `[?]` marker signals that the count was unknown at emit time. The `## _summary` trailer provides all counts after the data is complete. The LLM has both the data and the counts in its context window.
+The `[?]` marker signals that the count was unknown at emit time. The `##! summary` trailer provides all counts after the data is complete. The LLM has both the data and the counts in its context window.
 
 ## Why TOON's streaming is fake
 
@@ -115,7 +115,7 @@ This is not a feature addition. It is a fundamental redesign of the format's hea
 
 GCF was designed with extensibility in mind:
 
-- The `##` section header syntax naturally accommodates a `## _summary` trailer (existing decoders treat it as an empty section)
+- The `##!` directive prefix naturally accommodates a `##! summary` trailer (existing decoders ignore unknown directives)
 - The `[count]` production was already optional in some contexts, making `[?]` a natural extension
 - The format is line-oriented, so streaming is append-only (each line is self-contained)
 
@@ -129,13 +129,13 @@ The streaming extension is additive. No existing payloads are invalidated. No ex
 | Output-side streaming (lazy line yield) | Yes | Yes |
 | Input-side streaming (encode unknown-length data) | Yes | No (spec prohibits) |
 | Zero-buffering (O(1) memory) | Yes | No (requires full value) |
-| Count verification after stream | Yes (`## _summary`) | No mechanism exists |
+| Count verification after stream | Yes (`##! summary`) | No mechanism exists |
 | Time to first byte | Immediate | After full traversal |
 | Can be added without breaking spec | N/A (already in spec) | No (requires grammar rewrite) |
 
 ## Impact on LLM comprehension
 
-The `## _summary` trailer at the end of the payload is the last thing the model reads before answering a question. In transformer architectures, recent tokens have equal or stronger attention weight compared to early tokens. The trailer reinforces counts rather than degrading them.
+The `##! summary` trailer at the end of the payload is the last thing the model reads before answering a question. In transformer architectures, recent tokens have equal or stronger attention weight compared to early tokens. The trailer reinforces counts rather than degrading them.
 
 The section-based grouping (`## targets`, `## related`, `## extended`) is unchanged in streaming mode. This is what drives the accuracy advantage over TOON and JSON on counting tasks. The model counts lines within sections regardless of whether `[N]` or `[?]` appears in the header.
 

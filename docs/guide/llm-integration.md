@@ -95,7 +95,7 @@ LLMs can produce valid GCF given a short format example. 28 runs across 9 models
 The primer is 3 lines:
 
 ```
-GCF format: header starts with "GCF tool=", symbols are @id kind qname score provenance,
+GCF format: header starts with "GCF profile=graph tool=", symbols are @id kind qname score provenance,
 edges are @target<@source type (< not >), sections are ## targets/related/extended/edges.
 Kind abbreviations: function=fn, type=type, method=method, interface=iface.
 ```
@@ -166,14 +166,14 @@ The format's regularity makes structured extraction reliable:
 For the generic profile:
 - `## name [count]{fields}` declares the schema (one line)
 - Rows are positional values separated by `|`
-- Nested objects appear indented with `.fieldname`
+- Nested objects use `^` cell marker with `.field {}` attachment
 
 ## Token budget management
 
 GCF payloads include `budget` and `tokens` in the header:
 
 ```
-GCF tool=context_for_task budget=5000 tokens=1847 symbols=10 edges=8
+GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=10 edges=8
 ```
 
 The producing tool packs symbols up to the budget. The consumer can verify how much budget was consumed. The `edges=N` field lets the model verify edge count without scanning. This enables multi-tool orchestration where each tool gets a share of the total context budget.

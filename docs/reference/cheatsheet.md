@@ -15,17 +15,17 @@ GCF has two encoding profiles that share the same grammar primitives (`##`, `@`,
 ### Header
 
 ```
-GCF tool=<name> budget=<int> tokens=<int> symbols=<int> edges=<int> pack_root=<hex>
+GCF profile=graph tool=<name> budget=<int> tokens=<int> symbols=<int> edges=<int> pack_root=<hex>
 ```
 
 Only `tool` is required. All other fields are optional.
 
 ```
-GCF tool=context_for_task
-GCF tool=context_for_task budget=5000 tokens=1847 symbols=10 edges=8
-GCF tool=context_for_task budget=5000 tokens=1847 symbols=10 edges=8 pack_root=a1b2c3d4
-GCF tool=context_for_task tokens=800 symbols=5 edges=3 session=true
-GCF tool=context_for_task delta=true base_root=aaa111 new_root=bbb222 tokens=30 savings=81%
+GCF profile=graph tool=context_for_task
+GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=10 edges=8
+GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=10 edges=8 pack_root=a1b2c3d4
+GCF profile=graph tool=context_for_task tokens=800 symbols=5 edges=3 session=true
+GCF profile=graph tool=context_for_task delta=true base_root=aaa111 new_root=bbb222 tokens=30 savings=81%
 ```
 
 ### Symbol lines
@@ -101,7 +101,7 @@ Two spaces before `#`. Used when `session=true` in header.
 ### Delta payload
 
 ```
-GCF tool=context_for_task delta=true base_root=aaa new_root=bbb tokens=30 savings=85%
+GCF profile=graph tool=context_for_task delta=true base_root=aaa new_root=bbb tokens=30 savings=85%
 ## removed
 fn pkg.OldFunc
 method pkg.Server.Deprecated
@@ -121,7 +121,7 @@ pkg.Router -> pkg.NewFunc calls
 ### Complete graph example
 
 ```
-GCF tool=context_for_task budget=5000 tokens=1847 symbols=5 edges=4 pack_root=a1b2c3d4
+GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=5 edges=4 pack_root=a1b2c3d4
 ## targets
 @0 fn github.com/org/repo/internal/auth.Middleware 0.78 lsp_resolved
 @1 type github.com/org/repo/internal/auth.Config 0.71 ast_inferred
@@ -162,19 +162,19 @@ value1|value2|value3
 ### Tabular with nested fields
 
 ```
-## orders [2]{id,total,status}
-@0 1001|249.99|shipped
-  .customer
+## orders [2]{id,total,status,customer}
+@0 1001|249.99|shipped|^
+  .customer {}
     name=Alice Smith
     tier=premium
-@1 1002|89.50|pending
-  .customer
+@1 1002|89.50|pending|^
+  .customer {}
     name=Bob Jones
     tier=standard
 ```
 
 - `@{id}` prefix when rows have nested sub-objects
-- `.fieldname` introduces an inline nested object
+- `.field {}` introduces a nested object attachment (cell uses `^` marker)
 - Nested fields use `key=value` pairs, indented
 
 ### Primitive arrays (inline)
@@ -230,13 +230,13 @@ region=us-east-1
 1|Alice Smith|Engineering|95000|true
 2|Bob Jones|Sales|72000|true
 3|Carol Wu|Marketing|85000|false
-## projects [2]{id,title,lead}
-@0 101|Auth Rewrite|Alice Smith
-  .tags
+## projects [2]{id,title,lead,tags}
+@0 101|Auth Rewrite|Alice Smith|^
+  .tags {}
     priority=high
     deadline=2026-Q3
-@1 102|Dashboard|Bob Jones
-  .tags
+@1 102|Dashboard|Bob Jones|^
+  .tags {}
     priority=medium
     deadline=2026-Q4
 ```
@@ -257,7 +257,7 @@ Use `[?]` instead of `[N]` when encoding incrementally.
 ### Trailer summary
 
 ```
-## _summary symbols=4 edges=3 sections=targets:2,related:1,edges:3
+##! summary symbols=4 edges=3 counts=3
 ```
 
 Emitted after all data. Provides counts deferred from headers.
@@ -265,7 +265,7 @@ Emitted after all data. Provides counts deferred from headers.
 ### Streaming example
 
 ```
-GCF tool=context_for_task budget=5000
+GCF profile=graph tool=context_for_task budget=5000
 ## targets
 @0 fn pkg.Auth 0.95 lsp
 @1 fn pkg.Handler 0.88 lsp
@@ -274,7 +274,7 @@ GCF tool=context_for_task budget=5000
 ## edges [?]
 @0<@1 calls
 @2<@0 references
-## _summary symbols=3 edges=2 sections=targets:2,related:1,edges:2
+##! summary symbols=3 edges=2 counts=3
 ```
 
 Standard `decode()` handles streaming output with no changes.

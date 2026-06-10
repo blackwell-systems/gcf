@@ -84,7 +84,7 @@ The MCP tool response is a string. Return the GCF-encoded output as the content:
   "content": [
     {
       "type": "text",
-      "text": "GCF tool=context_for_task budget=5000 tokens=1847 symbols=10 edges=8 pack_root=a1b2c3\n## targets\n@0 fn pkg.Auth 0.78 lsp\n..."
+      "text": "GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=10 edges=8 pack_root=a1b2c3\n## targets\n@0 fn pkg.Auth 0.78 lsp\n..."
     }
   ]
 }

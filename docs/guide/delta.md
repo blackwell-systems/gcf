@@ -18,7 +18,7 @@ Server checks:
 ## Delta format
 
 ```
-GCF tool=context_for_task delta=true base_root=a1b2c3 new_root=d4e5f6 tokens=30 savings=81%
+GCF profile=graph tool=context_for_task delta=true base_root=a1b2c3 new_root=d4e5f6 tokens=30 savings=81%
 ## removed
 fn github.com/org/repo/pkg.OldHandler
 method github.com/org/repo/pkg.Server.Deprecated
@@ -120,7 +120,7 @@ fmt.Println(gcf.EncodeDelta(delta))
 **Output:**
 
 ```
-GCF tool=context_for_task delta=true base_root=a1b2c3 new_root=d4e5f6 tokens=30 savings=85%
+GCF profile=graph tool=context_for_task delta=true base_root=a1b2c3 new_root=d4e5f6 tokens=30 savings=85%
 ## removed
 fn pkg.OldFunc
 ## added

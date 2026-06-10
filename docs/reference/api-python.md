@@ -93,7 +93,7 @@ Create a streaming encoder that writes GCF incrementally. Zero buffering, thread
 enc = StreamEncoder(sys.stdout, "context_for_task", token_budget=5000)
 enc.write_symbol(sym)  # emitted immediately
 enc.write_edge(edge)   # emitted immediately
-enc.close()            # emits ## _summary trailer
+enc.close()            # emits ##! summary trailer
 ```
 
 ## Types
