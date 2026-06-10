@@ -32,7 +32,7 @@ function encodeSessionCall2(obj: any): string {
   const edges: any[] = obj.edges ?? []
   const lines: string[] = []
 
-  lines.push(`GCF tool=${obj.tool} budget=${obj.tokenBudget || 0} tokens=${obj.tokensUsed || 0} symbols=${syms.length} edges=${edges.length} session=true`)
+  lines.push(`GCF profile=graph tool=${obj.tool} budget=${obj.tokenBudget || 0} tokens=${obj.tokensUsed || 0} symbols=${syms.length} edges=${edges.length} session=true`)
 
   const groupNames = ['targets', 'related', 'extended']
   let currentDist: number | null = null
