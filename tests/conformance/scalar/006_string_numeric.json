@@ -1,0 +1,9 @@
+{
+  "name": "string_numeric_must_be_quoted",
+  "description": "JSON string \"123\" must be quoted to avoid number collision",
+  "input": {
+    "value": "123"
+  },
+  "expected": "GCF profile=generic\nvalue=\"123\"\n",
+  "operation": "encode"
+}

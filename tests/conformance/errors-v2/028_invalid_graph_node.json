@@ -1,0 +1,7 @@
+{
+  "name": "invalid_graph_node",
+  "description": "Graph symbol lines with too few positional fields must be rejected",
+  "input": "GCF profile=graph tool=test symbols=1\n## targets\n@0 fn pkg.Foo 0.90\n",
+  "expectedError": "invalid_node_line",
+  "operation": "error"
+}

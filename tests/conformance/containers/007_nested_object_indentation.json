@@ -1,0 +1,15 @@
+{
+  "name": "nested_object_two_levels",
+  "description": "Two levels of nested objects with two-space indentation",
+  "input": {
+    "name": "top",
+    "level1": {
+      "a": 1,
+      "level2": {
+        "b": 2
+      }
+    }
+  },
+  "expected": "GCF profile=generic\nname=top\n## level1\n  a=1\n  ## level2\n    b=2\n",
+  "operation": "encode"
+}

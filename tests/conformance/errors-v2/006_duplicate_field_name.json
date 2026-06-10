@@ -1,0 +1,7 @@
+{
+  "name": "duplicate_field_name",
+  "description": "Duplicate field names in tabular header must be rejected",
+  "input": "GCF profile=generic\n## rows [1]{id,name,id}\n1|Alice|2\n",
+  "expectedError": "duplicate_field_name",
+  "operation": "error"
+}

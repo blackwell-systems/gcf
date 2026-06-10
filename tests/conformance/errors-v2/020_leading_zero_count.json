@@ -1,0 +1,7 @@
+{
+  "name": "leading_zero_count",
+  "description": "Count with leading zero must be rejected",
+  "input": "GCF profile=generic\n## rows [03]{id}\n1\n2\n3\n",
+  "expectedError": "invalid_count",
+  "operation": "error"
+}

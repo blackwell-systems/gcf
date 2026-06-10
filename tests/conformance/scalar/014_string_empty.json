@@ -1,0 +1,9 @@
+{
+  "name": "string_empty_must_be_quoted",
+  "description": "Empty JSON string must be quoted",
+  "input": {
+    "value": ""
+  },
+  "expected": "GCF profile=generic\nvalue=\"\"\n",
+  "operation": "encode"
+}

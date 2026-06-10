@@ -1,0 +1,21 @@
+{
+  "name": "field_scalar_in_one_row_nested_in_another",
+  "description": "Same field is scalar in one record and nested object in another",
+  "input": {
+    "rows": [
+      {
+        "id": 1,
+        "meta": "simple"
+      },
+      {
+        "id": 2,
+        "meta": {
+          "type": "complex",
+          "version": 2
+        }
+      }
+    ]
+  },
+  "expected": "GCF profile=generic\n## rows [2]{id,meta}\n1|simple\n@1 2|^\n  .meta {}\n    type=complex\n    version=2\n",
+  "operation": "encode"
+}

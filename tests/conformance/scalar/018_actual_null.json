@@ -1,0 +1,9 @@
+{
+  "name": "actual_null_not_quoted",
+  "description": "Actual null must be encoded as bare dash",
+  "input": {
+    "value": null
+  },
+  "expected": "GCF profile=generic\nvalue=-\n",
+  "operation": "encode"
+}

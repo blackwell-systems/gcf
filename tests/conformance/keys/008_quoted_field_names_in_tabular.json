@@ -1,0 +1,20 @@
+{
+  "name": "quoted_field_names_in_tabular",
+  "description": "Tabular header with quoted field names containing special characters",
+  "input": {
+    "rows": [
+      {
+        "id": 1,
+        "display name": "Alice",
+        "a,b": "test"
+      },
+      {
+        "id": 2,
+        "display name": "Bob",
+        "a,b": "other"
+      }
+    ]
+  },
+  "expected": "GCF profile=generic\n## rows [2]{id,\"display name\",\"a,b\"}\n1|Alice|test\n2|Bob|other\n",
+  "operation": "encode"
+}

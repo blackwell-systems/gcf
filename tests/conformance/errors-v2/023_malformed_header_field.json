@@ -1,0 +1,7 @@
+{
+  "name": "malformed_header_field",
+  "description": "Header fields without an equals sign must be rejected",
+  "input": "GCF profile=generic broken\n",
+  "expectedError": "malformed_header_field",
+  "operation": "error"
+}

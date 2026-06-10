@@ -1,0 +1,9 @@
+{
+  "name": "string_hash_prefix_must_be_quoted",
+  "description": "JSON string starting with # must be quoted to avoid comment collision",
+  "input": {
+    "value": "# not a comment"
+  },
+  "expected": "GCF profile=generic\nvalue=\"# not a comment\"\n",
+  "operation": "encode"
+}

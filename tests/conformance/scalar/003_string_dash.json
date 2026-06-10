@@ -1,0 +1,9 @@
+{
+  "name": "string_dash_must_be_quoted",
+  "description": "JSON string \"-\" must be quoted to avoid null collision",
+  "input": {
+    "value": "-"
+  },
+  "expected": "GCF profile=generic\nvalue=\"-\"\n",
+  "operation": "encode"
+}

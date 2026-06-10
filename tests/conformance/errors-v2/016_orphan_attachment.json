@@ -1,0 +1,7 @@
+{
+  "name": "orphan_attachment",
+  "description": "Attachment without parent row and matching ^ cell must be rejected",
+  "input": "GCF profile=generic\n## rows [1]{id,name}\n1|Alice\n  .extra {}\n    key=val\n",
+  "expectedError": "orphan_attachment",
+  "operation": "error"
+}

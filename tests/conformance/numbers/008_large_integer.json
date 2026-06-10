@@ -1,0 +1,9 @@
+{
+  "name": "number_large_integer",
+  "description": "Large integer within plain decimal range",
+  "input": {
+    "value": 999999999999999
+  },
+  "expected": "GCF profile=generic\nvalue=999999999999999\n",
+  "operation": "encode"
+}

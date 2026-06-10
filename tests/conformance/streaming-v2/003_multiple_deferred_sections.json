@@ -1,0 +1,32 @@
+{
+  "name": "multiple_deferred_sections",
+  "description": "Multiple [?] sections matched to counts entries by document order",
+  "input": "GCF profile=generic\n## users [?]{id,name}\n1|Alice\n2|Bob\n## logs [?]{ts,msg}\n100|started\n101|stopped\n102|restarted\n##! summary counts=2,3\n",
+  "expected": {
+    "users": [
+      {
+        "id": 1,
+        "name": "Alice"
+      },
+      {
+        "id": 2,
+        "name": "Bob"
+      }
+    ],
+    "logs": [
+      {
+        "ts": 100,
+        "msg": "started"
+      },
+      {
+        "ts": 101,
+        "msg": "stopped"
+      },
+      {
+        "ts": 102,
+        "msg": "restarted"
+      }
+    ]
+  },
+  "operation": "decode"
+}

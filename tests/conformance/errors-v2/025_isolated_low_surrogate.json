@@ -1,0 +1,7 @@
+{
+  "name": "isolated_low_surrogate",
+  "description": "An escaped low surrogate without a preceding high surrogate must be rejected",
+  "input": "GCF profile=generic\nvalue=\"\\uDC00\"\n",
+  "expectedError": "invalid_surrogate",
+  "operation": "error"
+}

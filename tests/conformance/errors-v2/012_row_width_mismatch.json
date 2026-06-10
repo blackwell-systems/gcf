@@ -1,0 +1,7 @@
+{
+  "name": "row_width_mismatch",
+  "description": "Row with wrong number of pipe-separated values must be rejected",
+  "input": "GCF profile=generic\n## rows [1]{id,name,score}\n1|Alice\n",
+  "expectedError": "row_width_mismatch",
+  "operation": "error"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "summary_count_arity",
+  "description": "Trailer counts entries must match the number of deferred sections",
+  "input": "GCF profile=generic\n## first [?]{id}\n1\n## second [?]{id}\n2\n##! summary counts=1\n",
+  "expectedError": "count_mismatch",
+  "operation": "error"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "number_small_exponent",
+  "description": "Very small number requiring exponent notation",
+  "input": {
+    "value": 1.0E-7
+  },
+  "expected": "GCF profile=generic\nvalue=1e-7\n",
+  "operation": "encode"
+}

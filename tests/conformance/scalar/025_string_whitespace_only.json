@@ -1,0 +1,9 @@
+{
+  "name": "string_whitespace_only",
+  "description": "String consisting only of spaces must be quoted",
+  "input": {
+    "value": "   "
+  },
+  "expected": "GCF profile=generic\nvalue=\"   \"\n",
+  "operation": "encode"
+}

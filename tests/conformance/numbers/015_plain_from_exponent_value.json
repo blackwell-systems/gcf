@@ -1,0 +1,7 @@
+{
+  "name": "number_plain_from_exponent_value",
+  "description": "A numeric value inside the plain range is emitted as plain decimal regardless of source notation",
+  "input": {"value": 1e+10},
+  "expected": "GCF profile=generic\nvalue=10000000000\n",
+  "operation": "encode"
+}

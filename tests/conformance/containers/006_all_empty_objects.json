@@ -1,0 +1,13 @@
+{
+  "name": "array_of_empty_objects_uses_expanded",
+  "description": "Array of only empty objects has zero-column union so uses expanded form",
+  "input": {
+    "items": [
+      {},
+      {},
+      {}
+    ]
+  },
+  "expected": "GCF profile=generic\n## items [3]\n@0 {}\n@1 {}\n@2 {}\n",
+  "operation": "encode"
+}

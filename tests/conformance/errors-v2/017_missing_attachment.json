@@ -1,0 +1,7 @@
+{
+  "name": "missing_attachment",
+  "description": "^ cell without corresponding .field attachment must be rejected",
+  "input": "GCF profile=generic\n## rows [1]{id,data}\n@0 1|^\n",
+  "expectedError": "missing_attachment",
+  "operation": "error"
+}

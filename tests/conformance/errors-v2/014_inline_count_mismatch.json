@@ -1,0 +1,7 @@
+{
+  "name": "inline_count_mismatch",
+  "description": "Inline array count not matching value count must be rejected",
+  "input": "GCF profile=generic\ntags[3]: a,b\n",
+  "expectedError": "count_mismatch",
+  "operation": "error"
+}

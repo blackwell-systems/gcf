@@ -1,0 +1,16 @@
+{
+  "name": "root_array_tabular",
+  "description": "Root JSON array of objects uses anonymous ## [N]{fields} header",
+  "input": [
+    {
+      "id": 1,
+      "name": "Alice"
+    },
+    {
+      "id": 2,
+      "name": "Bob"
+    }
+  ],
+  "expected": "GCF profile=generic\n## [2]{id,name}\n1|Alice\n2|Bob\n",
+  "operation": "encode"
+}

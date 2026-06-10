@@ -1,0 +1,7 @@
+{
+  "name": "number_plain_lower_boundary",
+  "description": "1e-6 is emitted in plain decimal notation",
+  "input": {"value": 0.000001},
+  "expected": "GCF profile=generic\nvalue=0.000001\n",
+  "operation": "encode"
+}

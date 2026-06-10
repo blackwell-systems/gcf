@@ -1,0 +1,18 @@
+{
+  "name": "comments_do_not_increment_count",
+  "description": "Comment lines between tabular rows are ignored and do not affect count validation",
+  "input": "GCF profile=generic\n## rows [2]{id,name}\n# first row\n1|Alice\n# second row\n2|Bob\n",
+  "expected": {
+    "rows": [
+      {
+        "id": 1,
+        "name": "Alice"
+      },
+      {
+        "id": 2,
+        "name": "Bob"
+      }
+    ]
+  },
+  "operation": "decode"
+}

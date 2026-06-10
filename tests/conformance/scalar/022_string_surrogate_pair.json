@@ -1,0 +1,9 @@
+{
+  "name": "string_supplementary_character",
+  "description": "String with supplementary Unicode character (U+1F600 grinning face) emitted as literal UTF-8",
+  "input": {
+    "value": "smile: 😀"
+  },
+  "expected": "GCF profile=generic\nvalue=smile: 😀\n",
+  "operation": "encode"
+}

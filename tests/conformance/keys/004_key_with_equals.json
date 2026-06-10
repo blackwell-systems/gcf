@@ -1,0 +1,9 @@
+{
+  "name": "key_with_equals_quoted",
+  "description": "Key containing equals sign must be quoted",
+  "input": {
+    "a=b": "value"
+  },
+  "expected": "GCF profile=generic\n\"a=b\"=value\n",
+  "operation": "encode"
+}

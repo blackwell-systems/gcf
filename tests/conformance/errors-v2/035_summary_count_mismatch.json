@@ -1,0 +1,7 @@
+{
+  "name": "summary_count_mismatch",
+  "description": "Trailer counts must match the actual number of items",
+  "input": "GCF profile=generic\n## rows [?]{id}\n1\n2\n##! summary counts=1\n",
+  "expectedError": "count_mismatch",
+  "operation": "error"
+}

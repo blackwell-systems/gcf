@@ -1,0 +1,7 @@
+{
+  "name": "root_string",
+  "description": "Root JSON string uses =value syntax",
+  "input": "hello world",
+  "expected": "GCF profile=generic\n=hello world\n",
+  "operation": "encode"
+}

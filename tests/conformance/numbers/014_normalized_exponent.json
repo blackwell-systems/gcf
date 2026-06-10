@@ -1,0 +1,7 @@
+{
+  "name": "number_normalized_exponent",
+  "description": "Exponent notation uses lowercase e, an explicit sign, and no trailing fractional zeroes",
+  "input": {"value": 1.23e+21},
+  "expected": "GCF profile=generic\nvalue=1.23e+21\n",
+  "operation": "encode"
+}

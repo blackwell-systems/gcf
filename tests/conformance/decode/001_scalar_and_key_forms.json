@@ -1,0 +1,13 @@
+{
+  "name": "decode_scalar_and_key_forms",
+  "description": "Decode valid noncanonical scalar spellings and quoted keys independently of encoder output",
+  "input": "GCF profile=generic\n\"display name\"=Alice\nleading_zero=01\nexponent=6.022E+23\nescaped=\"line1\\nline2\"\nnull_value=-\n",
+  "expected": {
+    "display name": "Alice",
+    "leading_zero": "01",
+    "exponent": 6.022e+23,
+    "escaped": "line1\nline2",
+    "null_value": null
+  },
+  "operation": "decode"
+}

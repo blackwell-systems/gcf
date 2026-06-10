@@ -1,0 +1,29 @@
+{
+  "name": "graph_session_stable_ids",
+  "description": "Session-scoped symbol IDs remain stable across calls",
+  "calls": [
+    {
+      "input": {
+        "tool": "test",
+        "symbols": [
+          {"qualifiedName": "pkg.Auth", "kind": "function", "score": 0.9, "provenance": "lsp", "distance": 0},
+          {"qualifiedName": "pkg.Server", "kind": "function", "score": 0.7, "provenance": "lsp", "distance": 1}
+        ],
+        "edges": []
+      },
+      "expected": "GCF profile=graph tool=test symbols=2 session=true\n## targets\n@0 fn pkg.Auth 0.90 lsp\n## related\n@1 fn pkg.Server 0.70 lsp\n"
+    },
+    {
+      "input": {
+        "tool": "test",
+        "symbols": [
+          {"qualifiedName": "pkg.Server", "kind": "function", "score": 0.7, "provenance": "lsp", "distance": 0},
+          {"qualifiedName": "pkg.Handler", "kind": "function", "score": 0.6, "provenance": "ast", "distance": 0}
+        ],
+        "edges": []
+      },
+      "expected": "GCF profile=graph tool=test symbols=2 session=true\n## targets\n@1  # previously transmitted\n@2 fn pkg.Handler 0.60 ast\n"
+    }
+  ],
+  "operation": "session"
+}

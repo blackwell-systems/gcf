@@ -1,5 +1,32 @@
 # Changelog
 
+## v2.0 (2026-06-10)
+
+Specification rewrite addressing 11 correctness findings from the generic profile review. Coordinated breaking change with zero installed base cost. Prior versions (v1.0 through v1.4) are considered pre-stable development.
+
+### Breaking changes
+
+- **Mandatory header**: every payload requires `GCF profile=generic` or `GCF profile=graph`
+- **Scalar quoting obligation**: strings colliding with typed literals must be quoted (`"true"`, `"123"`, `"-"`, `"~"`, `"^"`)
+- **Full JSON string escaping**: `\b`, `\f`, `\n`, `\r`, `\t`, `\uXXXX`, surrogate pairs; `\|` removed
+- **Full JSON number grammar**: exponent notation, canonical formatting rules
+- **Null vs missing**: `-` is null, `~` is absent (tabular rows only)
+- **Attachment marker**: `^` in tabular cells with `.field {}` / `.field [N]` attachment syntax
+- **Quoted keys**: keys with special characters must be quoted; no key prefix reservation
+- **Expanded per-item form**: explicit type markers `=` (scalar), `{}` (object), `[N]` (array)
+- **Root values**: `=value` for root scalars, anonymous `## [N]` for root arrays
+- **Streaming trailer**: `##! summary counts=N,M,...` replaces `## _summary`
+- **Duplicate key rejection** in objects and field declarations
+- **Normative indentation**: 2 spaces per level, tabs forbidden
+- **Count validation** at every nesting level with leading-zero rejection
+- **Item ID validation**: expanded item IDs must equal zero-based index
+
+### Conformance
+
+- 131 fixtures across 10 categories (was 61)
+- Go reference implementation passes all 131
+- Status: Draft (Stable after cross-language conformance matrix passes)
+
 ## v1.4 (2026-06-06)
 
 - Streaming encoding extension (Section 6b): true zero-buffering encode

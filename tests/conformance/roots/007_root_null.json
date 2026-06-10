@@ -1,0 +1,7 @@
+{
+  "name": "root_null",
+  "description": "Root JSON null uses =- syntax",
+  "input": null,
+  "expected": "GCF profile=generic\n=-\n",
+  "operation": "encode"
+}

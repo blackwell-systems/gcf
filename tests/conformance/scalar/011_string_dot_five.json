@@ -1,0 +1,9 @@
+{
+  "name": "string_dot_five_must_be_quoted",
+  "description": "JSON string \".5\" must be quoted (numeric-like: starts with . then digit)",
+  "input": {
+    "value": ".5"
+  },
+  "expected": "GCF profile=generic\nvalue=\".5\"\n",
+  "operation": "encode"
+}

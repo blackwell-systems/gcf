@@ -1,0 +1,30 @@
+{
+  "name": "numbers_in_tabular_row",
+  "description": "Various number types in tabular context",
+  "input": {
+    "data": [
+      {
+        "label": "int",
+        "val": 42
+      },
+      {
+        "label": "neg",
+        "val": -17
+      },
+      {
+        "label": "dec",
+        "val": 3.14
+      },
+      {
+        "label": "exp",
+        "val": 6.022E+23
+      },
+      {
+        "label": "zero",
+        "val": 0
+      }
+    ]
+  },
+  "expected": "GCF profile=generic\n## data [5]{label,val}\nint|42\nneg|-17\ndec|3.14\nexp|6.022e+23\nzero|0\n",
+  "operation": "encode"
+}

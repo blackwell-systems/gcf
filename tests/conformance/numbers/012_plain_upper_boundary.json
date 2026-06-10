@@ -1,0 +1,7 @@
+{
+  "name": "number_plain_below_upper_boundary",
+  "description": "A value below 1e21 remains in plain decimal notation",
+  "input": {"value": 100000000000000000000},
+  "expected": "GCF profile=generic\nvalue=100000000000000000000\n",
+  "operation": "encode"
+}

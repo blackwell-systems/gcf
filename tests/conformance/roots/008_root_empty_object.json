@@ -1,0 +1,7 @@
+{
+  "name": "root_empty_object",
+  "description": "Root empty object is header line only with no body",
+  "input": {},
+  "expected": "GCF profile=generic\n",
+  "operation": "encode"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "string_all_json_escapes",
+  "description": "String containing all JSON escape sequences",
+  "input": {
+    "value": "quote:\" backslash:\\ slash:/ backspace:\b formfeed:\f newline:\n return:\r tab:\t"
+  },
+  "expected": "GCF profile=generic\nvalue=\"quote:\\\" backslash:\\\\ slash:/ backspace:\\b formfeed:\\f newline:\\n return:\\r tab:\\t\"\n",
+  "operation": "encode"
+}

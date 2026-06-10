@@ -1,0 +1,12 @@
+{
+  "name": "decode_tabular_attachment",
+  "description": "Decode a nested object attachment and preserve missing versus null",
+  "input": "GCF profile=generic\n## rows [2]{id,meta,note}\n@0 1|^|~\n  .meta {}\n    active=true\n@1 2|^|-\n  .meta {}\n",
+  "expected": {
+    "rows": [
+      {"id": 1, "meta": {"active": true}},
+      {"id": 2, "meta": {}, "note": null}
+    ]
+  },
+  "operation": "decode"
+}

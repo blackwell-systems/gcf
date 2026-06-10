@@ -1,0 +1,7 @@
+{
+  "name": "root_number",
+  "description": "Root JSON number uses =value syntax",
+  "input": 42,
+  "expected": "GCF profile=generic\n=42\n",
+  "operation": "encode"
+}

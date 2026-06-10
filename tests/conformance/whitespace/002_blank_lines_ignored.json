@@ -1,0 +1,10 @@
+{
+  "name": "blank_lines_after_header_ignored",
+  "description": "Decoders must ignore blank lines after the header",
+  "input": "GCF profile=generic\n\nname=Alice\n\nage=30\n",
+  "expected": {
+    "name": "Alice",
+    "age": 30
+  },
+  "operation": "decode"
+}

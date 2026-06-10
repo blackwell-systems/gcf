@@ -1,0 +1,17 @@
+{
+  "name": "graph_decode_comments_crlf_and_kind",
+  "description": "Decode CRLF, comments, known kind expansion, and unknown kind pass-through",
+  "input": "GCF profile=graph tool=test symbols=2\r\n# comment\r\n## targets\r\n@0 iface pkg.Handler 0.90 lsp\r\n@1 widget pkg.Custom 0.80 ast\r\n",
+  "expected": {
+    "tool": "test",
+    "tokenBudget": 0,
+    "tokensUsed": 0,
+    "packRoot": "",
+    "symbols": [
+      {"qualifiedName": "pkg.Handler", "kind": "interface", "score": 0.9, "provenance": "lsp", "distance": 0},
+      {"qualifiedName": "pkg.Custom", "kind": "widget", "score": 0.8, "provenance": "ast", "distance": 0}
+    ],
+    "edges": []
+  },
+  "operation": "decode"
+}

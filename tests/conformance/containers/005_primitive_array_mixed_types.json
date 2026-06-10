@@ -1,0 +1,19 @@
+{
+  "name": "primitive_array_mixed_types",
+  "description": "Inline array with mixed primitive types including quoted collisions",
+  "input": {
+    "vals": [
+      "hello",
+      42,
+      true,
+      false,
+      null,
+      "",
+      "true",
+      "123",
+      "-"
+    ]
+  },
+  "expected": "GCF profile=generic\nvals[9]: hello,42,true,false,-,\"\",\"true\",\"123\",\"-\"\n",
+  "operation": "encode"
+}

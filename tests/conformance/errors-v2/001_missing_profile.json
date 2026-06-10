@@ -1,0 +1,7 @@
+{
+  "name": "missing_profile",
+  "description": "Header without profile= field must be rejected",
+  "input": "GCF tool=test\n## targets\n@0 fn pkg.Foo 0.78 lsp\n",
+  "expectedError": "missing_profile",
+  "operation": "error"
+}

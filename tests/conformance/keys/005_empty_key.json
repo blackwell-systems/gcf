@@ -1,0 +1,9 @@
+{
+  "name": "empty_key_quoted",
+  "description": "Empty string key must be quoted",
+  "input": {
+    "": "value"
+  },
+  "expected": "GCF profile=generic\n\"\"=value\n",
+  "operation": "encode"
+}

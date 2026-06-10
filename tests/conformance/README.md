@@ -1,150 +1,85 @@
-# GCF Conformance Test Suite
+# GCF v2.0 Conformance Suite
 
-Language-agnostic test fixtures for validating GCF implementations. Each fixture is a JSON file containing an input payload and the expected GCF output.
+This directory is the canonical conformance suite for `SPEC.md` v2.0. Implementations SHOULD recursively load JSON fixtures from this directory and dispatch each fixture using its explicit `operation` field.
+
+The incompatible v1 fixtures are retained in `tests/conformance-v1/` for historical implementation migration. They MUST NOT be included in v2 conformance runs.
+
+## Operations
+
+| Operation | Contract |
+|-----------|----------|
+| `encode` | Encode `input` and byte-match the GCF string in `expected` |
+| `decode` | Decode the GCF string in `input` and structurally compare `expected` |
+| `error` | Decode `input` and require the category in `expectedError` |
+| `session` | Encode each entry in `calls` with shared session state |
+| `delta` | Delta-encode `input` and byte-match `expected` |
+
+Error fixtures normally use a JSON string in `input`. The malformed UTF-8 fixture uses `inputBase64`; runners MUST base64-decode it to raw bytes before invoking the decoder.
 
 ## Structure
 
-```
-tests/conformance/
-├── encode/           # Graph profile: input payload → expected GCF output
-├── decode/           # Graph profile: GCF input → expected parsed payload
-├── session/          # Graph profile: multi-call session sequences
-├── delta/            # Graph profile: delta payload encoding
-├── generic/          # Tabular profile: arbitrary JSON → expected GCF output
-└── errors/           # Malformed input → expected error
-```
+| Directory | Fixtures | Coverage |
+|-----------|---------:|----------|
+| `scalar/` | 26 | Scalar identity, quoting, escapes, Unicode |
+| `numbers/` | 15 | JSON numbers, normalized exponents, and notation boundaries |
+| `keys/` | 10 | Bare and quoted keys and field declarations |
+| `containers/` | 7 | Missing values, field unions, empty containers, indentation |
+| `attachments/` | 7 | Nested tabular values and attachment matching |
+| `arrays/` | 5 | Mixed, expanded, and recursive arrays |
+| `roots/` | 11 | Object, array, scalar, null, and empty roots |
+| `decode/` | 5 | Independently authored positive generic decoder inputs |
+| `graph-encode/` | 2 | Buffered graph encoding and deterministic ordering |
+| `graph-decode/` | 2 | Buffered graph decoding, comments, CRLF, and kinds |
+| `graph-session/` | 1 | Stable session-scoped symbol IDs |
+| `graph-delta/` | 1 | Delta profile header and sections |
+| `streaming-v2/` | 3 | Deferred counts and summary trailers |
+| `whitespace/` | 3 | Comments, blank lines, and CRLF |
+| `errors-v2/` | 35 | Generic, header, Unicode, attachment, count, and graph errors |
+| **Total** | **133** | |
 
-## Running
+## Fixture Examples
 
-Each implementation loads the JSON fixtures and validates its output matches exactly (byte-for-byte for encode, structural equality for decode).
-
-### Go
-
-```bash
-cd gcf-go && go test -run TestConformance ./...
-```
-
-### TypeScript
-
-```bash
-cd gcf-typescript && npx vitest run tests/conformance
-```
-
-### Python
-
-```bash
-cd gcf-python && pytest tests/test_conformance.py
-```
-
-## Fixture format
-
-### Encode fixtures
+Encode:
 
 ```json
 {
-  "name": "basic_two_symbols",
-  "description": "Two symbols in different distance groups with one edge",
-  "input": {
-    "tool": "context_for_task",
-    "tokenBudget": 5000,
-    "tokensUsed": 1847,
-    "packRoot": "",
-    "symbols": [
-      {"qualifiedName": "pkg.Auth", "kind": "function", "score": 0.78, "provenance": "lsp_resolved", "distance": 0},
-      {"qualifiedName": "pkg.Server", "kind": "function", "score": 0.54, "provenance": "lsp_resolved", "distance": 1}
-    ],
-    "edges": [
-      {"source": "pkg.Server", "target": "pkg.Auth", "edgeType": "calls", "status": ""}
-    ]
-  },
-  "expected": "GCF tool=context_for_task budget=5000 tokens=1847 symbols=2 edges=1\n## targets\n@0 fn pkg.Auth 0.78 lsp_resolved\n## related\n@1 fn pkg.Server 0.54 lsp_resolved\n## edges [1]\n@0<@1 calls\n"
+  "name": "bare_key",
+  "description": "A bare key and scalar value",
+  "input": {"key": "value"},
+  "expected": "GCF profile=generic\nkey=value\n",
+  "operation": "encode"
 }
 ```
 
-### Decode fixtures
+Decode:
 
 ```json
 {
-  "name": "basic_decode",
-  "description": "Parse a simple GCF payload",
-  "input": "GCF tool=context_for_task budget=5000 tokens=1847 symbols=2 edges=1\n## targets\n@0 fn pkg.Auth 0.78 lsp_resolved\n## related\n@1 fn pkg.Server 0.54 lsp_resolved\n## edges [1]\n@0<@1 calls\n",
-  "expected": {
-    "tool": "context_for_task",
-    "tokenBudget": 5000,
-    "tokensUsed": 1847,
-    "packRoot": "",
-    "symbols": [
-      {"qualifiedName": "pkg.Auth", "kind": "function", "score": 0.78, "provenance": "lsp_resolved", "distance": 0},
-      {"qualifiedName": "pkg.Server", "kind": "function", "score": 0.54, "provenance": "lsp_resolved", "distance": 1}
-    ],
-    "edges": [
-      {"source": "pkg.Server", "target": "pkg.Auth", "edgeType": "calls", "status": ""}
-    ]
-  }
+  "name": "decode_root_scalar",
+  "description": "Decode a root scalar",
+  "input": "GCF profile=generic\n=true\n",
+  "expected": true,
+  "operation": "decode"
 }
 ```
 
-### Session fixtures
+Error:
 
 ```json
 {
-  "name": "session_second_call",
-  "description": "Second call with overlapping symbol becomes bare ref",
-  "calls": [
-    {
-      "input": { "...payload1..." },
-      "expected": "...full output..."
-    },
-    {
-      "input": { "...payload2 with overlapping symbol..." },
-      "expected": "...output with @N  # previously transmitted..."
-    }
-  ]
+  "name": "invalid_missing",
+  "description": "The missing marker is valid only in tabular cells",
+  "input": "GCF profile=generic\nvalue=~\n",
+  "expectedError": "invalid_missing",
+  "operation": "error"
 }
 ```
 
-### Error fixtures
+## Required Runner Checks
 
-```json
-{
-  "name": "invalid_header",
-  "description": "Missing GCF prefix should error",
-  "input": "INVALID tool=test\n@0 fn pkg.Foo 0.9 lsp\n",
-  "expectedError": true
-}
-```
-
-### Generic fixtures (tabular profile)
-
-```json
-{
-  "name": "flat_tabular",
-  "description": "Uniform array of objects becomes tabular rows with pipe separators",
-  "input": {
-    "employees": [
-      {"id": 1, "name": "Alice", "department": "Engineering", "salary": 95000},
-      {"id": 2, "name": "Bob", "department": "Sales", "salary": 72000}
-    ]
-  },
-  "expected": "## employees [2]{id,name,department,salary}\n1|Alice|Engineering|95000\n2|Bob|Sales|72000\n"
-}
-```
-
-**Note on field ordering:** Generic fixtures use insertion order (matching JavaScript/Python dict behavior). Go implementations use sorted map keys, which produces different field ordering. Go should validate structural correctness (correct headers, correct row counts, correct values) rather than byte-exact matching against these fixtures.
-
-## Fixture counts
-
-| Directory | Fixtures | Profile |
-|-----------|----------|---------|
-| encode/ | 11 | Graph |
-| decode/ | 8 | Graph |
-| session/ | 4 | Graph |
-| delta/ | 5 | Graph |
-| generic/ | 18 | Tabular |
-| streaming/ | 5 | Both (streaming mode) |
-| errors/ | 10 | Both |
-| **Total** | **61** | |
-
-## Contributing fixtures
-
-Add a JSON file to the appropriate directory. Run all implementations against it to confirm they agree on the output.
+- Validate every fixture against its operation contract.
+- Compare encoder output byte-for-byte, including final LF.
+- Compare decoded JSON structurally.
+- Require the exact documented error category.
+- Run `decode(encode(input)) == input` for every `encode` fixture whose input is JSON data.
+- Do not infer operation from the JSON types of `input` and `expected`.

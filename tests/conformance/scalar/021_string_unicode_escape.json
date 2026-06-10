@@ -1,0 +1,9 @@
+{
+  "name": "string_unicode_escape",
+  "description": "String containing a control character encoded as \\u00XX",
+  "input": {
+    "value": "null\u0000byte"
+  },
+  "expected": "GCF profile=generic\nvalue=\"null\\u0000byte\"\n",
+  "operation": "encode"
+}

@@ -1,0 +1,21 @@
+{
+  "name": "multiple_attachments_per_row",
+  "description": "Row with two nested values: one object and one array",
+  "input": {
+    "orders": [
+      {
+        "id": 1,
+        "status": "shipped",
+        "customer": {
+          "name": "Alice"
+        },
+        "tags": [
+          "express",
+          "gift"
+        ]
+      }
+    ]
+  },
+  "expected": "GCF profile=generic\n## orders [1]{id,status,customer,tags}\n@0 1|shipped|^|^\n  .customer {}\n    name=Alice\n  .tags [2]: express,gift\n",
+  "operation": "encode"
+}

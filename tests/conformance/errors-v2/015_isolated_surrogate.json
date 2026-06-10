@@ -1,0 +1,7 @@
+{
+  "name": "isolated_surrogate",
+  "description": "Isolated high surrogate escape must be rejected",
+  "input": "GCF profile=generic\nvalue=\"\\uD800\"\n",
+  "expectedError": "invalid_surrogate",
+  "operation": "error"
+}

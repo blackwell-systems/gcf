@@ -1,0 +1,10 @@
+{
+  "name": "actual_boolean_not_quoted",
+  "description": "Actual boolean values must not be quoted",
+  "input": {
+    "a": true,
+    "b": false
+  },
+  "expected": "GCF profile=generic\na=true\nb=false\n",
+  "operation": "encode"
+}

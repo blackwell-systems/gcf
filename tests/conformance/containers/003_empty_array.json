@@ -1,0 +1,9 @@
+{
+  "name": "empty_array",
+  "description": "Empty array uses [0] with no body",
+  "input": {
+    "items": []
+  },
+  "expected": "GCF profile=generic\n## items [0]\n",
+  "operation": "encode"
+}

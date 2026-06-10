@@ -1,0 +1,9 @@
+{
+  "name": "string_caret_must_be_quoted",
+  "description": "JSON string \"^\" must be quoted (reserved attachment marker)",
+  "input": {
+    "value": "^"
+  },
+  "expected": "GCF profile=generic\nvalue=\"^\"\n",
+  "operation": "encode"
+}

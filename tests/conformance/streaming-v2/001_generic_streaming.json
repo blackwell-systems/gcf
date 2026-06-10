@@ -1,0 +1,25 @@
+{
+  "name": "generic_streaming_with_trailer",
+  "description": "Streaming generic payload with deferred count and ##! summary trailer",
+  "input": "GCF profile=generic\n## employees [?]{id,name,department}\n1|Alice|Engineering\n2|Bob|Sales\n3|Carol|Marketing\n##! summary counts=3\n",
+  "expected": {
+    "employees": [
+      {
+        "id": 1,
+        "name": "Alice",
+        "department": "Engineering"
+      },
+      {
+        "id": 2,
+        "name": "Bob",
+        "department": "Sales"
+      },
+      {
+        "id": 3,
+        "name": "Carol",
+        "department": "Marketing"
+      }
+    ]
+  },
+  "operation": "decode"
+}

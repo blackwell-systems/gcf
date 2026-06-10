@@ -1,0 +1,7 @@
+{
+  "name": "invalid_graph_score",
+  "description": "Graph symbol scores must be decimal floats",
+  "input": "GCF profile=graph tool=test symbols=1\n## targets\n@0 fn pkg.Foo nope lsp\n",
+  "expectedError": "invalid_score",
+  "operation": "error"
+}

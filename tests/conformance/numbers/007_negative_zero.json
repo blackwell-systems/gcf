@@ -1,0 +1,9 @@
+{
+  "name": "number_negative_zero",
+  "description": "Negative zero preserves sign",
+  "input": {
+    "value": -0
+  },
+  "expected": "GCF profile=generic\nvalue=-0\n",
+  "operation": "encode"
+}

@@ -1,0 +1,27 @@
+{
+  "name": "graph_streaming_with_trailer",
+  "description": "Streaming graph payload with ##! summary trailer",
+  "input": "GCF profile=graph tool=context_for_task budget=5000\n## targets\n@0 fn pkg.Auth 0.95 lsp_resolved\n## edges [?]\n@0<@0 calls\n##! summary symbols=1 edges=1 counts=1\n",
+  "expected": {
+    "tool": "context_for_task",
+    "tokenBudget": 5000,
+    "symbols": [
+      {
+        "qualifiedName": "pkg.Auth",
+        "kind": "function",
+        "score": 0.95,
+        "provenance": "lsp_resolved",
+        "distance": 0
+      }
+    ],
+    "edges": [
+      {
+        "source": "pkg.Auth",
+        "target": "pkg.Auth",
+        "edgeType": "calls",
+        "status": ""
+      }
+    ]
+  },
+  "operation": "decode"
+}

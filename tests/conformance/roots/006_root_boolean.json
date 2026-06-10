@@ -1,0 +1,7 @@
+{
+  "name": "root_boolean",
+  "description": "Root JSON boolean uses =value syntax",
+  "input": true,
+  "expected": "GCF profile=generic\n=true\n",
+  "operation": "encode"
+}

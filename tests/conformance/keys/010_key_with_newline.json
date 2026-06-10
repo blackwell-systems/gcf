@@ -1,0 +1,9 @@
+{
+  "name": "key_with_newline_quoted",
+  "description": "Key containing newline must be quoted with escape",
+  "input": {
+    "line\none": "value"
+  },
+  "expected": "GCF profile=generic\n\"line\\none\"=value\n",
+  "operation": "encode"
+}

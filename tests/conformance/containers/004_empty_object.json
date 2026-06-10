@@ -1,0 +1,10 @@
+{
+  "name": "empty_nested_object",
+  "description": "Empty nested object uses section header with no content",
+  "input": {
+    "name": "test",
+    "metadata": {}
+  },
+  "expected": "GCF profile=generic\nname=test\n## metadata\n",
+  "operation": "encode"
+}

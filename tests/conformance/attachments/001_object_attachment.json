@@ -1,0 +1,26 @@
+{
+  "name": "tabular_with_object_attachment",
+  "description": "Nested object in tabular row uses ^ marker and .field {} attachment",
+  "input": {
+    "orders": [
+      {
+        "id": 1,
+        "total": 249.99,
+        "customer": {
+          "name": "Alice",
+          "tier": "premium"
+        }
+      },
+      {
+        "id": 2,
+        "total": 89.50,
+        "customer": {
+          "name": "Bob",
+          "tier": "standard"
+        }
+      }
+    ]
+  },
+  "expected": "GCF profile=generic\n## orders [2]{id,total,customer}\n@0 1|249.99|^\n  .customer {}\n    name=Alice\n    tier=premium\n@1 2|89.5|^\n  .customer {}\n    name=Bob\n    tier=standard\n",
+  "operation": "encode"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "decode_expanded_nested_array",
+  "description": "Decode recursive expanded arrays without relying on an encoder snapshot",
+  "input": "GCF profile=generic\n## values [3]\n@0 =first\n@1 [2]: 1,2\n@2 {}\n  child=true\n",
+  "expected": {
+    "values": ["first", [1, 2], {"child": true}]
+  },
+  "operation": "decode"
+}

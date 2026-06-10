@@ -1,0 +1,7 @@
+{
+  "name": "invalid_graph_symbol_id",
+  "description": "Graph symbol IDs must be integers",
+  "input": "GCF profile=graph tool=test symbols=1\n## targets\n@x fn pkg.Foo 0.90 lsp\n",
+  "expectedError": "invalid_symbol_id",
+  "operation": "error"
+}

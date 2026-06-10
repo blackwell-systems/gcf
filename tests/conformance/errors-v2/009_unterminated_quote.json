@@ -1,0 +1,7 @@
+{
+  "name": "unterminated_quote",
+  "description": "Quoted string missing closing quote must be rejected",
+  "input": "GCF profile=generic\nvalue=\"hello\n",
+  "expectedError": "unterminated_quote",
+  "operation": "error"
+}

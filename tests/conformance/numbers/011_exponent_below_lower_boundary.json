@@ -1,0 +1,7 @@
+{
+  "name": "number_exponent_below_lower_boundary",
+  "description": "Values below 1e-6 use normalized exponent notation",
+  "input": {"value": 0.0000004},
+  "expected": "GCF profile=generic\nvalue=4e-7\n",
+  "operation": "encode"
+}

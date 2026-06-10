@@ -1,0 +1,7 @@
+{
+  "name": "tab_indentation",
+  "description": "Tab characters in leading whitespace must be rejected",
+  "input": "GCF profile=generic\n## nested\n\tkey=value\n",
+  "expectedError": "tab_indentation",
+  "operation": "error"
+}

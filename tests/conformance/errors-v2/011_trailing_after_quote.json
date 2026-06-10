@@ -1,0 +1,7 @@
+{
+  "name": "trailing_after_quote",
+  "description": "Characters after closing quote must be rejected",
+  "input": "GCF profile=generic\nvalue=\"hello\"world\n",
+  "expectedError": "trailing_characters",
+  "operation": "error"
+}

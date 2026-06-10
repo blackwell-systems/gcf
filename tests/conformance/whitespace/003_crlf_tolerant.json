@@ -1,0 +1,10 @@
+{
+  "name": "crlf_tolerant",
+  "description": "Decoders must tolerate CRLF line endings",
+  "input": "GCF profile=generic\r\nname=Alice\r\nage=30\r\n",
+  "expected": {
+    "name": "Alice",
+    "age": 30
+  },
+  "operation": "decode"
+}

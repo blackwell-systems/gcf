@@ -1,0 +1,7 @@
+{
+  "name": "caret_outside_tabular",
+  "description": "^ token in kv-line must be rejected",
+  "input": "GCF profile=generic\nvalue=^\n",
+  "expectedError": "invalid_attachment_marker",
+  "operation": "error"
+}

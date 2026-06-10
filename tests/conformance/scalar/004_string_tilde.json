@@ -1,0 +1,9 @@
+{
+  "name": "string_tilde_must_be_quoted",
+  "description": "JSON string \"~\" must be quoted (reserved tabular marker)",
+  "input": {
+    "value": "~"
+  },
+  "expected": "GCF profile=generic\nvalue=\"~\"\n",
+  "operation": "encode"
+}

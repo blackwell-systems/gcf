@@ -1,0 +1,7 @@
+{
+  "name": "number_exponent_upper_boundary",
+  "description": "1e21 uses normalized exponent notation with an explicit sign",
+  "input": {"value": 1e+21},
+  "expected": "GCF profile=generic\nvalue=1e+21\n",
+  "operation": "encode"
+}

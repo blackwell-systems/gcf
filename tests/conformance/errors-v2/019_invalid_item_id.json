@@ -1,0 +1,7 @@
+{
+  "name": "invalid_item_id",
+  "description": "Expanded item ID not matching zero-based index must be rejected",
+  "input": "GCF profile=generic\n## items [2]\n@0 =first\n@5 =second\n",
+  "expectedError": "invalid_item_id",
+  "operation": "error"
+}

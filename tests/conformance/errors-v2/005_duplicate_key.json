@@ -1,0 +1,7 @@
+{
+  "name": "duplicate_key",
+  "description": "Duplicate keys in same object scope must be rejected",
+  "input": "GCF profile=generic\nname=Alice\nname=Bob\n",
+  "expectedError": "duplicate_key",
+  "operation": "error"
+}

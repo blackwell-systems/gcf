@@ -1,0 +1,24 @@
+{
+  "name": "deeply_nested_mixed",
+  "description": "Three levels of nesting: object > array > object",
+  "input": {
+    "name": "root",
+    "children": [
+      {
+        "type": "group",
+        "members": [
+          {
+            "id": 1,
+            "role": "admin"
+          },
+          {
+            "id": 2,
+            "role": "user"
+          }
+        ]
+      }
+    ]
+  },
+  "expected": "GCF profile=generic\nname=root\n## children [1]{type,members}\n@0 group|^\n  .members [2]{id,role}\n    1|admin\n    2|user\n",
+  "operation": "encode"
+}

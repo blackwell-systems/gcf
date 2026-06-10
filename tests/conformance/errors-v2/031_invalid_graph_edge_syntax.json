@@ -1,0 +1,7 @@
+{
+  "name": "invalid_graph_edge_syntax",
+  "description": "Graph edges require the target<source separator",
+  "input": "GCF profile=graph tool=test symbols=1 edges=1\n## targets\n@0 fn pkg.Foo 0.90 lsp\n## edges [1]\n@0 @0 calls\n",
+  "expectedError": "invalid_edge_syntax",
+  "operation": "error"
+}

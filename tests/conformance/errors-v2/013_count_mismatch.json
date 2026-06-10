@@ -1,0 +1,7 @@
+{
+  "name": "count_mismatch",
+  "description": "Declared count not matching actual row count must be rejected",
+  "input": "GCF profile=generic\n## rows [3]{id,name}\n1|Alice\n2|Bob\n",
+  "expectedError": "count_mismatch",
+  "operation": "error"
+}

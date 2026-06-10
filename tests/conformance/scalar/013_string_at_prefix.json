@@ -1,0 +1,9 @@
+{
+  "name": "string_at_prefix_must_be_quoted",
+  "description": "JSON string starting with @ must be quoted to avoid row-ID collision",
+  "input": {
+    "value": "@handle"
+  },
+  "expected": "GCF profile=generic\nvalue=\"@handle\"\n",
+  "operation": "encode"
+}

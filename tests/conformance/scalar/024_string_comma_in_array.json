@@ -1,0 +1,13 @@
+{
+  "name": "string_comma_in_primitive_array",
+  "description": "String containing comma must be quoted in primitive array context",
+  "input": {
+    "tags": [
+      "alpha",
+      "a,b",
+      "c"
+    ]
+  },
+  "expected": "GCF profile=generic\ntags[3]: alpha,\"a,b\",c\n",
+  "operation": "encode"
+}

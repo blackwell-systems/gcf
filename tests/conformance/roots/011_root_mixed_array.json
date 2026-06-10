@@ -1,0 +1,13 @@
+{
+  "name": "root_mixed_array",
+  "description": "Root array with mixed types uses anonymous expanded form",
+  "input": [
+    "hello",
+    42,
+    {
+      "key": "val"
+    }
+  ],
+  "expected": "GCF profile=generic\n## [3]\n@0 =hello\n@1 =42\n@2 {}\n  key=val\n",
+  "operation": "encode"
+}

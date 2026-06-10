@@ -1,0 +1,9 @@
+{
+  "name": "string_leading_space_must_be_quoted",
+  "description": "JSON string with leading space must be quoted",
+  "input": {
+    "value": " hello"
+  },
+  "expected": "GCF profile=generic\nvalue=\" hello\"\n",
+  "operation": "encode"
+}

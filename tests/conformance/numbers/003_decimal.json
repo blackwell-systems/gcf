@@ -1,0 +1,9 @@
+{
+  "name": "number_decimal",
+  "description": "Decimal fraction",
+  "input": {
+    "value": 3.14
+  },
+  "expected": "GCF profile=generic\nvalue=3.14\n",
+  "operation": "encode"
+}

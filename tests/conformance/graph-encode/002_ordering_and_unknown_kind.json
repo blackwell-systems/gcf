@@ -1,0 +1,15 @@
+{
+  "name": "graph_encode_ordering_and_unknown_kind",
+  "description": "Order symbols by distance and descending score while preserving unknown kinds",
+  "input": {
+    "tool": "test",
+    "symbols": [
+      {"qualifiedName": "pkg.Low", "kind": "widget", "score": 0.4, "provenance": "x", "distance": 0},
+      {"qualifiedName": "pkg.High", "kind": "function", "score": 0.9, "provenance": "x", "distance": 0},
+      {"qualifiedName": "pkg.Far", "kind": "type", "score": 0.7, "provenance": "x", "distance": 3}
+    ],
+    "edges": []
+  },
+  "expected": "GCF profile=graph tool=test symbols=3\n## targets\n@0 fn pkg.High 0.90 x\n@1 widget pkg.Low 0.40 x\n## distance_3\n@2 type pkg.Far 0.70 x\n",
+  "operation": "encode"
+}

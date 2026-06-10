@@ -1,0 +1,7 @@
+{
+  "name": "decode_root_scalar",
+  "description": "Decode an independently authored quoted root scalar",
+  "input": "GCF profile=generic\n=\"true\"\n",
+  "expected": "true",
+  "operation": "decode"
+}

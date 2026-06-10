@@ -1,0 +1,9 @@
+{
+  "name": "key_with_hyphen_quoted",
+  "description": "Key containing hyphen must be quoted",
+  "input": {
+    "content-type": "application/json"
+  },
+  "expected": "GCF profile=generic\n\"content-type\"=application/json\n",
+  "operation": "encode"
+}

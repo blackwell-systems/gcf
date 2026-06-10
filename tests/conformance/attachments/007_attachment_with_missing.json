@@ -1,0 +1,23 @@
+{
+  "name": "attachment_and_missing_in_same_row",
+  "description": "Row with ^ for present nested value and ~ for absent field",
+  "input": {
+    "items": [
+      {
+        "id": 1,
+        "data": {
+          "x": 1
+        },
+        "extra": "a"
+      },
+      {
+        "id": 2,
+        "data": {
+          "x": 2
+        }
+      }
+    ]
+  },
+  "expected": "GCF profile=generic\n## items [2]{id,data,extra}\n@0 1|^|a\n  .data {}\n    x=1\n@1 2|^|~\n  .data {}\n    x=2\n",
+  "operation": "encode"
+}

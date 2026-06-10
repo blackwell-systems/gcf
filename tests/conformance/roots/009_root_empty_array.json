@@ -1,0 +1,7 @@
+{
+  "name": "root_empty_array",
+  "description": "Root empty array uses anonymous ## [0]",
+  "input": [],
+  "expected": "GCF profile=generic\n## [0]\n",
+  "operation": "encode"
+}

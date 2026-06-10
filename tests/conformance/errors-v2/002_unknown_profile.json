@@ -1,0 +1,7 @@
+{
+  "name": "unknown_profile",
+  "description": "Unknown profile value must be rejected",
+  "input": "GCF profile=custom\nkey=value\n",
+  "expectedError": "unknown_profile",
+  "operation": "error"
+}

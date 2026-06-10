@@ -1,0 +1,9 @@
+{
+  "name": "number_exponent",
+  "description": "Number with exponent notation",
+  "input": {
+    "value": 6.022E+23
+  },
+  "expected": "GCF profile=generic\nvalue=6.022e+23\n",
+  "operation": "encode"
+}

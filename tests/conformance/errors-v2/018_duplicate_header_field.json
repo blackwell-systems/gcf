@@ -1,0 +1,7 @@
+{
+  "name": "duplicate_header_field",
+  "description": "Duplicate key in header must be rejected",
+  "input": "GCF profile=graph tool=test tool=other\n## targets\n",
+  "expectedError": "duplicate_header_field",
+  "operation": "error"
+}

@@ -1,0 +1,21 @@
+{
+  "name": "nested_object_array_in_expanded",
+  "description": "Expanded item containing an array of objects uses nested tabular form",
+  "input": {
+    "items": [
+      "header",
+      [
+        {
+          "id": 1,
+          "name": "a"
+        },
+        {
+          "id": 2,
+          "name": "b"
+        }
+      ]
+    ]
+  },
+  "expected": "GCF profile=generic\n## items [2]\n@0 =header\n@1 [2]{id,name}\n  1|a\n  2|b\n",
+  "operation": "encode"
+}

@@ -1,0 +1,11 @@
+{
+  "name": "root_array_primitive",
+  "description": "Root JSON array of primitives uses anonymous ## [N]: inline form",
+  "input": [
+    "a",
+    "b",
+    "c"
+  ],
+  "expected": "GCF profile=generic\n## [3]: a,b,c\n",
+  "operation": "encode"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "field_union_includes_late_keys",
+  "description": "Field union computed from ALL elements; keys first seen in later objects appear in header",
+  "input": {
+    "items": [
+      {
+        "a": 1,
+        "b": 2
+      },
+      {
+        "a": 3,
+        "c": 4
+      },
+      {
+        "b": 5,
+        "d": 6
+      }
+    ]
+  },
+  "expected": "GCF profile=generic\n## items [3]{a,b,c,d}\n1|2|~|~\n3|~|4|~\n~|5|~|6\n",
+  "operation": "encode"
+}

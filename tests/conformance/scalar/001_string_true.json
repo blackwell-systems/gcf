@@ -1,0 +1,9 @@
+{
+  "name": "string_true_must_be_quoted",
+  "description": "JSON string \"true\" must be quoted to avoid boolean collision",
+  "input": {
+    "value": "true"
+  },
+  "expected": "GCF profile=generic\nvalue=\"true\"\n",
+  "operation": "encode"
+}

@@ -1,0 +1,10 @@
+{
+  "name": "bare_key",
+  "description": "Simple identifier keys are bare",
+  "input": {
+    "name": "Alice",
+    "age_2": 30
+  },
+  "expected": "GCF profile=generic\nname=Alice\nage_2=30\n",
+  "operation": "encode"
+}

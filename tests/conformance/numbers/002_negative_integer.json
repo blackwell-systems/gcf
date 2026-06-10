@@ -1,0 +1,9 @@
+{
+  "name": "number_negative_integer",
+  "description": "Negative integer",
+  "input": {
+    "value": -17
+  },
+  "expected": "GCF profile=generic\nvalue=-17\n",
+  "operation": "encode"
+}

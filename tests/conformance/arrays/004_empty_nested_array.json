@@ -1,0 +1,13 @@
+{
+  "name": "empty_nested_array_in_expanded",
+  "description": "Empty array inside expanded form uses @N [0]",
+  "input": {
+    "items": [
+      "a",
+      [],
+      "b"
+    ]
+  },
+  "expected": "GCF profile=generic\n## items [3]\n@0 =a\n@1 [0]\n@2 =b\n",
+  "operation": "encode"
+}

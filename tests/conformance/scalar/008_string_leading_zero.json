@@ -1,0 +1,9 @@
+{
+  "name": "string_leading_zero_quoted",
+  "description": "\"01\" is numeric-like and must be quoted by conforming encoders",
+  "input": {
+    "value": "01"
+  },
+  "expected": "GCF profile=generic\nvalue=\"01\"\n",
+  "operation": "encode"
+}

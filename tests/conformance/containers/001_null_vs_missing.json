@@ -1,0 +1,23 @@
+{
+  "name": "null_vs_missing_in_tabular",
+  "description": "Null fields use dash, absent fields use tilde in tabular rows",
+  "input": {
+    "items": [
+      {
+        "id": 1,
+        "a": null,
+        "b": "x"
+      },
+      {
+        "id": 2,
+        "a": "y"
+      },
+      {
+        "id": 3,
+        "b": null
+      }
+    ]
+  },
+  "expected": "GCF profile=generic\n## items [3]{id,a,b}\n1|-|x\n2|y|~\n3|~|-\n",
+  "operation": "encode"
+}

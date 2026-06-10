@@ -1,0 +1,9 @@
+{
+  "name": "number_integer",
+  "description": "Plain integer",
+  "input": {
+    "value": 42
+  },
+  "expected": "GCF profile=generic\nvalue=42\n",
+  "operation": "encode"
+}

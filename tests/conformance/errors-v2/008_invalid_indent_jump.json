@@ -1,0 +1,7 @@
+{
+  "name": "invalid_indent_jump",
+  "description": "Indentation increase of more than one level must be rejected",
+  "input": "GCF profile=generic\n## outer\n      key=value\n",
+  "expectedError": "invalid_indent",
+  "operation": "error"
+}

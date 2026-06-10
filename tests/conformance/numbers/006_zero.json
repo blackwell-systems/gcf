@@ -1,0 +1,9 @@
+{
+  "name": "number_zero",
+  "description": "Zero",
+  "input": {
+    "value": 0
+  },
+  "expected": "GCF profile=generic\nvalue=0\n",
+  "operation": "encode"
+}

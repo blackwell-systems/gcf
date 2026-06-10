@@ -1,0 +1,25 @@
+{
+  "name": "tabular_with_array_attachment",
+  "description": "Nested primitive array in tabular row uses ^ marker and .field [N]: inline attachment",
+  "input": {
+    "items": [
+      {
+        "id": 1,
+        "name": "Alice",
+        "tags": [
+          "admin",
+          "active"
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Bob",
+        "tags": [
+          "user"
+        ]
+      }
+    ]
+  },
+  "expected": "GCF profile=generic\n## items [2]{id,name,tags}\n@0 1|Alice|^\n  .tags [2]: admin,active\n@1 2|Bob|^\n  .tags [1]: user\n",
+  "operation": "encode"
+}

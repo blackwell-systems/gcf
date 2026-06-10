@@ -1,0 +1,7 @@
+{
+  "name": "unknown_graph_edge_reference",
+  "description": "Graph edges may reference only previously declared symbol IDs",
+  "input": "GCF profile=graph tool=test symbols=1 edges=1\n## targets\n@0 fn pkg.Foo 0.90 lsp\n## edges [1]\n@0<@1 calls\n",
+  "expectedError": "unknown_edge_reference",
+  "operation": "error"
+}

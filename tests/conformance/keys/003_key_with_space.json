@@ -1,0 +1,9 @@
+{
+  "name": "key_with_space_quoted",
+  "description": "Key containing space must be quoted",
+  "input": {
+    "first name": "Alice"
+  },
+  "expected": "GCF profile=generic\n\"first name\"=Alice\n",
+  "operation": "encode"
+}

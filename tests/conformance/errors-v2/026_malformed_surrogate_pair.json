@@ -1,0 +1,7 @@
+{
+  "name": "malformed_surrogate_pair",
+  "description": "A high surrogate followed by a non-low-surrogate escape must be rejected",
+  "input": "GCF profile=generic\nvalue=\"\\uD83D\\u0041\"\n",
+  "expectedError": "invalid_surrogate",
+  "operation": "error"
+}

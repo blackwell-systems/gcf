@@ -1,0 +1,9 @@
+{
+  "name": "string_plus_one_must_be_quoted",
+  "description": "JSON string \"+1\" must be quoted (numeric-like: starts with + then digit)",
+  "input": {
+    "value": "+1"
+  },
+  "expected": "GCF profile=generic\nvalue=\"+1\"\n",
+  "operation": "encode"
+}

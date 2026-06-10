@@ -1,0 +1,11 @@
+{
+  "name": "underscore_prefixed_key_is_user_data",
+  "description": "Keys starting with underscore are valid user keys (no reservation)",
+  "input": {
+    "_root": "value",
+    "_summary": "data",
+    "_private": true
+  },
+  "expected": "GCF profile=generic\n_root=value\n_summary=data\n_private=true\n",
+  "operation": "encode"
+}

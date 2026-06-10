@@ -1,0 +1,7 @@
+{
+  "name": "invalid_utf8",
+  "description": "Malformed UTF-8 bytes must be rejected; inputBase64 decodes to a payload containing byte FF",
+  "inputBase64": "R0NGIHByb2ZpbGU9Z2VuZXJpYwp2YWx1ZT3/Cg==",
+  "expectedError": "invalid_utf8",
+  "operation": "error"
+}

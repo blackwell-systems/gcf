@@ -1,0 +1,7 @@
+{
+  "name": "missing_header",
+  "description": "Input whose first line is not a GCF header must be rejected",
+  "input": "value=1\n",
+  "expectedError": "missing_header",
+  "operation": "error"
+}

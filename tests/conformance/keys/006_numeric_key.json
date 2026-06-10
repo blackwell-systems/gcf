@@ -1,0 +1,10 @@
+{
+  "name": "numeric_key_quoted",
+  "description": "Key starting with digit must be quoted (not a valid bare-key)",
+  "input": {
+    "123": "value",
+    "0x1f": "hex"
+  },
+  "expected": "GCF profile=generic\n\"123\"=value\n\"0x1f\"=hex\n",
+  "operation": "encode"
+}

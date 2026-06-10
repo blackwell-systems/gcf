@@ -1,0 +1,11 @@
+{
+  "name": "decode_quoted_tabular_fields",
+  "description": "Decode commas and spaces in quoted tabular field names",
+  "input": "GCF profile=generic\n## rows [1]{\"a,b\",\"display name\"}\nvalue|Alice\n",
+  "expected": {
+    "rows": [
+      {"a,b": "value", "display name": "Alice"}
+    ]
+  },
+  "operation": "decode"
+}

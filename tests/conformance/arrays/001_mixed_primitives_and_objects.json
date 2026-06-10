@@ -1,0 +1,15 @@
+{
+  "name": "mixed_primitives_and_objects",
+  "description": "Array containing both primitives and objects uses expanded form",
+  "input": {
+    "items": [
+      "alpha",
+      42,
+      {
+        "name": "Alice"
+      }
+    ]
+  },
+  "expected": "GCF profile=generic\n## items [3]\n@0 =alpha\n@1 =42\n@2 {}\n  name=Alice\n",
+  "operation": "encode"
+}

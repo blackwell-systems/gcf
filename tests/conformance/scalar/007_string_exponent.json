@@ -1,0 +1,9 @@
+{
+  "name": "string_exponent_must_be_quoted",
+  "description": "JSON string \"1e10\" must be quoted to avoid number collision",
+  "input": {
+    "value": "1e10"
+  },
+  "expected": "GCF profile=generic\nvalue=\"1e10\"\n",
+  "operation": "encode"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "root_string_requires_quoting",
+  "description": "Root string that would collide with boolean must be quoted",
+  "input": "true",
+  "expected": "GCF profile=generic\n=\"true\"\n",
+  "operation": "encode"
+}

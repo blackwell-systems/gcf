@@ -1,0 +1,20 @@
+{
+  "name": "empty_object_attachment",
+  "description": "Empty nested object uses .field {} with no indented members",
+  "input": {
+    "rows": [
+      {
+        "id": 1,
+        "config": {}
+      },
+      {
+        "id": 2,
+        "config": {
+          "key": "val"
+        }
+      }
+    ]
+  },
+  "expected": "GCF profile=generic\n## rows [2]{id,config}\n@0 1|^\n  .config {}\n@1 2|^\n  .config {}\n    key=val\n",
+  "operation": "encode"
+}

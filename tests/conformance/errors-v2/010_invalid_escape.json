@@ -1,0 +1,7 @@
+{
+  "name": "invalid_escape",
+  "description": "Unknown escape sequence must be rejected",
+  "input": "GCF profile=generic\nvalue=\"hello\\x\"\n",
+  "expectedError": "invalid_escape",
+  "operation": "error"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "malformed_delta",
+  "description": "Delta payloads must reject unknown delta sections",
+  "input": "GCF profile=graph tool=test delta=true base_root=aaa new_root=bbb\n## unexpected\nfn pkg.Foo\n",
+  "expectedError": "malformed_delta",
+  "operation": "error"
+}

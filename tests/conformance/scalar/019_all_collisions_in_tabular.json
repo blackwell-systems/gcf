@@ -1,0 +1,38 @@
+{
+  "name": "all_scalar_collisions_in_tabular",
+  "description": "Tabular row with every type of scalar collision requiring quoting",
+  "input": {
+    "rows": [
+      {
+        "id": 1,
+        "val": "true"
+      },
+      {
+        "id": 2,
+        "val": "false"
+      },
+      {
+        "id": 3,
+        "val": "-"
+      },
+      {
+        "id": 4,
+        "val": "123"
+      },
+      {
+        "id": 5,
+        "val": "1e10"
+      },
+      {
+        "id": 6,
+        "val": ""
+      },
+      {
+        "id": 7,
+        "val": "normal"
+      }
+    ]
+  },
+  "expected": "GCF profile=generic\n## rows [7]{id,val}\n1|\"true\"\n2|\"false\"\n3|\"-\"\n4|\"123\"\n5|\"1e10\"\n6|\"\"\n7|normal\n",
+  "operation": "encode"
+}
