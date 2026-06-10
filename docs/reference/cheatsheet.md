@@ -141,6 +141,31 @@ GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=5 edges=
 
 ## Generic Profile
 
+### Header
+
+```
+GCF profile=generic
+```
+
+Every generic payload starts with this line. Optional fields (`schema=`, etc.) may follow.
+
+### Root values
+
+```
+GCF profile=generic
+=42                    # root scalar
+```
+
+```
+GCF profile=generic
+=-                     # root null
+```
+
+```
+GCF profile=generic
+## [3]: a,b,c          # root primitive array
+```
+
 ### Tabular arrays
 
 ```
@@ -149,6 +174,7 @@ value1|value2|value3
 ```
 
 ```
+GCF profile=generic
 ## employees [3]{id,name,department,salary}
 1|Alice Smith|Engineering|95000
 2|Bob Jones|Sales|72000
@@ -211,15 +237,35 @@ version=2.1.0
 - Nested objects: `## key` section header + indented key=value
 - Null/missing: `-`
 
+### Expanded arrays
+
+When array items are mixed types (not all objects with the same fields), use expanded form:
+
+```
+## items [3]
+@0 =hello              # scalar item
+@1 {}                   # object item
+  name=Alice
+  age=30
+@2 [2]: a,b            # nested array item
+```
+
+- `@N =value` for scalars
+- `@N {}` for objects (key=value pairs follow, indented)
+- `@N [M]` for nested arrays
+
 ### Value formatting
 
 | Type | Format | Example |
 |------|--------|---------|
 | String | bare text | `Alice Smith` |
-| Number | unquoted | `95000` |
+| Number | unquoted | `95000`, `3.14`, `1.5e-8` |
 | Boolean | lowercase | `true` / `false` |
 | Null | dash | `-` |
-| String with `\|` or newline | quoted | `"value\|with\|pipes"` |
+| Absent (tabular only) | tilde | `~` |
+| Attachment (tabular only) | caret | `^` |
+| Empty string | quoted | `""` |
+| String with `\|`, `,`, or newline | quoted | `"value\|with\|pipes"` |
 
 ### Complete tabular example
 
@@ -257,10 +303,10 @@ Use `[?]` instead of `[N]` when encoding incrementally.
 ### Trailer summary
 
 ```
-##! summary symbols=4 edges=3 counts=3
+##! summary counts=3,2
 ```
 
-Emitted after all data. Provides counts deferred from headers.
+Emitted after all data. `counts=N,M,...` lists the resolved values for each `[?]` header in order of appearance.
 
 ### Streaming example
 
@@ -274,7 +320,7 @@ GCF profile=graph tool=context_for_task budget=5000
 ## edges [?]
 @0<@1 calls
 @2<@0 references
-##! summary symbols=3 edges=2 counts=3
+##! summary counts=2
 ```
 
 Standard `decode()` handles streaming output with no changes.

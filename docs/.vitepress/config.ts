@@ -40,6 +40,7 @@ export default defineConfig({
           { text: 'MCP Integration', link: '/guide/mcp' },
           { text: 'MCP Proxy (Zero-Code)', link: '/guide/proxy' },
           { text: 'Schema Validation', link: '/guide/schema-validation' },
+          { text: 'FAQ', link: '/guide/faq' },
         ],
       },
       {
