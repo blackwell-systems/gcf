@@ -1,0 +1,11 @@
+{
+  "name": "pack_root_empty",
+  "description": "Canonical pack root for an empty graph (no symbols, no edges)",
+  "input": {
+    "symbols": [],
+    "edges": []
+  },
+  "canonicalBytes": "",
+  "expected": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "operation": "pack-root"
+}

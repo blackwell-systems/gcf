@@ -1,0 +1,32 @@
+{
+  "name": "pack_root_basic",
+  "description": "Canonical pack root for a 2-symbol, 1-edge graph",
+  "input": {
+    "symbols": [
+      {
+        "qualifiedName": "pkg.Auth",
+        "kind": "function",
+        "score": 0.78,
+        "provenance": "lsp_resolved",
+        "distance": 0
+      },
+      {
+        "qualifiedName": "pkg.Server",
+        "kind": "function",
+        "score": 0.54,
+        "provenance": "lsp_resolved",
+        "distance": 1
+      }
+    ],
+    "edges": [
+      {
+        "source": "pkg.Server",
+        "target": "pkg.Auth",
+        "edgeType": "calls"
+      }
+    ]
+  },
+  "canonicalBytes": "S\tfn\tpkg.Auth\t0.78\tlsp_resolved\t0\nS\tfn\tpkg.Server\t0.54\tlsp_resolved\t1\nE\tfn\tpkg.Server\tfn\tpkg.Auth\tcalls\n",
+  "expected": "sha256:8e6d32973b4005c604399a14faa32799d54f427800008312a3357c349d41e572",
+  "operation": "pack-root"
+}

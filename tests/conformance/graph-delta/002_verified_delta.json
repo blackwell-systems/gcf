@@ -1,0 +1,58 @@
+{
+  "name": "verified_delta",
+  "description": "Delta with pack_root verification: remove Server, add Handler, update edges",
+  "base_root": "sha256:8e6d32973b4005c604399a14faa32799d54f427800008312a3357c349d41e572",
+  "input": "GCF profile=graph tool=test delta=true base_root=sha256:8e6d32973b4005c604399a14faa32799d54f427800008312a3357c349d41e572 new_root=sha256:209fa026484529cc94ab00667a30bfa2951cb66e4bfeb237bbd528a9c640513d\n## removed\nfn pkg.Server\n## added\n@0 fn pkg.Handler 0.85 lsp_resolved\n## edges_removed\npkg.Server -> pkg.Auth calls\n## edges_added\npkg.Handler -> pkg.Auth calls\n",
+  "base_snapshot": {
+    "symbols": [
+      {
+        "qualifiedName": "pkg.Auth",
+        "kind": "function",
+        "score": 0.78,
+        "provenance": "lsp_resolved",
+        "distance": 0
+      },
+      {
+        "qualifiedName": "pkg.Server",
+        "kind": "function",
+        "score": 0.54,
+        "provenance": "lsp_resolved",
+        "distance": 1
+      }
+    ],
+    "edges": [
+      {
+        "source": "pkg.Server",
+        "target": "pkg.Auth",
+        "edgeType": "calls"
+      }
+    ]
+  },
+  "expected_snapshot": {
+    "symbols": [
+      {
+        "qualifiedName": "pkg.Auth",
+        "kind": "function",
+        "score": 0.78,
+        "provenance": "lsp_resolved",
+        "distance": 0
+      },
+      {
+        "qualifiedName": "pkg.Handler",
+        "kind": "function",
+        "score": 0.85,
+        "provenance": "lsp_resolved",
+        "distance": 1
+      }
+    ],
+    "edges": [
+      {
+        "source": "pkg.Handler",
+        "target": "pkg.Auth",
+        "edgeType": "calls"
+      }
+    ]
+  },
+  "new_root": "sha256:209fa026484529cc94ab00667a30bfa2951cb66e4bfeb237bbd528a9c640513d",
+  "operation": "delta"
+}

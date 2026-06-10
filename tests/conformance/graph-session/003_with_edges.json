@@ -1,0 +1,30 @@
+{
+  "name": "session_with_edges",
+  "description": "Session with edges referencing both new and previously transmitted symbols",
+  "calls": [
+    {
+      "input": {
+        "tool": "test",
+        "symbols": [
+          {"qualifiedName": "pkg.Auth", "kind": "function", "score": 0.9, "provenance": "lsp", "distance": 0}
+        ],
+        "edges": []
+      },
+      "expected": "GCF profile=graph tool=test symbols=1 session=true\n## targets\n@0 fn pkg.Auth 0.90 lsp\n"
+    },
+    {
+      "input": {
+        "tool": "test",
+        "symbols": [
+          {"qualifiedName": "pkg.Auth", "kind": "function", "score": 0.9, "provenance": "lsp", "distance": 0},
+          {"qualifiedName": "pkg.Server", "kind": "function", "score": 0.7, "provenance": "lsp", "distance": 1}
+        ],
+        "edges": [
+          {"source": "pkg.Server", "target": "pkg.Auth", "edgeType": "calls"}
+        ]
+      },
+      "expected": "GCF profile=graph tool=test symbols=2 edges=1 session=true\n## targets\n@0  # previously transmitted\n## related\n@1 fn pkg.Server 0.70 lsp\n## edges [1]\n@0<@1 calls\n"
+    }
+  ],
+  "operation": "session"
+}

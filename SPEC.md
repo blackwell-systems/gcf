@@ -966,16 +966,59 @@ GCF profile=graph tool=context_for_files tokens=800 symbols=5 edges=1 session=tr
 @0<@7 calls
 ```
 
-A bare `@{id}` followed by `# previously transmitted` is a reference to a symbol sent in a prior response within the same session. The consumer (LLM) has this symbol in its context window from the earlier response.
+A bare `@{id}` followed by `# previously transmitted` is a reference to a symbol sent in a prior response within the same session.
 
-Session statefulness exploits a property unique to LLM tool interactions: the consumer maintains conversational state across calls.
+### 9.1 Symbol identity
 
-## 10. Delta Encoding Extension (Graph Profile)
+Symbol identity within a session is defined by the pair `(kind, qualified_name)`. Changes to `score`, `provenance`, or `distance` do not create a new symbol identity but may require retransmission or a delta update if the consumer needs the updated values.
+
+### 9.2 Session ID lifecycle
+
+Within a session:
+
+- Local IDs MUST remain bound to the same symbol identity for the lifetime of the session.
+- Local IDs MUST NOT be reused for a different symbol.
+- New IDs MUST be allocated monotonically (each new symbol receives the next integer).
+- A bare reference (`@{id}  # previously transmitted`) is valid only after the full symbol declaration has been delivered successfully in that session.
+- IDs are stable across calls: a symbol assigned `@3` in call 1 remains `@3` in call 2.
+- IDs need not be contiguous within a single payload (some IDs may refer to symbols not included in the current response).
+
+### 9.3 Session scope
+
+A session MUST be scoped to:
+
+- one authorization principal;
+- one conversation or agent execution;
+- one logical producer namespace;
+- one GCF protocol version.
+
+Implementations MUST NOT share session state between users or conversations.
+
+### 9.4 Session recovery
+
+| Condition | Required behavior |
+|-----------|-------------------|
+| Session unknown or expired | Return a full non-session payload. The consumer starts a new session. |
+| Consumer lost prior context | Consumer requests session reset or full refresh. |
+| Bare reference cannot be resolved | Consumer rejects the response and requests a full payload. |
+| Producer cannot confirm delivery of a declaration | Producer MUST emit the full declaration, not a bare reference. |
+
+### 9.5 Session limits
+
+Implementations SHOULD document and enforce:
+
+- Maximum session idle time before expiry.
+- Maximum session lifetime.
+- Maximum number of retained symbol IDs.
+
+When a limit is exceeded, the implementation MUST fall back to a full non-session payload.
+
+## 10. Delta Encoding (Graph Profile)
 
 When the consumer sends a `pack_root` from a prior response and the current result differs, the server may return a delta payload containing only what changed:
 
 ```
-GCF profile=graph tool=context_for_task delta=true base_root=aaa111 new_root=bbb222 tokens=30 savings=81%
+GCF profile=graph tool=context_for_task delta=true base_root=sha256:0123456789abcdef... new_root=sha256:fedcba9876543210... tokens=30 savings=81%
 ## removed
 fn github.com/org/repo/pkg.OldHandler
 ## added
@@ -986,7 +1029,7 @@ github.com/org/repo/pkg.Router -> github.com/org/repo/pkg.OldHandler calls
 github.com/org/repo/pkg.Router -> github.com/org/repo/pkg.NewHandler calls
 ```
 
-### Delta sections
+### 10.1 Delta sections
 
 | Section | Content |
 |---------|---------|
@@ -999,18 +1042,79 @@ A server SHOULD only use delta encoding when it saves significantly over full re
 
 When `delta=true`, only the four delta section names above are valid. `removed` lines MUST use `kind qname`; `added` lines MUST use full node syntax; edge delta lines MUST use `source -> target type`. Delta-only line forms MUST NOT appear in non-delta graph payloads.
 
-### Three-outcome protocol
+### 10.2 Canonical pack root (`gcf-pack-root-v1`)
+
+The `pack_root` field identifies a logical graph snapshot. Two implementations given the same logical graph MUST compute the same `pack_root` value.
+
+Algorithm `gcf-pack-root-v1`:
+
+1. Validate all strings as UTF-8 Unicode scalar-value sequences.
+2. Build one canonical record for each symbol:
+
+   ```
+   S<TAB>kind<TAB>qualified_name<TAB>score<TAB>provenance<TAB>distance<LF>
+   ```
+
+   Where `score` is formatted using the canonical number rules (Section 2.3.1) and `distance` is the decimal integer.
+
+3. Build one canonical record for each edge:
+
+   ```
+   E<TAB>source_kind<TAB>source_qname<TAB>target_kind<TAB>target_qname<TAB>edge_type<LF>
+   ```
+
+   Edge records include kind to disambiguate symbols with the same qualified name but different kinds.
+
+4. Sort all symbol records by unsigned UTF-8 byte order.
+5. Sort all edge records by unsigned UTF-8 byte order.
+6. Concatenate all sorted symbol records followed by all sorted edge records into one byte sequence.
+7. Compute SHA-256 over those bytes.
+8. Serialize as lowercase hexadecimal with algorithm prefix:
+
+   ```
+   sha256:<64 lowercase hex characters>
+   ```
+
+Implementations MUST use algorithm `gcf-pack-root-v1` when emitting `pack_root`, `base_root`, or `new_root` header fields. A consumer receiving a `pack_root` with an unrecognized algorithm prefix MUST treat it as an unknown root and request a full payload.
+
+### 10.3 Three-outcome protocol
 
 When a consumer sends `pack_root`:
-1. **Same root**: return a header-only graph payload with `unchanged=true`, `pack_root=<hash>`, and `symbols=N` (zero retransmission)
-2. **Different root, prior known**: return delta payload
-3. **Different root, prior unknown**: return full payload (fallback)
+1. **Same root**: return a header-only graph payload with `unchanged=true`, `pack_root=<hash>`, and `symbols=N` (zero retransmission).
+2. **Different root, prior known**: return delta payload with `base_root` and `new_root`.
+3. **Different root, prior unknown**: return full payload (fallback).
 
 Example unchanged response:
 
 ```
-GCF profile=graph tool=context_for_task unchanged=true pack_root=aaa111 symbols=10
+GCF profile=graph tool=context_for_task unchanged=true pack_root=sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef symbols=10
 ```
+
+### 10.4 Delta application
+
+A delta transforms exactly one immutable base snapshot into one immutable new snapshot. A consumer MUST apply a delta atomically:
+
+1. Verify that the consumer's current root equals `base_root`.
+2. Validate the entire delta payload before modifying local state.
+3. Reject duplicate, contradictory, or malformed operations (e.g., removing a symbol that does not exist in the base, or adding a symbol that already exists).
+4. Apply all removals and additions to a temporary copy of the base snapshot.
+5. Compute the canonical `pack_root` of the resulting snapshot using `gcf-pack-root-v1`.
+6. Verify that the computed root equals `new_root` from the delta header.
+7. Commit the temporary snapshot only after verification succeeds.
+
+If any step fails, the consumer MUST retain the base snapshot unchanged and request a full payload. Partial application is not permitted.
+
+### 10.5 Delta ordering
+
+Delta sections may appear in any order. The resulting logical snapshot MUST be identical regardless of section ordering. Encoders SHOULD use deterministic ordering (`removed`, `added`, `edges_removed`, `edges_added`) for reproducibility.
+
+### 10.6 Combining sessions and deltas
+
+Session references and delta encoding solve different problems (repeated declarations vs. changed data) and may be used independently or together. However:
+
+- Delta `## added` sections MUST contain full node declarations, not bare session references. Delta reconstruction MUST be independent of conversational context.
+- Session reset MUST NOT invalidate the identity of a retained delta snapshot. A consumer may retain a graph snapshot even after its session state is cleared.
+- If a consumer retains a `pack_root` but has lost the session context for the symbols within it, the producer MUST either send a full payload or a delta with complete declarations in `## added`.
 
 ## 11. Comments
 

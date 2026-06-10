@@ -1,0 +1,37 @@
+{
+  "name": "pack_root_sort_order",
+  "description": "Verifies byte-order sorting: fn sorts before type, edge sources sorted independently",
+  "input": {
+    "symbols": [
+      {
+        "qualifiedName": "z.Foo",
+        "kind": "function",
+        "score": 0.9,
+        "provenance": "lsp_resolved",
+        "distance": 0
+      },
+      {
+        "qualifiedName": "a.Bar",
+        "kind": "type",
+        "score": 0.5,
+        "provenance": "ast_inferred",
+        "distance": 1
+      }
+    ],
+    "edges": [
+      {
+        "source": "z.Foo",
+        "target": "a.Bar",
+        "edgeType": "calls"
+      },
+      {
+        "source": "a.Bar",
+        "target": "z.Foo",
+        "edgeType": "imports"
+      }
+    ]
+  },
+  "canonicalBytes": "S\tfn\tz.Foo\t0.9\tlsp_resolved\t0\nS\ttype\ta.Bar\t0.5\tast_inferred\t1\nE\tfn\tz.Foo\ttype\ta.Bar\tcalls\nE\ttype\ta.Bar\tfn\tz.Foo\timports\n",
+  "expected": "sha256:fa9ffe4a5d09fc21e1e122000b269ac9098fbec8d21eee5665ed33711be8af94",
+  "operation": "pack-root"
+}

@@ -1,0 +1,13 @@
+{
+  "name": "pack_root_single_symbol",
+  "description": "Canonical pack root for a single symbol with integer score, no edges",
+  "input": {
+    "symbols": [
+      {"qualifiedName": "pkg.Main", "kind": "function", "score": 1.0, "provenance": "lsp_resolved", "distance": 0}
+    ],
+    "edges": []
+  },
+  "canonicalBytes": "S\tfn\tpkg.Main\t1\tlsp_resolved\t0\n",
+  "expected": "sha256:da39c1fb07913659a75865cf4afaa971683448625d19ac92c0303e90f678585f",
+  "operation": "pack-root"
+}

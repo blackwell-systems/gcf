@@ -1,0 +1,41 @@
+{
+  "name": "session_three_calls",
+  "description": "Three-call session: full declarations, then bare refs for known symbols, stable IDs",
+  "calls": [
+    {
+      "input": {
+        "tool": "test",
+        "symbols": [
+          {"qualifiedName": "pkg.Auth", "kind": "function", "score": 0.9, "provenance": "lsp", "distance": 0},
+          {"qualifiedName": "pkg.Server", "kind": "function", "score": 0.7, "provenance": "lsp", "distance": 1}
+        ],
+        "edges": []
+      },
+      "expected": "GCF profile=graph tool=test symbols=2 session=true\n## targets\n@0 fn pkg.Auth 0.90 lsp\n## related\n@1 fn pkg.Server 0.70 lsp\n"
+    },
+    {
+      "input": {
+        "tool": "test",
+        "symbols": [
+          {"qualifiedName": "pkg.Server", "kind": "function", "score": 0.7, "provenance": "lsp", "distance": 0},
+          {"qualifiedName": "pkg.Handler", "kind": "function", "score": 0.6, "provenance": "ast", "distance": 0}
+        ],
+        "edges": []
+      },
+      "expected": "GCF profile=graph tool=test symbols=2 session=true\n## targets\n@1  # previously transmitted\n@2 fn pkg.Handler 0.60 ast\n"
+    },
+    {
+      "input": {
+        "tool": "test",
+        "symbols": [
+          {"qualifiedName": "pkg.Auth", "kind": "function", "score": 0.9, "provenance": "lsp", "distance": 0},
+          {"qualifiedName": "pkg.Handler", "kind": "function", "score": 0.6, "provenance": "ast", "distance": 0},
+          {"qualifiedName": "pkg.Config", "kind": "type", "score": 0.4, "provenance": "lsp", "distance": 1}
+        ],
+        "edges": []
+      },
+      "expected": "GCF profile=graph tool=test symbols=3 session=true\n## targets\n@0  # previously transmitted\n@2  # previously transmitted\n## related\n@3 type pkg.Config 0.40 lsp\n"
+    }
+  ],
+  "operation": "session"
+}
