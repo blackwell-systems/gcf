@@ -227,6 +227,8 @@ GCF avoids this entirely. Distance is expressed through section placement: a tar
 
 This is a design tradeoff inherent to flat tabular formats: any time a column encodes a semantic category as an integer or enum, the model must perform an extra encoding step that it may silently get wrong. GCF eliminates this failure class by making categories structural rather than positional.
 
+**Methodological notes:** The comparison is inherently asymmetric because the formats are structurally different. GCF's primer includes section names (`## targets/related/extended`) because those are format keywords; TOON's primer uses natural-language labels because distance is a column value, not format syntax. When TOON is given an explicit label-to-integer mapping (see "hand-holding" results below), it passes at 5/5. The supported conclusion is: models more reliably generate GCF when semantic labels map directly to format syntax than TOON when labels must be converted to numeric column values. Additionally, the generation eval validates decoder acceptance (syntactic + type correctness), not semantic correctness. A parseable GCF output with symbols in the wrong distance section would pass, just as parseable TOON with correct types but wrong values would pass.
+
 ### TOON with hand-holding (pre-encoded integer distances)
 
 When the prompt explicitly says "distance 0" instead of "target" (hand-holding the model through the label-to-integer mapping that TOON requires), TOON passes. 2 runs, zero variance, identical byte counts both times.
