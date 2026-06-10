@@ -140,13 +140,19 @@ Invalid (MUST NOT be emitted by encoders as numbers): leading zeros (`01`, `00.5
 
 Tokens that do not match this grammar in their entirety fall through to bare string (precedence rule 7). Thus an unquoted token such as `01` decodes as the string `"01"`, not as a number and not as an error.
 
-Canonical encoder formatting:
+### 2.3.1 Canonical number formatting
+
+Conforming encoders MUST emit numbers in canonical form to ensure bit-for-byte deterministic output:
 
 - Zero is emitted as `0`; negative zero is emitted as `-0` when the source numeric model distinguishes it.
 - For non-zero values where `1e-6 <= abs(value) < 1e21`, emit plain decimal notation.
 - For non-zero values outside that range, emit normalized exponent notation using lowercase `e`, exactly one digit before the decimal point, no trailing fractional zeroes, an explicit exponent sign, and no leading exponent zeroes (for example `1.25e+21`, `4e-7`).
 - Plain decimals MUST have no leading zeroes except the single zero before a fractional point, and MUST have no trailing fractional zeroes.
 - Encoders MUST emit enough digits to preserve the exact value in their documented JSON numeric domain.
+
+Two conforming encoders given the same parsed numeric value MUST produce the same byte sequence.
+
+### 2.3.2 Numeric domain and precision
 
 Implementations MUST document their supported numeric domain. A decoder that cannot represent an input number exactly in that domain MUST return an out-of-range error or an exact numeric/string representation exposed by its API; it MUST NOT silently return an approximate value. Non-finite host values are outside the JSON data model and encoders MUST reject them unless host-value normalization converts them before GCF encoding.
 
@@ -1194,9 +1200,9 @@ Conforming generic-profile decoders MUST:
 - Validate counts at every nesting level (Section 13)
 - Satisfy the round-trip invariant (Section 1.1)
 
-### 16.5 Decoder Errors
+### 16.5 Decoder Strict Mode
 
-Decoders MUST reject (return an error, not silently ignore) the following conditions:
+A conforming decoder operates in strict mode. There is no lenient or permissive mode. Decoders MUST reject (return an error, not silently ignore) every condition listed below. This section is the complete compliance checklist for decoder validation.
 
 #### Header errors
 
@@ -1247,6 +1253,8 @@ Decoders MUST reject (return an error, not silently ignore) the following condit
 | Invalid edge syntax | Edge line missing `<` separator |
 | Unknown edge reference | Edge references a symbol ID not declared earlier |
 | Malformed delta | Delta payload uses an unknown section or a line form invalid for its section |
+
+The tables above define **30 strict-mode error conditions** across 4 categories (header, scalar, structural, graph). A decoder that accepts any of these conditions is non-conforming.
 
 Decoders MAY issue warnings (without rejecting) for:
 
