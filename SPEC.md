@@ -55,9 +55,9 @@ Not preserved (not part of the parsed JSON data model): source JSON whitespace, 
 
 ### 1.2 JSON data model
 
-This specification encodes the JSON data model as defined by [RFC8259]:
+This specification encodes the parsed JSON data model. [RFC8259] recommends but does not require unique object keys; GCF requires them (Section 2a.2). The data model is:
 
-- object (unordered collection of name/value pairs with unique string keys);
+- object (unordered collection of name/value pairs with unique string keys; duplicate keys are rejected);
 - array (ordered sequence of values);
 - string (sequence of Unicode code points);
 - number (as representable by JSON);
@@ -386,10 +386,10 @@ count               = "0" / ( DIGIT1-9 *DIGIT )
 kind                = "fn" / "type" / "method" / "iface" / "var" / "const"
                     / "resource" / "table" / "class" / "selector" / "field"
                     / "route" / "ext" / "file" / "pkg" / "svc"
-qname               = 1*( %x21-7E )
+qname               = 1*( %x21-7E )  ; printable non-whitespace ASCII (graph profile constraint)
 score               = [ "-" ] 1*DIGIT "." 2DIGIT
-provenance          = 1*( %x21-7E )
-edge-type           = 1*( %x21-7E )
+provenance          = 1*( %x21-7E )  ; printable non-whitespace ASCII (graph profile constraint)
+edge-type           = 1*( %x21-7E )  ; printable non-whitespace ASCII (graph profile constraint)
 status              = "added" / "removed"
 group-name          = "targets" / "related" / "extended" / "edges"
                     / ( "distance_" 1*DIGIT )
@@ -1249,9 +1249,9 @@ A conforming decoder operates in strict mode. There is no lenient or permissive 
 
 | Error | Condition |
 |-------|-----------|
-| Invalid node line | Symbol line has fewer than 5 positional fields |
+| Invalid node line | Symbol line does not have exactly 5 positional fields |
 | Invalid symbol ID | `@` prefix followed by non-integer |
-| Invalid score | Score field is not a valid decimal float |
+| Invalid score | Score field does not match the score grammar (`[-]DIGITS.2DIGIT`) |
 | Invalid edge syntax | Edge line missing `<` separator |
 | Unknown edge reference | Edge references a symbol ID not declared earlier |
 | Malformed delta | Delta payload uses an unknown section or a line form invalid for its section |
@@ -1315,6 +1315,7 @@ GCF is a UTF-8 format. All text (keys, values, field names, qualified names) is 
 - Surrogate code points (U+D800 through U+DFFF) MUST NOT appear as literal UTF-8. They may only appear as `\uXXXX` escape pairs in quoted strings (Section 2.2).
 - Bidirectional text in keys and values is preserved as-is. GCF does not insert or require directional markers.
 - String comparison for duplicate-key detection (Section 2a.2) is byte-level, not code-point-level. Two keys that differ only by Unicode normalization form are considered distinct.
+- The generic profile supports the full Unicode range in keys and values (via the common key grammar in Section 2a and quoted strings in Section 2.2). The graph profile restricts `qname`, `provenance`, and `edge-type` to printable non-whitespace ASCII (`%x21-7E`) because these fields are positional and whitespace-delimited. This is a deliberate constraint of the graph profile, not a limitation of the format.
 
 ## 21. Intellectual Property
 
