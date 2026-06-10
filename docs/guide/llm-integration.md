@@ -108,9 +108,9 @@ Kind abbreviations: function=fn, type=type, method=method, interface=iface.
 
 ### When to use JSON for output
 
-- **Schema validation.** JSON schema validators are mature. GCF doesn't have a schema system.
 - **Interoperability.** If the consumer is a non-LLM system that expects JSON.
-- **Provider structured output modes.** If you're using a provider's built-in JSON mode.
+- **Provider structured output modes.** If you're using a provider's built-in JSON mode (OpenAI structured outputs, Anthropic tool use).
+- **Schema validation.** JSON Schema works on decoded GCF (`decode()` then validate). See [Schema Validation](/guide/schema-validation).
 
 ## Prompt patterns
 
