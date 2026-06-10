@@ -163,6 +163,8 @@ Zero runtime dependencies. MIT licensed. All implementations support both generi
 - [GCF vs TOON](https://gcformat.com/guide/vs-toon.html)
 - [Playground](https://gcformat.com/playground.html)
 - [Specification](SPEC.md)
+- [betterthanjson.com](https://betterthanjson.com)
+- [jsonalternative.com](https://jsonalternative.com)
 
 ## Use cases
 
