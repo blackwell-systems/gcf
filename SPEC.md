@@ -383,7 +383,8 @@ id                  = 1*DIGIT
 target-id           = id
 source-id           = id
 count               = "0" / ( DIGIT1-9 *DIGIT )
-kind                = "fn" / "type" / "method" / "iface" / "var" / "const"
+kind                = known-kind / bare-key  ; extensible: decoders MUST accept unknown kinds
+known-kind          = "fn" / "type" / "method" / "iface" / "var" / "const"
                     / "resource" / "table" / "class" / "selector" / "field"
                     / "route" / "ext" / "file" / "pkg" / "svc"
 qname               = 1*( %x21-7E )  ; printable non-whitespace ASCII (graph profile constraint)
