@@ -31,10 +31,10 @@ GCF profile=graph tool=context_for_task budget=5000
 @0<@1 calls                                ← emitted at 500ms
 @2<@0 references                           ← emitted at 520ms
 @0<@3 imports                              ← emitted at 540ms
-##! summary symbols=4 edges=3 counts=3
+##! summary counts=3
 ```
 
-The `[?]` marker signals that the count was unknown at emit time. The `##! summary` trailer provides all counts after the data is complete. The LLM has both the data and the counts in its context window.
+The `[?]` marker signals that the count was unknown at emit time. The `##! summary counts=N` trailer resolves each deferred `[?]` in order of appearance. The LLM has both the data and the counts in its context window.
 
 ## Why TOON's streaming is fake
 
