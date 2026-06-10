@@ -68,13 +68,14 @@ output = encode_generic({
 ```
 
 ```
+GCF profile=generic
 ## employees [3]{id,name,department,salary}
 1|Alice|Engineering|95000
 2|Bob|Sales|72000
 3|Carol|Marketing|85000
 ```
 
-One header declares field names. Rows are positional values only. No field names repeated per record. Works on any JSON.
+One header declares field names. Rows are positional values only. No field names repeated per record. Lossless: `decode(encode(value)) == value` for every JSON value, proven across 20 million random round-trips.
 
 ### Graph profile (code intelligence, knowledge graphs, MCP tools)
 
@@ -115,12 +116,13 @@ Local IDs (`@0`, `@1`) replace full names in edges. 233 tokens instead of 965 fo
 
 ### Generic profile
 
-Encodes any JSON structure. Arrays, nested objects, mixed types, primitives.
+Lossless JSON encoding. Arrays, nested objects, mixed types, primitives, root scalars.
 
-1. **Arrays of objects.** `## name [count]{field1,field2}` declares field names once. Rows are pipe-separated values. Field names are never repeated per record.
-2. **Nested objects.** `## address` becomes a section. Fields inside are `key=value` pairs or further nested sections.
-3. **Primitive arrays.** Inlined: `tags[2]: admin,user`. No wrapping structure.
-4. **Scalars.** `key=value` at the top level. Nulls, booleans, and numbers are preserved as-is.
+1. **Arrays of objects.** `## name [count]{field1,field2}` declares field names once. Rows are pipe-separated values. Absent fields use `~`, null uses `-`.
+2. **Nested objects.** `## key` becomes a section. In tabular rows, nested values use `^` cell marker with `.field {}` attachment.
+3. **Primitive arrays.** Inlined: `tags[2]: admin,user`. Strings containing commas are quoted.
+4. **Scalars.** `key=value` at the top level. Strings that collide with typed literals (`"true"`, `"123"`, `"-"`) are quoted automatically.
+5. **Root values.** Objects, arrays, and scalars at the document root. Every JSON value has a GCF representation.
 
 ### Graph profile
 
@@ -128,7 +130,7 @@ Encodes any JSON structure. Arrays, nested objects, mixed types, primitives.
 2. **Local IDs.** `@0`, `@1`. Edges reference by ID, not by repeating full identifiers.
 3. **Hierarchical grouping.** Section headers (`## targets`, `## related`) replace per-record metadata.
 
-Both profiles share the same grammar. The savings are structural and grow with payload size.
+Both profiles share the same grammar (common scalar grammar, key grammar, header format). The savings are structural and grow with payload size.
 
 ## It gets cheaper over time
 
@@ -152,6 +154,8 @@ No other format has these. They compound across multi-turn agent interactions.
 | Tree-sitter | `npm install tree-sitter-gcf` | [tree-sitter-gcf](https://github.com/blackwell-systems/tree-sitter-gcf) |
 
 Zero runtime dependencies. MIT licensed. All implementations support both generic profile (`encodeGeneric`) and graph profile (`encode`). CLI included in Go, TypeScript, and Python. Syntax highlighting via tree-sitter (Neovim, Helix, Zed).
+
+**Specification:** [SPEC v2.0](SPEC.md) with 133 conformance fixtures, 20M round-trip proofs, and fuzz testing. Go reference implementation at v1.0.0.
 
 ## Documentation
 
