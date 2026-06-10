@@ -136,11 +136,13 @@ scopes[2]: read,write
 | Type | Format | Example |
 |------|--------|---------|
 | String | bare text | `Alice Smith` |
-| Number | unquoted | `95000`, `3.14` |
+| Number | unquoted | `95000`, `3.14`, `1.5e-8` |
 | Boolean | lowercase | `true` / `false` |
 | Null | dash | `-` |
+| Absent (tabular only) | tilde | `~` |
+| Attachment (tabular only) | caret | `^` |
 | Empty string | quoted | `""` |
-| String with `\|` or newline | quoted | `"value\|pipes"` |
+| String with `\|`, `,`, or newline | quoted | `"value\|pipes"` |
 
 ### Comparison: the same data in JSON
 
