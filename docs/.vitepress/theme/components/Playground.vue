@@ -3,6 +3,9 @@ import { ref, computed, watch, onMounted } from 'vue'
 import { encode, decode, encodeGeneric, decodeGeneric } from '@blackwell-systems/gcf'
 import type { Payload } from '@blackwell-systems/gcf'
 import { encode as toonEncode } from '@toon-format/toon'
+const highlightFn = ref<((code: string) => string) | null>(null)
+const highlightJsonFn = ref<((code: string) => string) | null>(null)
+const highlightToonFn = ref<((code: string) => string) | null>(null)
 
 // ---------------------------------------------------------------------------
 // TOON encoding: uses the real @toon-format/toon library (same one used
@@ -297,6 +300,23 @@ const sessionOutput = computed(() => {
   catch { return '' }
 })
 
+const gcfHighlighted = computed(() => {
+  if (!highlightFn.value || !gcfOutput.value) return ''
+  return highlightFn.value(gcfOutput.value)
+})
+const jsonHighlighted = computed(() => {
+  if (!highlightJsonFn.value || !jsonOutput.value) return ''
+  return highlightJsonFn.value(jsonOutput.value)
+})
+const toonHighlighted = computed(() => {
+  if (!highlightToonFn.value || !toonOutput.value) return ''
+  return highlightToonFn.value(toonOutput.value)
+})
+const encodeHighlighted = computed(() => {
+  if (!highlightFn.value || !encodeOutput.value || encodeError.value) return ''
+  return highlightFn.value(encodeOutput.value)
+})
+
 const jsonTokens = computed(() => estimateTokens(jsonOutput.value))
 const toonTokens = computed(() => estimateTokens(toonOutput.value))
 const gcfTokens = computed(() => estimateTokens(gcfOutput.value))
@@ -423,7 +443,18 @@ function shareUrl() {
 // Watchers & Init
 // ---------------------------------------------------------------------------
 
-onMounted(() => {
+onMounted(async () => {
+  // Init tree-sitter parser for GCF highlighting (client-side only)
+  try {
+    const mod = await import('../gcf-highlight')
+    await mod.initParser()
+    highlightFn.value = mod.highlightGCF
+    highlightJsonFn.value = mod.highlightJSON
+    highlightToonFn.value = mod.highlightTOON
+  } catch (e) {
+    console.warn('GCF syntax highlighting unavailable:', e)
+  }
+
   const params = new URLSearchParams(window.location.search)
   if (params.get('tab') === 'encode') {
     activeTab.value = 'encode'
@@ -515,7 +546,8 @@ onMounted(() => {
           </div>
           <div class="pane-body-wrap">
             <button v-if="toonOutput" class="pane-copy" @click="copyText(toonOutput, 'toon')">{{ copied === 'toon' ? 'Copied!' : 'Copy' }}</button>
-            <pre class="pane-code">{{ toonOutput || 'TOON output will appear here...' }}</pre>
+            <pre class="pane-code" v-if="toonHighlighted" v-html="toonHighlighted"></pre>
+            <pre class="pane-code" v-else>{{ toonOutput || 'TOON output will appear here...' }}</pre>
           </div>
         </div>
 
@@ -527,7 +559,8 @@ onMounted(() => {
           </div>
           <div class="pane-body-wrap">
             <button v-if="gcfOutput" class="pane-copy" @click="copyText(gcfOutput, 'gcf')">{{ copied === 'gcf' ? 'Copied!' : 'Copy' }}</button>
-            <pre class="pane-code">{{ gcfOutput || 'GCF output will appear here...' }}</pre>
+            <pre class="pane-code" v-if="gcfHighlighted" v-html="gcfHighlighted"></pre>
+            <pre class="pane-code" v-else>{{ gcfOutput || 'GCF output will appear here...' }}</pre>
           </div>
         </div>
       </div>
@@ -646,7 +679,8 @@ onMounted(() => {
           </div>
           <div class="pane-body-wrap">
             <button v-if="encodeOutput && !encodeError" class="pane-copy" @click="copyText(encodeOutput, 'encode')">{{ copied === 'encode' ? 'Copied!' : 'Copy' }}</button>
-            <pre :class="['pane-code', { 'pane-error': encodeError }]">{{ encodeOutput || 'GCF output will appear here...' }}</pre>
+            <pre class="pane-code" v-if="encodeHighlighted" v-html="encodeHighlighted"></pre>
+            <pre :class="['pane-code', { 'pane-error': encodeError }]" v-else>{{ encodeOutput || 'GCF output will appear here...' }}</pre>
           </div>
         </div>
       </div>
@@ -675,7 +709,8 @@ onMounted(() => {
           </div>
           <div class="pane-body-wrap">
             <button v-if="decodeOutput && !decodeError" class="pane-copy" @click="copyText(decodeOutput, 'decode')">{{ copied === 'decode' ? 'Copied!' : 'Copy' }}</button>
-            <pre :class="['pane-code', { 'pane-error': decodeError }]">{{ decodeOutput || 'JSON output will appear here...' }}</pre>
+            <pre class="pane-code" v-if="highlightJsonFn && decodeOutput && !decodeError" v-html="highlightJsonFn(decodeOutput)"></pre>
+            <pre :class="['pane-code', { 'pane-error': decodeError }]" v-else>{{ decodeOutput || 'JSON output will appear here...' }}</pre>
           </div>
         </div>
       </div>
