@@ -32,6 +32,9 @@ Specification rewrite addressing 11 correctness findings from the generic profil
 - Kotlin: 133/133 fixtures, 40M round-trips
 - Swift: 123/133 fixtures (3 key-ordering), 1K round-trips
 - Cross-language matrix: 81/81 generic encode/decode verified (Go encode, Python decode)
+- gcf-proxy v0.4.0: bumped to gcf-go v1.0.0, all output now v2.0 wire format
+- tree-sitter-gcf: grammar updated for `##!` summary, wasm rebuilt
+- Playground: `profile=graph` header, `@blackwell-systems/gcf` bumped to `^1.0.0`
 - **Status: Stable** (cross-language conformance verified 2026-06-10)
 
 ### Design documents
