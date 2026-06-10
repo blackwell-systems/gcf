@@ -25,23 +25,24 @@ Use the official implementations as reference:
 
 ### 3. Run the conformance tests
 
-The `tests/conformance/` directory contains 29 language-agnostic JSON fixtures:
+The `tests/conformance/` directory contains 133 language-agnostic JSON fixtures for GCF v2.0:
 
 ```
 tests/conformance/
-  encode/     8 fixtures   (graph profile)
-  decode/     4 fixtures   (graph profile)
-  session/    1 fixture    (graph profile)
-  delta/      1 fixture    (graph profile)
-  generic/   12 fixtures   (tabular profile)
-  errors/     3 fixtures   (both profiles)
+  scalar/, numbers/, keys/       generic scalar grammar
+  containers/, arrays/, roots/   generic container grammar
+  attachments/, decode/          generic nested and decoder behavior
+  graph-encode/, graph-decode/   graph profile
+  graph-session/, graph-delta/   stateful graph behavior
+  streaming-v2/, whitespace/     streaming and input handling
+  errors-v2/                     normative rejection cases
 ```
 
-Each fixture is a JSON file with `input` and `expected` fields. Load the fixture, run your encoder/decoder, and compare output.
+Each fixture has an explicit `operation` field. Follow the runner contract in `tests/conformance/README.md`; do not infer direction from the types of `input` and `expected`.
 
 **Graph profile**: byte-exact matching on encode, structural equality on decode.
 
-**Tabular profile**: byte-exact matching for languages with ordered maps (JS, Python). For languages with unordered maps (Go), validate structural correctness (correct headers, correct row counts, correct values) rather than byte-exact field order.
+**Generic profile**: byte-exact matching on encode. Implementations MUST preserve the input object order required by the v2 deterministic encoding contract.
 
 ### 4. Open a PR
 
