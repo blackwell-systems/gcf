@@ -39,6 +39,7 @@ export default defineConfig({
           { text: 'Using GCF with LLMs', link: '/guide/llm-integration' },
           { text: 'MCP Integration', link: '/guide/mcp' },
           { text: 'MCP Proxy (Zero-Code)', link: '/guide/proxy' },
+          { text: 'Schema Validation', link: '/guide/schema-validation' },
         ],
       },
       {
