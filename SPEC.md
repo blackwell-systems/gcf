@@ -1276,13 +1276,13 @@ Decoders MAY issue warnings (without rejecting) for:
 
 ## 18. MIME Type
 
-Registered type: `application/vnd.gcf+text`
+Media type: `application/vnd.gcf+text` (IANA registration pending)
 
 File extension: `.gcf`
 
 Charset: always UTF-8.
 
-IANA registration: pending submission to the IANA media type registry. Implementations SHOULD use `application/vnd.gcf+text` as the Content-Type for GCF payloads. Implementations MAY fall back to `text/plain; charset=utf-8` when the receiver does not recognize the GCF media type.
+Implementations SHOULD use `application/vnd.gcf+text` as the Content-Type for GCF payloads. Implementations MAY fall back to `text/plain; charset=utf-8` when the receiver does not recognize the GCF media type.
 
 ## 19. Versioning and Status Lifecycle
 
