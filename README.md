@@ -163,8 +163,6 @@ Zero runtime dependencies. MIT licensed. All implementations support both generi
 - [GCF vs TOON](https://gcformat.com/guide/vs-toon.html)
 - [Playground](https://gcformat.com/playground.html)
 - [Specification](SPEC.md)
-- [betterthanjson.com](https://betterthanjson.com)
-- [jsonalternative.com](https://jsonalternative.com)
 
 ## Use cases
 
@@ -172,6 +170,15 @@ Zero runtime dependencies. MIT licensed. All implementations support both generi
 - **Agent-to-agent communication.** 63% fewer tokens per handoff. 5/5 generation validity on every frontier model.
 - **LLM structured output.** LLMs produce valid GCF with a 3-line primer. No training required.
 - **Code intelligence.** Graph profile with local IDs, edges, and distance grouping.
+
+<details>
+<summary>More links</summary>
+
+- [betterthanjson.com](https://betterthanjson.com)
+- [jsonalternative.com](https://jsonalternative.com)
+- [betterthantoon.com](https://betterthantoon.com)
+
+</details>
 
 ## License
 
