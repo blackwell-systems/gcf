@@ -433,6 +433,8 @@ Indentation is normative and carries structure.
 
 ## 5. Node Lines (Graph Profile)
 
+*Sections 5, 6, and 6a define the graph profile. Implementations that only support the generic profile (Section 7) may skip these sections. The two profiles share the common scalar grammar (Section 2), key grammar (Section 2a), and header (Section 3).*
+
 ```
 @{id} {kind} {qualified_name} {score} {provenance}
 ```
