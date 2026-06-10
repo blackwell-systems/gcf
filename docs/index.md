@@ -25,8 +25,8 @@ features:
     details: 'LLMs produce valid <span class="gcf">GCF</span> with a 3-line primer. 33% smaller output than <span class="toon">TOON</span>. 5/5 generation validity on every frontier model across 3 providers. Zero training.'
   - title: The format LLMs understand without training
     details: '90.7% comprehension, 5/5 generation validity across every frontier model from Anthropic, OpenAI, and Google. No model has seen GCF in training. <span class="toon">TOON</span>&apos;s own decoder rejects LLM-generated output on 7 of 9 models. 23 comprehension runs, 28 generation runs, zero losses.'
-  - title: 133 conformance fixtures, 6 languages
-    details: 'All implementations at v1.0.0. Go and Kotlin pass 133/133 fixtures. 200M+ property-based round-trips across all languages. Cross-language encode/decode matrix verified. <a href="https://github.com/blackwell-systems/gcf/blob/main/SPEC.md">Spec v2.0</a> designated Stable.'
+  - title: 141 conformance fixtures, 6 languages
+    details: 'All implementations at v1.0.0+. 141 conformance fixtures. 200M+ property-based round-trips across all languages. Cross-language 5x5 encode/decode matrix verified. CLIs for all 6 languages. <a href="https://github.com/blackwell-systems/gcf/blob/main/SPEC.md">Spec v2.0</a> designated Stable.'
   - title: Beats TOON on TOON's benchmark
     details: 'Wins all 6 datasets on <span class="toon">TOON</span> own benchmark. 34% fewer tokens on mixed-structure, 42% on semi-uniform, 3% on flat. Their datasets, their tokenizer, their library.'
 ---

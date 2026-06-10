@@ -72,12 +72,12 @@ cargo add gcf
 
 ```bash [Swift]
 # Package.swift
-.package(url: "https://github.com/blackwell-systems/gcf-swift", from: "0.5.0")
+.package(url: "https://github.com/blackwell-systems/gcf-swift", from: "1.0.0")
 ```
 
 ```bash [Kotlin]
 # build.gradle.kts
-implementation("com.github.blackwell-systems:gcf-kotlin:v0.5.0")
+implementation("com.github.blackwell-systems:gcf-kotlin:v1.0.0")
 ```
 
 :::
@@ -162,6 +162,7 @@ println(output)
 **Output:**
 
 ```
+GCF profile=generic
 ## employees [2]{id,name,department,salary}
 1|Alice|Engineering|95000
 2|Bob|Sales|72000

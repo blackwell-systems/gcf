@@ -57,7 +57,7 @@ The specification defines conformance requirements in three areas:
 
 **Decoder error taxonomy** (Section 12.5): 14 normative error conditions that decoders MUST reject, including invalid headers, unknown edge references, row width mismatches, and unterminated quotes.
 
-The v2 contract is covered by [133 conformance fixtures](https://github.com/blackwell-systems/gcf/tree/main/tests/conformance) across both profiles, streaming, and normative decoder errors.
+The v2 contract is covered by [141 conformance fixtures](https://github.com/blackwell-systems/gcf/tree/main/tests/conformance) across both profiles, streaming, and normative decoder errors.
 
 ## Stability guarantee
 
