@@ -61,4 +61,4 @@ The v2 contract is covered by [141 conformance fixtures](https://github.com/blac
 
 ## Stability guarantee
 
-Draft (pre-stable; will be designated Stable after cross-language conformance passes). Existing v1.x payloads will continue to parse correctly with v2.0 decoders.
+**Stable** (designated 2026-06-10). The wire format will not change in backwards-incompatible ways. Six implementations at v1.0.0+, 141 conformance fixtures, 200M+ lossless round-trips verified, cross-language matrix passing. Existing v1.x payloads continue to parse correctly with v2.0 decoders.
