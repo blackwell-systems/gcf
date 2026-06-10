@@ -219,13 +219,13 @@ Same data, same prompt structure per format. GCF and JSON use natural-language d
 | Gemini 3.1 Flash Lite | 4-5/5 | 0/5 | 4-5/5 | 3 |
 | Gemini 2.5 Flash | 2-3/5 | 0-4/5 | 0-3/5 | 3 (output truncation) |
 
-**GCF achieves 5/5 on every frontier model (Opus, Sonnet, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro).** TOON fails on every model when given natural-language descriptions. JSON matches GCF on Anthropic/OpenAI but truncates on some Gemini Flash models.
+**GCF achieves 5/5 on every frontier model (Opus, Sonnet, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro).** Models produce TOON that is syntactically valid but semantically incorrect (wrong types in typed columns) on 7 of 9 models when given natural-language descriptions. JSON matches GCF on Anthropic/OpenAI but truncates on some Gemini Flash models.
 
-TOON's flat tabular design requires column values to be pre-encoded as integers. When a model is told "this symbol is a target" (natural language), it writes `target` in the distance column. TOON's decoder rejects this because it expects `0`. The model has to know that "target" means 0, "related" means 1, "extended" means 2, and perform that mapping before writing. Every model tested (GPT-5.4, GPT-5.4-mini) fails to do this mapping unprompted.
+The failure pattern: TOON's tabular design represents distance as an integer column. When a model is told "this symbol is a target" (natural language), it writes `target` in the distance column. The TOON text is syntactically valid, but a typed decoder (which any real consumer uses) rejects it because the schema expects integer `0`, not string `target`. The model would need to know, unprompted, that "target" maps to 0, "related" maps to 1, "extended" maps to 2. No model performs this mapping without explicit instructions.
 
-GCF never has this problem. Distance is expressed through section placement: a target goes in `## targets`, a related symbol goes in `## related`. The model writes the symbol in the section that matches the label. No integer mapping required. The format aligns with how LLMs naturally express grouped data.
+GCF avoids this entirely. Distance is expressed through section placement: a target goes in `## targets`, a related symbol goes in `## related`. The model writes the symbol in the section that matches the label. No integer mapping required. The format aligns with how LLMs naturally express grouped data.
 
-This is a structural design flaw in flat tabular formats: any time a column encodes a semantic category as an integer or enum, the model must perform an extra encoding step that it may silently get wrong. GCF eliminates this entire failure class by making categories structural.
+This is a design tradeoff inherent to flat tabular formats: any time a column encodes a semantic category as an integer or enum, the model must perform an extra encoding step that it may silently get wrong. GCF eliminates this failure class by making categories structural rather than positional.
 
 ### TOON with hand-holding (pre-encoded integer distances)
 
