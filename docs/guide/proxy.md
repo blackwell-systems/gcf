@@ -51,19 +51,26 @@ That's it. The proxy spawns your server as a subprocess and sits between it and 
 
 ## What happens
 
+The proxy translates in both directions:
+
 ```
-Client (LLM)  ←──  GCF  ←──  gcf-proxy  ←──  JSON  ←──  Your Server
-              ──→  stdin ──→             ──→  stdin  ──→
+Responses:  Your Server (JSON) ──→ gcf-proxy encodes ──→ LLM reads GCF   (79% input savings)
+Requests:   LLM writes GCF    ──→ gcf-proxy decodes ──→ Your Server (JSON) (63% output savings)
 ```
 
-1. Client sends requests to gcf-proxy via stdin (unchanged)
-2. gcf-proxy forwards them to your server via stdin (unchanged)
-3. Your server responds with JSON via stdout (unchanged)
-4. gcf-proxy intercepts JSON-RPC responses containing tool results
-5. If the `text` content is structured JSON, it re-encodes as GCF
-6. Client receives GCF instead of JSON
+**Encode direction** (responses):
+1. Your server responds with JSON via stdout (unchanged)
+2. gcf-proxy intercepts JSON-RPC responses containing tool results
+3. If the `text` content is structured JSON, it re-encodes as GCF
+4. Client receives GCF instead of JSON
 
-Non-convertible responses (plain text, HTML, errors) pass through untouched.
+**Decode direction** (requests):
+1. Client sends a tool call with GCF strings in arguments
+2. gcf-proxy detects the `GCF ` prefix (4-byte check, zero overhead)
+3. GCF strings are decoded to JSON objects inline
+4. Your server receives JSON, never sees GCF
+
+Non-convertible content (plain text, HTML, errors, non-GCF strings) passes through untouched in both directions. Neither the server nor the client needs to know about GCF.
 
 ## What gets converted
 
@@ -176,18 +183,19 @@ The proxy only converts `text` content blocks in JSON-RPC responses that contain
 | You want maximum control over encoding | Library |
 | You want zero-effort adoption | Proxy |
 
-The proxy gives you GCF savings (positional encoding, tabular rows, primitive array inlining) plus streaming progress on large payloads. For session dedup and delta encoding, use the [GCF libraries](/ecosystem/implementations) directly.
+The proxy gives you bidirectional GCF translation (both input and output token savings) plus streaming progress on large payloads. For session dedup and delta encoding, use the [GCF libraries](/ecosystem/implementations) directly.
 
 ## Roadmap
 
 | Phase | Status | Description |
 |-------|--------|-------------|
 | 1. Streaming progress (stdio) | Done | Progress notifications with GCF fragments |
-| 2. HTTP/SSE frontend | Planned | Proxy becomes a Streamable HTTP server (`--http :9090`) |
-| 3. HTTP backend + session | Planned | Connect to upstream via HTTP, cross-request session dedup |
-| 4. Production hardening | Planned | Graceful shutdown, metrics, resume support |
+| 2. Bidirectional translation | Done | GCF in tool call arguments decoded to JSON for the server |
+| 3. HTTP/SSE frontend | Planned | Proxy becomes a Streamable HTTP server (`--http :9090`) |
+| 4. HTTP backend + session | Planned | Connect to upstream via HTTP, cross-request session dedup |
+| 5. Production hardening | Planned | Graceful shutdown, metrics, resume support |
 
-Phase 2 will upgrade any stdio MCP server into a remote Streamable HTTP service with SSE streaming. No upstream changes needed.
+Phase 3 will upgrade any stdio MCP server into a remote Streamable HTTP service with SSE streaming. No upstream changes needed.
 
 ## Links
 
