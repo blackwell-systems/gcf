@@ -199,11 +199,11 @@ The proxy gives you bidirectional GCF translation (both input and output token s
 | 1. Streaming progress (stdio) | Done | Progress notifications with GCF fragments |
 | 2. Bidirectional translation | Done | GCF in tool call arguments decoded to JSON for the server |
 | 3. HTTP backend | Done | `--upstream` connects to remote MCP servers over HTTP |
-| 4. HTTP/SSE frontend | Planned | Proxy becomes a Streamable HTTP server (`--http :9090`) |
-| 5. Session dedup in proxy | Planned | Cross-request deduplication without server changes |
+| 4. Session dedup | Done | `--session` deduplicates symbols across calls (40% savings proven e2e) |
+| 5. HTTP/SSE frontend | Planned | Proxy becomes a Streamable HTTP server (`--http :9090`) |
 | 6. Production hardening | Planned | Graceful shutdown, metrics, resume support |
 
-Phase 3 will upgrade any stdio MCP server into a remote Streamable HTTP service with SSE streaming. No upstream changes needed.
+Phase 5 will upgrade any stdio MCP server into a remote Streamable HTTP service with SSE streaming. No upstream changes needed.
 
 ## Links
 
