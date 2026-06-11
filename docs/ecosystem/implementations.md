@@ -33,7 +33,7 @@ All six support both encoding profiles:
 
 ## MCP Proxy
 
-Drop-in wrapper for any existing MCP server. Zero code changes required.
+Bidirectional proxy for any MCP server: local or remote, stdio or HTTP. Zero code changes required. Session dedup, streaming progress, and HTTP/SSE frontend built in.
 
 ```bash
 pip install gcf-proxy          # PyPI
@@ -41,8 +41,10 @@ npm install -g @blackwell-systems/gcf-proxy   # npm
 go install github.com/blackwell-systems/gcf-proxy@latest   # Go
 ```
 
-```json
-{"mcpServers": {"yours": {"command": "gcf-proxy", "args": ["your-mcp-server"]}}}
+```bash
+gcf-proxy your-mcp-server                                   # local stdio
+gcf-proxy --upstream http://host:3000/mcp                    # remote HTTP
+gcf-proxy --http :9090 --session your-mcp-server             # deploy as HTTP service
 ```
 
 Your server keeps outputting JSON. The LLM receives GCF. [Full setup guide](/guide/proxy).

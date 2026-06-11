@@ -190,7 +190,30 @@ The proxy only converts `text` content blocks in JSON-RPC responses that contain
 | You want maximum control over encoding | Library |
 | You want zero-effort adoption | Proxy |
 
-The proxy gives you bidirectional GCF translation (both input and output token savings) on local and remote servers, plus streaming progress on large payloads. For session dedup and delta encoding, use the [GCF libraries](/ecosystem/implementations) directly.
+The proxy gives you bidirectional GCF translation (both input and output token savings) on local and remote servers, plus session dedup and streaming progress. For delta encoding, use the [GCF libraries](/ecosystem/implementations) directly.
+
+## Deploy as a remote service
+
+`--http` turns the proxy into a Streamable HTTP server. Any stdio MCP server becomes a remote service:
+
+```bash
+gcf-proxy --http :9090 --session your-mcp-server
+```
+
+Clients connect via HTTP POST. Responses are SSE-streamed with GCF encoding and session dedup. Health check at `/health`.
+
+```bash
+# Test it
+curl -X POST http://localhost:9090 \
+  -H "Content-Type: application/json" \
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"list"}}'
+```
+
+Chains with `--upstream` for fully remote deployments:
+
+```bash
+gcf-proxy --http :9090 --upstream http://remote-mcp:3000/mcp
+```
 
 ## Roadmap
 
@@ -200,10 +223,8 @@ The proxy gives you bidirectional GCF translation (both input and output token s
 | 2. Bidirectional translation | Done | GCF in tool call arguments decoded to JSON for the server |
 | 3. HTTP backend | Done | `--upstream` connects to remote MCP servers over HTTP |
 | 4. Session dedup | Done | `--session` deduplicates symbols across calls (40% savings proven e2e) |
-| 5. HTTP/SSE frontend | Planned | Proxy becomes a Streamable HTTP server (`--http :9090`) |
-| 6. Production hardening | Planned | Graceful shutdown, metrics, resume support |
-
-Phase 5 will upgrade any stdio MCP server into a remote Streamable HTTP service with SSE streaming. No upstream changes needed.
+| 5. HTTP/SSE frontend | Done | `--http :9090` serves MCP over Streamable HTTP |
+| 6. Production hardening | Planned | Graceful shutdown, metrics, connection pooling |
 
 ## Links
 
