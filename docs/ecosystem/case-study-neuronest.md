@@ -52,43 +52,42 @@ Per-surface savings ratios are emitted as telemetry: `gcf.tool_executor.savings_
 
 ## Architecture
 
-```mermaid
-flowchart TB
-    subgraph NeuroNest Pipeline
-        TE[Tool Executor] -->|MCP tool result| ENC
-        SC[Swarm Coordinator] -->|agent handoff| ENC
-        MCP[MCP Server Manager] -->|server response| ENC
-        GE[Graph Export] -->|call graph extract| ENC
-
-        subgraph ENC[GCF Encoder Layer]
-            direction TB
-            DETECT{Graph shaped?}
-            DETECT -->|yes| GRAPH[encodeGraph]
-            DETECT -->|no| GENERIC[encodeGeneric]
-            GRAPH --> DELTA{Previous payload?}
-            DELTA -->|overlap >= 0.5| DELTAE[encodeDelta]
-            DELTA -->|no/low overlap| SESSION{Session ID?}
-            SESSION -->|yes| SESSIONE[encodeWithSession]
-            SESSION -->|no| FULL[encode]
-            GENERIC --> OUT
-            DELTAE --> OUT
-            SESSIONE --> OUT
-            FULL --> OUT
-        end
-
-        OUT[GCF text] --> LLM[LLM Context Window]
-    end
-
-    subgraph Safety Layer
-        GATE[Comprehension Gate] -->|gcfCapable?| FF
-        FF[Feature Flags] -->|GCF_WIRE_FORMAT| ENC
-        FF -->|GCF_WIRE_FORMAT_SHADOW| SHADOW[Shadow Metrics]
-        SHADOW --> TEL[Telemetry]
-    end
-
-    style ENC fill:#1a1a2e,color:#fff
-    style LLM fill:#0f3460,color:#fff
-    style GATE fill:#e94560,color:#fff
+```
+┌─────────────────────────────────────────────────────────────┐
+│                     NeuroNest Pipeline                      │
+│                                                             │
+│  Tool Executor ─────┐                                       │
+│  Swarm Coordinator ─┤                                       │
+│  MCP Server Mgr ────┤──▶ ┌───────────────────────────────┐  │
+│  Graph Export ───────┘    │      GCF Encoder Layer        │  │
+│                           │                               │  │
+│                           │  Graph shaped? ──▶ encodeGraph │  │
+│                           │       │                       │  │
+│                           │       ├─ prev payload?        │  │
+│                           │       │   overlap >= 0.5      │  │
+│                           │       │   └─▶ encodeDelta     │  │
+│                           │       │                       │  │
+│                           │       ├─ session ID?          │  │
+│                           │       │   └─▶ encodeWithSess  │  │
+│                           │       │                       │  │
+│                           │       └─▶ encode (full)       │  │
+│                           │                               │  │
+│                           │  Not graph ──▶ encodeGeneric   │  │
+│                           └───────────────┬───────────────┘  │
+│                                           │                  │
+│                                      GCF text                │
+│                                           │                  │
+│                                    ▼──────▼──────▼           │
+│                               LLM Context Window             │
+├──────────────────────────────────────────────────────────────┤
+│                       Safety Layer                           │
+│                                                              │
+│  Comprehension Gate ──▶ gcfCapable? ──▶ Feature Flags        │
+│                                          │         │         │
+│                               GCF_WIRE_FORMAT  SHADOW_MODE   │
+│                                    │              │          │
+│                               Active path    Telemetry only  │
+└──────────────────────────────────────────────────────────────┘
 ```
 
 ## Technical details
