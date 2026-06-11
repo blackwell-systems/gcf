@@ -75,7 +75,7 @@ GCF profile=generic
 3|Carol|Marketing|85000
 ```
 
-One header declares field names. Rows are positional values only. No field names repeated per record. Lossless: `decode(encode(value)) == value` for every JSON value, proven across 20 million random round-trips.
+One header declares field names. Rows are positional values only. No field names repeated per record. Lossless: `decode(encode(value)) == value` for every JSON value, proven across 200M+ random round-trips and 7.9M fuzz executions.
 
 ### Graph profile (code intelligence, knowledge graphs, MCP tools)
 
@@ -150,12 +150,12 @@ No other format has these. They compound across multi-turn agent interactions.
 | Rust | `cargo add gcf` | [gcf-rust](https://github.com/blackwell-systems/gcf-rust) |
 | Swift | Swift Package Manager | [gcf-swift](https://github.com/blackwell-systems/gcf-swift) |
 | Kotlin | JitPack | [gcf-kotlin](https://github.com/blackwell-systems/gcf-kotlin) |
-| MCP Proxy | `pip install gcf-proxy` | [gcf-proxy](https://github.com/blackwell-systems/gcf-proxy) |
+| MCP Proxy | `pip install gcf-proxy` | [gcf-proxy](https://github.com/blackwell-systems/gcf-proxy) (bidirectional, session dedup, HTTP frontend) |
 | Tree-sitter | `npm install tree-sitter-gcf` | [tree-sitter-gcf](https://github.com/blackwell-systems/tree-sitter-gcf) |
 
-Zero runtime dependencies. MIT licensed. All implementations support both generic profile (`encodeGeneric`) and graph profile (`encode`). CLI included in Go, TypeScript, and Python. Syntax highlighting via tree-sitter (Neovim, Helix, Zed).
+Zero runtime dependencies. MIT licensed. All implementations support both generic profile (`encodeGeneric`) and graph profile (`encode`). CLI included in all 6 languages. Syntax highlighting via tree-sitter (Neovim, Helix, Zed).
 
-**Specification:** [SPEC v2.0](SPEC.md) with 133 conformance fixtures, 20M round-trip proofs, and fuzz testing. Go reference implementation at v1.0.0.
+**Specification:** [SPEC v2.0 Stable](SPEC.md) with 141 conformance fixtures, 200M+ round-trip proofs, and 7.9M fuzz executions. Six implementations at v1.0.0+. Cross-language 5x5 matrix verified.
 
 ## Documentation
 
@@ -165,6 +165,9 @@ Zero runtime dependencies. MIT licensed. All implementations support both generi
 - [Benchmarks](https://gcformat.com/guide/benchmarks.html)
 - [Benchmarks (Full Data)](https://gcformat.com/guide/eval-results.html)
 - [GCF vs TOON](https://gcformat.com/guide/vs-toon.html)
+- [Schema Validation](https://gcformat.com/guide/schema-validation.html)
+- [FAQ](https://gcformat.com/guide/faq.html)
+- [Independent AI Reviews](https://gcformat.com/reviews/)
 - [Playground](https://gcformat.com/playground.html)
 - [Specification](SPEC.md)
 
