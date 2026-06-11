@@ -6,7 +6,7 @@
       "affiliation": "Blackwell Systems"
     }
   ],
-  "description": "1,300+ LLM evaluations across 10 models and 3 providers demonstrate that GCF achieves 90.7% comprehension accuracy (four models at 100%) where JSON averages 53.6% and TOON averages 68.5%. GCF achieves 5/5 generation validity on every frontier model. TOON's official decoder rejects LLM-generated output on 7 of 9 models. GCF uses 79% fewer input tokens than JSON and wins all 6 datasets on TOON's own benchmark.",
+  "description": "GCF is a proven lossless, bidirectional text-based wire format for LLM interactions. 1,300+ evaluations across 10 models from Anthropic, OpenAI, and Google. Comprehension: 90.7% average accuracy (four models at 100%) where JSON averages 53.6% and TOON averages 68.5%. Generation: 5/5 validity on every frontier model, zero training. TOON's official decoder rejects LLM-generated output on 7 of 9 models. Token efficiency: 79% fewer input tokens than JSON, wins all 6 datasets on TOON's own benchmark. Session deduplication (92.7% by 5th call) and delta encoding (81.2%) compound savings. Six implementations (Go, TypeScript, Python, Rust, Swift, Kotlin), all at v1.0.0+ with CLIs. Bidirectional MCP proxy with session dedup, delta encoding, HTTP backend/frontend. 200M+ lossless round-trips verified. JSON Schema validation works on decoded output unchanged.",
   "keywords": [
     "LLM",
     "wire format",
