@@ -19,6 +19,10 @@ footer-center: ""
 footer-right: "\\thepage"
 geometry: "margin=1in"
 fontsize: 11pt
+header-includes:
+  - \usepackage{enumitem}
+  - \setlist[itemize]{itemsep=4pt, parsep=2pt}
+  - \setlist[enumerate]{itemsep=4pt, parsep=2pt}
 listings-no-page-break: true
 code-block-font-size: "\\scriptsize"
 ---
