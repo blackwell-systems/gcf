@@ -146,8 +146,26 @@ The LLM gets the first symbols in its context within milliseconds. Without `prog
 
 | Flag | Default | Description |
 |------|---------|-------------|
+| `--http <addr>` | (none) | Serve MCP over Streamable HTTP |
+| `--upstream <url>` | (none) | Connect to a remote MCP server over HTTP |
+| `--session` | off | Session dedup (bare refs for known symbols) |
+| `--delta` | off | Send only changed symbols when responses change slightly |
+| `--cache` | off | Cache encoded responses for identical tool calls |
+| `--min-size N` | 100 | Skip encoding for responses smaller than N bytes |
 | `--stream-threshold N` | 5 | Min symbols before streaming activates |
-| `--no-progress` | false | Disable progress notifications entirely |
+| `--no-progress` | false | Disable progress notifications |
+| `--verbose` | false | Log per-call savings to stderr |
+
+## Delta encoding
+
+`--delta` compares each tool's response against the previous one. When only a few symbols changed, the proxy sends a delta instead of the full response:
+
+```
+Call 1: full response (1,416 bytes, 20 symbols)
+Call 2: delta (459 bytes, 2 changed, 68% savings)
+```
+
+The server sends full responses every time. The proxy diffs transparently using GCF's native delta format with `pack_root` content hashes.
 
 ## Test it
 
