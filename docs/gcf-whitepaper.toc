@@ -1,0 +1,48 @@
+\contentsline {section}{\nonumberline GCF: A Token-Optimized Wire Format for Structured LLM Interactions}{3}{section*.1}%
+\contentsline {subsection}{\nonumberline Abstract}{3}{subsection*.2}%
+\contentsline {subsection}{\nonumberline 1. Why JSON Fails at Scale}{4}{subsection*.4}%
+\contentsline {subsubsection}{\nonumberline 1.1 Why This Matters Now}{4}{subsubsection*.5}%
+\contentsline {subsubsection}{\nonumberline 1.2 Why Not Just Use Binary?}{5}{subsubsection*.6}%
+\contentsline {subsection}{\nonumberline 2. Design Principles}{5}{subsection*.7}%
+\contentsline {subsubsection}{\nonumberline 2.1 Referential Identity}{5}{subsubsection*.8}%
+\contentsline {subsubsection}{\nonumberline 2.2 Topological Encoding}{6}{subsubsection*.9}%
+\contentsline {subsubsection}{\nonumberline 2.3 Hierarchical Grouping}{6}{subsubsection*.10}%
+\contentsline {subsection}{\nonumberline 3. Specification}{6}{subsection*.11}%
+\contentsline {subsubsection}{\nonumberline 3.1 Grammar}{6}{subsubsection*.12}%
+\contentsline {subsubsection}{\nonumberline 3.2 Header}{7}{subsubsection*.13}%
+\contentsline {subsubsection}{\nonumberline 3.3 Node Lines}{7}{subsubsection*.14}%
+\contentsline {subsubsection}{\nonumberline 3.4 Edge Lines}{8}{subsubsection*.15}%
+\contentsline {subsubsection}{\nonumberline 3.5 Group Headers}{8}{subsubsection*.16}%
+\contentsline {subsubsection}{\nonumberline 3.6 Generic Profile (Generic Encoding)}{9}{subsubsection*.17}%
+\contentsline {subsubsection}{\nonumberline 3.7 Session Statefulness}{10}{subsubsection*.18}%
+\contentsline {subsubsection}{\nonumberline 3.8 Streaming Encoding Extension}{10}{subsubsection*.19}%
+\contentsline {subsection}{\nonumberline 4. Implementation Status}{11}{subsection*.20}%
+\contentsline {subsubsection}{\nonumberline Correctness Validation}{12}{subsubsection*.21}%
+\contentsline {subsubsection}{\nonumberline Production Deployment}{12}{subsubsection*.22}%
+\contentsline {subsection}{\nonumberline 5. Where Token Savings Come From}{13}{subsection*.23}%
+\contentsline {subsubsection}{\nonumberline 5.1 Generic Profile Savings}{13}{subsubsection*.24}%
+\contentsline {subsection}{\nonumberline 6. Benchmarks}{14}{subsection*.25}%
+\contentsline {subsubsection}{\nonumberline 6.1 Token Comparison}{14}{subsubsection*.26}%
+\contentsline {subsubsection}{\nonumberline 6.1a Comprehension Accuracy at Scale (500 symbols, multi-model)}{15}{subsubsection*.27}%
+\contentsline {paragraph}{\nonumberline Failure taxonomy}{16}{paragraph*.30}%
+\contentsline {paragraph}{\nonumberline Comprehension methodology}{19}{paragraph*.36}%
+\contentsline {subsubsection}{\nonumberline 6.2 Session Statefulness Savings}{19}{subsubsection*.37}%
+\contentsline {subsection}{\nonumberline 7. Comparison to Alternatives}{20}{subsection*.38}%
+\contentsline {subsubsection}{\nonumberline 7.1 Columnar/TSV}{20}{subsubsection*.39}%
+\contentsline {subsubsection}{\nonumberline 7.2 Binary Formats (Protobuf, MessagePack, FlatBuffers)}{20}{subsubsection*.40}%
+\contentsline {subsubsection}{\nonumberline 7.3 JSON-LD / RDF}{20}{subsubsection*.41}%
+\contentsline {subsubsection}{\nonumberline 7.4 Markdown / Freeform Text}{20}{subsubsection*.42}%
+\contentsline {subsubsection}{\nonumberline 7.5 TOON (Token-Oriented Object Notation)}{20}{subsubsection*.43}%
+\contentsline {subsubsection}{\nonumberline 7.6 Custom Compressed JSON}{22}{subsubsection*.44}%
+\contentsline {subsection}{\nonumberline 8. Limitations and Validation}{22}{subsection*.45}%
+\contentsline {subsection}{\nonumberline 9. Implications for MCP and Agent Tooling}{23}{subsection*.46}%
+\contentsline {subsubsection}{\nonumberline 9.1 LLM Generation: GCF as a Bidirectional Format}{23}{subsubsection*.47}%
+\contentsline {paragraph}{\nonumberline Why TOON fails generation}{24}{paragraph*.49}%
+\contentsline {paragraph}{\nonumberline Output size comparison}{26}{paragraph*.52}%
+\contentsline {subsubsection}{\nonumberline 9.2 Streaming: Progressive Context Delivery}{26}{subsubsection*.54}%
+\contentsline {subsubsection}{\nonumberline 9.3 Delta Encoding}{27}{subsubsection*.55}%
+\contentsline {subsection}{\nonumberline 10. Conclusion}{27}{subsection*.56}%
+\contentsline {subsection}{\nonumberline Reference Implementation}{28}{subsection*.57}%
+\contentsline {subsection}{\nonumberline Appendix A: Full Example}{29}{subsection*.58}%
+\contentsline {subsection}{\nonumberline Appendix B: Streaming Example}{30}{subsection*.59}%
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
