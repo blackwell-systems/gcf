@@ -1,4 +1,4 @@
-![GCF Benchmark Overview](assets/gcf-infographic.png)
+![GCF Format Comparison](assets/gcf-format-comparison.png)
 
 <p align="center">
   <a href="https://gcformat.com/playground.html"><img src="https://img.shields.io/badge/playground-live-2563eb?style=for-the-badge" alt="Playground"></a>
