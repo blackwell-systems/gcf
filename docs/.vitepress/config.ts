@@ -80,6 +80,7 @@ export default defineConfig({
         items: [
           { text: 'Implementations', link: '/ecosystem/implementations' },
           { text: 'Who Uses GCF', link: '/ecosystem/adopters' },
+          { text: 'Case Study: NeuroNest', link: '/ecosystem/case-study-neuronest' },
         ],
       },
     ],

@@ -24,10 +24,16 @@ GCF was designed for knowing's use case and extracted into a standalone format o
 
 [NeuroNest](https://github.com/NETGVai/NeuroNest) is an agent-first IDE built by [Network Guardian](https://netgv.ai). First independent commercial adoption of GCF.
 
-- GCF used in tool executor, swarm coordinator, and MCP server manager
-- Per-provider comprehension gate: validates each LLM provider can read GCF before enabling it
-- Parallel JSON/GCF pipeline with runtime rollout control
-- Uses `@blackwell-systems/gcf` TypeScript library
+- GCF across 4 encoding surfaces: tool executor, swarm coordinator, MCP server manager, graph export
+- Session dedup with 1-hour eviction and background sweep
+- Delta encoding with Jaccard similarity threshold (0.5)
+- Per-provider comprehension gate: validates each LLM can read GCF before enabling it
+- Shadow mode (A/B testing): compute GCF for telemetry while sending JSON to LLM
+- Non-throwing failure contract with JSON fallback
+- Per-surface savings ratio metrics
+- Uses `@blackwell-systems/gcf` v1.0.0
+
+[Full case study](/ecosystem/case-study-neuronest)
 
 ## Your project here
 
