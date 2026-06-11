@@ -2,7 +2,7 @@
 
 **Dayna Blackwell, Blackwell Systems**
 
-**Date:** 2026-06-11 (v3) · **DOI:** [10.5281/zenodo.20579817](https://doi.org/10.5281/zenodo.20579817)
+**Date:** 2026-06-06 · **DOI:** [10.5281/zenodo.20579817](https://doi.org/10.5281/zenodo.20579817)
 
 ---
 
@@ -20,7 +20,7 @@ We benchmark against JSON and TOON (Token-Oriented Object Notation), a tabular e
 
 **Token efficiency:** GCF achieves 79% fewer input tokens than JSON at 500 symbols. On TOON's own benchmark (their datasets, their tokenizer, their methodology), GCF wins all 6 datasets.
 
-Session deduplication (92.7% savings by the 5th call) and delta encoding (81.2% on re-queries) compound savings across multi-turn interactions. A streaming encoding extension enables zero-buffering encode with O(1) memory per row. The format is implemented in six languages (all at v1.0.0+), verified across 200M+ property-based round-trips and 7.9M fuzz executions, with a cross-language 5x5 encode/decode matrix passing. A bidirectional MCP proxy with session dedup, HTTP backend/frontend, and response caching enables zero-code adoption. JSON Schema validation works on decoded output unchanged. Specification v2.0 Stable: gcformat.com.
+Session deduplication (92.7% savings by the 5th call) and delta encoding (81.2% on re-queries) compound savings across multi-turn interactions. A streaming encoding extension enables zero-buffering encode with O(1) memory per row. The format is implemented in six languages, published to seven package registries, and deployed in production MCP servers. Specification: gcformat.com.
 
 ![Comprehension and Generation across 10 models and 3 providers](public/charts/hero.png)
 
@@ -290,7 +290,7 @@ GCF profile=graph tool=context_for_task budget=5000
 ## edges [?]
 @0<@1 calls
 @2<@0 references
-##! summary counts=2
+##! summary symbols=3 edges=2 sections=targets:2,related:1,edges:2
 ```
 
 The `[?]` deferred count marker signals that the count will be provided in the trailer. The `##! summary` line provides all counts after the data is complete. The LLM has both the data and the counts in its context window (recency bias in transformer attention means the trailer is at least as strong a signal as header counts).
@@ -303,37 +303,28 @@ TOON cannot add streaming without a breaking spec change (their grammar mandates
 
 ## 4. Implementation Status
 
-GCF is not a speculative format proposal. It is implemented in six languages, all at v1.0.0+, published to seven package registries, covered by 141 conformance fixtures, verified across 200M+ property-based round-trips and 7.9M fuzz executions, and deployed in production MCP servers.
+GCF is not a speculative format proposal. It is implemented in six languages, published to seven package registries, covered by 133 conformance fixtures, and deployed in production MCP servers handling 94 combined tool endpoints.
 
 The implementation includes:
 
-- **Go library** (`github.com/blackwell-systems/gcf-go`, v1.0.2): Encode, Decode, EncodeGeneric, DecodeGeneric, EncodeWithSession, EncodeDelta, StreamEncoder, GenericStreamEncoder, ParseJSONOrdered, PackRoot. CLI with both profiles. Zero dependencies.
-- **TypeScript library** (`@blackwell-systems/gcf` on npm, v1.0.1): encode, decode, encodeGeneric, decodeGeneric, encodeWithSession, encodeDelta, StreamEncoder, GenericStreamEncoder. CLI with both profiles. Zero dependencies, ESM.
-- **Python library** (`gcf-python` on PyPI, v1.0.1): encode, decode, encode_generic, decode_generic, encode_with_session, encode_delta, StreamEncoder, GenericStreamEncoder. CLI with both profiles. Zero dependencies, Python 3.9+.
-- **Rust library** (`gcf` on crates.io, v1.0.1): encode, decode, encode_generic, decode_generic, encode_with_session, encode_delta, StreamEncoder, GenericStreamEncoder. CLI with both profiles. Minimal dependencies (serde_json).
-- **Swift library** (`gcf-swift` via SPM, v1.0.1): encode, decode, encodeGeneric, decodeGeneric, encodeWithSession, encodeDelta, StreamEncoder, GenericStreamEncoder, OrderedDictionary. CLI with both profiles. 50M property-based round-trips. Zero dependencies.
-- **Kotlin library** (`gcf-kotlin` via JitPack, v1.0.1): encode, decode, encodeGeneric, decodeGeneric, encodeWithSession, encodeDelta, StreamEncoder, GenericStreamEncoder. CLI with both profiles. Zero dependencies.
-- **MCP proxy** (`github.com/blackwell-systems/gcf-proxy`, v0.9.0): bidirectional translation (JSON-to-GCF responses, GCF-to-JSON requests), session dedup (40% savings proven e2e), HTTP backend (`--upstream`), HTTP/SSE frontend (`--http`), response caching (`--cache`), min-size bypass (`--min-size`), streaming progress notifications. Zero code changes to upstream.
-- **Cross-language matrix**: 5x5 encode/decode matrix verified (all passing). Each language's encoder output decoded by every other language's decoder.
-- **Conformance test suite** (141 v2 fixtures across both profiles): language-agnostic JSON fixtures validating encode, decode, session, delta, generic, streaming, and normative error cases.
-- **Specification** (gcformat.com, v2.0 Stable): RFC 2119 keywords, conformance checklists, decoder error taxonomy, streaming extension, security considerations, i18n, status lifecycle.
+- **Go library** (`github.com/blackwell-systems/gcf-go`, v0.6.1): Encode, Decode, EncodeGeneric, DecodeGeneric, EncodeWithSession, EncodeDelta, StreamEncoder, GenericStreamEncoder. Zero dependencies.
+- **TypeScript library** (`@blackwell-systems/gcf` on npm, v0.6.1): encode, decode, encodeGeneric, decodeGeneric, encodeWithSession, encodeDelta, StreamEncoder, GenericStreamEncoder. Zero dependencies, ESM.
+- **Python library** (`gcf-python` on PyPI, v0.5.1): encode, decode, encode_generic, decode_generic, encode_with_session, encode_delta, StreamEncoder, GenericStreamEncoder. Zero dependencies, Python 3.9+.
+- **Rust library** (`gcf` on crates.io, v0.5.1): encode, decode, encode_generic, decode_generic, encode_with_session, encode_delta, StreamEncoder, GenericStreamEncoder. Minimal dependencies (serde_json).
+- **Swift library** (`gcf-swift` via SPM, v0.5.1): encode, decode, encodeGeneric, decodeGeneric, encodeWithSession, encodeDelta, StreamEncoder, GenericStreamEncoder. Zero dependencies.
+- **Kotlin library** (`gcf-kotlin` via JitPack, v0.5.1): encode, decode, encodeGeneric, decodeGeneric, encodeWithSession, encodeDelta, StreamEncoder, GenericStreamEncoder. Zero dependencies.
+- **MCP proxy** (`github.com/blackwell-systems/gcf-proxy`): drop-in wrapper for any MCP server, re-encodes JSON responses as GCF with streaming progress notifications. Zero code changes to upstream.
+- **Conformance test suite** (133 v2 fixtures across both profiles): language-agnostic JSON fixtures validating encode, decode, session, delta, generic, streaming, and normative error cases.
+- **Specification** (gcformat.com, v2.0): RFC 2119 keywords, conformance checklists, decoder error taxonomy, streaming extension, security considerations.
 
 ### Correctness Validation
 
-All six implementations are tested against round-trip invariants and the shared conformance suite. A graph response encoded as GCF and decoded back must preserve node identity, kind, score, provenance, group membership, edge direction, edge type, and optional status metadata. The generic profile is validated against additional fixtures covering flat arrays, nested objects, value formatting, primitive array inlining, and edge cases.
-
-- **200M+ property-based round-trips** across all languages (random + adversarial value generators)
-- **7.9M fuzz executions** (Go native fuzzing) finding and fixing 3 bugs
-- **141 conformance fixtures** across both profiles, streaming, and normative error cases
-- **5x5 cross-language encode/decode matrix** verified (each encoder's output decoded by every other decoder)
-- **JSON Schema validation** works on decoded output unchanged (gcformat.com/guide/schema-validation)
+All six implementations are tested against round-trip invariants and the shared conformance suite. A graph response encoded as GCF and decoded back must preserve node identity, kind, score, provenance, group membership, edge direction, edge type, and optional status metadata. The generic profile is validated against 18 additional fixtures covering flat arrays, nested objects, value formatting, primitive array inlining, and edge cases.
 
 ### Production Deployment
 
 - **knowing** (28 MCP tools): GCF as primary output format for code intelligence, with session deduplication and delta encoding.
-- **agent-lsp** (66 MCP tools): GCF graph profile output for symbol-returning tools (blast_radius, find_callers, explore_symbol, find_references, type_hierarchy, list_symbols, find_symbol, cross_repo). First independent production consumer.
-- **NeuroNest** (NETGVai): first independent commercial adoption. GCF encoder in tool executor, swarm coordinator, and MCP server manager.
-- **gcf-proxy session dedup** proven end-to-end: 40% savings on repeated queries, compounding across a session. Tested against agent-lsp on real TypeScript codebase.
+- **agent-lsp** (66 MCP tools): GCF tabular output via EncodeGeneric for symbol lists, references, diagnostics, and call hierarchies.
 
 ---
 
@@ -619,7 +610,7 @@ GCF eliminates this waste through two encoding profiles. The graph profile uses 
 
 GCF is bidirectional. 1,300+ LLM evaluations across 10 models and 3 providers prove it. Comprehension: 90.7% average accuracy (four models at 100%) where JSON averages 53.6% and TOON averages 68.5%. Generation: 5/5 validity on every frontier model where TOON fails on 7 of 9 models. Output: 63% fewer tokens than JSON, 33% fewer than TOON. Session deduplication (92.7% by the fifth call), delta encoding (81.2% on re-queries), and streaming encode (zero-buffering with trailer summary) compound savings across multi-turn interactions. No competing format offers these features.
 
-The format is text-based, LLM-optimized, and implementable in any language. Implementations exist in six languages (Go, TypeScript, Python, Rust, Swift, Kotlin), all at v1.0.0+ with CLIs, zero or minimal runtime dependencies, and 200M+ verified lossless round-trips. A bidirectional MCP proxy enables adoption with zero code changes: session dedup (40% savings proven e2e), HTTP backend/frontend for remote deployment, response caching, and streaming progress notifications. JSON Schema validation works on decoded output unchanged, eliminating the primary enterprise adoption objection.
+The format is text-based, LLM-optimized, and implementable in any language. Implementations exist in six languages (Go, TypeScript, Python, Rust, Swift, Kotlin) with zero or minimal runtime dependencies. A drop-in MCP proxy enables adoption with zero code changes and adds streaming progress notifications for immediate partial context delivery.
 
 The broader point: GCF is a wire format. Wire formats are not optimized for human readability. HTTP headers are not readable. Protobuf is not readable. Nobody cares; they use a viewer. GCF is the wire format; JSON is the viewer format. The agent reads GCF (cheap, accurate), does its work, then calls `decode()` at the end if a human needs to see the result. Human readability is a last-mile rendering concern, not a wire format property.
 
@@ -629,24 +620,21 @@ The format that looks clean to humans (JSON) is the one that breaks for agents a
 
 ## Reference Implementation
 
-- **Specification:** gcformat.com (v2.0 Stable, RFC 2119 keywords, conformance checklists, streaming extension, error taxonomy, i18n, status lifecycle)
-- **Go library:** `github.com/blackwell-systems/gcf-go` (v1.0.2). CLI: `gcf encode-generic`, `gcf decode-generic`
-- **TypeScript library:** `@blackwell-systems/gcf` on npm (v1.0.1). CLI: `npx @blackwell-systems/gcf encode-generic`
-- **Python library:** `gcf-python` on PyPI (v1.0.1). CLI: `python -m gcf encode-generic`
-- **Rust library:** `gcf` on crates.io (v1.0.1). CLI: `gcf encode-generic`
-- **Swift library:** `gcf-swift` via SPM (v1.0.1). CLI: `swift run GCFCLI encode-generic`
-- **Kotlin library:** `gcf-kotlin` via JitPack (v1.0.1). CLI: `gradle run --args="encode-generic"`
-- **MCP proxy:** `github.com/blackwell-systems/gcf-proxy` (v0.9.0): bidirectional translation, session dedup, HTTP backend/frontend, response caching, min-size bypass, streaming progress
+- **Specification:** gcformat.com (v2.0, RFC 2119 keywords, conformance checklists, streaming extension, error taxonomy)
+- **Go library:** `github.com/blackwell-systems/gcf-go` (v0.6.1)
+- **TypeScript library:** `@blackwell-systems/gcf` on npm (v0.6.1)
+- **Python library:** `gcf-python` on PyPI (v0.5.1)
+- **Rust library:** `gcf` on crates.io (v0.5.1)
+- **Swift library:** `gcf-swift` via SPM (v0.5.1)
+- **Kotlin library:** `gcf-kotlin` via JitPack (v0.5.1)
+- **MCP proxy:** `github.com/blackwell-systems/gcf-proxy`: streaming progress notifications, drop-in wrapper, zero code changes
 - **Comprehension eval:** `github.com/blackwell-systems/gcf-go/eval` (500 symbols, 13 questions, 3 formats, 10 models, 3 providers)
 - **Generation eval:** `github.com/blackwell-systems/gcf-go/eval` (5-100 symbols, GCF vs TOON vs JSON, 9 models, validated through real decoders)
 - **Eval results:** `github.com/blackwell-systems/gcf/eval/results` (all raw logs, failure taxonomy, artifacts)
 - **TOON benchmark fork:** `github.com/blackwell-systems/toon` (branch: gcf-comparison, their datasets, their tokenizer)
-- **Conformance test suite:** `github.com/blackwell-systems/gcf/tests/conformance` (141 v2 fixtures across both profiles, streaming, and normative errors)
-- **Cross-language matrix:** `github.com/blackwell-systems/gcf/tests/cross-language-matrix.py` (5x5 encode/decode verification)
-- **Schema validation guide:** gcformat.com/guide/schema-validation (JSON Schema on decoded output, three validation patterns)
-- **FAQ:** gcformat.com/guide/faq (protobuf, MessagePack, CBOR, gzip, YAML comparisons)
+- **Conformance test suite:** `github.com/blackwell-systems/gcf/tests/conformance` (133 v2 fixtures across both profiles, streaming, and normative errors)
 - **Interactive playground:** gcformat.com/playground (three-way JSON vs TOON vs GCF comparison using real @toon-format/toon library)
-- **Production deployment:** knowing (28 MCP tools), agent-lsp (66 MCP tools), NeuroNest (first independent commercial adoption)
+- **Production deployment:** knowing (28 MCP tools), agent-lsp (66 MCP tools)
 
 ---
 
@@ -729,7 +717,7 @@ GCF profile=graph tool=context_for_task budget=5000
 ## edges [?]
 @0<@1 calls
 @2<@0 references
-##! summary counts=2
+##! summary symbols=3 edges=2 sections=targets:2,related:1,edges:2
 ```
 
 Both produce identical `Payload` structures when decoded. The streaming mode enables zero-buffering encode with O(1) memory per row.
