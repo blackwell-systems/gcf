@@ -1,6 +1,6 @@
 # MCP Proxy (Zero-Code Adoption)
 
-gcf-proxy wraps any existing MCP server and re-encodes JSON tool responses as GCF. Your server keeps outputting JSON. The LLM receives GCF. Zero code changes. For large payloads, the proxy streams GCF fragments via progress notifications for immediate partial context delivery.
+gcf-proxy is a bidirectional proxy that translates between JSON and GCF for any MCP server, local or remote. Your server keeps outputting JSON. The LLM receives GCF. If the LLM produces GCF, the server receives JSON. Zero code changes on either side.
 
 ## Install
 
@@ -21,20 +21,9 @@ Find your MCP config. It's usually in one of these places:
 | VS Code (Copilot) | `.vscode/mcp.json` |
 | Cursor | `.cursor/mcp.json` |
 
-**Before:**
+### Local server (stdio)
 
-```json
-{
-  "mcpServers": {
-    "my-server": {
-      "command": "my-mcp-server",
-      "args": ["--port", "8080"]
-    }
-  }
-}
-```
-
-**After:**
+Add `gcf-proxy` in front of your server command:
 
 ```json
 {
@@ -47,7 +36,24 @@ Find your MCP config. It's usually in one of these places:
 }
 ```
 
-That's it. The proxy spawns your server as a subprocess and sits between it and the client.
+The proxy spawns your server as a subprocess and sits between it and the client.
+
+### Remote server (HTTP)
+
+Point `--upstream` at any Streamable HTTP MCP server:
+
+```json
+{
+  "mcpServers": {
+    "remote": {
+      "command": "gcf-proxy",
+      "args": ["--upstream", "http://host:3000/mcp"]
+    }
+  }
+}
+```
+
+The proxy connects over HTTP, translates responses to GCF, and handles SSE streaming from the upstream. Session ID tracking via `Mcp-Session-Id` header is automatic.
 
 ## What happens
 
@@ -178,12 +184,13 @@ The proxy only converts `text` content blocks in JSON-RPC responses that contain
 | Scenario | Use |
 |----------|-----|
 | You can't modify the server (third-party binary) | Proxy |
+| Server is remote (Streamable HTTP) | Proxy (`--upstream`) |
 | You want to test GCF savings without code changes | Proxy |
 | You control the server and want session dedup/delta | Library (`encode`) |
 | You want maximum control over encoding | Library |
 | You want zero-effort adoption | Proxy |
 
-The proxy gives you bidirectional GCF translation (both input and output token savings) plus streaming progress on large payloads. For session dedup and delta encoding, use the [GCF libraries](/ecosystem/implementations) directly.
+The proxy gives you bidirectional GCF translation (both input and output token savings) on local and remote servers, plus streaming progress on large payloads. For session dedup and delta encoding, use the [GCF libraries](/ecosystem/implementations) directly.
 
 ## Roadmap
 
@@ -191,9 +198,10 @@ The proxy gives you bidirectional GCF translation (both input and output token s
 |-------|--------|-------------|
 | 1. Streaming progress (stdio) | Done | Progress notifications with GCF fragments |
 | 2. Bidirectional translation | Done | GCF in tool call arguments decoded to JSON for the server |
-| 3. HTTP/SSE frontend | Planned | Proxy becomes a Streamable HTTP server (`--http :9090`) |
-| 4. HTTP backend + session | Planned | Connect to upstream via HTTP, cross-request session dedup |
-| 5. Production hardening | Planned | Graceful shutdown, metrics, resume support |
+| 3. HTTP backend | Done | `--upstream` connects to remote MCP servers over HTTP |
+| 4. HTTP/SSE frontend | Planned | Proxy becomes a Streamable HTTP server (`--http :9090`) |
+| 5. Session dedup in proxy | Planned | Cross-request deduplication without server changes |
+| 6. Production hardening | Planned | Graceful shutdown, metrics, resume support |
 
 Phase 3 will upgrade any stdio MCP server into a remote Streamable HTTP service with SSE streaming. No upstream changes needed.
 
