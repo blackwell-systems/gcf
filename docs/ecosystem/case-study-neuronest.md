@@ -25,6 +25,8 @@ Per-conversation `Session` objects track transmitted symbols. Bare references re
 ### Delta encoding with Jaccard similarity
 When a caller supplies a previous payload, the encoder computes the Jaccard similarity of the two symbol sets (by qualified name). At >= 0.5 overlap, it emits a delta-only encoding of the changes. Below 0.5, it sends a full encode. The diff is purely deterministic: no internal cache, no side effects.
 
+**Note:** NeuroNest's delta implementation uses FNV-1a content hashing for `baseRoot`/`newRoot` identity rather than the GCF spec's SHA-256 `PackRoot` algorithm (SPEC Section 10.2). This works within NeuroNest (the hashes are self-consistent) but deltas produced by NeuroNest cannot be verified by other GCF implementations that use `PackRoot`. Adopting the spec's `PackRoot` algorithm would enable cross-implementation delta verification.
+
 ### Per-provider comprehension gate
 Before flipping any provider from JSON to GCF, NeuroNest runs a built-in comprehension eval. A fixed reference graph payload (symbols, edges, distance groups) is shown to the provider encoded as both JSON and GCF. Structured-extraction questions probe whether the model can read the format: symbol counts, edge types, distance grouping, qualified name extraction.
 
