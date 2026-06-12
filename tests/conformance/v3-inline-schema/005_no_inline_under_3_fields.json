@@ -1,0 +1,24 @@
+{
+  "description": "Objects with fewer than 3 fields use traditional .field {} encoding, not inline",
+  "expected": "GCF profile=generic\n## items [2]{id,meta}\n@0 1|^\n.meta {}\n    x=10\n    y=20\n@1 2|^\n.meta {}\n    x=30\n    y=40\n",
+  "input": {
+    "items": [
+      {
+        "id": 1,
+        "meta": {
+          "x": 10,
+          "y": 20
+        }
+      },
+      {
+        "id": 2,
+        "meta": {
+          "x": 30,
+          "y": 40
+        }
+      }
+    ]
+  },
+  "name": "no_inline_under_3_fields",
+  "operation": "encode"
+}

@@ -1,0 +1,28 @@
+{
+  "description": "Decoder handles ^{fields} inline schema and positional attachment body",
+  "expected": {
+    "orders": [
+      {
+        "customer": {
+          "email": "alice@test.com",
+          "name": "Alice",
+          "tier": "premium"
+        },
+        "id": 1,
+        "total": 99.99
+      },
+      {
+        "customer": {
+          "email": "bob@test.com",
+          "name": "Bob",
+          "tier": "standard"
+        },
+        "id": 2,
+        "total": 49.99
+      }
+    ]
+  },
+  "input": "GCF profile=generic\n## orders [2]{id,total,customer}\n@0 1|99.99|^{name,email,tier}\nAlice|alice@test.com|premium\n@1 2|49.99|^\nBob|bob@test.com|standard\n",
+  "name": "decode_inline_schema",
+  "operation": "decode"
+}

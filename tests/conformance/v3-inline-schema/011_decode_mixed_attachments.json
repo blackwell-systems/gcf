@@ -1,0 +1,33 @@
+{
+  "description": "Decoder handles mix of inline (no prefix) and traditional (.field) attachments in same row",
+  "expected": {
+    "orders": [
+      {
+        "customer": {
+          "email": "alice@test.com",
+          "name": "Alice",
+          "tier": "premium"
+        },
+        "id": 1,
+        "items": [
+          {
+            "name": "Widget",
+            "price": 19.99,
+            "qty": 2,
+            "sku": "A1"
+          },
+          {
+            "name": "Gadget",
+            "price": 29.99,
+            "qty": 1,
+            "sku": "B2"
+          }
+        ],
+        "total": 69.97
+      }
+    ]
+  },
+  "input": "GCF profile=generic\n## orders [1]{id,customer,items,total}\n@0 1|^{name,email,tier}|^|69.97\nAlice|alice@test.com|premium\n.items [2]{sku,name,qty,price}\n    A1|Widget|2|19.99\n    B2|Gadget|1|29.99\n",
+  "name": "decode_mixed_inline_and_traditional",
+  "operation": "decode"
+}

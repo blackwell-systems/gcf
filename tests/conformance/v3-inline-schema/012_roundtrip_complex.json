@@ -1,0 +1,58 @@
+{
+  "description": "Full round-trip: encode then decode a complex nested structure with all v3 features",
+  "expected": "GCF profile=generic\n## orders [2]{customer,items,orderId,status,subtotal,tax,total}\n@0 ^{email,id,name,tier}|^|ORD-001|shipped|74.97|6|80.97\nalice@example.com|1|Alice Chen|premium\n.items [2]{name,price,quantity,sku}\n    Wireless Mouse|29.99|2|SKU-WM01\n    USB-C Cable|14.99|1|SKU-UC02\n@1 ^|^|ORD-002|pending|89.99|7.2|97.19\nbob@example.com|2|Bob Martinez|standard\n.items [1]\n    Mechanical Keyboard|89.99|1|SKU-MK04\n",
+  "input": {
+    "orders": [
+      {
+        "customer": {
+          "email": "alice@example.com",
+          "id": 1,
+          "name": "Alice Chen",
+          "tier": "premium"
+        },
+        "items": [
+          {
+            "name": "Wireless Mouse",
+            "price": 29.99,
+            "quantity": 2,
+            "sku": "SKU-WM01"
+          },
+          {
+            "name": "USB-C Cable",
+            "price": 14.99,
+            "quantity": 1,
+            "sku": "SKU-UC02"
+          }
+        ],
+        "orderId": "ORD-001",
+        "status": "shipped",
+        "subtotal": 74.97,
+        "tax": 6,
+        "total": 80.97
+      },
+      {
+        "customer": {
+          "email": "bob@example.com",
+          "id": 2,
+          "name": "Bob Martinez",
+          "tier": "standard"
+        },
+        "items": [
+          {
+            "name": "Mechanical Keyboard",
+            "price": 89.99,
+            "quantity": 1,
+            "sku": "SKU-MK04"
+          }
+        ],
+        "orderId": "ORD-002",
+        "status": "pending",
+        "subtotal": 89.99,
+        "tax": 7.2,
+        "total": 97.19
+      }
+    ]
+  },
+  "name": "roundtrip_complex_nested",
+  "operation": "encode"
+}

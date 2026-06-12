@@ -1,0 +1,50 @@
+{
+  "description": "Row has both inline object (^{fields}) and traditional array attachment",
+  "expected": "GCF profile=generic\n## orders [2]{customer,id,items,total}\n@0 ^{email,name,tier}|1|^|69.97\nalice@test.com|Alice|premium\n.items [2]{name,price,qty,sku}\n    Widget|19.99|2|A1\n    Gadget|29.99|1|B2\n@1 ^|2|^|29.97\nbob@test.com|Bob|standard\n.items [1]\n    Gizmo|9.99|3|C3\n",
+  "input": {
+    "orders": [
+      {
+        "customer": {
+          "email": "alice@test.com",
+          "name": "Alice",
+          "tier": "premium"
+        },
+        "id": 1,
+        "items": [
+          {
+            "name": "Widget",
+            "price": 19.99,
+            "qty": 2,
+            "sku": "A1"
+          },
+          {
+            "name": "Gadget",
+            "price": 29.99,
+            "qty": 1,
+            "sku": "B2"
+          }
+        ],
+        "total": 69.97
+      },
+      {
+        "customer": {
+          "email": "bob@test.com",
+          "name": "Bob",
+          "tier": "standard"
+        },
+        "id": 2,
+        "items": [
+          {
+            "name": "Gizmo",
+            "price": 9.99,
+            "qty": 3,
+            "sku": "C3"
+          }
+        ],
+        "total": 29.97
+      }
+    ]
+  },
+  "name": "inline_object_with_array_attachment",
+  "operation": "encode"
+}

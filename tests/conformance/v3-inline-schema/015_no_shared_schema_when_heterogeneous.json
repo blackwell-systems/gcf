@@ -1,0 +1,28 @@
+{
+  "description": "Shared array schema not used when arrays have different field sets across rows",
+  "expected": "GCF profile=generic\n## data [2]{id,tags}\n@0 1|^\n.tags [1]{name,priority}\n    urgent|1\n@1 2|^\n.tags [1]{color,label}\n    green|low\n",
+  "input": {
+    "data": [
+      {
+        "id": 1,
+        "tags": [
+          {
+            "name": "urgent",
+            "priority": 1
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "tags": [
+          {
+            "color": "green",
+            "label": "low"
+          }
+        ]
+      }
+    ]
+  },
+  "name": "no_shared_schema_heterogeneous_arrays",
+  "operation": "encode"
+}

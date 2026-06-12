@@ -1,0 +1,21 @@
+{
+  "description": "Objects containing nested objects or arrays as values use traditional encoding, not inline",
+  "expected": "GCF profile=generic\n## items [1]{config,id}\n@0 ^|1\n.config {}\n    level=5\n    name=test\n    tags[2]: a,b\n",
+  "input": {
+    "items": [
+      {
+        "config": {
+          "level": 5,
+          "name": "test",
+          "tags": [
+            "a",
+            "b"
+          ]
+        },
+        "id": 1
+      }
+    ]
+  },
+  "name": "no_inline_when_nested_values",
+  "operation": "encode"
+}

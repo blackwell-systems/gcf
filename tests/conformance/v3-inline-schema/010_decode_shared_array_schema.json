@@ -1,0 +1,32 @@
+{
+  "description": "Decoder uses shared schema from first row when .field [N] has no {fields}",
+  "expected": {
+    "orders": [
+      {
+        "id": 1,
+        "items": [
+          {
+            "price": 19.99,
+            "sku": "A1"
+          },
+          {
+            "price": 29.99,
+            "sku": "B2"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "items": [
+          {
+            "price": 9.99,
+            "sku": "C3"
+          }
+        ]
+      }
+    ]
+  },
+  "input": "GCF profile=generic\n## orders [2]{id,items}\n@0 1|^\n.items [2]{sku,price}\n    A1|19.99\n    B2|29.99\n@1 2|^\n.items [1]\n    C3|9.99\n",
+  "name": "decode_shared_array_schema",
+  "operation": "decode"
+}

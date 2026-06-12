@@ -1,0 +1,18 @@
+{
+  "description": "String values starting with . are quoted to avoid attachment prefix ambiguity",
+  "expected": "GCF profile=generic\n## items [2]{path,type}\n\".hidden\"|file\n\".config\"|dir\n",
+  "input": {
+    "items": [
+      {
+        "path": ".hidden",
+        "type": "file"
+      },
+      {
+        "path": ".config",
+        "type": "dir"
+      }
+    ]
+  },
+  "name": "quoting_dot_prefix_string",
+  "operation": "encode"
+}

@@ -1,0 +1,49 @@
+{
+  "description": "Array attachment with same schema across rows omits {fields} after first row",
+  "expected": "GCF profile=generic\n## orders [3]{id,items}\n@0 1|^\n.items [2]{price,sku}\n    19.99|A1\n    29.99|B2\n@1 2|^\n.items [1]\n    9.99|C3\n@2 3|^\n.items [3]\n    49.99|D4\n    14.99|E5\n    24.99|F6\n",
+  "input": {
+    "orders": [
+      {
+        "id": 1,
+        "items": [
+          {
+            "price": 19.99,
+            "sku": "A1"
+          },
+          {
+            "price": 29.99,
+            "sku": "B2"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "items": [
+          {
+            "price": 9.99,
+            "sku": "C3"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "items": [
+          {
+            "price": 49.99,
+            "sku": "D4"
+          },
+          {
+            "price": 14.99,
+            "sku": "E5"
+          },
+          {
+            "price": 24.99,
+            "sku": "F6"
+          }
+        ]
+      }
+    ]
+  },
+  "name": "shared_array_schema",
+  "operation": "encode"
+}

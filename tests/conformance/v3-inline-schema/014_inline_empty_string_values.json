@@ -1,0 +1,26 @@
+{
+  "description": "Inline schema with empty string values in cells",
+  "expected": "GCF profile=generic\n## records [2]{id,info}\n@0 1|^{desc,name,tag}\n\"\"|test|active\n@1 2|^\nsomething|\"\"|\"\"\n",
+  "input": {
+    "records": [
+      {
+        "id": 1,
+        "info": {
+          "desc": "",
+          "name": "test",
+          "tag": "active"
+        }
+      },
+      {
+        "id": 2,
+        "info": {
+          "desc": "something",
+          "name": "",
+          "tag": ""
+        }
+      }
+    ]
+  },
+  "name": "inline_schema_empty_string_values",
+  "operation": "encode"
+}

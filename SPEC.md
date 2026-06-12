@@ -2,9 +2,9 @@
 
 ## Graph Compact Format: A Token-Optimized Wire Format for LLM Interactions
 
-**Version:** 2.0
+**Version:** 3.0
 
-**Date:** 2026-06-10
+**Date:** 2026-06-12
 
 **Status:** Stable (see Section 19 for status lifecycle)
 
@@ -84,7 +84,7 @@ A decoder MUST parse a scalar token using the following precedence, applying the
 
 3. **Missing.** If the token is exactly `~`, decode as absent. This token is valid ONLY in tabular row cells where a declared union field is absent from the source object (Section 7.4). The `~` token MUST NOT appear in `key=value` lines, primitive arrays, expanded-array items, or root values. A decoder encountering `~` outside a tabular row cell MUST reject the input.
 
-4. **Attachment.** If the token is exactly `^`, decode as an attachment reference. This token is valid ONLY in a tabular row cell and MUST have exactly one matching nested attachment beneath that row (Section 7.4.4). A decoder encountering `^` in any other context, or without a matching attachment, MUST reject the input.
+4. **Attachment.** If the token is exactly `^`, decode as an attachment reference. If the token matches `^{...}`, decode as an inline-schema attachment reference, where `{...}` is a field declaration using the grammar in Section 2a.3. These tokens are valid ONLY in tabular row cells and MUST have exactly one matching attachment body associated with that row (Sections 7.4.4 and 7.4.5). A decoder encountering either form in another context, with an invalid field declaration, or without a matching attachment body MUST reject the input.
 
 5. **Boolean.** If the token is exactly `true` or `false`, decode as the corresponding JSON boolean.
 
@@ -162,13 +162,15 @@ An encoder MUST quote a string value when its bare form would be parsed as a non
 
 - it equals `-` (would decode as null);
 - it equals `~` or `^` (reserved tabular cell markers);
+- it matches `^{fields}` using the field declaration grammar (would decode as an inline-schema attachment marker);
 - it equals `true` or `false` (would decode as boolean);
 - it matches the JSON number grammar (would decode as number);
 - it is numeric-like: after an optional leading `+` or `-`, it begins with a digit, or it begins with `.` followed by a digit;
 - it is empty (zero length);
 - it begins or ends with whitespace;
-- it begins with `#` or `@` (would collide with comment or row-ID syntax in positional contexts);
-- it contains `"`, `\`, or a control character (U+0000 through U+001F);
+- it begins with `#`, `@`, or `.` (would collide with comment, row-ID, or attachment syntax in positional contexts);
+- it contains `"`, `\`, a C0 control character (U+0000 through U+001F), or a C1 control character (U+0080 through U+009F);
+- it contains non-ASCII Unicode whitespace, including U+00A0, U+2028, U+2029, U+FEFF, or any code point greater than U+007F classified as whitespace by the implementation's Unicode character database;
 - it contains the active context delimiter: `|` in tabular rows, `,` in primitive arrays;
 - it contains `\n` (newline) or `\r` (carriage return).
 
@@ -327,9 +329,11 @@ anonymous-array-block = "##" SP count-bracket [ field-decl ] LF array-body
 array-block         = "##" SP key SP count-bracket [ field-decl ] LF array-body
 inline-array        = key count-bracket ":" [ SP scalar-list ] LF
 array-body          = tabular-body / expanded-body / empty
-tabular-body        = 1*( tabular-row *( INDENT attachment ) )
+tabular-body        = 1*( tabular-row *( INDENT traditional-attachment
+                      / inline-object-attachment ) )
 tabular-row         = [ "@" id SP ] cell *( "|" cell ) LF
-cell                = scalar / "~" / "^"
+cell                = scalar / "~" / attachment-cell
+attachment-cell     = "^" / "^" field-decl
 expanded-body       = 1*( expanded-item )
 expanded-item       = primitive-item / object-item / array-item
 primitive-item      = "@" id SP "=" scalar LF
@@ -339,11 +343,12 @@ array-item          = "@" id SP count-bracket [ field-decl ]
                       [ INDENT array-body ]
 
 ; --- Tabular attachments ---
-attachment          = object-attachment / array-attachment
+traditional-attachment = object-attachment / array-attachment
 object-attachment   = "." key SP "{}" LF *( INDENT object-member )
 array-attachment    = "." key SP count-bracket [ field-decl ]
                       [ ":" [ SP scalar-list ] ] LF
                       [ INDENT array-body ]
+inline-object-attachment = scalar *( "|" scalar ) LF
 
 ; --- Shared array syntax ---
 count-bracket       = "[" count-or-deferred "]"
@@ -407,7 +412,7 @@ empty               = ""
 
 Line terminator is `LF` (U+000A). Encoders MUST use `LF`. Decoders MUST tolerate trailing `\r` (CRLF input).
 
-`INDENT` in the grammar means that every line in the referenced production is prefixed by exactly one additional two-space indentation unit. Because ABNF does not maintain an indentation stack, Section 4.1 is the authoritative parsing algorithm for nesting and dedent behavior.
+`INDENT` in the grammar means that every line in the referenced production is prefixed by exactly one additional two-space indentation unit. An `inline-object-attachment` is the sole attachment form permitted at the same indentation level as its parent tabular row. Because ABNF does not maintain an indentation stack, Section 4.1 is the authoritative parsing algorithm for nesting and dedent behavior.
 
 ### 4.1 Indentation
 
@@ -417,8 +422,9 @@ Indentation is normative and carries structure.
 - One nesting level is exactly two spaces.
 - Indentation may increase by exactly one level at a time. An increase of two or more levels is an error.
 - A dedent (decrease in indentation) closes all containers deeper than the new level.
-- Content following `@N` belongs to that item until the next item at the same or lesser indentation level, or until the containing section ends.
-- `.field` attachment lines are valid only beneath an `@N` tabular row containing a matching `^` cell.
+- Indented content following `@N` belongs to that item until the next item at the same or lesser indentation level, or until the containing section ends. Same-indent inline attachment bodies are consumed according to Section 7.4.5.2.
+- `.field` attachment lines are valid only one indentation level beneath an `@N` tabular row containing a matching bare `^` cell.
+- A positional inline object attachment MAY appear either at the same indentation level as its parent `@N` row or one indentation level beneath it. No other child form may appear at the parent's indentation level.
 - An unexpected indentation increase (not preceded by a container-opening production) is an error.
 - Tab characters (U+0009) in leading whitespace are an error.
 
@@ -429,6 +435,7 @@ Indentation is normative and carries structure.
 - Decoders MUST ignore completely blank lines after the header.
 - Decoders MUST trim ASCII space and tab surrounding unquoted scalar tokens after splitting on the applicable delimiter.
 - Decoders MUST NOT trim or normalize any character inside a quoted string.
+- Delimiters and structural brackets MUST be recognized only outside quoted strings. In particular, a `[` or `]` inside a quoted key or value MUST NOT be interpreted as an array count bracket.
 - Spaces inside a safe bare string are data except for leading and trailing structural whitespace.
 - Tabs are forbidden only in leading indentation. A tab inside a quoted string is data and uses the `\t` escape in canonical output.
 
@@ -597,14 +604,14 @@ The header determines the body grammar:
 - a non-empty block header without a field declaration has an expanded body;
 - a `[0]` block header has no body.
 
-Decoders MUST NOT infer or switch body forms from individual data lines.
+The sole exception is an array attachment beneath a tabular row: a `.field [N]` attachment without a field declaration uses a previously established shared array schema for that field when one exists (Section 7.4.5.3). Otherwise it has an expanded body. Decoders MUST NOT infer or switch body forms from individual data lines.
 
 "Losslessly tabular" means:
 
 - every element is a JSON object;
 - the complete field union contains at least one field;
 - the complete ordered field union is computed from ALL elements (not a sample);
-- each field value in every element is either a scalar or uses the attachment marker and attachment syntax defined in Section 7.4.4;
+- each field value in every element is either a scalar or uses the attachment marker and attachment syntax defined in Sections 7.4.4 and 7.4.5;
 - every field from every element is preserved in the encoding;
 - absent fields are distinguishable from null fields (Section 7.4.2).
 
@@ -675,7 +682,7 @@ When encoding values:
 
 #### 7.4.4 Nested fields in tabular rows
 
-When tabular records contain nested objects or arrays, the complete field union remains in the header and every row retains one cell per declared field. A nested value is represented by the `^` attachment marker in its cell. The attached value appears beneath the row using the same field name.
+When tabular records contain nested objects or arrays, the complete field union remains in the header and every row retains one cell per declared field. A nested value is represented by an attachment marker in its cell. Traditional attachments use the bare `^` marker, and the attached value appears beneath the row using the same field name. Inline object attachments may instead declare or reuse a positional schema as defined in Section 7.4.5.
 
 ```
 ## orders [2]{id,total,status,customer,tags}
@@ -703,16 +710,95 @@ Array attachments use the same header-to-body rules as ordinary arrays in Sectio
 
 Rules:
 
-- A row containing one or more `^` cells MUST have an `@{id}` prefix.
+- A row containing one or more `^` or `^{fields}` cells MUST have an `@{id}` prefix.
 - When present, the row ID MUST equal the row's zero-based index within the containing array.
-- Each `^` cell MUST have exactly one attachment beneath the row with the same decoded field name.
-- An attachment MUST correspond to a `^` cell. Attachments for scalar, null, or missing cells are errors.
+- Each attachment marker cell MUST have exactly one attachment body associated with the row.
+- A traditional attachment MUST appear one indentation level beneath its row, MUST use the same decoded field name as its marker cell, and MUST match a bare `^` marker.
+- An attachment MUST correspond to a `^` or `^{fields}` cell. Attachments for scalar, null, or missing cells are errors.
 - Attachment field names MUST be unique within a row.
 - A field may be scalar in one record and nested in another. The scalar record emits its scalar directly; the nested record emits `^` and an attachment.
 - Empty objects use `.field {}` with no indented members.
 - Empty arrays use `.field [0]`.
 
-Content following `@N` belongs to that item until the next `@N` at the same indentation level or until the section ends.
+Indented content following `@N` belongs to that row until the next data line at the row's indentation or until the section ends. When same-indent inline bodies are present, the decoder consumes the exact number of eligible positional attachments before treating the next same-indent line as a tabular row.
+
+#### 7.4.5 Inline object schemas and shared attachment schemas
+
+Version 3.0 adds optional schema reuse for repeated nested values in tabular arrays. Schema state is scoped to one containing tabular array and one decoded field name. It does not leak into nested arrays, sibling arrays, or later sections.
+
+##### 7.4.5.1 Inline object schema
+
+When a field is a non-null flat object with the same ordered key set in every row where that field is present, an encoder MAY encode those objects positionally:
+
+- The first row MUST contain the field with a non-null object value and MUST use `^{field1,field2,...}` to declare the ordered inline schema.
+- Subsequent rows containing a conforming object for that field use bare `^` and reuse the schema declared by the first row.
+- A subsequent row where the field is absent emits `~`. A present null value makes the field ineligible for inline schema encoding.
+- The attachment body is one pipe-delimited line containing exactly one scalar value per declared field, in declaration order.
+- The body has no `.field` prefix, `{}` marker, or `key=value` members.
+- All object values MUST be scalars. Nested objects and arrays are not eligible.
+- Every encoded object MUST have exactly the same keys in exactly the same order.
+- The object schema MUST contain at least three keys. Smaller objects use traditional attachment encoding to avoid inline-schema overhead.
+
+Example:
+
+```
+## orders [2]{id,customer,total,status}
+@0 ORD-001|^{id,name,email,phone}|109.97|shipped
+1|Alice|alice@test.com|"555-0101"
+@1 ORD-002|^|49.99|pending
+2|Bob|bob@test.com|"555-0202"
+```
+
+A decoder encountering `^{fields}` establishes the inline object schema for that field. A later bare `^` for the same field reuses that schema when matched to a positional inline attachment body. The bare `^` syntax remains valid for traditional named attachments, so the attachment body form determines which interpretation applies.
+
+Decoders MUST support traditional and inline attachments in the same row and payload.
+
+##### 7.4.5.2 Positional attachment matching and indentation
+
+An inline object attachment body MAY appear at the same indentation level as its parent row or one two-space level deeper. Encoders SHOULD use the same indentation level to minimize tokens. Traditional named attachments retain their required one-level indentation.
+
+Within a row, decoders MUST process attachment bodies in source order:
+
+- A child line beginning with `.` is a traditional attachment and is matched by decoded field name to a bare `^` marker.
+- A child line not beginning with `.` is a positional inline object attachment and is matched to the next unmatched attachment-marker cell, in header field order, that has an inline schema declared by `^{fields}` or available for reuse from an earlier row.
+- Quoted string values beginning with `.` remain positional values; the leading quote prevents them from being interpreted as traditional attachments.
+
+Every positional body MUST contain exactly the number of pipe-delimited scalar values declared by its inline schema. A positional body without an eligible marker, an eligible marker without a body, or more than one body for the same marker is an error.
+
+Mixed example:
+
+```
+## orders [1]{id,customer,items,total,status}
+@0 ORD-001|^{id,name,email,phone}|^|109.97|shipped
+1|Alice|alice@test.com|"555-0101"
+  .items [2]{sku,name,qty,price}
+    SKU-A|Widget|2|29.99
+    SKU-B|Gadget|1|49.99
+```
+
+##### 7.4.5.3 Shared array schemas
+
+When array attachments for the same field use the same tabular field declaration across rows, an encoder MAY omit the declaration after it has been established:
+
+```
+## orders [2]{id,items}
+@0 ORD-001|^
+  .items [2]{sku,name,qty,price}
+    SKU-A|Widget|2|29.99
+    SKU-B|Gadget|1|49.99
+@1 ORD-002|^
+  .items [1]
+    SKU-C|Gizmo|1|39.99
+```
+
+The first row MUST contain the field with a tabular array attachment that includes `{fields}`. This declaration establishes the shared array schema for that field. A later `.field [N]` attachment without `{fields}` uses that schema and therefore has a tabular body.
+
+An encoder MAY omit `{fields}` only when the later array's tabular field list exactly matches the established schema. If a later array is not tabular or has a different field list, the encoder MUST emit the ordinary complete attachment syntax for that value. An explicit different field declaration applies only to that attachment and does not replace the established shared schema.
+
+When a decoder encounters `.field [N]` without `{fields}`:
+
+1. If a shared array schema was established for that field by an earlier row in the same containing tabular array, parse the body as tabular using that schema.
+2. Otherwise, parse the body as an expanded array according to Section 7.6.
 
 ### 7.5 Primitive array encoding (inline)
 
@@ -806,7 +892,7 @@ IDs within expanded arrays are scoped to their containing array. Nested arrays s
 | Array of uniform objects | Tabular: header with field declaration + positional pipe-separated rows |
 | Array of primitives | Inline: `name[count]: val1,val2,val3` |
 | Array of mixed items | Expanded: `## name [count]` + `@{id}` per item with type markers |
-| Nested value in tabular row | `^` cell + matching `.field` attachment |
+| Nested value in tabular row | `^` or `^{fields}` cell + matching attachment body |
 | Null value | `-` |
 | Missing field (tabular only) | `~` |
 | Empty string | `""` |
@@ -843,6 +929,10 @@ The field declaration in tabular headers MUST follow the field union computation
 #### Container selection
 
 Canonical buffered encoders MUST select container encoding using Section 7.3 rules. The selection is deterministic: same input produces the same encoding form.
+
+#### Attachment optimization selection
+
+Inline object schemas and shared array schemas are optional encoding optimizations. An encoder that enables either optimization MUST make that choice deterministically for the same input and configuration. Traditional v2 attachment syntax remains valid v3 input and output.
 
 ### 7.12 Metadata isolation
 
@@ -1245,8 +1335,10 @@ Conforming generic-profile encoders MUST:
 - Compute the complete field union from all elements for tabular encoding (Section 7.4.3)
 - Emit `-` for null values and `~` for absent fields in tabular rows
 - NOT emit `~` outside tabular row cells
-- Emit `^` for nested values in tabular rows and exactly one matching attachment
-- NOT emit `^` outside tabular row cells
+- Emit `^` or `^{fields}` for nested values in tabular rows and exactly one matching attachment body
+- NOT emit attachment markers outside tabular row cells
+- When using inline object schemas, declare the schema on the first row and emit exactly one positional scalar body per inline attachment
+- Omit an array attachment field declaration only when an identical shared schema was established for that field by an earlier row
 - Select array encoding form per Section 7.3
 - Emit primitive arrays inline as `name[count]: val1,val2,val3`
 - Quote primitive array elements containing commas
@@ -1254,7 +1346,7 @@ Conforming generic-profile encoders MUST:
 - Use expanded per-item form (Section 7.6) for arrays containing mixed element types
 - Emit root scalars as `=value`
 - Emit root arrays with an anonymous `## [N]` header
-- Use exactly two-space indentation per nesting level
+- Use exactly two-space indentation per nesting level, except that inline object attachment bodies SHOULD appear at their parent row's indentation
 - Produce deterministic output
 - NOT emit trailing whitespace on any line
 
@@ -1289,7 +1381,9 @@ Conforming generic-profile decoders MUST:
 - Interpret `~` as absent (in tabular rows only)
 - Reject `~` outside tabular row cells
 - Interpret `^` as a nested-value attachment reference in tabular rows
-- Reject `^` outside tabular row cells or without exactly one matching attachment
+- Parse `^{fields}` as an inline object schema declaration in a tabular row cell
+- Reuse a previously declared field-scoped inline schema when a bare `^` is matched to a positional inline attachment
+- Reject attachment markers outside tabular row cells or without exactly one matching attachment body
 - Interpret `true` and `false` as booleans
 - Parse bare tokens not matching the above as strings
 - Parse keys using the common key grammar (Section 2a), supporting both bare and quoted forms
@@ -1298,7 +1392,11 @@ Conforming generic-profile decoders MUST:
 - Split tabular rows on pipe (`|`) outside quoted strings
 - Split primitive array values on comma (`,`) outside quoted strings
 - Validate row value count against field count in the header
-- Parse `.field` attachment lines as nested object or array values
+- Parse `.field` attachment lines as traditional nested object or array values
+- Accept positional inline attachment bodies at the parent row's indentation or one level beneath it
+- Match positional inline attachment bodies to eligible attachment-marker cells in field order
+- Use a previously established field-scoped array schema when `.field [N]` omits `{fields}`; otherwise parse it as expanded form
+- Ignore `[` and `]` characters inside quoted strings when locating array count brackets
 - Parse `@{id}` prefixes on rows with nested fields
 - Parse expanded per-item scalar, object, and array markers (`=`, `{}`, `[N]`)
 - Parse a leading `=` line as a root scalar
@@ -1330,7 +1428,7 @@ A conforming decoder operates in strict mode. There is no lenient or permissive 
 | Invalid escape | Escape sequence not in the defined set (Section 2.2) |
 | Trailing characters | Characters after closing quote of a quoted scalar |
 | Invalid missing | `~` token outside a tabular row cell |
-| Invalid attachment marker | `^` token outside a tabular row cell |
+| Invalid attachment marker | `^` or `^{fields}` token outside a tabular row cell, or malformed inline field declaration |
 | Invalid surrogate | Literal surrogate, isolated escaped surrogate, or malformed surrogate pair |
 | Invalid UTF-8 | Input contains a malformed UTF-8 byte sequence |
 
@@ -1346,9 +1444,11 @@ A conforming decoder operates in strict mode. There is no lenient or permissive 
 | Tab indentation | Leading whitespace contains tab characters |
 | Invalid indent | Indentation increases by more than one level |
 | Invalid item ID | Expanded item ID or present tabular row ID does not equal its zero-based item index |
-| Orphan attachment | `.field` without a parent `@N` row and matching `^` cell |
-| Missing attachment | `^` cell has no matching `.field` attachment |
+| Orphan attachment | `.field` without a parent `@N` row and matching bare `^` cell |
+| Orphan inline attachment | Positional inline body has no eligible attachment-marker cell |
+| Missing attachment | Attachment-marker cell has no matching named or positional body |
 | Duplicate attachment | More than one attachment targets the same field in one row |
+| Inline width mismatch | Positional inline body value count does not match its declared inline schema |
 
 #### Graph profile errors
 
@@ -1361,7 +1461,7 @@ A conforming decoder operates in strict mode. There is no lenient or permissive 
 | Unknown edge reference | Edge references a symbol ID not declared earlier |
 | Malformed delta | Delta payload uses an unknown section or a line form invalid for its section |
 
-The tables above define **30 strict-mode error conditions** across 4 categories (header, scalar, structural, graph). A decoder that accepts any of these conditions is non-conforming.
+The tables above define the strict-mode error conditions across 4 categories (header, scalar, structural, graph). A decoder that accepts any of these conditions is non-conforming.
 
 Decoders MAY issue warnings (without rejecting) for:
 
@@ -1405,11 +1505,15 @@ This specification follows a three-stage lifecycle:
 | **Stable** | The grammar is frozen. No breaking changes. Additive extensions only. Implementations may depend on stability for production use. |
 | **Frozen** | No changes of any kind. The specification is archived. |
 
-Current status: **Stable** (designated 2026-06-10 after cross-language conformance verification across 6 implementations).
+Current status: **Stable** (v3.0 designated 2026-06-12).
 
 ### 19.3 Version history
 
-This specification (v2.0) replaces all prior versions (v1.0 through v1.4). Prior versions are considered pre-stable development and are not supported. Implementations MUST NOT maintain backward compatibility with pre-v2.0 encoding behavior.
+This specification (v3.0) supersedes v2.0 and adds inline object schemas, positional inline attachment bodies, shared array attachment schemas, and expanded quoting protections. The graph profile is unchanged.
+
+The v2.0 generic syntax is a valid subset of v3.0. V3 decoders MUST accept conforming v2.0 generic payloads without requiring a compatibility mode. Encoders emit the v3 grammar and are not required to expose a v2 fallback mode.
+
+Versions v1.0 through v1.4 are considered pre-stable development and are not supported. Implementations MUST NOT maintain backward compatibility with pre-v2.0 encoding behavior.
 
 ## 20. Internationalization
 

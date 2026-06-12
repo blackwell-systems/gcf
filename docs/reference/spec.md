@@ -8,27 +8,22 @@ It covers:
 - **Terminology and Conventions** (MUST/SHALL/SHOULD/MAY semantics)
 
 1. **Overview** (two profiles, design goals)
-2. **Grammar** (EBNF, both graph and generic profiles)
-3. **Header fields** (required and optional, graph profile)
-4. **Node line format** (positional encoding, graph profile)
-5. **Edge line format** (local ID references, graph profile)
-6. **Group headers** (distance-based sections, graph profile)
-6a. **Tabular encoding** (generic profile: arrays, nested records, pipe rows, primitive array inlining, value encoding rules)
-6b. **Streaming encoding extension** (deferred counts `[?]`, `##! summary` trailer, zero-buffering encode)
-7. **Session statefulness** (bare reference protocol)
-8. **Delta encoding extension** (three-outcome protocol)
-9. **Comments**
-10. **Token savings analysis** (both graph and generic profiles)
-11. **Design constraints** (text-only, line-oriented, deterministic, shallow nesting)
-12. **Conformance** (encoder/decoder checklists for both profiles, decoder error taxonomy with 14 normative error conditions)
-13. **Security considerations** (injection, memory exhaustion, sanitization)
-14. **MIME type** (`application/vnd.gcf+text`, file extension `.gcf`)
-15. **Versioning** (GCF, GCF2, GCF3, ...)
-16. **Intellectual property** (MIT, no patents)
+2. **Common scalar and key grammar**
+3. **Header fields**
+4. **Formal grammar and indentation**
+5-6a. **Graph profile** (nodes, edges, group headers)
+7. **Generic profile** (tabular encoding, inline object schemas, shared attachment schemas, expanded arrays)
+8. **Streaming encoding extension**
+9. **Session statefulness**
+10. **Delta encoding extension**
+11-13. **Comments, implementation limits, and count validation**
+14-15. **Token analysis and design constraints**
+16. **Conformance** (encoder/decoder checklists and strict error taxonomy)
+17-21. **Security, MIME type, versioning, internationalization, and intellectual property**
 
 ## Version
 
-Current: **GCF v2.0** (stable, 2026-06-10)
+Current: **GCF v3.0** (stable, 2026-06-12)
 
 ## Conventions
 
@@ -38,8 +33,8 @@ The specification uses [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119) keywor
 
 GCF supports two encoding profiles that share the same grammar primitives (`##` headers, `@` IDs, positional fields):
 
-- **Graph profile** (Sections 3-6): Encodes code graph payloads (symbols, edges, distance groups) for MCP tool responses.
-- **Generic profile** (Section 6a): Encodes arbitrary structured data (arrays of objects, nested records, mixed types) using positional rows and pipe separators.
+- **Graph profile** (Sections 4-6a): Encodes code graph payloads (symbols, edges, distance groups) for MCP tool responses.
+- **Generic profile** (Section 7): Encodes arbitrary structured data using positional rows, inline object schemas, shared array schemas, and expanded forms.
 
 Implementations MAY support one or both profiles. All six official implementations (Go, TypeScript, Python, Rust, Swift, Kotlin) support both.
 
@@ -48,17 +43,17 @@ Implementations MAY support one or both profiles. All six official implementatio
 The specification defines conformance requirements in three areas:
 
 **Encoder checklists:**
-- Graph encoder (Section 12.1): header format, ID assignment, score formatting, edge validation, determinism
-- Tabular encoder (Section 12.2): header counts, pipe separators, positional encoding, null handling, value quoting
+- Graph encoder (Section 16.1): header format, ID assignment, score formatting, edge validation, determinism
+- Generic encoder (Section 16.2): container selection, positional attachments, schema reuse, null handling, and quoting
 
 **Decoder checklists:**
-- Graph decoder (Section 12.3): header parsing, node/edge parsing, kind expansion, error handling
-- Tabular decoder (Section 12.4): header parsing, row splitting, field validation
+- Graph decoder (Section 16.3): header parsing, node/edge parsing, kind expansion, error handling
+- Generic decoder (Section 16.4): scalar parsing, inline attachment matching, shared schemas, and field validation
 
-**Decoder error taxonomy** (Section 12.5): 14 normative error conditions that decoders MUST reject, including invalid headers, unknown edge references, row width mismatches, and unterminated quotes.
+**Decoder error taxonomy** (Section 16.5): normative conditions that decoders MUST reject, including invalid headers, orphan attachments, width mismatches, and unterminated quotes.
 
-The v2 contract is covered by [141 conformance fixtures](https://github.com/blackwell-systems/gcf/tree/main/tests/conformance) across both profiles, streaming, and normative decoder errors.
+Conformance fixtures live in [tests/conformance](https://github.com/blackwell-systems/gcf/tree/main/tests/conformance).
 
 ## Stability guarantee
 
-**Stable** (designated 2026-06-10). The wire format will not change in backwards-incompatible ways. Six implementations at v1.0.0+, 141 conformance fixtures, 200M+ lossless round-trips verified, cross-language matrix passing. Existing v1.x payloads continue to parse correctly with v2.0 decoders.
+**Stable** (v3.0 designated 2026-06-12). The v2.0 generic grammar is a valid subset of v3.0, and v3 decoders accept conforming v2 payloads without a separate compatibility mode. The graph profile and `GCF profile=generic` header are unchanged.

@@ -1,0 +1,28 @@
+{
+  "description": "Nested object with 3+ fields uses ^{fields} inline schema on first row, bare ^ on subsequent",
+  "expected": "GCF profile=generic\n## orders [2]{customer,id,total}\n@0 ^{email,name,tier}|1|99.99\nalice@test.com|Alice|premium\n@1 ^|2|49.99\nbob@test.com|Bob|standard\n",
+  "input": {
+    "orders": [
+      {
+        "customer": {
+          "email": "alice@test.com",
+          "name": "Alice",
+          "tier": "premium"
+        },
+        "id": 1,
+        "total": 99.99
+      },
+      {
+        "customer": {
+          "email": "bob@test.com",
+          "name": "Bob",
+          "tier": "standard"
+        },
+        "id": 2,
+        "total": 49.99
+      }
+    ]
+  },
+  "name": "basic_inline_object_schema",
+  "operation": "encode"
+}

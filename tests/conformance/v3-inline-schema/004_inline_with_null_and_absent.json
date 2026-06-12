@@ -1,0 +1,26 @@
+{
+  "description": "Inline schema handles null values within the object and absent fields across rows",
+  "expected": "GCF profile=generic\n## users [2]{id,profile}\n@0 1|^{bio,name,role}\n-|Alice|admin\n@1 2|^\nDeveloper|Bob|user\n",
+  "input": {
+    "users": [
+      {
+        "id": 1,
+        "profile": {
+          "bio": null,
+          "name": "Alice",
+          "role": "admin"
+        }
+      },
+      {
+        "id": 2,
+        "profile": {
+          "bio": "Developer",
+          "name": "Bob",
+          "role": "user"
+        }
+      }
+    ]
+  },
+  "name": "inline_schema_with_null_and_absent",
+  "operation": "encode"
+}

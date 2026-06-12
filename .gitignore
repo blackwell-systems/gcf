@@ -2,3 +2,4 @@ docs/node_modules/
 .claude/
 .DS_Store
 database.db
+INTERNAL-*.md

@@ -1,0 +1,23 @@
+{
+  "description": "Inline schema not used when first row does not have the field (decoder needs ^{} on row 0)",
+  "expected": "GCF profile=generic\n## items [2]{id,total,meta}\n1|50|~\n@1 2|75|^\n.meta {}\n    region=us-east\n    source=api\n    version=\"2.1\"\n",
+  "input": {
+    "items": [
+      {
+        "id": 1,
+        "total": 50
+      },
+      {
+        "id": 2,
+        "meta": {
+          "region": "us-east",
+          "source": "api",
+          "version": "2.1"
+        },
+        "total": 75
+      }
+    ]
+  },
+  "name": "no_inline_when_first_row_missing_field",
+  "operation": "encode"
+}

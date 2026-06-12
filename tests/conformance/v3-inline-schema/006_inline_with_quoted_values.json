@@ -1,0 +1,26 @@
+{
+  "description": "Inline schema values requiring quoting (pipes, commas, special strings)",
+  "expected": "GCF profile=generic\n## records [2]{id,meta}\n@0 1|^{flag,note,tag}\n\"true\"|\"hello, world\"|\"a|b\"\n@1 2|^\n\"false\"|\"-\"|c\n",
+  "input": {
+    "records": [
+      {
+        "id": 1,
+        "meta": {
+          "flag": "true",
+          "note": "hello, world",
+          "tag": "a|b"
+        }
+      },
+      {
+        "id": 2,
+        "meta": {
+          "flag": "false",
+          "note": "-",
+          "tag": "c"
+        }
+      }
+    ]
+  },
+  "name": "inline_schema_quoted_values",
+  "operation": "encode"
+}
