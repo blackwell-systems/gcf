@@ -19,7 +19,7 @@
 
 ---
 
-**79% fewer input tokens than JSON. 63% fewer output tokens. 90.7% comprehension accuracy across 10 models and 3 providers. Proven lossless: `decode(encode(value)) == value` for every JSON value, verified across 200M+ round-trips. Zero training required.**
+**79% fewer input tokens than JSON. 63% fewer output tokens. 90.7% comprehension accuracy across 10 models and 3 providers. Proven lossless: `decode(encode(value)) == value` for every JSON value, verified across 1B+ round-trips. Zero training required.**
 
 Encode any JSON payload as GCF before sending it to an LLM. Arrays, nested objects, key-value pairs, mixed types. The model reads it natively with zero format instructions. `decode()` converts back to JSON when a human needs to see it. Your existing JSON schemas and validators work on the decoded output unchanged.
 
@@ -40,7 +40,7 @@ pip install gcf-proxy
 
 ## Benchmarks
 
-1,300+ LLM evaluations across 10 models, 3 providers, and 51 independent test runs.
+1,700+ LLM evaluations across 10 models, 3 providers, and 51 independent test runs.
 
 | | GCF | TOON | JSON |
 |---|---|---|---|
@@ -49,7 +49,7 @@ pip install gcf-proxy
 | **Input tokens** (500 symbols) | **11,090** | 16,378 | 53,341 |
 | **Output tokens** (100 symbols) | **5,976** | 8,937 | 16,121 |
 
-GCF wins all 6 datasets on [TOON's own benchmark](https://github.com/blackwell-systems/toon/tree/gcf-comparison). Full results: [gcformat.com/guide/benchmarks](https://gcformat.com/guide/benchmarks.html)
+GCF wins 13/15 datasets on the expanded [token efficiency benchmark](https://github.com/blackwell-systems/toon/tree/gcf-comparison). Full results: [gcformat.com/guide/benchmarks](https://gcformat.com/guide/benchmarks.html)
 
 ---
 
@@ -75,7 +75,7 @@ GCF profile=generic
 3|Carol|Marketing|85000
 ```
 
-One header declares field names. Rows are positional values only. No field names repeated per record. Lossless: `decode(encode(value)) == value` for every JSON value, proven across 200M+ random round-trips and 7.9M fuzz executions.
+One header declares field names. Rows are positional values only. No field names repeated per record. Lossless: `decode(encode(value)) == value` for every JSON value, proven across 1B+ random round-trips and 7.9M fuzz executions.
 
 ### Graph profile (code intelligence, knowledge graphs, MCP tools)
 
