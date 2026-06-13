@@ -21,6 +21,12 @@ const models = [
   { name: 'Grok 4.20', input: 2.00, output: 6.00, provider: 'xAI' },
   { name: 'Grok 4.3', input: 1.25, output: 2.50, provider: 'xAI' },
   { name: 'Grok 4.1 Fast', input: 0.20, output: 0.50, provider: 'xAI' },
+  { name: 'Mistral Large 3', input: 0.50, output: 1.50, provider: 'Mistral' },
+  { name: 'Mistral Medium 3', input: 0.40, output: 2.00, provider: 'Mistral' },
+  { name: 'Mistral Small 4', input: 0.15, output: 0.60, provider: 'Mistral' },
+  { name: 'Kimi 2.6', input: 0.95, output: 4.00, provider: 'Moonshot' },
+  { name: 'Kimi K2.5', input: 0.60, output: 3.00, provider: 'Moonshot' },
+  { name: 'Qwen 3.5 397B', input: 0.60, output: 3.60, provider: 'Alibaba' },
   { name: 'DeepSeek V3', input: 0.27, output: 1.10, provider: 'DeepSeek' },
 ]
 
@@ -94,243 +100,237 @@ function formatCurrencyMonth(n: number): string {
 
 <template>
   <div class="calculator">
-    <h2>Real-World Cost Savings</h2>
-    <p class="subtitle">Calculate your savings based on actual measured token counts from production payloads.</p>
+    <h1 class="hero-title">Real-World Cost Savings</h1>
+    <p class="subtitle">Calculate your savings with GCF based on your usage</p>
 
-    <div class="params">
-      <div class="param">
-        <label>Records per Query</label>
-        <input type="range" v-model.number="records" min="100" max="2000" step="100" />
-        <span class="value">{{ records.toLocaleString() }}</span>
-      </div>
+    <div class="layout">
+      <div class="left">
+        <h3>Your Parameters</h3>
 
-      <div class="param">
-        <label>Queries per Day</label>
-        <input type="range" v-model.number="queriesPerDay" min="100" max="100000" step="100" />
-        <span class="value">{{ queriesPerDay.toLocaleString() }}</span>
-      </div>
-
-      <div class="param">
-        <label>Model</label>
-        <select v-model.number="selectedModel" class="model-select" @change="useCustom = false">
-          <option v-for="(m, i) in models" :key="i" :value="i">{{ m.name }} ({{ m.provider }}) — ${{ m.input }}/MTok in</option>
-        </select>
-      </div>
-
-      <div class="param">
-        <label>Custom $/MTok <input type="checkbox" v-model="useCustom" /></label>
-        <input type="range" v-model.number="customCost" min="0.1" max="50" step="0.1" :disabled="!useCustom" />
-        <span class="value" :style="{ opacity: useCustom ? 1 : 0.4 }">${{ customCost.toFixed(2) }}</span>
-      </div>
-
-      <div class="param">
-        <label>Session Call # (GCF dedup)</label>
-        <input type="range" v-model.number="sessionCalls" min="1" max="5" step="1" />
-        <span class="value">Call {{ sessionCalls }}{{ sessionCalls >= 5 ? '+' : '' }}</span>
-      </div>
-    </div>
-
-    <div class="tokens-per-query">
-      <h3>Tokens per query</h3>
-      <div class="token-row gcf">
-        <span class="label">GCF{{ sessionCalls > 1 ? ' (with session dedup)' : '' }}</span>
-        <span class="count">{{ tokensPerQuery.gcf.toLocaleString() }}</span>
-      </div>
-      <div class="token-row toon">
-        <span class="label">TOON</span>
-        <span class="count">{{ tokensPerQuery.toon.toLocaleString() }}</span>
-      </div>
-      <div class="token-row json">
-        <span class="label">JSON</span>
-        <span class="count">{{ tokensPerQuery.json.toLocaleString() }}</span>
-      </div>
-    </div>
-
-    <div class="savings">
-      <h3>Annual Savings with GCF</h3>
-      <div class="savings-grid">
-        <div class="saving-card vs-json">
-          <div class="amount">{{ formatCurrency(annualSavings.vsJson) }}</div>
-          <div class="versus">vs JSON</div>
+        <div class="param">
+          <div class="param-header"><label>Records per Query</label><span class="value">{{ records.toLocaleString() }}</span></div>
+          <input type="range" v-model.number="records" min="100" max="10000" step="100" />
+          <div class="param-range"><span>100</span><span>10,000</span></div>
         </div>
-        <div class="saving-card vs-toon">
-          <div class="amount">{{ formatCurrency(annualSavings.vsToon) }}</div>
-          <div class="versus">vs TOON</div>
+
+        <div class="param">
+          <div class="param-header"><label>Queries per Day</label><span class="value">{{ queriesPerDay.toLocaleString() }}</span></div>
+          <input type="range" v-model.number="queriesPerDay" min="10" max="1000000" step="10" />
+          <div class="param-range"><span>10</span><span>1,000,000</span></div>
+        </div>
+
+        <div class="param">
+          <div class="param-header"><label>Model</label></div>
+          <select v-model.number="selectedModel" class="model-select" @change="useCustom = false">
+            <option v-for="(m, i) in models" :key="i" :value="i">{{ m.name }} ({{ m.provider }}) — ${{ m.input }}/MTok</option>
+          </select>
+        </div>
+
+        <div class="param">
+          <div class="param-header"><label>Custom $/MTok <input type="checkbox" v-model="useCustom" /></label><span class="value" :style="{ opacity: useCustom ? 1 : 0.4 }">${{ customCost.toFixed(2) }}</span></div>
+          <input type="range" v-model.number="customCost" min="0.1" max="50" step="0.1" :disabled="!useCustom" />
+        </div>
+
+        <div class="param">
+          <div class="param-header"><label>Session Call # (GCF dedup)</label><span class="value">Call {{ sessionCalls }}{{ sessionCalls >= 5 ? '+' : '' }}</span></div>
+          <input type="range" v-model.number="sessionCalls" min="1" max="5" step="1" />
+          <div class="param-range"><span>1 (first call)</span><span>5+ (warm session)</span></div>
+        </div>
+
+        <div class="token-stats">
+          <div>Tokens per query (GCF): <strong>{{ tokensPerQuery.gcf.toLocaleString() }}</strong></div>
+          <div>Tokens per query (TOON): <strong>{{ tokensPerQuery.toon.toLocaleString() }}</strong></div>
+          <div>Tokens per query (JSON): <strong>{{ tokensPerQuery.json.toLocaleString() }}</strong></div>
         </div>
       </div>
-    </div>
 
-    <div class="monthly">
-      <h3>Monthly Cost</h3>
-      <div class="monthly-grid">
-        <div class="monthly-card gcf">
-          <div class="format-name">GCF</div>
-          <div class="cost">{{ formatCurrencyMonth(monthlyCost.gcf) }}</div>
-          <div class="tokens">{{ monthlyTokens.gcf }}M tokens</div>
+      <div class="right">
+        <div class="annual-savings">
+          <div class="annual-label">ANNUAL SAVINGS WITH GCF</div>
+          <div class="annual-amount vs-json">{{ formatCurrency(annualSavings.vsJson) }}</div>
+          <div class="annual-versus">vs JSON</div>
+          <div class="annual-amount vs-toon">{{ formatCurrency(annualSavings.vsToon) }}</div>
+          <div class="annual-versus">vs TOON</div>
         </div>
-        <div class="monthly-card toon">
-          <div class="format-name">TOON</div>
-          <div class="cost">{{ formatCurrencyMonth(monthlyCost.toon) }}</div>
-          <div class="tokens">{{ monthlyTokens.toon }}M tokens</div>
+
+        <div class="monthly-grid">
+          <div class="monthly-card gcf">
+            <div class="format-name">GCF</div>
+            <div class="cost">{{ formatCurrencyMonth(monthlyCost.gcf) }}</div>
+            <div class="per">per month</div>
+          </div>
+          <div class="monthly-card toon">
+            <div class="format-name">TOON</div>
+            <div class="cost">{{ formatCurrencyMonth(monthlyCost.toon) }}</div>
+            <div class="per">per month</div>
+          </div>
+          <div class="monthly-card json">
+            <div class="format-name">JSON</div>
+            <div class="cost">{{ formatCurrencyMonth(monthlyCost.json) }}</div>
+            <div class="per">per month</div>
+          </div>
         </div>
-        <div class="monthly-card json">
-          <div class="format-name">JSON</div>
-          <div class="cost">{{ formatCurrencyMonth(monthlyCost.json) }}</div>
-          <div class="tokens">{{ monthlyTokens.json }}M tokens</div>
+
+        <div class="monthly-tokens">
+          <h4>Monthly Token Usage</h4>
+          <div class="token-line"><span>GCF:</span><strong>{{ monthlyTokens.gcf }}M</strong></div>
+          <div class="token-line"><span>TOON:</span><strong>{{ monthlyTokens.toon }}M</strong></div>
+          <div class="token-line"><span>JSON:</span><strong>{{ monthlyTokens.json }}M</strong></div>
         </div>
       </div>
     </div>
 
     <div class="note">
-      <p><strong>Data source:</strong> Token counts measured from actual 500/1000-order nested payloads (customers, items, addresses) using o200k_base tokenizer. GCF session dedup compounds savings across multi-turn agent sessions. TOON and JSON have no session mechanism and retransmit everything on every call.</p>
-      <p><strong>At 1,000 records on 200K context models:</strong> JSON (161K tokens) doesn't fit. TOON (84K) exceeds effective limits on some models. GCF (47K) always fits.</p>
+      <p><strong>Data source:</strong> Token counts measured from actual 500/1000-order nested payloads using o200k_base tokenizer. GCF session dedup compounds savings across multi-turn agent sessions. TOON and JSON retransmit everything on every call.</p>
     </div>
   </div>
 </template>
 
 <style scoped>
 .calculator {
-  max-width: 700px;
+  max-width: 1000px;
   margin: 2rem auto;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
-h2 {
-  font-size: 1.8rem;
+.hero-title {
+  font-size: 2.4rem;
+  font-weight: 800;
+  text-align: center;
   margin-bottom: 0.25rem;
 }
 
 .subtitle {
   color: var(--vp-c-text-2);
-  margin-bottom: 2rem;
+  text-align: center;
+  margin-bottom: 2.5rem;
 }
 
-.params {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-  margin-bottom: 2rem;
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.left, .right {
   padding: 1.5rem;
   background: var(--vp-c-bg-soft);
-  border-radius: 8px;
+  border-radius: 12px;
+}
+
+.left h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
 }
 
 .param {
+  margin-bottom: 1.25rem;
+}
+
+.param-header {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 1rem;
+  margin-bottom: 0.4rem;
 }
 
 .param label {
-  min-width: 200px;
   font-weight: 600;
   font-size: 0.9rem;
 }
 
-.param input[type="range"] {
-  flex: 1;
-  accent-color: #2563eb;
-}
-
-.model-select {
-  flex: 1;
-  padding: 0.4rem 0.75rem;
-  border-radius: 6px;
-  border: 1px solid var(--vp-c-divider);
-  background: var(--vp-c-bg);
-  font-size: 0.9rem;
-  color: var(--vp-c-text-1);
-}
-
 .param .value {
-  min-width: 80px;
-  text-align: right;
   font-weight: 700;
   font-size: 0.95rem;
 }
 
-.tokens-per-query {
-  margin-bottom: 2rem;
+.param input[type="range"] {
+  width: 100%;
+  accent-color: #2563eb;
 }
 
-.tokens-per-query h3 {
+.param-range {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--vp-c-text-3);
+  margin-top: 0.2rem;
+}
+
+.model-select {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid var(--vp-c-divider);
+  background: var(--vp-c-bg);
+  font-size: 0.85rem;
+  color: var(--vp-c-text-1);
+}
+
+.token-stats {
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--vp-c-text-2);
+  line-height: 1.8;
+}
+
+.annual-savings {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.annual-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--vp-c-text-2);
   margin-bottom: 0.75rem;
 }
 
-.token-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  margin-bottom: 0.4rem;
-}
-
-.token-row.gcf { background: rgba(37, 99, 235, 0.1); }
-.token-row.toon { background: rgba(245, 158, 11, 0.1); }
-.token-row.json { background: rgba(107, 114, 128, 0.1); }
-
-.token-row .label { font-weight: 600; }
-.token-row .count { font-weight: 700; font-family: "SF Mono", monospace; }
-
-.savings {
-  margin-bottom: 2rem;
-}
-
-.savings-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
-
-.saving-card {
-  padding: 1.5rem;
-  border-radius: 8px;
-  text-align: center;
-}
-
-.saving-card.vs-json {
-  background: rgba(34, 197, 94, 0.1);
-  border: 1px solid rgba(34, 197, 94, 0.3);
-}
-
-.saving-card.vs-toon {
-  background: rgba(37, 99, 235, 0.1);
-  border: 1px solid rgba(37, 99, 235, 0.3);
-}
-
-.saving-card .amount {
-  font-size: 2rem;
+.annual-amount {
   font-weight: 800;
+  margin-bottom: 0.25rem;
+}
+
+.annual-amount.vs-json {
+  font-size: 2.8rem;
   color: #22c55e;
 }
 
-.saving-card.vs-toon .amount {
+.annual-amount.vs-toon {
+  font-size: 1.8rem;
   color: #2563eb;
+  margin-top: 1rem;
 }
 
-.saving-card .versus {
+.annual-versus {
   font-size: 0.85rem;
   color: var(--vp-c-text-2);
-  margin-top: 0.25rem;
 }
 
 .monthly-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 1rem;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
 }
 
 .monthly-card {
-  padding: 1.25rem;
+  padding: 1rem;
   border-radius: 8px;
   text-align: center;
-  background: var(--vp-c-bg-soft);
+  background: var(--vp-c-bg);
 }
 
 .monthly-card .format-name {
   font-weight: 700;
-  font-size: 0.85rem;
-  margin-bottom: 0.5rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.4rem;
 }
 
 .monthly-card.gcf .format-name { color: #2563eb; }
@@ -338,14 +338,33 @@ h2 {
 .monthly-card.json .format-name { color: #6b7280; }
 
 .monthly-card .cost {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   font-weight: 800;
 }
 
-.monthly-card .tokens {
-  font-size: 0.8rem;
-  color: var(--vp-c-text-2);
-  margin-top: 0.25rem;
+.monthly-card .per {
+  font-size: 0.75rem;
+  color: var(--vp-c-text-3);
+}
+
+.monthly-tokens {
+  padding: 1rem;
+  background: var(--vp-c-bg);
+  border-radius: 8px;
+}
+
+.monthly-tokens h4 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.token-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  padding: 0.25rem 0;
+  font-family: "SF Mono", "Fira Code", monospace;
 }
 
 .note {
@@ -353,18 +372,16 @@ h2 {
   padding: 1rem 1.25rem;
   background: var(--vp-c-bg-soft);
   border-radius: 8px;
-  font-size: 0.85rem;
-  color: var(--vp-c-text-2);
+  font-size: 0.8rem;
+  color: var(--vp-c-text-3);
 }
 
 .note p {
   margin: 0.5rem 0;
 }
 
-@media (max-width: 600px) {
-  .param { flex-wrap: wrap; }
-  .param label { min-width: 100%; }
-  .savings-grid { grid-template-columns: 1fr; }
+@media (max-width: 768px) {
+  .layout { grid-template-columns: 1fr; }
   .monthly-grid { grid-template-columns: 1fr; }
 }
 </style>
