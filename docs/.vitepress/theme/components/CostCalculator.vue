@@ -4,6 +4,7 @@ import { ref, computed } from 'vue'
 const records = ref(500)
 const queriesPerDay = ref(1000)
 const sessionCalls = ref(1)
+const showTokens = ref(false)
 
 const models = [
   { name: 'Claude Mythos 5', input: 10.00, output: 50.00, provider: 'Anthropic' },
@@ -30,41 +31,28 @@ const models = [
   { name: 'DeepSeek V3', input: 0.27, output: 1.10, provider: 'DeepSeek' },
 ]
 
-const selectedModel = ref(2) // Claude Sonnet 4.6 default
+const selectedModel = ref(4) // Claude Sonnet 4.6 default
 const customCost = ref(0)
 const useCustom = ref(false)
 const costPerMillion = computed(() => useCustom.value ? customCost.value : models[selectedModel.value].input)
 
-// Token data from real eval measurements
-// These are actual measured values, not estimates
 const tokensPerQuery = computed(() => {
   const r = records.value
-  // Linear interpolation from measured data points:
-  // 500 orders: GCF 23,653 / TOON 42,151 / JSON 80,653
-  // 1000 orders: GCF 47,000 / TOON 84,000 / JSON 161,000
   const ratio = r / 500
   const gcfBase = Math.round(23653 * ratio)
   const toonBase = Math.round(42151 * ratio)
   const jsonBase = Math.round(80653 * ratio)
 
-  // Apply session dedup for GCF (compounding savings)
-  // Call 1: 100%, Call 2: 35%, Call 3: 20%, Call 4: 12%, Call 5+: 8%
   const sessionMultipliers = [1.0, 0.35, 0.20, 0.12, 0.08]
   const sessIdx = Math.min(sessionCalls.value - 1, 4)
   const gcfWithSession = Math.round(gcfBase * sessionMultipliers[sessIdx])
 
-  return {
-    gcf: gcfWithSession,
-    toon: toonBase,
-    json: jsonBase,
-  }
+  return { gcf: gcfWithSession, toon: toonBase, json: jsonBase }
 })
 
 const monthlyCost = computed(() => {
-  const dailyQueries = queriesPerDay.value
-  const monthlyQueries = dailyQueries * 30
+  const monthlyQueries = queriesPerDay.value * 30
   const cpm = costPerMillion.value
-
   return {
     gcf: (tokensPerQuery.value.gcf * monthlyQueries / 1_000_000) * cpm,
     toon: (tokensPerQuery.value.toon * monthlyQueries / 1_000_000) * cpm,
@@ -72,23 +60,18 @@ const monthlyCost = computed(() => {
   }
 })
 
-const annualSavings = computed(() => {
-  return {
-    vsJson: (monthlyCost.value.json - monthlyCost.value.gcf) * 12,
-    vsToon: (monthlyCost.value.toon - monthlyCost.value.gcf) * 12,
-  }
-})
+const annualSavings = computed(() => ({
+  vsJson: (monthlyCost.value.json - monthlyCost.value.gcf) * 12,
+  vsToon: (monthlyCost.value.toon - monthlyCost.value.gcf) * 12,
+}))
 
-const pctSaved = computed(() => {
-  return {
-    vsJson: monthlyCost.value.json > 0 ? Math.round((1 - monthlyCost.value.gcf / monthlyCost.value.json) * 100) : 0,
-    vsToon: monthlyCost.value.toon > 0 ? Math.round((1 - monthlyCost.value.gcf / monthlyCost.value.toon) * 100) : 0,
-  }
-})
+const pctSaved = computed(() => ({
+  vsJson: monthlyCost.value.json > 0 ? Math.round((1 - monthlyCost.value.gcf / monthlyCost.value.json) * 100) : 0,
+  vsToon: monthlyCost.value.toon > 0 ? Math.round((1 - monthlyCost.value.gcf / monthlyCost.value.toon) * 100) : 0,
+}))
 
 const monthlyTokens = computed(() => {
-  const dailyQueries = queriesPerDay.value
-  const monthlyQueries = dailyQueries * 30
+  const monthlyQueries = queriesPerDay.value * 30
   return {
     gcf: (tokensPerQuery.value.gcf * monthlyQueries / 1_000_000).toFixed(1),
     toon: (tokensPerQuery.value.toon * monthlyQueries / 1_000_000).toFixed(1),
@@ -96,23 +79,30 @@ const monthlyTokens = computed(() => {
   }
 })
 
-function formatCurrency(n: number): string {
-  return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })
-}
+// Bar widths relative to JSON (always 100%)
+const barWidth = computed(() => {
+  const j = monthlyCost.value.json
+  if (j === 0) return { json: 100, toon: 100, gcf: 100 }
+  return {
+    json: 100,
+    toon: Math.round((monthlyCost.value.toon / j) * 100),
+    gcf: Math.round((monthlyCost.value.gcf / j) * 100),
+  }
+})
 
-function formatCurrencyMonth(n: number): string {
+function formatCurrency(n: number): string {
   return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })
 }
 </script>
 
 <template>
   <div class="calculator">
-    <h1 class="hero-title">Real-World Cost Savings</h1>
-    <p class="subtitle">Calculate your savings with GCF based on your usage</p>
+    <h1 class="hero-title">How much is JSON costing you?</h1>
+    <p class="subtitle">Plug in your numbers. See what you could save.</p>
 
     <div class="layout">
       <div class="left">
-        <h3>Your Parameters</h3>
+        <h3>Your Pipeline</h3>
 
         <div class="param">
           <div class="param-header"><label>Records per Query</label><input type="number" class="number-input" v-model.number="records" min="1" max="100000" /></div>
@@ -143,52 +133,65 @@ function formatCurrencyMonth(n: number): string {
           <input type="range" v-model.number="sessionCalls" min="1" max="5" step="1" />
           <div class="param-range"><span>1 (first call)</span><span>5+ (warm session)</span></div>
         </div>
-
-        <div class="token-stats">
-          <div>Tokens per query (GCF): <strong>{{ tokensPerQuery.gcf.toLocaleString() }}</strong></div>
-          <div>Tokens per query (TOON): <strong>{{ tokensPerQuery.toon.toLocaleString() }}</strong></div>
-          <div>Tokens per query (JSON): <strong>{{ tokensPerQuery.json.toLocaleString() }}</strong></div>
-        </div>
       </div>
 
       <div class="right">
-        <div class="annual-savings">
-          <div class="annual-label">ANNUAL SAVINGS WITH GCF</div>
-          <div class="savings-row">
-            <div class="annual-amount vs-json">{{ formatCurrency(annualSavings.vsJson) }}</div>
-            <div class="annual-pct vs-json">{{ pctSaved.vsJson }}% fewer tokens</div>
-            <div class="annual-versus">vs JSON</div>
+        <!-- What you're paying now -->
+        <div class="current-cost">
+          <div class="current-label">YOUR CURRENT MONTHLY COST</div>
+          <div class="current-amount">{{ formatCurrency(monthlyCost.json) }}</div>
+          <div class="current-sub">per month with JSON</div>
+        </div>
+
+        <!-- Visual cost comparison bars -->
+        <div class="cost-bars">
+          <div class="bar-row">
+            <div class="bar-label">JSON</div>
+            <div class="bar-track">
+              <div class="bar-fill json" :style="{ width: barWidth.json + '%' }">
+                <span class="bar-amount">{{ formatCurrency(monthlyCost.json) }}</span>
+              </div>
+            </div>
           </div>
-          <div class="savings-row">
-            <div class="annual-amount vs-toon">{{ formatCurrency(annualSavings.vsToon) }}</div>
-            <div class="annual-pct vs-toon">{{ pctSaved.vsToon }}% fewer tokens</div>
-            <div class="annual-versus">vs TOON</div>
+          <div class="bar-row">
+            <div class="bar-label">TOON</div>
+            <div class="bar-track">
+              <div class="bar-fill toon" :style="{ width: barWidth.toon + '%' }">
+                <span class="bar-amount">{{ formatCurrency(monthlyCost.toon) }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">GCF</div>
+            <div class="bar-track">
+              <div class="bar-fill gcf" :style="{ width: barWidth.gcf + '%' }">
+                <span class="bar-amount">{{ formatCurrency(monthlyCost.gcf) }}</span>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="monthly-grid">
-          <div class="monthly-card gcf">
-            <div class="format-name">GCF</div>
-            <div class="cost">{{ formatCurrencyMonth(monthlyCost.gcf) }}</div>
-            <div class="per">per month</div>
-          </div>
-          <div class="monthly-card toon">
-            <div class="format-name">TOON</div>
-            <div class="cost">{{ formatCurrencyMonth(monthlyCost.toon) }}</div>
-            <div class="per">per month</div>
-          </div>
-          <div class="monthly-card json">
-            <div class="format-name">JSON</div>
-            <div class="cost">{{ formatCurrencyMonth(monthlyCost.json) }}</div>
-            <div class="per">per month</div>
+        <!-- Annual savings hero -->
+        <div class="savings-hero">
+          <div class="savings-hero-amount">{{ formatCurrency(annualSavings.vsJson) }}</div>
+          <div class="savings-hero-label">saved per year vs JSON</div>
+          <div class="savings-pills">
+            <span class="pill green">{{ pctSaved.vsJson }}% savings vs JSON</span>
+            <span class="pill blue">{{ pctSaved.vsToon }}% savings vs TOON</span>
           </div>
         </div>
 
-        <div class="monthly-tokens">
-          <h4>Monthly Token Usage</h4>
-          <div class="token-line"><span>GCF:</span><strong>{{ monthlyTokens.gcf }}M</strong></div>
-          <div class="token-line"><span>TOON:</span><strong>{{ monthlyTokens.toon }}M</strong></div>
-          <div class="token-line"><span>JSON:</span><strong>{{ monthlyTokens.json }}M</strong></div>
+        <!-- Token details toggle -->
+        <div class="token-toggle" @click="showTokens = !showTokens">
+          <span>{{ showTokens ? '▾' : '▸' }} Token details</span>
+        </div>
+        <div v-if="showTokens" class="token-details">
+          <div class="token-line"><span>Tokens/query (GCF):</span><strong>{{ tokensPerQuery.gcf.toLocaleString() }}</strong></div>
+          <div class="token-line"><span>Tokens/query (TOON):</span><strong>{{ tokensPerQuery.toon.toLocaleString() }}</strong></div>
+          <div class="token-line"><span>Tokens/query (JSON):</span><strong>{{ tokensPerQuery.json.toLocaleString() }}</strong></div>
+          <div class="token-line"><span>Monthly tokens (GCF):</span><strong>{{ monthlyTokens.gcf }}M</strong></div>
+          <div class="token-line"><span>Monthly tokens (TOON):</span><strong>{{ monthlyTokens.toon }}M</strong></div>
+          <div class="token-line"><span>Monthly tokens (JSON):</span><strong>{{ monthlyTokens.json }}M</strong></div>
         </div>
       </div>
     </div>
@@ -238,9 +241,7 @@ function formatCurrencyMonth(n: number): string {
   margin-bottom: 1.5rem;
 }
 
-.param {
-  margin-bottom: 1.25rem;
-}
+.param { margin-bottom: 1.25rem; }
 
 .param-header {
   display: flex;
@@ -249,15 +250,8 @@ function formatCurrencyMonth(n: number): string {
   margin-bottom: 0.4rem;
 }
 
-.param label {
-  font-weight: 600;
-  font-size: 0.9rem;
-}
-
-.param .value {
-  font-weight: 700;
-  font-size: 0.95rem;
-}
+.param label { font-weight: 600; font-size: 0.9rem; }
+.param .value { font-weight: 700; font-size: 0.95rem; }
 
 .number-input {
   width: 110px;
@@ -273,19 +267,11 @@ function formatCurrencyMonth(n: number): string {
 }
 
 .number-input::-webkit-inner-spin-button,
-.number-input::-webkit-outer-spin-button {
-  opacity: 1;
-}
+.number-input::-webkit-outer-spin-button { opacity: 1; }
 
-.number-input:focus {
-  outline: none;
-  border-color: #2563eb;
-}
+.number-input:focus { outline: none; border-color: #2563eb; }
 
-.param input[type="range"] {
-  width: 100%;
-  accent-color: #2563eb;
-}
+.param input[type="range"] { width: 100%; accent-color: #2563eb; }
 
 .param-range {
   display: flex;
@@ -306,142 +292,158 @@ function formatCurrencyMonth(n: number): string {
   color: var(--vp-c-text-1);
 }
 
-.token-stats {
-  margin-top: 1.5rem;
-  font-size: 0.85rem;
-  color: var(--vp-c-text-2);
-  line-height: 1.8;
-}
-
-.annual-savings {
+/* Right panel: Current cost */
+.current-cost {
   text-align: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.75rem;
 }
 
-.annual-label {
-  font-size: 1rem;
-  font-weight: 800;
+.current-label {
+  font-size: 0.8rem;
+  font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--vp-c-text-1);
-  margin-bottom: 1.5rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 2px solid #2563eb;
+  color: var(--vp-c-text-3);
+  margin-bottom: 0.5rem;
 }
 
-.savings-row {
-  margin-bottom: 1.5rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid var(--vp-c-divider);
-}
-
-.savings-row:last-child {
-  margin-bottom: 0;
-  padding-bottom: 0;
-  border-bottom: none;
-}
-
-.annual-amount {
+.current-amount {
+  font-size: 3rem;
   font-weight: 800;
+  color: #ef4444;
   line-height: 1;
-  padding-bottom: 0.75rem;
 }
 
-.annual-amount.vs-json {
-  font-size: 2.8rem;
-  color: #22c55e;
+.current-sub {
+  font-size: 0.85rem;
+  color: var(--vp-c-text-3);
+  margin-top: 0.4rem;
 }
 
-.annual-amount.vs-toon {
-  font-size: 1.8rem;
-  color: #2563eb;
+/* Cost comparison bars */
+.cost-bars {
+  margin-bottom: 1.75rem;
 }
 
-.annual-pct {
-  font-size: 1.1rem;
+.bar-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.6rem;
+}
+
+.bar-label {
+  width: 50px;
+  font-size: 0.75rem;
   font-weight: 700;
-  padding-bottom: 0.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--vp-c-text-2);
+  flex-shrink: 0;
 }
 
-.annual-pct.vs-json {
+.bar-track {
+  flex: 1;
+  height: 32px;
+  background: var(--vp-c-bg);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  padding: 0 0.75rem;
+  transition: width 0.4s ease;
+  min-width: 80px;
+}
+
+.bar-fill.json { background: rgba(107, 114, 128, 0.3); }
+.bar-fill.toon { background: rgba(245, 158, 11, 0.25); }
+.bar-fill.gcf { background: rgba(37, 99, 235, 0.25); }
+
+.bar-amount {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--vp-c-text-1);
+  white-space: nowrap;
+}
+
+/* Savings hero */
+.savings-hero {
+  text-align: center;
+  padding: 1.25rem;
+  background: rgba(34, 197, 94, 0.06);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+.savings-hero-amount {
+  font-size: 2.6rem;
+  font-weight: 800;
   color: #22c55e;
-  font-size: 1.3rem;
-  background: rgba(34, 197, 94, 0.1);
-  display: inline-block;
-  padding: 0.2rem 0.75rem;
-  border-radius: 6px;
+  line-height: 1;
 }
 
-.annual-pct.vs-toon {
-  color: #2563eb;
-  font-size: 1.3rem;
-  background: rgba(37, 99, 235, 0.1);
-  display: inline-block;
-  padding: 0.2rem 0.75rem;
-  border-radius: 6px;
-}
-
-.annual-versus {
+.savings-hero-label {
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--vp-c-text-2);
-  margin-top: 0.2rem;
-}
-
-.monthly-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 0.75rem;
-  margin-bottom: 1.5rem;
-}
-
-.monthly-card {
-  padding: 1rem;
-  border-radius: 8px;
-  text-align: center;
-  background: var(--vp-c-bg);
-}
-
-.monthly-card .format-name {
-  font-weight: 700;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 0.4rem;
-}
-
-.monthly-card.gcf .format-name { color: #2563eb; }
-.monthly-card.toon .format-name { color: #f59e0b; }
-.monthly-card.json .format-name { color: #6b7280; }
-
-.monthly-card .cost {
-  font-size: 1.3rem;
-  font-weight: 800;
-}
-
-.monthly-card .per {
-  font-size: 0.75rem;
-  color: var(--vp-c-text-3);
-}
-
-.monthly-tokens {
-  padding: 1rem;
-  background: var(--vp-c-bg);
-  border-radius: 8px;
-}
-
-.monthly-tokens h4 {
-  font-size: 0.85rem;
-  font-weight: 700;
+  margin-top: 0.4rem;
   margin-bottom: 0.75rem;
+}
+
+.savings-pills {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.pill {
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+}
+
+.pill.green {
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.12);
+}
+
+.pill.blue {
+  color: #2563eb;
+  background: rgba(37, 99, 235, 0.12);
+}
+
+/* Token details toggle */
+.token-toggle {
+  font-size: 0.8rem;
+  color: var(--vp-c-text-3);
+  cursor: pointer;
+  padding: 0.5rem 0;
+  user-select: none;
+}
+
+.token-toggle:hover { color: var(--vp-c-text-2); }
+
+.token-details {
+  padding: 0.75rem 1rem;
+  background: var(--vp-c-bg);
+  border-radius: 8px;
+  margin-top: 0.25rem;
 }
 
 .token-line {
   display: flex;
   justify-content: space-between;
-  font-size: 0.85rem;
-  padding: 0.25rem 0;
+  font-size: 0.8rem;
+  padding: 0.2rem 0;
   font-family: "SF Mono", "Fira Code", monospace;
+  color: var(--vp-c-text-2);
 }
 
 .note {
@@ -453,12 +455,11 @@ function formatCurrencyMonth(n: number): string {
   color: var(--vp-c-text-3);
 }
 
-.note p {
-  margin: 0.5rem 0;
-}
+.note p { margin: 0.5rem 0; }
 
 @media (max-width: 768px) {
   .layout { grid-template-columns: 1fr; }
-  .monthly-grid { grid-template-columns: 1fr; }
+  .current-amount { font-size: 2.2rem; }
+  .savings-hero-amount { font-size: 2rem; }
 }
 </style>
