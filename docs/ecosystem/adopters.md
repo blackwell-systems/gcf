@@ -35,6 +35,14 @@ GCF was designed for knowing's use case and extracted into a standalone format o
 
 [Full case study](/ecosystem/case-study-neuronest)
 
+## Open Data Products SDK (Linux Foundation)
+
+[Open Data Products SDK](https://opendataproducts.org/sdk/) is a Python toolkit and MCP server for working with data product standards under the Linux Foundation. It validates, generates, and publishes Open Data Product specifications.
+
+- GCF sidecars for ODPC and ODPG workflows (agent-ready graph context)
+- Packed for agent prompts and review automation
+- Status: experimental integration
+
 ## Your project here
 
 If you're using GCF in production, [open an issue](https://github.com/blackwell-systems/gcf/issues) to be listed here.
