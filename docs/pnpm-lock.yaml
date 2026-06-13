@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@blackwell-systems/gcf':
-        specifier: ^2.0.1
-        version: 2.0.1
+        specifier: ^2.0.2
+        version: 2.0.2
       '@toon-format/toon':
         specifier: ^2.3.0
         version: 2.3.0
@@ -120,8 +120,8 @@ packages:
     resolution: {integrity: sha512-4zBIxpPzowiZpusoFkyGVwakdRJUyuH5PxQ/PrqghfdFWWasvnCdPfQXHrenDai+gyLARulZjZowCOj6fjT4pA==}
     engines: {node: '>=6.9.0'}
 
-  '@blackwell-systems/gcf@2.0.1':
-    resolution: {integrity: sha512-f1VZk3x+G10KkJ6PSv86C2bOckWZK6zmLPCNOdd3vOhTUayqILs5fW/hUSSrFTctwSIVVO+wWYXXCG8nmeI9Fg==}
+  '@blackwell-systems/gcf@2.0.2':
+    resolution: {integrity: sha512-E61NwfMd3Hj19XCAC84RHrock9tAWz/MJNBDbE0VklBJ5d5EawtOMBOyu1Cuz8jbEV5vnpgLM6iNHS40aAEv/A==}
     hasBin: true
 
   '@docsearch/css@3.8.2':
@@ -962,7 +962,7 @@ snapshots:
       '@babel/helper-string-parser': 7.29.7
       '@babel/helper-validator-identifier': 7.29.7
 
-  '@blackwell-systems/gcf@2.0.1': {}
+  '@blackwell-systems/gcf@2.0.2': {}
 
   '@docsearch/css@3.8.2': {}
 
