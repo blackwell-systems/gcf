@@ -26,7 +26,7 @@ We benchmark against JSON and TOON (Token-Oriented Object Notation), a tabular e
 
 Session deduplication (92.7% savings by the 5th call) and delta encoding (81.2% on re-queries) compound savings across multi-turn interactions. A streaming encoding extension enables zero-buffering encode with O(1) memory per row. The format is implemented in six languages (all at v2.0.0), verified across 1B+ property-based round-trips, with a cross-language 6x6 encode/decode matrix passing. A bidirectional MCP proxy with session dedup, HTTP backend/frontend, and response caching enables zero-code adoption. JSON Schema validation works on decoded output unchanged. Specification v3.0 Stable: gcformat.com.
 
-![Comprehension and Generation across 10 models and 3 providers](public/charts/hero.png)
+![100% on standard workloads (6 frontier models), 90.5% under structural stress (10 models, 23 runs). 1,700+ evaluations across 3 providers.](public/charts/hero.png)
 
 ---
 
