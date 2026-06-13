@@ -60,7 +60,7 @@ The proxy connects over HTTP, translates responses to GCF, and handles SSE strea
 The proxy translates in both directions:
 
 ```
-Responses:  Your Server (JSON) ──→ gcf-proxy encodes ──→ LLM reads GCF   (79% input savings)
+Responses:  Your Server (JSON) ──→ gcf-proxy encodes ──→ LLM reads GCF   (53-71% input savings)
 Requests:   LLM writes GCF    ──→ gcf-proxy decodes ──→ Your Server (JSON) (63% output savings)
 ```
 
