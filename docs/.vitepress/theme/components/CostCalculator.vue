@@ -147,10 +147,14 @@ function formatCurrencyMonth(n: number): string {
       <div class="right">
         <div class="annual-savings">
           <div class="annual-label">ANNUAL SAVINGS WITH GCF</div>
-          <div class="annual-amount vs-json">{{ formatCurrency(annualSavings.vsJson) }}</div>
-          <div class="annual-versus">vs JSON</div>
-          <div class="annual-amount vs-toon">{{ formatCurrency(annualSavings.vsToon) }}</div>
-          <div class="annual-versus">vs TOON</div>
+          <div class="savings-row">
+            <div class="annual-amount vs-json">{{ formatCurrency(annualSavings.vsJson) }}</div>
+            <div class="annual-versus">vs JSON</div>
+          </div>
+          <div class="savings-row">
+            <div class="annual-amount vs-toon">{{ formatCurrency(annualSavings.vsToon) }}</div>
+            <div class="annual-versus">vs TOON</div>
+          </div>
         </div>
 
         <div class="monthly-grid">
@@ -311,17 +315,15 @@ function formatCurrencyMonth(n: number): string {
   letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--vp-c-text-2);
-  margin-bottom: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.savings-row {
+  margin-bottom: 1.25rem;
 }
 
 .annual-amount {
   font-weight: 800;
-  margin-bottom: 0.25rem;
-}
-
-.annual-amount {
-  font-weight: 800;
-  margin-top: 1rem;
 }
 
 .annual-amount.vs-json {
@@ -336,8 +338,9 @@ function formatCurrencyMonth(n: number): string {
 
 .annual-versus {
   font-size: 0.9rem;
+  font-weight: 600;
   color: var(--vp-c-text-2);
-  margin-top: 0.4rem;
+  margin-top: 0.3rem;
 }
 
 .monthly-grid {
