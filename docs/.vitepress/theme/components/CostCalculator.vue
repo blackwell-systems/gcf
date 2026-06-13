@@ -296,6 +296,11 @@ function formatCurrencyMonth(n: number): string {
   margin-bottom: 0.25rem;
 }
 
+.annual-amount {
+  font-weight: 800;
+  margin-top: 1rem;
+}
+
 .annual-amount.vs-json {
   font-size: 2.8rem;
   color: #22c55e;
@@ -310,7 +315,6 @@ function formatCurrencyMonth(n: number): string {
   font-size: 0.9rem;
   color: var(--vp-c-text-2);
   margin-top: 0.4rem;
-  margin-bottom: 1.5rem;
 }
 
 .monthly-grid {
