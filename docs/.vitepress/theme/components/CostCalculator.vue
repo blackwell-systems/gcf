@@ -79,6 +79,13 @@ const annualSavings = computed(() => {
   }
 })
 
+const pctSaved = computed(() => {
+  return {
+    vsJson: monthlyCost.value.json > 0 ? Math.round((1 - monthlyCost.value.gcf / monthlyCost.value.json) * 100) : 0,
+    vsToon: monthlyCost.value.toon > 0 ? Math.round((1 - monthlyCost.value.gcf / monthlyCost.value.toon) * 100) : 0,
+  }
+})
+
 const monthlyTokens = computed(() => {
   const dailyQueries = queriesPerDay.value
   const monthlyQueries = dailyQueries * 30
@@ -149,10 +156,12 @@ function formatCurrencyMonth(n: number): string {
           <div class="annual-label">ANNUAL SAVINGS WITH GCF</div>
           <div class="savings-row">
             <div class="annual-amount vs-json">{{ formatCurrency(annualSavings.vsJson) }}</div>
+            <div class="annual-pct vs-json">{{ pctSaved.vsJson }}% fewer tokens</div>
             <div class="annual-versus">vs JSON</div>
           </div>
           <div class="savings-row">
             <div class="annual-amount vs-toon">{{ formatCurrency(annualSavings.vsToon) }}</div>
+            <div class="annual-pct vs-toon">{{ pctSaved.vsToon }}% fewer tokens</div>
             <div class="annual-versus">vs TOON</div>
           </div>
         </div>
@@ -336,11 +345,25 @@ function formatCurrencyMonth(n: number): string {
   color: #2563eb;
 }
 
+.annual-pct {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-top: 0.2rem;
+}
+
+.annual-pct.vs-json {
+  color: #22c55e;
+}
+
+.annual-pct.vs-toon {
+  color: #2563eb;
+}
+
 .annual-versus {
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--vp-c-text-2);
-  margin-top: 0.3rem;
+  margin-top: 0.2rem;
 }
 
 .monthly-grid {
