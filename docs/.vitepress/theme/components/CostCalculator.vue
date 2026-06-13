@@ -3,8 +3,24 @@ import { ref, computed } from 'vue'
 
 const records = ref(500)
 const queriesPerDay = ref(1000)
-const costPerMillion = ref(2.50)
 const sessionCalls = ref(1)
+
+const models = [
+  { name: 'Claude Fable 5', input: 10.00, output: 50.00, provider: 'Anthropic' },
+  { name: 'Claude Opus 4.8', input: 5.00, output: 25.00, provider: 'Anthropic' },
+  { name: 'Claude Sonnet 4.6', input: 3.00, output: 15.00, provider: 'Anthropic' },
+  { name: 'Claude Haiku 4.5', input: 1.00, output: 5.00, provider: 'Anthropic' },
+  { name: 'GPT-5.5', input: 5.00, output: 30.00, provider: 'OpenAI' },
+  { name: 'GPT-5.4', input: 2.50, output: 15.00, provider: 'OpenAI' },
+  { name: 'GPT-4o mini', input: 0.15, output: 0.60, provider: 'OpenAI' },
+  { name: 'Gemini 2.5 Pro', input: 1.25, output: 10.00, provider: 'Google' },
+  { name: 'Gemini 2.5 Flash', input: 0.30, output: 2.50, provider: 'Google' },
+  { name: 'Gemini 3.1 Pro', input: 2.00, output: 12.00, provider: 'Google' },
+  { name: 'DeepSeek V3', input: 0.27, output: 1.10, provider: 'DeepSeek' },
+]
+
+const selectedModel = ref(2) // Claude Sonnet 4.6 default
+const costPerMillion = computed(() => models[selectedModel.value].input)
 
 // Token data from real eval measurements
 // These are actual measured values, not estimates
@@ -88,9 +104,10 @@ function formatCurrencyMonth(n: number): string {
       </div>
 
       <div class="param">
-        <label>Cost per Million Tokens ($)</label>
-        <input type="range" v-model.number="costPerMillion" min="0.5" max="30" step="0.25" />
-        <span class="value">${{ costPerMillion.toFixed(2) }}</span>
+        <label>Model</label>
+        <select v-model.number="selectedModel" class="model-select">
+          <option v-for="(m, i) in models" :key="i" :value="i">{{ m.name }} ({{ m.provider }}) — ${{ m.input }}/MTok in</option>
+        </select>
       </div>
 
       <div class="param">
@@ -200,6 +217,16 @@ h2 {
 .param input[type="range"] {
   flex: 1;
   accent-color: #2563eb;
+}
+
+.model-select {
+  flex: 1;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid var(--vp-c-divider);
+  background: var(--vp-c-bg);
+  font-size: 0.9rem;
+  color: var(--vp-c-text-1);
 }
 
 .param .value {
