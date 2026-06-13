@@ -8,6 +8,7 @@ const sessionCalls = ref(1)
 const models = [
   { name: 'Claude Fable 5', input: 10.00, output: 50.00, provider: 'Anthropic' },
   { name: 'Claude Opus 4.8', input: 5.00, output: 25.00, provider: 'Anthropic' },
+  { name: 'Claude Opus 4.6', input: 5.00, output: 25.00, provider: 'Anthropic' },
   { name: 'Claude Sonnet 4.6', input: 3.00, output: 15.00, provider: 'Anthropic' },
   { name: 'Claude Haiku 4.5', input: 1.00, output: 5.00, provider: 'Anthropic' },
   { name: 'GPT-5.5', input: 5.00, output: 30.00, provider: 'OpenAI' },
@@ -16,6 +17,9 @@ const models = [
   { name: 'Gemini 2.5 Pro', input: 1.25, output: 10.00, provider: 'Google' },
   { name: 'Gemini 2.5 Flash', input: 0.30, output: 2.50, provider: 'Google' },
   { name: 'Gemini 3.1 Pro', input: 2.00, output: 12.00, provider: 'Google' },
+  { name: 'Grok 4.20', input: 2.00, output: 6.00, provider: 'xAI' },
+  { name: 'Grok 4.3', input: 1.25, output: 2.50, provider: 'xAI' },
+  { name: 'Grok 4.1 Fast', input: 0.20, output: 0.50, provider: 'xAI' },
   { name: 'DeepSeek V3', input: 0.27, output: 1.10, provider: 'DeepSeek' },
 ]
 
