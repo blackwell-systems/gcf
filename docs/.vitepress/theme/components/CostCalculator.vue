@@ -20,7 +20,9 @@ const models = [
 ]
 
 const selectedModel = ref(2) // Claude Sonnet 4.6 default
-const costPerMillion = computed(() => models[selectedModel.value].input)
+const customCost = ref(0)
+const useCustom = ref(false)
+const costPerMillion = computed(() => useCustom.value ? customCost.value : models[selectedModel.value].input)
 
 // Token data from real eval measurements
 // These are actual measured values, not estimates
@@ -105,9 +107,15 @@ function formatCurrencyMonth(n: number): string {
 
       <div class="param">
         <label>Model</label>
-        <select v-model.number="selectedModel" class="model-select">
+        <select v-model.number="selectedModel" class="model-select" @change="useCustom = false">
           <option v-for="(m, i) in models" :key="i" :value="i">{{ m.name }} ({{ m.provider }}) — ${{ m.input }}/MTok in</option>
         </select>
+      </div>
+
+      <div class="param">
+        <label>Custom $/MTok <input type="checkbox" v-model="useCustom" /></label>
+        <input type="range" v-model.number="customCost" min="0.1" max="50" step="0.1" :disabled="!useCustom" />
+        <span class="value" :style="{ opacity: useCustom ? 1 : 0.4 }">${{ customCost.toFixed(2) }}</span>
       </div>
 
       <div class="param">
