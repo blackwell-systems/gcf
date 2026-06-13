@@ -108,13 +108,13 @@ function formatCurrencyMonth(n: number): string {
         <h3>Your Parameters</h3>
 
         <div class="param">
-          <div class="param-header"><label>Records per Query</label><span class="value">{{ records.toLocaleString() }}</span></div>
+          <div class="param-header"><label>Records per Query</label><input type="number" class="number-input" v-model.number="records" min="1" max="100000" /></div>
           <input type="range" v-model.number="records" min="100" max="10000" step="100" />
           <div class="param-range"><span>100</span><span>10,000</span></div>
         </div>
 
         <div class="param">
-          <div class="param-header"><label>Queries per Day</label><span class="value">{{ queriesPerDay.toLocaleString() }}</span></div>
+          <div class="param-header"><label>Queries per Day</label><input type="number" class="number-input" v-model.number="queriesPerDay" min="1" max="10000000" /></div>
           <input type="range" v-model.number="queriesPerDay" min="10" max="1000000" step="10" />
           <div class="param-range"><span>10</span><span>1,000,000</span></div>
         </div>
@@ -127,7 +127,7 @@ function formatCurrencyMonth(n: number): string {
         </div>
 
         <div class="param">
-          <div class="param-header"><label>Custom $/MTok <input type="checkbox" v-model="useCustom" /></label><span class="value" :style="{ opacity: useCustom ? 1 : 0.4 }">${{ customCost.toFixed(2) }}</span></div>
+          <div class="param-header"><label>Custom $/MTok <input type="checkbox" v-model="useCustom" /></label><input type="number" class="number-input" v-model.number="customCost" min="0.01" max="100" step="0.01" :disabled="!useCustom" :style="{ opacity: useCustom ? 1 : 0.4 }" /></div>
           <input type="range" v-model.number="customCost" min="0.1" max="50" step="0.1" :disabled="!useCustom" />
         </div>
 
@@ -244,6 +244,29 @@ function formatCurrencyMonth(n: number): string {
 .param .value {
   font-weight: 700;
   font-size: 0.95rem;
+}
+
+.number-input {
+  width: 110px;
+  padding: 0.3rem 0.5rem;
+  border-radius: 6px;
+  border: 1px solid var(--vp-c-divider);
+  background: var(--vp-c-bg);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-align: right;
+  color: var(--vp-c-text-1);
+  -moz-appearance: textfield;
+}
+
+.number-input::-webkit-inner-spin-button,
+.number-input::-webkit-outer-spin-button {
+  opacity: 1;
+}
+
+.number-input:focus {
+  outline: none;
+  border-color: #2563eb;
 }
 
 .param input[type="range"] {
