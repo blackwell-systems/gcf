@@ -319,12 +319,14 @@ function formatCurrencyMonth(n: number): string {
 }
 
 .annual-label {
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--vp-c-text-2);
-  margin-bottom: 1.25rem;
+  color: var(--vp-c-text-1);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid #2563eb;
 }
 
 .savings-row {
