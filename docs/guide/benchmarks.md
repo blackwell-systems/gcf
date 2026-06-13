@@ -6,19 +6,19 @@ No model has ever been trained on GCF. Every model reads it better than the form
 
 | | Generic Profile | Graph Profile |
 |---|---|---|
-| **GCF** | **100%** (7 models) | **90.7%** (10 models) |
+| **GCF** | **100%** (6 frontier models) | **90.7%** (10 models) |
 | **TOON** | 92.3% | 68.5% |
 | **JSON** | 91.2% | 53.6% |
 
 | | GCF | TOON | JSON |
 |---|---|---|---|
-| **Token efficiency** (15 datasets) | **baseline** | +25.5% more | +53.3% more |
+| **Token efficiency** (15 datasets) | **wins 13/15** | wins 2/15 | wins 0/15 |
 | **Generation** (28 runs, 9 models) | **5/5** | 1.0/5 | 5.0/5 |
 | **1B+ fuzz iterations** | **0 failures** | | |
 
 Four benchmark suites, three providers (Anthropic, OpenAI, Google), zero training:
 
-1. **[Generic comprehension](#generic-profile-standard-workloads)**: 500-order nested data, 8 models. GCF 100% on every frontier model.
+1. **[Generic comprehension](#generic-profile-standard-workloads)**: 500-order nested data, 7 models. GCF 100% on every frontier model.
 2. **[Graph comprehension](#graph-profile-under-structural-stress)**: 500-symbol code graphs, 10 models. GCF 90.7% where JSON drops to 53.6%.
 3. **[Scale test](#scale-test-1000-orders)**: At 1000 records, JSON doesn't fit. GCF is the only format that works on 200K context models.
 4. **[Token efficiency](#token-efficiency-15-datasets)**: 15 real-world datasets. GCF wins 13/15 vs TOON, 25.5% fewer overall.
