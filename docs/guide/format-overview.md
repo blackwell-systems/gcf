@@ -95,25 +95,30 @@ Sections can nest:
 
 ## 4. Nested fields in tabular rows
 
-When records contain both primitive fields and nested objects, rows use `@{id}` prefixes and `.field {}` declarations with `^` cell markers:
+When records contain both primitive fields and nested objects, rows use `@{id}` prefixes with `^` cell markers. Nested objects with 3+ scalar fields use inline schema encoding (`^{fields}`) for maximum density:
 
 ```
 ## orders [2]{id,total,status,customer}
-@0 1001|249.99|shipped|^
-  .customer {}
-    name=Alice Smith
-    tier=premium
+@0 1001|249.99|shipped|^{name,email,tier}
+Alice Smith|alice@example.com|premium
 @1 1002|89.50|pending|^
-  .customer {}
-    name=Bob Jones
-    tier=standard
+Bob Jones|bob@example.com|standard
 ```
 
 - `@{id}` prefix appears only when the row has nested fields (flat rows have no prefix)
-- `.field {}` introduces a nested object attachment (cell uses `^` marker)
-- Nested fields are indented and use `key=value` pairs
+- `^{fields}` on the first row declares inline schema; subsequent rows use bare `^`
+- Inline attachment data follows on the next line (positional, no field prefix)
+- For objects with fewer than 3 fields or nested sub-objects, traditional `.field {}` syntax is used:
 
-**Why this saves tokens:** JSON repeats the entire `"customer": {"name": "...", "tier": "..."}` structure on every record. GCF's primitive fields go in the tabular row (positional), and only the nested portion is expanded.
+```
+## orders [1]{id,metadata}
+@0 1001|^
+.metadata {}
+    source=api
+    version=2
+```
+
+**Why this saves tokens:** JSON repeats the entire `"customer": {"name": "...", "email": "...", "tier": "..."}` structure on every record. GCF's inline schema declares fields once and encodes values positionally. At 500 orders, this produces 32% fewer tokens than TOON and 57% fewer than JSON.
 
 ## 5. Primitive arrays (inline)
 
@@ -142,7 +147,8 @@ scopes[2]: read,write
 | Absent (tabular only) | tilde | `~` |
 | Attachment (tabular only) | caret | `^` |
 | Empty string | quoted | `""` |
-| String with `\|`, `,`, or newline | quoted | `"value\|pipes"` |
+| String with `\|` or newline | quoted | `"value\|pipes"` |
+| String with `,` in comma context | quoted | `"a,b"` (inline arrays only) |
 
 ### Comparison: the same data in JSON
 
@@ -166,7 +172,7 @@ GCF profile=generic
 3|Carol Wu|Marketing|85000
 ```
 
-292 bytes vs 122 bytes. Same information. 58% smaller. On TOON's own benchmark with 2,000 employee records, GCF is 2% smaller than TOON and 61% smaller than JSON.
+292 bytes vs 122 bytes. Same information. 58% smaller. Across [15 real-world datasets](/guide/benchmarks#token-efficiency-15-datasets), GCF is 25.5% smaller than TOON and 53% smaller than JSON overall.
 
 ---
 
@@ -374,4 +380,4 @@ Both profiles use the same grammar primitives: `##` headers, `@` IDs, positional
 - **Line-oriented.** One semantic unit per line.
 - **Shallow nesting.** The graph profile is flat. The generic profile supports indented nested fields for records with sub-objects.
 - **Deterministic.** Same input produces same output.
-- **LLM-parseable.** 90.7% average comprehension accuracy across 10 models and 3 providers (four models hit 100%). No model has been trained on GCF.
+- **LLM-parseable.** 100% comprehension on standard workloads (every frontier model). 90.7% on structurally complex code graphs. No model has been trained on GCF.
