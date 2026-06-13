@@ -1,12 +1,12 @@
 # Using GCF with LLMs
 
-GCF works in both directions: tools produce it, LLMs read it, and LLMs can produce it too. No model has ever been trained on GCF. Reading requires no primer (proven across 10 models and 3 providers at 500 symbols). Writing requires a 3-line example and produces valid output with **63% fewer tokens than JSON** and **33% fewer than TOON**.
+GCF works in both directions: tools produce it, LLMs read it, and LLMs can produce it too. No model has ever been trained on GCF. Reading requires no primer: 100% accuracy on standard workloads (every frontier model), 90.7% on structurally complex code graphs (vs TOON 68.5%, JSON 53.6%). Writing requires a 3-line example and produces valid output with **63% fewer tokens than JSON** and **33% fewer than TOON**.
 
 ## Designed for agent comprehension, not human scanning
 
 GCF looks dense to human eyes. `@0<@1 calls` is not as immediately obvious as `{"source": "pkg.Server", "target": "pkg.Auth", "edge_type": "calls"}`. That's deliberate.
 
-Human-readability and LLM-readability are different things, and they diverge at scale. At 8 records, both JSON and GCF are easy for humans and LLMs alike. At 500 records, JSON's field-name repetition creates enough structural noise that LLMs lose count (53.6% average accuracy across 10 models). GCF's dense, positional format cuts through that noise (90.7% accuracy, four models at 100%).
+Human-readability and LLM-readability are different things, and they diverge at scale. At 8 records, both JSON and GCF are easy for humans and LLMs alike. At 500 records, JSON's field-name repetition creates enough structural noise that LLMs lose count (53.6% on code graphs, 76.9% on nested orders with Gemini Flash). GCF's dense, positional format cuts through that noise (100% on standard workloads, 90.7% on code graphs).
 
 Here's what JSON at 500 symbols looks like to an LLM. Every record repeats five field names:
 
@@ -28,7 +28,7 @@ The same data in GCF:
 ... 497 more, each one line, no repeated field names ...
 ```
 
-No noise. Every token is content. Across 23 runs and 10 models, GCF averages 90.7% accuracy. Four models (Sonnet, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash) achieve 100%.
+No noise. Every token is content. On code graph data, GCF averages 90.7% across 23 runs and 10 models (vs TOON 68.5%, JSON 53.6%). On nested order data, GCF achieves 100% on every frontier model tested (Claude, GPT-5.5, Gemini).
 
 The format is optimized for the actual consumer. Every character carries meaning. No decoration, no repeated field names, no structural tokens that exist only for human scanners. The result is a format that agents understand perfectly and costs a fraction of the "readable" alternative.
 
@@ -57,7 +57,17 @@ The gcf-proxy proves this pattern works in reverse: the MCP server outputs JSON,
 
 GCF payloads are immediately comprehensible to frontier models without any format description in the prompt. This isn't a claim; it's measured.
 
-The [comprehension eval](https://github.com/blackwell-systems/gcf-go/tree/main/eval) sends a 500-symbol, 200-edge payload to an LLM with **zero format instructions**: only the raw payload and a question. 13 questions, all deterministic. 23 runs across 10 models and 3 providers (Anthropic, OpenAI, Google).
+The [comprehension eval](https://github.com/blackwell-systems/gcf-go/tree/main/eval) sends payloads to LLMs with **zero format instructions**: only the raw payload and a question. 13 questions per run, all deterministic. Tested across 10+ models and 3 providers (Anthropic, OpenAI, Google).
+
+**Generic profile (500 orders, nested data):**
+
+| Format | Frontier models (6) |
+|--------|---------------------|
+| **GCF** | **100%** on every model |
+| TOON | 92.3% (fails on GPT-5.5) |
+| JSON | 76.9% (fails on Gemini 2.5 Flash) |
+
+**Graph profile (500 symbols + 200 edges):**
 
 | Format | Avg accuracy (10 models) | Tokens |
 |--------|--------------------------|--------|
@@ -65,7 +75,7 @@ The [comprehension eval](https://github.com/blackwell-systems/gcf-go/tree/main/e
 | TOON | 68.5% | 16,378 |
 | JSON | 53.6% | 53,341 |
 
-**GCF wins 22 of 23 runs (1 tie, 0 losses).** Four models achieve 100%. JSON fails on counting tasks because field-name repetition overwhelms attention. TOON fails on distance grouping (no section headers). GCF answers structurally. See the [full benchmarks](/guide/benchmarks) for per-model results.
+GCF wins 22 of 23 graph profile runs (1 tie, 0 losses). JSON fails on counting tasks because field-name repetition overwhelms attention. TOON fails on distance grouping (no section headers). GCF answers structurally. See the [full benchmarks](/guide/benchmarks) for per-model results.
 
 The model was never told what `@0`, `##`, or `<` mean. It figured it out from the structure. The format is regular enough (positional fields, consistent prefixes, section headers) that pattern recognition handles it.
 
@@ -166,7 +176,8 @@ The format's regularity makes structured extraction reliable:
 For the generic profile:
 - `## name [count]{fields}` declares the schema (one line)
 - Rows are positional values separated by `|`
-- Nested objects use `^` cell marker with `.field {}` attachment
+- Nested objects with 3+ fields use `^{fields}` inline schema (positional on next line)
+- Smaller nested objects use `^` cell marker with `.field {}` attachment
 
 ## Token budget management
 
@@ -190,7 +201,12 @@ If the LLM receives truncated GCF (response cut off):
 ```bash
 git clone https://github.com/blackwell-systems/gcf-go
 cd gcf-go/eval
+
+# Generic profile (500 orders, nested data)
+GOWORK=off EVAL_FORMATS=gcf,json,toon EVAL_BACKEND=cli EVAL_MODEL=haiku EVAL_NUM_ORDERS=500 go test -run TestGenericComprehension -v -timeout 0
+
+# Graph profile (500 symbols, 200 edges)
 GOWORK=off go test -run TestComprehension -v -timeout 0
 ```
 
-The eval generates a 500-symbol, 200-edge payload, encodes it in GCF, TOON, and JSON, sends each to an LLM, and measures accuracy on 13 structured extraction questions. Deterministic ground truth, no LLM judge.
+Both evals encode data in GCF, TOON, and JSON, send each to an LLM, and measure accuracy on 13 structured extraction questions. Deterministic ground truth, no LLM judge.
