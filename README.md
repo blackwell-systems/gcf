@@ -19,7 +19,7 @@
 
 ---
 
-**79% fewer input tokens than JSON. 63% fewer output tokens. 90.7% comprehension accuracy across 10 models and 3 providers. Proven lossless: `decode(encode(value)) == value` for every JSON value, verified across 1B+ round-trips. Zero training required.**
+**100% comprehension on every frontier model tested. 25.5% fewer tokens than TOON, 53% fewer than JSON across 15 datasets. 90.7% on structurally complex code graphs (vs TOON 68.5%, JSON 53.6%). Proven lossless: `decode(encode(value)) == value` for every JSON value, verified across 1B+ round-trips. Zero training required.**
 
 Encode any JSON payload as GCF before sending it to an LLM. Arrays, nested objects, key-value pairs, mixed types. The model reads it natively with zero format instructions. `decode()` converts back to JSON when a human needs to see it. Your existing JSON schemas and validators work on the decoded output unchanged.
 
@@ -173,7 +173,7 @@ Zero runtime dependencies. MIT licensed. All implementations support both generi
 
 ## Use cases
 
-- **MCP tool responses.** Any MCP server returning structured data. 79% fewer tokens with better comprehension accuracy.
+- **MCP tool responses.** Any MCP server returning structured data. 53-71% fewer tokens with 100% comprehension accuracy.
 - **Agent-to-agent communication.** 63% fewer tokens per handoff. 5/5 generation validity on every frontier model.
 - **LLM structured output.** LLMs produce valid GCF with a 3-line primer. No training required.
 - **Code intelligence.** Graph profile with local IDs, edges, and distance grouping.
