@@ -328,11 +328,20 @@ function formatCurrencyMonth(n: number): string {
 }
 
 .savings-row {
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--vp-c-divider);
+}
+
+.savings-row:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
 }
 
 .annual-amount {
   font-weight: 800;
+  margin-bottom: 0.5rem;
 }
 
 .annual-amount.vs-json {
@@ -348,7 +357,6 @@ function formatCurrencyMonth(n: number): string {
 .annual-pct {
   font-size: 1.1rem;
   font-weight: 700;
-  margin-top: 0.5rem;
 }
 
 .annual-pct.vs-json {
