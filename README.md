@@ -19,7 +19,7 @@
 
 ---
 
-**100% comprehension on every frontier model tested. 25.5% fewer tokens than TOON, 53% fewer than JSON across 15 datasets. 90.7% on structurally complex code graphs (vs TOON 68.5%, JSON 53.6%). Proven lossless: `decode(encode(value)) == value` for every JSON value, verified across 1B+ round-trips. Zero training required.**
+**100% comprehension on every frontier model tested. 25.5% fewer tokens than TOON, 53% fewer than JSON across 15 datasets. 90.7% on structurally complex code graphs (vs TOON 68.5%, JSON 53.6%). Proven lossless: `decode(encode(value)) == value` for every JSON value, verified across 1,000,000,000+ round-trips. Zero training required.**
 
 Encode any JSON payload as GCF before sending it to an LLM. Arrays, nested objects, key-value pairs, mixed types. The model reads it natively with zero format instructions. `decode()` converts back to JSON when a human needs to see it. Your existing JSON schemas and validators work on the decoded output unchanged.
 
@@ -75,7 +75,7 @@ GCF profile=generic
 3|Carol|Marketing|85000
 ```
 
-One header declares field names. Rows are positional values only. No field names repeated per record. Lossless: `decode(encode(value)) == value` for every JSON value, proven across 1B+ random round-trips and 7.9M fuzz executions.
+One header declares field names. Rows are positional values only. No field names repeated per record. Lossless: `decode(encode(value)) == value` for every JSON value, proven across 1,000,000,000+ random round-trips and 7.9M fuzz executions.
 
 ### Graph profile (code intelligence, knowledge graphs, MCP tools)
 
@@ -155,7 +155,7 @@ No other format has these. They compound across multi-turn agent interactions.
 
 Zero runtime dependencies. MIT licensed. All implementations support both generic profile (`encodeGeneric`) and graph profile (`encode`). CLI included in all 6 languages. Syntax highlighting via tree-sitter (Neovim, Helix, Zed).
 
-**Specification:** [SPEC v3.0 Stable](SPEC.md) with 156 conformance fixtures, 1B+ lossless round-trips verified across 6 languages. Six implementations at v2.0.0. Cross-language 6x6 matrix verified.
+**Specification:** [SPEC v3.0 Stable](SPEC.md) with 156 conformance fixtures, 1,000,000,000+ lossless round-trips verified across 6 languages. Six implementations at v2.0.0. Cross-language 6x6 matrix verified.
 
 ## Documentation
 

@@ -62,4 +62,4 @@ jsonschema.validate(data, existing_schema)
 
 ## How stable is the spec?
 
-[Spec v2.0](https://github.com/blackwell-systems/gcf/blob/main/SPEC.md) is designated Stable. Six implementations at v2.0.0, 156 conformance fixtures, 1B+ lossless round-trips verified across all 6 languages, cross-language matrix passing.
+[Spec v2.0](https://github.com/blackwell-systems/gcf/blob/main/SPEC.md) is designated Stable. Six implementations at v2.0.0, 156 conformance fixtures, 1,000,000,000+ lossless round-trips verified across all 6 languages, cross-language matrix passing.

@@ -24,7 +24,7 @@ We benchmark against JSON and TOON (Token-Oriented Object Notation), a tabular e
 
 **Token efficiency:** 25.5% fewer tokens than TOON and 53% fewer than JSON across 15 real-world datasets (13/15 wins). On nested data specifically, 30-38% fewer than TOON.
 
-Session deduplication (92.7% savings by the 5th call) and delta encoding (81.2% on re-queries) compound savings across multi-turn interactions. A streaming encoding extension enables zero-buffering encode with O(1) memory per row. The format is implemented in six languages (all at v2.0.0), verified across 1B+ property-based round-trips, with a cross-language 6x6 encode/decode matrix passing. A bidirectional MCP proxy with session dedup, HTTP backend/frontend, and response caching enables zero-code adoption. JSON Schema validation works on decoded output unchanged. Specification v3.0 Stable: gcformat.com.
+Session deduplication (92.7% savings by the 5th call) and delta encoding (81.2% on re-queries) compound savings across multi-turn interactions. A streaming encoding extension enables zero-buffering encode with O(1) memory per row. The format is implemented in six languages (all at v2.0.0), verified across 1,000,000,000+ property-based round-trips, with a cross-language 6x6 encode/decode matrix passing. A bidirectional MCP proxy with session dedup, HTTP backend/frontend, and response caching enables zero-code adoption. JSON Schema validation works on decoded output unchanged. Specification v3.0 Stable: gcformat.com.
 
 ![100% on standard workloads (6 frontier models), 90.5% under structural stress (10 models, 23 runs). 1,700+ evaluations across 3 providers.](public/charts/hero.png)
 
@@ -316,7 +316,7 @@ TOON cannot add streaming without a breaking spec change (their grammar mandates
 
 ## 4. Implementation Status
 
-GCF is not a speculative format proposal. It is implemented in six languages, all at v2.0.0 (Go v1.1.0), published to seven package registries, covered by 156 conformance fixtures, verified across 1B+ property-based round-trips, and deployed in production MCP servers including a Linux Foundation project (Open Data Products SDK).
+GCF is not a speculative format proposal. It is implemented in six languages, all at v2.0.0 (Go v1.1.0), published to seven package registries, covered by 156 conformance fixtures, verified across 1,000,000,000+ property-based round-trips, and deployed in production MCP servers including a Linux Foundation project (Open Data Products SDK).
 
 The implementation includes:
 
@@ -335,7 +335,7 @@ The implementation includes:
 
 All six implementations are tested against round-trip invariants and the shared conformance suite. A graph response encoded as GCF and decoded back must preserve node identity, kind, score, provenance, group membership, edge direction, edge type, and optional status metadata. The generic profile is validated against additional fixtures covering flat arrays, nested objects, value formatting, primitive array inlining, and edge cases.
 
-- **1B+ property-based round-trips** across all 6 languages (random + adversarial value generators): Go 477M, Swift 171M, TypeScript 141M, Rust 105M, Kotlin 61M, Python 51M
+- **1,000,000,000+ property-based round-trips** across all 6 languages (random + adversarial value generators): Go 477M, Swift 171M, TypeScript 141M, Rust 105M, Kotlin 61M, Python 51M
 - **19 fuzz-discovered bugs** fixed during development (empty string field names, quote-aware bracket parsing, C1 controls, Unicode whitespace, shared schema validation, grapheme clustering)
 - **156 conformance fixtures** across both profiles, inline schemas, streaming, and normative error cases
 - **6x6 cross-language encode/decode matrix** verified (each encoder's output decoded by every other decoder)
@@ -670,7 +670,7 @@ GCF is bidirectional. 1,700+ LLM evaluations across 10+ models and 3 providers p
 
 At production scale (1000 records), the advantage becomes existential: JSON (161K tokens) doesn't fit in a 200K context window. TOON (84K) also exceeds the effective limit on some models. GCF (47K) is the only format that works. Format efficiency is not an optimization; at scale, it is a hard requirement.
 
-The format is text-based, LLM-optimized, and implementable in any language. Implementations exist in six languages (Go, TypeScript, Python, Rust, Swift, Kotlin), all at v2.0.0 with CLIs, zero or minimal runtime dependencies, and 1B+ verified lossless round-trips. A bidirectional MCP proxy enables adoption with zero code changes: session dedup (40% savings proven e2e), proxy-level delta encoding (68% savings on incremental changes), HTTP backend/frontend for remote deployment, response caching, and streaming progress notifications. JSON Schema validation works on decoded output unchanged, eliminating the primary enterprise adoption objection. A Linux Foundation project (Open Data Products SDK) has adopted GCF for agent-ready context workflows.
+The format is text-based, LLM-optimized, and implementable in any language. Implementations exist in six languages (Go, TypeScript, Python, Rust, Swift, Kotlin), all at v2.0.0 with CLIs, zero or minimal runtime dependencies, and 1,000,000,000+ verified lossless round-trips. A bidirectional MCP proxy enables adoption with zero code changes: session dedup (40% savings proven e2e), proxy-level delta encoding (68% savings on incremental changes), HTTP backend/frontend for remote deployment, response caching, and streaming progress notifications. JSON Schema validation works on decoded output unchanged, eliminating the primary enterprise adoption objection. A Linux Foundation project (Open Data Products SDK) has adopted GCF for agent-ready context workflows.
 
 The broader point: GCF is a wire format. Wire formats are not optimized for human readability. HTTP headers are not readable. Protobuf is not readable. Nobody cares; they use a viewer. GCF is the wire format; JSON is the viewer format. The agent reads GCF (cheap, accurate), does its work, then calls `decode()` at the end if a human needs to see the result. Human readability is a last-mile rendering concern, not a wire format property.
 
