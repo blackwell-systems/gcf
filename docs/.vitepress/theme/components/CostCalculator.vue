@@ -298,12 +298,14 @@ function formatCurrencyMonth(n: number): string {
 .annual-amount.vs-json {
   font-size: 2.8rem;
   color: #22c55e;
+  margin-bottom: 0.5rem;
 }
 
 .annual-amount.vs-toon {
   font-size: 1.8rem;
   color: #2563eb;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .annual-versus {
