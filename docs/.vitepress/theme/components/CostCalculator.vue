@@ -365,6 +365,11 @@ function formatCurrencyMonth(n: number): string {
 
 .annual-pct.vs-json {
   color: #22c55e;
+  font-size: 1.3rem;
+  background: rgba(34, 197, 94, 0.1);
+  display: inline-block;
+  padding: 0.2rem 0.75rem;
+  border-radius: 6px;
 }
 
 .annual-pct.vs-toon {
