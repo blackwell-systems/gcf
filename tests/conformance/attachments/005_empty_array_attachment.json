@@ -16,6 +16,6 @@
       }
     ]
   },
-  "expected": "GCF profile=generic\n## rows [2]{id,tags}\n@0 1|^\n  .tags [0]\n@1 2|^\n  .tags [2]: a,b\n",
+  "expected": "GCF profile=generic\n## rows [2]{id,tags}\n@0 1|^\n.tags [0]\n@1 2|^\n.tags [2]: a,b\n",
   "operation": "encode"
 }

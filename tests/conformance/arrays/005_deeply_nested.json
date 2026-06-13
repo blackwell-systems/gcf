@@ -19,6 +19,6 @@
       }
     ]
   },
-  "expected": "GCF profile=generic\nname=root\n## children [1]{type,members}\n@0 group|^\n  .members [2]{id,role}\n    1|admin\n    2|user\n",
+  "expected": "GCF profile=generic\nname=root\n## children [1]{type,members}\n@0 group|^\n.members [2]{id,role}\n    1|admin\n    2|user\n",
   "operation": "encode"
 }

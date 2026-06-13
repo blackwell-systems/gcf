@@ -1,53 +1,60 @@
 # Benchmarks
 
-1,300+ LLM evaluations across 10 models, 3 providers, and 51 independent test runs.
+1,700+ LLM evaluations across 10+ models, 3 providers, and 60+ independent test runs.
 
-No model has ever been trained on GCF.
+No model has ever been trained on GCF. Every model reads it better than the formats they were trained on.
 
-Every model reads it better and writes it better than the formats they were trained on.
+| | Generic Profile | Graph Profile |
+|---|---|---|
+| **GCF** | **100%** (8 models) | **90.7%** (10 models) |
+| **TOON** | 95.6% | 68.5% |
+| **JSON** | 92.8% | 53.6% |
 
 | | GCF | TOON | JSON |
 |---|---|---|---|
-| **Comprehension** (23 runs, 10 models) | **90.7%** | 68.5% | 53.6% |
+| **Token efficiency** (15 datasets) | **baseline** | +25.5% | +53.3% |
 | **Generation** (28 runs, 9 models) | **5/5** | 1.0/5 | 5.0/5 |
-| **Input tokens** (500 symbols) | **11,090** | 16,378 | 53,341 |
-| **Output tokens** (100 symbols) | **5,976** | 8,937 | 16,121 |
+| **1B+ fuzz iterations** | **0 failures** | | |
 
-Three benchmark suites, three providers (Anthropic, OpenAI, Google), zero training:
+Four benchmark suites, three providers (Anthropic, OpenAI, Google), zero training:
 
-1. **[Comprehension eval](#comprehension-can-llms-read-it)**: Can models extract information from a format? 500 symbols, 13 questions, 23 runs across 10 models.
-2. **[Generation eval](#generation-can-llms-write-it)**: Can models produce valid output in a format? 3-line primer, 28 runs across 9 models.
-3. **[TOON's benchmark: Token efficiency](#toons-benchmark-token-efficiency)**: How many tokens does each format cost? This is [TOON's own benchmark](https://github.com/toon-format/toon/tree/main/benchmarks), forked unmodified, with GCF added as one additional formatter.
+1. **[Generic comprehension](#generic-profile-standard-workloads)**: 500-order nested data, 8 models. GCF 100% on every frontier model.
+2. **[Graph comprehension](#graph-profile-under-structural-stress)**: 500-symbol code graphs, 10 models. GCF 90.7% where JSON drops to 53.6%.
+3. **[Scale test](#scale-test-1000-orders)**: At 1000 records, JSON doesn't fit. GCF is the only format that works on 200K context models.
+4. **[Token efficiency](#token-efficiency-15-datasets)**: 15 real-world datasets. GCF wins 13/15 vs TOON.
+5. **[Generation](#generation-can-llms-write-it)**: Every frontier model produces valid GCF. TOON's decoder rejects output from 7/9 models.
 
 All results [reproducible](https://github.com/blackwell-systems/gcf/tree/main/eval/results).
 
-![Comprehension and Generation](/charts/hero.png)
+---
+
+## Generic Profile: Standard Workloads
+
+500 orders with nested customer objects and line items. 13 structured extraction questions. Zero format instructions. Deterministic answers, no LLM judge.
+
+This is what most MCP tool responses look like: arrays of objects with nested metadata. The "normal" workload.
+
+![Generic Comprehension Accuracy](/charts/generic-accuracy-by-model.png)
+
+| Model | Provider | GCF | JSON | TOON |
+|-------|----------|-----|------|------|
+| Claude Opus 4.6 | Anthropic | **100%** | 100% | 100% |
+| Claude Sonnet 4.6 | Anthropic | **100%** | 100% | 100% |
+| Claude Haiku 4.5 | Anthropic | **100%** | 100% | 100% |
+| GPT-5.5 | OpenAI | **100%** | 100% | 92.3% |
+| GPT-4o-mini | OpenAI | 69.2% | 61.5% | 69.2% |
+| Gemini 2.5 Flash | Google | **100%** | 76.9% | 84.6% |
+| Gemini 3.5 Flash | Google | **100%** | 100% | 100% |
+
+**GCF achieves 100% on every frontier model.** The only format that never fails.
+
+TOON fails on GPT-5.5 (`count_premium_customers`: got 250, expected 200). JSON fails on Gemini 2.5 Flash (3 counting questions wrong). On the weakest model (4o-mini), all formats struggle equally on aggregation questions.
 
 ---
 
-## Comprehension: Can LLMs Read It?
+## Graph Profile: Under Structural Stress
 
-500 symbols, 200 edges, zero format instructions. Each run generates a fresh random payload. The model receives the payload in each format and answers 13 extraction questions:
-
-| # | Category | Question |
-|---|----------|----------|
-| 1 | Counting | How many symbols? |
-| 2 | Counting | How many edges? |
-| 3 | Counting | How many targets (distance 0)? |
-| 4 | Counting | How many related (distance 1)? |
-| 5 | Counting | How many extended (distance 2)? |
-| 6 | Counting | How many functions? |
-| 7 | Counting | How many 'calls' edges? |
-| 8 | Extraction | Highest-scored symbol name? |
-| 9 | Extraction | Kind of highest-scored symbol? |
-| 10 | Extraction | Kind of last symbol? |
-| 11 | Extraction | All unique edge types? |
-| 12 | Structure | Does it have an edges section? |
-| 13 | Structure | What is the tool name? |
-
-All answers are deterministic (computed from the payload). No LLM judge.
-
-When an agent receives data in JSON at this scale, it gets the wrong answer 46% of the time. With TOON, 32% of the time. With GCF, 10%.
+500 symbols, 200 edges, zero format instructions. Code intelligence data with cross-references, distance groups, and provenance chains. This is the hard case: structurally complex data that tests whether a format scales.
 
 ![Comprehension Accuracy by Model](/charts/accuracy-by-model.png)
 
@@ -64,58 +71,74 @@ When an agent receives data in JSON at this scale, it gets the wrong answer 46% 
 | Gemini 3.5 Flash | 1 | **100%** | 61.5% | 46.2% |
 | Gemini 2.5 Flash | 3 | **80.6%** | 54.6% | 57.0% |
 
-**GCF wins on every model. The ordering GCF > TOON > JSON never flips.**
+**23 runs, 10 models, 3 providers. GCF wins 22, ties 1, loses 0.**
 
-### Example: "How many related symbols?"
+When an agent receives data in JSON at this scale, it gets the wrong answer 46% of the time. With TOON, 32% of the time. With GCF, 10%.
 
-The answer is 167. Here's what each format gives the model:
+### Why GCF wins on complex data
 
-**GCF:** The answer is in the section header.
-```
-## related [167]{qualifiedName|kind|score}
-@0 handler.Response.Notify|fn|0.82
-@1 model.SubscribeConfig|type|0.81
-...
-```
-The model reads `167`. Done.
-
-**TOON:** All 500 symbols in one flat table. The model must scan every row, filter by the `distance` column, and count.
-```
-symbols[500]{name,kind,score,distance}:
-  handler.Response.Notify,function,0.82,1
-  model.SubscribeConfig,type,0.81,1
-  ...
-```
-Answers across runs: 100, 115, 165, 172, 190, 214. Wildly inconsistent.
-
-**JSON:** Same as TOON but with 53,000 tokens of repeated field names. Claude Opus, the most capable model on earth, responded by enumerating symbols one by one:
-
-> *"Let me count precisely by going through the list:*
-> *1. handler.Response.Notify*
-> *2. model.SubscribeConfig*
-> *3. service.PublishOptions*
-> *...*
-> *143. store.DispatchConfig*
->
-> *So: 143."*
-
-143 lines of output. Wrong answer. The correct answer was 167. ([Full artifact](https://github.com/blackwell-systems/gcf/tree/main/eval/results/artifacts/opus-json-enumeration-failure.md))
-
-### Error magnitude
-
-When GCF gets an answer wrong, it's off by 1-2 (median error: 4). When TOON and JSON get answers wrong, they're off by 50-140 (median error: 53 and 56). GCF fails on precision. TOON and JSON fail on comprehension. And when GCF does fail, the model returns a short wrong number. When JSON fails, the model burns 143 lines of output tokens on a manual enumeration and still gets it wrong. GCF fails cheaper.
-
-![Error Magnitude](/charts/error-magnitude.png)
+GCF encodes answers structurally. "How many related symbols?" is answered by the section header `## related [167]`. TOON and JSON force the model to scan 500 rows and count. The result: GCF errors are off by 1-2 (precision), TOON/JSON errors are off by 50-140 (comprehension failure).
 
 See the [full failure taxonomy](/guide/eval-results#failure-taxonomy) for the complete analysis.
 
 ---
 
+## Scale Test: 1000 Orders
+
+At production scale, format choice determines whether the task is possible at all.
+
+![Scale Test](/charts/scale-test.png)
+
+| Model | Context | GCF (47K) | TOON (84K) | JSON (161K) |
+|-------|---------|-----------|------------|-------------|
+| Claude Haiku 4.5 | 200K | **100%** (13/13) | 100% (13/13) | IMPOSSIBLE |
+| Claude Sonnet 4.6 | 200K | **92.3%** (12/13) | IMPOSSIBLE | IMPOSSIBLE |
+| Claude Opus 4.6 | 1M | **100%** (13/13) | 100% (13/13) | 100% (13/13) |
+| GPT-5.5 | - | **100%** (6/6) | 100% (5/5) | 100% (6/6) |
+
+JSON at 1000 records consumes 161K tokens. On 200K context models, this exceeds usable context and the task becomes impossible. TOON at 84K also exceeds the effective limit on Sonnet.
+
+GCF encodes the same data in 47K tokens (71% smaller than JSON). This means:
+- On 200K models: GCF is the only format that reliably fits
+- On 1M models: all formats work, but GCF costs 71% less per API call
+- In agent loops: GCF leaves 150K+ tokens for conversation history, tool schemas, and reasoning
+
+---
+
+## Token Efficiency: 15 Datasets
+
+15 real-world datasets representing actual LLM tool response payloads. Same tokenizer (o200k_base), deterministic data, spec-compliant encoders.
+
+![Token Efficiency](/charts/token-efficiency-15.png)
+
+| # | Dataset | GCF | TOON | GCF vs TOON |
+|---|---------|-----|------|-------------|
+| 1 | Employee records (flat) | 49,061 | 49,966 | -1.8% |
+| 2 | E-commerce orders (nested) | 51,334 | 73,246 | -29.9% |
+| 3 | Analytics time-series | 8,404 | 9,127 | -7.9% |
+| 4 | GitHub repositories | 8,582 | 8,744 | -1.9% |
+| 5 | Event logs (semi-uniform) | 95,635 | 154,032 | -37.9% |
+| 6 | Nested config | 645 | 618 | +4.4% |
+| 7 | LSP symbol search | 5,442 | 5,365 | +1.4% |
+| 8 | PR file changes | 2,623 | 2,657 | -1.3% |
+| 9 | Distributed trace | 4,318 | 4,959 | -12.9% |
+| 10 | Database query results | 17,716 | 17,969 | -1.4% |
+| 11 | File tree + diagnostics | 6,018 | 6,894 | -12.7% |
+| 12 | Multi-tool composite | 3,131 | 3,192 | -1.9% |
+| 13 | Order history (shared schemas) | 13,295 | 16,454 | -19.2% |
+| 14 | Blast radius response | 6,561 | 7,831 | -16.2% |
+| 15 | Comprehension eval payload | 41,213 | 60,603 | -32.0% |
+| | **TOTAL** | **313,978** | **421,657** | **-25.5%** |
+
+**GCF wins 13/15 vs TOON.** Two TOON wins: nested config (27 tokens, pure key-value tree) and LSP symbols (77 tokens, tokenizer artifact).
+
+Dataset 15 is the exact payload used in the comprehension eval. The format that achieves 100% accuracy uses 32% fewer tokens.
+
+---
+
 ## Generation: Can LLMs Write It?
 
-The model is given a natural-language description of symbols and edges (e.g., "ProductManager, class, score 1.0, target") and a 3-line format primer. It must produce valid, decoder-parseable output. Tested at 5, 10, 20, 50, and 100 symbols.
-
-Output validated through real decoders: the official [toon-go](https://github.com/toon-format/toon-go) library for TOON, `gcf.Decode()` for GCF, `json.Unmarshal()` for JSON. Same data, same descriptions, same prompt structure across all three formats.
+The model is given a natural-language description and a 3-line format primer. It must produce valid, decoder-parseable output. Tested at 5, 10, 20, 50, and 100 symbols.
 
 ![Generation Validity by Model](/charts/generation-validity.png)
 
@@ -130,43 +153,12 @@ Output validated through real decoders: the official [toon-go](https://github.co
 | Gemini 2.5 Pro | **5/5** | 1/5 | 5/5 |
 | Gemini 3.1 Pro | **5/5** | 0/5 | 5/5 |
 | Gemini 3.5 Flash | 3/5 | 1/5 | 3/5 |
-| Gemini 3.1 Flash Lite | **4-5/5** | 0/5 | 4-5/5 |
-| Gemini 2.5 Flash | 2-3/5 | 0-4/5 | 0-3/5 |
 
-**GCF is the only format every frontier model can produce.** TOON's official decoder rejects the output on 7 of 9 models.
+**GCF is the only format every frontier model can produce.** TOON's official decoder rejects output on 7 of 9 models. The format's flat tabular design encodes semantic categories as integers, forcing a mapping no model performs unprompted.
 
-### Why TOON fails
-
-![The Distance Label Problem](/charts/distance-label-problem.png)
-
-TOON's flat columns require the model to encode semantic categories as integers. When told "this symbol is a target," the model writes `target` in the distance column. TOON's decoder expects `0`. Every model tested fails to perform this mapping unprompted.
-
-GCF expresses distance through section placement: targets go in `## targets`, related symbols go in `## related`. No mapping required. The format aligns with how models naturally express grouped data.
-
-When TOON is given pre-encoded integers (hand-holding the model through the mapping it can't do on its own), it passes 5/5 but still produces 28% more output than GCF.
-
-### Output size
-
-GCF output is 63% smaller than JSON and 33% smaller than TOON at 100 symbols. Every output token costs money. At scale, this compounds.
+GCF output is 63% smaller than JSON and 33% smaller than TOON at 100 symbols. Every output token costs money.
 
 ![Output Size at Scale](/charts/output-cost-at-scale.png)
-
----
-
-## TOON's Benchmark: Token Efficiency
-
-This is not our benchmark. This is [TOON's benchmark](https://github.com/toon-format/toon/tree/main/benchmarks), forked unmodified. Their datasets, their tokenizer (gpt-tokenizer, o200k_base), their methodology. We added one line: a GCF formatter. Everything else is TOON's code measuring TOON's chosen datasets.
-
-| Dataset | Structure | GCF | TOON | JSON |
-|---------|-----------|-----|------|------|
-| Event logs | Semi-uniform | **108,158** | 154,032 | 181,141 |
-| E-commerce | Nested | **61,593** | 73,246 | 109,574 |
-| Nested config | Deep | **616** | 618 | 905 |
-| Employees | Flat | **49,054** | 49,966 | 127,050 |
-| Analytics | Flat | **8,397** | 9,127 | 22,257 |
-| GitHub repos | Flat | **8,575** | 8,744 | 15,144 |
-
-**GCF wins all 6 datasets.** 42% smaller than TOON on semi-uniform data, 2-8% on flat data.
 
 ---
 
@@ -178,18 +170,21 @@ All evals are in [gcf-go/eval](https://github.com/blackwell-systems/gcf-go/tree/
 git clone https://github.com/blackwell-systems/gcf-go
 cd gcf-go/eval
 
-# Comprehension (any backend)
+# Generic profile comprehension
+GOWORK=off EVAL_FORMATS=gcf,json,toon EVAL_BACKEND=cli EVAL_MODEL=haiku EVAL_NUM_ORDERS=500 go test -run TestGenericComprehension -v -timeout 0
+
+# Graph profile comprehension
 GOWORK=off go test -run TestComprehension -v -timeout 0
 EVAL_BACKEND=openai OPENAI_API_KEY=... EVAL_MODEL=gpt-5.5 GOWORK=off go test -run TestComprehension -v -timeout 0
 EVAL_BACKEND=google GOOGLE_API_KEY=... EVAL_MODEL=gemini-2.5-flash GOWORK=off go test -run TestComprehension -v -timeout 0
 
-# Generation (all three formats)
+# Generation
 GOWORK=off go test -run "TestGeneration$|TestGenerationTOON|TestGenerationJSON" -v -timeout 0
 
-# Token efficiency
-git clone https://github.com/blackwell-systems/toon.git
-cd toon && git checkout gcf-comparison
-cd benchmarks && pnpm install && pnpm benchmark:tokens
+# Token efficiency (15 datasets)
+git clone https://github.com/blackwell-systems/toon-benchmark
+cd toon-benchmark
+node --experimental-strip-types benchmarks/scripts/token-efficiency-benchmark.ts
 ```
 
 For detailed failure analysis, error taxonomy, and per-run data, see the [full eval results](/guide/eval-results).

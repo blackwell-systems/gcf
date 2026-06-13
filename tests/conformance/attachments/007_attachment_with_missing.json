@@ -18,6 +18,6 @@
       }
     ]
   },
-  "expected": "GCF profile=generic\n## items [2]{id,data,extra}\n@0 1|^|a\n  .data {}\n    x=1\n@1 2|^|~\n  .data {}\n    x=2\n",
+  "expected": "GCF profile=generic\n## items [2]{id,data,extra}\n@0 1|^|a\n.data {}\n    x=1\n@1 2|^|~\n.data {}\n    x=2\n",
   "operation": "encode"
 }

@@ -16,6 +16,6 @@
       }
     ]
   },
-  "expected": "GCF profile=generic\n## rows [2]{id,meta}\n1|simple\n@1 2|^\n  .meta {}\n    type=complex\n    version=2\n",
+  "expected": "GCF profile=generic\n## rows [2]{id,meta}\n1|simple\n@1 2|^\n.meta {}\n    type=complex\n    version=2\n",
   "operation": "encode"
 }

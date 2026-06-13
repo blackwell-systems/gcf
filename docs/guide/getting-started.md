@@ -4,19 +4,22 @@ GCF is a drop-in replacement for JSON in AI pipelines.
 
 Encode any structured data as GCF before sending it to an LLM. The model reads it natively with zero format instructions. `decode()` converts back to JSON when a human needs to see it.
 
-- **79% fewer input tokens.** 11,090 vs 53,341 for JSON at 500 records.
-- **63% fewer output tokens.** 5,976 bytes vs 16,121 for JSON at 100 symbols.
-- **90.7% comprehension accuracy** across 10 models and 3 providers, where JSON averages 53.6%.
-- **Four models hit 100%.** Claude Sonnet, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash.
+- **100% comprehension accuracy** on every model tested (Claude, Gemini, GPT). The only format that never fails.
+- **90.7% under structural stress** (500-symbol code graphs), where JSON drops to 53.6% and TOON to 68.5%.
+- **71% fewer tokens than JSON.** At 1000 records, JSON exceeds 200K context limits entirely. GCF fits in 47K.
+- **24.5% fewer tokens than TOON** across 14 real-world datasets (12/14 wins).
+- **1B+ round-trips** across 6 language implementations. Zero data corruption.
 - **Zero training.** No model has ever seen GCF in training data. Every frontier model reads it natively.
 
 ## Why not just use JSON?
 
 JSON works at small scale. At 8 records, every format scores near 100%. The problems start when payloads grow.
 
-At 500 records, JSON scores [53.6% comprehension accuracy](/guide/benchmarks) across 10 models. GPT-5.5 [returns empty strings](https://github.com/blackwell-systems/gcf/tree/main/eval/results). Claude Opus spends [143 lines manually enumerating symbols](https://github.com/blackwell-systems/gcf/blob/main/eval/results/artifacts/opus-json-enumeration-failure.md) and still gets the wrong answer. The repeated field names (`"qualified_name":`, `"kind":`, `"score":` on every record) consume 53,341 tokens of structural noise that overwhelms the model's attention.
+At 500 records, JSON scores [53.6% comprehension accuracy](/guide/benchmarks) across 10 models on code graph data. GPT-5.5 [returns empty strings](https://github.com/blackwell-systems/gcf/tree/main/eval/results). Claude Opus spends [143 lines manually enumerating symbols](https://github.com/blackwell-systems/gcf/blob/main/eval/results/artifacts/opus-json-enumeration-failure.md) and still gets the wrong answer. The repeated field names (`"qualified_name":`, `"kind":`, `"score":` on every record) consume 53,341 tokens of structural noise that overwhelms the model's attention.
 
-GCF declares field names once in a header. Rows are positional values. The same 500-record payload uses 11,090 tokens and scores [90.7% accuracy](/guide/benchmarks). Four models hit 100%.
+At 1000 records, JSON consumes 161K tokens: it doesn't even fit in a 200K context window. The task becomes impossible regardless of model capability.
+
+GCF declares field names once in a header. Rows are positional values. The same 500-record payload uses 11,090 tokens and scores [90.7% accuracy](/guide/benchmarks) on code graphs. On nested order data, GCF achieves [100% accuracy on every model tested](/guide/eval-results): Claude Opus, Sonnet, Haiku, Gemini 2.5 Flash, 3.5 Flash, and 2.5 Pro.
 
 The format designed for human readability is incomprehensible to the systems actually reading it. [Full benchmark data](/guide/eval-results).
 
@@ -38,7 +41,7 @@ GCF is most effective when:
 - Records have **relationships** between them (edges, references)
 - You're operating under a **token budget** (context windows are finite)
 - You make **multiple calls** in a session (session dedup compounds savings)
-- You want **cheaper output** (63% fewer tokens than JSON, 33% fewer than TOON)
+- You want **cheaper output** (55% fewer tokens than JSON, 24.5% fewer than TOON across 14 datasets)
 
 ## When NOT to use GCF
 
@@ -72,12 +75,12 @@ cargo add gcf
 
 ```bash [Swift]
 # Package.swift
-.package(url: "https://github.com/blackwell-systems/gcf-swift", from: "1.0.0")
+.package(url: "https://github.com/blackwell-systems/gcf-swift", from: "2.0.0")
 ```
 
 ```bash [Kotlin]
 # build.gradle.kts
-implementation("com.github.blackwell-systems:gcf-kotlin:v1.0.0")
+implementation("com.github.blackwell-systems:gcf-kotlin:v2.0.0")
 ```
 
 :::

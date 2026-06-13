@@ -20,6 +20,6 @@
       }
     ]
   },
-  "expected": "GCF profile=generic\n## items [2]{id,name,tags}\n@0 1|Alice|^\n  .tags [2]: admin,active\n@1 2|Bob|^\n  .tags [1]: user\n",
+  "expected": "GCF profile=generic\n## items [2]{id,name,tags}\n@0 1|Alice|^\n.tags [2]: admin,active\n@1 2|Bob|^\n.tags [1]: user\n",
   "operation": "encode"
 }

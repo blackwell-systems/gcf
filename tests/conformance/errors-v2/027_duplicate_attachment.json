@@ -1,7 +1,7 @@
 {
   "name": "duplicate_attachment",
   "description": "A row field may have exactly one matching attachment",
-  "input": "GCF profile=generic\n## rows [1]{id,meta}\n@0 1|^\n  .meta {}\n  .meta {}\n",
+  "input": "GCF profile=generic\n## rows [1]{id,meta}\n@0 1|^\n.meta {}\n.meta {}\n",
   "expectedError": "duplicate_attachment",
   "operation": "error"
 }

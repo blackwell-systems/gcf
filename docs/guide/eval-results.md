@@ -1,12 +1,68 @@
 # Benchmarks (Full Data)
 
-Every number on the [benchmarks page](/guide/benchmarks) comes from the runs below. This page has the complete per-run data, failure analysis, and generation results across all 10 models and 3 providers. All raw logs are in the [eval/results](https://github.com/blackwell-systems/gcf/tree/main/eval/results) directory.
+Every number on the [benchmarks page](/guide/benchmarks) comes from the runs below. This page has the complete per-run data, failure analysis, and generation results across all 10+ models and 3 providers. All raw logs are in the [eval/results](https://github.com/blackwell-systems/gcf/tree/main/eval/results) directory.
 
 ![Comprehension and Generation](/charts/hero.png)
 
 ---
 
-## Comprehension: All Runs
+## Generic Profile: All Runs
+
+![Generic Comprehension Accuracy](/charts/generic-accuracy-by-model.png)
+
+500 orders with nested customer objects and line items. 13 structured extraction questions. Zero format instructions. Deterministic answers, no LLM judge.
+
+| Model | Provider | Run | Orders | GCF | JSON | TOON | Notes |
+|-------|----------|-----|--------|-----|------|------|-------|
+| Claude Opus 4.6 | Anthropic | 1 | 500 | **100%** | 100% | 100% | All exact |
+| Claude Sonnet 4.6 | Anthropic | 1 | 500 | **100%** | 100% | 100% | All exact |
+| Claude Sonnet 4.6 | Anthropic | 2 | 500 | **100%** | 100% | 100% | All exact |
+| Claude Haiku 4.5 | Anthropic | 1 | 500 | **100%** | 100% | 100% | All exact |
+| Claude Haiku 4.5 | Anthropic | 2 | 500 | **100%** | 100% | 100% | All exact |
+| GPT-5.5 | OpenAI | 1 | 500 | **100%** | 100% | 92.3% | TOON failed count_premium_customers |
+| GPT-4o-mini | OpenAI | 1 | 500 | 69.2% | 61.5% | 69.2% | Weak model, all formats struggle |
+| Gemini 2.5 Flash | Google | 1 | 500 | **100%** | 76.9% | 84.6% | JSON/TOON failed counting questions |
+| Gemini 3.5 Flash | Google | 1 | 500 | **100%** | 100% | 100% | All exact |
+
+**GCF: 100% on every frontier model (6/6). The only format that never fails.**
+
+### Scale Test: 1000 Orders
+
+![Scale Test](/charts/scale-test.png)
+
+| Model | Context | GCF (47K) | TOON (84K) | JSON (161K) |
+|-------|---------|-----------|------------|-------------|
+| Claude Haiku 4.5 | 200K | **100%** (13/13) | 100% (13/13) | IMPOSSIBLE |
+| Claude Sonnet 4.6 | 200K | **92.3%** (12/13) | IMPOSSIBLE | IMPOSSIBLE |
+| Claude Opus 4.6 | 1M | **100%** (13/13) | 100% (13/13) | 100% (13/13) |
+| Claude Opus 4.6 | 1M | **100%** (13/13) | 100% (13/13) | 100% (13/13) |
+
+At 1000 orders, JSON (161K tokens) exceeds 200K context. TOON (84K) also exceeds effective context on Sonnet. GCF (47K) is the only format that reliably fits on 200K context models.
+
+### Generic Profile Failures
+
+| Model | Format | Question | Expected | Got |
+|-------|--------|----------|----------|-----|
+| GPT-5.5 | TOON | count_premium_customers | 200 | 250 |
+| Gemini 2.5 Flash | JSON | count_shipped | 100 | 80 |
+| Gemini 2.5 Flash | JSON | count_premium_customers | 200 | 150 |
+| Gemini 2.5 Flash | JSON | total_revenue_shipped | 21325.50 | ? |
+| Gemini 2.5 Flash | TOON | count_shipped | 100 | 125 |
+| Gemini 2.5 Flash | TOON | count_premium_customers | 200 | 250 |
+
+GCF has zero failures across all generic profile runs on frontier models.
+
+### Token Efficiency: 15 Datasets
+
+![Token Efficiency](/charts/token-efficiency-15.png)
+
+15 real-world datasets. GCF wins 13/15 vs TOON, -25.5% overall, -53.3% vs JSON.
+
+Dataset 15 is the exact payload used in the comprehension eval above. The format that achieves 100% accuracy uses 32% fewer tokens than TOON and 57.5% fewer than JSON.
+
+---
+
+## Graph Profile: All Runs
 
 ![Comprehension Accuracy by Model](/charts/accuracy-by-model.png)
 

@@ -21,6 +21,6 @@
       }
     ]
   },
-  "expected": "GCF profile=generic\n## orders [2]{id,total,customer}\n@0 1|249.99|^\n  .customer {}\n    name=Alice\n    tier=premium\n@1 2|89.5|^\n  .customer {}\n    name=Bob\n    tier=standard\n",
+  "expected": "GCF profile=generic\n## orders [2]{id,total,customer}\n@0 1|249.99|^\n.customer {}\n    name=Alice\n    tier=premium\n@1 2|89.5|^\n.customer {}\n    name=Bob\n    tier=standard\n",
   "operation": "encode"
 }
