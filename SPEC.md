@@ -35,7 +35,7 @@ GCF is a text-based, line-oriented wire format for encoding structured data in a
 GCF supports two encoding profiles:
 
 - **Generic profile** (Section 7): Encodes arbitrary structured data (objects, arrays, nested records, mixed types) as a lossless, token-efficient alternative to JSON. 34% fewer tokens than TOON on mixed-structure benchmarks.
-- **Graph profile** (Sections 4-6): Specialized encoding for code graph payloads (symbols, edges, distance groups) with local IDs and distance-based grouping. 79% fewer tokens than JSON at 500 symbols.
+- **Graph profile** (Sections 4-6): Specialized encoding for code graph payloads (symbols, edges, distance groups) with local IDs and distance-based grouping. 71-79% fewer tokens than JSON at 500 records.
 
 Both profiles share the same grammar primitives: `##` section headers, `@` local IDs, the common scalar grammar (Section 2), and the common key grammar (Section 2a). The savings come from eliminating three sources of waste: field name repetition (positional encoding), identifier repetition (local IDs), and per-record metadata (hierarchical grouping).
 
@@ -1297,7 +1297,7 @@ On TOON's own benchmark datasets: 34% fewer tokens on mixed-structure data, 44% 
 - **Shallow nesting.** The graph profile is flat. The generic profile supports nested objects and arrays, but typical nesting depth is 1-3 levels.
 - **Deterministic.** Same input produces same output. No randomness, no ordering ambiguity (symbols ordered by score descending, edges ordered by source then target, object keys in input order).
 - **Human-readable.** The format can be read and understood by a human without tooling.
-- **LLM-parseable.** The format can be parsed by an LLM without special instructions. Validated: 90.7% accuracy across 10 models and 3 providers on structured extraction tasks (23 comprehension runs, 1,300+ evaluations).
+- **LLM-parseable.** The format can be parsed by an LLM without special instructions. Validated: 100% accuracy on standard workloads (every frontier model), 90.7% on structurally complex code graphs (vs TOON 68.5%, JSON 53.6%). 1,700+ evaluations across 10+ models and 3 providers.
 
 ## 16. Conformance
 
