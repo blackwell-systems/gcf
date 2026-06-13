@@ -185,23 +185,41 @@ GCF profile=generic
 - Pipe `|` separator, no spaces
 - No `@id` on flat rows (only when nested fields need cross-referencing)
 
-### Tabular with nested fields
+### Tabular with nested fields (inline schema)
+
+When nested objects have 3+ scalar fields, they use inline schema encoding:
 
 ```
 ## orders [2]{id,total,status,customer}
-@0 1001|249.99|shipped|^
-  .customer {}
-    name=Alice Smith
-    tier=premium
+@0 1001|249.99|shipped|^{name,email,tier}
+Alice Smith|alice@example.com|premium
 @1 1002|89.50|pending|^
-  .customer {}
-    name=Bob Jones
-    tier=standard
+Bob Jones|bob@example.com|standard
 ```
 
 - `@{id}` prefix when rows have nested sub-objects
-- `.field {}` introduces a nested object attachment (cell uses `^` marker)
-- Nested fields use `key=value` pairs, indented
+- `^{fields}` on first row declares inline schema; subsequent rows use bare `^`
+- Attachment data follows on next line (positional, pipe-separated)
+
+### Tabular with nested fields (traditional)
+
+For objects with fewer than 3 fields or containing nested sub-objects:
+
+```
+## items [2]{id,metadata}
+@0 1001|^
+.metadata {}
+    source=api
+    version=2
+@1 1002|^
+.metadata {}
+    source=web
+    version=3
+```
+
+- `.field {}` introduces a nested object attachment
+- Attachment lines are at the same indent as the row (no extra indentation)
+- Nested fields use `key=value` pairs, indented under the attachment
 
 ### Primitive arrays (inline)
 
@@ -265,7 +283,8 @@ When array items are mixed types (not all objects with the same fields), use exp
 | Absent (tabular only) | tilde | `~` |
 | Attachment (tabular only) | caret | `^` |
 | Empty string | quoted | `""` |
-| String with `\|`, `,`, or newline | quoted | `"value\|with\|pipes"` |
+| String with `\|` or newline | quoted | `"value\|with\|pipes"` |
+| String with `,` in comma context | quoted | `"a,b"` (inline arrays only) |
 
 ### Complete tabular example
 
@@ -278,11 +297,11 @@ region=us-east-1
 3|Carol Wu|Marketing|85000|false
 ## projects [2]{id,title,lead,tags}
 @0 101|Auth Rewrite|Alice Smith|^
-  .tags {}
+.tags {}
     priority=high
     deadline=2026-Q3
 @1 102|Dashboard|Bob Jones|^
-  .tags {}
+.tags {}
     priority=medium
     deadline=2026-Q4
 ```
