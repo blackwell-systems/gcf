@@ -1,6 +1,6 @@
 # Implementations
 
-Six official implementations, all MIT licensed and zero runtime dependencies. The current v2 contract is defined by [141 conformance fixtures](https://github.com/blackwell-systems/gcf/tree/main/tests/conformance); implementation v2 conformance must be reported independently during migration.
+Six official implementations, all MIT licensed and zero runtime dependencies. The current v3 contract is defined by [156 conformance fixtures](https://github.com/blackwell-systems/gcf/tree/main/tests/conformance); implementation v2 conformance must be reported independently during migration.
 
 ## Official Implementations
 

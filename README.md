@@ -155,7 +155,7 @@ No other format has these. They compound across multi-turn agent interactions.
 
 Zero runtime dependencies. MIT licensed. All implementations support both generic profile (`encodeGeneric`) and graph profile (`encode`). CLI included in all 6 languages. Syntax highlighting via tree-sitter (Neovim, Helix, Zed).
 
-**Specification:** [SPEC v2.0 Stable](SPEC.md) with 141 conformance fixtures, 200M+ round-trip proofs, and 7.9M fuzz executions. Six implementations at v1.0.0+. Cross-language 5x5 matrix verified.
+**Specification:** [SPEC v3.0 Stable](SPEC.md) with 156 conformance fixtures, 1B+ lossless round-trips verified across 6 languages. Six implementations at v2.0.0. Cross-language 6x6 matrix verified.
 
 ## Documentation
 
