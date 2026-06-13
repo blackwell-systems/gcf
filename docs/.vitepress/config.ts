@@ -40,6 +40,7 @@ export default defineConfig({
           { text: 'Using GCF with LLMs', link: '/guide/llm-integration' },
           { text: 'MCP Integration', link: '/guide/mcp' },
           { text: 'MCP Proxy (Zero-Code)', link: '/guide/proxy' },
+          { text: 'Claude Code Plugin', link: '/guide/claude-code' },
           { text: 'Schema Validation', link: '/guide/schema-validation' },
           { text: 'FAQ', link: '/guide/faq' },
         ],
