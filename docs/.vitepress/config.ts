@@ -24,6 +24,7 @@ export default defineConfig({
   themeConfig: {
     nav: [
       { text: 'Playground', link: '/playground' },
+      { text: 'Cost Calculator', link: '/calculator' },
       { text: 'Guide', link: '/guide/getting-started' },
       { text: 'GCF vs TOON', link: '/guide/vs-toon' },
       { text: 'Benchmarks', link: '/guide/benchmarks' },
