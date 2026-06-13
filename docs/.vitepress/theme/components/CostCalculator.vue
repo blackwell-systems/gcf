@@ -263,9 +263,10 @@ function formatCurrencyMonth(n: number): string {
   width: 100%;
   padding: 0.5rem 0.75rem;
   border-radius: 6px;
-  border: 1px solid var(--vp-c-divider);
-  background: var(--vp-c-bg);
+  border: 2px solid #2563eb;
+  background: rgba(37, 99, 235, 0.05);
   font-size: 0.85rem;
+  font-weight: 600;
   color: var(--vp-c-text-1);
 }
 
