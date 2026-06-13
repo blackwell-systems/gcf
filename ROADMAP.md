@@ -24,13 +24,15 @@
 
 ## Next
 
-- [ ] **Whitepaper update**: incorporate all eval data (1,300+ evaluations), failure taxonomy, generation analysis into formal paper.
+- [ ] **Whitepaper update**: incorporate all eval data (1,700+ evaluations), failure taxonomy, generation analysis into formal paper.
 - [ ] **Temperature=0 eval runs**: deterministic OpenAI runs for tighter confidence intervals.
 - [ ] **More Opus comprehension runs**: only 2 saved, need 3-4 to confirm consistency.
 - [ ] **Gemini comprehension on newer models**: 3.1 Pro has 1 run, 3.5 Flash has 1 run.
 - [ ] **Migration guide**: step-by-step for converting JSON MCP tool responses to GCF.
 - [ ] **Blog post**: "The format LLMs understand without training" with inline data.
-- [ ] **LinkedIn content**: leverage 1,300+ evaluations, Opus enumeration artifact, TOON generation failure.
+- [ ] **LinkedIn content**: leverage 1,700+ evaluations, calculator, consulting angle.
+- [ ] **Operational eval**: downstream tool-call accuracy (model reads GCF, picks correct tool + args). Plan written.
+- [ ] **Value alias comprehension eval**: test if LLMs maintain 100% accuracy when repeated values are aliased.
 
 ## Spec v1.5 (under consideration)
 
@@ -46,6 +48,7 @@
 
 ## Format extensions (future, backwards-compatible)
 
+- [ ] **Value aliases**: semantic compression for repeated values. Define aliases once (e.g., `SF=San Francisco`), reference by alias in body rows. Could significantly reduce tokens on data with high value repetition (cities, departments, status enums). **Requires comprehension eval before committing**: the 100% accuracy number must hold with aliases active. If comprehension drops even 5%, not worth it.
 - [ ] **Binary encoding**: compact binary wire format for non-LLM consumers (server-to-server).
 - [ ] **Signature field**: optional per-symbol function signature.
 - [ ] **Component scores**: optional score breakdown (blast_radius, confidence, recency, distance).
