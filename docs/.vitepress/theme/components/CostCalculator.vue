@@ -374,6 +374,11 @@ function formatCurrencyMonth(n: number): string {
 
 .annual-pct.vs-toon {
   color: #2563eb;
+  font-size: 1.3rem;
+  background: rgba(37, 99, 235, 0.1);
+  display: inline-block;
+  padding: 0.2rem 0.75rem;
+  border-radius: 6px;
 }
 
 .annual-versus {
