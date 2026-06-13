@@ -197,13 +197,13 @@ function formatCurrencyMonth(n: number): string {
   font-size: 2.4rem;
   font-weight: 800;
   text-align: center;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.75rem;
 }
 
 .subtitle {
   color: var(--vp-c-text-2);
   text-align: center;
-  margin-bottom: 2.5rem;
+  margin-bottom: 3rem;
 }
 
 .layout {
