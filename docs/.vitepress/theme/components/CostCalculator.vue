@@ -348,7 +348,7 @@ function formatCurrencyMonth(n: number): string {
 .annual-pct {
   font-size: 1.1rem;
   font-weight: 700;
-  margin-top: 0.2rem;
+  margin-top: 0.5rem;
 }
 
 .annual-pct.vs-json {
