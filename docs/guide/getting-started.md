@@ -7,7 +7,7 @@ Encode any structured data as GCF before sending it to an LLM. The model reads i
 - **100% comprehension accuracy** on every model tested (Claude, Gemini, GPT). The only format that never fails.
 - **90.7% under structural stress** (500-symbol code graphs), where JSON drops to 53.6% and TOON to 68.5%.
 - **71% fewer tokens than JSON.** At 1000 records, JSON exceeds 200K context limits entirely. GCF fits in 47K.
-- **24.5% fewer tokens than TOON** across 14 real-world datasets (12/14 wins).
+- **25.5% fewer tokens than TOON** across 15 real-world datasets (13/15 wins).
 - **1B+ round-trips** across 6 language implementations. Zero data corruption.
 - **Zero training.** No model has ever seen GCF in training data. Every frontier model reads it natively.
 
@@ -19,7 +19,7 @@ At 500 records, JSON scores [53.6% comprehension accuracy](/guide/benchmarks) ac
 
 At 1000 records, JSON consumes 161K tokens: it doesn't even fit in a 200K context window. The task becomes impossible regardless of model capability.
 
-GCF declares field names once in a header. Rows are positional values. The same 500-record payload uses 11,090 tokens and scores [90.7% accuracy](/guide/benchmarks) on code graphs. On nested order data, GCF achieves [100% accuracy on every model tested](/guide/eval-results): Claude Opus, Sonnet, Haiku, Gemini 2.5 Flash, 3.5 Flash, and 2.5 Pro.
+GCF declares field names once in a header. Rows are positional values. The same 500-record payload uses 11,090 tokens and scores [90.7% accuracy](/guide/benchmarks) on code graphs. On nested order data, GCF achieves [100% accuracy on every frontier model tested](/guide/eval-results): Claude Opus, Sonnet, Haiku, GPT-5.5, Gemini 2.5 Flash, and Gemini 3.5 Flash.
 
 The format designed for human readability is incomprehensible to the systems actually reading it. [Full benchmark data](/guide/eval-results).
 
@@ -41,7 +41,7 @@ GCF is most effective when:
 - Records have **relationships** between them (edges, references)
 - You're operating under a **token budget** (context windows are finite)
 - You make **multiple calls** in a session (session dedup compounds savings)
-- You want **cheaper output** (55% fewer tokens than JSON, 24.5% fewer than TOON across 14 datasets)
+- You want **cheaper output** (53% fewer tokens than JSON, 25.5% fewer than TOON across 15 datasets)
 
 ## When NOT to use GCF
 
@@ -51,7 +51,7 @@ GCF is most effective when:
 
 ## "But I need human-readable output"
 
-Use GCF for the wire format and JSON for the display format. The agent reads GCF (cheap: 79% fewer tokens in the context window), does its work, then calls `decode()` at the end to render JSON for a human. The context window savings are already banked. Readability is a last-mile rendering concern, not a wire format property.
+Use GCF for the wire format and JSON for the display format. The agent reads GCF (cheap: 53-71% fewer tokens than JSON in the context window), does its work, then calls `decode()` at the end to render JSON for a human. The context window savings are already banked. Readability is a last-mile rendering concern, not a wire format property.
 
 ## Install
 
