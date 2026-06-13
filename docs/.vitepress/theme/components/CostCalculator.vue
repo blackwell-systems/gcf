@@ -309,8 +309,9 @@ function formatCurrencyMonth(n: number): string {
 }
 
 .annual-versus {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   color: var(--vp-c-text-2);
+  margin-bottom: 0.5rem;
 }
 
 .monthly-grid {
