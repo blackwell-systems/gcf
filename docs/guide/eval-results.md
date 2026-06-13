@@ -34,8 +34,8 @@ Every number on the [benchmarks page](/guide/benchmarks) comes from the runs bel
 |-------|---------|-----------|------------|-------------|
 | Claude Haiku 4.5 | 200K | **100%** (13/13) | 100% (13/13) | IMPOSSIBLE |
 | Claude Sonnet 4.6 | 200K | **92.3%** (12/13) | IMPOSSIBLE | IMPOSSIBLE |
-| Claude Opus 4.6 | 1M | **100%** (13/13) | 100% (13/13) | 100% (13/13) |
-| Claude Opus 4.6 | 1M | **100%** (13/13) | 100% (13/13) | 100% (13/13) |
+| Claude Opus 4.6 (run 1) | 1M | **100%** (13/13) | 100% (13/13) | 100% (13/13) |
+| Claude Opus 4.6 (run 2) | 1M | **100%** (13/13) | 100% (13/13) | 100% (13/13) |
 
 At 1000 orders, JSON (161K tokens) exceeds 200K context. TOON (84K) also exceeds effective context on Sonnet. GCF (47K) is the only format that reliably fits on 200K context models.
 
@@ -298,7 +298,7 @@ Generation cost compounds over a session. Every tool response an agent produces 
 
 The eval was designed to be deterministic, reproducible, and resistant to gaming.
 
-- **Scale:** 500 symbols, 200 edges for comprehension; 5-100 symbols for generation. 500 records is the threshold where format differences become visible. At 8 records, everything works.
+- **Scale:** 500 symbols/200 edges (graph profile) and 500 orders with nested objects (generic profile) for comprehension; 5-100 symbols for generation; 1000 orders for scale testing. 500 records is the threshold where format differences become visible. At 8 records, everything works.
 - **Ground truth:** 13 extraction questions with deterministic answers computed from the payload. No LLM judge. The correct answer to "how many symbols?" is always exactly the number generated.
 - **Randomization:** Each run generates a fresh random payload with different symbol names and edge distributions. Scores reflect comprehension of the format, not memorization of a fixed dataset.
 - **Temperature:** OpenAI runs used default temperature (non-zero) to reflect real-world usage. `EVAL_TEMPERATURE=0` is available for deterministic runs.
@@ -312,7 +312,10 @@ The eval was designed to be deterministic, reproducible, and resistant to gaming
 git clone https://github.com/blackwell-systems/gcf-go
 cd gcf-go/eval
 
-# Comprehension
+# Generic profile comprehension
+GOWORK=off EVAL_FORMATS=gcf,json,toon EVAL_BACKEND=cli EVAL_MODEL=haiku EVAL_NUM_ORDERS=500 go test -run TestGenericComprehension -v -timeout 0
+
+# Graph profile comprehension
 GOWORK=off go test -run TestComprehension -v -timeout 0
 EVAL_BACKEND=openai OPENAI_API_KEY=... EVAL_MODEL=gpt-5.5 GOWORK=off go test -run TestComprehension -v -timeout 0
 EVAL_BACKEND=google GOOGLE_API_KEY=... EVAL_MODEL=gemini-2.5-flash GOWORK=off go test -run TestComprehension -v -timeout 0
@@ -320,8 +323,8 @@ EVAL_BACKEND=google GOOGLE_API_KEY=... EVAL_MODEL=gemini-2.5-flash GOWORK=off go
 # Generation (all three formats)
 GOWORK=off go test -run "TestGeneration$|TestGenerationTOON|TestGenerationJSON" -v -timeout 0
 
-# Token efficiency (TOON's benchmark)
-git clone https://github.com/blackwell-systems/toon.git
-cd toon && git checkout gcf-comparison
-cd benchmarks && pnpm install && pnpm benchmark:tokens
+# Token efficiency (15 datasets)
+git clone https://github.com/blackwell-systems/toon-benchmark
+cd toon-benchmark
+node --experimental-strip-types benchmarks/scripts/token-efficiency-benchmark.ts
 ```

@@ -6,9 +6,9 @@ No model has ever been trained on GCF. Every model reads it better than the form
 
 | | Generic Profile | Graph Profile |
 |---|---|---|
-| **GCF** | **100%** (8 models) | **90.7%** (10 models) |
-| **TOON** | 95.6% | 68.5% |
-| **JSON** | 92.8% | 53.6% |
+| **GCF** | **100%** (7 models) | **90.7%** (10 models) |
+| **TOON** | 92.3% | 68.5% |
+| **JSON** | 91.2% | 53.6% |
 
 | | GCF | TOON | JSON |
 |---|---|---|---|
