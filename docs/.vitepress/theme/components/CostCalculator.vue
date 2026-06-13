@@ -298,12 +298,19 @@ function formatCurrency(n: number): string {
   margin-bottom: 1.75rem;
 }
 
+.current-cost {
+  padding: 1.25rem;
+  background: rgba(239, 68, 68, 0.06);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 10px;
+}
+
 .current-label {
-  font-size: 0.8rem;
-  font-weight: 700;
+  font-size: 0.85rem;
+  font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--vp-c-text-3);
+  color: #ef4444;
   margin-bottom: 0.5rem;
 }
 
