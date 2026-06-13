@@ -56,4 +56,4 @@ Conformance fixtures live in [tests/conformance](https://github.com/blackwell-sy
 
 ## Stability guarantee
 
-**Stable** (v3.0 designated 2026-06-12). The v2.0 generic grammar is a valid subset of v3.0, and v3 decoders accept conforming v2 payloads without a separate compatibility mode. The graph profile and `GCF profile=generic` header are unchanged.
+**Stable** (v3.0 designated 2026-06-12). V3 is the only supported encoding. No backwards compatibility with v2 indented attachments. The graph profile and `GCF profile=generic` header are unchanged.

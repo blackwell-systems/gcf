@@ -1511,9 +1511,9 @@ Current status: **Stable** (v3.0 designated 2026-06-12).
 
 This specification (v3.0) supersedes v2.0 and adds inline object schemas, positional inline attachment bodies, shared array attachment schemas, and expanded quoting protections. The graph profile is unchanged.
 
-The v2.0 generic syntax is a valid subset of v3.0. V3 decoders MUST accept conforming v2.0 generic payloads without requiring a compatibility mode. Encoders emit the v3 grammar and are not required to expose a v2 fallback mode.
+V3 is the only supported encoding. Decoders are not required to accept v2-style indented attachments. Encoders emit v3 grammar exclusively.
 
-Versions v1.0 through v1.4 are considered pre-stable development and are not supported. Implementations MUST NOT maintain backward compatibility with pre-v2.0 encoding behavior.
+Versions v1.0 through v2.0 are considered pre-stable development and are not supported. Implementations MUST NOT maintain backward compatibility with pre-v3.0 encoding behavior.
 
 ## 20. Internationalization
 
