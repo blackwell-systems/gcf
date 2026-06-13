@@ -6,6 +6,7 @@ const queriesPerDay = ref(1000)
 const sessionCalls = ref(1)
 
 const models = [
+  { name: 'Claude Mythos 5', input: 10.00, output: 50.00, provider: 'Anthropic' },
   { name: 'Claude Fable 5', input: 10.00, output: 50.00, provider: 'Anthropic' },
   { name: 'Claude Opus 4.8', input: 5.00, output: 25.00, provider: 'Anthropic' },
   { name: 'Claude Opus 4.6', input: 5.00, output: 25.00, provider: 'Anthropic' },
