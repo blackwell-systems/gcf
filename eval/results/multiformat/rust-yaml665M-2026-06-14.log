@@ -1,0 +1,70 @@
+warning: function `gen_tabular` is never used
+  --> tests/multiformat_fuzz.rs:91:4
+   |
+91 | fn gen_tabular(rng: &mut u64) -> Value {
+   |    ^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `std::collections::HashMap`
+ --> tests/roundtrip_v2.rs:5:5
+  |
+5 | use std::collections::HashMap;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: field `name` is never read
+  --> tests/conformance_v2.rs:10:5
+   |
+ 9 | struct Fixture {
+   |        ------- field in this struct
+10 |     name: String,
+   |     ^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+   Compiling gcf v2.0.0 (/Users/dayna.blackwell/code/gcf-rust)
+warning: `gcf` (test "multiformat_fuzz") generated 1 warning
+warning: `gcf` (test "roundtrip_v2") generated 1 warning (run `cargo fix --test "roundtrip_v2" -p gcf` to apply 1 suggestion)
+warning: `gcf` (test "conformance_v2") generated 1 warning
+    Finished `release` profile [optimized] target(s) in 0.48s
+     Running unittests src/lib.rs (target/release/deps/gcf-f6d406679a875bd1)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 29 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (target/release/deps/gcf-aeb25a920ba695c7)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/conformance_v2.rs (target/release/deps/conformance_v2-795959eb4cc72563)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+     Running tests/multiformat_fuzz.rs (target/release/deps/multiformat_fuzz-e849b331eb27307f)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.00s
+
+     Running tests/roundtrip_v2.rs (target/release/deps/roundtrip_v2-693f976c6879d455)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.00s
+
+     Running tests/yaml_1b.rs (target/release/deps/yaml_1b-38a0433a01ee7112)
+
+running 1 test
+  YAML: 10000000/665000000 (1.5%) 229144/s ETA 48m | total: 345000000   test yaml_to_1b has been running for over 60 seconds
+  YAML: 20000000/665000000 (3.0%) 227747/s ETA 47m | total: 355000000     YAML: 30000000/665000000 (4.5%) 228180/s ETA 46m | total: 365000000     YAML: 40000000/665000000 (6.0%) 228742/s ETA 46m | total: 375000000     YAML: 50000000/665000000 (7.5%) 229362/s ETA 45m | total: 385000000     YAML: 60000000/665000000 (9.0%) 229815/s ETA 44m | total: 395000000     YAML: 70000000/665000000 (10.5%) 229791/s ETA 43m | total: 405000000     YAML: 80000000/665000000 (12.0%) 229827/s ETA 42m | total: 415000000     YAML: 90000000/665000000 (13.5%) 229890/s ETA 42m | total: 425000000     YAML: 100000000/665000000 (15.0%) 230098/s ETA 41m | total: 435000000     YAML: 110000000/665000000 (16.5%) 230537/s ETA 40m | total: 445000000     YAML: 120000000/665000000 (18.0%) 230934/s ETA 39m | total: 455000000     YAML: 130000000/665000000 (19.5%) 231249/s ETA 39m | total: 465000000     YAML: 140000000/665000000 (21.1%) 231528/s ETA 38m | total: 475000000     YAML: 150000000/665000000 (22.6%) 231783/s ETA 37m | total: 485000000     YAML: 160000000/665000000 (24.1%) 232068/s ETA 36m | total: 495000000     YAML: 170000000/665000000 (25.6%) 232327/s ETA 36m | total: 505000000     YAML: 180000000/665000000 (27.1%) 232554/s ETA 35m | total: 515000000     YAML: 190000000/665000000 (28.6%) 232774/s ETA 34m | total: 525000000     YAML: 200000000/665000000 (30.1%) 232994/s ETA 33m | total: 535000000     YAML: 210000000/665000000 (31.6%) 233170/s ETA 33m | total: 545000000     YAML: 220000000/665000000 (33.1%) 233322/s ETA 32m | total: 555000000     YAML: 230000000/665000000 (34.6%) 233466/s ETA 31m | total: 565000000     YAML: 240000000/665000000 (36.1%) 233609/s ETA 30m | total: 575000000     YAML: 250000000/665000000 (37.6%) 233746/s ETA 30m | total: 585000000     YAML: 260000000/665000000 (39.1%) 233879/s ETA 29m | total: 595000000     YAML: 270000000/665000000 (40.6%) 233992/s ETA 28m | total: 605000000     YAML: 280000000/665000000 (42.1%) 234108/s ETA 27m | total: 615000000     YAML: 290000000/665000000 (43.6%) 234156/s ETA 27m | total: 625000000     YAML: 300000000/665000000 (45.1%) 234223/s ETA 26m | total: 635000000     YAML: 310000000/665000000 (46.6%) 234307/s ETA 25m | total: 645000000     YAML: 320000000/665000000 (48.1%) 234391/s ETA 25m | total: 655000000     YAML: 330000000/665000000 (49.6%) 234468/s ETA 24m | total: 665000000     YAML: 340000000/665000000 (51.1%) 234546/s ETA 23m | total: 675000000     YAML: 350000000/665000000 (52.6%) 234628/s ETA 22m | total: 685000000     YAML: 360000000/665000000 (54.1%) 234709/s ETA 22m | total: 695000000     YAML: 370000000/665000000 (55.6%) 234782/s ETA 21m | total: 705000000     YAML: 380000000/665000000 (57.1%) 234839/s ETA 20m | total: 715000000     YAML: 390000000/665000000 (58.6%) 234900/s ETA 20m | total: 725000000     YAML: 400000000/665000000 (60.2%) 234967/s ETA 19m | total: 735000000     YAML: 410000000/665000000 (61.7%) 235012/s ETA 18m | total: 745000000     YAML: 420000000/665000000 (63.2%) 235060/s ETA 17m | total: 755000000     YAML: 430000000/665000000 (64.7%) 235101/s ETA 17m | total: 765000000     YAML: 440000000/665000000 (66.2%) 235126/s ETA 16m | total: 775000000     YAML: 450000000/665000000 (67.7%) 235167/s ETA 15m | total: 785000000     YAML: 460000000/665000000 (69.2%) 235204/s ETA 15m | total: 795000000     YAML: 470000000/665000000 (70.7%) 235235/s ETA 14m | total: 805000000     YAML: 480000000/665000000 (72.2%) 235280/s ETA 13m | total: 815000000     YAML: 490000000/665000000 (73.7%) 235301/s ETA 12m | total: 825000000     YAML: 500000000/665000000 (75.2%) 235329/s ETA 12m | total: 835000000     YAML: 510000000/665000000 (76.7%) 235357/s ETA 11m | total: 845000000     YAML: 520000000/665000000 (78.2%) 235382/s ETA 10m | total: 855000000     YAML: 530000000/665000000 (79.7%) 235413/s ETA 10m | total: 865000000     YAML: 540000000/665000000 (81.2%) 235438/s ETA 9m | total: 875000000     YAML: 550000000/665000000 (82.7%) 235464/s ETA 8m | total: 885000000     YAML: 560000000/665000000 (84.2%) 235494/s ETA 7m | total: 895000000     YAML: 570000000/665000000 (85.7%) 235508/s ETA 7m | total: 905000000     YAML: 580000000/665000000 (87.2%) 235537/s ETA 6m | total: 915000000     YAML: 590000000/665000000 (88.7%) 235557/s ETA 5m | total: 925000000     YAML: 600000000/665000000 (90.2%) 235582/s ETA 5m | total: 935000000     YAML: 610000000/665000000 (91.7%) 235610/s ETA 4m | total: 945000000     YAML: 620000000/665000000 (93.2%) 235635/s ETA 3m | total: 955000000     YAML: 630000000/665000000 (94.7%) 235660/s ETA 2m | total: 965000000     YAML: 640000000/665000000 (96.2%) 235675/s ETA 2m | total: 975000000     YAML: 650000000/665000000 (97.7%) 235674/s ETA 1m | total: 985000000     YAML: 660000000/665000000 (99.2%) 235694/s ETA 0m | total: 995000000     YAML: 665000000/665000000 (100%) in 2821.4s (235701/s) | TOTAL: 1000000000          
+test yaml_to_1b ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2821.38s
+

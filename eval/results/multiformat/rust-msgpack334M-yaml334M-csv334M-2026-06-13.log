@@ -1,0 +1,70 @@
+warning: field `name` is never read
+  --> tests/conformance_v2.rs:10:5
+   |
+ 9 | struct Fixture {
+   |        ------- field in this struct
+10 |     name: String,
+   |     ^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+   Compiling gcf v2.0.0 (/Users/dayna.blackwell/code/gcf-rust)
+warning: unused import: `std::collections::HashMap`
+ --> tests/roundtrip_v2.rs:5:5
+  |
+5 | use std::collections::HashMap;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `gcf` (test "conformance_v2") generated 1 warning
+warning: `gcf` (test "roundtrip_v2") generated 1 warning (run `cargo fix --test "roundtrip_v2" -p gcf` to apply 1 suggestion)
+warning: function `gen_tabular` is never used
+  --> tests/multiformat_fuzz.rs:91:4
+   |
+91 | fn gen_tabular(rng: &mut u64) -> Value {
+   |    ^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `gcf` (test "multiformat_fuzz") generated 1 warning
+    Finished `release` profile [optimized] target(s) in 0.67s
+     Running unittests src/lib.rs (target/release/deps/gcf-f6d406679a875bd1)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 29 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (target/release/deps/gcf-aeb25a920ba695c7)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/conformance_v2.rs (target/release/deps/conformance_v2-795959eb4cc72563)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+     Running tests/multiformat_fuzz.rs (target/release/deps/multiformat_fuzz-e849b331eb27307f)
+
+running 3 tests
+  MessagePack: 10000000/334000000 (3.0%) 410138/s ETA 13m     MessagePack: 20000000/334000000 (6.0%) 410860/s ETA 13m     YAML: 10000000/334000000 (3.0%) 203950/s ETA 26m   test multiformat_csv has been running for over 60 seconds
+test multiformat_msgpack has been running for over 60 seconds
+test multiformat_yaml has been running for over 60 seconds
+  MessagePack: 30000000/334000000 (9.0%) 410565/s ETA 12m     MessagePack: 40000000/334000000 (12.0%) 410582/s ETA 12m     YAML: 20000000/334000000 (6.0%) 204049/s ETA 26m     MessagePack: 50000000/334000000 (15.0%) 407097/s ETA 12m     MessagePack: 60000000/334000000 (18.0%) 407624/s ETA 11m     YAML: 30000000/334000000 (9.0%) 201837/s ETA 25m     MessagePack: 70000000/334000000 (21.0%) 406688/s ETA 11m     MessagePack: 80000000/334000000 (24.0%) 406505/s ETA 10m     YAML: 40000000/334000000 (12.0%) 201063/s ETA 24m     MessagePack: 90000000/334000000 (26.9%) 406764/s ETA 10m     CSV: 10000000/334000000 (3.0%) 43482/s ETA 124m     MessagePack: 100000000/334000000 (29.9%) 406772/s ETA 10m     YAML: 50000000/334000000 (15.0%) 201256/s ETA 24m     MessagePack: 110000000/334000000 (32.9%) 406477/s ETA 9m     MessagePack: 120000000/334000000 (35.9%) 406428/s ETA 9m     YAML: 60000000/334000000 (18.0%) 201069/s ETA 23m     MessagePack: 130000000/334000000 (38.9%) 405810/s ETA 8m     MessagePack: 140000000/334000000 (41.9%) 405946/s ETA 8m     YAML: 70000000/334000000 (21.0%) 200657/s ETA 22m     MessagePack: 150000000/334000000 (44.9%) 405713/s ETA 8m     MessagePack: 160000000/334000000 (47.9%) 405429/s ETA 7m     YAML: 80000000/334000000 (24.0%) 200434/s ETA 21m     MessagePack: 170000000/334000000 (50.9%) 405646/s ETA 7m     MessagePack: 180000000/334000000 (53.9%) 405884/s ETA 6m     YAML: 90000000/334000000 (26.9%) 200746/s ETA 20m     CSV: 20000000/334000000 (6.0%) 43357/s ETA 121m     MessagePack: 190000000/334000000 (56.9%) 405434/s ETA 6m     MessagePack: 200000000/334000000 (59.9%) 405458/s ETA 6m     YAML: 100000000/334000000 (29.9%) 200480/s ETA 19m     MessagePack: 210000000/334000000 (62.9%) 405846/s ETA 5m     MessagePack: 220000000/334000000 (65.9%) 406203/s ETA 5m     YAML: 110000000/334000000 (32.9%) 200994/s ETA 19m     MessagePack: 230000000/334000000 (68.9%) 406567/s ETA 4m     MessagePack: 240000000/334000000 (71.9%) 406875/s ETA 4m     YAML: 120000000/334000000 (35.9%) 201459/s ETA 18m     MessagePack: 250000000/334000000 (74.9%) 407132/s ETA 3m     MessagePack: 260000000/334000000 (77.8%) 407433/s ETA 3m     YAML: 130000000/334000000 (38.9%) 201855/s ETA 17m     MessagePack: 270000000/334000000 (80.8%) 407632/s ETA 3m     MessagePack: 280000000/334000000 (83.8%) 407889/s ETA 2m     CSV: 30000000/334000000 (9.0%) 43562/s ETA 116m     YAML: 140000000/334000000 (41.9%) 202201/s ETA 16m     MessagePack: 290000000/334000000 (86.8%) 408087/s ETA 2m     MessagePack: 300000000/334000000 (89.8%) 407866/s ETA 1m     YAML: 150000000/334000000 (44.9%) 202065/s ETA 15m     MessagePack: 310000000/334000000 (92.8%) 407425/s ETA 1m     MessagePack: 320000000/334000000 (95.8%) 407350/s ETA 1m     YAML: 160000000/334000000 (47.9%) 201831/s ETA 14m     MessagePack: 330000000/334000000 (98.8%) 407124/s ETA 0m     MessagePack: 334000000/334000000 (100%) in 820.9s (406882/s)          
+test multiformat_msgpack ... ok
+  YAML: 170000000/334000000 (50.9%) 201773/s ETA 14m     YAML: 180000000/334000000 (53.9%) 202319/s ETA 13m     CSV: 40000000/334000000 (12.0%) 43583/s ETA 112m     YAML: 190000000/334000000 (56.9%) 202999/s ETA 12m     YAML: 200000000/334000000 (59.9%) 203549/s ETA 11m     YAML: 210000000/334000000 (62.9%) 204112/s ETA 10m     YAML: 220000000/334000000 (65.9%) 204632/s ETA 9m     YAML: 230000000/334000000 (68.9%) 205234/s ETA 8m     CSV: 50000000/334000000 (15.0%) 43869/s ETA 108m     YAML: 240000000/334000000 (71.9%) 205729/s ETA 8m     YAML: 250000000/334000000 (74.9%) 206246/s ETA 7m     YAML: 260000000/334000000 (77.8%) 206711/s ETA 6m     YAML: 270000000/334000000 (80.8%) 207113/s ETA 5m     YAML: 280000000/334000000 (83.8%) 207335/s ETA 4m     CSV: 60000000/334000000 (18.0%) 44075/s ETA 104m     YAML: 290000000/334000000 (86.8%) 207407/s ETA 4m     YAML: 300000000/334000000 (89.8%) 207536/s ETA 3m     YAML: 310000000/334000000 (92.8%) 207786/s ETA 2m     YAML: 320000000/334000000 (95.8%) 208073/s ETA 1m     YAML: 330000000/334000000 (98.8%) 208321/s ETA 0m     CSV: 70000000/334000000 (21.0%) 44135/s ETA 100m     YAML: 334000000/334000000 (100%) in 1603.2s (208338/s)          
+test multiformat_yaml ... ok
+  CSV: 80000000/334000000 (24.0%) 44421/s ETA 95m     CSV: 90000000/334000000 (26.9%) 44719/s ETA 91m     CSV: 100000000/334000000 (29.9%) 44967/s ETA 87m     CSV: 110000000/334000000 (32.9%) 45171/s ETA 83m     CSV: 120000000/334000000 (35.9%) 45339/s ETA 79m     CSV: 130000000/334000000 (38.9%) 45486/s ETA 75m     CSV: 140000000/334000000 (41.9%) 45612/s ETA 71m     CSV: 150000000/334000000 (44.9%) 45719/s ETA 67m     CSV: 160000000/334000000 (47.9%) 45811/s ETA 63m     CSV: 170000000/334000000 (50.9%) 45894/s ETA 60m     CSV: 180000000/334000000 (53.9%) 45970/s ETA 56m     CSV: 190000000/334000000 (56.9%) 46037/s ETA 52m     CSV: 200000000/334000000 (59.9%) 46152/s ETA 48m     CSV: 210000000/334000000 (62.9%) 46272/s ETA 45m     CSV: 220000000/334000000 (65.9%) 46391/s ETA 41m     CSV: 230000000/334000000 (68.9%) 46503/s ETA 37m     CSV: 240000000/334000000 (71.9%) 46611/s ETA 34m     CSV: 250000000/334000000 (74.9%) 46711/s ETA 30m     CSV: 260000000/334000000 (77.8%) 46803/s ETA 26m     CSV: 270000000/334000000 (80.8%) 46889/s ETA 23m     CSV: 280000000/334000000 (83.8%) 46973/s ETA 19m     CSV: 290000000/334000000 (86.8%) 47051/s ETA 16m     CSV: 300000000/334000000 (89.8%) 47123/s ETA 12m     CSV: 310000000/334000000 (92.8%) 47195/s ETA 8m     CSV: 320000000/334000000 (95.8%) 47261/s ETA 5m     CSV: 330000000/334000000 (98.8%) 47319/s ETA 1m     CSV: 334000000/334000000 (100%) in 7054.8s (47344/s)          
+test multiformat_csv ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7054.80s
+
+     Running tests/roundtrip_v2.rs (target/release/deps/roundtrip_v2-693f976c6879d455)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.00s
+
