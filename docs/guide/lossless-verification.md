@@ -27,10 +27,10 @@ Six language implementations, all passing the same 156 conformance fixtures:
 
 | Language | Package | Conformance | Round-trip fuzz |
 |----------|---------|-------------|-----------------|
-| Go | gcf-go | 156/156 | 1B+ (existing suite) |
+| Rust | gcf | 156/156 | **23B+ multi-format** (definitive suite) |
+| Go | gcf-go | 156/156 | 1B+ (native Go fuzzing) |
 | TypeScript | @blackwell-systems/gcf | 156/156 | Conformance-based |
-| Python | gcf-python | 156/156 | 5M multi-format |
-| Rust | gcf | 156/156 | 23B+ multi-format |
+| Python | gcf-python | 156/156 | Conformance-based |
 | Swift | gcf-swift | 156/156 | Conformance-based |
 | Kotlin | gcf-kotlin | 156/156 | Conformance-based |
 
@@ -63,8 +63,6 @@ Each seed produces a unique value. Seeds are sequential (0, 1, 2, ..., N). The t
 
 ## Reproduce it
 
-### Rust (fastest, parallel)
-
 ```bash
 git clone https://github.com/blackwell-systems/gcf-rust
 cd gcf-rust
@@ -82,30 +80,7 @@ cargo test --release multiformat -- --nocapture
 cargo test --release toml_100m -- --nocapture
 ```
 
-### Python (proof of concept, 5 formats)
-
-```bash
-git clone https://github.com/blackwell-systems/gcf-python
-cd gcf-python
-pip install -e ".[dev]"
-pip install pyyaml toml msgpack
-
-# 100K per format (default), set GCF_FUZZ_ITERATIONS for more
-GCF_FUZZ_ITERATIONS=100000 pytest tests/test_multiformat_roundtrip.py -v -s
-```
-
-### Go (JSON + YAML + CSV + Tabular)
-
-```bash
-git clone https://github.com/blackwell-systems/gcf-go
-cd gcf-go
-
-# Native Go fuzzing (continuous, Ctrl+C to stop)
-GOWORK=off go test -fuzz FuzzEncodeGeneric -fuzztime 10m
-
-# Multi-format deterministic (1M per format default)
-GOWORK=off go test -run TestMultiFormat -v -timeout 0
-```
+All tests use Rayon for parallel execution across all available cores. Progress logs to stderr with rate and ETA. The Rust implementation is the definitive fuzz suite: 2.94M round-trips/second on JSON, 307K/s on YAML, at release optimization.
 
 ## Conformance fixtures
 
