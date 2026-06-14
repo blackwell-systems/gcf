@@ -27,7 +27,7 @@ The format designed for human readability is incomprehensible to the systems act
 
 ### Generic profile: any structured data
 
-Use `encodeGeneric()` for anything JSON can represent:
+Use `encodeGeneric()` for any structured data. JSON is the most common source, but the same function handles data originating from YAML, TOML, CSV, MessagePack, or any format that deserializes to objects and arrays:
 - MCP tool responses (arrays of objects, nested data)
 - API responses, database query results, search results
 - Log entries, telemetry, event streams
@@ -35,7 +35,7 @@ Use `encodeGeneric()` for anything JSON can represent:
 - Agent-to-agent communication
 - Any structured output where you want fewer tokens
 
-71% fewer tokens. Lossless. `decode(encode(value)) == value` for every JSON value.
+71% fewer tokens than JSON. Lossless. `decode(encode(value)) == value` for every structured value, regardless of source format.
 
 ### Graph profile: relationship-heavy data
 
@@ -185,7 +185,7 @@ GCF profile=generic
 2|Bob|Sales|72000
 ```
 
-One header declares field names. Rows are positional values only. No field names repeated per record. Works on any structured JSON.
+One header declares field names. Rows are positional values only. No field names repeated per record. Works on any structured data, whether it originated as JSON, YAML, or any other format.
 
 ## Graph profile (first-class graph data)
 
