@@ -170,6 +170,18 @@ def process_tool_response(gcf_text: str, schema: dict) -> dict:
     return data
 ```
 
+## Trust the round-trip
+
+The entire validation pattern depends on one guarantee: `decode(encode(value)) == value`. If the encoding is lossy, your schema validates corrupted data. If the round-trip drops a field or changes a type, your pipeline silently breaks.
+
+GCF's round-trip guarantee is not a claim. It's verified:
+
+- **23 billion+** lossless round-trips across JSON, YAML, TOML, CSV, and MessagePack
+- **6 language implementations** (Go, TypeScript, Python, Rust, Swift, Kotlin) all passing the same 156 conformance fixtures
+- **Cross-language 6x6 matrix**: encode in any language, decode in any other, zero mismatches
+
+Your schema validates the decoded output. GCF guarantees the decoded output is identical to the original input. The encoding is invisible to your validation pipeline.
+
 ## Why not a GCF-native schema language?
 
 JSON Schema already has:
@@ -179,7 +191,7 @@ JSON Schema already has:
 - Code generation tooling
 - IDE support (autocomplete, hover docs)
 
-Building a GCF-specific schema language would duplicate all of this for no gain. GCF decodes losslessly to JSON, so JSON Schema validates GCF payloads exactly as well as it validates JSON payloads. The encoding is transparent to the validator.
+Building a GCF-specific schema language would duplicate all of this for no gain. GCF decodes losslessly to the original structured data, so JSON Schema validates GCF payloads exactly as well as it validates JSON payloads. The encoding is transparent to the validator.
 
 ## Schema references
 
