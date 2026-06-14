@@ -7,49 +7,66 @@ const ready = ref(false)
 const examples = [
   {
     title: 'Inline Schemas',
-    description: 'Field names declared once in the header. Body rows are positional values. No repeated keys.',
+    description: 'JSON repeats every key on every row. GCF declares them once. At 500 rows, that\'s thousands of wasted tokens.',
     json: `[
-  {"name":"Alice","age":32,"city":"NYC"},
-  {"name":"Bob","age":28,"city":"LA"},
-  {"name":"Carol","age":45,"city":"NYC"}
+  {"file":"src/auth.ts","line":42,"symbol":"validateToken","kind":"function","refs":18},
+  {"file":"src/auth.ts","line":87,"symbol":"refreshSession","kind":"function","refs":6},
+  {"file":"src/db.ts","line":12,"symbol":"getConnection","kind":"function","refs":34},
+  {"file":"src/db.ts","line":55,"symbol":"runMigration","kind":"function","refs":3},
+  {"file":"src/api.ts","line":8,"symbol":"handleRequest","kind":"function","refs":27}
 ]`,
-    gcf: `## employees [3]{name,age,city}
-Alice|32|NYC
-Bob|28|LA
-Carol|45|NYC`,
+    gcf: `## results [5]{file,line,symbol,kind,refs}
+src/auth.ts|42|validateToken|function|18
+src/auth.ts|87|refreshSession|function|6
+src/db.ts|12|getConnection|function|34
+src/db.ts|55|runMigration|function|3
+src/api.ts|8|handleRequest|function|27`,
   },
   {
-    title: 'Section Headers',
-    description: 'Sections separate data groups. Count in header. No array syntax overhead.',
+    title: 'Graph Structure',
+    description: 'Code intelligence returns symbols and their relationships. GCF encodes both in a format LLMs parse natively.',
     json: `{
   "symbols": [
-    {"id":"@1","kind":"func","name":"main"},
-    {"id":"@2","kind":"func","name":"init"}
+    {"id":1,"kind":"function","name":"handleRequest","score":0.95},
+    {"id":2,"kind":"function","name":"validateToken","score":0.87},
+    {"id":3,"kind":"function","name":"getConnection","score":0.82},
+    {"id":4,"kind":"interface","name":"AuthConfig","score":0.60}
   ],
   "edges": [
-    {"source":"@1","target":"@2","type":"calls"}
+    {"source":1,"target":2,"type":"calls"},
+    {"source":1,"target":3,"type":"calls"},
+    {"source":2,"target":4,"type":"implements"}
   ]
 }`,
-    gcf: `## symbols [2]{kind,qname}
-@1 func main
-@2 func init
+    gcf: `## symbols [4]
+@1 function handleRequest 0.95
+@2 function validateToken 0.87
+@3 function getConnection 0.82
+@4 interface AuthConfig 0.60
 
-## edges [1]
-@2<@1 calls`,
+## edges [3]
+@2<@1 calls
+@3<@1 calls
+@4<@2 implements`,
   },
   {
     title: 'Session Dedup',
-    description: 'Previously transmitted symbols become bare references. 92% savings by the 5th call.',
-    json: `// Call 2: retransmit everything
-[
-  {"id":"@1","kind":"func","name":"main"...},
-  {"id":"@2","kind":"func","name":"init"...},
-  {"id":"@3","kind":"func","name":"new_func"...}
+    description: 'Call 1 sends everything. Call 2 only sends what changed. JSON retransmits the full payload every time.',
+    jsonLabel: 'JSON (call 2: full retransmit)',
+    gcfLabel: 'GCF (call 2: bare refs + delta)',
+    json: `[
+  {"id":1,"kind":"function","name":"handleRequest","score":0.95},
+  {"id":2,"kind":"function","name":"validateToken","score":0.87},
+  {"id":3,"kind":"function","name":"getConnection","score":0.82},
+  {"id":4,"kind":"interface","name":"AuthConfig","score":0.60},
+  {"id":5,"kind":"function","name":"revokeToken","score":0.91}
 ]`,
-    gcf: `## symbols [3]
+    gcf: `## symbols [5]
 @1
 @2
-@3 func new_func 0.95`,
+@3
+@4
+@5 function revokeToken 0.91`,
   },
 ]
 
@@ -73,11 +90,11 @@ onMounted(async () => {
 
           <div class="comparison">
             <div class="format-block json-block">
-              <div class="format-label">JSON</div>
+              <div class="format-label">{{ ex.jsonLabel || 'JSON' }}</div>
               <pre class="code-block"><code v-if="ready" v-html="highlightJSON(ex.json)"></code><code v-else>{{ ex.json }}</code></pre>
             </div>
             <div class="format-block gcf-block">
-              <div class="format-label gcf-label">GCF</div>
+              <div class="format-label gcf-label">{{ ex.gcfLabel || 'GCF' }}</div>
               <pre class="code-block"><code v-if="ready" v-html="highlightGCF(ex.gcf)"></code><code v-else>{{ ex.gcf }}</code></pre>
             </div>
           </div>
