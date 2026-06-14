@@ -169,6 +169,22 @@ Carol|dev|false</code></pre>
               <li>No braces, no colons per row</li>
             </ul>
           </div>
+
+          <div class="grammar-card">
+            <h4>Streaming</h4>
+            <pre class="grammar-code"><code v-if="ready" v-html="highlightGCF(`## results [?]{name,kind}\nvalidate|func\nconnect|func\nhandle|func\n##! summary counts=3`)"></code><code v-else>## results [?]{name,kind}
+validate|func
+connect|func
+handle|func
+##! summary counts=3</code></pre>
+            <ul class="grammar-notes">
+              <li><code>[?]</code> count unknown upfront</li>
+              <li>Rows emit instantly, O(1) memory</li>
+              <li><code>##!</code> trailer finalizes count</li>
+              <li>Works for both profiles</li>
+              <li>Zero buffering, zero latency</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -284,7 +300,7 @@ Carol|dev|false</code></pre>
 
 .grammar-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.25rem;
 }
 
