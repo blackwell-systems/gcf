@@ -2,7 +2,7 @@
 
 In multi-turn LLM tool interactions, the same symbols appear across multiple responses. A code intelligence tool queried about `AuthMiddleware` will return it in the first response, and likely again in follow-up queries about related functions.
 
-JSON retransmits the full declaration every time. GCF tracks what's been sent and replaces known symbols with bare references.
+JSON and every other format retransmit the full declaration every time. GCF's graph profile tracks what's been sent and replaces known symbols with bare references.
 
 ## The problem
 
