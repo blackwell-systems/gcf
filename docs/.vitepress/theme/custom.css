@@ -9,6 +9,7 @@
 .gcf { color: var(--gcf-color); font-weight: 600; }
 .toon { color: var(--toon-color); font-weight: 600; }
 .json { color: var(--json-color); font-weight: 600; }
+code.terminal { color: #4ade80; background: #0a1a0a; border: 1px solid #1a3a1a; font-weight: 600; }
 
 .VPSidebar {
   padding-left: 24px !important;
