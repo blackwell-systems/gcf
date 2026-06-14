@@ -1,11 +1,11 @@
 # Syntax Cheatsheet
 
-GCF has two encoding profiles that share the same grammar primitives (`##`, `@`, `|`, `=`).
+GCF has two encoding profiles that share the same grammar primitives (`##`, `|`, `=`). The graph profile adds `@` local IDs and edge notation.
 
 ::: tip Two profiles, one format
-**Generic profile** (`encodeGeneric`): any structured data with arrays, nested objects, and primitives. Drop-in JSON replacement. This is what most users need.
+**Generic profile** (`encodeGeneric`): any structured data with arrays, nested objects, and primitives. This is what most users need.
 
-**Graph profile** (`encode`): code graph payloads with symbols, edges, and distance groups. Specialized for code intelligence tools.
+**Graph profile** (`encode`): superset that adds local IDs, typed edges, and distance groups for relationship-heavy data (code intelligence, knowledge graphs, ontologies, agent memory).
 :::
 
 ---
