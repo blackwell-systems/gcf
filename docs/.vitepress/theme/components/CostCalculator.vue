@@ -102,7 +102,7 @@ function formatCurrency(n: number): string {
 
 <template>
   <div class="calculator">
-    <h1 class="hero-title">How much is JSON costing you?</h1>
+    <h1 class="hero-title">How much is <span class="json-highlight">JSON</span> costing you?</h1>
     <p class="subtitle">Plug in your numbers. See what you could save.</p>
 
     <div class="layout">
@@ -223,6 +223,10 @@ function formatCurrency(n: number): string {
   font-weight: 800;
   text-align: center;
   margin-bottom: 0.75rem;
+}
+
+.json-highlight {
+  color: #ef4444;
 }
 
 .subtitle {
