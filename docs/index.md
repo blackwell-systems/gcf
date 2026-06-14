@@ -20,8 +20,8 @@ hero:
       link: /guide/vs-toon
 
 features:
-  - title: Proven lossless JSON encoding
-    details: '<code class="terminal">decode(encode(value)) == value</code> for every structured value. Verified across <em>23,000,000,000+</em> random round-trips across 5 formats (JSON, YAML, TOML, CSV, MessagePack) and 6 language implementations. 157 conformance fixtures, cross-language matrix verified. Spec v3.1 Stable.'
+  - title: The universal pivot for structured data
+    details: 'JSON, YAML, TOML, CSV, MessagePack: any format in, GCF in the context window, any format out. One format that speaks every format. No other wire format operates across format boundaries.<br><br><code class="terminal">decode(encode(value)) == value</code> for every structured value. Verified across <em>23,000,000,000+</em> round-trips in 5 formats and 6 languages.'
   - title: 53-71% fewer input tokens
     details: 'At 500 orders: <span class="json">JSON</span> uses 80K tokens, <span class="gcf">GCF</span> uses 24K.<br><br>At 1000 orders, JSON doesn&apos;t even fit in a 200K context window. GCF fits in 47K. Positional fields, inline schemas, and hierarchical grouping eliminate per-record overhead.'
   - title: 63% fewer output tokens
