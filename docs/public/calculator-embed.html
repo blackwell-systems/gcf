@@ -63,6 +63,11 @@
   .pill.green { color: #22c55e; background: rgba(34, 197, 94, 0.12); }
   .pill.blue { color: #2563eb; background: rgba(37, 99, 235, 0.12); }
 
+  .monthly-savings { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 0.6rem; }
+  .monthly-pill { font-size: 0.85rem; font-weight: 700; padding: 0.2rem 0.6rem; }
+  .monthly-pill.green { color: #22c55e; }
+  .monthly-pill.blue { color: #2563eb; }
+
   .token-toggle { font-size: 0.8rem; color: #71717a; cursor: pointer; padding: 0.5rem 0; user-select: none; }
   .token-toggle:hover { color: #a1a1aa; }
   .token-details { padding: 0.75rem 1rem; background: #09090b; border-radius: 8px; margin-top: 0.25rem; }
@@ -139,6 +144,10 @@
         <div class="savings-hero">
           <div class="savings-hero-amount">{{ formatCurrency(annualSavings.vsJson) }}</div>
           <div class="savings-hero-label">saved per year vs JSON</div>
+          <div class="monthly-savings">
+            <span class="monthly-pill green">{{ formatCurrency(monthlySavings.vsJson) }}/mo vs JSON</span>
+            <span class="monthly-pill blue">{{ formatCurrency(monthlySavings.vsToon) }}/mo vs TOON</span>
+          </div>
           <div class="savings-pills">
             <span class="pill green">{{ pctSaved.vsJson }}% savings vs JSON</span>
             <span class="pill blue">{{ pctSaved.vsToon }}% savings vs TOON</span>
@@ -246,6 +255,11 @@ createApp({
       }
     })
 
+    const monthlySavings = computed(() => ({
+      vsJson: monthlyCost.value.json - monthlyCost.value.gcf,
+      vsToon: monthlyCost.value.toon - monthlyCost.value.gcf,
+    }))
+
     const barWidth = computed(() => {
       const j = monthlyCost.value.json
       if (j === 0) return { json: 100, toon: 100, gcf: 100 }
@@ -263,7 +277,7 @@ createApp({
     return {
       records, queriesPerDay, sessionCalls, showTokens, models, selectedModel,
       customCost, useCustom, tokensPerQuery, monthlyCost,
-      annualSavings, pctSaved, monthlyTokens, barWidth, formatCurrency,
+      annualSavings, monthlySavings, pctSaved, monthlyTokens, barWidth, formatCurrency,
     }
   }
 }).mount('#app')

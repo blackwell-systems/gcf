@@ -79,6 +79,11 @@ const monthlyTokens = computed(() => {
   }
 })
 
+const monthlySavings = computed(() => ({
+  vsJson: monthlyCost.value.json - monthlyCost.value.gcf,
+  vsToon: monthlyCost.value.toon - monthlyCost.value.gcf,
+}))
+
 // Bar widths relative to JSON (always 100%)
 const barWidth = computed(() => {
   const j = monthlyCost.value.json
@@ -175,6 +180,10 @@ function formatCurrency(n: number): string {
         <div class="savings-hero">
           <div class="savings-hero-amount">{{ formatCurrency(annualSavings.vsJson) }}</div>
           <div class="savings-hero-label">saved per year vs JSON</div>
+          <div class="monthly-savings">
+            <span class="monthly-pill green">{{ formatCurrency(monthlySavings.vsJson) }}/mo vs JSON</span>
+            <span class="monthly-pill blue">{{ formatCurrency(monthlySavings.vsToon) }}/mo vs TOON</span>
+          </div>
           <div class="savings-pills">
             <span class="pill green">{{ pctSaved.vsJson }}% savings vs JSON</span>
             <span class="pill blue">{{ pctSaved.vsToon }}% savings vs TOON</span>
@@ -401,6 +410,23 @@ function formatCurrency(n: number): string {
   margin-top: 0.4rem;
   margin-bottom: 0.75rem;
 }
+
+.monthly-savings {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 0.6rem;
+}
+
+.monthly-pill {
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+}
+
+.monthly-pill.green { color: #22c55e; }
+.monthly-pill.blue { color: #2563eb; }
 
 .savings-pills {
   display: flex;
