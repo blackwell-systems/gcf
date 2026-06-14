@@ -1178,8 +1178,8 @@ onMounted(async () => {
 
         <!-- Comprehension note -->
         <div class="comprehension-note">
-          <strong>GCF is a wire format optimized for agentic comprehension and token compression.</strong> Human readability is a last-mile concern: call <code>decode()</code> when a human needs to see it. 100% comprehension on every frontier model tested. On complex code graphs, GCF scores <strong>90.7%</strong> where JSON drops to 53.6%.
-          <div class="comprehension-punchline">The "readable" format is the one that breaks.</div>
+          <strong>100% comprehension on every frontier model tested.</strong> Claude, GPT-5.5, Gemini: all read GCF natively with zero format instructions. On adversarial workloads (500-symbol code graphs), GCF scores <strong>90.7%</strong> where TOON drops to 68.5% and JSON to 53.6%. Human readability is a last-mile concern: call <code>decode()</code> when a human needs to see it.
+          <div class="comprehension-punchline">The "readable" formats are the ones that break.</div>
           <a href="/guide/benchmarks">See the benchmarks &rarr;</a>
         </div>
 
