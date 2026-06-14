@@ -1,8 +1,12 @@
 # GCF vs TOON
 
-100% comprehension on every frontier model. TOON fails on GPT-5.5 and Gemini Flash. 5/5 generation validity on every frontier model. TOON's own decoder rejects LLM-generated output on 7 of 9 models. Five features TOON structurally cannot add without becoming a different format.
+GCF has two profiles. TOON has one. The comparison plays out on both dimensions, and GCF wins both.
 
-And on token efficiency: we forked [TOON's benchmark](https://github.com/blackwell-systems/toon-benchmark), ran their original 6 datasets with their tokenizer and methodology, then added 9 more representing real-world MCP tool responses. GCF wins all 6 of TOON's original datasets and 13 of 15 overall (-25.5%). TOON's two wins total 104 tokens combined. GCF's 13 wins save 107,679 tokens.
+**On structured data** (generic profile, the common case): GCF achieves 100% comprehension on every frontier model tested. TOON fails on GPT-5.5 and Gemini Flash. Both formats can encode flat tabular data, but GCF is 25.5% smaller across 15 real-world datasets. LLMs produce valid GCF at 5/5 on every frontier model. TOON's own decoder rejects LLM-generated output on 7 of 9 models.
+
+**On relationship data** (graph profile): TOON has no grammar for this. No local IDs, no edge notation, no session dedup, no distance grouping. TOON must repeat full identifiers on every edge (~30-100 tokens each). GCF uses `@0<@1 calls` (~4 tokens). On 500-symbol code graphs, GCF scores 90.7% comprehension. TOON scores 68.5%. This isn't a gap that closes with optimization. TOON structurally cannot represent relationships efficiently without becoming a different format.
+
+**On TOON's own benchmark**: We forked [their benchmark](https://github.com/blackwell-systems/toon-benchmark), ran their original 6 datasets with their tokenizer and methodology, then added 9 more representing real-world MCP tool responses. GCF wins all 6 of TOON's original datasets and 13 of 15 overall. TOON's two wins total 104 tokens combined. GCF's 13 wins save 107,679 tokens.
 
 ## Feature comparison
 
