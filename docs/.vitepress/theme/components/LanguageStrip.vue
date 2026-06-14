@@ -18,11 +18,11 @@ const languages = [
           <div class="proxy-desc">Drop-in proxy for existing MCP servers. Your server keeps outputting JSON. The LLM receives GCF.</div>
         </div>
         <div class="proxy-right">
-          <code class="proxy-cmd">pip install gcf-proxy</code>
-          <span class="proxy-or">or</span>
-          <code class="proxy-cmd">npm i -g @blackwell-systems/gcf-proxy</code>
-          <span class="proxy-or">or</span>
-          <code class="proxy-cmd">go install github.com/blackwell-systems/gcf-proxy@latest</code>
+          <div class="proxy-cmds">
+            <code class="proxy-cmd">pip install gcf-proxy</code>
+            <code class="proxy-cmd">npm i -g @blackwell-systems/gcf-proxy</code>
+            <code class="proxy-cmd">go install github.com/blackwell-systems/gcf-proxy@latest</code>
+          </div>
           <a href="https://github.com/blackwell-systems/gcf-proxy" target="_blank" class="proxy-link">GitHub</a>
         </div>
       </div>
@@ -88,10 +88,10 @@ const languages = [
   white-space: nowrap;
 }
 
-.proxy-or {
-  font-size: 0.75rem;
-  color: var(--vp-c-text-3);
-  font-weight: 500;
+.proxy-cmds {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .proxy-link {
