@@ -1,10 +1,10 @@
 # Getting Started
 
-GCF is a drop-in replacement for JSON in AI pipelines.
+An AI-native data format can't just be "JSON but smaller." It has to excel at the data shapes AI actually works with.
 
-Encode any structured data as GCF before sending it to an LLM. The model reads it natively with zero format instructions. `decode()` converts back to JSON when a human needs to see it.
+GCF is two things: a **lossless JSON codec** that cuts tokens by 71%, and a **graph-native superset** that treats relationships, edges, and identities as first-class grammar. One format, two profiles. The generic profile is a strict subset of the graph profile: learn one, use both.
 
-- **100% comprehension accuracy** on every model tested (Claude, Gemini, GPT). The only format that never fails.
+- **100% comprehension accuracy** on every frontier model tested (Claude, Gemini, GPT). The only format that never fails.
 - **90.7% under structural stress** (500-symbol code graphs), where JSON drops to 53.6% and TOON to 68.5%.
 - **71% fewer tokens than JSON.** At 1000 records, JSON exceeds 200K context limits entirely. GCF fits in 47K.
 - **25.5% fewer tokens than TOON** across 15 real-world datasets (13/15 wins).
@@ -25,23 +25,37 @@ The format designed for human readability is incomprehensible to the systems act
 
 ## When to use GCF
 
-**Tool responses** (input to LLM):
-- Any MCP tool response with arrays of objects
+### Generic profile: any structured data
+
+Use `encodeGeneric()` for anything JSON can represent:
+- MCP tool responses (arrays of objects, nested data)
 - API responses, database query results, search results
 - Log entries, telemetry, event streams
-- Code intelligence results (symbols, call graphs, dependencies)
+- RAG retrieval chunks
+- Agent-to-agent communication
+- Any structured output where you want fewer tokens
 
-**Agent output** (produced by LLM):
-- Agent-to-agent communication in multi-agent workflows
-- Structured output where you want to minimize output tokens
-- Any case where the model returns structured data
+71% fewer tokens. Lossless. `decode(encode(value)) == value` for every JSON value.
 
-GCF is most effective when:
+### Graph profile: relationship-heavy data
+
+Use `encode()` when your data has entities with relationships:
+- Code intelligence (symbols, call graphs, dependencies)
+- Knowledge graphs and ontologies
+- Neo4j / Memgraph / Dgraph query results
+- Agent memory with entity relationships
+- Network topologies, dependency trees
+- Any domain where nodes have edges
+
+Graph-shaped data is the fastest-growing data shape in AI. Knowledge systems, ontologies, GraphRAG, code intelligence, agent memory. Every other token-efficient format (TOON, IRON, PLOON) treats data as flat tables. GCF is the only format with first-class graph syntax: local IDs, typed edges, distance grouping, and session deduplication that compounds to 92% savings across multi-turn sessions.
+
+### When GCF is most effective
+
 - Payloads contain **repeated structures** (arrays of similar objects)
 - Records have **relationships** between them (edges, references)
 - You're operating under a **token budget** (context windows are finite)
-- You make **multiple calls** in a session (session dedup compounds savings)
-- You want **cheaper output** (53% fewer tokens than JSON, 25.5% fewer than TOON across 15 datasets)
+- You make **multiple calls** in a session (graph profile session dedup compounds savings)
+- You want **cheaper output** (63% fewer output tokens than JSON)
 
 ## When NOT to use GCF
 
@@ -173,9 +187,9 @@ GCF profile=generic
 
 One header declares field names. Rows are positional values only. No field names repeated per record. Works on any structured JSON.
 
-## Graph profile (code intelligence, MCP tools)
+## Graph profile (first-class graph data)
 
-For code graph data with symbols, edges, and distance groups, use the graph profile:
+For data with entities and relationships, the graph profile adds local IDs, typed edges, distance grouping, and session dedup. Everything the generic profile does, plus the grammar to express graphs natively:
 
 ::: code-group
 
