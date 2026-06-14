@@ -1861,10 +1861,12 @@ onMounted(async () => {
 
 .toon-error-verified {
   margin-top: 16px;
-  font-size: 11px;
-  color: var(--vp-c-text-3);
-  padding: 6px 12px;
-  background: var(--vp-c-bg-soft);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--vp-c-danger-1);
+  padding: 10px 14px;
+  background: color-mix(in srgb, var(--vp-c-danger-1) 8%, var(--vp-c-bg-soft));
+  border: 1px solid color-mix(in srgb, var(--vp-c-danger-1) 20%, var(--vp-c-border));
   border-radius: 6px;
   max-width: 320px;
 }
