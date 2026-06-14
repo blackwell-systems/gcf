@@ -7,8 +7,8 @@ const ready = ref(false)
 const examples = [
   {
     title: 'Generic Profile',
-    subtitle: 'Lossless JSON codec (subset)',
-    description: 'Any JSON value in, same JSON value out. Verified lossless across 1,000,000,000+ random round-trips. 71% fewer tokens. Perfect interoperability.',
+    subtitle: 'Any structured data (subset)',
+    description: 'Any structured value in, same value out. Verified lossless across 23 billion+ round-trips with JSON, YAML, TOML, CSV, and MessagePack. 71% fewer tokens than JSON.',
     json: `[
   {"name":"validateToken",
    "kind":"func","refs":18},
