@@ -215,7 +215,7 @@ echo 'GCF profile=generic\nname=Alice' | gcf decode-generic
 
 | Command | Description |
 |---------|-------------|
-| `gcf encode` | Encode JSON graph payload to GCF |
+| `gcf encode` | Encode graph payload (JSON stdin) to GCF |
 | `gcf decode` | Decode GCF graph text to JSON |
 | `gcf encode-generic` | Encode any JSON to GCF generic profile |
 | `gcf decode-generic` | Decode GCF generic profile to JSON |

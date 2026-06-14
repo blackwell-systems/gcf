@@ -233,7 +233,7 @@ python -m gcf decode-generic < data.gcf
 
 | Command | Description |
 |---------|-------------|
-| `encode` | Encode JSON graph payload to GCF |
+| `encode` | Encode graph payload (JSON stdin) to GCF |
 | `decode` | Decode GCF graph text to JSON |
 | `encode-generic` | Encode any JSON to GCF generic profile |
 | `decode-generic` | Decode GCF generic profile to JSON |
