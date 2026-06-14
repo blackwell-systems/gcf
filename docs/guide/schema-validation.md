@@ -1,6 +1,6 @@
 # Schema Validation
 
-GCF round-trips losslessly to JSON. Validate on the decoded side using JSON Schema, the same tooling every AI framework already supports.
+GCF round-trips losslessly with JSON and any structured data format (YAML, TOML, CSV, MessagePack). Validate on the decoded side using JSON Schema, the same tooling every AI framework already supports.
 
 ## The pattern
 
@@ -146,14 +146,15 @@ def search_flights(origin: str, destination: str, date: str):
 
 ### 2. Proxy-level
 
-The [GCF proxy](/guide/proxy) sits between the tool and the model. Add schema validation at the proxy layer so every tool response is validated without changing tool code:
+The [GCF proxy](/guide/proxy) sits between the tool and the model. You can add a validation wrapper around the proxy that decodes each response and validates before forwarding:
 
-```bash
-# Proxy validates every response against a schema directory
-gcf-proxy --validate-dir ./schemas/ your-mcp-server
+```python
+# Validate proxy output in a thin wrapper
+data = decode_generic(gcf_response)
+jsonschema.validate(data, schemas[tool_name])
 ```
 
-Each tool's response schema is a JSON file in the schemas directory, named by tool name (`search_flights.json`). The proxy decodes GCF to JSON, validates against the matching schema, and forwards the validated result.
+This keeps validation separate from encoding, and lets you use any schema validator without coupling it to the proxy.
 
 ### 3. Application-level
 
