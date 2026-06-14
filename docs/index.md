@@ -31,4 +31,4 @@ features:
     details: 'Wins 13/15 real-world datasets. 38% fewer on semi-uniform data, 30% on nested, 32% on the exact comprehension eval payload. <span class="toon">TOON</span>&apos;s two wins total 104 tokens combined.'
 ---
 
-<!-- <RotatingText /> -->
+<HowItWorks />

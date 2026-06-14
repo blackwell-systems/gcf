@@ -2,6 +2,7 @@ import DefaultTheme from 'vitepress/theme'
 import Playground from './components/Playground.vue'
 import RotatingText from './components/RotatingText.vue'
 import CostCalculator from './components/CostCalculator.vue'
+import HowItWorks from './components/HowItWorks.vue'
 import './custom.css'
 import mediumZoom from 'medium-zoom'
 import { onMounted, watch, nextTick } from 'vue'
@@ -13,6 +14,7 @@ export default {
     app.component('Playground', Playground)
     app.component('RotatingText', RotatingText)
     app.component('CostCalculator', CostCalculator)
+    app.component('HowItWorks', HowItWorks)
   },
   setup() {
     const route = useRoute()
