@@ -176,7 +176,7 @@ Carol|dev|false</code></pre>
 
           <div class="grammar-card">
             <h4>Scalars &amp; Key-Value</h4>
-            <pre class="grammar-code"><code v-if="ready" v-html="highlightGCF(`name=Alice\nage=30\nactive=true\nmissing=-\nempty=\"\"`)"></code><code v-else>name=Alice
+            <pre class="grammar-code"><code v-if="ready" v-html="highlightGCF('name=Alice\nage=30\nactive=true\nmissing=-\nempty=&quot;&quot;')"></code><code v-else>name=Alice
 age=30
 active=true
 missing=-
