@@ -6,7 +6,7 @@ GCF has two profiles. TOON has one. The comparison plays out on both dimensions,
 
 **On relationship data** (graph profile): TOON has no grammar for this. No local IDs, no edge notation, no session dedup, no distance grouping. TOON must repeat full identifiers on every edge (~30-100 tokens each). GCF uses `@0<@1 calls` (~4 tokens). On 500-symbol code graphs, GCF scores 90.7% comprehension. TOON scores 68.5%. This isn't a gap that closes with optimization. TOON structurally cannot represent relationships efficiently without becoming a different format.
 
-**On TOON's own benchmark**: We forked [their benchmark](https://github.com/blackwell-systems/toon-benchmark), ran their original 6 datasets with their tokenizer and methodology, then added 9 more representing real-world MCP tool responses. GCF wins all 6 of TOON's original datasets and 13 of 15 overall. TOON's two wins total 104 tokens combined. GCF's 13 wins save 107,679 tokens.
+**On TOON's own benchmark**: We forked [their benchmark](https://github.com/blackwell-systems/toon-benchmark), ran their original 6 datasets with their tokenizer and methodology, then added 9 more representing real-world MCP tool responses. GCF wins 13 of 15 overall. TOON's two wins total 104 tokens combined. GCF's 13 wins save 107,679 tokens.
 
 ## Feature comparison
 
