@@ -17,7 +17,7 @@ GCF guarantees `decode(encode(value)) == value` for every structured value. This
 
 ## What this proves
 
-GCF's grammar expresses any structured data regardless of source format. The encoding operates on structured values (objects, arrays, strings, numbers, booleans, null), not on JSON syntax. Whether your data originates as JSON, YAML, TOML, CSV, MessagePack, or any other format that deserializes to these primitives, GCF encodes it losslessly.
+**GCF's grammar expresses any structured data regardless of source format.** The encoding operates on structured values (objects, arrays, strings, numbers, booleans, null), not on JSON syntax. Whether your data originates as JSON, YAML, TOML, CSV, MessagePack, or any other format that deserializes to these primitives, GCF encodes it losslessly.
 
 The 5 formats tested are proof points. The capability is universal: any format that produces objects and arrays round-trips through GCF.
 
