@@ -23,15 +23,23 @@ That said, if your pipeline uses MessagePack internally, GCF handles it: deseria
 
 ## Why not just compress JSON with gzip?
 
+This isn't compression. It's a different encoding that models comprehend better.
+
 gzip reduces bytes on the wire but not tokens in the context window. The LLM doesn't see gzip bytes; it sees the decompressed text. A gzipped JSON payload that decompresses to 53,341 tokens still costs 53,341 tokens in the context window.
 
-GCF reduces the token count of the text itself. 11,090 tokens for the same data. The savings are in the representation, not the transport.
+GCF reduces the token count of the text itself. 11,090 tokens for the same data. And the model reads it with [100% accuracy](/guide/benchmarks) where JSON drops to 53.6% at scale. Compression doesn't improve comprehension. GCF does both.
 
 ## What about YAML or TOML?
 
-YAML and TOML are human-readable configuration formats. They weren't designed for token efficiency or LLM comprehension at scale. But if your data originates as YAML or TOML, GCF handles it natively: parse to a structured value, call `encodeGeneric()`. Verified lossless across 11 billion YAML round-trips and 100 million TOML round-trips.
+GCF handles data from any format. If your pipeline produces YAML, parse it, call `encodeGeneric()`. Same for TOML, CSV, MessagePack, or anything else that deserializes to structured values.
 
-GCF is 36% fewer tokens than YAML on the same data. The format decisions that make GCF less human-readable (positional fields, no repeated keys, pipe-delimited rows) are exactly what make it more LLM-readable and more token-efficient.
+We've verified this lossless across 11 billion YAML round-trips and 100 million TOML round-trips. GCF is 36% fewer tokens than YAML on the same data. The format decisions that make GCF less human-readable (positional fields, no repeated keys, pipe-delimited rows) are exactly what make it more LLM-readable and more token-efficient.
+
+## Is GCF just a codec?
+
+No. A codec is invisible infrastructure that gets decoded before consumption. The LLM reads GCF directly. It's the final format, not an intermediate state. `decode()` is optional, only needed when a human wants to see the data.
+
+GCF has its own grammar, its own spec, its own syntax. It's a wire format: it lives at the boundary between your data and the LLM context window. Data is stored in whatever format is natural (JSON, a database, YAML configs). At the moment it enters the context window, it becomes GCF. The model reads it natively.
 
 ## Can LLMs actually read GCF without training?
 
