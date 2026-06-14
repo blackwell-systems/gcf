@@ -12,7 +12,7 @@ hero:
     - theme: alt
       text: Try the Playground
       link: /playground
-    - theme: alt
+    - theme: brand
       text: Cost Calculator
       link: /calculator
     - theme: alt
