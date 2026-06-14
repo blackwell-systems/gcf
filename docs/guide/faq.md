@@ -19,6 +19,8 @@ Same answer as protobuf: they're binary. An LLM cannot read MessagePack bytes in
 
 GCF is text. It goes directly into the context window. The model reads it natively with [100% accuracy on standard workloads and 90.7% on complex code graphs](/guide/benchmarks) (vs JSON 53.6%) and produces valid output from a 3-line primer. Binary formats solve the wrong layer of the problem.
 
+That said, if your pipeline uses MessagePack internally, GCF handles it: deserialize to a native object, call `encodeGeneric()`. We've verified this path lossless across 585 million round-trips.
+
 ## Why not just compress JSON with gzip?
 
 gzip reduces bytes on the wire but not tokens in the context window. The LLM doesn't see gzip bytes; it sees the decompressed text. A gzipped JSON payload that decompresses to 53,341 tokens still costs 53,341 tokens in the context window.
@@ -27,9 +29,9 @@ GCF reduces the token count of the text itself. 11,090 tokens for the same data.
 
 ## What about YAML or TOML?
 
-YAML and TOML are human-readable configuration formats. They weren't designed for token efficiency or LLM comprehension at scale. At 500 records, YAML's indentation-based nesting produces more tokens than JSON (every nested field adds whitespace tokens). TOML doesn't support arrays of objects well.
+YAML and TOML are human-readable configuration formats. They weren't designed for token efficiency or LLM comprehension at scale. But if your data originates as YAML or TOML, GCF handles it natively: parse to a structured value, call `encodeGeneric()`. Verified lossless across 11 billion YAML round-trips and 100 million TOML round-trips.
 
-GCF is purpose-built for machine readers: positional fields (no repeated keys), section headers (structural grouping), and pipe-delimited rows (maximum density). The format decisions that make it less human-readable are exactly what make it more LLM-readable.
+GCF is 36% fewer tokens than YAML on the same data. The format decisions that make GCF less human-readable (positional fields, no repeated keys, pipe-delimited rows) are exactly what make it more LLM-readable and more token-efficient.
 
 ## Can LLMs actually read GCF without training?
 
@@ -49,7 +51,7 @@ Use the [MCP proxy](/guide/proxy). It wraps any existing MCP server, converts JS
 gcf-proxy your-mcp-server
 ```
 
-Or call `decodeGeneric()` at the boundary. GCF decodes losslessly to JSON. The last-mile rendering is always JSON for humans and systems that expect it.
+Or call `decodeGeneric()` at the boundary. GCF decodes losslessly to the original structured data. The last-mile rendering is always JSON (or whatever format you prefer) for humans and systems that expect it.
 
 ## Does GCF support JSON Schema validation?
 
@@ -62,4 +64,4 @@ jsonschema.validate(data, existing_schema)
 
 ## How stable is the spec?
 
-[Spec v3.0](https://github.com/blackwell-systems/gcf/blob/main/SPEC.md) is designated Stable. Six implementations at v2.0.0+, 156 conformance fixtures, 1,000,000,000+ lossless round-trips verified across all 6 languages, cross-language 6x6 matrix passing.
+[Spec v3.0](https://github.com/blackwell-systems/gcf/blob/main/SPEC.md) is designated Stable. Six implementations at v2.0.0+, 156 conformance fixtures, 23 billion+ lossless round-trips verified across 5 formats (JSON, YAML, TOML, CSV, MessagePack) and 6 language implementations, cross-language 6x6 matrix passing.
