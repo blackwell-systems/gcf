@@ -6,8 +6,9 @@ const ready = ref(false)
 
 const examples = [
   {
-    title: 'Inline Schemas',
-    description: 'JSON repeats every key on every row. GCF declares them once. At 500 rows, that\'s thousands of wasted tokens.',
+    title: 'Generic Profile',
+    subtitle: 'Lossless JSON codec (subset)',
+    description: 'Any JSON value in, same JSON value out. Verified lossless across 1,000,000,000+ random round-trips. 71% fewer tokens. Perfect interoperability.',
     json: `[
   {"name":"validateToken",
    "kind":"func","refs":18},
@@ -25,8 +26,9 @@ getConnection|func|34
 runMigration|func|3`,
   },
   {
-    title: 'Graph Structure',
-    description: 'Symbols and relationships. GCF encodes both in a format LLMs parse natively.',
+    title: 'Graph Profile',
+    subtitle: 'Superset: adds IDs, edges, scores',
+    description: 'Knowledge graphs, code intelligence, ontologies, relationship networks. Graph-shaped data is the fastest-growing data shape in AI. No other format treats it as a first-class citizen.',
     json: `{
   "symbols": [
     {"id":1,"kind":"func",
@@ -54,9 +56,10 @@ runMigration|func|3`,
   },
   {
     title: 'Session Dedup',
-    description: 'Call 2: JSON retransmits everything. GCF sends only what changed.',
-    jsonLabel: 'JSON (call 2)',
-    gcfLabel: 'GCF (call 2)',
+    subtitle: 'Both profiles',
+    description: 'JSON retransmits everything on every call. GCF tracks what\'s been sent and only transmits deltas. 92% savings by the 5th call in a session.',
+    jsonLabel: 'JSON (call 2: full retransmit)',
+    gcfLabel: 'GCF (call 2: bare refs + new)',
     json: `[
   {"id":1,"kind":"func",
    "name":"handleReq"},
@@ -84,13 +87,14 @@ onMounted(async () => {
 <template>
   <section class="how-it-works">
     <div class="container">
-      <h2 class="section-title">How GCF Works</h2>
-      <p class="section-subtitle">Three concepts. Same data. Fewer tokens.</p>
+      <h2 class="section-title">Two Profiles. One Format.</h2>
+      <p class="section-subtitle">One grammar, two profiles. The generic profile is a strict subset of the graph profile: learn one, use both. Any JSON in, same JSON out. Graphs get first-class syntax.</p>
 
       <div class="cards">
         <div v-for="(ex, i) in examples" :key="i" class="card">
           <div class="card-number">{{ i + 1 }}</div>
           <h3 class="card-title">{{ ex.title }}</h3>
+          <div v-if="ex.subtitle" class="card-subtitle">{{ ex.subtitle }}</div>
           <p class="card-desc">{{ ex.description }}</p>
 
           <div class="comparison">
@@ -243,6 +247,15 @@ handle|func
 .card-title {
   font-size: 1.15rem;
   font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.card-subtitle {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--vp-c-brand-1);
   margin-bottom: 0.5rem;
 }
 
