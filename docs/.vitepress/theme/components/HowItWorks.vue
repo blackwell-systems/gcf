@@ -56,8 +56,8 @@ runMigration|func|3`,
   },
   {
     title: 'Session Dedup',
-    subtitle: 'Both profiles',
-    description: 'JSON retransmits everything on every call. GCF tracks what\'s been sent and only transmits deltas. 92% savings by the 5th call in a session.',
+    subtitle: 'Graph profile',
+    description: 'JSON retransmits everything on every call. GCF tracks which symbols have been sent and only transmits bare references for known ones. 92% savings by the 5th call.',
     jsonLabel: 'JSON (call 2: full retransmit)',
     gcfLabel: 'GCF (call 2: bare refs + new)',
     json: `[
