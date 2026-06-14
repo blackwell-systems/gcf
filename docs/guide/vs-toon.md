@@ -1,6 +1,8 @@
 # GCF vs TOON
 
-GCF is smaller on 13/15 datasets (-25.5% overall), achieves 100% comprehension on every frontier model (where TOON fails on GPT-5.5 and Gemini Flash), and has five features TOON structurally cannot add. TOON's own official decoder rejects LLM-generated TOON output on 7 of 9 models tested.
+We forked [TOON's own benchmark](https://github.com/blackwell-systems/toon-benchmark), used their datasets, their tokenizer, their methodology. GCF wins 13 of 15 datasets (-25.5% overall). TOON's two wins total 104 tokens combined. GCF's 13 wins save 107,679 tokens.
+
+On top of that: 100% comprehension on every frontier model (TOON fails on GPT-5.5 and Gemini Flash), 5/5 generation validity on every frontier model (TOON's own decoder rejects LLM-generated output on 7 of 9 models), and five features TOON structurally cannot add without becoming a different format.
 
 ## Feature comparison
 
