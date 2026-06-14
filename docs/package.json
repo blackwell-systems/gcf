@@ -13,7 +13,10 @@
   "dependencies": {
     "@blackwell-systems/gcf": "^2.0.2",
     "@toon-format/toon": "^2.3.0",
+    "js-yaml": "^4.2.0",
     "medium-zoom": "^1.1.0",
+    "papaparse": "^5.5.3",
+    "smol-toml": "^1.6.1",
     "web-tree-sitter": "^0.26.9"
   }
 }

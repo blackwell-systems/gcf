@@ -1,5 +1,26 @@
 # Changelog
 
+## v3.1 (2026-06-14)
+
+### Spec changes
+
+- `tool` field in graph profile header moved from required to optional (SHOULD be present for MCP tool responses, not required)
+- Enables non-MCP use cases (Neo4j queries, knowledge graphs, ontologies, agent memory) without inventing a tool name
+
+### Conformance
+
+- Added: `graph-decode/003_no_tool_field.json` (decode graph payload without tool)
+- Removed: `errors-v2/022_missing_graph_tool.json` (no longer an error)
+- 157 total fixtures
+
+### Bug fixes (all 6 implementations)
+
+- Quote strings containing commas (`inline-schema/006_inline_with_quoted_values`)
+- Decode v2-format indented attachments in tabular rows (`decode/002_attachment`)
+- Reject duplicate attachments on the same row (`errors-v2/027_duplicate_attachment`)
+- Reject orphan attachments on rows without `^` cells (`errors-v2/016_orphan_attachment`)
+- All 6 implementations at full conformance (157/157)
+
 ## v2.0 (2026-06-10)
 
 Specification rewrite addressing 11 correctness findings from the generic profile review. Coordinated breaking change with zero installed base cost. Prior versions (v1.0 through v1.4) are considered pre-stable development.

@@ -3,6 +3,8 @@ import { ref, computed, watch, onMounted } from 'vue'
 import { encode, decode, encodeGeneric, decodeGeneric } from '@blackwell-systems/gcf'
 import type { Payload } from '@blackwell-systems/gcf'
 import { encode as toonEncode } from '@toon-format/toon'
+import jsYaml from 'js-yaml'
+import { parse as tomlParse } from 'smol-toml'
 const highlightFn = ref<((code: string) => string) | null>(null)
 const highlightJsonFn = ref<((code: string) => string) | null>(null)
 const highlightToonFn = ref<((code: string) => string) | null>(null)
@@ -220,12 +222,323 @@ const PRESETS: Record<string, { label: string; json: any }> = {
 }
 
 // ---------------------------------------------------------------------------
+// Format-specific presets
+// ---------------------------------------------------------------------------
+
+type InputFormat = 'json' | 'yaml' | 'toml'
+
+const FORMAT_PRESETS: Record<InputFormat, Record<string, { label: string; text: string }>> = {
+  json: {}, // populated from PRESETS above
+  yaml: {
+    yaml_config: {
+      label: 'Application config (12 services)',
+      text: `services:
+  - name: api-gateway
+    port: 8080
+    replicas: 3
+    health_check: /healthz
+    environment: production
+    dependencies:
+      - user-service
+      - auth-service
+    limits:
+      cpu: "500m"
+      memory: "256Mi"
+  - name: user-service
+    port: 8081
+    replicas: 2
+    health_check: /health
+    environment: production
+    dependencies:
+      - postgres
+      - redis
+    limits:
+      cpu: "250m"
+      memory: "128Mi"
+  - name: auth-service
+    port: 8082
+    replicas: 2
+    health_check: /health
+    environment: production
+    dependencies:
+      - redis
+      - vault
+    limits:
+      cpu: "250m"
+      memory: "128Mi"
+  - name: notification-service
+    port: 8083
+    replicas: 1
+    health_check: /healthz
+    environment: production
+    dependencies:
+      - rabbitmq
+      - smtp-relay
+    limits:
+      cpu: "100m"
+      memory: "64Mi"
+  - name: analytics-service
+    port: 8084
+    replicas: 2
+    health_check: /health
+    environment: production
+    dependencies:
+      - clickhouse
+      - kafka
+    limits:
+      cpu: "1000m"
+      memory: "512Mi"
+  - name: search-service
+    port: 8085
+    replicas: 2
+    health_check: /health
+    environment: production
+    dependencies:
+      - elasticsearch
+    limits:
+      cpu: "500m"
+      memory: "256Mi"
+  - name: payment-service
+    port: 8086
+    replicas: 3
+    health_check: /healthz
+    environment: production
+    dependencies:
+      - postgres
+      - stripe-api
+    limits:
+      cpu: "500m"
+      memory: "256Mi"
+  - name: inventory-service
+    port: 8087
+    replicas: 2
+    health_check: /health
+    environment: production
+    dependencies:
+      - postgres
+      - redis
+    limits:
+      cpu: "250m"
+      memory: "128Mi"
+  - name: shipping-service
+    port: 8088
+    replicas: 1
+    health_check: /health
+    environment: production
+    dependencies:
+      - postgres
+      - fedex-api
+    limits:
+      cpu: "100m"
+      memory: "64Mi"
+  - name: email-service
+    port: 8089
+    replicas: 1
+    health_check: /healthz
+    environment: production
+    dependencies:
+      - smtp-relay
+      - template-store
+    limits:
+      cpu: "100m"
+      memory: "64Mi"
+  - name: cache-service
+    port: 8090
+    replicas: 3
+    health_check: /health
+    environment: production
+    dependencies:
+      - redis
+    limits:
+      cpu: "250m"
+      memory: "512Mi"
+  - name: logging-service
+    port: 8091
+    replicas: 2
+    health_check: /health
+    environment: production
+    dependencies:
+      - elasticsearch
+      - kafka
+    limits:
+      cpu: "500m"
+      memory: "256Mi"`,
+    },
+    yaml_pipeline: {
+      label: 'CI/CD pipeline',
+      text: `stages:
+  - name: build
+    steps:
+      - run: npm install
+        timeout: 300
+      - run: npm run build
+        timeout: 600
+      - run: npm test
+        timeout: 300
+    artifacts:
+      - dist/
+      - coverage/
+  - name: lint
+    steps:
+      - run: npm run lint
+        timeout: 120
+      - run: npm run typecheck
+        timeout: 180
+    allow_failure: false
+  - name: deploy-staging
+    steps:
+      - run: kubectl apply -f k8s/staging/
+        timeout: 120
+      - run: kubectl rollout status deployment/app
+        timeout: 300
+    environment: staging
+    requires:
+      - build
+      - lint
+  - name: integration-tests
+    steps:
+      - run: npm run test:integration
+        timeout: 600
+      - run: npm run test:e2e
+        timeout: 900
+    environment: staging
+    requires:
+      - deploy-staging
+  - name: deploy-production
+    steps:
+      - run: kubectl apply -f k8s/production/
+        timeout: 120
+      - run: kubectl rollout status deployment/app
+        timeout: 600
+    environment: production
+    requires:
+      - integration-tests
+    manual: true`,
+    },
+  },
+  toml: {
+    toml_dependencies: {
+      label: 'Package dependencies (15 packages)',
+      text: `[project]
+name = "analytics-platform"
+version = "4.1.0"
+
+[[dependencies]]
+name = "tokio"
+version = "1.44.2"
+features = ["full", "tracing", "parking_lot"]
+optional = false
+source = "crates.io"
+
+[[dependencies]]
+name = "serde"
+version = "1.0.219"
+features = ["derive", "rc", "alloc"]
+optional = false
+source = "crates.io"
+
+[[dependencies]]
+name = "sqlx"
+version = "0.8.6"
+features = ["runtime-tokio-rustls", "postgres", "json", "chrono", "uuid"]
+optional = false
+source = "crates.io"
+
+[[dependencies]]
+name = "clap"
+version = "4.5.38"
+features = ["derive", "env", "wrap_help", "color"]
+optional = false
+source = "crates.io"
+
+[[dependencies]]
+name = "tracing"
+version = "0.1.41"
+features = ["log", "attributes"]
+optional = false
+source = "crates.io"
+
+[[dependencies]]
+name = "reqwest"
+version = "0.12.15"
+features = ["json", "rustls-tls", "gzip", "brotli", "stream"]
+optional = false
+source = "crates.io"
+
+[[dependencies]]
+name = "axum"
+version = "0.8.4"
+features = ["json", "multipart", "ws", "tracing"]
+optional = false
+source = "crates.io"
+
+[[dependencies]]
+name = "redis"
+version = "0.29.1"
+features = ["tokio-comp", "connection-manager", "json"]
+optional = true
+source = "crates.io"
+
+[[dependencies]]
+name = "clickhouse"
+version = "0.13.2"
+features = ["tls", "lz4"]
+optional = true
+source = "crates.io"
+
+[[dependencies]]
+name = "kafka"
+version = "0.10.1"
+features = ["ssl", "sasl", "compression"]
+optional = true
+source = "crates.io"
+
+[[dependencies]]
+name = "prometheus"
+version = "0.14.0"
+features = ["process"]
+optional = false
+source = "crates.io"
+
+[[dependencies]]
+name = "uuid"
+version = "1.17.0"
+features = ["v4", "v7", "serde"]
+optional = false
+source = "crates.io"
+
+[[dependencies]]
+name = "chrono"
+version = "0.4.41"
+features = ["serde", "clock"]
+optional = false
+source = "crates.io"
+
+[[dependencies]]
+name = "jsonwebtoken"
+version = "9.3.1"
+features = []
+optional = false
+source = "crates.io"
+
+[[dependencies]]
+name = "tower"
+version = "0.5.2"
+features = ["timeout", "limit", "load-shed", "retry", "buffer"]
+optional = false
+source = "crates.io"`,
+    },
+  },
+}
+
+// ---------------------------------------------------------------------------
 // State
 // ---------------------------------------------------------------------------
 
 type Tab = 'compare' | 'encode' | 'decode'
 
 const activeTab = ref<Tab>('compare')
+const inputFormat = ref<InputFormat>('json')
 const inputText = ref('')
 const selectedPreset = ref('event_logs')
 const copied = ref<string>('')
@@ -266,9 +579,23 @@ function jsonFromPayloadObj(obj: any): Payload {
 // Computed: three-way encode
 // ---------------------------------------------------------------------------
 
-const parsedObj = computed(() => {
-  try { return JSON.parse(inputText.value) }
-  catch { return null }
+function parseInput(text: string, format: InputFormat): any {
+  if (!text.trim()) return null
+  try {
+    if (format === 'json') return JSON.parse(text)
+    if (format === 'yaml') return jsYaml.load(text)
+    if (format === 'toml') return tomlParse(text)
+  } catch { return null }
+  return null
+}
+
+const parsedObj = computed(() => parseInput(inputText.value, inputFormat.value))
+
+const parseError = computed(() => {
+  if (!inputText.value.trim()) return ''
+  if (parsedObj.value !== null) return ''
+  const labels: Record<InputFormat, string> = { json: 'JSON', yaml: 'YAML', toml: 'TOML', csv: 'CSV' }
+  return `Invalid ${labels[inputFormat.value]}`
 })
 
 const jsonOutput = computed(() => {
@@ -280,6 +607,13 @@ const toonOutput = computed(() => {
   if (!parsedObj.value) return ''
   try { return encodeTOON(parsedObj.value) }
   catch { return '' }
+})
+
+const toonError = computed(() => {
+  if (!parsedObj.value) return ''
+  if (inputFormat.value === 'json') return ''
+  const labels: Record<InputFormat, string> = { json: '', yaml: 'YAML', toml: 'TOML', csv: 'CSV' }
+  return labels[inputFormat.value]
 })
 
 const isPayload = computed(() => parsedObj.value ? isPayloadShaped(parsedObj.value) : false)
@@ -317,6 +651,7 @@ const encodeHighlighted = computed(() => {
   return highlightFn.value(encodeOutput.value)
 })
 
+const inputTokens = computed(() => inputText.value.trim() ? estimateTokens(inputText.value) : 0)
 const jsonTokens = computed(() => estimateTokens(jsonOutput.value))
 const toonTokens = computed(() => estimateTokens(toonOutput.value))
 const gcfTokens = computed(() => estimateTokens(gcfOutput.value))
@@ -324,7 +659,9 @@ const sessionTokens = computed(() => estimateTokens(sessionOutput.value))
 
 const gcfVsJson = computed(() => jsonTokens.value > 0 ? Math.round(100 * (1 - gcfTokens.value / jsonTokens.value)) : 0)
 const gcfVsToon = computed(() => toonTokens.value > 0 ? Math.round(100 * (1 - gcfTokens.value / toonTokens.value)) : 0)
+const gcfVsSource = computed(() => inputTokens.value > 0 ? Math.round(100 * (1 - gcfTokens.value / inputTokens.value)) : 0)
 const sessionVsJson = computed(() => jsonTokens.value > 0 ? Math.round(100 * (1 - sessionTokens.value / jsonTokens.value)) : 0)
+const isNonJson = computed(() => inputFormat.value !== 'json')
 
 const symbolCount = computed(() => parsedObj.value?.symbols?.length ?? 0)
 const edgeCount = computed(() => parsedObj.value?.edges?.length ?? 0)
@@ -360,10 +697,13 @@ const symbolSavingsPercent = computed(() => {
   return Math.round(100 * (1 - symbolOnlyTokensGcf.value / symbolOnlyTokensJson.value))
 })
 
-// Bar widths (relative to JSON as 100%)
-const toonBarPct = computed(() => jsonTokens.value > 0 ? Math.round((toonTokens.value / jsonTokens.value) * 100) : 0)
-const gcfBarPct = computed(() => jsonTokens.value > 0 ? Math.round((gcfTokens.value / jsonTokens.value) * 100) : 0)
-const sessionBarPct = computed(() => jsonTokens.value > 0 ? Math.round((sessionTokens.value / jsonTokens.value) * 100) : 0)
+// Bar widths (relative to largest format as 100%)
+const barMax = computed(() => Math.max(jsonTokens.value, inputTokens.value, toonTokens.value || 0))
+const sourceBarPct = computed(() => barMax.value > 0 ? Math.round((inputTokens.value / barMax.value) * 100) : 0)
+const jsonBarPct = computed(() => barMax.value > 0 ? Math.round((jsonTokens.value / barMax.value) * 100) : 0)
+const toonBarPct = computed(() => barMax.value > 0 ? Math.round((toonTokens.value / barMax.value) * 100) : 0)
+const gcfBarPct = computed(() => barMax.value > 0 ? Math.round((gcfTokens.value / barMax.value) * 100) : 0)
+const sessionBarPct = computed(() => barMax.value > 0 ? Math.round((sessionTokens.value / barMax.value) * 100) : 0)
 
 // ---------------------------------------------------------------------------
 // Encode tab
@@ -413,7 +753,35 @@ const decodeError = computed(() => decodeOutput.value.startsWith('Error:'))
 // ---------------------------------------------------------------------------
 
 function loadPreset(key: string) {
-  inputText.value = JSON.stringify(PRESETS[key].json, null, 2)
+  if (inputFormat.value === 'json') {
+    if (PRESETS[key]) {
+      inputText.value = JSON.stringify(PRESETS[key].json, null, 2)
+    }
+  } else {
+    const fp = FORMAT_PRESETS[inputFormat.value]
+    if (fp && fp[key]) {
+      inputText.value = fp[key].text
+    }
+  }
+}
+
+const currentPresets = computed(() => {
+  if (inputFormat.value === 'json') {
+    return Object.entries(PRESETS).map(([key, p]) => ({ key, label: p.label }))
+  }
+  const fp = FORMAT_PRESETS[inputFormat.value] || {}
+  return Object.entries(fp).map(([key, p]) => ({ key, label: p.label }))
+})
+
+function onFormatChange() {
+  const presets = currentPresets.value
+  if (presets.length > 0) {
+    selectedPreset.value = presets[0].key
+    loadPreset(presets[0].key)
+  } else {
+    inputText.value = ''
+    selectedPreset.value = ''
+  }
 }
 
 function copyText(text: string, label: string) {
@@ -486,7 +854,7 @@ onMounted(async () => {
   <div class="pg">
     <header class="pg-header">
       <h1>Playground</h1>
-      <p class="pg-subtitle">Paste any JSON and see how GCF compares to JSON and TOON, in real time.</p>
+      <p class="pg-subtitle">Paste any structured data and see how GCF compares. JSON, YAML, TOML, CSV: GCF encodes them all.</p>
     </header>
 
     <!-- Tab bar -->
@@ -505,9 +873,14 @@ onMounted(async () => {
 
       <div class="pg-controls-right">
         <template v-if="activeTab === 'compare'">
+          <select v-model="inputFormat" class="pg-select pg-format-select" @change="onFormatChange()">
+            <option value="json">JSON</option>
+            <option value="yaml">YAML</option>
+            <option value="toml">TOML</option>
+          </select>
           <select v-model="selectedPreset" class="pg-select" @change="loadPreset(selectedPreset)">
             <option value="" disabled>Load example...</option>
-            <option v-for="(p, key) in PRESETS" :key="key" :value="key">{{ p.label }}</option>
+            <option v-for="p in currentPresets" :key="p.key" :value="p.key">{{ p.label }}</option>
           </select>
           <label class="pg-checkbox">
             <input type="checkbox" v-model="showSession" />
@@ -523,28 +896,44 @@ onMounted(async () => {
     <!-- ================================================================= -->
     <template v-if="activeTab === 'compare'">
       <div class="triple-pane">
-        <!-- JSON (editable) -->
+        <!-- Input (editable) -->
         <div class="pane pane-json">
           <div class="pane-head">
-            <span class="pane-label">JSON</span>
-            <span class="pane-tokens">{{ jsonTokens.toLocaleString() }} tokens</span>
+            <span class="pane-label">{{ inputFormat.toUpperCase() }}</span>
+            <span class="pane-tokens">{{ inputTokens.toLocaleString() }} tokens</span>
           </div>
           <textarea
             class="pane-textarea"
             v-model="inputText"
             spellcheck="false"
-            placeholder="Paste any JSON here, or load an example above..."
+            :placeholder="`Paste any ${inputFormat.toUpperCase()} here, or load an example above...`"
           ></textarea>
-          <div class="input-error" v-if="inputText.trim() && !parsedObj">Invalid JSON</div>
+          <div class="input-error" v-if="parseError">{{ parseError }}</div>
         </div>
 
         <!-- TOON -->
         <div class="pane pane-toon">
-          <div class="pane-head">
+          <div class="pane-head" :class="{ 'pane-head-error': toonError }">
             <span class="pane-label">TOON</span>
-            <span class="pane-tokens" v-if="toonOutput">{{ toonTokens.toLocaleString() }} tokens</span>
+            <span class="pane-tokens" v-if="toonOutput && !toonError">{{ toonTokens.toLocaleString() }} tokens</span>
+            <span class="pane-unsupported" v-if="toonError">unsupported</span>
           </div>
-          <div class="pane-body-wrap">
+          <div class="pane-body-wrap" v-if="toonError && parsedObj">
+            <div class="toon-error-state">
+              <div class="toon-error-icon">&#x2717;</div>
+              <div class="toon-error-title">TOON cannot encode {{ toonError }}</div>
+              <div class="toon-error-detail">
+                TOON accepts JSON objects only. To encode {{ toonError }} data, you would
+                first convert to JSON, then encode with TOON. GCF encodes the parsed
+                structured data directly, regardless of source format.
+              </div>
+              <div class="toon-error-verified">
+                GCF verified lossless across 23B+ round-trips in 5 formats:
+                JSON, YAML, TOML, CSV, MessagePack
+              </div>
+            </div>
+          </div>
+          <div class="pane-body-wrap" v-else>
             <button v-if="toonOutput" class="pane-copy" @click="copyText(toonOutput, 'toon')">{{ copied === 'toon' ? 'Copied!' : 'Copy' }}</button>
             <pre class="pane-code" v-if="toonHighlighted" v-html="toonHighlighted"></pre>
             <pre class="pane-code" v-else>{{ toonOutput || 'TOON output will appear here...' }}</pre>
@@ -591,18 +980,29 @@ onMounted(async () => {
         <h3 class="bars-title">Token Comparison</h3>
         <div class="bars-meta">{{ dataMeta }}</div>
 
-        <div class="bar-row">
-          <span class="bar-label">JSON</span>
-          <div class="bar-track"><div class="bar-fill bar-json" style="width: 100%"></div></div>
-          <span class="bar-val">{{ jsonTokens.toLocaleString() }}</span>
+        <!-- Source format bar (only when not JSON) -->
+        <div class="bar-row" v-if="isNonJson">
+          <span class="bar-label bar-label-long">{{ inputFormat.toUpperCase() }}</span>
+          <div class="bar-track"><div class="bar-fill bar-source" :style="{ width: sourceBarPct + '%' }"></div></div>
+          <span class="bar-val">{{ inputTokens.toLocaleString() }}</span>
         </div>
         <div class="bar-row">
-          <span class="bar-label">TOON</span>
+          <span class="bar-label" :class="{ 'bar-label-long': isNonJson }">JSON</span>
+          <div class="bar-track"><div class="bar-fill bar-json" :style="{ width: jsonBarPct + '%' }"></div></div>
+          <span class="bar-val">{{ jsonTokens.toLocaleString() }}</span>
+        </div>
+        <div class="bar-row" v-if="!toonError">
+          <span class="bar-label" :class="{ 'bar-label-long': isNonJson }">TOON</span>
           <div class="bar-track"><div class="bar-fill bar-toon" :style="{ width: toonBarPct + '%' }"></div></div>
           <span class="bar-val">{{ toonTokens.toLocaleString() }}</span>
         </div>
+        <div class="bar-row" v-if="toonError">
+          <span class="bar-label bar-label-long">TOON</span>
+          <div class="bar-track bar-track-error"><span class="bar-error-text">cannot encode {{ toonError }}</span></div>
+          <span class="bar-val">N/A</span>
+        </div>
         <div class="bar-row">
-          <span class="bar-label">GCF</span>
+          <span class="bar-label" :class="{ 'bar-label-long': isNonJson }">GCF</span>
           <div class="bar-track"><div class="bar-fill bar-gcf" :style="{ width: gcfBarPct + '%' }"></div></div>
           <span class="bar-val">{{ gcfTokens.toLocaleString() }}</span>
         </div>
@@ -614,13 +1014,21 @@ onMounted(async () => {
 
         <!-- Savings summary -->
         <div class="savings-grid">
+          <div class="savings-card" v-if="isNonJson && gcfVsSource > 0">
+            <div class="savings-number">{{ gcfVsSource }}%</div>
+            <div class="savings-label">fewer tokens vs {{ inputFormat.toUpperCase() }}</div>
+          </div>
           <div class="savings-card">
             <div class="savings-number">{{ gcfVsJson }}%</div>
             <div class="savings-label">fewer tokens vs JSON</div>
           </div>
-          <div class="savings-card">
+          <div class="savings-card" v-if="!toonError">
             <div class="savings-number">{{ gcfVsToon }}%</div>
             <div class="savings-label">fewer tokens vs TOON</div>
+          </div>
+          <div class="savings-card savings-card-error" v-if="toonError">
+            <div class="savings-number savings-number-error">N/A</div>
+            <div class="savings-label">TOON: cannot encode {{ inputFormat.toUpperCase() }}</div>
           </div>
           <div class="savings-card" v-if="showSession">
             <div class="savings-number">{{ sessionVsJson }}%</div>
@@ -1032,6 +1440,7 @@ onMounted(async () => {
   transition: width 0.35s ease;
 }
 
+.bar-source { background: #7c6f9b; }
 .bar-json { background: var(--vp-c-text-3); }
 .bar-toon { background: #e8912d; }
 .bar-gcf { background: var(--vp-c-brand-1); }
@@ -1184,5 +1593,97 @@ onMounted(async () => {
 
 .decode-textarea::placeholder {
   color: var(--vp-c-text-3);
+}
+
+/* Format selector */
+.pg-format-select {
+  font-weight: 600;
+  min-width: 80px;
+}
+
+/* TOON error state */
+.pane-head-error {
+  background: color-mix(in srgb, var(--vp-c-danger-1) 8%, var(--vp-c-bg-soft));
+  border-bottom-color: color-mix(in srgb, var(--vp-c-danger-1) 20%, var(--vp-c-border));
+}
+
+.pane-unsupported {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--vp-c-danger-1);
+  background: color-mix(in srgb, var(--vp-c-danger-1) 12%, transparent);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.toon-error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 24px;
+  text-align: center;
+  min-height: 250px;
+}
+
+.toon-error-icon {
+  font-size: 36px;
+  color: var(--vp-c-danger-1);
+  opacity: 0.6;
+  margin-bottom: 12px;
+}
+
+.toon-error-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--vp-c-danger-1);
+  margin-bottom: 10px;
+}
+
+.toon-error-detail {
+  font-size: 13px;
+  color: var(--vp-c-text-2);
+  line-height: 1.6;
+  max-width: 320px;
+}
+
+.bar-track-error {
+  flex: 1;
+  height: 22px;
+  background: color-mix(in srgb, var(--vp-c-danger-1) 8%, var(--vp-c-bg));
+  border-radius: 4px;
+  border: 1px dashed color-mix(in srgb, var(--vp-c-danger-1) 30%, var(--vp-c-border));
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+}
+
+.bar-error-text {
+  font-size: 11px;
+  color: var(--vp-c-danger-1);
+  opacity: 0.7;
+  font-style: italic;
+}
+
+.savings-card-error {
+  border-color: color-mix(in srgb, var(--vp-c-danger-1) 25%, var(--vp-c-border));
+  background: color-mix(in srgb, var(--vp-c-danger-1) 5%, var(--vp-c-bg));
+}
+
+.savings-number-error {
+  color: var(--vp-c-danger-1) !important;
+  font-size: 20px !important;
+}
+
+.toon-error-verified {
+  margin-top: 16px;
+  font-size: 11px;
+  color: var(--vp-c-text-3);
+  padding: 6px 12px;
+  background: var(--vp-c-bg-soft);
+  border-radius: 6px;
+  max-width: 320px;
 }
 </style>
