@@ -1,0 +1,10 @@
+{
+  "name": "special_char_field_names",
+  "description": "Tabular header with field names containing special characters (%, !, @, #) that require quoting",
+  "input": [
+    {"user%id": 1, "score!avg": 0.95, "tag@v2": "active"},
+    {"user%id": 2, "score!avg": 0.87, "tag@v2": "inactive"}
+  ],
+  "expected": "GCF profile=generic\n## [2]{\"user%id\",\"score!avg\",\"tag@v2\"}\n1|0.95|active\n2|0.87|inactive\n",
+  "operation": "roundtrip"
+}
