@@ -1,6 +1,6 @@
 # Getting Started
 
-GCF is an AI-native wire format for structured data. It sits at the boundary between your data and the LLM context window: 71% fewer tokens than JSON, 100% comprehension on every frontier model.
+GCF is an AI-native wire format for **structured data**. It sits at the boundary between your data and the LLM context window: 71% fewer tokens than JSON, 100% comprehension on every frontier model.
 
 **The grammar expresses any structured data regardless of source format**, verified lossless across 23 billion+ round-trips with JSON, YAML, TOML, CSV, and MessagePack.
 
