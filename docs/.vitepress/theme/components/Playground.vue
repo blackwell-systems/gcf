@@ -6,6 +6,7 @@ import { encode as toonEncode } from '@toon-format/toon'
 import jsYaml from 'js-yaml'
 import { parse as tomlParse, stringify as tomlStringify } from 'smol-toml'
 import Papa from 'papaparse'
+import { encode as msgpackEncode, decode as msgpackDecode } from '@msgpack/msgpack'
 const highlightFn = ref<((code: string) => string) | null>(null)
 const highlightJsonFn = ref<((code: string) => string) | null>(null)
 const highlightToonFn = ref<((code: string) => string) | null>(null)
@@ -227,8 +228,21 @@ const PRESETS: Record<string, { label: string; json: any }> = {
 // ---------------------------------------------------------------------------
 
 type InputFormat = 'json' | 'yaml' | 'toml'
-type EncodeFormat = 'json' | 'yaml' | 'toml' | 'csv'
-type DecodeFormat = 'json' | 'yaml' | 'toml' | 'csv'
+type EncodeFormat = 'json' | 'yaml' | 'toml' | 'csv' | 'msgpack'
+type DecodeFormat = 'json' | 'yaml' | 'toml' | 'csv' | 'msgpack'
+
+function base64ToUint8Array(b64: string): Uint8Array {
+  const binary = atob(b64.trim())
+  const bytes = new Uint8Array(binary.length)
+  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i)
+  return bytes
+}
+
+function uint8ArrayToBase64(bytes: Uint8Array): string {
+  let binary = ''
+  for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i])
+  return btoa(binary)
+}
 
 const FORMAT_PRESETS: Record<InputFormat, Record<string, { label: string; text: string }>> = {
   json: {}, // populated from PRESETS above
@@ -725,6 +739,10 @@ function parseEncodeInput(text: string, format: EncodeFormat): any {
       const result = Papa.parse(text.trim(), { header: true, dynamicTyping: true, skipEmptyLines: true })
       return result.data
     }
+    if (format === 'msgpack') {
+      const bytes = base64ToUint8Array(text)
+      return msgpackDecode(bytes)
+    }
   } catch { return null }
   return null
 }
@@ -733,7 +751,7 @@ const encodeParsed = computed(() => parseEncodeInput(encodeInput.value, encodeFo
 const encodeParseError = computed(() => {
   if (!encodeInput.value.trim()) return ''
   if (encodeParsed.value !== null) return ''
-  const labels: Record<EncodeFormat, string> = { json: 'JSON', yaml: 'YAML', toml: 'TOML', csv: 'CSV' }
+  const labels: Record<EncodeFormat, string> = { json: 'JSON', yaml: 'YAML', toml: 'TOML', csv: 'CSV', msgpack: 'MessagePack (base64)' }
   return `Invalid ${labels[encodeFormat.value]}`
 })
 const encodeIsPayload = computed(() => encodeParsed.value ? isPayloadShaped(encodeParsed.value) : false)
@@ -768,6 +786,10 @@ function formatDecodeOutput(value: any, format: DecodeFormat): string {
     if (format === 'csv') {
       if (Array.isArray(value)) return Papa.unparse(value)
       return Papa.unparse([value])
+    }
+    if (format === 'msgpack') {
+      const bytes = msgpackEncode(value)
+      return uint8ArrayToBase64(new Uint8Array(bytes))
     }
   } catch (e: any) {
     return `Error: cannot represent as ${format.toUpperCase()}: ${e.message ?? e}`
@@ -1112,6 +1134,7 @@ onMounted(async () => {
           <option value="yaml">YAML</option>
           <option value="toml">TOML</option>
           <option value="csv">CSV</option>
+          <option value="msgpack">MessagePack (base64)</option>
         </select>
       </div>
       <div class="decode-panes">
@@ -1124,7 +1147,7 @@ onMounted(async () => {
             class="decode-textarea"
             v-model="encodeInput"
             spellcheck="false"
-            :placeholder="`Paste any ${encodeFormat.toUpperCase()} here...`"
+            :placeholder="encodeFormat === 'msgpack' ? 'Paste base64-encoded MessagePack here...' : `Paste any ${encodeFormat.toUpperCase()} here...`"
           ></textarea>
           <div class="input-error" v-if="encodeParseError">{{ encodeParseError }}</div>
         </div>
@@ -1153,6 +1176,7 @@ onMounted(async () => {
           <option value="yaml">YAML</option>
           <option value="toml">TOML</option>
           <option value="csv">CSV</option>
+          <option value="msgpack">MessagePack (base64)</option>
         </select>
       </div>
       <div class="decode-panes">
