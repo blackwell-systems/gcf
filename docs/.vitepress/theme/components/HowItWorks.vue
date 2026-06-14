@@ -113,7 +113,7 @@ onMounted(async () => {
       <!-- Grammar Reference -->
       <div class="grammar">
         <h2 class="section-title">GCF Grammar</h2>
-        <p class="section-subtitle">Five building blocks. No ambiguity.</p>
+        <p class="section-subtitle">Six building blocks. No ambiguity.</p>
 
         <div class="grammar-grid">
           <div class="grammar-card">
@@ -171,6 +171,22 @@ Carol|dev|false</code></pre>
               <li>Fields declared once in header</li>
               <li>No quotes unless needed</li>
               <li>No braces, no colons per row</li>
+            </ul>
+          </div>
+
+          <div class="grammar-card">
+            <h4>Scalars &amp; Key-Value</h4>
+            <pre class="grammar-code"><code v-if="ready" v-html="highlightGCF(`name=Alice\nage=30\nactive=true\nmissing=-\nempty=\"\"`)"></code><code v-else>name=Alice
+age=30
+active=true
+missing=-
+empty=""</code></pre>
+            <ul class="grammar-notes">
+              <li><code>key=value</code> for primitives</li>
+              <li><code>-</code> null</li>
+              <li><code>~</code> absent (tabular only)</li>
+              <li><code>""</code> empty string</li>
+              <li>Quote if value contains <code>|</code> or newline</li>
             </ul>
           </div>
 
