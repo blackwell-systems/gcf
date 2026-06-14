@@ -3,9 +3,9 @@
 GCF is a line-oriented, text-based format with two encoding profiles:
 
 - **Generic profile** (`encodeGeneric`): any structured data with arrays, nested objects, and primitives. This is what most users need.
-- **Graph profile** (`encode`): code graph payloads with symbols, edges, and distance groups. For code intelligence tools.
+- **Graph profile** (`encode`): a superset of the generic profile that adds local IDs, typed edges, and distance groups. For any relationship-heavy data: code intelligence, knowledge graphs, ontologies, agent memory.
 
-Both profiles share the same primitives: `##` section headers, `@` local IDs, positional fields.
+Both profiles share the same grammar primitives: `##` section headers and positional fields. The graph profile adds `@` local IDs and edge notation.
 
 ## Generic profile at a glance
 
@@ -17,7 +17,7 @@ GCF profile=generic
 3|Carol Wu|Marketing|85000
 ```
 
-One header declares field names. Rows are positional values. No field names repeated per record. Works on any JSON.
+One header declares field names. Rows are positional values. No field names repeated per record. Works on any structured data.
 
 Five elements in the generic profile. Five more in the [graph profile](#graph-profile) below.
 
@@ -178,7 +178,7 @@ GCF profile=generic
 
 ## Graph profile
 
-The generic profile (above) handles any structured data. The graph profile adds specialized encoding for code graph payloads with typed symbols, directed edges, and distance-based grouping. This is what `encode` / `Encode` produces.
+The generic profile (above) handles any structured data. The graph profile is a superset that adds typed symbols, directed edges, and distance-based grouping for relationship-heavy data: code intelligence, knowledge graphs, ontologies, Neo4j/Memgraph query results, agent memory. This is what `encode` / `Encode` produces.
 
 ### Graph profile at a glance
 
@@ -368,7 +368,7 @@ GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=2 edges=
 
 ### Relationship to generic profile
 
-The graph profile is a specialized application of the generic profile for code graph data. The `@{id} {kind} {qname} {score} {provenance}` node line format is a tabular row with implicit field names. The generic profile generalizes this to arbitrary field sets.
+The graph profile is a superset of the generic profile. The `@{id} {kind} {qname} {score} {provenance}` node line format is a tabular row with implicit field names. The generic profile generalizes this to arbitrary field sets. Both profiles share the same grammar; the graph profile adds identity (`@` IDs), relationships (edges), and session statefulness.
 
 Both profiles use the same grammar primitives: `##` headers, `@` IDs, positional fields. Implementations may support one or both profiles.
 
