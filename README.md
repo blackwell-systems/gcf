@@ -11,7 +11,7 @@
   <img src="assets/gcf-logo.png" alt="GCF" width="360">
 </p>
 
-<h3 align="center">Drop-in JSON replacement for all AI pipelines, with superpowers for graph-shaped data.</h3>
+<h3 align="center">The AI-native wire format for structured data.</h3>
 
 > [!IMPORTANT]
 > **Graph Compact Format (GCF): A Token-Efficient Wire Format for LLM Tool Interactions**
@@ -19,9 +19,9 @@
 
 ---
 
-**100% comprehension on every frontier model tested. 25.5% fewer tokens than TOON, 53% fewer than JSON across 15 datasets. 90.7% on structurally complex code graphs (vs TOON 68.5%, JSON 53.6%). Proven lossless: `decode(encode(value)) == value` for every JSON value, verified across 1,000,000,000+ round-trips. Zero training required.**
+**100% comprehension on every frontier model tested. 25.5% fewer tokens than TOON, 53% fewer than JSON across 15 datasets. 90.7% on structurally complex code graphs (vs TOON 68.5%, JSON 53.6%). Proven lossless: `decode(encode(value)) == value` for every structured value, verified across 23,000,000,000+ round-trips in 5 formats (JSON, YAML, TOML, CSV, MessagePack). Zero training required.**
 
-Encode any JSON payload as GCF before sending it to an LLM. Arrays, nested objects, key-value pairs, mixed types. The model reads it natively with zero format instructions. `decode()` converts back to JSON when a human needs to see it. Your existing JSON schemas and validators work on the decoded output unchanged.
+Encode any structured data as GCF before sending it to an LLM. JSON, YAML, TOML, CSV, MessagePack: GCF encodes them all. The model reads it natively with zero format instructions. `decode()` converts back to any format when a human needs to see it. Your existing schemas and validators work on the decoded output unchanged.
 
 ```bash
 pip install gcf-python                    # Python
@@ -75,7 +75,7 @@ GCF profile=generic
 3|Carol|Marketing|85000
 ```
 
-One header declares field names. Rows are positional values only. No field names repeated per record. Lossless: `decode(encode(value)) == value` for every JSON value, proven across 1,000,000,000+ random round-trips and 7.9M fuzz executions.
+One header declares field names. Rows are positional values only. No field names repeated per record. Lossless: `decode(encode(value)) == value` for every structured value, proven across 23,000,000,000+ random round-trips in 5 formats and 6 languages.
 
 ### Graph profile (code intelligence, knowledge graphs, MCP tools)
 
@@ -108,7 +108,7 @@ Local IDs (`@0`, `@1`) replace full names in edges. 233 tokens instead of 965 fo
 
 [![Playground](assets/playground.png)](https://gcformat.com/playground.html)
 
-**[Try it live in the playground](https://gcformat.com/playground.html)** with real-time three-way comparison (JSON vs TOON vs GCF).
+**[Try it live in the playground](https://gcformat.com/playground.html)** with real-time multi-format comparison. Paste JSON, YAML, or TOML. Encode from and decode to JSON, YAML, TOML, CSV, and MessagePack.
 
 ---
 
@@ -116,7 +116,7 @@ Local IDs (`@0`, `@1`) replace full names in edges. 233 tokens instead of 965 fo
 
 ### Generic profile
 
-Lossless JSON encoding. Arrays, nested objects, mixed types, primitives, root scalars.
+Lossless structured data encoding. Arrays, nested objects, mixed types, primitives, root scalars. Works on any data that deserializes to objects and arrays, regardless of source format.
 
 1. **Arrays of objects.** `## name [count]{field1,field2}` declares field names once. Rows are pipe-separated values. Absent fields use `~`, null uses `-`.
 2. **Nested objects.** `## key` becomes a section. In tabular rows, nested values use `^` cell marker with `.field {}` attachment.
@@ -157,7 +157,7 @@ No other format has these. They compound across multi-turn agent interactions.
 
 Zero runtime dependencies. MIT licensed. All implementations support both generic profile (`encodeGeneric`) and graph profile (`encode`). CLI included in all 6 languages. Syntax highlighting via tree-sitter (Neovim, Helix, Zed).
 
-**Specification:** [SPEC v3.0 Stable](SPEC.md) with 156 conformance fixtures, 1,000,000,000+ lossless round-trips verified across 6 languages. Six implementations at v2.0.0. Cross-language 6x6 matrix verified.
+**Specification:** [SPEC v3.1 Stable](SPEC.md) with 157 conformance fixtures, 23,000,000,000+ lossless round-trips verified across 5 formats and 6 languages. All implementations at v2.1.0+ (Go v1.2.0). Cross-language 6x6 matrix verified.
 
 ## Documentation
 
