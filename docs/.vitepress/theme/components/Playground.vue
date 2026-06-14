@@ -4,7 +4,8 @@ import { encode, decode, encodeGeneric, decodeGeneric } from '@blackwell-systems
 import type { Payload } from '@blackwell-systems/gcf'
 import { encode as toonEncode } from '@toon-format/toon'
 import jsYaml from 'js-yaml'
-import { parse as tomlParse } from 'smol-toml'
+import { parse as tomlParse, stringify as tomlStringify } from 'smol-toml'
+import Papa from 'papaparse'
 const highlightFn = ref<((code: string) => string) | null>(null)
 const highlightJsonFn = ref<((code: string) => string) | null>(null)
 const highlightToonFn = ref<((code: string) => string) | null>(null)
@@ -226,6 +227,8 @@ const PRESETS: Record<string, { label: string; json: any }> = {
 // ---------------------------------------------------------------------------
 
 type InputFormat = 'json' | 'yaml' | 'toml'
+type EncodeFormat = 'json' | 'yaml' | 'toml' | 'csv'
+type DecodeFormat = 'json' | 'yaml' | 'toml' | 'csv'
 
 const FORMAT_PRESETS: Record<InputFormat, Record<string, { label: string; text: string }>> = {
   json: {}, // populated from PRESETS above
@@ -709,10 +712,29 @@ const sessionBarPct = computed(() => barMax.value > 0 ? Math.round((sessionToken
 // Encode tab
 // ---------------------------------------------------------------------------
 
+const encodeFormat = ref<EncodeFormat>('json')
 const encodeInput = ref('')
-const encodeParsed = computed(() => {
-  try { return JSON.parse(encodeInput.value) }
-  catch { return null }
+
+function parseEncodeInput(text: string, format: EncodeFormat): any {
+  if (!text.trim()) return null
+  try {
+    if (format === 'json') return JSON.parse(text)
+    if (format === 'yaml') return jsYaml.load(text)
+    if (format === 'toml') return tomlParse(text)
+    if (format === 'csv') {
+      const result = Papa.parse(text.trim(), { header: true, dynamicTyping: true, skipEmptyLines: true })
+      return result.data
+    }
+  } catch { return null }
+  return null
+}
+
+const encodeParsed = computed(() => parseEncodeInput(encodeInput.value, encodeFormat.value))
+const encodeParseError = computed(() => {
+  if (!encodeInput.value.trim()) return ''
+  if (encodeParsed.value !== null) return ''
+  const labels: Record<EncodeFormat, string> = { json: 'JSON', yaml: 'YAML', toml: 'TOML', csv: 'CSV' }
+  return `Invalid ${labels[encodeFormat.value]}`
 })
 const encodeIsPayload = computed(() => encodeParsed.value ? isPayloadShaped(encodeParsed.value) : false)
 const encodeOutput = computed(() => {
@@ -727,20 +749,37 @@ const encodeOutput = computed(() => {
   }
 })
 const encodeError = computed(() => encodeOutput.value.startsWith('Error:'))
-const encodeJsonTokens = computed(() => encodeInput.value.trim() ? estimateTokens(encodeInput.value) : 0)
+const encodeInputTokens = computed(() => encodeInput.value.trim() ? estimateTokens(encodeInput.value) : 0)
 const encodeGcfTokens = computed(() => encodeOutput.value && !encodeError.value ? estimateTokens(encodeOutput.value) : 0)
-const encodeSavings = computed(() => encodeJsonTokens.value > 0 ? Math.round(100 * (1 - encodeGcfTokens.value / encodeJsonTokens.value)) : 0)
+const encodeSavings = computed(() => encodeInputTokens.value > 0 ? Math.round(100 * (1 - encodeGcfTokens.value / encodeInputTokens.value)) : 0)
 
 // ---------------------------------------------------------------------------
 // Decode tab
 // ---------------------------------------------------------------------------
 
+const decodeFormat = ref<DecodeFormat>('json')
 const decodeInput = ref('')
+
+function formatDecodeOutput(value: any, format: DecodeFormat): string {
+  try {
+    if (format === 'json') return JSON.stringify(value, null, 2)
+    if (format === 'yaml') return jsYaml.dump(value, { lineWidth: -1, noRefs: true })
+    if (format === 'toml') return tomlStringify(value)
+    if (format === 'csv') {
+      if (Array.isArray(value)) return Papa.unparse(value)
+      return Papa.unparse([value])
+    }
+  } catch (e: any) {
+    return `Error: cannot represent as ${format.toUpperCase()}: ${e.message ?? e}`
+  }
+  return ''
+}
+
 const decodeOutput = computed(() => {
   if (!decodeInput.value.trim()) return ''
   try {
     const result = decodeGeneric(decodeInput.value)
-    return JSON.stringify(result, null, 2)
+    return formatDecodeOutput(result, decodeFormat.value)
   } catch (e: any) {
     return `Error: ${e.message ?? e}`
   }
@@ -1066,19 +1105,28 @@ onMounted(async () => {
     <!-- ENCODE TAB                                                        -->
     <!-- ================================================================= -->
     <template v-if="activeTab === 'encode'">
+      <div class="tab-format-bar">
+        <span class="tab-format-label">Input format:</span>
+        <select v-model="encodeFormat" class="pg-select pg-format-select">
+          <option value="json">JSON</option>
+          <option value="yaml">YAML</option>
+          <option value="toml">TOML</option>
+          <option value="csv">CSV</option>
+        </select>
+      </div>
       <div class="decode-panes">
         <div class="pane">
           <div class="pane-head">
-            <span class="pane-label">JSON Input</span>
-            <span class="pane-tokens" v-if="encodeJsonTokens">{{ encodeJsonTokens.toLocaleString() }} tokens</span>
+            <span class="pane-label">{{ encodeFormat.toUpperCase() }} Input</span>
+            <span class="pane-tokens" v-if="encodeInputTokens">{{ encodeInputTokens.toLocaleString() }} tokens</span>
           </div>
           <textarea
             class="decode-textarea"
             v-model="encodeInput"
             spellcheck="false"
-            placeholder="Paste any JSON here..."
+            :placeholder="`Paste any ${encodeFormat.toUpperCase()} here...`"
           ></textarea>
-          <div class="input-error" v-if="encodeInput.trim() && !encodeParsed">Invalid JSON</div>
+          <div class="input-error" v-if="encodeParseError">{{ encodeParseError }}</div>
         </div>
         <div class="pane">
           <div class="pane-head pane-head-gcf">
@@ -1098,6 +1146,15 @@ onMounted(async () => {
     <!-- DECODE TAB                                                        -->
     <!-- ================================================================= -->
     <template v-if="activeTab === 'decode'">
+      <div class="tab-format-bar">
+        <span class="tab-format-label">Output format:</span>
+        <select v-model="decodeFormat" class="pg-select pg-format-select">
+          <option value="json">JSON</option>
+          <option value="yaml">YAML</option>
+          <option value="toml">TOML</option>
+          <option value="csv">CSV</option>
+        </select>
+      </div>
       <div class="decode-panes">
         <div class="pane">
           <div class="pane-head pane-head-gcf">
@@ -1112,13 +1169,13 @@ onMounted(async () => {
         </div>
         <div class="pane">
           <div class="pane-head">
-            <span class="pane-label">JSON Output</span>
+            <span class="pane-label">{{ decodeFormat.toUpperCase() }} Output</span>
             <span class="pane-tokens" v-if="decodeOutput && !decodeError">{{ estimateTokens(decodeOutput).toLocaleString() }} tokens</span>
           </div>
           <div class="pane-body-wrap">
             <button v-if="decodeOutput && !decodeError" class="pane-copy" @click="copyText(decodeOutput, 'decode')">{{ copied === 'decode' ? 'Copied!' : 'Copy' }}</button>
-            <pre class="pane-code" v-if="highlightJsonFn && decodeOutput && !decodeError" v-html="highlightJsonFn(decodeOutput)"></pre>
-            <pre :class="['pane-code', { 'pane-error': decodeError }]" v-else>{{ decodeOutput || 'JSON output will appear here...' }}</pre>
+            <pre class="pane-code" v-if="highlightJsonFn && decodeOutput && !decodeError && decodeFormat === 'json'" v-html="highlightJsonFn(decodeOutput)"></pre>
+            <pre :class="['pane-code', { 'pane-error': decodeError }]" v-else>{{ decodeOutput || `${decodeFormat.toUpperCase()} output will appear here...` }}</pre>
           </div>
         </div>
       </div>
@@ -1593,6 +1650,20 @@ onMounted(async () => {
 
 .decode-textarea::placeholder {
   color: var(--vp-c-text-3);
+}
+
+/* Tab format bar */
+.tab-format-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.tab-format-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--vp-c-text-2);
 }
 
 /* Format selector */
