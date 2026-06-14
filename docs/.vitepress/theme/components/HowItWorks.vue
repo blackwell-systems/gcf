@@ -234,8 +234,8 @@ handle|func
 }
 
 .section-graph-note {
-  text-align: center;
-  color: var(--vp-c-text-3);
+  text-align: justify;
+  color: var(--vp-c-brand-1);
   font-size: 0.9rem;
   line-height: 1.7;
   max-width: 720px;
