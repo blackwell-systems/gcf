@@ -110,12 +110,28 @@ Every implementation must pass every fixture. New fixtures are added when edge c
 
 ## Log files
 
-All fuzz run logs are archived in [eval/results/multiformat/](https://github.com/blackwell-systems/gcf/tree/main/eval/results/multiformat):
+All fuzz run logs are archived in [eval/results/multiformat/](https://github.com/blackwell-systems/gcf/tree/main/eval/results/multiformat). Every claimed number has a corresponding log file.
 
-- `rust-json10B-parallel-2026-06-14.log` (10B JSON, 2.94M/s)
-- `rust-yaml665M-2026-06-14.log` (665M YAML, seed offset run)
-- `rust-msgpack334M-yaml334M-csv334M-2026-06-13.log` (3 formats parallel)
-- `rust-toml100M-2026-06-14.log` (100M TOML)
+**JSON (11.25B total):**
+- `rust-json10B-parallel-2026-06-14.log` (10B, 2.94M/s, parallel)
+- `rust-json1B-extra-2026-06-14.log` (1B, 2.52M/s, parallel)
+- `rust-rerun-json250M-msgpack250M-2026-06-14.log` (250M JSON + 250M MessagePack)
+
+**YAML (11B total):**
+- `rust-yaml10B-parallel-2026-06-14.log` (10B, parallel)
+- `rust-yaml665M-2026-06-14.log` (665M, seed offset 334M-999M)
+- `rust-msgpack334M-yaml334M-csv334M-2026-06-13.log` (334M YAML portion)
+
+**MessagePack (584M total):**
+- `rust-msgpack334M-yaml334M-csv334M-2026-06-13.log` (334M MessagePack portion)
+- `rust-rerun-json250M-msgpack250M-2026-06-14.log` (250M MessagePack portion)
+
+**CSV (335M total):**
+- `rust-msgpack334M-yaml334M-csv334M-2026-06-13.log` (334M CSV portion)
+- `rust-rerun-csv1M-2026-06-14.log` (1M, seed offset 334M)
+
+**TOML (100M total):**
+- `rust-toml100M-2026-06-14.log` (100M)
 
 ## Edge cases verified
 
