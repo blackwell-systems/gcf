@@ -816,6 +816,46 @@ const encodeSavings = computed(() => encodeInputTokens.value > 0 ? Math.round(10
 
 const decodeFormat = ref<DecodeFormat>('json')
 const decodeInput = ref('')
+const selectedDecodePreset = ref('')
+
+const DECODE_PRESETS: Record<string, { label: string; text: string }> = {
+  decode_users: {
+    label: 'User records (8 rows)',
+    text: `GCF profile=generic
+## users [8]{id,name,role,active,score}
+1|Alice Smith|admin|true|94.5
+2|Bob Jones|editor|true|87.2
+3|Carol Wu|viewer|false|72.1
+4|Dan Lee|editor|true|91.8
+5|Eve Park|admin|true|96.3
+6|Frank Chen|viewer|true|68.4
+7|Grace Kim|editor|false|55.9
+8|Hank Davis|admin|true|88.7
+`,
+  },
+  decode_metrics: {
+    label: 'API metrics (8 endpoints)',
+    text: `GCF profile=generic
+service=api-gateway
+timestamp=2026-06-05T18:00:00Z
+## requests [8]{path,method,count,avg_ms,p99_ms,errors}
+/api/users|GET|1542|45.2|312.5|3
+/api/users|POST|287|120.8|890.1|12
+/api/products|GET|3891|23.4|156.7|0
+/api/orders|GET|956|67.3|445.2|7
+/api/orders|POST|412|234.1|1200.5|21
+/api/auth|POST|2103|15.6|89.3|45
+/api/search|GET|1678|89.7|567.8|2
+/api/health|GET|8640|1.2|5.4|0
+`,
+  },
+}
+
+function loadDecodePreset(key: string) {
+  if (DECODE_PRESETS[key]) {
+    decodeInput.value = DECODE_PRESETS[key].text
+  }
+}
 
 function formatDecodeOutput(value: any, format: DecodeFormat): string {
   try {
@@ -1220,6 +1260,10 @@ onMounted(async () => {
           <option value="toml">TOML</option>
           <option value="csv">CSV</option>
           <option value="msgpack">MessagePack (base64)</option>
+        </select>
+        <select v-model="selectedDecodePreset" class="pg-select" @change="loadDecodePreset(selectedDecodePreset)">
+          <option value="" disabled>Load GCF example...</option>
+          <option v-for="(p, key) in DECODE_PRESETS" :key="key" :value="key">{{ p.label }}</option>
         </select>
       </div>
       <div class="decode-panes">
