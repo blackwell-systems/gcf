@@ -729,6 +729,45 @@ const sessionBarPct = computed(() => barMax.value > 0 ? Math.round((sessionToken
 const encodeFormat = ref<EncodeFormat>('json')
 const encodeInput = ref('')
 
+const ENCODE_PRESETS: Partial<Record<EncodeFormat, Record<string, { label: string; text: string }>>> = {
+  msgpack: {
+    msgpack_users: {
+      label: 'User records (8 rows)',
+      text: 'gaV1c2Vyc5iFomlkAaRuYW1lq0FsaWNlIFNtaXRopHJvbGWlYWRtaW6mYWN0aXZlw6VzY29yZctAV6AAAAAAAIWiaWQCpG5hbWWpQm9iIEpvbmVzpHJvbGWmZWRpdG9ypmFjdGl2ZcOlc2NvcmXLQFXMzMzMzM2FomlkA6RuYW1lqENhcm9sIFd1pHJvbGWmdmlld2VypmFjdGl2ZcKlc2NvcmXLQFIGZmZmZmaFomlkBKRuYW1lp0RhbiBMZWWkcm9sZaZlZGl0b3KmYWN0aXZlw6VzY29yZctAVvMzMzMzM4WiaWQFpG5hbWWoRXZlIFBhcmukcm9sZaVhZG1pbqZhY3RpdmXDpXNjb3Jly0BYEzMzMzMzhaJpZAakbmFtZapGcmFuayBDaGVupHJvbGWmdmlld2VypmFjdGl2ZcOlc2NvcmXLQFEZmZmZmZqFomlkB6RuYW1lqUdyYWNlIEtpbaRyb2xlpmVkaXRvcqZhY3RpdmXCpXNjb3Jly0BL8zMzMzMzhaJpZAikbmFtZapIYW5rIERhdmlzpHJvbGWlYWRtaW6mYWN0aXZlw6VzY29yZctAVizMzMzMzQ==',
+    },
+    msgpack_metrics: {
+      label: 'API metrics (8 endpoints)',
+      text: 'g6dzZXJ2aWNlq2FwaS1nYXRld2F5qXRpbWVzdGFtcLQyMDI2LTA2LTA1VDE4OjAwOjAwWqhyZXF1ZXN0c5iGpHBhdGiqL2FwaS91c2Vyc6ZtZXRob2SjR0VUpWNvdW50zQYGpmF2Z19tc8tARpmZmZmZmqZwOTlfbXPLQHOIAAAAAACmZXJyb3JzA4akcGF0aKovYXBpL3VzZXJzpm1ldGhvZKRQT1NUpWNvdW50zQEfpmF2Z19tc8tAXjMzMzMzM6ZwOTlfbXPLQIvQzMzMzM2mZXJyb3JzDIakcGF0aK0vYXBpL3Byb2R1Y3Rzpm1ldGhvZKNHRVSlY291bnTNDzOmYXZnX21zy0A3ZmZmZmZmpnA5OV9tc8tAY5ZmZmZmZqZlcnJvcnMAhqRwYXRoqy9hcGkvb3JkZXJzpm1ldGhvZKNHRVSlY291bnTNA7ymYXZnX21zy0BQ0zMzMzMzpnA5OV9tc8tAe9MzMzMzM6ZlcnJvcnMHhqRwYXRoqy9hcGkvb3JkZXJzpm1ldGhvZKRQT1NUpWNvdW50zQGcpmF2Z19tc8tAbUMzMzMzM6ZwOTlfbXPLQJLCAAAAAACmZXJyb3JzFYakcGF0aKkvYXBpL2F1dGimbWV0aG9kpFBPU1SlY291bnTNCDemYXZnX21zy0AvMzMzMzMzpnA5OV9tc8tAVlMzMzMzM6ZlcnJvcnMthqRwYXRoqy9hcGkvc2VhcmNopm1ldGhvZKNHRVSlY291bnTNBo6mYXZnX21zy0BWbMzMzMzNpnA5OV9tc8tAgb5mZmZmZqZlcnJvcnMChqRwYXRoqy9hcGkvaGVhbHRopm1ldGhvZKNHRVSlY291bnTNIcCmYXZnX21zyz/zMzMzMzMzpnA5OV9tc8tAFZmZmZmZmqZlcnJvcnMA',
+    },
+  },
+}
+
+const encodePresets = computed(() => {
+  const fp = ENCODE_PRESETS[encodeFormat.value]
+  if (!fp) return []
+  return Object.entries(fp).map(([key, p]) => ({ key, label: p.label }))
+})
+
+const selectedEncodePreset = ref('')
+
+function loadEncodePreset(key: string) {
+  const fp = ENCODE_PRESETS[encodeFormat.value]
+  if (fp && fp[key]) {
+    encodeInput.value = fp[key].text
+  }
+}
+
+function onEncodeFormatChange() {
+  const presets = encodePresets.value
+  if (presets.length > 0) {
+    selectedEncodePreset.value = presets[0].key
+    loadEncodePreset(presets[0].key)
+  } else {
+    encodeInput.value = ''
+    selectedEncodePreset.value = ''
+  }
+}
+
 function parseEncodeInput(text: string, format: EncodeFormat): any {
   if (!text.trim()) return null
   try {
@@ -1129,12 +1168,16 @@ onMounted(async () => {
     <template v-if="activeTab === 'encode'">
       <div class="tab-format-bar">
         <span class="tab-format-label">Input format:</span>
-        <select v-model="encodeFormat" class="pg-select pg-format-select">
+        <select v-model="encodeFormat" class="pg-select pg-format-select" @change="onEncodeFormatChange()">
           <option value="json">JSON</option>
           <option value="yaml">YAML</option>
           <option value="toml">TOML</option>
           <option value="csv">CSV</option>
           <option value="msgpack">MessagePack (base64)</option>
+        </select>
+        <select v-if="encodePresets.length > 0" v-model="selectedEncodePreset" class="pg-select" @change="loadEncodePreset(selectedEncodePreset)">
+          <option value="" disabled>Load example...</option>
+          <option v-for="p in encodePresets" :key="p.key" :value="p.key">{{ p.label }}</option>
         </select>
       </div>
       <div class="decode-panes">
