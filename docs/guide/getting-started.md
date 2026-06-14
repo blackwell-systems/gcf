@@ -2,7 +2,7 @@
 
 An AI-native data format can't just be "JSON but smaller." It has to excel at the data shapes AI actually works with.
 
-GCF is two things: a **lossless JSON codec** that cuts tokens by 71%, and a **graph-native superset** that treats relationships, edges, and identities as first-class grammar. One format, two profiles. The generic profile is a strict subset of the graph profile: learn one, use both.
+GCF is two things: a **lossless JSON codec** that cuts tokens by 71%, and a **graph-native superset** that treats relationships, edges, and identities as first-class grammar. One format, two profiles. You never read or write GCF directly: call `encode()`, the LLM reads it natively, call `decode()` when a human needs the data back.
 
 - **100% comprehension accuracy** on every frontier model tested (Claude, Gemini, GPT). The only format that never fails.
 - **90.7% under structural stress** (500-symbol code graphs), where JSON drops to 53.6% and TOON to 68.5%.

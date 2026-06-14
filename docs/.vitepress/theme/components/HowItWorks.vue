@@ -88,7 +88,7 @@ onMounted(async () => {
   <section class="how-it-works">
     <div class="container">
       <h2 class="section-title">Two Profiles. One Format.</h2>
-      <p class="section-subtitle">One grammar, two profiles. The generic profile is a strict subset of the graph profile: learn one, use both. Any JSON in, same JSON out. Graphs get first-class syntax.</p>
+      <p class="section-subtitle">One grammar, two profiles. The generic profile is a strict subset of the graph profile. You never read or write GCF: call <code>encode()</code>, the LLM reads it natively, call <code>decode()</code> at the end.</p>
 
       <div class="cards">
         <div v-for="(ex, i) in examples" :key="i" class="card">
