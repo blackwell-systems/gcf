@@ -18,7 +18,7 @@ GCF has two encoding profiles that share the same grammar primitives (`##`, `|`,
 GCF profile=graph tool=<name> budget=<int> tokens=<int> symbols=<int> edges=<int> pack_root=<hex>
 ```
 
-Only `tool` is required. All other fields are optional.
+All fields are optional. `tool` SHOULD be present for MCP tool responses.
 
 ```
 GCF profile=graph tool=context_for_task
@@ -284,7 +284,7 @@ When array items are mixed types (not all objects with the same fields), use exp
 | Attachment (tabular only) | caret | `^` |
 | Empty string | quoted | `""` |
 | String with `\|` or newline | quoted | `"value\|with\|pipes"` |
-| String with `,` in comma context | quoted | `"a,b"` (inline arrays only) |
+| String with `,` | quoted | `"a,b"` |
 
 ### Complete tabular example
 
