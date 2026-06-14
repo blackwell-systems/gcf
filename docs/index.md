@@ -28,10 +28,12 @@ features:
     details: 'LLMs produce valid <span class="gcf">GCF</span> with a 3-line primer.<br><br>33% smaller output than <span class="toon">TOON</span>. 5/5 generation validity on every frontier model across 3 providers. Zero training.'
   - title: 100% comprehension on every frontier model
     details: 'The only format that never fails. Tested across Claude, GPT-5.5, and Gemini with zero format instructions. On structurally complex code graphs, GCF scores 90.7% where <span class="json">JSON</span> drops to 53.6% and <span class="toon">TOON</span> to 68.5%. 1,700+ evaluations, 3 providers.'
-  - title: 157 conformance fixtures, 6 languages
-    details: 'All implementations at v2.1.0+ (Go v1.2.0). 157 conformance fixtures. 23,000,000,000+ lossless round-trips across 5 formats and 6 languages. Cross-language 6x6 encode/decode matrix verified. CLIs for all 6 languages. <a href="https://github.com/blackwell-systems/gcf/blob/main/SPEC.md">Spec v3.1</a> designated Stable.'
+  - title: Proven lossless. 6 languages. Spec v3.1 Stable.
+    details: '23B+ (yes, really) round-trips across JSON, YAML, TOML, CSV, and MessagePack. Zero failures. 157 conformance fixtures. Cross-language 6x6 encode/decode matrix verified. <a href="https://github.com/blackwell-systems/gcf/blob/main/SPEC.md">Read the spec</a>.'
   - title: 25.5% fewer tokens than TOON (15 datasets)
     details: 'Wins 13/15 real-world datasets. 38% fewer on semi-uniform data, 30% on nested, 32% on the exact comprehension eval payload. <span class="toon">TOON</span>&apos;s two wins total 104 tokens combined.'
 ---
+
+<LanguageStrip />
 
 <HowItWorks />

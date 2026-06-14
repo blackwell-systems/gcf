@@ -1,0 +1,120 @@
+<script setup lang="ts">
+const languages = [
+  { name: 'Go', version: 'v1.2.0', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg', url: 'https://github.com/blackwell-systems/gcf-go', registry: 'pkg.go.dev' },
+  { name: 'Rust', version: 'v2.1.0', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/rust/rust-original.svg', url: 'https://github.com/blackwell-systems/gcf-rust', registry: 'crates.io' },
+  { name: 'TypeScript', version: 'v2.1.0', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg', url: 'https://github.com/blackwell-systems/gcf-typescript', registry: 'npm' },
+  { name: 'Python', version: 'v2.1.0', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg', url: 'https://github.com/blackwell-systems/gcf-python', registry: 'PyPI' },
+  { name: 'Swift', version: 'v2.1.0', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swift/swift-original.svg', url: 'https://github.com/blackwell-systems/gcf-swift', registry: 'SPM' },
+  { name: 'Kotlin', version: 'v2.1.0', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg', url: 'https://github.com/blackwell-systems/gcf-kotlin', registry: 'JitPack' },
+]
+</script>
+
+<template>
+  <div class="lang-strip">
+    <div class="lang-strip-inner">
+      <h2 class="lang-title">Six Languages, One Spec</h2>
+      <p class="lang-subtitle">Every implementation passes 157/157 conformance fixtures. Same output, any language.</p>
+      <div class="lang-grid">
+        <a v-for="lang in languages" :key="lang.name" :href="lang.url" target="_blank" class="lang-card">
+          <img :src="lang.icon" :alt="lang.name" class="lang-icon" />
+          <div class="lang-name">{{ lang.name }}</div>
+          <div class="lang-version">{{ lang.version }}</div>
+          <div class="lang-check">157/157</div>
+          <div class="lang-registry">{{ lang.registry }}</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+.lang-strip {
+  max-width: 1152px;
+  margin: 0 auto;
+  padding: 48px 24px 24px;
+}
+
+.lang-strip-inner {
+  text-align: center;
+}
+
+.lang-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--vp-c-text-1);
+}
+
+.lang-subtitle {
+  font-size: 0.95rem;
+  color: var(--vp-c-text-2);
+  margin-bottom: 28px;
+}
+
+.lang-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 768px) {
+  .lang-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 480px) {
+  .lang-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.lang-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 12px 16px;
+  border: 1px solid var(--vp-c-border);
+  border-radius: 10px;
+  background: var(--vp-c-bg-soft);
+  text-decoration: none;
+  transition: all 0.15s;
+}
+
+.lang-card:hover {
+  border-color: var(--vp-c-brand-1);
+  background: color-mix(in srgb, var(--vp-c-brand-1) 5%, var(--vp-c-bg-soft));
+  transform: translateY(-2px);
+}
+
+.lang-icon {
+  width: 36px;
+  height: 36px;
+  margin-bottom: 10px;
+}
+
+.lang-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--vp-c-text-1);
+  margin-bottom: 2px;
+}
+
+.lang-version {
+  font-size: 0.75rem;
+  font-family: var(--vp-font-family-mono);
+  color: var(--vp-c-text-3);
+  margin-bottom: 6px;
+}
+
+.lang-check {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.1);
+  padding: 1px 8px;
+  border-radius: 999px;
+  margin-bottom: 4px;
+}
+
+.lang-registry {
+  font-size: 0.7rem;
+  color: var(--vp-c-text-3);
+}
+</style>
