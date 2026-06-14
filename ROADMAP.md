@@ -33,6 +33,7 @@
 - [ ] **LinkedIn content**: leverage 1,700+ evaluations, calculator, consulting angle.
 - [ ] **Operational eval**: downstream tool-call accuracy (model reads GCF, picks correct tool + args). Plan written.
 - [ ] **Value alias comprehension eval**: test if LLMs maintain 100% accuracy when repeated values are aliased.
+- [ ] **Multi-format fuzz testing**: property-based round-trip verification against YAML, TOML, CSV, MessagePack (millions of random payloads per format). Proof of concept passed 7/7 on hand-picked data. Need the same rigor as JSON (1B+ round-trips) before claiming "structured data codec" publicly.
 
 ## Spec v1.5 (under consideration)
 
