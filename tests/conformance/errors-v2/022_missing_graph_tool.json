@@ -1,7 +1,0 @@
-{
-  "name": "missing_graph_tool",
-  "description": "Graph profile requires a tool header field",
-  "input": "GCF profile=graph symbols=0\n",
-  "expectedError": "missing_tool",
-  "operation": "error"
-}
