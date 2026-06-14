@@ -57,6 +57,7 @@ export default defineConfig({
       {
         text: 'Evidence',
         items: [
+          { text: 'Lossless Verification', link: '/guide/lossless-verification' },
           { text: 'Benchmarks', link: '/guide/benchmarks' },
           { text: 'Benchmarks (Full Data)', link: '/guide/eval-results' },
           { text: 'GCF vs TOON', link: '/guide/vs-toon' },
