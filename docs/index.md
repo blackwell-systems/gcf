@@ -13,6 +13,9 @@ hero:
       text: Try the Playground
       link: /playground
     - theme: alt
+      text: Cost Calculator
+      link: /calculator
+    - theme: alt
       text: GCF vs TOON
       link: /guide/vs-toon
 
