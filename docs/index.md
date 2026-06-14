@@ -3,8 +3,8 @@ layout: home
 sidebar: false
 hero:
   name: GCF
-  text: Drop-in JSON replacement for <span class="hero-highlight">all AI pipelines</span>, with superpowers for graph-shaped data.
-  tagline: 'The most token-efficient wire format for LLMs. <strong>100% comprehension</strong> on every frontier model tested. 25.5% fewer tokens than <span class="toon">TOON</span>, 53% fewer than <span class="json">JSON</span> across 15 real-world datasets. 23,000,000,000+ lossless round-trips. Spec v3.0 Stable.'
+  text: The AI-native wire format for <span class="hero-highlight">structured data</span>.
+  tagline: '71% fewer tokens than <span class="json">JSON</span>. <strong>100% comprehension</strong> on every frontier model. 23 billion+ lossless round-trips across 5 formats (<span class="json">JSON</span>, YAML, TOML, CSV, MessagePack). Spec v3.0 Stable.'
   actions:
     - theme: brand
       text: Get Started
