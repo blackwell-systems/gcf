@@ -1,0 +1,91 @@
+   Compiling gcf v2.0.0 (/Users/dayna.blackwell/code/gcf-rust)
+warning: function `gen_tabular` is never used
+  --> tests/multiformat_fuzz.rs:91:4
+   |
+91 | fn gen_tabular(rng: &mut u64) -> Value {
+   |    ^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: field `name` is never read
+  --> tests/conformance_v2.rs:10:5
+   |
+ 9 | struct Fixture {
+   |        ------- field in this struct
+10 |     name: String,
+   |     ^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `std::collections::HashMap`
+ --> tests/roundtrip_v2.rs:5:5
+  |
+5 | use std::collections::HashMap;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `gcf` (test "multiformat_fuzz") generated 1 warning
+warning: `gcf` (test "conformance_v2") generated 1 warning
+warning: `gcf` (test "roundtrip_v2") generated 1 warning (run `cargo fix --test "roundtrip_v2" -p gcf` to apply 1 suggestion)
+    Finished `release` profile [optimized] target(s) in 1.90s
+     Running unittests src/lib.rs (target/release/deps/gcf-d809188963397e1d)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 29 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (target/release/deps/gcf-37abc7a60485bff9)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/conformance_v2.rs (target/release/deps/conformance_v2-5d7352bc0b1efa45)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+     Running tests/fuzz_parallel.rs (target/release/deps/fuzz_parallel-17374156eb86196d)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.00s
+
+     Running tests/multiformat_fuzz.rs (target/release/deps/multiformat_fuzz-a0cd494b380fccac)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.00s
+
+     Running tests/rerun_missing.rs (target/release/deps/rerun_missing-943e40746b65bd78)
+
+running 2 tests
+  JSON-rerun: 50000000/250000000 (20.0%) 2425726/s ETA 1m     JSON-rerun: 100000000/250000000 (40.0%) 2404137/s ETA 1m   test rerun_json_250m has been running for over 60 seconds
+test rerun_msgpack_250m has been running for over 60 seconds
+  JSON-rerun: 150000000/250000000 (60.0%) 2398606/s ETA 1m     JSON-rerun: 200000000/250000000 (80.0%) 2357801/s ETA 0m     JSON-rerun: 250000000/250000000 (100.0%) 2397388/s ETA 0m     MessagePack-rerun: 50000000/250000000 (20.0%) 399735/s ETA 8m     MessagePack-rerun: 100000000/250000000 (40.0%) 685607/s ETA 4m     MessagePack-rerun: 150000000/250000000 (60.0%) 881276/s ETA 2m     MessagePack-rerun: 200000000/250000000 (80.0%) 1040953/s ETA 1m     MessagePack-rerun: 250000000/250000000 (100.0%) 1172980/s ETA 0m     MessagePack-rerun: 250000000 passed, 0 failed in 213.1s (1172958/s)                    
+test rerun_msgpack_250m ... ok
+  JSON-rerun: 250000000 passed, 0 failed in 213.1s (1172941/s)                    
+test rerun_json_250m ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 213.14s
+
+     Running tests/roundtrip_v2.rs (target/release/deps/roundtrip_v2-ef14d6d2a2c31551)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.00s
+
+     Running tests/toml_fuzz.rs (target/release/deps/toml_fuzz-2835e37f933cbe45)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+     Running tests/yaml_1b.rs (target/release/deps/yaml_1b-c8afe22058265b69)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
