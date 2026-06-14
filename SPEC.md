@@ -254,12 +254,12 @@ GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=10 edges
 | Field | Type | Description |
 |-------|------|-------------|
 | `profile` | string | MUST be `graph` |
-| `tool` | string | Name of the tool that produced this response |
 
 #### Optional fields (graph profile)
 
 | Field | Type | Description |
 |-------|------|-------------|
+| `tool` | string | Name of the producing tool. SHOULD be present for MCP tool responses. |
 | `budget` | integer | Token budget requested by the consumer |
 | `tokens` | integer | Actual tokens used in this payload |
 | `symbols` | integer | Number of symbols in this payload |
