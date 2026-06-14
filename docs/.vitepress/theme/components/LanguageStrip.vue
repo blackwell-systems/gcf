@@ -19,6 +19,10 @@ const languages = [
         </div>
         <div class="proxy-right">
           <code class="proxy-cmd">pip install gcf-proxy</code>
+          <span class="proxy-or">or</span>
+          <code class="proxy-cmd">npm i -g @blackwell-systems/gcf-proxy</code>
+          <span class="proxy-or">or</span>
+          <code class="proxy-cmd">go install github.com/blackwell-systems/gcf-proxy@latest</code>
           <a href="https://github.com/blackwell-systems/gcf-proxy" target="_blank" class="proxy-link">GitHub</a>
         </div>
       </div>
@@ -82,6 +86,12 @@ const languages = [
   border-radius: 8px;
   color: var(--vp-c-brand-1);
   white-space: nowrap;
+}
+
+.proxy-or {
+  font-size: 0.75rem;
+  color: var(--vp-c-text-3);
+  font-weight: 500;
 }
 
 .proxy-link {
