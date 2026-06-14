@@ -155,6 +155,7 @@ The LLM gets the first symbols in its context within milliseconds. Without `prog
 | `--stream-threshold N` | 5 | Min symbols before streaming activates |
 | `--no-progress` | false | Disable progress notifications |
 | `--verbose` | false | Log per-call savings to stderr |
+| `--stats-file <path>` | (none) | Write JSON stats after each rewrite (for plugin hooks) |
 
 ## Delta encoding
 
@@ -208,7 +209,7 @@ The proxy only converts `text` content blocks in JSON-RPC responses that contain
 | You want maximum control over encoding | Library |
 | You want zero-effort adoption | Proxy |
 
-The proxy gives you bidirectional GCF translation (both input and output token savings) on local and remote servers, plus session dedup and streaming progress. For delta encoding, use the [GCF libraries](/ecosystem/implementations) directly.
+The proxy gives you bidirectional GCF translation (both input and output token savings) on local and remote servers, plus session dedup, delta encoding, and streaming progress.
 
 ## Deploy as a remote service
 
@@ -250,3 +251,5 @@ gcf-proxy --http :9090 --upstream http://remote-mcp:3000/mcp
 - [Roadmap](https://github.com/blackwell-systems/gcf-proxy/blob/main/ROADMAP.md)
 - [PyPI](https://pypi.org/project/gcf-proxy/)
 - [npm](https://www.npmjs.com/package/@blackwell-systems/gcf-proxy)
+- [Claude Code Plugin](https://github.com/blackwell-systems/gcf-claude-plugin)
+- [Codex Plugin](https://github.com/blackwell-systems/gcf-codex-plugin)
