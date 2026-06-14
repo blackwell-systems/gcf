@@ -25,7 +25,7 @@ features:
   - title: 53-71% fewer input tokens
     details: 'At 500 orders: <span class="json">JSON</span> uses 80K tokens, <span class="gcf">GCF</span> uses 24K. At 1000 orders, JSON doesn&apos;t even fit in a 200K context window. GCF fits in 47K. Positional fields, inline schemas, and hierarchical grouping eliminate per-record overhead.'
   - title: 63% fewer output tokens
-    details: 'LLMs produce valid <span class="gcf">GCF</span> with a 3-line primer. 33% smaller output than <span class="toon">TOON</span>. 5/5 generation validity on every frontier model across 3 providers. Zero training.'
+    details: 'LLMs produce valid <span class="gcf">GCF</span> with a 3-line primer.<br><br>33% smaller output than <span class="toon">TOON</span>. 5/5 generation validity on every frontier model across 3 providers. Zero training.'
   - title: 100% comprehension on every frontier model
     details: 'The only format that never fails. Tested across Claude, GPT-5.5, and Gemini with zero format instructions. On structurally complex code graphs, GCF scores 90.7% where <span class="json">JSON</span> drops to 53.6% and <span class="toon">TOON</span> to 68.5%. 1,700+ evaluations, 3 providers.'
   - title: 157 conformance fixtures, 6 languages
