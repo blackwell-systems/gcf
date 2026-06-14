@@ -31,9 +31,9 @@ The specification uses [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119) keywor
 
 ## Profiles
 
-GCF supports two encoding profiles that share the same grammar primitives (`##` headers, `@` IDs, positional fields):
+GCF supports two encoding profiles that share the same grammar primitives (`##` headers, positional fields). The graph profile adds `@` local IDs and edge notation:
 
-- **Graph profile** (Sections 4-6a): Encodes code graph payloads (symbols, edges, distance groups) for MCP tool responses.
+- **Graph profile** (Sections 4-6a): Superset that adds local IDs, typed edges, and distance groups for relationship-heavy data (code intelligence, knowledge graphs, ontologies, agent memory).
 - **Generic profile** (Section 7): Encodes arbitrary structured data using positional rows, inline object schemas, shared array schemas, and expanded forms.
 
 Implementations MAY support one or both profiles. All six official implementations (Go, TypeScript, Python, Rust, Swift, Kotlin) support both.
