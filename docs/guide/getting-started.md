@@ -49,7 +49,7 @@ Use `encode()` when your data has entities with relationships:
 - Network topologies, dependency trees
 - Any domain where nodes have edges
 
-Graph-shaped data is the fastest-growing data shape in AI. Knowledge systems, ontologies, GraphRAG, code intelligence, agent memory. Every other token-efficient format (TOON, IRON, PLOON) treats data as flat tables. GCF is the only format with first-class graph syntax: local IDs, typed edges, distance grouping, and session deduplication that compounds to 92% savings across multi-turn sessions.
+Graph-shaped data is the fastest-growing data shape in AI. Knowledge systems, ontologies, GraphRAG, code intelligence, agent memory. No other token-efficient format treats graphs as first-class. GCF is the only format with native graph syntax: local IDs, typed edges, distance grouping, and session deduplication that compounds to 92% savings across multi-turn sessions.
 
 ### When GCF is most effective
 
