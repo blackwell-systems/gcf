@@ -12,7 +12,39 @@ For an MCP tool returning 500 records (search results, database rows, API respon
 
 That's 56,000-42,000 tokens freed for additional context, longer conversations, or more tool calls. The LLM comprehends GCF with 100% accuracy on standard workloads (every frontier model tested), and 90.7% on structurally complex code graphs (vs TOON 68.5%, JSON 53.6%). At 1000 records, JSON doesn't even fit in a 200K context window.
 
-## Basic integration
+## Zero-code option: gcf-proxy
+
+The fastest path. Wrap any existing MCP server with [gcf-proxy](https://github.com/blackwell-systems/gcf-proxy). JSON tool responses are re-encoded as GCF before reaching the model. No changes to your server.
+
+```json
+{
+  "mcpServers": {
+    "my-server": {
+      "command": "gcf-proxy",
+      "args": ["npx", "-y", "your-mcp-server"]
+    }
+  }
+}
+```
+
+That's it. Every JSON tool response from `your-mcp-server` is now GCF-encoded. The model reads it natively. Use `--verbose` to see per-call savings:
+
+```
+gcf-proxy: get_context         54.0KB -> 28.1KB (48% saved)
+gcf-proxy: search_symbols      10.0KB ->  7.4KB (26% saved)
+```
+
+Additional flags:
+- `--session`: enable session deduplication (92% savings by 5th call)
+- `--cache`: cache encoded responses for identical tool calls
+- `--delta`: send only changed symbols on re-queries
+- `--stats-file <path>`: write JSON stats for plugin hooks
+
+Available on [npm](https://www.npmjs.com/package/@blackwell-systems/gcf-proxy), [PyPI](https://pypi.org/project/gcf-proxy/), and [Go](https://github.com/blackwell-systems/gcf-proxy). Claude Code and Codex plugins available for one-command install.
+
+## Native integration
+
+For MCP servers where you control the source, encode directly with the GCF library for maximum control.
 
 ### 1. Encode your tool response as GCF
 
