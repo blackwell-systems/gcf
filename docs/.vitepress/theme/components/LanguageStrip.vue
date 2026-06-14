@@ -12,6 +12,17 @@ const languages = [
 <template>
   <div class="lang-strip">
     <div class="lang-strip-inner">
+      <div class="proxy-callout">
+        <div class="proxy-left">
+          <div class="proxy-title">Zero-code adoption</div>
+          <div class="proxy-desc">Drop-in proxy for existing MCP servers. Your server keeps outputting JSON. The LLM receives GCF.</div>
+        </div>
+        <div class="proxy-right">
+          <code class="proxy-cmd">pip install gcf-proxy</code>
+          <a href="https://github.com/blackwell-systems/gcf-proxy" target="_blank" class="proxy-link">GitHub</a>
+        </div>
+      </div>
+
       <h2 class="lang-title">Six Languages, One Spec</h2>
       <p class="lang-subtitle">Every implementation passes 157/157 conformance fixtures. Same output, any language.</p>
       <div class="lang-grid">
@@ -28,6 +39,72 @@ const languages = [
 </template>
 
 <style scoped>
+.proxy-callout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 20px 28px;
+  background: color-mix(in srgb, var(--vp-c-brand-1) 6%, var(--vp-c-bg-soft));
+  border: 1px solid color-mix(in srgb, var(--vp-c-brand-1) 20%, var(--vp-c-border));
+  border-radius: 12px;
+  margin-bottom: 32px;
+  text-align: left;
+}
+
+.proxy-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--vp-c-text-1);
+  margin-bottom: 4px;
+}
+
+.proxy-desc {
+  font-size: 0.85rem;
+  color: var(--vp-c-text-2);
+  line-height: 1.5;
+}
+
+.proxy-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.proxy-cmd {
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 8px 16px;
+  background: var(--vp-c-bg);
+  border: 1px solid var(--vp-c-border);
+  border-radius: 8px;
+  color: var(--vp-c-brand-1);
+  white-space: nowrap;
+}
+
+.proxy-link {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--vp-c-brand-1);
+  text-decoration: none;
+}
+
+.proxy-link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .proxy-callout {
+    flex-direction: column;
+    text-align: center;
+  }
+  .proxy-right {
+    flex-direction: column;
+  }
+}
+
 .lang-strip {
   max-width: 1152px;
   margin: 0 auto;
