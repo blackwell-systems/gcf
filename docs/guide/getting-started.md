@@ -96,7 +96,7 @@ cargo add gcf
 
 ```bash [Kotlin]
 # build.gradle.kts
-implementation("com.github.blackwell-systems:gcf-kotlin:v2.0.0")
+implementation("com.github.blackwell-systems:gcf-kotlin:v2.1.0")
 ```
 
 :::

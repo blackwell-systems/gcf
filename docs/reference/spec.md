@@ -56,4 +56,4 @@ Conformance fixtures live in [tests/conformance](https://github.com/blackwell-sy
 
 ## Stability guarantee
 
-**Stable** (v3.0 designated 2026-06-12). V3 is the only supported encoding. No backwards compatibility with v2 indented attachments. The graph profile and `GCF profile=generic` header are unchanged.
+**Stable** (v3.1 designated 2026-06-14). V3 is the only supported encoding. v3.1 makes the `tool` field optional in the graph profile header. The graph profile and `GCF profile=generic` header are unchanged.
