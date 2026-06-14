@@ -23,7 +23,7 @@ features:
   - title: Proven lossless JSON encoding
     details: '<code class="terminal">decode(encode(value)) == value</code> for every structured value. Verified across <em>23,000,000,000+</em> random round-trips across 5 formats (JSON, YAML, TOML, CSV, MessagePack) and 6 language implementations. 157 conformance fixtures, cross-language matrix verified. Spec v3.1 Stable.'
   - title: 53-71% fewer input tokens
-    details: 'At 500 orders: <span class="json">JSON</span> uses 80K tokens, <span class="gcf">GCF</span> uses 24K. At 1000 orders, JSON doesn&apos;t even fit in a 200K context window. GCF fits in 47K. Positional fields, inline schemas, and hierarchical grouping eliminate per-record overhead.'
+    details: 'At 500 orders: <span class="json">JSON</span> uses 80K tokens, <span class="gcf">GCF</span> uses 24K.<br><br>At 1000 orders, JSON doesn&apos;t even fit in a 200K context window. GCF fits in 47K. Positional fields, inline schemas, and hierarchical grouping eliminate per-record overhead.'
   - title: 63% fewer output tokens
     details: 'LLMs produce valid <span class="gcf">GCF</span> with a 3-line primer.<br><br>33% smaller output than <span class="toon">TOON</span>. 5/5 generation validity on every frontier model across 3 providers. Zero training.'
   - title: 100% comprehension on every frontier model
