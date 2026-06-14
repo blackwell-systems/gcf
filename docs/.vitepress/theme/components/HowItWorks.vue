@@ -109,7 +109,7 @@ onMounted(async () => {
       <!-- Grammar Reference -->
       <div class="grammar">
         <h2 class="section-title">GCF Grammar</h2>
-        <p class="section-subtitle">Everything fits on one card.</p>
+        <p class="section-subtitle">Five building blocks. No ambiguity.</p>
 
         <div class="grammar-grid">
           <div class="grammar-card">
