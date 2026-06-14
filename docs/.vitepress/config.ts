@@ -90,6 +90,11 @@ export default defineConfig({
     logo: '/favicon-32x32.png',
     socialLinks: [
       { icon: 'github', link: 'https://github.com/blackwell-systems/gcf' },
+      { icon: 'linkedin', link: 'https://www.linkedin.com/in/daynablackwell/' },
     ],
+    footer: {
+      message: '100% comprehension. 71% fewer tokens. 1,700+ LLM evaluations.',
+      copyright: '&copy; 2026 <a href="https://blackwell-systems.com">Blackwell Systems</a>. MIT Licensed.',
+    },
   },
 })
