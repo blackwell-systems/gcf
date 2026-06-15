@@ -27,7 +27,6 @@ const plugins = [
 <template>
   <div class="plugin-strip">
     <div class="plugin-strip-inner">
-      <h2 class="plugin-title">Editor & Agent Plugins</h2>
       <div class="plugin-grid">
         <a v-for="p in plugins" :key="p.name" :href="p.url" target="_blank" class="plugin-card">
           <img :src="p.icon" :alt="p.name" class="plugin-icon" />
