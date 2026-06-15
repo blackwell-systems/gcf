@@ -44,6 +44,26 @@
 }
 
 
+/* Premium nav */
+.VPNav {
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+.VPNavBar {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+  background: rgba(0, 0, 0, 0.7) !important;
+}
+
+.VPNavBar .title {
+  font-weight: 800 !important;
+  letter-spacing: 0.02em !important;
+}
+
+.VPNavBarMenuLink {
+  font-weight: 500 !important;
+}
+
 .gcf { color: var(--gcf-color); font-weight: 600; }
 .toon { color: var(--toon-color); font-weight: 600; }
 .json { color: var(--json-color); font-weight: 600; }
