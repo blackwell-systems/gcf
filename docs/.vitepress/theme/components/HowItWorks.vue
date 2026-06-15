@@ -354,9 +354,14 @@ handle|func
 }
 
 .grammar-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 1.25rem;
+}
+
+.grammar-grid > * {
+  flex: 0 0 calc(33.333% - 1rem);
 }
 
 .grammar-card {
