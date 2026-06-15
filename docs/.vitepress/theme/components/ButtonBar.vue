@@ -47,7 +47,9 @@
 }
 
 .bb-brand:hover {
-  box-shadow: 0 0 30px rgba(24, 190, 252, 0.4);
+  background: #fff;
+  color: #000;
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
   transform: translateY(-1px);
 }
 
