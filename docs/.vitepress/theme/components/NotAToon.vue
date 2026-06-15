@@ -3,6 +3,7 @@ import { onMounted, onUnmounted, ref, nextTick } from 'vue'
 import mediumZoom from 'medium-zoom'
 
 const poem = ref(null)
+const progressWidth = ref('0%')
 const counterValue = ref('0')
 const closingText = ref('')
 const showCursor = ref(false)
@@ -78,6 +79,7 @@ onMounted(() => {
   const images = poem.value?.querySelectorAll('.chapter-img') || []
   const onScroll = () => {
     const scrollY = window.scrollY
+    // Parallax
     images.forEach((img) => {
       const rect = img.getBoundingClientRect()
       const center = rect.top + rect.height / 2
@@ -85,6 +87,10 @@ onMounted(() => {
       const offset = (center - viewCenter) * 0.04
       img.style.transform = `translateY(${offset}px)`
     })
+    // Progress bar
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight
+    const progress = docHeight > 0 ? (scrollY / docHeight) * 100 : 0
+    progressWidth.value = `${Math.min(progress, 100)}%`
   }
 
   window.addEventListener('scroll', onScroll, { passive: true })
@@ -102,6 +108,7 @@ onMounted(() => {
 
 <template>
   <div class="poem" ref="poem">
+    <div class="progress-bar" :style="{ width: progressWidth }"></div>
     <!-- Hero -->
     <section class="poem-hero">
       <div class="hero-inner">
@@ -516,6 +523,18 @@ onMounted(() => {
   max-width: 100%;
   overflow-x: clip;
   position: relative;
+}
+
+/* Reading progress bar */
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gcf-blue, #18befc), #3dd4ff);
+  box-shadow: 0 0 10px rgba(24, 190, 252, 0.5);
+  z-index: 9999;
+  transition: width 0.1s linear;
 }
 
 /* Subtle paper grain texture */
