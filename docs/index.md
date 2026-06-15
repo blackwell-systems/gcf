@@ -14,8 +14,8 @@ hero:
 
 <ProxyCallout />
 
-<FeatureCards />
-
 <LanguageStrip />
+
+<FeatureCards />
 
 <HowItWorks />
