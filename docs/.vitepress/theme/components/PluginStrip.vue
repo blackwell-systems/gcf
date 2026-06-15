@@ -46,7 +46,6 @@ const plugins = [
           <img :src="p.icon" :alt="p.name" class="plugin-icon" />
           <div class="plugin-name">{{ p.name }}</div>
           <div class="plugin-desc">{{ p.desc }}</div>
-          <code class="plugin-install">{{ p.install }}</code>
         </a>
       </div>
     </div>
