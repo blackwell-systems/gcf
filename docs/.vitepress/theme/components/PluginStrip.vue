@@ -102,7 +102,7 @@ const plugins = [
 
 .plugin-desc {
   font-size: 0.75rem;
-  color: var(--vp-c-text-3);
+  color: var(--vp-c-text-1);
   margin-bottom: 8px;
 }
 
