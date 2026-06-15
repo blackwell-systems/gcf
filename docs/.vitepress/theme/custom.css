@@ -18,6 +18,12 @@
   display: none !important;
 }
 
+/* Make hero image bigger */
+.VPHero .VPImage {
+  max-width: 600px !important;
+  max-height: none !important;
+}
+
 .gcf { color: var(--gcf-color); font-weight: 600; }
 .toon { color: var(--toon-color); font-weight: 600; }
 .json { color: var(--json-color); font-weight: 600; }
