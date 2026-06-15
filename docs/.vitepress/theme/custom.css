@@ -6,11 +6,11 @@
   --json-color: #b28080;
 }
 
-/* Black background to match hero image */
-:root.dark {
-  --vp-c-bg: #000;
-  --vp-c-bg-alt: #0a0a0a;
-  --vp-c-bg-soft: #111;
+/* Black background to match hero image (dark mode only) */
+.dark {
+  --vp-c-bg: #000 !important;
+  --vp-c-bg-alt: #0a0a0a !important;
+  --vp-c-bg-soft: #111 !important;
 }
 
 .gcf { color: var(--gcf-color); font-weight: 600; }
