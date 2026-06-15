@@ -12,7 +12,7 @@ Knowing worked with JSON. But JSON is verbose for graphs. Every edge repeats bot
 
 So the experiment started: what if section headers replaced per-record metadata? What if local IDs replaced repeated identifiers? What if the format aligned with how LLMs already process sequential information, instead of how humans scan nested trees?
 
-The experiment worked. And then it kept working, on more data shapes, at larger scales, across more models, in ways nobody expected.
+The experiment worked. I started benchmarking the graph grammar and discovered the savings were significant: 79% fewer tokens on a 500-symbol code graph. Then came the bigger realization: the generic profile could be a strict subset of the graph grammar, and it could express arbitrary structured data more efficiently than any existing solution. The graph experiment had accidentally produced a general-purpose wire format.
 
 ## The first encoding
 
