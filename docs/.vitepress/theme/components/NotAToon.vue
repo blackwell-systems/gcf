@@ -883,17 +883,17 @@ onMounted(() => {
 
 <!-- Unscoped: Seuss candy-cane scrollbar (applied to html via class toggle) -->
 <style>
-.seuss-scrollbar::-webkit-scrollbar {
-  width: 18px;
+html.seuss-scrollbar::-webkit-scrollbar {
+  width: 18px !important;
 }
 
-.seuss-scrollbar::-webkit-scrollbar-track {
-  background: #0a0a0a;
+html.seuss-scrollbar::-webkit-scrollbar-track {
+  background: #0a0a0a !important;
 }
 
-.seuss-scrollbar::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  border: 2px solid #0a0a0a;
+html.seuss-scrollbar::-webkit-scrollbar-thumb {
+  border-radius: 10px !important;
+  border: 2px solid #0a0a0a !important;
   background:
     repeating-linear-gradient(
       -45deg,
@@ -901,10 +901,10 @@ onMounted(() => {
       #18befc 6px,
       #0d2a3a 6px,
       #0d2a3a 12px
-    );
+    ) !important;
 }
 
-.seuss-scrollbar::-webkit-scrollbar-thumb:hover {
+html.seuss-scrollbar::-webkit-scrollbar-thumb:hover {
   background:
     repeating-linear-gradient(
       -45deg,
@@ -912,11 +912,11 @@ onMounted(() => {
       #3dd4ff 6px,
       #0f3548 6px,
       #0f3548 12px
-    );
+    ) !important;
 }
 
-.seuss-scrollbar {
-  scrollbar-width: auto;
-  scrollbar-color: #18befc #0a0a0a;
+html.seuss-scrollbar {
+  scrollbar-width: auto !important;
+  scrollbar-color: #18befc #0a0a0a !important;
 }
 </style>

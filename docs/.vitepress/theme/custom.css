@@ -115,27 +115,27 @@
   color: var(--gcf-blue, #18befc) !important;
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
+/* Custom scrollbar (disabled when Seuss scrollbar is active) */
+html:not(.seuss-scrollbar)::-webkit-scrollbar {
   width: 16px;
   height: 16px;
 }
 
-::-webkit-scrollbar-track {
+html:not(.seuss-scrollbar)::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.03);
 }
 
-::-webkit-scrollbar-thumb {
+html:not(.seuss-scrollbar)::-webkit-scrollbar-thumb {
   background: var(--gcf-blue, #18befc);
   border-radius: 6px;
   opacity: 0.7;
 }
 
-::-webkit-scrollbar-thumb:hover {
+html:not(.seuss-scrollbar)::-webkit-scrollbar-thumb:hover {
   opacity: 1;
 }
 
-* {
+html:not(.seuss-scrollbar) {
   scrollbar-width: auto;
   scrollbar-color: #18befc rgba(255, 255, 255, 0.03);
 }
