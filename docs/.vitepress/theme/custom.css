@@ -66,6 +66,10 @@
   display: none !important;
 }
 
+.VPNavBar .content-body {
+  background-color: transparent !important;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&display=swap');
 
 .VPNavBar .title {
