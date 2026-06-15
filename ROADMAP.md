@@ -24,16 +24,11 @@
 
 ## Next
 
-- [ ] **Whitepaper update**: incorporate all eval data (1,700+ evaluations), failure taxonomy, generation analysis into formal paper.
-- [ ] **Temperature=0 eval runs**: deterministic OpenAI runs for tighter confidence intervals.
-- [ ] **More Opus comprehension runs**: only 2 saved, need 3-4 to confirm consistency.
-- [ ] **Gemini comprehension on newer models**: 3.1 Pro has 1 run, 3.5 Flash has 1 run.
-- [ ] **Migration guide**: step-by-step for converting JSON MCP tool responses to GCF.
+- [ ] **Ruby implementation**: 7th language. Conformance fixtures exist, spec is stable. Encoder, decoder, scalar grammar, streaming, conformance runner.
+- [ ] **Whitepaper rewrite**: structured data positioning, multi-format interop, updated eval data (1,700+ evaluations, 23B+ round-trips).
 - [ ] **Blog post**: "The format LLMs understand without training" with inline data.
-- [ ] **LinkedIn content**: leverage 1,700+ evaluations, calculator, consulting angle.
-- [ ] **Operational eval**: downstream tool-call accuracy (model reads GCF, picks correct tool + args). Plan written.
+- [ ] **LinkedIn content**: Dr. Seuss poem, playground demo, calculator.
 - [ ] **Value alias comprehension eval**: test if LLMs maintain 100% accuracy when repeated values are aliased.
-- [ ] **Multi-format fuzz testing**: property-based round-trip verification against YAML, TOML, CSV, MessagePack (millions of random payloads per format). Proof of concept passed 7/7 on hand-picked data. Need the same rigor as JSON (1B+ round-trips) before claiming "structured data codec" publicly.
 
 ## Spec v1.5 (under consideration)
 
