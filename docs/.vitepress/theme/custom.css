@@ -53,7 +53,7 @@
 .VPNavBar {
   border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
   background: rgba(10, 10, 10, 0.85) !important;
-  padding: 4px 0 !important;
+  padding: 10px 0 !important;
 }
 
 .VPNavBar .title {
