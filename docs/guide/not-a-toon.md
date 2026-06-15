@@ -1,3 +1,5 @@
+<div class="poem-page">
+
 # Not a TOON
 
 *A cautionary tale about wire formats, for engineers of all ages.*
@@ -280,3 +282,5 @@ The *-OONs were wrong.
 *[See the benchmarks.](https://gcformat.com/guide/benchmarks.html) 1,700+ LLM evaluations. Every frontier model. Every format.*
 
 *[Read the spec.](https://gcformat.com/reference/spec.html) v3.1. Stable. Six implementations. 157 conformance fixtures.*
+
+</div>

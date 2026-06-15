@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
+
 :root {
   --vp-nav-height: 94px;
   --vp-layout-max-width: 1440px;
@@ -197,4 +199,29 @@ code.terminal { color: #4ade80; background: #0a1a0a; border: 1px solid #1a3a1a; 
 .medium-zoom-overlay,
 .medium-zoom-image--opened {
   z-index: 999 !important;
+}
+
+/* Dr. Seuss poem page — playful storybook font */
+.poem-page,
+.poem-page h1,
+.poem-page p,
+.poem-page em,
+.poem-page strong,
+.poem-page blockquote,
+.poem-page a {
+  font-family: 'Patrick Hand', cursive !important;
+}
+
+.poem-page h1 {
+  font-size: 3.5rem !important;
+  letter-spacing: 0.02em;
+}
+
+.poem-page p {
+  font-size: 1.7rem !important;
+  line-height: 1.9 !important;
+}
+
+.poem-page em {
+  font-size: 1.5rem !important;
 }
