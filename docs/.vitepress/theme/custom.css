@@ -37,6 +37,10 @@
 }
 
 
+.VPHero .image {
+  overflow: hidden !important;
+}
+
 .VPHero .VPImage {
   max-width: 520px !important;
   max-height: none !important;
