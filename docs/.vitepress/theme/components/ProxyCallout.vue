@@ -3,7 +3,7 @@
     <div class="proxy-callout">
       <div class="proxy-left">
         <div class="proxy-title">Zero-code adoption</div>
-        <div class="proxy-desc">Drop-in proxy for existing MCP servers. Your server keeps outputting JSON. The LLM receives GCF.</div>
+        <div class="proxy-desc">Don't want to change code? Drop-in proxy for existing MCP servers. Or integrate natively with any of 6 languages below.</div>
       </div>
       <div class="proxy-right">
         <div class="proxy-cmds">
