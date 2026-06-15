@@ -462,7 +462,7 @@ onMounted(() => {
   font-style: italic;
   color: rgba(255, 255, 255, 0.35);
   letter-spacing: 0.08em;
-  margin: 0 0 32px;
+  margin: 0 0 40px;
 }
 
 .poem-title {
@@ -470,8 +470,9 @@ onMounted(() => {
   font-size: 6rem;
   font-weight: 400;
   color: #fff;
-  margin: 0 0 16px;
+  margin: 0 0 24px;
   letter-spacing: 0.03em;
+  line-height: 1.1;
 }
 
 .title-accent {
@@ -484,7 +485,7 @@ onMounted(() => {
   font-size: 1.2rem;
   color: rgba(255, 255, 255, 0.3);
   font-style: italic;
-  margin: 0;
+  margin: 12px 0 0;
 }
 
 .hero-divider {
