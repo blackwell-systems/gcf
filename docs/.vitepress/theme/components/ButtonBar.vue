@@ -35,8 +35,9 @@
 }
 
 .bb-brand {
-  background: var(--vp-c-brand-1);
-  color: #fff;
+  background: var(--gcf-blue, #18befc);
+  color: #000;
+  font-weight: 700;
 }
 
 .bb-brand:hover {
