@@ -72,17 +72,23 @@ const plugins = [
 }
 
 .plugin-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 12px;
 }
 
+.plugin-grid > * {
+  flex: 0 0 calc(20% - 10px);
+  min-width: 150px;
+}
+
 @media (max-width: 960px) {
-  .plugin-grid { grid-template-columns: repeat(2, 1fr); }
+  .plugin-grid > * { flex: 0 0 calc(33% - 10px); }
 }
 
 @media (max-width: 480px) {
-  .plugin-grid { grid-template-columns: 1fr; }
+  .plugin-grid > * { flex: 0 0 100%; }
 }
 
 .plugin-card {
