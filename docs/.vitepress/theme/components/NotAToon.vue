@@ -402,7 +402,7 @@ onMounted(() => {
         <p>One hundred percent comprehension.</p>
       </div>
 
-      <div class="closing-line reveal">The *-OONs were wrong.</div>
+      <div class="closing-line reveal">The *-OONs were wrong</div>
 
       <img src="/not-a-toon-closing.png" alt="The OONs were wrong - GCF triumphant with five format streams" class="chapter-img wide reveal" />
     </section>
