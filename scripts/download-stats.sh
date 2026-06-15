@@ -46,6 +46,21 @@ gh_proxy_total=$(gh api "repos/${GCF_PROXY_REPO}/releases" --jq '[.[].assets[].d
 crates_total=$(curl -sf -A "$UA" --max-time 10 "https://crates.io/api/v1/crates/gcf" \
   | python3 -c "import json,sys; print(json.load(sys.stdin)['crate']['downloads'])" 2>/dev/null || echo "?")
 
+vscode_total=$(curl -sf --max-time 10 "https://marketplace.visualstudio.com/_apis/public/gallery/extensionquery" \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json;api-version=6.0-preview.1" \
+  -d '{"filters":[{"criteria":[{"filterType":7,"value":"blackwell-systems.gcf-vscode"}]}],"flags":914}' \
+  | python3 -c "
+import json,sys
+data=json.load(sys.stdin)
+for ext in data.get('results',[])[0].get('extensions',[]):
+    for stat in ext.get('statistics',[]):
+        if stat['statisticName']=='install':
+            print(int(stat['value']))
+            sys.exit()
+print(0)
+" 2>/dev/null || echo "?")
+
 # ── High-water mark: never regress displayed totals ────────────────
 read_cache() {
   local key="$1"
@@ -83,6 +98,7 @@ pypi_proxy_total=$(use_or_cache pypi_proxy "$pypi_proxy_total")
 gh_go_total=$(use_or_cache gh_go "$gh_go_total")
 gh_proxy_total=$(use_or_cache gh_proxy "$gh_proxy_total")
 crates_total=$(use_or_cache crates "$crates_total")
+vscode_total=$(use_or_cache vscode "$vscode_total")
 
 cat > "$CACHE" << CACHEEOF
 npm=${npm_total}
@@ -94,11 +110,12 @@ pypi_proxy=${pypi_proxy_total}
 gh_go=${gh_go_total}
 gh_proxy=${gh_proxy_total}
 crates=${crates_total}
+vscode=${vscode_total}
 CACHEEOF
 
 # ── Calculate cumulative total ──────────────────────────────────────
 cumulative=0
-for v in "$npm_total" "$npm_n8n_total" "$npm_proxy_total" "$npm_treesitter_total" "$pypi_total" "$pypi_proxy_total" "$gh_go_total" "$gh_proxy_total" "$crates_total"; do
+for v in "$npm_total" "$npm_n8n_total" "$npm_proxy_total" "$npm_treesitter_total" "$pypi_total" "$pypi_proxy_total" "$gh_go_total" "$gh_proxy_total" "$crates_total" "$vscode_total"; do
   if [[ "$v" != "?" && "$v" != "--" ]]; then
     cumulative=$((cumulative + v))
   fi
@@ -117,6 +134,7 @@ pypi_fmt=$(fmt "$pypi_total" 2>/dev/null || echo "$pypi_total")
 gh_go_fmt=$(fmt "$gh_go_total" 2>/dev/null || echo "$gh_go_total")
 gh_proxy_fmt=$(fmt "$gh_proxy_total" 2>/dev/null || echo "$gh_proxy_total")
 crates_fmt=$(fmt "$crates_total" 2>/dev/null || echo "$crates_total")
+vscode_fmt=$(fmt "$vscode_total" 2>/dev/null || echo "$vscode_total")
 cumulative_fmt=$(fmt "$cumulative" 2>/dev/null || echo "$cumulative")
 
 date_str=$(date +"%Y-%m-%d")
@@ -145,6 +163,7 @@ has_downloads "$npm_treesitter_total" && add_row "npm (tree-sitter-gcf)"  "$npm_
 has_downloads "$pypi_total"          && add_row "pypi (gcf-python)"       "$pypi_fmt"
 has_downloads "$pypi_proxy_total"    && add_row "pypi (gcf-proxy)"        "$pypi_proxy_fmt"
 has_downloads "$crates_total"        && add_row "crates.io (gcf)"         "$crates_fmt"
+has_downloads "$vscode_total"        && add_row "vscode marketplace"       "$vscode_fmt"
 has_downloads "$gh_go_total"         && add_row "github (gcf-go)"         "$gh_go_fmt"
 has_downloads "$gh_proxy_total"      && add_row "github (gcf-proxy)"      "$gh_proxy_fmt"
 
