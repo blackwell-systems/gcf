@@ -5,11 +5,20 @@ import mediumZoom from 'medium-zoom'
 const poem = ref(null)
 
 onMounted(() => {
+  // Scroll reveal with staggered lines
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible')
+
+          // Stagger child <p> elements inside stanzas
+          if (entry.target.classList.contains('stanza')) {
+            const lines = entry.target.querySelectorAll('p')
+            lines.forEach((line, i) => {
+              line.style.transitionDelay = `${i * 120}ms`
+            })
+          }
         }
       })
     },
@@ -23,7 +32,24 @@ onMounted(() => {
     })
   }
 
-  onUnmounted(() => observer.disconnect())
+  // Parallax on images
+  const images = poem.value?.querySelectorAll('.chapter-img') || []
+  const onScroll = () => {
+    const scrollY = window.scrollY
+    images.forEach((img) => {
+      const rect = img.getBoundingClientRect()
+      const center = rect.top + rect.height / 2
+      const viewCenter = window.innerHeight / 2
+      const offset = (center - viewCenter) * 0.04
+      img.style.transform = `translateY(${offset}px)`
+    })
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true })
+  onUnmounted(() => {
+    observer.disconnect()
+    window.removeEventListener('scroll', onScroll)
+  })
 })
 </script>
 
@@ -578,6 +604,15 @@ onMounted(() => {
   line-height: 2;
   margin: 0;
   color: rgba(255, 255, 255, 0.78);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.stanza.visible p {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .stanza.accent {
@@ -636,10 +671,11 @@ onMounted(() => {
 
 .chapter-img {
   cursor: zoom-in;
+  will-change: transform;
+  transition: box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .chapter-img:hover {
-  transform: scale(1.01);
   box-shadow:
     0 20px 60px rgba(0, 0, 0, 0.55),
     0 0 60px rgba(24, 190, 252, 0.1);
