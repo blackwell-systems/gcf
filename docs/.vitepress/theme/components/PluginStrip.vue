@@ -21,6 +21,13 @@ const plugins = [
     url: 'https://github.com/blackwell-systems/gcf-codex-plugin',
     icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/openai.svg',
   },
+  {
+    name: 'n8n',
+    desc: 'Encode/decode node for workflows',
+    install: 'npm install n8n-nodes-gcf',
+    url: 'https://www.npmjs.com/package/n8n-nodes-gcf',
+    icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/n8n.svg',
+  },
 ]
 </script>
 
