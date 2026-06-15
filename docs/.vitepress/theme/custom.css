@@ -1,4 +1,5 @@
 :root {
+  --vp-nav-height: 84px;
   --vp-layout-max-width: 1440px;
   --vp-sidebar-width: 245px;
   --gcf-color: var(--vp-c-brand-1);
@@ -55,9 +56,6 @@
   background: rgba(10, 10, 10, 0.85) !important;
 }
 
-.VPNavBar .wrapper {
-  height: 84px !important;
-}
 
 .VPNavBar .container {
   height: 100% !important;
