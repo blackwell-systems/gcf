@@ -86,15 +86,15 @@
 
 .VPNavBarMenuLink:hover {
   opacity: 1 !important;
-  color: var(--vp-c-brand-1) !important;
-  text-shadow: 0 0 12px rgba(37, 99, 235, 0.3);
+  color: var(--gcf-blue, #18befc) !important;
+  text-shadow: 0 0 12px rgba(24, 190, 252, 0.3);
   transition-delay: 0.05s !important;
 }
 
 .VPNavBarMenuLink.active {
-  color: var(--vp-c-brand-1) !important;
+  color: var(--gcf-blue, #18befc) !important;
   opacity: 1 !important;
-  text-shadow: 0 0 12px rgba(37, 99, 235, 0.2);
+  text-shadow: 0 0 12px rgba(24, 190, 252, 0.2);
 }
 
 /* Premium footer */
@@ -122,18 +122,18 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--vp-c-brand-1);
+  background: var(--gcf-blue, #18befc);
   border-radius: 6px;
-  opacity: 0.6;
+  opacity: 0.7;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--vp-c-brand-2);
+  opacity: 1;
 }
 
 * {
   scrollbar-width: auto;
-  scrollbar-color: var(--vp-c-brand-1) rgba(255, 255, 255, 0.03);
+  scrollbar-color: #18befc rgba(255, 255, 255, 0.03);
 }
 
 .gcf { color: var(--gcf-color); font-weight: 600; }
