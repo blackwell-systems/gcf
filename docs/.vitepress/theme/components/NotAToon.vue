@@ -756,7 +756,7 @@ onMounted(() => {
   text-shadow:
     0 0 40px rgba(24, 190, 252, 0.5),
     0 0 80px rgba(24, 190, 252, 0.2);
-  margin: 64px 0;
+  margin: 64px auto;
   letter-spacing: 0.02em;
 }
 
