@@ -45,13 +45,17 @@ GCF was designed for knowing's use case and extracted into a standalone format o
 
 ## bb (Bitbucket Cloud CLI)
 
-[bb](https://github.com/payfacto/bb) is a Go CLI and TUI for the Bitbucket Cloud REST API, built by [Payfacto](https://github.com/payfacto). Designed for AI agent consumption with a human-friendly TUI mode.
+[bb](https://github.com/payfacto/bb) is a Go CLI and TUI for the Bitbucket Cloud REST API, built by [Payfacto](https://github.com/payfacto). Designed for AI agent consumption with a human-friendly TUI mode. **First third-party project to make GCF the default output format over JSON.**
 
+- Imports `github.com/blackwell-systems/gcf-go` directly in Go source
 - GCF is the **default output format** for all commands
 - JSON and text are opt-in via `--format json` or `--format text`
 - When stdout is piped (non-terminal), output auto-coerces to GCF unless text was explicitly requested
 - Format precedence: built-in default (gcf) < config file < env var < CLI flag
-- Links to the GCF spec and libraries in their README
+- Full design spec documenting the GCF integration decision (2026-06-15)
+- Migration instructions for existing JSON consumers
+- Describes GCF as "~71% more token-efficient than JSON"
+- Links to the GCF spec in both README and llms.txt
 - Independent third-party adoption: no affiliation with Blackwell Systems
 
 ## Your project here
