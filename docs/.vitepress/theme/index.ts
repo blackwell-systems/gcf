@@ -8,6 +8,7 @@ import ButtonBar from './components/ButtonBar.vue'
 import FeatureCards from './components/FeatureCards.vue'
 import PluginStrip from './components/PluginStrip.vue'
 import ProxyCallout from './components/ProxyCallout.vue'
+import NotAToon from './components/NotAToon.vue'
 import './custom.css'
 import mediumZoom from 'medium-zoom'
 import { onMounted, watch, nextTick } from 'vue'
@@ -25,6 +26,7 @@ export default {
     app.component('FeatureCards', FeatureCards)
     app.component('PluginStrip', PluginStrip)
     app.component('ProxyCallout', ProxyCallout)
+    app.component('NotAToon', NotAToon)
   },
   setup() {
     const route = useRoute()
