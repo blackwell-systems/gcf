@@ -1346,7 +1346,7 @@ onMounted(async () => {
 }
 
 .pg-tab.active {
-  background: var(--vp-c-brand-1);
+  background: var(--gcf-blue, #18befc);
   color: var(--vp-c-white);
 }
 
@@ -1382,7 +1382,7 @@ onMounted(async () => {
 }
 
 .pg-checkbox input {
-  accent-color: var(--vp-c-brand-1);
+  accent-color: var(--gcf-blue, #18befc);
 }
 
 .pg-share {
@@ -1461,7 +1461,7 @@ onMounted(async () => {
 }
 
 .pane-head-gcf {
-  background: color-mix(in srgb, var(--vp-c-brand-1) 10%, var(--vp-c-bg-soft));
+  background: color-mix(in srgb, var(--gcf-blue, #18befc) 10%, var(--vp-c-bg-soft));
 }
 
 .pane-label {
@@ -1611,8 +1611,8 @@ onMounted(async () => {
 .bar-source { background: #7c6f9b; }
 .bar-json { background: var(--vp-c-text-3); }
 .bar-toon { background: #e8912d; }
-.bar-gcf { background: var(--vp-c-brand-1); }
-.bar-session { background: var(--vp-c-brand-2); }
+.bar-gcf { background: var(--gcf-blue, #18befc); }
+.bar-session { background: var(--gcf-blue, #18befc); }
 
 .bar-val {
   width: 60px;
@@ -1645,7 +1645,7 @@ onMounted(async () => {
 .savings-number {
   font-size: 28px;
   font-weight: 800;
-  color: var(--vp-c-brand-1);
+  color: var(--gcf-blue, #18befc);
   font-variant-numeric: tabular-nums;
   line-height: 1.1;
 }
@@ -1670,7 +1670,7 @@ onMounted(async () => {
   color: var(--vp-c-text-1);
 }
 .comprehension-note a {
-  color: var(--vp-c-brand-1);
+  color: var(--gcf-blue, #18befc);
   text-decoration: none;
   font-weight: 500;
 }
@@ -1684,7 +1684,7 @@ onMounted(async () => {
   margin-top: 10px;
   font-size: 1.1em;
   font-weight: 800;
-  color: var(--vp-c-brand-1);
+  color: var(--gcf-blue, #18befc);
 }
 
 .breakdown {
@@ -1722,7 +1722,7 @@ onMounted(async () => {
 }
 
 .breakdown-val-highlight {
-  color: var(--vp-c-brand-1);
+  color: var(--gcf-blue, #18befc);
   font-size: 14px;
 }
 

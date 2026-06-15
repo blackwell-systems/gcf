@@ -108,7 +108,7 @@
 .VPFooter .message {
   font-weight: 600 !important;
   letter-spacing: 0.01em !important;
-  color: var(--vp-c-brand-1) !important;
+  color: var(--gcf-blue, #18befc) !important;
 }
 
 /* Custom scrollbar */
@@ -172,7 +172,7 @@ code.terminal { color: #4ade80; background: #0a1a0a; border: 1px solid #1a3a1a; 
 }
 
 .hero-highlight {
-  color: var(--vp-c-brand-1);
+  color: var(--gcf-blue, #18befc);
 }
 
 .medium-zoom-overlay,

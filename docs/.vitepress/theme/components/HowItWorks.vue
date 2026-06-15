@@ -235,7 +235,7 @@ handle|func
 
 .section-graph-note {
   text-align: justify;
-  color: var(--vp-c-brand-1);
+  color: var(--gcf-blue, #18befc);
   font-size: 0.9rem;
   line-height: 1.7;
   max-width: 720px;
@@ -260,7 +260,7 @@ handle|func
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: var(--vp-c-brand-1);
+  background: var(--gcf-blue, #18befc);
   color: white;
   font-weight: 700;
   font-size: 0.85rem;
@@ -281,7 +281,7 @@ handle|func
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--vp-c-brand-1);
+  color: var(--gcf-blue, #18befc);
   margin-bottom: 0.5rem;
 }
 

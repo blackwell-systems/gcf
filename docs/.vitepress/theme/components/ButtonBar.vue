@@ -51,7 +51,7 @@
 }
 
 .bb-alt:hover {
-  border-color: var(--vp-c-brand-1);
-  color: var(--vp-c-brand-1);
+  border-color: var(--gcf-blue, #18befc);
+  color: var(--gcf-blue, #18befc);
 }
 </style>

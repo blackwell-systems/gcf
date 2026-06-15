@@ -60,7 +60,7 @@ onUnmounted(() => clearInterval(interval))
 .rotating-word {
   font-size: 1.8rem;
   font-weight: 800;
-  color: var(--vp-c-brand-1);
+  color: var(--gcf-blue, #18befc);
   line-height: 2.4rem;
 }
 

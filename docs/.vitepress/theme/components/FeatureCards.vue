@@ -3,7 +3,7 @@ const features = [
   {
     icon: '🔄',
     title: 'The universal pivot for structured data',
-    details: 'JSON, YAML, TOML, CSV, MessagePack: any format in, GCF in the context window, any format out. One format that speaks every format. No other wire format operates across format boundaries.<br><br><code class="terminal">decode(encode(value)) == value</code> for every structured value. Verified across <a href="/guide/lossless-verification" style="color: var(--vp-c-brand-1); font-weight: 800; font-style: italic; text-decoration: none;">33,000,000,000+ lossless round-trips</a> in 5 formats and 6 languages.',
+    details: 'JSON, YAML, TOML, CSV, MessagePack: any format in, GCF in the context window, any format out. One format that speaks every format. No other wire format operates across format boundaries.<br><br><code class="terminal">decode(encode(value)) == value</code> for every structured value. Verified across <a href="/guide/lossless-verification" style="color: var(--gcf-blue, #18befc); font-weight: 800; font-style: italic; text-decoration: none;">33,000,000,000+ lossless round-trips</a> in 5 formats and 6 languages.',
   },
   {
     icon: '📉',
@@ -93,7 +93,7 @@ const features = [
 }
 
 .feature-details :deep(a) {
-  color: var(--vp-c-brand-1);
+  color: var(--gcf-blue, #18befc);
   text-decoration: none;
   font-weight: 600;
 }
