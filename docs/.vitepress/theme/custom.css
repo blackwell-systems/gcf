@@ -8,7 +8,7 @@
 
 /* Hero image: match dark background */
 .VPHero .VPImage {
-  background: #000 !important;
+  background: var(--vp-c-bg) !important;
   border-radius: 12px !important;
 }
 
