@@ -503,6 +503,8 @@ onMounted(() => {
 }
 
 .hero-img {
+  display: block;
+  margin: 0 auto;
   max-width: 800px;
   width: 100%;
   border-radius: 20px;
