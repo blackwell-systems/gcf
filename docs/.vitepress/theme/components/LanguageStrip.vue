@@ -197,14 +197,14 @@ const languages = [
 .swoosh::after {
   content: '';
   position: absolute;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  height: 6px;
-  background: var(--gcf-blue, #18befc);
-  opacity: 0.35;
-  border-radius: 3px;
-  transform: skewX(-12deg);
+  left: -3px;
+  right: -3px;
+  bottom: 0;
+  height: 45%;
+  background: rgba(250, 204, 21, 0.3);
+  border-radius: 2px;
+  transform: skewX(-6deg);
+  z-index: -1;
 }
 
 .lang-deps {
