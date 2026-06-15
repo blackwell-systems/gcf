@@ -3,7 +3,7 @@
     <div class="proxy-callout">
       <div class="proxy-left">
         <div class="proxy-title">Zero-code adoption</div>
-        <div class="proxy-desc">Don't want to change code? Drop-in proxy for existing MCP servers. Or integrate natively with any of 6 languages below.</div>
+        <div class="proxy-desc"><span class="proxy-hook">Don't want to change code?</span> Drop-in proxy for existing MCP servers. Or integrate natively with any of 6 languages below.</div>
       </div>
       <div class="proxy-right">
         <div class="proxy-cmds">
@@ -72,6 +72,11 @@
   border-radius: 8px;
   color: var(--vp-c-brand-1);
   white-space: nowrap;
+}
+
+.proxy-hook {
+  color: var(--vp-c-brand-1);
+  font-weight: 700;
 }
 
 .proxy-link {
