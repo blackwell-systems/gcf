@@ -6,10 +6,11 @@
   --json-color: #b28080;
 }
 
-/* Hero image: match dark background */
-.VPHero .VPImage {
-  background: var(--vp-c-bg) !important;
-  border-radius: 12px !important;
+/* Black background to match hero image */
+:root.dark {
+  --vp-c-bg: #000;
+  --vp-c-bg-alt: #0a0a0a;
+  --vp-c-bg-soft: #111;
 }
 
 .gcf { color: var(--gcf-color); font-weight: 600; }
