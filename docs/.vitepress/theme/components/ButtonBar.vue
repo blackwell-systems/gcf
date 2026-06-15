@@ -3,7 +3,7 @@
     <div class="button-bar-inner">
       <a href="/guide/getting-started" class="bb-btn bb-brand">Get Started</a>
       <a href="/playground" class="bb-btn bb-alt">Try the Playground</a>
-      <a href="/calculator" class="bb-btn bb-brand">Cost Calculator</a>
+      <a href="/calculator" class="bb-btn bb-alt">Cost Calculator</a>
       <a href="/guide/vs-toon" class="bb-btn bb-alt">GCF vs TOON</a>
     </div>
   </div>
