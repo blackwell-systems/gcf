@@ -157,6 +157,10 @@ code.terminal { color: #4ade80; background: #0a1a0a; border: 1px solid #1a3a1a; 
   border-color: var(--gcf-blue) !important;
 }
 
+.VPSidebar a.active {
+  color: var(--gcf-blue, #18befc) !important;
+}
+
 .VPSidebar {
   padding-left: 24px !important;
   padding-right: 16px !important;
