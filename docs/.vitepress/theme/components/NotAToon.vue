@@ -59,6 +59,8 @@ onMounted(() => {
         <p>redundant key-notes.</p>
       </div>
 
+      <img src="/not-a-toon-vendor.png" alt="A slick vendor pitches TOON from a market stall while a skeptical engineer watches" class="chapter-img reveal" />
+
       <div class="stanza accent reveal">
         <p>"But TOON!" said the vendor.</p>
         <p>"TOON's smaller!" they cried.</p>
