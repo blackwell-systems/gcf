@@ -106,6 +106,30 @@
   color: var(--vp-c-brand-1) !important;
 }
 
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
+}
+
 .gcf { color: var(--gcf-color); font-weight: 600; }
 .toon { color: var(--toon-color); font-weight: 600; }
 .json { color: var(--json-color); font-weight: 600; }
