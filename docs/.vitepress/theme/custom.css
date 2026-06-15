@@ -53,7 +53,19 @@
 .VPNavBar {
   border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
   background: rgba(10, 10, 10, 0.85) !important;
+}
+
+.VPNavBar .wrapper {
   height: 72px !important;
+}
+
+.VPNavBar .container {
+  height: 100% !important;
+  align-items: center !important;
+}
+
+.VPNavBar .divider {
+  display: none !important;
 }
 
 .VPNavBar .title {
