@@ -82,6 +82,7 @@ const plugins = [
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   padding: 20px 16px 16px;
   border: 1px solid var(--vp-c-border);
   border-radius: 10px;
@@ -119,12 +120,13 @@ const plugins = [
 
 .plugin-install {
   font-family: var(--vp-font-family-mono);
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   color: var(--gcf-blue, #18befc);
   background: var(--vp-c-bg);
   padding: 4px 10px;
   border-radius: 6px;
   border: 1px solid var(--vp-c-border);
   white-space: nowrap;
+  margin-top: auto;
 }
 </style>
