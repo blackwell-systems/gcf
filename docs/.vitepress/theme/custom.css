@@ -46,22 +46,38 @@
 
 /* Premium nav */
 .VPNav {
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
+  backdrop-filter: blur(16px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
 }
 
 .VPNavBar {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
-  background: rgba(0, 0, 0, 0.7) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  background: rgba(10, 10, 10, 0.85) !important;
+  padding: 4px 0 !important;
 }
 
 .VPNavBar .title {
   font-weight: 800 !important;
-  letter-spacing: 0.02em !important;
+  letter-spacing: 0.05em !important;
+  font-size: 1.1rem !important;
+  color: var(--vp-c-brand-1) !important;
 }
 
 .VPNavBarMenuLink {
   font-weight: 500 !important;
+  font-size: 0.9rem !important;
+  letter-spacing: 0.01em !important;
+  opacity: 0.8;
+  transition: opacity 0.15s !important;
+}
+
+.VPNavBarMenuLink:hover {
+  opacity: 1 !important;
+}
+
+.VPNavBarMenuLink.active {
+  color: var(--vp-c-brand-1) !important;
+  opacity: 1 !important;
 }
 
 .gcf { color: var(--gcf-color); font-weight: 600; }
