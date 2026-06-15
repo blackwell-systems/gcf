@@ -21,6 +21,7 @@ const languages = [
           <div class="lang-registry">{{ lang.registry }}</div>
         </a>
       </div>
+      <p class="lang-deps">Zero runtime dependencies. MIT licensed. Every implementation ships the full spec: both profiles, streaming, session dedup, delta encoding, and CLI.</p>
     </div>
   </div>
 </template>
@@ -186,5 +187,13 @@ const languages = [
 .lang-registry {
   font-size: 0.7rem;
   color: var(--vp-c-text-3);
+}
+
+.lang-deps {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--vp-c-text-3);
+  line-height: 1.6;
 }
 </style>
