@@ -447,7 +447,7 @@ onMounted(() => {
 }
 
 .hero-inner {
-  margin-bottom: 56px;
+  margin-bottom: 72px;
 }
 
 .hero-eyebrow {
@@ -456,7 +456,7 @@ onMounted(() => {
   font-style: italic;
   color: rgba(255, 255, 255, 0.35);
   letter-spacing: 0.08em;
-  margin: 0 0 20px;
+  margin: 0 0 32px;
 }
 
 .poem-title {
