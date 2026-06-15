@@ -319,7 +319,7 @@ handle|func
 }
 
 .code-block {
-  background: #1e1e2e;
+  background: #000;
   padding: 0.6rem 0.75rem;
   font-size: 0.72rem;
   line-height: 1.5;
@@ -357,7 +357,7 @@ handle|func
 }
 
 .grammar-code {
-  background: #1e1e2e;
+  background: #000;
   padding: 0.6rem 0.75rem;
   border-radius: 6px;
   font-size: 0.72rem;
