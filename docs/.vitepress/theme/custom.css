@@ -117,20 +117,18 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.25);
+  background: var(--vp-c-brand-1);
   border-radius: 6px;
-  border: 2px solid transparent;
-  background-clip: padding-box;
+  opacity: 0.6;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.4);
-  background-clip: padding-box;
+  background: var(--vp-c-brand-2);
 }
 
 * {
   scrollbar-width: auto;
-  scrollbar-color: rgba(255, 255, 255, 0.25) rgba(255, 255, 255, 0.03);
+  scrollbar-color: var(--vp-c-brand-1) rgba(255, 255, 255, 0.03);
 }
 
 .gcf { color: var(--gcf-color); font-weight: 600; }
