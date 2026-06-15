@@ -1,6 +1,6 @@
 # Implementations
 
-Six official implementations, all MIT licensed and zero runtime dependencies. The current spec v3.1 contract is defined by [157 conformance fixtures](https://github.com/blackwell-systems/gcf/tree/main/tests/conformance). All six implementations pass 157/157 with 23.25B+ combined round-trips verified.
+Six official implementations, all MIT licensed and zero runtime dependencies. The current spec v3.1 contract is defined by [157 conformance fixtures](https://github.com/blackwell-systems/gcf/tree/main/tests/conformance). All six implementations pass 157/157 with 33B+ combined round-trips verified.
 
 ## Official Implementations
 
@@ -9,7 +9,7 @@ Six official implementations, all MIT licensed and zero runtime dependencies. Th
 | Go | `gcf-go` | `go get github.com/blackwell-systems/gcf-go@v1.2.0` | [pkg.go.dev](https://pkg.go.dev/github.com/blackwell-systems/gcf-go) | v1.2.0 · 157/157 · 200M RT |
 | TypeScript | `@blackwell-systems/gcf` | `npm install @blackwell-systems/gcf@2.1.0` | [npm](https://www.npmjs.com/package/@blackwell-systems/gcf) | v2.1.0 · 157/157 · 20M RT |
 | Python | `gcf-python` | `pip install gcf-python==2.1.0` | [PyPI](https://pypi.org/project/gcf-python/) | v2.1.0 · 157/157 · 10M RT |
-| Rust | `gcf` | `cargo add gcf@2.1.0` | [crates.io](https://crates.io/crates/gcf) | v2.1.0 · 157/157 · 23B+ RT |
+| Rust | `gcf` | `cargo add gcf@2.1.0` | [crates.io](https://crates.io/crates/gcf) | v2.1.0 · 157/157 · 33B+ RT |
 | Swift | `GCF` | `.package(url: "https://github.com/blackwell-systems/gcf-swift", from: "2.1.0")` | [GitHub](https://github.com/blackwell-systems/gcf-swift) | v2.1.0 · 157/157 · 20M RT |
 | Kotlin | `gcf` | `implementation("com.github.blackwell-systems:gcf-kotlin:2.1.0")` | [JitPack](https://jitpack.io/#blackwell-systems/gcf-kotlin) | v2.1.0 · 157/157 · 10M RT |
 

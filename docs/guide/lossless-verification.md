@@ -7,13 +7,13 @@ GCF guarantees `decode(encode(value)) == value` for every structured value. This
 | Format | Round-trips | Failures |
 |--------|------------|----------|
 | JSON | 11,250,000,000+ | 0 |
-| YAML | 11,000,000,000 | 0 |
+| YAML | 21,000,000,000 | 0 |
 | MessagePack | 585,000,000 | 0 |
 | CSV | 335,000,000 | 0 |
 | TOML | 100,000,000 | 0 |
-| **Total** | **23,270,000,000+** | **0** |
+| **Total** | **33,270,000,000+** | **0** |
 
-23 billion+ random structured values generated, serialized through each format, parsed back, encoded as GCF, decoded from GCF, and compared to the original. Zero mismatches.
+33 billion+ random structured values generated, serialized through each format, parsed back, encoded as GCF, decoded from GCF, and compared to the original. Zero mismatches.
 
 ## What this proves
 
@@ -27,7 +27,7 @@ Six language implementations, all passing the same 157 conformance fixtures:
 
 | Language | Package | Conformance | Round-trip fuzz |
 |----------|---------|-------------|-----------------|
-| Rust | gcf | 156/156 | **23B+ multi-format** (definitive suite) |
+| Rust | gcf | 156/156 | **33B+ multi-format** (definitive suite) |
 | Go | gcf-go | 156/156 | 1B+ (native Go fuzzing) |
 | TypeScript | @blackwell-systems/gcf | 156/156 | Conformance-based |
 | Python | gcf-python | 156/156 | Conformance-based |

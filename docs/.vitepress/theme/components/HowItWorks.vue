@@ -8,7 +8,7 @@ const examples = [
   {
     title: 'Generic Profile',
     subtitle: 'Any structured data (subset)',
-    description: 'Any structured value in, same value out. Verified lossless across 23 billion+ round-trips with JSON, YAML, TOML, CSV, and MessagePack. 71% fewer tokens than JSON.',
+    description: 'Any structured value in, same value out. Verified lossless across 33 billion+ round-trips with JSON, YAML, TOML, CSV, and MessagePack. 71% fewer tokens than JSON.',
     json: `[
   {"name":"validateToken",
    "kind":"func","refs":18},

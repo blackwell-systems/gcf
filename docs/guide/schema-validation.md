@@ -176,7 +176,7 @@ The entire validation pattern depends on one guarantee: `decode(encode(value)) =
 
 GCF's round-trip guarantee is not a claim. It's verified:
 
-- **23 billion+** lossless round-trips across JSON, YAML, TOML, CSV, and MessagePack
+- **33 billion+** lossless round-trips across JSON, YAML, TOML, CSV, and MessagePack
 - **6 language implementations** (Go, TypeScript, Python, Rust, Swift, Kotlin) all passing the same 157 conformance fixtures
 - **Cross-language 6x6 matrix**: encode in any language, decode in any other, zero mismatches
 

@@ -19,7 +19,7 @@
 
 ---
 
-**100% comprehension on every frontier model tested. 25.5% fewer tokens than TOON, 53% fewer than JSON across 15 datasets. 90.7% on structurally complex code graphs (vs TOON 68.5%, JSON 53.6%). Proven lossless: `decode(encode(value)) == value` for every structured value, verified across 23,000,000,000+ round-trips in 5 formats (JSON, YAML, TOML, CSV, MessagePack). Zero training required.**
+**100% comprehension on every frontier model tested. 25.5% fewer tokens than TOON, 53% fewer than JSON across 15 datasets. 90.7% on structurally complex code graphs (vs TOON 68.5%, JSON 53.6%). Proven lossless: `decode(encode(value)) == value` for every structured value, verified across 33,000,000,000+ round-trips in 5 formats (JSON, YAML, TOML, CSV, MessagePack). Zero training required.**
 
 Encode any structured data as GCF before sending it to an LLM. JSON, YAML, TOML, CSV, MessagePack: GCF encodes them all. The model reads it natively with zero format instructions. `decode()` converts back to any format when a human needs to see it. Your existing schemas and validators work on the decoded output unchanged.
 
@@ -75,7 +75,7 @@ GCF profile=generic
 3|Carol|Marketing|85000
 ```
 
-One header declares field names. Rows are positional values only. No field names repeated per record. Lossless: `decode(encode(value)) == value` for every structured value, proven across 23,000,000,000+ random round-trips in 5 formats and 6 languages.
+One header declares field names. Rows are positional values only. No field names repeated per record. Lossless: `decode(encode(value)) == value` for every structured value, proven across 33,000,000,000+ random round-trips in 5 formats and 6 languages.
 
 ### Graph profile (code intelligence, knowledge graphs, MCP tools)
 
@@ -157,7 +157,7 @@ No other format has these. They compound across multi-turn agent interactions.
 
 Zero runtime dependencies. MIT licensed. All implementations support both generic profile (`encodeGeneric`) and graph profile (`encode`). CLI included in all 6 languages. Syntax highlighting via tree-sitter (Neovim, Helix, Zed).
 
-**Specification:** [SPEC v3.1 Stable](SPEC.md) with 157 conformance fixtures, 23,000,000,000+ lossless round-trips verified across 5 formats and 6 languages. All implementations at v2.1.0+ (Go v1.2.0). Cross-language 6x6 matrix verified.
+**Specification:** [SPEC v3.1 Stable](SPEC.md) with 157 conformance fixtures, 33,000,000,000+ lossless round-trips verified across 5 formats and 6 languages. All implementations at v2.1.0+ (Go v1.2.0). Cross-language 6x6 matrix verified.
 
 ## Documentation
 

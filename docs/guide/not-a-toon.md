@@ -131,8 +131,8 @@ and back up again?
 With no bits lost or mangled
 or misplaced, and then..."
 
-Twenty-three billion.
-23,000,000,000.
+Thirty-three billion.
+33,000,000,000.
 Round-trips through five formats,
 every language, every one.
 
@@ -199,7 +199,7 @@ whatever the source.
 GCF packs it tight
 on a lossless course.
 
-Twenty-three billion times tested.
+Thirty-three billion times tested.
 Six languages strong.
 One hundred percent comprehension.
 
