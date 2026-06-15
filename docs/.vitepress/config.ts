@@ -88,7 +88,8 @@ export default defineConfig({
         ],
       },
     ],
-    logo: '/favicon-32x32.png',
+    logo: '/gcf-logo.png',
+    siteTitle: false,
     socialLinks: [
       { icon: 'github', link: 'https://github.com/blackwell-systems/gcf' },
       { icon: 'linkedin', link: 'https://www.linkedin.com/in/daynablackwell/' },

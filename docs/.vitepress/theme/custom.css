@@ -70,14 +70,9 @@
   background-color: transparent !important;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&display=swap');
-
-.VPNavBar .title {
-  font-family: 'Plus Jakarta Sans', sans-serif !important;
-  font-weight: 800 !important;
-  letter-spacing: 0.05em !important;
-  font-size: 1.2rem !important;
-  color: var(--vp-c-brand-1) !important;
+.VPNavBarTitle .logo {
+  height: 36px !important;
+  width: auto !important;
 }
 
 .VPNavBarMenuLink {
