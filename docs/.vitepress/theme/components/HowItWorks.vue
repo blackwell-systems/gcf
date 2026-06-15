@@ -114,7 +114,7 @@ onMounted(async () => {
       <!-- Grammar Reference -->
       <div class="grammar">
         <h2 class="section-title">GCF Grammar</h2>
-        <p class="section-subtitle">Six building blocks. No ambiguity.</p>
+        <p class="section-subtitle">Seven building blocks. No ambiguity.</p>
 
         <div class="grammar-grid">
           <div class="grammar-card">
@@ -188,6 +188,22 @@ empty=""</code></pre>
               <li><code>~</code> absent (tabular only)</li>
               <li><code>""</code> empty string</li>
               <li>Quote if value contains <code>|</code> or newline</li>
+            </ul>
+          </div>
+
+          <div class="grammar-card">
+            <h4>Nested Objects</h4>
+            <pre class="grammar-code"><code v-if="ready" v-html="highlightGCF(`## orders [2]{id,total,customer}\n@0 1001|249.99|^{name,tier}\nAlice|premium\n@1 1002|89.50|^\nBob|standard`)"></code><code v-else>## orders [2]{id,total,customer}
+@0 1001|249.99|^{name,tier}
+Alice|premium
+@1 1002|89.50|^
+Bob|standard</code></pre>
+            <ul class="grammar-notes">
+              <li><code>^</code> attachment marker in cell</li>
+              <li><code>^{fields}</code> declares inline schema (row 0)</li>
+              <li>Subsequent rows use bare <code>^</code></li>
+              <li>Nested values follow on next line</li>
+              <li>Positional, no field names repeated</li>
             </ul>
           </div>
 
