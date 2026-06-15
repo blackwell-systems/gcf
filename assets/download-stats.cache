@@ -7,3 +7,5 @@ pypi_proxy=10483
 gh_go=21
 gh_proxy=163
 crates=156
+jetbrains=?
+vscode=0
