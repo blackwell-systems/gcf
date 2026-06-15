@@ -21,7 +21,7 @@ const languages = [
           <div class="lang-registry">{{ lang.registry }}</div>
         </a>
       </div>
-      <p class="lang-deps">Zero runtime dependencies, zero supply chain risk. MIT licensed.</p>
+      <p class="lang-deps"><span class="swoosh">Zero</span> runtime dependencies, <span class="swoosh">zero</span> supply chain risk. MIT licensed.</p>
     </div>
   </div>
 </template>
@@ -187,6 +187,24 @@ const languages = [
 .lang-registry {
   font-size: 0.7rem;
   color: var(--vp-c-text-3);
+}
+
+.swoosh {
+  position: relative;
+  font-weight: 800;
+}
+
+.swoosh::after {
+  content: '';
+  position: absolute;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  height: 6px;
+  background: var(--gcf-blue, #18befc);
+  opacity: 0.35;
+  border-radius: 3px;
+  transform: skewX(-12deg);
 }
 
 .lang-deps {
