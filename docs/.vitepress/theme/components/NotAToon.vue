@@ -46,9 +46,14 @@ onMounted(() => {
   }
 
   window.addEventListener('scroll', onScroll, { passive: true })
+
+  // Seuss scrollbar
+  document.documentElement.classList.add('seuss-scrollbar')
+
   onUnmounted(() => {
     observer.disconnect()
     window.removeEventListener('scroll', onScroll)
+    document.documentElement.classList.remove('seuss-scrollbar')
   })
 })
 </script>
@@ -873,5 +878,45 @@ onMounted(() => {
   .img-pair { grid-template-columns: 1fr; }
   .stanza.highlight { padding: 24px 20px; }
   .code-block { padding: 16px 20px; }
+}
+</style>
+
+<!-- Unscoped: Seuss candy-cane scrollbar (applied to html via class toggle) -->
+<style>
+.seuss-scrollbar::-webkit-scrollbar {
+  width: 18px;
+}
+
+.seuss-scrollbar::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+
+.seuss-scrollbar::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  border: 2px solid #0a0a0a;
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      #18befc 0px,
+      #18befc 6px,
+      #0d2a3a 6px,
+      #0d2a3a 12px
+    );
+}
+
+.seuss-scrollbar::-webkit-scrollbar-thumb:hover {
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      #3dd4ff 0px,
+      #3dd4ff 6px,
+      #0f3548 6px,
+      #0f3548 12px
+    );
+}
+
+.seuss-scrollbar {
+  scrollbar-width: auto;
+  scrollbar-color: #18befc #0a0a0a;
 }
 </style>
