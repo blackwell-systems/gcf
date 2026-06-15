@@ -64,6 +64,10 @@ I tried it one night.
 The header said `generic`.
 The rows were packed tight.
 
+<div style="text-align: center; margin: 2rem 0;">
+  <img src="/not-a-toon-discovery.png" alt="Late night discovery: GCF profile=generic glows above a desk with compact rows" style="max-width: 600px; width: 100%; border-radius: 12px;" />
+</div>
+
 `## orders [10]{id,total,status}`
 `1001|249.99|shipped`
 
@@ -91,6 +95,10 @@ Could it do MessagePack?
 (Binary, base64, the works.)
 GCF decoded and encoded.
 TOON said: "That format irks."
+
+<div style="text-align: center; margin: 2rem 0;">
+  <img src="/not-a-toon-gameshow.png" alt="GCF on stage as formats enter with questions and leave with checkmarks" style="max-width: 700px; width: 100%; border-radius: 12px;" />
+</div>
 
 ---
 
@@ -120,6 +128,10 @@ of tokens so tall
 that the context filled up
 before it said anything
 useful at all.
+
+<div style="text-align: center; margin: 2rem 0;">
+  <img src="/not-a-toon-no-ids.png" alt="TOON's collapsing tower of repeated identifiers vs GCF's compact @0 @1 @2 blocks" style="max-width: 600px; width: 100%; border-radius: 12px;" />
+</div>
 
 ---
 
@@ -158,6 +170,10 @@ through encode and decode
 and back up again?
 With no bits lost or mangled
 or misplaced, and then..."
+
+<div style="text-align: center; margin: 2rem 0;">
+  <img src="/not-a-toon-prove-it.png" alt="Skeptical judges demand proof while GCF sits calmly before a wall of 33 billion evidence" style="max-width: 700px; width: 100%; border-radius: 12px;" />
+</div>
 
 Thirty-three billion.
 33,000,000,000.
