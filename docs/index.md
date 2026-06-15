@@ -12,6 +12,8 @@ hero:
 
 <ButtonBar />
 
+<ProxyCallout />
+
 <FeatureCards />
 
 <LanguageStrip />

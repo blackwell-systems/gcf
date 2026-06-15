@@ -12,21 +12,6 @@ const languages = [
 <template>
   <div class="lang-strip">
     <div class="lang-strip-inner">
-      <div class="proxy-callout">
-        <div class="proxy-left">
-          <div class="proxy-title">Zero-code adoption</div>
-          <div class="proxy-desc">Drop-in proxy for existing MCP servers. Your server keeps outputting JSON. The LLM receives GCF.</div>
-        </div>
-        <div class="proxy-right">
-          <div class="proxy-cmds">
-            <code class="proxy-cmd">pip install gcf-proxy</code>
-            <code class="proxy-cmd">npm i -g @blackwell-systems/gcf-proxy</code>
-            <code class="proxy-cmd">go install github.com/blackwell-systems/gcf-proxy@latest</code>
-          </div>
-          <a href="https://github.com/blackwell-systems/gcf-proxy" target="_blank" class="proxy-link">GitHub</a>
-        </div>
-      </div>
-
       <h2 class="lang-title">Six Languages, One Spec</h2>
       <p class="lang-subtitle">Every implementation passes 157/157 conformance fixtures. Same output, any language.</p>
       <div class="lang-grid">

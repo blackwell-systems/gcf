@@ -6,6 +6,7 @@ import HowItWorks from './components/HowItWorks.vue'
 import LanguageStrip from './components/LanguageStrip.vue'
 import ButtonBar from './components/ButtonBar.vue'
 import FeatureCards from './components/FeatureCards.vue'
+import ProxyCallout from './components/ProxyCallout.vue'
 import './custom.css'
 import mediumZoom from 'medium-zoom'
 import { onMounted, watch, nextTick } from 'vue'
@@ -21,6 +22,7 @@ export default {
     app.component('LanguageStrip', LanguageStrip)
     app.component('ButtonBar', ButtonBar)
     app.component('FeatureCards', FeatureCards)
+    app.component('ProxyCallout', ProxyCallout)
   },
   setup() {
     const route = useRoute()
