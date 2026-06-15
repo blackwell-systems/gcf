@@ -8,7 +8,11 @@
 set -euo pipefail
 
 NPM_PKG="@blackwell-systems/gcf"
+NPM_N8N_PKG="n8n-nodes-gcf"
+NPM_PROXY_PKG="@blackwell-systems/gcf-proxy"
+NPM_TREESITTER_PKG="tree-sitter-gcf"
 PYPI_PKG="gcf-python"
+PYPI_PROXY_PKG="gcf-proxy"
 GCF_GO_REPO="blackwell-systems/gcf-go"
 GCF_PROXY_REPO="blackwell-systems/gcf-proxy"
 OUT="${1:-assets/download-stats.svg}"
@@ -20,7 +24,19 @@ UA="gcf-stats/1.0 (https://github.com/blackwell-systems/gcf)"
 npm_total=$(curl -sf --max-time 10 "https://api.npmjs.org/downloads/point/2000-01-01:2030-01-01/${NPM_PKG}" \
   | python3 -c "import json,sys; print(json.load(sys.stdin)['downloads'])" 2>/dev/null || echo "?")
 
+npm_n8n_total=$(curl -sf --max-time 10 "https://api.npmjs.org/downloads/point/2000-01-01:2030-01-01/${NPM_N8N_PKG}" \
+  | python3 -c "import json,sys; print(json.load(sys.stdin)['downloads'])" 2>/dev/null || echo "?")
+
+npm_proxy_total=$(curl -sf --max-time 10 "https://api.npmjs.org/downloads/point/2000-01-01:2030-01-01/${NPM_PROXY_PKG}" \
+  | python3 -c "import json,sys; print(json.load(sys.stdin)['downloads'])" 2>/dev/null || echo "?")
+
+npm_treesitter_total=$(curl -sf --max-time 10 "https://api.npmjs.org/downloads/point/2000-01-01:2030-01-01/${NPM_TREESITTER_PKG}" \
+  | python3 -c "import json,sys; print(json.load(sys.stdin)['downloads'])" 2>/dev/null || echo "?")
+
 pypi_total=$(curl -sf -A "$UA" --max-time 10 "https://pypistats.org/api/packages/${PYPI_PKG}/overall" \
+  | python3 -c "import json,sys; print(sum(r['downloads'] for r in json.load(sys.stdin).get('data',[])))" 2>/dev/null || echo "?")
+
+pypi_proxy_total=$(curl -sf -A "$UA" --max-time 10 "https://pypistats.org/api/packages/${PYPI_PROXY_PKG}/overall" \
   | python3 -c "import json,sys; print(sum(r['downloads'] for r in json.load(sys.stdin).get('data',[])))" 2>/dev/null || echo "?")
 
 gh_go_total=$(gh api "repos/${GCF_GO_REPO}/releases" --jq '[.[].assets[].download_count] | add // 0' 2>/dev/null || echo "?")
@@ -59,14 +75,22 @@ use_or_cache() {
 }
 
 npm_total=$(use_or_cache npm "$npm_total")
+npm_n8n_total=$(use_or_cache npm_n8n "$npm_n8n_total")
+npm_proxy_total=$(use_or_cache npm_proxy "$npm_proxy_total")
+npm_treesitter_total=$(use_or_cache npm_treesitter "$npm_treesitter_total")
 pypi_total=$(use_or_cache pypi "$pypi_total")
+pypi_proxy_total=$(use_or_cache pypi_proxy "$pypi_proxy_total")
 gh_go_total=$(use_or_cache gh_go "$gh_go_total")
 gh_proxy_total=$(use_or_cache gh_proxy "$gh_proxy_total")
 crates_total=$(use_or_cache crates "$crates_total")
 
 cat > "$CACHE" << CACHEEOF
 npm=${npm_total}
+npm_n8n=${npm_n8n_total}
+npm_proxy=${npm_proxy_total}
+npm_treesitter=${npm_treesitter_total}
 pypi=${pypi_total}
+pypi_proxy=${pypi_proxy_total}
 gh_go=${gh_go_total}
 gh_proxy=${gh_proxy_total}
 crates=${crates_total}
@@ -74,7 +98,7 @@ CACHEEOF
 
 # ── Calculate cumulative total ──────────────────────────────────────
 cumulative=0
-for v in "$npm_total" "$pypi_total" "$gh_go_total" "$gh_proxy_total" "$crates_total"; do
+for v in "$npm_total" "$npm_n8n_total" "$npm_proxy_total" "$npm_treesitter_total" "$pypi_total" "$pypi_proxy_total" "$gh_go_total" "$gh_proxy_total" "$crates_total"; do
   if [[ "$v" != "?" && "$v" != "--" ]]; then
     cumulative=$((cumulative + v))
   fi
@@ -85,6 +109,10 @@ if (( cumulative == 0 )); then cumulative="?"; fi
 fmt() { printf "%'d" "$1" 2>/dev/null || echo "$1"; }
 
 npm_fmt=$(fmt "$npm_total" 2>/dev/null || echo "$npm_total")
+npm_n8n_fmt=$(fmt "$npm_n8n_total" 2>/dev/null || echo "$npm_n8n_total")
+npm_proxy_fmt=$(fmt "$npm_proxy_total" 2>/dev/null || echo "$npm_proxy_total")
+npm_treesitter_fmt=$(fmt "$npm_treesitter_total" 2>/dev/null || echo "$npm_treesitter_total")
+pypi_proxy_fmt=$(fmt "$pypi_proxy_total" 2>/dev/null || echo "$pypi_proxy_total")
 pypi_fmt=$(fmt "$pypi_total" 2>/dev/null || echo "$pypi_total")
 gh_go_fmt=$(fmt "$gh_go_total" 2>/dev/null || echo "$gh_go_total")
 gh_proxy_fmt=$(fmt "$gh_proxy_total" 2>/dev/null || echo "$gh_proxy_total")
@@ -110,11 +138,15 @@ add_row() {
   row_count=$((row_count + 1))
 }
 
-has_downloads "$npm_total"       && add_row "npm (gcf library)"        "$npm_fmt"
-has_downloads "$pypi_total"      && add_row "pypi (gcf-python)"         "$pypi_fmt"
-has_downloads "$crates_total"    && add_row "crates.io (gcf)"           "$crates_fmt"
-has_downloads "$gh_go_total"     && add_row "github (gcf-go)"           "$gh_go_fmt"
-has_downloads "$gh_proxy_total"  && add_row "github (gcf-proxy)"        "$gh_proxy_fmt"
+has_downloads "$npm_total"            && add_row "npm (gcf library)"        "$npm_fmt"
+has_downloads "$npm_proxy_total"     && add_row "npm (gcf-proxy)"         "$npm_proxy_fmt"
+has_downloads "$npm_n8n_total"       && add_row "npm (n8n-nodes-gcf)"     "$npm_n8n_fmt"
+has_downloads "$npm_treesitter_total" && add_row "npm (tree-sitter-gcf)"  "$npm_treesitter_fmt"
+has_downloads "$pypi_total"          && add_row "pypi (gcf-python)"       "$pypi_fmt"
+has_downloads "$pypi_proxy_total"    && add_row "pypi (gcf-proxy)"        "$pypi_proxy_fmt"
+has_downloads "$crates_total"        && add_row "crates.io (gcf)"         "$crates_fmt"
+has_downloads "$gh_go_total"         && add_row "github (gcf-go)"         "$gh_go_fmt"
+has_downloads "$gh_proxy_total"      && add_row "github (gcf-proxy)"      "$gh_proxy_fmt"
 
 svg_height=$(( 48 + row_count * 22 + 16 + 28 + 20 ))
 divider_y=$(( 48 + row_count * 22 + 8 ))
@@ -166,4 +198,4 @@ BADGEEOF
 fi
 
 echo "Generated ${OUT}"
-echo "  npm: ${npm_total}  pypi: ${pypi_total}  crates: ${crates_total}  gh-go: ${gh_go_total}  gh-proxy: ${gh_proxy_total}  total: ${cumulative}"
+echo "  npm-gcf: ${npm_total}  npm-proxy: ${npm_proxy_total}  npm-n8n: ${npm_n8n_total}  npm-treesitter: ${npm_treesitter_total}  pypi: ${pypi_total}  pypi-proxy: ${pypi_proxy_total}  crates: ${crates_total}  gh-go: ${gh_go_total}  gh-proxy: ${gh_proxy_total}  total: ${cumulative}"

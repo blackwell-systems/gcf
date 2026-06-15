@@ -1,5 +1,9 @@
 npm=2320
+npm_n8n=?
+npm_proxy=1773
+npm_treesitter=196
 pypi=6114
+pypi_proxy=10483
 gh_go=21
 gh_proxy=163
 crates=156
