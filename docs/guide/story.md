@@ -2,15 +2,17 @@
 
 ## Where it came from
 
-GCF started inside a project called "knowing."
+GCF started as an experiment.
 
-Knowing is the code intelligence engine behind agent-lsp, a language server built to give AI agents deep understanding of codebases. It crawls source code, builds a graph of every symbol, every function call, every type relationship, and serves that graph to LLMs so they can reason about code at scale. The graph is the point. Symbols have qualified names, kinds, scores, provenance chains. Edges connect them: calls, implements, imports, references. Distance groups organize them by relevance to the query.
+The project it grew out of is called "knowing," the code intelligence engine behind agent-lsp. Knowing builds graphs of code: symbols, function calls, type relationships, dependency chains. It serves those graphs to LLMs so they can reason about codebases at scale. Symbols have qualified names, kinds, scores, provenance chains. Edges connect them: calls, implements, imports, references. Distance groups organize them by relevance to the query.
 
-The problem was getting that graph into the context window.
+The question was simple: what if there was a format designed specifically for graph-shaped data going into an LLM context window? Not JSON squeezed into a role it wasn't designed for. Something native to the data shape.
 
-A 500-symbol code graph with 200 edges, serialized as JSON, consumed 53,341 tokens. That is not a typo. Fifty-three thousand tokens for a single tool response. On a 200K context window, one tool call ate a quarter of the budget before the model even started thinking. And the model couldn't think clearly about it anyway. Claude Opus, given 500 symbols in JSON, spent 143 lines manually enumerating symbols and still got the wrong answer. It counted 320 symbols when there were 500. It counted 240 targets when there were 166. The format that was supposed to be universal was actively sabotaging comprehension.
+There was no crisis. Knowing worked fine with JSON. But JSON is verbose for graphs. Every edge repeats both endpoint identifiers in full. Every symbol repeats every field name. A 500-symbol code graph with 200 edges, serialized as JSON, consumed 53,341 tokens. That is a lot of structural noise for data that has natural positional structure.
 
-This was not a theoretical problem. This was the thing standing between knowing and being useful.
+So the experiment started: what if section headers replaced per-record metadata? What if local IDs replaced repeated identifiers? What if the format aligned with how LLMs already process sequential information, instead of how humans scan nested trees?
+
+The experiment worked. And then it kept working, on more data shapes, at larger scales, across more models, in ways nobody expected.
 
 ## The first encoding
 
