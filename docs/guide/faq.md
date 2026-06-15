@@ -43,6 +43,53 @@ data = decode_generic(gcf_response)
 jsonschema.validate(data, existing_schema)
 ```
 
+## How does GCF compare to TOON?
+
+GCF wins on every measured dimension. 25.5% fewer tokens across 15 real-world datasets (13/15 wins). 90.7% comprehension where TOON averages 68.5%. 5/5 generation validity on every frontier model while TOON's decoder rejects output from 7 of 9 models. Session deduplication that compounds to 92% savings by the 5th tool call, a feature TOON structurally cannot add.
+
+TOON is a tree serializer: YAML with counted arrays. It encodes flat tabular data efficiently. It cannot encode relationships, cross-references, session state, or deltas. Adding local IDs would require a new grammar. Adding session dedup would require local IDs. TOON would have to become a different format to match what GCF already ships.
+
+[Full comparison with benchmarks, failure analysis, and code examples](/guide/vs-toon).
+
+## What languages are supported?
+
+Six official implementations, all MIT licensed, zero runtime dependencies:
+
+- **Go** ([pkg.go.dev](https://pkg.go.dev/github.com/blackwell-systems/gcf-go)) v1.2.0
+- **TypeScript** ([npm](https://www.npmjs.com/package/@blackwell-systems/gcf)) v2.1.0
+- **Python** ([PyPI](https://pypi.org/project/gcf-python/)) v2.1.0
+- **Rust** ([crates.io](https://crates.io/crates/gcf)) v2.1.0
+- **Swift** ([SPM](https://github.com/blackwell-systems/gcf-swift)) v2.1.0
+- **Kotlin** ([JitPack](https://jitpack.io/#blackwell-systems/gcf-kotlin)) v2.1.0
+
+All pass 157/157 conformance fixtures. All support both generic and graph profiles, streaming, session dedup, delta encoding, and CLI. [Full details](/ecosystem/implementations).
+
+## What's the encoding/decoding overhead?
+
+Negligible. Encoding and decoding are single-pass string operations with no I/O, no network calls, no allocation beyond the output buffer. On typical MCP tool response sizes (1K to 100K tokens), encode/decode takes microseconds to low milliseconds.
+
+The Rust implementation encodes at 2.94 million round-trips per second on JSON data. Go and TypeScript are similarly fast. The encoding cost is invisible compared to the LLM API call it's optimizing (which takes seconds and costs dollars).
+
+## Can I use GCF with LangChain, CrewAI, or other frameworks?
+
+Yes. GCF works at the tool response level. Encode your tool's output as GCF before it enters the context window, decode when a human needs to see it. This works with any framework that supports custom tool responses.
+
+For zero-code adoption, the [MCP proxy](/guide/proxy) wraps any existing MCP server and re-encodes JSON responses as GCF mid-flight. No framework changes needed.
+
+```python
+# LangChain example: encode tool output
+from gcf import encode_generic
+
+@tool
+def search_flights(query: str) -> str:
+    results = flight_api.search(query)
+    return encode_generic(results)  # LLM reads GCF, 71% fewer tokens
+```
+
+## Is GCF open source?
+
+Yes. MIT licensed. The [spec](https://github.com/blackwell-systems/gcf), all six implementations, the proxy, the plugins, the tree-sitter grammar, the eval harness, and all benchmark logs are open source. Every claimed number has a corresponding log file in the repository.
+
 ## How stable is the spec?
 
 [Spec v3.1](https://github.com/blackwell-systems/gcf/blob/main/SPEC.md) is designated Stable. Six implementations at v2.1.0+ (Go v1.2.0), 157 conformance fixtures, <strong style="color: var(--vp-c-brand-1)">[33 billion+ lossless round-trips](/guide/lossless-verification)</strong> verified across 5 formats (JSON, YAML, TOML, CSV, MessagePack) and 6 language implementations, cross-language 6x6 matrix passing.
