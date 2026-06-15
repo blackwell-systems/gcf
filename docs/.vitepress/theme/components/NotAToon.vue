@@ -439,7 +439,13 @@ onMounted(() => {
 .poem {
   color: #e8e8e8;
   max-width: 100%;
-  overflow-x: hidden;
+  overflow-x: clip;
+}
+
+.poem *,
+.poem *::before,
+.poem *::after {
+  box-sizing: border-box;
 }
 
 /* ── Hero ── */
