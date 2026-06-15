@@ -1,25 +1,57 @@
+<script setup>
+import { onMounted, onUnmounted, ref } from 'vue'
+
+const poem = ref(null)
+
+onMounted(() => {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible')
+        }
+      })
+    },
+    { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
+  )
+
+  if (poem.value) {
+    poem.value.querySelectorAll('.reveal').forEach((el) => observer.observe(el))
+  }
+
+  onUnmounted(() => observer.disconnect())
+})
+</script>
+
 <template>
-  <div class="poem">
+  <div class="poem" ref="poem">
     <!-- Hero -->
     <section class="poem-hero">
-      <h1 class="poem-title">Not a TOON</h1>
-      <p class="poem-subtitle">A cautionary tale about wire formats, for engineers of all ages.</p>
-      <img src="/not-a-toon-hero.png" alt="Five data formats flow into the GCF funnel while TOON watches" class="hero-img" />
+      <div class="hero-inner">
+        <p class="hero-eyebrow">A cautionary tale about wire formats</p>
+        <h1 class="poem-title">Not a <span class="title-accent">TOON</span></h1>
+        <p class="poem-subtitle">for engineers of all ages</p>
+        <div class="hero-divider"></div>
+      </div>
+      <img src="/not-a-toon-hero.png" alt="Five data formats flow into the GCF funnel while TOON watches" class="hero-img reveal" />
     </section>
 
     <!-- Chapter 1: The Problem -->
     <section class="chapter dark">
-      <div class="chapter-label">Chapter I</div>
-      <h2 class="chapter-title">The Problem with JSON</h2>
+      <div class="chapter-header reveal">
+        <div class="chapter-ornament">&#x2726;</div>
+        <div class="chapter-label">Chapter I</div>
+        <h2 class="chapter-title">The Problem with JSON</h2>
+      </div>
 
-      <div class="stanza">
+      <div class="stanza reveal">
         <p>Would you send it as JSON?</p>
         <p>Would you send it with TOON?</p>
       </div>
 
-      <img src="/not-a-toon-fork-road.png" alt="A fork in the road: JSON or TOON?" class="chapter-img medium" />
+      <img src="/not-a-toon-fork-road.png" alt="A fork in the road: JSON or TOON?" class="chapter-img medium reveal" />
 
-      <div class="stanza">
+      <div class="stanza reveal">
         <p>I would not send it as JSON.</p>
         <p>Not with all of those braces,</p>
         <p>not with all of those quotes,</p>
@@ -27,36 +59,39 @@
         <p>redundant key-notes.</p>
       </div>
 
-      <div class="stanza accent">
+      <div class="stanza accent reveal">
         <p>"But TOON!" said the vendor.</p>
         <p>"TOON's smaller!" they cried.</p>
         <p>"TOON folds all your keys</p>
         <p>and puts commas inside!"</p>
       </div>
 
-      <div class="stanza">
+      <div class="stanza reveal">
         <p>So I tried it with TOON.</p>
         <p>I tried it one day.</p>
         <p>I sent it five hundred</p>
         <p>symbols that way.</p>
       </div>
 
-      <div class="stanza">
+      <div class="stanza reveal">
         <p>And TOON lost the count.</p>
         <p>TOON bungled the call.</p>
         <p>On GPT-5.5,</p>
         <p>TOON failed on them all.</p>
       </div>
 
-      <img src="/not-a-toon-bungled-count.png" alt="TOON at the chalkboard with wrong numbers, robots holding red X cards" class="chapter-img" />
+      <img src="/not-a-toon-bungled-count.png" alt="TOON at the chalkboard with wrong numbers, robots holding red X cards" class="chapter-img reveal" />
     </section>
 
     <!-- Chapter 2: The Formats -->
     <section class="chapter">
-      <div class="chapter-label">Chapter II</div>
-      <h2 class="chapter-title">Five Formats, One Refusal</h2>
+      <div class="chapter-header reveal">
+        <div class="chapter-ornament">&#x2726;</div>
+        <div class="chapter-label">Chapter II</div>
+        <h2 class="chapter-title">Five Formats, One Refusal</h2>
+      </div>
 
-      <div class="stanza">
+      <div class="stanza reveal">
         <p>I tried it with YAML.</p>
         <p>TOON said: "I can't eat that."</p>
         <p>I tried it with TOML.</p>
@@ -67,7 +102,7 @@
         <p>TOON fled from the chat.</p>
       </div>
 
-      <div class="img-pair">
+      <div class="img-pair reveal">
         <img src="/not-a-toon-yaml-plate.png" alt="A friendly character offers YAML on a plate, TOON refuses" class="chapter-img" />
         <img src="/not-a-toon-fled-chat.png" alt="Five format characters chase TOON who runs in panic" class="chapter-img" />
       </div>
@@ -75,89 +110,95 @@
 
     <!-- Chapter 3: Discovery -->
     <section class="chapter dark">
-      <div class="chapter-label">Chapter III</div>
-      <h2 class="chapter-title">The Discovery</h2>
+      <div class="chapter-header reveal">
+        <div class="chapter-ornament">&#x2726;</div>
+        <div class="chapter-label">Chapter III</div>
+        <h2 class="chapter-title">The Discovery</h2>
+      </div>
 
-      <div class="stanza">
+      <div class="stanza reveal">
         <p>So I tried it with GCF.</p>
         <p>I tried it one night.</p>
         <p>The header said <code>generic</code>.</p>
         <p>The rows were packed tight.</p>
       </div>
 
-      <img src="/not-a-toon-discovery.png" alt="Late night discovery: GCF profile=generic glows above a desk with compact rows" class="chapter-img" />
+      <img src="/not-a-toon-discovery.png" alt="Late night discovery: GCF profile=generic glows above a desk with compact rows" class="chapter-img reveal" />
 
-      <div class="code-block">
+      <div class="code-block reveal">
         <code>## orders [10]{id,total,status}</code>
         <code>1001|249.99|shipped</code>
       </div>
 
-      <div class="stanza">
+      <div class="stanza reveal">
         <p>No braces. No colons.</p>
         <p>No keys on each line.</p>
         <p>Just fields declared once</p>
         <p>and the data looked fine.</p>
       </div>
 
-      <div class="stanza">
+      <div class="stanza reveal">
         <p>But could it do YAML?</p>
         <p>(I had YAML to send.)</p>
         <p>GCF parsed it and packed it.</p>
         <p>TOON said: "That's the end."</p>
       </div>
 
-      <div class="stanza">
+      <div class="stanza reveal">
         <p>Could it do TOML?</p>
         <p>(A Cargo.toml, fifteen crates deep.)</p>
         <p>GCF tabularized it.</p>
         <p>TOON went back to sleep.</p>
       </div>
 
-      <div class="stanza">
+      <div class="stanza reveal">
         <p>Could it do CSV?</p>
         <p>(Twenty rows, eight columns wide.)</p>
         <p>GCF took it directly.</p>
         <p>TOON ran off to hide.</p>
       </div>
 
-      <div class="stanza">
+      <div class="stanza reveal">
         <p>Could it do MessagePack?</p>
         <p>(Binary, base64, the works.)</p>
         <p>GCF decoded and encoded.</p>
         <p>TOON said: "That format irks."</p>
       </div>
 
-      <img src="/not-a-toon-gameshow.png" alt="GCF on stage as formats enter with questions and leave with checkmarks" class="chapter-img wide" />
+      <img src="/not-a-toon-gameshow.png" alt="GCF on stage as formats enter with questions and leave with checkmarks" class="chapter-img wide reveal" />
     </section>
 
     <!-- Chapter 4: Graphs -->
     <section class="chapter">
-      <div class="chapter-label">Chapter IV</div>
-      <h2 class="chapter-title">The Graph Challenge</h2>
+      <div class="chapter-header reveal">
+        <div class="chapter-ornament">&#x2726;</div>
+        <div class="chapter-label">Chapter IV</div>
+        <h2 class="chapter-title">The Graph Challenge</h2>
+      </div>
 
-      <div class="stanza accent">
+      <div class="stanza accent reveal">
         <p>"But wait!" said the vendor.</p>
         <p>"Can your format do graphs?</p>
         <p>Can it handle the edges?</p>
         <p>Can it handle the paths?"</p>
       </div>
 
-      <div class="code-block">
+      <div class="code-block reveal">
         <code>@0 fn pkg.AuthMiddleware 0.92 lsp</code>
         <code>@1 fn pkg.ValidateToken 0.87 lsp</code>
         <code>@0&lt;@1 calls</code>
       </div>
 
-      <div class="stanza">
+      <div class="stanza reveal">
         <p>Four tokens per edge.</p>
         <p>Not thirty. Not ninety.</p>
         <p>Local IDs, not full names</p>
         <p>repeated so fighty.</p>
       </div>
 
-      <img src="/not-a-toon-4-vs-90.png" alt="A tiny 4-plank bridge vs a massive sagging 90-plank bridge" class="chapter-img" />
+      <img src="/not-a-toon-4-vs-90.png" alt="A tiny 4-plank bridge vs a massive sagging 90-plank bridge" class="chapter-img reveal" />
 
-      <div class="stanza">
+      <div class="stanza reveal">
         <p>TOON had no IDs.</p>
         <p>TOON had no edges.</p>
         <p>TOON wrote <code>github.com/org/repo/pkg.AuthMiddleware</code></p>
@@ -168,37 +209,40 @@
         <p>useful at all.</p>
       </div>
 
-      <img src="/not-a-toon-no-ids.png" alt="TOON's collapsing tower of repeated identifiers vs GCF's compact @0 @1 @2 blocks" class="chapter-img" />
+      <img src="/not-a-toon-no-ids.png" alt="TOON's collapsing tower of repeated identifiers vs GCF's compact @0 @1 @2 blocks" class="chapter-img reveal" />
     </section>
 
     <!-- Chapter 5: Session Dedup -->
     <section class="chapter dark">
-      <div class="chapter-label">Chapter V</div>
-      <h2 class="chapter-title">The Session</h2>
+      <div class="chapter-header reveal">
+        <div class="chapter-ornament">&#x2726;</div>
+        <div class="chapter-label">Chapter V</div>
+        <h2 class="chapter-title">The Session</h2>
+      </div>
 
-      <div class="stanza accent">
+      <div class="stanza accent reveal">
         <p>"But wait!" said the vendor.</p>
         <p>"What about call two?</p>
         <p>The SAME symbols again,</p>
         <p>what does YOUR format do?"</p>
       </div>
 
-      <div class="code-block">
+      <div class="code-block reveal">
         <code>@0  # previously transmitted</code>
         <code>@1  # previously transmitted</code>
         <code>@2  # previously transmitted</code>
       </div>
 
-      <div class="stanza">
+      <div class="stanza reveal">
         <p>Call one: full payload.</p>
         <p>Call five: ninety-two percent bare.</p>
         <p>TOON sent the whole thing again.</p>
         <p>Every symbol. Every pair.</p>
       </div>
 
-      <img src="/not-a-toon-session-dedup.png" alt="GCF delivers less each call while TOON carries the same huge sack every time" class="chapter-img wide" />
+      <img src="/not-a-toon-session-dedup.png" alt="GCF delivers less each call while TOON carries the same huge sack every time" class="chapter-img wide reveal" />
 
-      <div class="stanza">
+      <div class="stanza reveal">
         <p>"Session dedup," I explained,</p>
         <p>"tracks what's been sent."</p>
         <p>TOON had no sessions.</p>
@@ -210,10 +254,13 @@
 
     <!-- Chapter 6: The Proof -->
     <section class="chapter">
-      <div class="chapter-label">Chapter VI</div>
-      <h2 class="chapter-title">The Proof</h2>
+      <div class="chapter-header reveal">
+        <div class="chapter-ornament">&#x2726;</div>
+        <div class="chapter-label">Chapter VI</div>
+        <h2 class="chapter-title">The Proof</h2>
+      </div>
 
-      <div class="stanza accent">
+      <div class="stanza accent reveal">
         <p>"But is it LOSSLESS?" they asked,</p>
         <p>with a skeptical frown.</p>
         <p>"Can you prove that it works</p>
@@ -224,28 +271,30 @@
         <p>or misplaced, and then..."</p>
       </div>
 
-      <img src="/not-a-toon-prove-it.png" alt="Skeptical judges demand proof while GCF sits calmly before a wall of 33 billion evidence" class="chapter-img wide" />
+      <img src="/not-a-toon-prove-it.png" alt="Skeptical judges demand proof while GCF sits calmly before a wall of 33 billion evidence" class="chapter-img wide reveal" />
 
-      <div class="big-number">33,000,000,000</div>
-      <p class="big-number-label">round-trips. zero failures.</p>
+      <div class="big-number reveal">
+        <span class="big-number-value">33,000,000,000</span>
+        <span class="big-number-label">round-trips. zero failures.</span>
+      </div>
 
-      <img src="/not-a-toon-33-billion.png" alt="A towering stack of 33 billion round-trips with a green checkmark" class="chapter-img small" />
+      <img src="/not-a-toon-33-billion.png" alt="A towering stack of 33 billion round-trips with a green checkmark" class="chapter-img small reveal" />
 
-      <div class="stanza">
+      <div class="stanza reveal">
         <p>JSON: eleven billion.</p>
         <p>YAML: eleven billion too.</p>
         <p>MessagePack, CSV, TOML:</p>
         <p>a billion between the few.</p>
       </div>
 
-      <div class="stanza">
+      <div class="stanza reveal">
         <p>Six languages tested.</p>
         <p>Go, Rust, TypeScript, Python,</p>
         <p>Swift, Kotlin: all passing.</p>
         <p>Not a single byte bitten.</p>
       </div>
 
-      <div class="stanza highlight">
+      <div class="stanza highlight reveal">
         <p>Zero failures.</p>
         <p>Not one in thirty-three billion tries.</p>
         <p>TOON published... no fuzz data.</p>
@@ -255,35 +304,38 @@
 
     <!-- Chapter 7: Readability -->
     <section class="chapter dark">
-      <div class="chapter-label">Chapter VII</div>
-      <h2 class="chapter-title">The Readability Question</h2>
+      <div class="chapter-header reveal">
+        <div class="chapter-ornament">&#x2726;</div>
+        <div class="chapter-label">Chapter VII</div>
+        <h2 class="chapter-title">The Readability Question</h2>
+      </div>
 
-      <div class="stanza accent">
+      <div class="stanza accent reveal">
         <p>"But humans can't READ it!"</p>
         <p>they said with dismay.</p>
         <p>"It's dense! It's compact!</p>
         <p>It's not readable that way!"</p>
       </div>
 
-      <img src="/not-a-toon-humans-cant-read.png" alt="Humans panic while a robot reads GCF at 100% with tea" class="chapter-img" />
+      <img src="/not-a-toon-humans-cant-read.png" alt="Humans panic while a robot reads GCF at 100% with tea" class="chapter-img reveal" />
 
-      <div class="stanza">
+      <div class="stanza reveal">
         <p>Neither is protobuf.</p>
         <p>Neither are gzip bytes.</p>
         <p>You don't read the wire format.</p>
         <p>You read what it writes.</p>
       </div>
 
-      <div class="stanza">
+      <div class="stanza reveal">
         <p><code>decode()</code> at the end.</p>
         <p>One function call away.</p>
         <p>The human sees JSON.</p>
         <p>The agent sees GCF all day.</p>
       </div>
 
-      <img src="/not-a-toon-agent-human-decode.png" alt="The Agent reads GCF efficiently, decode() transforms it, The Human reads JSON comfortably" class="chapter-img wide" />
+      <img src="/not-a-toon-agent-human-decode.png" alt="The Agent reads GCF efficiently, decode() transforms it, The Human reads JSON comfortably" class="chapter-img wide reveal" />
 
-      <div class="stanza">
+      <div class="stanza reveal">
         <p>The context window savings?</p>
         <p>Already banked, already done.</p>
         <p>The model reads it at one hundred percent.</p>
@@ -293,21 +345,24 @@
 
     <!-- Finale -->
     <section class="chapter finale">
-      <h2 class="chapter-title finale-title">The Verdict</h2>
+      <div class="chapter-header reveal">
+        <div class="chapter-ornament finale-ornament">&#x2605;</div>
+        <h2 class="chapter-title finale-title">The Verdict</h2>
+      </div>
 
-      <div class="stanza">
+      <div class="stanza reveal">
         <p>So would you send it as JSON?</p>
       </div>
 
-      <div class="stanza dramatic">
+      <div class="stanza dramatic reveal">
         <p>I would not.</p>
       </div>
 
-      <div class="stanza">
+      <div class="stanza reveal">
         <p>Would you send it with TOON?</p>
       </div>
 
-      <div class="stanza dramatic">
+      <div class="stanza dramatic reveal">
         <p>I could not, would not, with a TOON.</p>
         <p>Not a TOON, not a PLOON,</p>
         <p>not a BLOON or a SPOON.</p>
@@ -315,9 +370,9 @@
         <p>that ends with <em>-OON</em>.</p>
       </div>
 
-      <img src="/not-a-toon-oons-wrong.png" alt="TOON, PLOON, BLOON, and SPOON defeated on a bench while GCF glows on the podium" class="chapter-img" />
+      <img src="/not-a-toon-oons-wrong.png" alt="TOON, PLOON, BLOON, and SPOON defeated on a bench while GCF glows on the podium" class="chapter-img reveal" />
 
-      <div class="stanza">
+      <div class="stanza reveal">
         <p>I would send it with GCF.</p>
         <p>I would send it today.</p>
         <p>In JSON or YAML</p>
@@ -326,28 +381,29 @@
         <p>in any which way.</p>
       </div>
 
-      <img src="/not-a-toon-parade.png" alt="GCF leads a victory parade with all five format characters" class="chapter-img" />
+      <img src="/not-a-toon-parade.png" alt="GCF leads a victory parade with all five format characters" class="chapter-img reveal" />
 
-      <div class="stanza">
+      <div class="stanza reveal">
         <p>GCF takes your data,</p>
         <p>whatever the source.</p>
         <p>GCF packs it tight</p>
         <p>on a lossless course.</p>
       </div>
 
-      <div class="stanza">
+      <div class="stanza reveal">
         <p>Thirty-three billion times tested.</p>
         <p>Six languages strong.</p>
         <p>One hundred percent comprehension.</p>
       </div>
 
-      <div class="closing-line">The *-OONs were wrong.</div>
+      <div class="closing-line reveal">The *-OONs were wrong.</div>
 
-      <img src="/not-a-toon-closing.png" alt="The OONs were wrong - GCF triumphant with five format streams" class="chapter-img wide" />
+      <img src="/not-a-toon-closing.png" alt="The OONs were wrong - GCF triumphant with five format streams" class="chapter-img wide reveal" />
     </section>
 
     <!-- CTA -->
-    <section class="cta">
+    <section class="cta reveal">
+      <div class="cta-divider"></div>
       <div class="cta-links">
         <a href="/playground.html" class="cta-btn primary">Try it yourself</a>
         <a href="/guide/benchmarks.html" class="cta-btn">See the benchmarks</a>
@@ -361,57 +417,100 @@
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Patrick+Hand&display=swap');
 
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .poem {
-  font-family: 'Patrick Hand', cursive;
   color: #e8e8e8;
   max-width: 100%;
   overflow-x: hidden;
 }
 
-/* Hero */
+/* ── Hero ── */
 .poem-hero {
   text-align: center;
-  padding: 80px 24px 60px;
-  background: radial-gradient(ellipse at 50% 20%, rgba(24, 190, 252, 0.08) 0%, transparent 70%);
+  padding: 120px 24px 80px;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(24, 190, 252, 0.1) 0%, transparent 60%),
+    radial-gradient(circle at 20% 80%, rgba(24, 190, 252, 0.04) 0%, transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(24, 190, 252, 0.04) 0%, transparent 40%);
+}
+
+.hero-inner {
+  margin-bottom: 56px;
+}
+
+.hero-eyebrow {
+  font-family: 'Lora', Georgia, serif;
+  font-size: 1.1rem;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.35);
+  letter-spacing: 0.08em;
+  margin: 0 0 20px;
 }
 
 .poem-title {
   font-family: 'Patrick Hand', cursive !important;
-  font-size: 5rem;
+  font-size: 6rem;
   font-weight: 400;
   color: #fff;
   margin: 0 0 16px;
-  letter-spacing: 0.02em;
-  text-shadow: 0 0 40px rgba(24, 190, 252, 0.3);
+  letter-spacing: 0.03em;
+}
+
+.title-accent {
+  color: var(--gcf-blue, #18befc);
+  text-shadow: 0 0 60px rgba(24, 190, 252, 0.4), 0 0 120px rgba(24, 190, 252, 0.15);
 }
 
 .poem-subtitle {
   font-family: 'Lora', Georgia, serif;
-  font-size: 1.3rem;
-  color: rgba(255, 255, 255, 0.5);
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.3);
   font-style: italic;
-  margin: 0 0 48px;
+  margin: 0;
+}
+
+.hero-divider {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gcf-blue, #18befc), transparent);
+  margin: 32px auto 0;
+  opacity: 0.5;
 }
 
 .hero-img {
-  max-width: 750px;
+  max-width: 800px;
   width: 100%;
-  border-radius: 16px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+  box-shadow:
+    0 24px 80px rgba(0, 0, 0, 0.6),
+    0 0 60px rgba(24, 190, 252, 0.08);
 }
 
-/* Chapters */
+/* ── Chapters ── */
 .chapter {
-  padding: 80px 24px;
+  padding: 100px 24px;
   max-width: 800px;
   margin: 0 auto;
 }
 
 .chapter.dark {
   max-width: 100%;
-  background: rgba(255, 255, 255, 0.02);
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  background:
+    linear-gradient(180deg, rgba(24, 190, 252, 0.02) 0%, transparent 30%, transparent 70%, rgba(24, 190, 252, 0.02) 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 .chapter.dark > * {
@@ -420,15 +519,26 @@
   margin-right: auto;
 }
 
-.chapter-label {
-  font-family: 'Patrick Hand', cursive;
-  font-size: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 0.3em;
-  color: var(--gcf-blue, #18befc);
-  opacity: 0.6;
-  margin-bottom: 8px;
+.chapter-header {
   text-align: center;
+  margin-bottom: 56px;
+}
+
+.chapter-ornament {
+  font-size: 0.9rem;
+  color: var(--gcf-blue, #18befc);
+  opacity: 0.3;
+  margin-bottom: 16px;
+}
+
+.chapter-label {
+  font-family: 'Lora', Georgia, serif;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.35em;
+  color: var(--gcf-blue, #18befc);
+  opacity: 0.5;
+  margin-bottom: 12px;
 }
 
 .chapter-title {
@@ -436,85 +546,95 @@
   font-size: 2.8rem;
   font-weight: 400;
   color: #fff;
-  text-align: center;
-  margin: 0 0 48px;
-  text-shadow: 0 0 30px rgba(24, 190, 252, 0.15);
+  margin: 0;
+  text-shadow: 0 0 30px rgba(24, 190, 252, 0.12);
 }
 
-/* Stanzas */
+/* ── Stanzas ── */
 .stanza {
   text-align: center;
-  margin: 36px auto;
-  max-width: 600px;
+  margin: 44px auto;
+  max-width: 580px;
 }
 
 .stanza p {
   font-family: 'Lora', Georgia, serif;
-  font-size: 1.35rem;
-  line-height: 1.85;
+  font-size: 1.3rem;
+  line-height: 2;
   margin: 0;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.78);
 }
 
 .stanza.accent {
-  border-left: 3px solid var(--gcf-blue, #18befc);
-  padding-left: 24px;
+  border-left: 2px solid rgba(24, 190, 252, 0.35);
+  padding-left: 28px;
   text-align: left;
+  max-width: 560px;
 }
 
 .stanza.accent p {
   font-family: 'Lora', Georgia, serif;
   font-style: italic;
-  color: rgba(255, 255, 255, 0.95);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.stanza.dramatic {
+  margin: 56px auto;
 }
 
 .stanza.dramatic p {
   font-family: 'Patrick Hand', cursive;
-  font-size: 2.2rem;
+  font-size: 2.4rem;
+  line-height: 1.5;
   color: #fff;
-  text-shadow: 0 0 20px rgba(24, 190, 252, 0.2);
+  text-shadow: 0 0 30px rgba(24, 190, 252, 0.2);
 }
 
 .stanza.highlight {
-  background: rgba(24, 190, 252, 0.06);
-  border: 1px solid rgba(24, 190, 252, 0.15);
-  border-radius: 12px;
-  padding: 28px 32px;
+  background: rgba(24, 190, 252, 0.04);
+  border: 1px solid rgba(24, 190, 252, 0.1);
+  border-radius: 16px;
+  padding: 36px 40px;
+  max-width: 560px;
 }
 
 .stanza.highlight p {
   font-family: 'Patrick Hand', cursive;
   color: var(--gcf-blue, #18befc);
-  font-size: 1.7rem;
+  font-size: 1.6rem;
+  line-height: 1.7;
 }
 
-/* Images */
+/* ── Images ── */
 .chapter-img {
   display: block;
-  margin: 40px auto;
+  margin: 48px auto;
   max-width: 600px;
   width: 100%;
-  border-radius: 16px;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  border-radius: 20px;
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(24, 190, 252, 0.05);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.chapter-img.wide {
-  max-width: 750px;
+.chapter-img:hover {
+  transform: scale(1.01);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.55),
+    0 0 60px rgba(24, 190, 252, 0.1);
 }
 
-.chapter-img.medium {
-  max-width: 500px;
-}
-
-.chapter-img.small {
-  max-width: 400px;
-}
+.chapter-img.wide { max-width: 750px; }
+.chapter-img.medium { max-width: 500px; }
+.chapter-img.small { max-width: 400px; }
 
 .img-pair {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  margin: 40px auto;
+  gap: 24px;
+  margin: 48px auto;
   max-width: 750px;
 }
 
@@ -523,83 +643,115 @@
   margin: 0;
 }
 
-/* Code blocks */
+/* ── Code blocks ── */
 .code-block {
-  background: #0a0a0a;
-  border: 1px solid rgba(24, 190, 252, 0.2);
-  border-radius: 12px;
-  padding: 20px 28px;
-  margin: 32px auto;
-  max-width: 550px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(24, 190, 252, 0.15);
+  border-radius: 14px;
+  padding: 24px 32px;
+  margin: 40px auto;
+  max-width: 540px;
   text-align: left;
+  backdrop-filter: blur(8px);
 }
 
 .code-block code {
   display: block;
-  font-family: 'SF Mono', 'Fira Code', monospace;
-  font-size: 0.95rem;
+  font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
   color: var(--gcf-blue, #18befc);
-  line-height: 1.8;
-}
-
-/* Big number callout */
-.big-number {
-  font-family: 'Patrick Hand', cursive;
-  font-size: 4.5rem;
-  font-weight: 400;
-  text-align: center;
-  color: var(--gcf-blue, #18befc);
-  text-shadow: 0 0 40px rgba(24, 190, 252, 0.3);
-  margin: 48px 0 8px;
+  line-height: 1.9;
   letter-spacing: 0.02em;
 }
 
-.big-number-label {
-  font-family: 'Lora', Georgia, serif;
-  font-size: 1.4rem;
+/* ── Big number ── */
+.big-number {
   text-align: center;
-  color: rgba(255, 255, 255, 0.4);
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  margin: 0 0 40px;
+  margin: 64px 0;
 }
 
-/* Inline code */
-.stanza code {
-  font-family: 'SF Mono', 'Fira Code', monospace;
-  font-size: 0.85em;
+.big-number-value {
+  display: block;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 5rem;
+  font-weight: 400;
   color: var(--gcf-blue, #18befc);
-  background: rgba(24, 190, 252, 0.08);
-  padding: 2px 8px;
-  border-radius: 4px;
+  text-shadow:
+    0 0 40px rgba(24, 190, 252, 0.3),
+    0 0 80px rgba(24, 190, 252, 0.1);
+  letter-spacing: 0.02em;
+  line-height: 1.1;
 }
 
-/* Finale */
+.big-number-label {
+  display: block;
+  font-family: 'Lora', Georgia, serif;
+  font-size: 1.15rem;
+  color: rgba(255, 255, 255, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  margin-top: 12px;
+}
+
+/* ── Inline code ── */
+.stanza code {
+  font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', monospace;
+  font-size: 0.82em;
+  color: var(--gcf-blue, #18befc);
+  background: rgba(24, 190, 252, 0.06);
+  padding: 3px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(24, 190, 252, 0.08);
+}
+
+/* ── Finale ── */
 .finale {
-  background: radial-gradient(ellipse at 50% 80%, rgba(24, 190, 252, 0.06) 0%, transparent 70%) !important;
+  max-width: 100% !important;
+  background:
+    radial-gradient(ellipse at 50% 70%, rgba(24, 190, 252, 0.08) 0%, transparent 60%) !important;
   border: none !important;
-  padding-bottom: 40px !important;
+  padding: 100px 24px 60px !important;
+}
+
+.finale > * {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.finale-ornament {
+  font-size: 1.2rem !important;
+  opacity: 0.5 !important;
 }
 
 .finale-title {
-  font-size: 3.2rem !important;
+  font-size: 3.4rem !important;
+  text-shadow: 0 0 40px rgba(24, 190, 252, 0.2) !important;
 }
 
 .closing-line {
   font-family: 'Patrick Hand', cursive;
-  font-size: 3.5rem;
+  font-size: 4rem;
   text-align: center;
   color: var(--gcf-blue, #18befc);
-  text-shadow: 0 0 40px rgba(24, 190, 252, 0.4);
-  margin: 48px 0;
+  text-shadow:
+    0 0 40px rgba(24, 190, 252, 0.5),
+    0 0 80px rgba(24, 190, 252, 0.2);
+  margin: 64px 0;
   letter-spacing: 0.02em;
 }
 
-/* CTA */
+/* ── CTA ── */
 .cta {
   text-align: center;
-  padding: 60px 24px 80px;
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  padding: 80px 24px 100px;
+}
+
+.cta-divider {
+  width: 80px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+  margin: 0 auto 48px;
 }
 
 .cta-links {
@@ -607,57 +759,64 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 16px;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
 .cta-btn {
   font-family: 'Lora', Georgia, serif;
-  font-size: 1.3rem;
-  padding: 14px 32px;
-  border-radius: 10px;
+  font-size: 1.15rem;
+  padding: 16px 36px;
+  border-radius: 12px;
   text-decoration: none;
-  color: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.04);
-  transition: all 0.2s;
+  color: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .cta-btn:hover {
-  border-color: var(--gcf-blue, #18befc);
+  border-color: rgba(24, 190, 252, 0.4);
   color: #fff;
-  background: rgba(24, 190, 252, 0.08);
-  transform: translateY(-2px);
+  background: rgba(24, 190, 252, 0.06);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
 .cta-btn.primary {
   background: var(--gcf-blue, #18befc);
   border-color: var(--gcf-blue, #18befc);
   color: #000;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .cta-btn.primary:hover {
   background: #fff;
   border-color: #fff;
-  box-shadow: 0 0 30px rgba(24, 190, 252, 0.4);
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.3),
+    0 0 40px rgba(24, 190, 252, 0.3);
 }
 
 .cta-sub {
   font-family: 'Lora', Georgia, serif;
-  font-size: 1.1rem;
-  color: rgba(255, 255, 255, 0.3);
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.2);
+  letter-spacing: 0.02em;
 }
 
-/* Mobile */
+/* ── Mobile ── */
 @media (max-width: 640px) {
-  .poem-title { font-size: 3rem; }
-  .poem-subtitle { font-size: 1.2rem; }
-  .chapter-title { font-size: 2rem; }
+  .poem-hero { padding: 80px 20px 60px; }
+  .poem-title { font-size: 3.5rem; }
+  .hero-eyebrow { font-size: 0.95rem; }
+  .chapter-title { font-size: 2.2rem; }
   .stanza p { font-size: 1.15rem; }
-  .stanza.dramatic p { font-size: 1.7rem; }
-  .big-number { font-size: 3rem; }
-  .closing-line { font-size: 2.5rem; }
-  .chapter { padding: 48px 20px; }
+  .stanza.dramatic p { font-size: 1.8rem; }
+  .big-number-value { font-size: 3.2rem; }
+  .closing-line { font-size: 2.8rem; }
+  .chapter { padding: 64px 20px; }
   .img-pair { grid-template-columns: 1fr; }
+  .stanza.highlight { padding: 24px 20px; }
+  .code-block { padding: 16px 20px; }
 }
 </style>
