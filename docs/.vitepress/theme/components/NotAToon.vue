@@ -531,8 +531,8 @@ onMounted(() => {
   top: 0;
   left: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--gcf-blue, #18befc), #3dd4ff);
-  box-shadow: 0 0 10px rgba(24, 190, 252, 0.5);
+  background: #18befc;
+  box-shadow: 0 0 8px rgba(24, 190, 252, 0.4);
   z-index: 9999;
   transition: width 0.1s linear;
 }
