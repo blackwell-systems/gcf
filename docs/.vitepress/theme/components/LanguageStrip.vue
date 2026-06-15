@@ -12,8 +12,6 @@ const languages = [
 <template>
   <div class="lang-strip">
     <div class="lang-strip-inner">
-      <h2 class="lang-title">Six Languages, One Spec</h2>
-      <p class="lang-subtitle">Every implementation passes 157/157 conformance fixtures. Same output, any language.</p>
       <div class="lang-grid">
         <a v-for="lang in languages" :key="lang.name" :href="lang.url" target="_blank" class="lang-card">
           <img :src="lang.icon" :alt="lang.name" class="lang-icon" />
