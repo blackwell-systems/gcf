@@ -28,6 +28,13 @@ const plugins = [
     url: 'https://www.npmjs.com/package/n8n-nodes-gcf',
     icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/n8n.svg',
   },
+  {
+    name: 'JetBrains',
+    desc: 'IntelliJ, PyCharm, WebStorm, GoLand',
+    install: 'Search "GCF" in Plugins',
+    url: 'https://github.com/blackwell-systems/gcf-jetbrains',
+    icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/jetbrains.svg',
+  },
 ]
 </script>
 
@@ -66,7 +73,7 @@ const plugins = [
 
 .plugin-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 12px;
 }
 
