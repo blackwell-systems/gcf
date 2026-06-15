@@ -3,6 +3,22 @@ import { onMounted, onUnmounted, ref, nextTick } from 'vue'
 import mediumZoom from 'medium-zoom'
 
 const poem = ref(null)
+const counterValue = ref('0')
+const TARGET = 33000000000
+
+function animateCounter(el) {
+  const duration = 2200
+  const start = performance.now()
+  const step = (now) => {
+    const progress = Math.min((now - start) / duration, 1)
+    // Ease out cubic
+    const eased = 1 - Math.pow(1 - progress, 3)
+    const current = Math.floor(eased * TARGET)
+    counterValue.value = current.toLocaleString()
+    if (progress < 1) requestAnimationFrame(step)
+  }
+  requestAnimationFrame(step)
+}
 
 onMounted(() => {
   // Scroll reveal with staggered lines
@@ -18,6 +34,11 @@ onMounted(() => {
             lines.forEach((line, i) => {
               line.style.transitionDelay = `${i * 120}ms`
             })
+          }
+
+          // Animate the counter
+          if (entry.target.classList.contains('big-number')) {
+            animateCounter(entry.target)
           }
         }
       })
@@ -313,7 +334,7 @@ onMounted(() => {
       <img src="/not-a-toon-prove-it.png" alt="Skeptical judges demand proof while GCF sits calmly before a wall of 33 billion evidence" class="chapter-img wide reveal" />
 
       <div class="big-number reveal">
-        <span class="big-number-value">33,000,000,000</span>
+        <span class="big-number-value">{{ counterValue }}</span>
         <span class="big-number-label">round-trips. zero failures.</span>
       </div>
 
@@ -473,6 +494,22 @@ onMounted(() => {
   color: #e8e8e8;
   max-width: 100%;
   overflow-x: clip;
+  position: relative;
+}
+
+/* Subtle paper grain texture */
+.poem::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
 }
 
 .poem *,
@@ -575,8 +612,30 @@ onMounted(() => {
 .chapter-ornament {
   font-size: 0.9rem;
   color: var(--gcf-blue, #18befc);
-  opacity: 0.3;
+  opacity: 0;
   margin-bottom: 16px;
+  display: inline-block;
+  transition: opacity 0.6s ease;
+}
+
+.chapter-header.visible .chapter-ornament {
+  opacity: 0.3;
+  animation: ornament-enter 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes ornament-enter {
+  0% {
+    transform: rotate(0deg) scale(0.5);
+    opacity: 0;
+  }
+  50% {
+    transform: rotate(200deg) scale(1.2);
+    opacity: 0.5;
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+    opacity: 0.3;
+  }
 }
 
 .chapter-label {
