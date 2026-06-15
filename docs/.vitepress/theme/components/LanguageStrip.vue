@@ -193,7 +193,7 @@ const languages = [
   margin-top: 20px;
   text-align: center;
   font-size: 0.85rem;
-  color: var(--vp-c-text-3);
+  color: var(--gcf-blue, #18befc);
   line-height: 1.6;
 }
 </style>
