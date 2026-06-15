@@ -1,5 +1,6 @@
 <script setup>
-import { onMounted, onUnmounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref, nextTick } from 'vue'
+import mediumZoom from 'medium-zoom'
 
 const poem = ref(null)
 
@@ -17,6 +18,9 @@ onMounted(() => {
 
   if (poem.value) {
     poem.value.querySelectorAll('.reveal').forEach((el) => observer.observe(el))
+    nextTick(() => {
+      mediumZoom(poem.value.querySelectorAll('img'), { background: 'rgba(0, 0, 0, 0.92)' })
+    })
   }
 
   onUnmounted(() => observer.disconnect())
@@ -619,6 +623,10 @@ onMounted(() => {
     0 0 40px rgba(24, 190, 252, 0.05);
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
               box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.chapter-img {
+  cursor: zoom-in;
 }
 
 .chapter-img:hover {
