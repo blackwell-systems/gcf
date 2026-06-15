@@ -20,7 +20,7 @@
 
 /* Make hero image bigger */
 .VPHero .VPImage {
-  max-width: 600px !important;
+  max-width: 450px !important;
   max-height: none !important;
 }
 
