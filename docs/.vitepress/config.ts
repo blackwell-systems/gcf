@@ -3,7 +3,7 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: 'GCF',
   description: 'Token-optimized wire format for LLM tool responses',
-  appearance: false,
+  appearance: 'force-dark',
   base: '/',
   head: [
     ['link', { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
