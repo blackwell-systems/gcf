@@ -174,6 +174,8 @@ onMounted(() => {
         <p>and the data looked fine.</p>
       </div>
 
+      <img src="/not-a-toon-banquet.png" alt="GCF feasts on YAML, TOML, CSV, and MessagePack while TOON watches horrified through the window" class="chapter-img wide reveal" />
+
       <div class="stanza reveal">
         <p>But could it do YAML?</p>
         <p>(I had YAML to send.)</p>
