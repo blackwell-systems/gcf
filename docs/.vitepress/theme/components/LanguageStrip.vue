@@ -192,7 +192,7 @@ const languages = [
 .lang-deps {
   margin-top: 20px;
   text-align: center;
-  font-size: 0.85rem;
+  font-size: 1.05rem;
   color: var(--gcf-blue, #18befc);
   line-height: 1.6;
 }
