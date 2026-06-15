@@ -18,6 +18,21 @@
   display: none !important;
 }
 
+/* Give hero full width */
+.VPHero .container {
+  max-width: 1400px !important;
+  padding: 0 48px !important;
+}
+
+.VPHero .main {
+  max-width: none !important;
+}
+
+.VPHero .VPImage {
+  max-width: 520px !important;
+  max-height: none !important;
+}
+
 
 .gcf { color: var(--gcf-color); font-weight: 600; }
 .toon { color: var(--toon-color); font-weight: 600; }
