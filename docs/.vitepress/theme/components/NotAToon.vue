@@ -188,6 +188,8 @@ onMounted(() => {
         <p>TOON went back to sleep.</p>
       </div>
 
+      <img src="/not-a-toon-toml.png" alt="GCF rolls a fifteen-crate Cargo.toml tower flat while TOON sleeps in a hammock" class="chapter-img reveal" />
+
       <div class="stanza reveal">
         <p>Could it do CSV?</p>
         <p>(Twenty rows, eight columns wide.)</p>
