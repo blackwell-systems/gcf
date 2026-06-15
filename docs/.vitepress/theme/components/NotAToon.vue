@@ -139,10 +139,8 @@ onMounted(() => {
         <p>TOON fled from the chat.</p>
       </div>
 
-      <div class="img-pair reveal">
-        <img src="/not-a-toon-yaml-plate.png" alt="A friendly character offers YAML on a plate, TOON refuses" class="chapter-img" />
-        <img src="/not-a-toon-fled-chat.png" alt="Five format characters chase TOON who runs in panic" class="chapter-img" />
-      </div>
+      <img src="/not-a-toon-yaml-plate.png" alt="A friendly character offers YAML on a plate, TOON refuses" class="chapter-img reveal" />
+      <img src="/not-a-toon-fled-chat.png" alt="Five format characters chase TOON who runs in panic" class="chapter-img reveal" />
     </section>
 
     <!-- Chapter 3: Discovery -->
