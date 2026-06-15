@@ -201,6 +201,6 @@ code.terminal { color: #4ade80; background: #0a1a0a; border: 1px solid #1a3a1a; 
 
 /* Prevent horizontal scrollbar on full-width page layouts */
 .VPPage {
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
