@@ -18,6 +18,29 @@
   display: none !important;
 }
 
+/* Wire diagram on top, text below */
+.VPHero .container {
+  display: flex !important;
+  flex-direction: column-reverse !important;
+  align-items: center !important;
+}
+
+.VPHero .image {
+  max-width: 720px !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+}
+
+.VPHero .VPImage {
+  max-width: 100% !important;
+  max-height: none !important;
+}
+
+.VPHero .main {
+  max-width: 100% !important;
+  text-align: center !important;
+}
+
 
 .gcf { color: var(--gcf-color); font-weight: 600; }
 .toon { color: var(--toon-color); font-weight: 600; }
