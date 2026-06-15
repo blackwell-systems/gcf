@@ -30,8 +30,8 @@
   justify-content: space-between;
   gap: 24px;
   padding: 20px 28px;
-  background: color-mix(in srgb, var(--vp-c-brand-1) 6%, var(--vp-c-bg-soft));
-  border: 1px solid color-mix(in srgb, var(--vp-c-brand-1) 20%, var(--vp-c-border));
+  background: color-mix(in srgb, var(--gcf-blue, #18befc) 6%, var(--vp-c-bg-soft));
+  border: 1px solid color-mix(in srgb, var(--gcf-blue, #18befc) 20%, var(--vp-c-border));
   border-radius: 12px;
   text-align: left;
 }
@@ -70,19 +70,19 @@
   background: var(--vp-c-bg);
   border: 1px solid var(--vp-c-border);
   border-radius: 8px;
-  color: var(--vp-c-brand-1);
+  color: var(--gcf-blue, #18befc);
   white-space: nowrap;
 }
 
 .proxy-hook {
-  color: var(--vp-c-brand-1);
+  color: var(--gcf-blue, #18befc);
   font-weight: 700;
 }
 
 .proxy-link {
   font-size: 0.8rem;
   font-weight: 600;
-  color: var(--vp-c-brand-1);
+  color: var(--gcf-blue, #18befc);
   text-decoration: none;
 }
 
