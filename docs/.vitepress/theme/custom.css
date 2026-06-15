@@ -13,24 +13,6 @@
   --vp-c-bg-soft: #111 !important;
 }
 
-/* Push features below custom content */
-.VPHome .VPFeatures {
-  order: 2;
-}
-
-.VPHome > .vp-doc {
-  order: 1;
-}
-
-.VPHome {
-  display: flex;
-  flex-direction: column;
-}
-
-.VPHome .VPHero {
-  order: 0;
-}
-
 .gcf { color: var(--gcf-color); font-weight: 600; }
 .toon { color: var(--toon-color); font-weight: 600; }
 .json { color: var(--json-color); font-weight: 600; }

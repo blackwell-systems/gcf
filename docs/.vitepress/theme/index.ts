@@ -5,6 +5,7 @@ import CostCalculator from './components/CostCalculator.vue'
 import HowItWorks from './components/HowItWorks.vue'
 import LanguageStrip from './components/LanguageStrip.vue'
 import ButtonBar from './components/ButtonBar.vue'
+import FeatureCards from './components/FeatureCards.vue'
 import './custom.css'
 import mediumZoom from 'medium-zoom'
 import { onMounted, watch, nextTick } from 'vue'
@@ -19,6 +20,7 @@ export default {
     app.component('HowItWorks', HowItWorks)
     app.component('LanguageStrip', LanguageStrip)
     app.component('ButtonBar', ButtonBar)
+    app.component('FeatureCards', FeatureCards)
   },
   setup() {
     const route = useRoute()
