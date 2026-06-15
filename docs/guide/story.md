@@ -8,7 +8,7 @@ The project it grew out of is called "knowing," the code intelligence engine beh
 
 The question was simple: what if there was a format designed specifically for graph-shaped data going into an LLM context window? Not JSON squeezed into a role it wasn't designed for. Something native to the data shape.
 
-There was no crisis. Knowing worked fine with JSON. But JSON is verbose for graphs. Every edge repeats both endpoint identifiers in full. Every symbol repeats every field name. A 500-symbol code graph with 200 edges, serialized as JSON, consumed 53,341 tokens. That is a lot of structural noise for data that has natural positional structure.
+Knowing worked with JSON. But JSON is verbose for graphs. Every edge repeats both endpoint identifiers in full. Every symbol repeats every field name. A 500-symbol code graph with 200 edges, serialized as JSON, consumed 53,341 tokens. That is a lot of structural noise for data that has natural positional structure.
 
 So the experiment started: what if section headers replaced per-record metadata? What if local IDs replaced repeated identifiers? What if the format aligned with how LLMs already process sequential information, instead of how humans scan nested trees?
 
