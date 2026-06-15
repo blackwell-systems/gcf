@@ -6,38 +6,6 @@
   --json-color: #b28080;
 }
 
-/* Hero 50/50 split layout */
-.VPHero .container {
-  max-width: 1280px !important;
-}
-
-.VPHero .main {
-  max-width: none !important;
-  width: 100% !important;
-}
-
-.VPHero .VPImage {
-  max-width: 520px !important;
-  max-height: none !important;
-}
-
-@media (min-width: 960px) {
-  .VPHero .container {
-    display: flex !important;
-    align-items: center !important;
-    gap: 40px !important;
-  }
-
-  .VPHero .main {
-    flex: 1 !important;
-  }
-
-  .VPHero .image {
-    flex: 1 !important;
-    max-width: 50% !important;
-  }
-}
-
 .gcf { color: var(--gcf-color); font-weight: 600; }
 .toon { color: var(--toon-color); font-weight: 600; }
 .json { color: var(--json-color); font-weight: 600; }
