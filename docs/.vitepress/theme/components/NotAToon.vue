@@ -4,7 +4,23 @@ import mediumZoom from 'medium-zoom'
 
 const poem = ref(null)
 const counterValue = ref('0')
+const closingText = ref('')
+const showCursor = ref(false)
 const TARGET = 33000000000
+const CLOSING = 'The *-OONs were wrong'
+
+function typeClosing() {
+  showCursor.value = true
+  let i = 0
+  const interval = setInterval(() => {
+    i++
+    closingText.value = CLOSING.slice(0, i)
+    if (i >= CLOSING.length) {
+      clearInterval(interval)
+      setTimeout(() => { showCursor.value = false }, 800)
+    }
+  }, 80)
+}
 
 function animateCounter(el) {
   const duration = 2200
@@ -39,6 +55,11 @@ onMounted(() => {
           // Animate the counter
           if (entry.target.classList.contains('big-number')) {
             animateCounter(entry.target)
+          }
+
+          // Typewriter on closing line
+          if (entry.target.classList.contains('typewriter')) {
+            typeClosing()
           }
         }
       })
@@ -456,7 +477,7 @@ onMounted(() => {
         <p>One hundred percent comprehension.</p>
       </div>
 
-      <div class="closing-line reveal">The *-OONs were wrong</div>
+      <div class="closing-line reveal typewriter"><span class="typewriter-text">{{ closingText }}</span><span class="typewriter-cursor" v-if="showCursor">|</span></div>
 
       <img src="/not-a-toon-closing.png" alt="The OONs were wrong - GCF triumphant with five format streams" class="chapter-img wide reveal" />
     </section>
@@ -859,7 +880,20 @@ onMounted(() => {
     0 0 40px rgba(24, 190, 252, 0.5),
     0 0 80px rgba(24, 190, 252, 0.2);
   margin: 64px auto;
+  min-height: 1.2em;
   letter-spacing: 0.02em;
+}
+
+.typewriter-cursor {
+  color: var(--gcf-blue, #18befc);
+  animation: blink 0.6s step-end infinite;
+  font-weight: 300;
+  margin-left: 2px;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
 /* ── CTA ── */
