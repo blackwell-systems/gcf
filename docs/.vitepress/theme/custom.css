@@ -13,17 +13,9 @@
   --vp-c-bg-soft: #111 !important;
 }
 
-/* Replace hero name text with logo */
+/* Hide hero name entirely */
 .VPHero .name {
-  background: url('/gcf-logo.png') no-repeat center center;
-  background-size: contain;
-  color: transparent !important;
-  height: 80px;
-  font-size: 0 !important;
-}
-
-.VPHero .clip {
-  -webkit-text-fill-color: transparent;
+  display: none !important;
 }
 
 .gcf { color: var(--gcf-color); font-weight: 600; }
