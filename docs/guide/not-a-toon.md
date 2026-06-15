@@ -2,10 +2,18 @@
 
 *A cautionary tale about wire formats, for engineers of all ages.*
 
+<div style="text-align: center; margin: 2rem 0;">
+  <img src="/not-a-toon-hero.png" alt="Five data formats flow into the GCF funnel while TOON watches" style="max-width: 700px; width: 100%; border-radius: 12px;" />
+</div>
+
 ---
 
 Would you send it as JSON?
 Would you send it with TOON?
+
+<div style="text-align: center; margin: 2rem 0;">
+  <img src="/not-a-toon-fork-road.png" alt="A fork in the road: JSON or TOON?" style="max-width: 500px; width: 100%; border-radius: 12px;" />
+</div>
 
 I would not send it as JSON.
 Not with all of those braces,
@@ -28,6 +36,10 @@ TOON bungled the call.
 On GPT-5.5,
 TOON failed on them all.
 
+<div style="text-align: center; margin: 2rem 0;">
+  <img src="/not-a-toon-bungled-count.png" alt="TOON at the chalkboard with wrong numbers, robots holding red X cards" style="max-width: 600px; width: 100%; border-radius: 12px;" />
+</div>
+
 I tried it with YAML.
 TOON said: "I can't eat that."
 I tried it with TOML.
@@ -36,6 +48,14 @@ I tried CSV.
 TOON said: "What is that?"
 I tried MessagePack.
 TOON fled from the chat.
+
+<div style="text-align: center; margin: 2rem 0;">
+  <img src="/not-a-toon-yaml-plate.png" alt="A friendly character offers YAML on a plate, TOON refuses" style="max-width: 600px; width: 100%; border-radius: 12px;" />
+</div>
+
+<div style="text-align: center; margin: 2rem 0;">
+  <img src="/not-a-toon-fled-chat.png" alt="Five format characters chase TOON who runs in panic" style="max-width: 600px; width: 100%; border-radius: 12px;" />
+</div>
 
 ---
 
@@ -88,6 +108,10 @@ Not thirty. Not ninety.
 Local IDs, not full names
 repeated so fighty.
 
+<div style="text-align: center; margin: 2rem 0;">
+  <img src="/not-a-toon-4-vs-90.png" alt="A tiny 4-plank bridge vs a massive sagging 90-plank bridge" style="max-width: 600px; width: 100%; border-radius: 12px;" />
+</div>
+
 TOON had no IDs.
 TOON had no edges.
 TOON wrote `github.com/org/repo/pkg.AuthMiddleware`
@@ -113,6 +137,10 @@ Call five: ninety-two percent bare.
 TOON sent the whole thing again.
 Every symbol. Every pair.
 
+<div style="text-align: center; margin: 2rem 0;">
+  <img src="/not-a-toon-session-dedup.png" alt="GCF delivers less each call while TOON carries the same huge sack every time" style="max-width: 700px; width: 100%; border-radius: 12px;" />
+</div>
+
 "Session dedup," I explained,
 "tracks what's been sent."
 TOON had no sessions.
@@ -136,6 +164,10 @@ Thirty-three billion.
 Round-trips through five formats,
 every language, every one.
 
+<div style="text-align: center; margin: 2rem 0;">
+  <img src="/not-a-toon-33-billion.png" alt="A towering stack of 33 billion round-trips with a green checkmark" style="max-width: 500px; width: 100%; border-radius: 12px;" />
+</div>
+
 JSON: eleven billion.
 YAML: eleven billion too.
 MessagePack, CSV, TOML:
@@ -147,7 +179,7 @@ Swift, Kotlin: all passing.
 Not a single byte bitten.
 
 Zero failures.
-Not one in twenty-three billion tries.
+Not one in thirty-three billion tries.
 TOON published... no fuzz data.
 No round-trips. No tries.
 
@@ -158,6 +190,10 @@ they said with dismay.
 "It's dense! It's compact!
 It's not readable that way!"
 
+<div style="text-align: center; margin: 2rem 0;">
+  <img src="/not-a-toon-humans-cant-read.png" alt="Humans panic while a robot reads GCF at 100% with tea" style="max-width: 600px; width: 100%; border-radius: 12px;" />
+</div>
+
 Neither is protobuf.
 Neither are gzip bytes.
 You don't read the wire format.
@@ -167,6 +203,10 @@ You read what it writes.
 One function call away.
 The human sees JSON.
 The agent sees GCF all day.
+
+<div style="text-align: center; margin: 2rem 0;">
+  <img src="/not-a-toon-agent-human-decode.png" alt="The Agent reads GCF efficiently, decode() transforms it, The Human reads JSON comfortably" style="max-width: 700px; width: 100%; border-radius: 12px;" />
+</div>
 
 The context window savings?
 Already banked, already done.
@@ -187,12 +227,20 @@ not a BLOON or a SPOON.
 Not with any format
 that ends with *-OON.
 
+<div style="text-align: center; margin: 2rem 0;">
+  <img src="/not-a-toon-oons-wrong.png" alt="TOON, PLOON, BLOON, and SPOON defeated on a bench while GCF glows on the podium" style="max-width: 600px; width: 100%; border-radius: 12px;" />
+</div>
+
 I would send it with GCF.
 I would send it today.
 In JSON or YAML
 or TOML or CSV,
 in MessagePack binary,
 in any which way.
+
+<div style="text-align: center; margin: 2rem 0;">
+  <img src="/not-a-toon-parade.png" alt="GCF leads a victory parade with all five format characters" style="max-width: 600px; width: 100%; border-radius: 12px;" />
+</div>
 
 GCF takes your data,
 whatever the source.
@@ -204,6 +252,10 @@ Six languages strong.
 One hundred percent comprehension.
 
 The *-OONs were wrong.
+
+<div style="text-align: center; margin: 2rem 0;">
+  <img src="/not-a-toon-closing.png" alt="The OONs were wrong - GCF triumphant with five format streams" style="max-width: 600px; width: 100%; border-radius: 12px;" />
+</div>
 
 ---
 
