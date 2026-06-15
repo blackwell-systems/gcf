@@ -692,7 +692,7 @@ onMounted(() => {
   color: rgba(255, 255, 255, 0.3);
   text-transform: uppercase;
   letter-spacing: 0.25em;
-  margin-top: 12px;
+  margin-top: 28px;
 }
 
 /* ── Inline code ── */
