@@ -45,7 +45,7 @@ jsonschema.validate(data, existing_schema)
 
 ## How stable is the spec?
 
-[Spec v3.1](https://github.com/blackwell-systems/gcf/blob/main/SPEC.md) is designated Stable. Six implementations at v2.1.0+ (Go v1.2.0), 157 conformance fixtures, 23 billion+ lossless round-trips verified across 5 formats (JSON, YAML, TOML, CSV, MessagePack) and 6 language implementations, cross-language 6x6 matrix passing.
+[Spec v3.1](https://github.com/blackwell-systems/gcf/blob/main/SPEC.md) is designated Stable. Six implementations at v2.1.0+ (Go v1.2.0), 157 conformance fixtures, <strong class="gcf">[23 billion+ lossless round-trips](/guide/lossless-verification)</strong> verified across 5 formats (JSON, YAML, TOML, CSV, MessagePack) and 6 language implementations, cross-language 6x6 matrix passing.
 
 ## Why not just compress JSON with gzip?
 
