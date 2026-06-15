@@ -154,8 +154,8 @@ const languages = [
 }
 
 .lang-icon {
-  width: 48px;
-  height: 48px;
+  width: 55px;
+  height: 55px;
   margin-bottom: 10px;
 }
 
