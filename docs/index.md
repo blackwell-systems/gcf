@@ -12,8 +12,6 @@ hero:
 
 <ButtonBar />
 
-<BeforeAfter />
-
 <ProxyCallout />
 
 <PluginStrip />
@@ -21,5 +19,7 @@ hero:
 <LanguageStrip />
 
 <FeatureCards />
+
+<BeforeAfter />
 
 <HowItWorks />
