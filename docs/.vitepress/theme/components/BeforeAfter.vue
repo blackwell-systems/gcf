@@ -37,7 +37,7 @@
             <span class="ba-label">GCF</span>
             <span class="ba-badge gcf-badge">177 tokens</span>
           </div>
-          <pre class="ba-code"><code>gcf 1 generic
+          <pre class="ba-code"><code>GCF profile=generic
 ## orders [10]{id,customer,total,status,items}
 1001|Acme Corp|49.99|shipped|1
 1002|Globex Inc|150.49|pending|2
