@@ -205,6 +205,22 @@ Bob|standard</code></pre>
             </div>
 
             <div class="grammar-entry">
+              <h4>Distance Groups</h4>
+              <pre class="grammar-code"><code v-if="ready" v-html="highlightGCF(`## targets [3]\n@0 fn handleReq 0.95 lsp\n@1 fn validate 0.87 lsp\n@2 fn connect 0.91 lsp\n\n## related [2]\n@3 fn helper 0.60 ast\n@4 iface Config 0.55 ast`)"></code><code v-else>## targets [3]
+@0 fn handleReq 0.95 lsp
+@1 fn validate 0.87 lsp
+@2 fn connect 0.91 lsp
+
+## related [2]
+@3 fn helper 0.60 ast
+@4 iface Config 0.55 ast</code></pre>
+              <ul class="grammar-notes">
+                <li><code>targets</code>, <code>related</code>, <code>extended</code> by relevance</li>
+                <li>LLM reads count from header, no scanning</li>
+              </ul>
+            </div>
+
+            <div class="grammar-entry">
               <h4>Streaming</h4>
               <pre class="grammar-code"><code v-if="ready" v-html="highlightGCF(`## results [?]{name,kind}\nvalidate|func\nconnect|func\nhandle|func\n##! summary counts=3`)"></code><code v-else>## results [?]{name,kind}
 validate|func
