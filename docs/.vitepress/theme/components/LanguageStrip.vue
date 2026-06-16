@@ -198,10 +198,10 @@ const languages = [
 }
 
 .lang-deps {
-  margin-top: 20px;
+  margin-top: 16px;
   text-align: center;
-  font-size: 1.05rem;
-  color: var(--gcf-blue, #18befc);
-  line-height: 1.6;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.3);
+  letter-spacing: 0.03em;
 }
 </style>
