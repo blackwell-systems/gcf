@@ -8,7 +8,7 @@ GCF guarantees `decode(encode(value)) == value` for every structured value. This
 |--------|------------|----------|
 | JSON | 11,250,000,000+ | 0 |
 | YAML | 21,000,000,000 | 0 |
-| MessagePack | 585,000,000 | 0 |
+| MessagePack | 584,000,000 | 0 |
 | CSV | 335,000,000 | 0 |
 | TOML | 100,000,000 | 0 |
 | **Total** | **33,270,000,000+** | **0** |
@@ -27,12 +27,12 @@ Six language implementations, all passing the same 157 conformance fixtures:
 
 | Language | Package | Conformance | Round-trip fuzz |
 |----------|---------|-------------|-----------------|
-| Rust | gcf | 156/156 | **33B+ multi-format** (definitive suite) |
-| Go | gcf-go | 156/156 | 1B+ (native Go fuzzing) |
-| TypeScript | @blackwell-systems/gcf | 156/156 | Conformance-based |
-| Python | gcf-python | 156/156 | Conformance-based |
-| Swift | gcf-swift | 156/156 | Conformance-based |
-| Kotlin | gcf-kotlin | 156/156 | Conformance-based |
+| Rust | gcf | 157/157 | **33B+ multi-format** (definitive suite) |
+| Go | gcf-go | 157/157 | 1B+ (native Go fuzzing) |
+| TypeScript | @blackwell-systems/gcf | 157/157 | Conformance-based |
+| Python | gcf-python | 157/157 | Conformance-based |
+| Swift | gcf-swift | 157/157 | Conformance-based |
+| Kotlin | gcf-kotlin | 157/157 | Conformance-based |
 
 ### Cross-language matrix
 

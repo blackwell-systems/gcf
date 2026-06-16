@@ -22,7 +22,7 @@ We evaluated GCF across **1,700+ LLM evaluations** spanning 10+ models and 3 pro
 
 **Scale test:** At 1000 orders, JSON (161K tokens) exceeds 200K context limits. TOON (84K) also exceeds effective context on some models. GCF (47K) is the only format that reliably fits.
 
-**Generation:** 28 runs across 9 models. GCF achieves 5/5 validity on every frontier model. TOON's official decoder rejects LLM-generated output on 7 of 9 models. GCF output is 63% smaller than JSON and 33% smaller than TOON.
+**Generation:** 28 runs across 11 models. GCF achieves 5/5 validity on every frontier model. TOON's official decoder rejects LLM-generated output on 7 of 9 models. GCF output is 63% smaller than JSON and 33% smaller than TOON.
 
 **Token efficiency:** 25.5% fewer tokens than TOON and 53% fewer than JSON across 15 real-world datasets (13/15 wins).
 
@@ -352,7 +352,7 @@ The claim that GCF handles any structured data is backed by 33 billion+ round-tr
 |--------|------------|----------|
 | YAML | 21,000,000,000 | 0 |
 | JSON | 11,250,000,000 | 0 |
-| MessagePack | 585,000,000 | 0 |
+| MessagePack | 584,000,000 | 0 |
 | CSV | 335,000,000 | 0 |
 | TOML | 100,000,000 | 0 |
 | **Total** | **33,270,000,000+** | **0** |

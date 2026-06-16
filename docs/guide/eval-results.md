@@ -36,6 +36,7 @@ Every number on the [benchmarks page](/guide/benchmarks) comes from the runs bel
 | Claude Sonnet 4.6 | 200K | **92.3%** (12/13) | IMPOSSIBLE | IMPOSSIBLE |
 | Claude Opus 4.6 (run 1) | 1M | **100%** (13/13) | 100% (13/13) | 100% (13/13) |
 | Claude Opus 4.6 (run 2) | 1M | **100%** (13/13) | 100% (13/13) | 100% (13/13) |
+| GPT-5.5 | - | **100%** (6/6) | 100% (5/5) | 100% (6/6) |
 
 At 1000 orders, JSON (161K tokens) exceeds 200K context. TOON (84K) also exceeds effective context on Sonnet. GCF (47K) is the only format that reliably fits on 200K context models.
 
