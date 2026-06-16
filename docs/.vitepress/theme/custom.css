@@ -75,6 +75,10 @@
   background-color: transparent !important;
 }
 
+.VPNavBarTitle a.title {
+  border-bottom: none !important;
+}
+
 .VPNavBarTitle .logo {
   height: 120px !important;
   width: auto !important;
