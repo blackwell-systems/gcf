@@ -58,7 +58,7 @@
 
 .VPNavBar {
   border-bottom: 1px solid #18befc !important;
-  background: rgba(19, 51, 72, 0.85) !important;
+  background: #1133487d !important;
 }
 
 
@@ -104,7 +104,7 @@
 /* Premium footer */
 .VPFooter {
   border-top: 1px solid #18befc !important;
-  background: rgba(19, 51, 72, 0.85) !important;
+  background: #1133487d !important;
   backdrop-filter: blur(16px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
 }
