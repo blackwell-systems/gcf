@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const languages = [
   { name: 'Go', version: 'v1.2.0', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg', url: 'https://github.com/blackwell-systems/gcf-go', registry: 'pkg.go.dev' },
-  { name: 'Rust', version: 'v2.1.0', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/rust/rust-plain.svg', url: 'https://github.com/blackwell-systems/gcf-rust', registry: 'crates.io' },
+  { name: 'Rust', version: 'v2.1.0', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/rust/rust-original.svg', url: 'https://github.com/blackwell-systems/gcf-rust', registry: 'crates.io' },
   { name: 'TypeScript', version: 'v2.1.0', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg', url: 'https://github.com/blackwell-systems/gcf-typescript', registry: 'npm' },
   { name: 'Python', version: 'v2.1.0', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg', url: 'https://github.com/blackwell-systems/gcf-python', registry: 'PyPI' },
   { name: 'Swift', version: 'v2.1.0', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swift/swift-original.svg', url: 'https://github.com/blackwell-systems/gcf-swift', registry: 'SPM' },
@@ -161,8 +161,6 @@ const languages = [
   width: 65px;
   height: 65px;
   margin-bottom: 10px;
-  filter: brightness(0) invert(1);
-  opacity: 0.85;
 }
 
 .lang-name {
