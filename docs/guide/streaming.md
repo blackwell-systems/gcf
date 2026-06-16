@@ -111,6 +111,21 @@ Adding real streaming to TOON would require:
 
 This is not a feature addition. It is a fundamental redesign of the format's header contract. Their spec mandates upfront counts in normative grammar. Every conforming decoder rejects count mismatches. There is no backward-compatible path.
 
+## Both profiles support streaming
+
+Streaming is not graph-only. The generic profile uses the same `[?]` deferred count and `##! summary` trailer:
+
+```
+GCF profile=generic
+## orders [?]{id,customer,total,status}
+1001|Acme Corp|249.99|shipped        ← emitted at 10ms
+1002|Globex Inc|150.49|pending       ← emitted at 20ms
+1003|Initech LLC|250.99|processing   ← emitted at 30ms
+##! summary counts=3
+```
+
+Any array section in either profile can use `[?]` instead of `[N]`. The deferred count is a grammar-level feature, not a profile-level feature.
+
 ## GCF's design advantage
 
 GCF was designed with extensibility in mind:
