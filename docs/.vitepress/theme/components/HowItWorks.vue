@@ -221,7 +221,7 @@ Bob|standard</code></pre>
             </div>
 
             <div class="grammar-entry">
-              <h4>Streaming</h4>
+              <h4>Streaming <span class="both-badge">both profiles</span></h4>
               <pre class="grammar-code"><code v-if="ready" v-html="highlightGCF(`## results [?]{name,kind}\nvalidate|func\nconnect|func\nhandle|func\n##! summary counts=3`)"></code><code v-else>## results [?]{name,kind}
 validate|func
 connect|func
@@ -414,6 +414,19 @@ handle|func
   line-height: 1.6;
   margin: 0 0 0.75rem 0;
   font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+}
+
+.both-badge {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--gcf-blue, #18befc);
+  background: rgba(24, 190, 252, 0.08);
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-left: 6px;
+  vertical-align: middle;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .grammar-code code {
