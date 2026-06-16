@@ -10,6 +10,7 @@ const languages = [
 </script>
 
 <template>
+  <div class="lang-section">
   <div class="lang-strip">
     <div class="lang-strip-inner">
       <div class="lang-grid">
@@ -23,6 +24,7 @@ const languages = [
       </div>
       <p class="lang-deps">Zero runtime dependencies, zero supply chain risk. MIT licensed.</p>
     </div>
+  </div>
   </div>
 </template>
 
@@ -97,6 +99,12 @@ const languages = [
   .proxy-right {
     flex-direction: column;
   }
+}
+
+.lang-section {
+  background: rgba(17, 51, 72, 0.25);
+  border-top: 1px solid rgba(24, 190, 252, 0.06);
+  border-bottom: 1px solid rgba(24, 190, 252, 0.06);
 }
 
 .lang-strip {
