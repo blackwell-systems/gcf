@@ -58,7 +58,7 @@ import json,sys
 data=json.load(sys.stdin)
 for ext in data.get('results',[])[0].get('extensions',[]):
     for stat in ext.get('statistics',[]):
-        if stat['statisticName']=='install':
+        if stat['statisticName']=='downloadCount':
             print(int(stat['value']))
             sys.exit()
 print(0)
