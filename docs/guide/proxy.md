@@ -252,7 +252,6 @@ Don't want to self-host? A fully managed hosted proxy is available at [blackwell
 ## Links
 
 - [GitHub](https://github.com/blackwell-systems/gcf-proxy)
-- [Roadmap](https://github.com/blackwell-systems/gcf-proxy/blob/main/ROADMAP.md)
 - [PyPI](https://pypi.org/project/gcf-proxy/)
 - [npm](https://www.npmjs.com/package/@blackwell-systems/gcf-proxy)
 - [Claude Code Plugin](https://github.com/blackwell-systems/gcf-claude-plugin)
