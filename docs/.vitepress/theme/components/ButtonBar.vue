@@ -22,20 +22,24 @@
 .button-bar-inner {
   display: flex;
   justify-content: center;
-  gap: 14px;
+  gap: 12px;
   flex-wrap: wrap;
 }
 
 .bb-btn {
   display: inline-flex;
   align-items: center;
-  padding: 12px 28px;
+  padding: 14px 32px;
   font-size: 0.9rem;
   font-weight: 600;
-  border-radius: 10px;
+  border-radius: 12px;
   text-decoration: none;
-  transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
   letter-spacing: 0.01em;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              background 0.3s,
+              border-color 0.3s,
+              color 0.3s;
 }
 
 .bb-brand {
@@ -43,37 +47,39 @@
   color: #000;
   font-weight: 700;
   gap: 8px;
-  box-shadow: 0 0 20px rgba(24, 190, 252, 0.2);
+  box-shadow: 0 0 24px rgba(24, 190, 252, 0.25),
+              0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .bb-brand:hover {
   background: #fff;
   color: #000;
-  box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
-  transform: translateY(-1px);
+  box-shadow: 0 0 36px rgba(255, 255, 255, 0.3),
+              0 6px 20px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
 }
 
 .bb-arrow {
-  transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   font-size: 1.1em;
 }
 
 .bb-brand:hover .bb-arrow {
-  transform: translateX(3px);
+  transform: translateX(4px);
 }
 
 .bb-alt {
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: var(--vp-c-text-1);
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(4px);
+  border: 1px solid rgba(24, 190, 252, 0.12);
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(24, 190, 252, 0.04);
 }
 
 .bb-alt:hover {
-  border-color: var(--gcf-blue, #18befc);
-  color: var(--gcf-blue, #18befc);
-  background: rgba(24, 190, 252, 0.06);
-  transform: translateY(-1px);
+  border-color: rgba(24, 190, 252, 0.3);
+  color: #fff;
+  background: rgba(24, 190, 252, 0.08);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(24, 190, 252, 0.1);
 }
 
 @media (max-width: 640px) {
