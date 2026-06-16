@@ -116,111 +116,108 @@ onMounted(async () => {
         <h2 class="section-title">GCF Grammar</h2>
         <p class="section-subtitle">Seven building blocks. No ambiguity.</p>
 
-        <div class="grammar-grid">
-          <div class="grammar-card">
-            <h4>Section Headers</h4>
-            <pre class="grammar-code"><code v-if="ready" v-html="highlightGCF(`## symbols [4]{kind,qname}\n## edges [3]\n## targets\n##! summary`)"></code><code v-else>## symbols [4]{kind,qname}
+        <div class="grammar-columns">
+          <div class="grammar-column">
+            <div class="grammar-column-header">Generic Profile</div>
+
+            <div class="grammar-entry">
+              <h4>Section Headers</h4>
+              <pre class="grammar-code"><code v-if="ready" v-html="highlightGCF(`## symbols [4]{kind,qname}\n## edges [3]\n## targets\n##! summary`)"></code><code v-else>## symbols [4]{kind,qname}
 ## edges [3]
 ## targets
 ##! summary</code></pre>
-            <ul class="grammar-notes">
-              <li><code>##</code> section start</li>
-              <li><code>[N]</code> element count</li>
-              <li><code>{fields}</code> inline schema</li>
-              <li><code>[?]</code> deferred count (streaming)</li>
-              <li><code>##!</code> summary trailer</li>
-            </ul>
-          </div>
+              <ul class="grammar-notes">
+                <li><code>##</code> section start</li>
+                <li><code>[N]</code> element count</li>
+                <li><code>{fields}</code> inline schema</li>
+                <li><code>[?]</code> deferred count (streaming)</li>
+                <li><code>##!</code> summary trailer</li>
+              </ul>
+            </div>
 
-          <div class="grammar-card">
-            <h4>Symbols</h4>
-            <pre class="grammar-code"><code v-if="ready" v-html="highlightGCF(`@1 func handleReq 0.95\n@2 iface AuthCfg 0.60 ast\n@3\n@4 func revoke 0.91`)"></code><code v-else>@1 func handleReq 0.95
-@2 iface AuthCfg 0.60 ast
-@3
-@4 func revoke 0.91</code></pre>
-            <ul class="grammar-notes">
-              <li><code>@N</code> local ID</li>
-              <li><code>kind</code> symbol type</li>
-              <li><code>qname</code> qualified name</li>
-              <li><code>score</code> relevance (0-1)</li>
-              <li><code>provenance</code> source tag</li>
-              <li>Bare <code>@N</code> = session ref (known)</li>
-            </ul>
-          </div>
-
-          <div class="grammar-card">
-            <h4>Edges</h4>
-            <pre class="grammar-code"><code v-if="ready" v-html="highlightGCF(`@2<@1 calls\n@3<@1 calls\n@4<@2 implements`)"></code><code v-else>@2<@1 calls
-@3<@1 calls
-@4<@2 implements</code></pre>
-            <ul class="grammar-notes">
-              <li><code>@target&lt;@source</code> direction</li>
-              <li><code>type</code> relationship kind</li>
-              <li>One edge per line</li>
-              <li>No JSON nesting overhead</li>
-            </ul>
-          </div>
-
-          <div class="grammar-card">
-            <h4>Tabular Data</h4>
-            <pre class="grammar-code"><code v-if="ready" v-html="highlightGCF(`## users [3]{name,role,active}\nAlice|admin|true\nBob|dev|true\nCarol|dev|false`)"></code><code v-else>## users [3]{name,role,active}
+            <div class="grammar-entry">
+              <h4>Tabular Data</h4>
+              <pre class="grammar-code"><code v-if="ready" v-html="highlightGCF(`## users [3]{name,role,active}\nAlice|admin|true\nBob|dev|true\nCarol|dev|false`)"></code><code v-else>## users [3]{name,role,active}
 Alice|admin|true
 Bob|dev|true
 Carol|dev|false</code></pre>
-            <ul class="grammar-notes">
-              <li><code>|</code> pipe-separated values</li>
-              <li>Fields declared once in header</li>
-              <li>No quotes unless needed</li>
-              <li>No braces, no colons per row</li>
-            </ul>
-          </div>
+              <ul class="grammar-notes">
+                <li><code>|</code> pipe-separated values</li>
+                <li>Fields declared once in header</li>
+                <li>No quotes unless needed</li>
+                <li>No braces, no colons per row</li>
+              </ul>
+            </div>
 
-          <div class="grammar-card">
-            <h4>Scalars &amp; Key-Value</h4>
-            <pre class="grammar-code"><code v-if="ready" v-html="highlightGCF('name=Alice\nage=30\nactive=true\nmissing=-\nempty=&quot;&quot;')"></code><code v-else>name=Alice
+            <div class="grammar-entry">
+              <h4>Scalars &amp; Key-Value</h4>
+              <pre class="grammar-code"><code v-if="ready" v-html="highlightGCF('name=Alice\nage=30\nactive=true\nmissing=-\nempty=&quot;&quot;')"></code><code v-else>name=Alice
 age=30
 active=true
 missing=-
 empty=""</code></pre>
-            <ul class="grammar-notes">
-              <li><code>key=value</code> for primitives</li>
-              <li><code>-</code> null</li>
-              <li><code>~</code> absent (tabular only)</li>
-              <li><code>""</code> empty string</li>
-              <li>Quote if value contains <code>|</code> or newline</li>
-            </ul>
-          </div>
+              <ul class="grammar-notes">
+                <li><code>key=value</code> for primitives</li>
+                <li><code>-</code> null, <code>~</code> absent, <code>""</code> empty string</li>
+                <li>Quote if value contains <code>|</code> or newline</li>
+              </ul>
+            </div>
 
-          <div class="grammar-card">
-            <h4>Nested Objects</h4>
-            <pre class="grammar-code"><code v-if="ready" v-html="highlightGCF(`## orders [2]{id,total,customer}\n@0 1001|249.99|^{name,tier}\nAlice|premium\n@1 1002|89.50|^\nBob|standard`)"></code><code v-else>## orders [2]{id,total,customer}
+            <div class="grammar-entry">
+              <h4>Nested Objects</h4>
+              <pre class="grammar-code"><code v-if="ready" v-html="highlightGCF(`## orders [2]{id,total,customer}\n@0 1001|249.99|^{name,tier}\nAlice|premium\n@1 1002|89.50|^\nBob|standard`)"></code><code v-else>## orders [2]{id,total,customer}
 @0 1001|249.99|^{name,tier}
 Alice|premium
 @1 1002|89.50|^
 Bob|standard</code></pre>
-            <ul class="grammar-notes">
-              <li><code>^</code> attachment marker in cell</li>
-              <li><code>^{fields}</code> declares inline schema (row 0)</li>
-              <li>Subsequent rows use bare <code>^</code></li>
-              <li>Nested values follow on next line</li>
-              <li>Positional, no field names repeated</li>
-            </ul>
+              <ul class="grammar-notes">
+                <li><code>^{fields}</code> attachment with inline schema</li>
+                <li>Subsequent rows use bare <code>^</code></li>
+                <li>Nested values follow on next line</li>
+              </ul>
+            </div>
           </div>
 
-          <div class="grammar-card">
-            <h4>Streaming</h4>
-            <pre class="grammar-code"><code v-if="ready" v-html="highlightGCF(`## results [?]{name,kind}\nvalidate|func\nconnect|func\nhandle|func\n##! summary counts=3`)"></code><code v-else>## results [?]{name,kind}
+          <div class="grammar-column">
+            <div class="grammar-column-header">Graph Profile</div>
+
+            <div class="grammar-entry">
+              <h4>Symbols</h4>
+              <pre class="grammar-code"><code v-if="ready" v-html="highlightGCF(`@1 func handleReq 0.95\n@2 iface AuthCfg 0.60 ast\n@3\n@4 func revoke 0.91`)"></code><code v-else>@1 func handleReq 0.95
+@2 iface AuthCfg 0.60 ast
+@3
+@4 func revoke 0.91</code></pre>
+              <ul class="grammar-notes">
+                <li><code>@N</code> local ID, <code>kind</code>, <code>qname</code>, <code>score</code>, <code>provenance</code></li>
+                <li>Bare <code>@N</code> = session ref (already transmitted)</li>
+              </ul>
+            </div>
+
+            <div class="grammar-entry">
+              <h4>Edges</h4>
+              <pre class="grammar-code"><code v-if="ready" v-html="highlightGCF(`@2<@1 calls\n@3<@1 calls\n@4<@2 implements`)"></code><code v-else>@2<@1 calls
+@3<@1 calls
+@4<@2 implements</code></pre>
+              <ul class="grammar-notes">
+                <li><code>@target&lt;@source type</code></li>
+                <li>One edge per line, no nesting overhead</li>
+              </ul>
+            </div>
+
+            <div class="grammar-entry">
+              <h4>Streaming</h4>
+              <pre class="grammar-code"><code v-if="ready" v-html="highlightGCF(`## results [?]{name,kind}\nvalidate|func\nconnect|func\nhandle|func\n##! summary counts=3`)"></code><code v-else>## results [?]{name,kind}
 validate|func
 connect|func
 handle|func
 ##! summary counts=3</code></pre>
-            <ul class="grammar-notes">
-              <li><code>[?]</code> count unknown upfront</li>
-              <li>Rows emit instantly, O(1) memory</li>
-              <li><code>##!</code> trailer finalizes count</li>
-              <li>Works for both profiles</li>
-              <li>Zero buffering, zero latency</li>
-            </ul>
+              <ul class="grammar-notes">
+                <li><code>[?]</code> count unknown upfront</li>
+                <li>Rows emit instantly, O(1) memory</li>
+                <li><code>##!</code> trailer finalizes count</li>
+                <li>Zero buffering, zero latency</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -353,28 +350,42 @@ handle|func
   margin-top: 4rem;
 }
 
-.grammar-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1.25rem;
+.grammar-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
 }
 
-.grammar-grid > * {
-  flex: 0 0 calc(33.333% - 1rem);
-}
-
-.grammar-card {
+.grammar-column {
   background: var(--vp-c-bg-soft);
   border: 1px solid var(--vp-c-divider);
   border-radius: 12px;
-  padding: 1.25rem;
+  padding: 1.5rem;
 }
 
-.grammar-card h4 {
-  font-size: 1rem;
+.grammar-column-header {
+  font-size: 0.75rem;
   font-weight: 700;
-  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--gcf-blue, #18befc);
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--vp-c-divider);
+}
+
+.grammar-entry {
+  margin-bottom: 1.5rem;
+}
+
+.grammar-entry:last-child {
+  margin-bottom: 0;
+}
+
+.grammar-entry h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
 }
 
 .grammar-code {
@@ -414,14 +425,8 @@ handle|func
   .cards {
     grid-template-columns: 1fr;
   }
-  .grammar-grid {
+  .grammar-columns {
     grid-template-columns: 1fr;
-  }
-}
-
-@media (min-width: 769px) and (max-width: 1024px) {
-  .grammar-grid {
-    grid-template-columns: repeat(2, 1fr);
   }
 }
 </style>
