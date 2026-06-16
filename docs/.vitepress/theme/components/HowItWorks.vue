@@ -249,17 +249,19 @@ handle|func
 }
 
 .section-title {
-  font-size: 2rem;
-  font-weight: 800;
+  font-size: 1.5rem;
+  font-weight: 700;
   text-align: center;
   margin-bottom: 0.5rem;
+  letter-spacing: -0.01em;
 }
 
 .section-subtitle {
   text-align: center;
   color: var(--vp-c-text-2);
   margin-bottom: 1rem;
-  font-size: 1.1rem;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
 }
 
 .section-graph-note {

@@ -26,11 +26,12 @@
 }
 
 .proxy-headline {
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: var(--gcf-blue, #18befc);
   text-align: center;
   margin-bottom: 12px;
+  letter-spacing: -0.01em;
 }
 
 .proxy-callout {

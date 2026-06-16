@@ -101,16 +101,18 @@ onMounted(async () => {
 }
 
 .ba-title {
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: var(--vp-c-text-1);
   margin: 0 0 8px;
+  letter-spacing: -0.01em;
 }
 
 .ba-subtitle {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   color: var(--vp-c-text-2);
   margin: 0 0 32px;
+  letter-spacing: 0.02em;
 }
 
 .ba-grid {
