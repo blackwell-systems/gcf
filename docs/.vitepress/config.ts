@@ -50,9 +50,9 @@ export default defineConfig({
       {
         text: 'Advanced',
         items: [
+          { text: 'Streaming Encoding', link: '/guide/streaming' },
           { text: 'Session Deduplication', link: '/guide/sessions' },
           { text: 'Delta Encoding', link: '/guide/delta' },
-          { text: 'Streaming Encoding', link: '/guide/streaming' },
         ],
       },
       {
