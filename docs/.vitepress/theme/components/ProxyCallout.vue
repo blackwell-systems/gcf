@@ -90,13 +90,24 @@
   text-decoration: underline;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
+  .proxy-wrap {
+    padding: 0 16px 12px;
+  }
   .proxy-callout {
     flex-direction: column;
     text-align: center;
+    padding: 16px;
   }
   .proxy-right {
     flex-direction: column;
+    width: 100%;
+  }
+  .proxy-cmd {
+    font-size: 0.72rem;
+    padding: 6px 10px;
+    white-space: normal;
+    word-break: break-all;
   }
 }
 </style>

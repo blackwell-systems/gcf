@@ -215,3 +215,57 @@ code.terminal { color: #4ade80; background: #0a1a0a; border: 1px solid #1a3a1a; 
   overflow-x: clip;
 }
 
+/* ── Mobile pass ── */
+@media (max-width: 768px) {
+  :root {
+    --vp-nav-height: 56px;
+  }
+
+  .VPNavBarTitle .logo {
+    height: 48px !important;
+  }
+
+  .VPHero .container {
+    padding: 0 16px !important;
+  }
+
+  .VPHero .VPImage {
+    max-width: 100% !important;
+    margin-top: 0 !important;
+  }
+
+  .VPHero .text {
+    font-size: 1.6rem !important;
+    line-height: 1.3 !important;
+  }
+
+  .VPHero .tagline {
+    font-size: 0.9rem !important;
+    line-height: 1.6 !important;
+  }
+
+  .VPHero .actions {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+
+  .VPHero .actions .VPButton {
+    font-size: 0.85rem !important;
+    padding: 8px 16px !important;
+  }
+
+  .VPSidebar {
+    padding-left: 16px !important;
+    padding-right: 12px !important;
+  }
+
+  .VPDoc .content {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  .VPFooter .message {
+    font-size: 0.85rem !important;
+  }
+}
+

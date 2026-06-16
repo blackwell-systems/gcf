@@ -75,4 +75,19 @@
   background: rgba(24, 190, 252, 0.06);
   transform: translateY(-1px);
 }
+
+@media (max-width: 640px) {
+  .button-bar {
+    padding: 0 16px 24px;
+  }
+  .button-bar-inner {
+    gap: 8px;
+  }
+  .bb-btn {
+    padding: 10px 16px;
+    font-size: 0.8rem;
+    width: 100%;
+    justify-content: center;
+  }
+}
 </style>
