@@ -1,3 +1,50 @@
+<script setup>
+import { ref, onMounted } from 'vue'
+import { initParser, highlightGCF, highlightJSON } from '../gcf-highlight'
+
+const ready = ref(false)
+
+const jsonCode = `{
+  "orders": [
+    {"id": 1001, "customer": "Acme Corp",
+     "total": 49.99, "status": "shipped",
+     "items": 1},
+    {"id": 1002, "customer": "Globex Inc",
+     "total": 150.49, "status": "pending",
+     "items": 2},
+    {"id": 1003, "customer": "Initech LLC",
+     "total": 250.99, "status": "processing",
+     "items": 3},`
+
+const jsonFade = `    {"id": 1004, ...},
+    {"id": 1005, ...},
+    {"id": 1006, ...},
+    {"id": 1007, ...},
+    {"id": 1008, ...},
+    {"id": 1009, ...},
+    {"id": 1010, ...}
+  ]
+}`
+
+const gcfCode = `GCF profile=generic
+## orders [10]{id,customer,total,status,items}
+1001|Acme Corp|49.99|shipped|1
+1002|Globex Inc|150.49|pending|2
+1003|Initech LLC|250.99|processing|3
+1004|Umbrella Co|351.49|delivered|4
+1005|Stark Ind|451.99|shipped|5
+1006|Wayne Ent|552.49|pending|6
+1007|Oscorp|652.99|shipped|7
+1008|LexCorp|753.49|processing|8
+1009|Cyberdyne|853.99|delivered|9
+1010|Soylent|954.49|shipped|10`
+
+onMounted(async () => {
+  await initParser()
+  ready.value = true
+})
+</script>
+
 <template>
   <div class="ba-section">
     <div class="ba-inner">
@@ -12,26 +59,8 @@
             <span class="ba-badge json-badge">458 tokens</span>
           </div>
           <div class="ba-code-wrap">
-            <pre class="ba-code"><code>{
-  "orders": [
-    {"id": 1001, "customer": "Acme Corp",
-     "total": 49.99, "status": "shipped",
-     "items": 1},
-    {"id": 1002, "customer": "Globex Inc",
-     "total": 150.49, "status": "pending",
-     "items": 2},
-    {"id": 1003, "customer": "Initech LLC",
-     "total": 250.99, "status": "processing",
-     "items": 3},
-    <span class="ba-fade">{"id": 1004, ...},
-    {"id": 1005, ...},
-    {"id": 1006, ...},
-    {"id": 1007, ...},
-    {"id": 1008, ...},
-    {"id": 1009, ...},
-    {"id": 1010, ...}</span>
-  ]
-}</code></pre>
+            <pre class="ba-code"><code v-if="ready" v-html="highlightJSON(jsonCode)"></code><code v-else>{{ jsonCode }}</code></pre>
+            <pre class="ba-code ba-faded"><code>{{ jsonFade }}</code></pre>
           </div>
         </div>
 
@@ -42,18 +71,7 @@
             <span class="ba-badge gcf-badge">177 tokens</span>
           </div>
           <div class="ba-code-wrap">
-            <pre class="ba-code"><code>GCF profile=generic
-## orders [10]{id,customer,total,status,items}
-1001|Acme Corp|49.99|shipped|1
-1002|Globex Inc|150.49|pending|2
-1003|Initech LLC|250.99|processing|3
-1004|Umbrella Co|351.49|delivered|4
-1005|Stark Ind|451.99|shipped|5
-1006|Wayne Ent|552.49|pending|6
-1007|Oscorp|652.99|shipped|7
-1008|LexCorp|753.49|processing|8
-1009|Cyberdyne|853.99|delivered|9
-1010|Soylent|954.49|shipped|10</code></pre>
+            <pre class="ba-code"><code v-if="ready" v-html="highlightGCF(gcfCode)"></code><code v-else>{{ gcfCode }}</code></pre>
           </div>
         </div>
       </div>
@@ -206,14 +224,15 @@
   font-size: 0.72rem;
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.5);
+  white-space: pre;
+}
+
+.ba-faded {
+  opacity: 0.25;
 }
 
 .gcf-card .ba-code code {
   color: rgba(255, 255, 255, 0.7);
-}
-
-.ba-fade {
-  opacity: 0.25;
 }
 
 /* Savings bar */
