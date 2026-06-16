@@ -30,9 +30,9 @@
   justify-content: space-between;
   gap: 24px;
   padding: 20px 28px;
-  background: #1133487d;
-  border: 1px solid #18befc;
-  border-radius: 12px;
+  background: rgba(24, 190, 252, 0.03);
+  border: 1px solid rgba(24, 190, 252, 0.15);
+  border-radius: 14px;
   text-align: left;
 }
 

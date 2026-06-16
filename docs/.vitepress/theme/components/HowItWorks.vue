@@ -278,9 +278,9 @@ handle|func
 }
 
 .card {
-  background: var(--vp-c-bg-soft);
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 12px;
+  background: rgba(24, 190, 252, 0.03);
+  border: 1px solid rgba(24, 190, 252, 0.1);
+  border-radius: 14px;
   padding: 1.5rem;
   position: relative;
 }
@@ -373,9 +373,9 @@ handle|func
 }
 
 .grammar-column {
-  background: var(--vp-c-bg-soft);
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 12px;
+  background: rgba(24, 190, 252, 0.03);
+  border: 1px solid rgba(24, 190, 252, 0.1);
+  border-radius: 14px;
   padding: 1.5rem;
 }
 
@@ -387,7 +387,7 @@ handle|func
   color: var(--gcf-blue, #18befc);
   margin-bottom: 1.25rem;
   padding-bottom: 0.75rem;
-  border-bottom: 1px solid var(--vp-c-divider);
+  border-bottom: 1px solid rgba(24, 190, 252, 0.1);
 }
 
 .grammar-entry {

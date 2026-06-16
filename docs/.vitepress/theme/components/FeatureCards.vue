@@ -68,9 +68,18 @@ const features = [
 
 .feature-card {
   padding: 24px;
-  border: 1px solid var(--vp-c-border);
-  border-radius: 12px;
-  background: var(--vp-c-bg-soft);
+  border: 1px solid rgba(24, 190, 252, 0.1);
+  border-radius: 14px;
+  background: rgba(24, 190, 252, 0.03);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s;
+}
+
+.feature-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(24, 190, 252, 0.25);
+  box-shadow: 0 8px 32px rgba(24, 190, 252, 0.08);
 }
 
 .feature-icon {

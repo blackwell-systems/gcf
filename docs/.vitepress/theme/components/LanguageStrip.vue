@@ -141,17 +141,20 @@ const languages = [
   flex-direction: column;
   align-items: center;
   padding: 20px 12px 16px;
-  border: 1px solid var(--vp-c-border);
-  border-radius: 10px;
-  background: var(--vp-c-bg-soft);
+  border: 1px solid rgba(24, 190, 252, 0.1);
+  border-radius: 14px;
+  background: rgba(24, 190, 252, 0.03);
   text-decoration: none;
-  transition: all 0.15s;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s;
 }
 
 .lang-card:hover {
-  border-color: var(--gcf-blue, #18befc);
-  background: color-mix(in srgb, var(--gcf-blue, #18befc) 5%, var(--vp-c-bg-soft));
+  border-color: rgba(24, 190, 252, 0.25);
+  background: rgba(24, 190, 252, 0.06);
   transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(24, 190, 252, 0.08);
 }
 
 .lang-icon {
