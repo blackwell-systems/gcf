@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const languages = [
   { name: 'Go', version: 'v1.2.0', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg', url: 'https://github.com/blackwell-systems/gcf-go', registry: 'pkg.go.dev' },
-  { name: 'Rust', version: 'v2.1.0', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/rust/rust-original.svg', url: 'https://github.com/blackwell-systems/gcf-rust', registry: 'crates.io' },
+  { name: 'Rust', version: 'v2.1.0', icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/rust.svg', url: 'https://github.com/blackwell-systems/gcf-rust', registry: 'crates.io', invert: true },
   { name: 'TypeScript', version: 'v2.1.0', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg', url: 'https://github.com/blackwell-systems/gcf-typescript', registry: 'npm' },
   { name: 'Python', version: 'v2.1.0', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg', url: 'https://github.com/blackwell-systems/gcf-python', registry: 'PyPI' },
   { name: 'Swift', version: 'v2.1.0', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swift/swift-original.svg', url: 'https://github.com/blackwell-systems/gcf-swift', registry: 'SPM' },
@@ -14,7 +14,7 @@ const languages = [
     <div class="lang-strip-inner">
       <div class="lang-grid">
         <a v-for="lang in languages" :key="lang.name" :href="lang.url" target="_blank" class="lang-card">
-          <img :src="lang.icon" :alt="lang.name" class="lang-icon" />
+          <img :src="lang.icon" :alt="lang.name" :class="['lang-icon', { 'lang-icon-invert': lang.invert }]" />
           <div class="lang-name">{{ lang.name }}</div>
           <div class="lang-version">{{ lang.version }}</div>
           <div class="lang-check">157/157</div>
@@ -161,6 +161,11 @@ const languages = [
   width: 65px;
   height: 65px;
   margin-bottom: 10px;
+}
+
+.lang-icon-invert {
+  filter: brightness(0) invert(1);
+  opacity: 0.85;
 }
 
 .lang-name {

@@ -37,7 +37,8 @@ const gcfCode = `GCF profile=generic
 1007|Oscorp|652.99|shipped|7
 1008|LexCorp|753.49|processing|8
 1009|Cyberdyne|853.99|delivered|9
-1010|Soylent|954.49|shipped|10`
+1010|Soylent|954.49|shipped|10
+`
 
 onMounted(async () => {
   await initParser()
