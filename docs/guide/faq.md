@@ -22,7 +22,7 @@ Yes. No model has ever been trained on GCF. The format didn't exist before we bu
 
 GCF handles data from any format. If your pipeline produces YAML, parse it, call `encodeGeneric()`. Same for TOML, CSV, MessagePack, or anything else that deserializes to structured values.
 
-We've verified this lossless across 11 billion YAML round-trips and 100 million TOML round-trips. GCF is 36% fewer tokens than YAML on the same data. The format decisions that make GCF less human-readable (positional fields, no repeated keys, pipe-delimited rows) are exactly what make it more LLM-readable and more token-efficient.
+We've verified this lossless across 33 billion+ round-trips in 5 formats (JSON 11.25B, YAML 21B, MessagePack 584M, CSV 335M, TOML 100M). GCF is 36% fewer tokens than YAML on the same data. The format decisions that make GCF less human-readable (positional fields, no repeated keys, pipe-delimited rows) are exactly what make it more LLM-readable and more token-efficient.
 
 ## What if my consumer can't parse GCF?
 

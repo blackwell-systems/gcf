@@ -80,7 +80,7 @@ GCF does not encode JSON. GCF encodes structured values. The source format is ir
 
 To prove this was not theoretical, the fuzz testing started. Not hundreds of round-trips. Not thousands. Billions.
 
-JSON: 11.25 billion round-trips. YAML: 21 billion. MessagePack: 585 million. CSV: 335 million. TOML: 100 million. Total: 33 billion, 270 million. Zero failures. Not one mismatched value in 33 billion attempts.
+JSON: 11.25 billion round-trips. YAML: 21 billion. MessagePack: 584 million. CSV: 335 million. TOML: 100 million. Total: 33 billion, 269 million. Zero failures. Not one mismatched value in 33 billion attempts.
 
 The Rust implementation drove the headline numbers: 2.94 million JSON round-trips per second across 10 cores. The 10-billion-JSON run finished in 56 minutes. The 10-billion-YAML run took 10.7 hours. They ran overnight because the numbers needed to be undeniable.
 
