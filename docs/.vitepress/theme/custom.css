@@ -49,6 +49,11 @@
   width: 100% !important;
 }
 
+.VPHero .main {
+  display: flex !important;
+  align-items: center !important;
+}
+
 
 /* Premium nav */
 .VPNav {
