@@ -19,49 +19,6 @@
   --vp-c-bg-soft: #111 !important;
 }
 
-/* Animated gradient mesh behind hero */
-.VPHero {
-  position: relative;
-  overflow: hidden;
-}
-
-.VPHero::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background:
-    radial-gradient(ellipse at 20% 50%, rgba(24, 190, 252, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, rgba(24, 190, 252, 0.06) 0%, transparent 40%),
-    radial-gradient(ellipse at 60% 80%, rgba(24, 190, 252, 0.05) 0%, transparent 45%),
-    radial-gradient(ellipse at 40% 30%, rgba(24, 190, 252, 0.04) 0%, transparent 35%);
-  animation: mesh-drift 20s ease-in-out infinite alternate;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.VPHero > * {
-  position: relative;
-  z-index: 1;
-}
-
-@keyframes mesh-drift {
-  0% {
-    transform: translate(0%, 0%) rotate(0deg);
-  }
-  33% {
-    transform: translate(5%, -3%) rotate(1deg);
-  }
-  66% {
-    transform: translate(-3%, 5%) rotate(-1deg);
-  }
-  100% {
-    transform: translate(2%, -2%) rotate(0.5deg);
-  }
-}
-
 /* Hide hero name entirely */
 .VPHero .name {
   display: none !important;
