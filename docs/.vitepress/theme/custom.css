@@ -54,13 +54,6 @@
   max-height: none !important;
   width: 100% !important;
   margin-top: 13px !important;
-  filter: drop-shadow(0 0 20px rgba(24, 190, 252, 0.15));
-  animation: hero-glow 4s ease-in-out infinite alternate;
-}
-
-@keyframes hero-glow {
-  from { filter: drop-shadow(0 0 20px rgba(24, 190, 252, 0.1)); }
-  to { filter: drop-shadow(0 0 40px rgba(24, 190, 252, 0.25)); }
 }
 
 /* Hero typography */
