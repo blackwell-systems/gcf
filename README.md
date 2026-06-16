@@ -45,11 +45,11 @@ pip install gcf-proxy
 | | GCF | TOON | JSON |
 |---|---|---|---|
 | **Comprehension** (23 runs, 10 models) | **90.7%** | 68.5% | 53.6% |
-| **Generation** (28 runs, 9 models) | **5/5** | 1.0/5 | 5.0/5 |
+| **Generation** (28 runs, 11 models) | **5/5** | 1.0/5 | 5.0/5 |
 | **Input tokens** (500 symbols) | **11,090** | 16,378 | 53,341 |
 | **Output tokens** (100 symbols) | **5,976** | 8,937 | 16,121 |
 
-GCF wins 13/15 datasets on the expanded [token efficiency benchmark](https://github.com/blackwell-systems/toon/tree/gcf-comparison). Full results: [gcformat.com/guide/benchmarks](https://gcformat.com/guide/benchmarks.html)
+GCF wins 13/15 datasets on the expanded [token efficiency benchmark](https://github.com/blackwell-systems/toon). Full results: [gcformat.com/guide/benchmarks](https://gcformat.com/guide/benchmarks.html)
 
 ---
 
@@ -156,6 +156,7 @@ No other format has these. They compound across multi-turn agent interactions.
 | VS Code | `ext install blackwell-systems.gcf-vscode` | [gcf-vscode](https://marketplace.visualstudio.com/items?itemName=blackwell-systems.gcf-vscode) (syntax highlighting) |
 | n8n | `npm install n8n-nodes-gcf` | [gcf-n8n-nodes](https://github.com/blackwell-systems/gcf-n8n-nodes) (workflow encode/decode) |
 | JetBrains | Search "GCF" in Plugins | [gcf-jetbrains](https://github.com/blackwell-systems/gcf-jetbrains) (IntelliJ, PyCharm, WebStorm, GoLand) |
+| Zed | Search "GCF" in Extensions | [gcf-zed](https://github.com/blackwell-systems/gcf-zed) (tree-sitter syntax highlighting) |
 | Tree-sitter | `npm install tree-sitter-gcf` | [tree-sitter-gcf](https://github.com/blackwell-systems/tree-sitter-gcf) |
 
 Zero runtime dependencies. MIT licensed. All implementations support both generic profile (`encodeGeneric`) and graph profile (`encode`). CLI included in all 6 languages. Syntax highlighting via tree-sitter (Neovim, Helix, Zed).
@@ -178,7 +179,7 @@ Zero runtime dependencies. MIT licensed. All implementations support both generi
 
 ## Use cases
 
-- **MCP tool responses.** Any MCP server returning structured data. 53-71% fewer tokens with 100% comprehension accuracy.
+- **MCP tool responses.** Any MCP server returning structured data. 61-71% fewer tokens with 100% comprehension accuracy.
 - **Agent-to-agent communication.** 63% fewer tokens per handoff. 5/5 generation validity on every frontier model.
 - **LLM structured output.** LLMs produce valid GCF with a 3-line primer. No training required.
 - **Code intelligence.** Graph profile with local IDs, edges, and distance grouping.
