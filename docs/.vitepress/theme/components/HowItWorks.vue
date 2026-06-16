@@ -85,7 +85,6 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="how-it-works-section">
   <section class="how-it-works">
     <div class="container">
       <h2 class="section-title">Two Profiles. One Format.</h2>
@@ -240,16 +239,9 @@ handle|func
       </div>
     </div>
   </section>
-  </div>
 </template>
 
 <style scoped>
-.how-it-works-section {
-  background: rgba(17, 51, 72, 0.25);
-  border-top: 1px solid rgba(24, 190, 252, 0.06);
-  border-bottom: 1px solid rgba(24, 190, 252, 0.06);
-}
-
 .how-it-works {
   padding: 4rem 1.5rem;
   max-width: 1200px;
