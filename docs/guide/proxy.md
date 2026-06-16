@@ -245,10 +245,6 @@ gcf-proxy --http :9090 --upstream http://remote-mcp:3000/mcp
 | 5. HTTP/SSE frontend | Done | `--http :9090` serves MCP over Streamable HTTP |
 | 6. Production hardening | Planned | Graceful shutdown, metrics, connection pooling |
 
-## Hosted Proxy
-
-Don't want to self-host? A fully managed hosted proxy is available at [blackwell-systems.com/services](https://blackwell-systems.com/services#proxy). One endpoint, no install, API key auth, usage metering. Free tier available.
-
 ## Links
 
 - [GitHub](https://github.com/blackwell-systems/gcf-proxy)
