@@ -28,6 +28,7 @@
 .VPHero .container {
   max-width: 1400px !important;
   padding: 0 48px !important;
+  align-items: center !important;
 }
 
 @media (min-width: 1600px) {
