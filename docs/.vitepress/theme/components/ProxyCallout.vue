@@ -30,8 +30,8 @@
   justify-content: space-between;
   gap: 24px;
   padding: 20px 28px;
-  background: color-mix(in srgb, var(--gcf-blue, #18befc) 6%, var(--vp-c-bg-soft));
-  border: 1px solid color-mix(in srgb, var(--gcf-blue, #18befc) 20%, var(--vp-c-border));
+  background: #1133487d;
+  border: 1px solid #18befc;
   border-radius: 12px;
   text-align: left;
 }
