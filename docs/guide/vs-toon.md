@@ -249,3 +249,5 @@ The gap widens over time. First call: GCF saves 34% vs TOON. Fifth call: GCF sav
 **[Try both formats in the playground](https://gcformat.com/playground.html)** with your own data.
 
 **[Get started in 5 minutes](https://gcformat.com/guide/getting-started.html)** with any of 6 languages.
+
+*[I could not, would not, with a TOON.](/guide/not-a-toon)*
