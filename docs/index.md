@@ -12,6 +12,8 @@ hero:
 
 <ButtonBar />
 
+<BeforeAfter />
+
 <ProxyCallout />
 
 <PluginStrip />
