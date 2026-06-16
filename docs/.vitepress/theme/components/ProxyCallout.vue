@@ -1,9 +1,10 @@
 <template>
   <div class="proxy-wrap">
+    <div class="proxy-headline">Don't want to change code?</div>
     <div class="proxy-callout">
       <div class="proxy-left">
         <div class="proxy-title">Zero-code adoption</div>
-        <div class="proxy-desc"><span class="proxy-hook">Don't want to change code?</span> Drop-in proxy for existing MCP servers. Or integrate natively with any of 6 languages below.</div>
+        <div class="proxy-desc">Drop-in proxy for existing MCP servers. Or integrate natively with any of 6 languages below.</div>
       </div>
       <div class="proxy-right">
         <div class="proxy-cmds">
@@ -24,14 +25,22 @@
   padding: 0 24px 16px;
 }
 
+.proxy-headline {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--gcf-blue, #18befc);
+  text-align: center;
+  margin-bottom: 12px;
+}
+
 .proxy-callout {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
   padding: 20px 28px;
-  background: rgba(24, 190, 252, 0.03);
-  border: 1px solid rgba(24, 190, 252, 0.15);
+  background: #1133487d;
+  border: 1px solid rgba(24, 190, 252, 0.2);
   border-radius: 14px;
   text-align: left;
 }
