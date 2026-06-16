@@ -89,7 +89,7 @@ onMounted(async () => {
     <div class="container">
       <h2 class="section-title">Two Profiles. One Format.</h2>
       <p class="section-subtitle">The generic profile is a strict subset of the graph profile. Call <code>encode()</code>, the LLM reads it natively, call <code>decode()</code> at the end.</p>
-      <p class="section-graph-note">Graph-shaped data is the fastest-growing data shape in AI: knowledge systems, ontologies, GraphRAG, code intelligence, agent memory. No other token-efficient format treats graphs as first-class. GCF is the only format with native graph syntax: local IDs, typed edges, distance grouping, and session deduplication that compounds to 92% savings across multi-turn sessions.</p>
+      <p class="section-graph-note"><strong>Graph-shaped data is the fastest-growing data shape in AI:</strong> knowledge systems, ontologies, GraphRAG, code intelligence, agent memory. No other token-efficient format treats graphs as first-class. GCF is the only format with native graph syntax: local IDs, typed edges, distance grouping, and session deduplication that compounds to 92% savings across multi-turn sessions.</p>
 
       <div class="cards">
         <div v-for="(ex, i) in examples" :key="i" class="card">
