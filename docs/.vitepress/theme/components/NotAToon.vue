@@ -435,7 +435,7 @@ onMounted(() => {
     <section class="chapter finale">
       <div class="chapter-header reveal">
         <div class="chapter-ornament finale-ornament">&#x2605;</div>
-        <h2 class="chapter-title finale-title">The Verdict</h2>
+        <h2 class="chapter-title finale-title">The Final Word</h2>
       </div>
 
       <div class="stanza reveal">
