@@ -1,9 +1,16 @@
 <template>
-  <div class="ba-wrap">
-    <div class="ba-grid">
-      <div class="ba-card json-card">
-        <div class="ba-label">JSON</div>
-        <pre class="ba-code"><code>{
+  <div class="ba-section">
+    <div class="ba-inner">
+      <h2 class="ba-title">See the Difference</h2>
+      <p class="ba-subtitle">Same data. Fewer tokens. Zero information loss.</p>
+
+      <div class="ba-grid">
+        <div class="ba-card json-card">
+          <div class="ba-header">
+            <span class="ba-label">JSON</span>
+            <span class="ba-badge json-badge">458 tokens</span>
+          </div>
+          <pre class="ba-code"><code>{
   "orders": [
     {"id": 1001, "customer": "Acme Corp",
      "total": 49.99, "status": "shipped",
@@ -14,20 +21,23 @@
     {"id": 1003, "customer": "Initech LLC",
      "total": 250.99, "status": "processing",
      "items": 3},
-    <span class="ba-fade">{"id": 1004, "customer": "Umbrella Co",
-     "total": 351.49, "status": "delivered",
-     "items": 4},
-    ... 6 more rows ...</span>
+    <span class="ba-fade">{"id": 1004, ...},
+    {"id": 1005, ...},
+    {"id": 1006, ...},
+    {"id": 1007, ...},
+    {"id": 1008, ...},
+    {"id": 1009, ...},
+    {"id": 1010, ...}</span>
   ]
 }</code></pre>
-        <div class="ba-badge json-badge">458 tokens</div>
-      </div>
+        </div>
 
-      <div class="ba-arrow">→</div>
-
-      <div class="ba-card gcf-card">
-        <div class="ba-label">GCF</div>
-        <pre class="ba-code"><code>gcf 1 generic
+        <div class="ba-card gcf-card">
+          <div class="ba-header">
+            <span class="ba-label">GCF</span>
+            <span class="ba-badge gcf-badge">177 tokens</span>
+          </div>
+          <pre class="ba-code"><code>gcf 1 generic
 ## orders [10]{id,customer,total,status,items}
 1001|Acme Corp|49.99|shipped|1
 1002|Globex Inc|150.49|pending|2
@@ -39,51 +49,74 @@
 1008|LexCorp|753.49|processing|8
 1009|Cyberdyne|853.99|delivered|9
 1010|Soylent|954.49|shipped|10</code></pre>
-        <div class="ba-badge gcf-badge">177 tokens</div>
+        </div>
       </div>
+
+      <p class="ba-footnote">10 rows, 5 fields. <span class="ba-highlight">61% reduction.</span> Scales to 71%+ at production sizes. Token counts verified with tiktoken (cl100k).</p>
     </div>
-    <p class="ba-caption">Same data. 10 rows. <span class="ba-highlight">61% fewer tokens.</span> Zero information loss. Scales to 71%+ at production sizes.</p>
   </div>
 </template>
 
 <style scoped>
-.ba-wrap {
-  max-width: 960px;
+.ba-section {
+  max-width: 1152px;
   margin: 0 auto;
-  padding: 32px 24px 0;
+  padding: 40px 24px 0;
+}
+
+.ba-inner {
+  text-align: center;
+}
+
+.ba-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--vp-c-text-1);
+  margin: 0 0 8px;
+}
+
+.ba-subtitle {
+  font-size: 0.95rem;
+  color: var(--vp-c-text-2);
+  margin: 0 0 28px;
 }
 
 .ba-grid {
-  display: flex;
-  align-items: stretch;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 16px;
+  text-align: left;
 }
 
 .ba-card {
-  flex: 1;
-  border-radius: 12px;
+  border-radius: 10px;
   padding: 20px;
-  position: relative;
   overflow: hidden;
 }
 
 .json-card {
-  background: rgba(178, 128, 128, 0.06);
-  border: 1px solid rgba(178, 128, 128, 0.2);
+  background: rgba(178, 128, 128, 0.04);
+  border: 1px solid rgba(178, 128, 128, 0.15);
 }
 
 .gcf-card {
-  background: rgba(24, 190, 252, 0.06);
-  border: 1px solid rgba(24, 190, 252, 0.2);
+  background: rgba(24, 190, 252, 0.04);
+  border: 1px solid rgba(24, 190, 252, 0.15);
+}
+
+.ba-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
 }
 
 .ba-label {
-  font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', monospace;
+  font-family: var(--vp-font-family-mono);
   font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  margin-bottom: 12px;
 }
 
 .json-card .ba-label {
@@ -94,6 +127,26 @@
   color: var(--gcf-blue, #18befc);
 }
 
+.ba-badge {
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.json-badge {
+  color: var(--json-color, #b28080);
+  background: rgba(178, 128, 128, 0.08);
+  border: 1px solid rgba(178, 128, 128, 0.15);
+}
+
+.gcf-badge {
+  color: var(--gcf-blue, #18befc);
+  background: rgba(24, 190, 252, 0.08);
+  border: 1px solid rgba(24, 190, 252, 0.15);
+}
+
 .ba-code {
   margin: 0;
   padding: 0;
@@ -102,50 +155,23 @@
 }
 
 .ba-code code {
-  font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', monospace;
+  font-family: var(--vp-font-family-mono);
   font-size: 0.72rem;
   line-height: 1.55;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.gcf-card .ba-code code {
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .ba-fade {
   opacity: 0.3;
 }
 
-.ba-badge {
-  display: inline-block;
-  font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', monospace;
+.ba-footnote {
   font-size: 0.8rem;
-  font-weight: 700;
-  padding: 6px 14px;
-  border-radius: 8px;
-  margin-top: 16px;
-}
-
-.json-badge {
-  color: var(--json-color, #b28080);
-  background: rgba(178, 128, 128, 0.1);
-  border: 1px solid rgba(178, 128, 128, 0.2);
-}
-
-.gcf-badge {
-  color: var(--gcf-blue, #18befc);
-  background: rgba(24, 190, 252, 0.1);
-  border: 1px solid rgba(24, 190, 252, 0.2);
-}
-
-.ba-arrow {
-  font-size: 1.8rem;
-  color: rgba(255, 255, 255, 0.15);
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-}
-
-.ba-caption {
-  text-align: center;
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.35);
+  color: rgba(255, 255, 255, 0.25);
   margin-top: 16px;
 }
 
@@ -156,11 +182,7 @@
 
 @media (max-width: 640px) {
   .ba-grid {
-    flex-direction: column;
-  }
-  .ba-arrow {
-    transform: rotate(90deg);
-    justify-content: center;
+    grid-template-columns: 1fr;
   }
 }
 </style>
