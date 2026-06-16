@@ -108,7 +108,7 @@ When the playground shipped, the TOON comparison used the real `@toon-format/too
 
 TOON has 24,000 stars. 3 million monthly npm downloads. 10+ implementations across every major language. Two years of market presence. A VS Code extension, n8n workflow nodes, a Laravel package, an MCP proxy called "Tooner."
 
-GCF has 180 stars. 1,679 monthly npm downloads. Six months of existence. One person building everything.
+GCF has six implementations, 22,000+ downloads across 11 channels, three independent adopters, and three weeks of existence. One person building everything.
 
 The gap is marketing, not product. GCF wins every measured benchmark. On structured data: 25.5% fewer tokens across 15 datasets, 13 of 15 wins. On comprehension: 90.7% versus 68.5%. On generation: 5/5 on every frontier model while TOON's decoder rejects output from 7 of 9 models. On multi-turn interactions: 92.7% savings by the fifth tool call through session dedup, a feature TOON structurally cannot add.
 
@@ -141,7 +141,7 @@ Six language implementations, all at v2.1.0 or above (Go at v1.2.0), all publish
 - **Swift** via Swift Package Manager.
 - **Kotlin** via JitPack.
 
-Around the core: gcf-proxy (wraps any MCP server with zero code changes, session dedup, delta encoding, HTTP frontend). A Claude Code plugin. A Codex plugin (93/100 on the HOL scanner). A tree-sitter grammar for syntax highlighting. 12 publication-quality charts.
+Around the core: gcf-proxy (wraps any MCP server with zero code changes, session dedup, delta encoding, HTTP frontend). A Claude Code plugin. A Codex plugin. VS Code extension. JetBrains plugin. Zed extension. An n8n community node. A tree-sitter grammar for syntax highlighting. 12 publication-quality charts.
 
 Upstream integration PRs to Neo4j's MCP server, Grafana, mcp-go. Submissions to 10+ awesome lists and marketplaces. The official MCP Registry. Three domain names: gcformat.com, betterthanjson.com, betterthantoon.com.
 
@@ -171,11 +171,11 @@ The spec is at v3.1 Stable. The foundation is solid. Six languages, 157 conforma
 
 What comes next:
 
-**Ruby implementation.** The seventh language. The conformance fixtures exist. The spec is stable. It is a matter of writing the encoder, decoder, scalar grammar, and conformance runner.
+**Adoption.** The product is built. The evidence is published. The distribution is in motion: 30+ PRs across 250K+ stars of curated lists, editor extensions on VS Code and Zed, plugin submissions to Anthropic's official directory. The gap is awareness, not capability.
 
-**Whitepaper rewrite.** The current whitepaper reflects the JSON codec era. The positioning is now "AI-native wire format for structured data," and the evidence base has grown from hundreds of millions of round-trips to 33 billion. The whitepaper needs to match.
+**Consulting.** Full-stack token cost reduction: 10 techniques that compound to 70-90% savings. GCF is one layer. Prompt caching, model routing, RAG optimization, agent loop design, batch API: the playbook covers all of them. blackwell-systems.com/services.
 
-**Content.** Blog posts, newsletter submissions, LinkedIn plays. The playground is live. The calculator is live. The poem is written. The data is undeniable. The distribution gap is marketing, not product.
+**Ruby implementation.** The seventh language. The conformance fixtures exist. The spec is stable.
 
 **The category GCF is creating.** There is no name for what GCF is. "Token-efficient encoding" undersells it. "JSON alternative" anchors it to one format. "Wire format for structured data" is accurate but not a category. The closest analogy: GCF is to the LLM context window what HTTP is to the network. A real format with a real spec that exists in transit, at the boundary between structured data and the consumer. You don't store data as HTTP. You don't store data as GCF. You encode at the wire. You decode at the end. The wire format is invisible to everyone except the two parties exchanging data, and one of those parties is an AI model that reads GCF better than it reads the format it was trained on.
 
