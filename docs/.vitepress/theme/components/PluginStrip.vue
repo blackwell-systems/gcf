@@ -35,6 +35,13 @@ const plugins = [
     url: 'https://github.com/blackwell-systems/gcf-jetbrains',
     icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/jetbrains.svg',
   },
+  {
+    name: 'Zed',
+    desc: 'Tree-sitter syntax highlighting',
+    install: 'Search "GCF" in Extensions',
+    url: 'https://github.com/blackwell-systems/gcf-zed',
+    icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/zedindustries.svg',
+  },
 ]
 </script>
 
@@ -78,7 +85,7 @@ const plugins = [
 }
 
 .plugin-grid > * {
-  flex: 0 0 calc(20% - 10px);
+  flex: 0 0 calc(16.666% - 10px);
   min-width: 150px;
 }
 
