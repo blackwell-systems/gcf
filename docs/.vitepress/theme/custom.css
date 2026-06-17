@@ -233,7 +233,7 @@ code.terminal { color: #4ade80; background: #0a1a0a; border: 1px solid #1a3a1a; 
   position: absolute;
   width: 12px;
   height: 12px;
-  border-color: rgba(255, 255, 255, 0.12);
+  border-color: rgba(24, 190, 252, 0.06);
   pointer-events: none;
   z-index: 1;
 }
