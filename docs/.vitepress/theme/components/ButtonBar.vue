@@ -6,9 +6,15 @@
           <span class="bb-3d__text">Get Started</span>
         </span>
       </a>
-      <a href="/playground" class="bb-btn bb-alt">Try the Playground</a>
-      <a href="/calculator" class="bb-btn bb-alt">Cost Calculator</a>
-      <a href="/guide/vs-toon" class="bb-btn bb-alt">GCF vs TOON</a>
+      <a href="/playground" class="bb-alt">
+        <span class="bb-alt__inner"><span class="bb-alt__text">Try the Playground</span></span>
+      </a>
+      <a href="/calculator" class="bb-alt">
+        <span class="bb-alt__inner"><span class="bb-alt__text">Cost Calculator</span></span>
+      </a>
+      <a href="/guide/vs-toon" class="bb-alt">
+        <span class="bb-alt__inner"><span class="bb-alt__text">GCF vs TOON</span></span>
+      </a>
     </div>
   </div>
 </template>
@@ -26,19 +32,6 @@
   align-items: center;
   gap: 23px;
   flex-wrap: wrap;
-}
-
-.bb-btn {
-  display: inline-flex;
-  align-items: center;
-  padding: 14px 32px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  border-radius: 0;
-  text-decoration: none;
-  letter-spacing: 0.01em;
-  border: 1.5px solid transparent;
-  transition: border-color 0.3s ease, color 0.3s ease;
 }
 
 /* ── Get Started (3D parallax) ── */
@@ -144,22 +137,102 @@
   transform: translate(0.375rem, -0.375rem);
 }
 
-/* ── Alt buttons ── */
+/* ── Alt buttons (subtle 3D) ── */
 .bb-alt {
-  border: 1px dashed rgba(24, 190, 252, 0.2);
+  position: relative;
+  padding: 12px 28px;
   color: rgba(255, 255, 255, 0.5);
-  background: transparent;
   text-transform: uppercase;
   letter-spacing: 0.2em;
   font-size: 0.75rem;
   font-weight: 600;
-  padding: 12px 28px;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.bb-alt::before,
+.bb-alt::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  outline: 1px dashed rgba(24, 190, 252, 0.12);
+  width: 100%;
+  height: 100%;
+  transition: 250ms all ease;
+}
+
+.bb-alt::before {
+  transform: translate(-0.4rem, -0.4rem);
+}
+
+.bb-alt::after {
+  background-color: rgba(24, 190, 252, 0.02);
+  outline-style: dashed;
+  outline-color: rgba(24, 190, 252, 0.2);
+}
+
+.bb-alt__inner::before,
+.bb-alt__inner::after {
+  content: "";
+  border: 1px dashed rgba(24, 190, 252, 0.12);
+  border-left: 0;
+  border-right: 0;
+  width: 0.4rem;
+  height: calc(100% + 2px);
+  position: absolute;
+  top: -0.2rem;
+  transform: translateX(var(--tx, 0)) skewY(var(--sy, 45deg));
+  transition: 250ms all ease;
+}
+
+.bb-alt__inner::before {
+  left: -0.4rem;
+}
+
+.bb-alt__inner::after {
+  left: calc(100% - 0.4rem);
+}
+
+.bb-alt__text {
+  z-index: 1;
+  position: relative;
+  display: inline-block;
+  transition: 250ms all ease;
 }
 
 .bb-alt:hover {
-  border-color: rgba(24, 190, 252, 0.5);
   color: var(--gcf-blue, #18befc);
-  background: rgba(24, 190, 252, 0.04);
+}
+
+.bb-alt:hover::before {
+  transform: translate(0.4rem, -0.4rem);
+}
+
+.bb-alt:hover::after {
+  background-color: rgba(24, 190, 252, 0.04);
+  outline-color: rgba(24, 190, 252, 0.35);
+}
+
+.bb-alt:hover .bb-alt__inner::before,
+.bb-alt:hover .bb-alt__inner::after {
+  --tx: 0.4rem;
+  --sy: -45deg;
+}
+
+.bb-alt:active::after {
+  transform: translate(0.2rem, -0.2rem);
+}
+
+.bb-alt:active .bb-alt__inner::before,
+.bb-alt:active .bb-alt__inner::after {
+  width: 0.2rem;
+  transform: translate(0.6rem, calc(-0.1rem - 2px)) skewY(-45deg);
+}
+
+.bb-alt:active .bb-alt__text {
+  transform: translate(0.2rem, -0.2rem);
 }
 
 /* ── Mobile ── */
@@ -170,15 +243,14 @@
   .button-bar-inner {
     gap: 8px;
   }
-  .bb-btn,
+  .bb-alt,
   .bb-3d {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     width: 100%;
     text-align: center;
   }
-  .bb-btn {
+  .bb-alt {
     padding: 10px 16px;
-    justify-content: center;
   }
   .bb-3d {
     padding: 12px 24px;
