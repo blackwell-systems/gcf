@@ -158,12 +158,8 @@ onMounted(async () => {
   line-height: 1.7;
   max-width: 720px;
   margin: 0 auto 3rem;
-  padding: 20px 24px;
-  background: rgba(24, 190, 252, 0.03);
-  border: 1px solid rgba(24, 190, 252, 0.08);
-  border-left: 3px solid rgba(24, 190, 252, 0.2);
-  border-radius: 8px;
-  position: relative;
+  padding: 0 0 0 20px;
+  border-left: 2px solid rgba(24, 190, 252, 0.2);
 }
 
 .cards {
