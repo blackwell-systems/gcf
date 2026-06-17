@@ -80,7 +80,7 @@
 
 /* Front face */
 .bb-3d::after {
-  background-color: rgba(24, 190, 252, 0.04);
+  background-color: #d8ca030d;
   outline-style: solid;
   outline-color: rgba(24, 190, 252, 0.4);
 }
