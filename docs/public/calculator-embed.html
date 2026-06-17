@@ -6,7 +6,7 @@
 <title>GCF Cost Calculator</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: #09090b; color: #e4e4e7; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  body { background: #000; color: #e4e4e7; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
 
   .calculator { max-width: 1000px; margin: 1.5rem auto; padding: 0 1rem; }
   .hero-title { font-size: 2.4rem; font-weight: 800; text-align: center; margin-bottom: 0.75rem; color: #fafafa; }
@@ -14,7 +14,7 @@
   .subtitle { color: #a1a1aa; text-align: center; margin-bottom: 3rem; }
 
   .layout { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
-  .left, .right { padding: 1.5rem; background: #18181b; border-radius: 12px; }
+  .left, .right { padding: 1.5rem; background: rgba(24, 190, 252, 0.03); border-radius: 14px; }
   .left h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 1.5rem; color: #fafafa; }
 
   .param { margin-bottom: 1.25rem; }
@@ -24,24 +24,24 @@
 
   .number-input {
     width: 110px; padding: 0.3rem 0.5rem; border-radius: 6px;
-    border: 1px solid #3f3f46; background: #09090b;
+    border: 1px solid rgba(24, 190, 252, 0.1); background: #000;
     font-size: 0.9rem; font-weight: 700; text-align: right; color: #fafafa;
     -moz-appearance: textfield;
   }
   .number-input::-webkit-inner-spin-button, .number-input::-webkit-outer-spin-button { opacity: 1; }
-  .number-input:focus { outline: none; border-color: #2563eb; }
+  .number-input:focus { outline: none; border-color: #18befc; }
 
-  .param input[type="range"] { width: 100%; accent-color: #2563eb; }
+  .param input[type="range"] { width: 100%; accent-color: #18befc; }
   .param-range { display: flex; justify-content: space-between; font-size: 0.75rem; color: #71717a; margin-top: 0.2rem; }
 
   .model-select {
     width: 100%; padding: 0.5rem 0.75rem; border-radius: 6px;
-    border: 2px solid #2563eb; background: rgba(37, 99, 235, 0.05);
+    border: 2px solid #18befc; background: rgba(24, 190, 252, 0.05);
     font-size: 0.85rem; font-weight: 600; color: #fafafa;
   }
-  .model-select option { background: #18181b; color: #fafafa; }
+  .model-select option { background: rgba(24, 190, 252, 0.03); color: #fafafa; }
 
-  .current-cost { text-align: center; margin-bottom: 1.75rem; padding: 1.25rem; background: rgba(239, 68, 68, 0.06); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 10px; }
+  .current-cost { text-align: center; margin-bottom: 1.75rem; padding: 1.25rem; background: rgba(239, 68, 68, 0.06); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 14px; }
   .current-label { font-size: 0.85rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #ef4444; margin-bottom: 0.5rem; }
   .current-amount { font-size: 3rem; font-weight: 800; color: #ef4444; line-height: 1; }
   .current-sub { font-size: 0.85rem; color: #71717a; margin-top: 0.4rem; }
@@ -49,32 +49,32 @@
   .cost-bars { margin-bottom: 1.75rem; }
   .bar-row { display: flex; align-items: center; margin-bottom: 0.6rem; }
   .bar-label { width: 50px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #a1a1aa; flex-shrink: 0; }
-  .bar-track { flex: 1; height: 32px; background: #09090b; border-radius: 6px; overflow: hidden; }
+  .bar-track { flex: 1; height: 32px; background: #000; border-radius: 6px; overflow: hidden; }
   .bar-fill { height: 100%; border-radius: 6px; display: flex; align-items: center; padding: 0 0.75rem; transition: width 0.4s ease; min-width: 80px; }
   .bar-fill.json { background: rgba(107, 114, 128, 0.3); }
   .bar-fill.toon { background: rgba(245, 158, 11, 0.25); }
-  .bar-fill.gcf { background: rgba(37, 99, 235, 0.25); }
+  .bar-fill.gcf { background: rgba(24, 190, 252, 0.25); }
   .bar-amount { font-size: 0.85rem; font-weight: 700; color: #fafafa; white-space: nowrap; }
 
-  .savings-hero { text-align: center; padding: 1.25rem; background: rgba(34, 197, 94, 0.06); border: 1px solid rgba(34, 197, 94, 0.2); border-radius: 10px; margin-bottom: 1rem; }
+  .savings-hero { text-align: center; padding: 1.25rem; background: rgba(34, 197, 94, 0.06); border: 1px solid rgba(34, 197, 94, 0.2); border-radius: 14px; margin-bottom: 1rem; }
   .savings-hero-amount { font-size: 2.6rem; font-weight: 800; color: #22c55e; line-height: 1; }
   .savings-hero-label { font-size: 0.9rem; font-weight: 600; color: #a1a1aa; margin-top: 0.4rem; margin-bottom: 0.75rem; }
   .savings-pills { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; }
   .pill { font-size: 0.8rem; font-weight: 700; padding: 0.25rem 0.75rem; border-radius: 999px; }
   .pill.green { color: #22c55e; background: rgba(34, 197, 94, 0.12); }
-  .pill.blue { color: #2563eb; background: rgba(37, 99, 235, 0.12); }
+  .pill.blue { color: #18befc; background: rgba(24, 190, 252, 0.12); }
 
   .monthly-savings { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 0.6rem; }
   .monthly-pill { font-size: 0.85rem; font-weight: 700; padding: 0.2rem 0.6rem; }
   .monthly-pill.green { color: #22c55e; }
-  .monthly-pill.blue { color: #2563eb; }
+  .monthly-pill.blue { color: #18befc; }
 
   .token-toggle { font-size: 0.8rem; color: #71717a; cursor: pointer; padding: 0.5rem 0; user-select: none; }
   .token-toggle:hover { color: #a1a1aa; }
-  .token-details { padding: 0.75rem 1rem; background: #09090b; border-radius: 8px; margin-top: 0.25rem; }
+  .token-details { padding: 0.75rem 1rem; background: #000; border-radius: 8px; margin-top: 0.25rem; }
   .token-line { display: flex; justify-content: space-between; font-size: 0.8rem; padding: 0.2rem 0; font-family: "SF Mono", "Fira Code", monospace; color: #a1a1aa; }
 
-  .note { margin-top: 2rem; padding: 1rem 1.25rem; background: #18181b; border-radius: 8px; font-size: 0.8rem; color: #71717a; }
+  .note { margin-top: 2rem; padding: 1rem 1.25rem; background: rgba(24, 190, 252, 0.03); border-radius: 8px; font-size: 0.8rem; color: #71717a; }
   .note p { margin: 0.5rem 0; }
 
   @media (max-width: 768px) {
