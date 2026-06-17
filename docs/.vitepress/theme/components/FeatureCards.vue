@@ -51,6 +51,10 @@ const features = [
 .feature-band {
   background: #060609;
   padding: 8px 0;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  padding-left: calc(50vw - 50%);
+  padding-right: calc(50vw - 50%);
 }
 
 .feature-cards {
