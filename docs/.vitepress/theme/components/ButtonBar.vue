@@ -142,12 +142,12 @@
 /* Active: front pushes in to meet back (back is at 0.75rem, -0.75rem during hover) */
 .bb-3d:active::before {
   outline-style: solid;
-  background-color: #d8ca031c;
+  background-color: #d8ca0316;
 }
 
 .bb-3d:active::after {
   transform: translate(0.75rem, -0.75rem);
-  background-color: #d8ca031c;
+  background-color: #d8ca0316;
 }
 
 .bb-3d:active .bb-3d__inner::before,
