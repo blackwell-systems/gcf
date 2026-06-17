@@ -180,7 +180,7 @@
 }
 
 .bb-alt::after {
-  background-color: #18befc06;
+  background-color: #0f00ff05;
   outline-style: dashed;
   outline-color: rgba(24, 190, 252, 0.2);
 }
