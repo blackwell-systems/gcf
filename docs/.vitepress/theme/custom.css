@@ -19,7 +19,7 @@
   --vp-c-bg-soft: #111 !important;
 }
 
-.VPHome {
+.VPContent.is-home {
   overflow-x: clip;
 }
 
