@@ -12,7 +12,6 @@
       </a>
       <a href="/calculator" class="bb-alt bb-calc">
         <span class="bb-alt__inner"><span class="bb-alt__text">Cost Calculator</span></span>
-        <span class="bb-calc-watermark">$</span>
       </a>
       <a href="/guide/vs-toon" class="bb-alt">
         <span class="bb-alt__inner"><span class="bb-alt__text">GCF vs TOON</span></span>
@@ -264,20 +263,6 @@
 
 .bb-alt:active .bb-alt__text {
   transform: translate(0.4rem, -0.4rem);
-}
-
-/* ── Calculator $ watermark ── */
-.bb-calc-watermark {
-  position: absolute;
-  right: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 1.6rem;
-  font-weight: 800;
-  color: rgba(74, 222, 128, 0.08);
-  pointer-events: none;
-  z-index: 0;
-  line-height: 1;
 }
 
 /* ── Calculator green tint on hover ── */
