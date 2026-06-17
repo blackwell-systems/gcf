@@ -87,18 +87,16 @@
 }
 
 .bb-brand:hover .bb-left {
-  transform: translateX(-24px);
-  opacity: 0;
+  transform: translateX(-12px);
 }
 
 .bb-brand:hover .bb-right {
-  transform: translateX(24px);
-  opacity: 0;
+  transform: translateX(12px);
 }
 
 .bb-brand:hover .bb-icon-arrow {
   opacity: 1;
-  left: calc(50% - 14px);
+  left: calc(100% - 48px);
   transform: scaleX(1);
 }
 
