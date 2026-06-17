@@ -126,7 +126,7 @@
 
 /* Hover: shift perspective + tighten kerning */
 .bb-3d:hover .bb-3d__text {
-  letter-spacing: 0.3em;
+  letter-spacing: 0.35em;
 }
 
 .bb-3d:hover::before {
@@ -236,7 +236,7 @@
 
 .bb-alt:hover {
   color: var(--gcf-blue, #18befc);
-  letter-spacing: 0.15em;
+  letter-spacing: 0.17em;
 }
 
 .bb-alt:hover::before {
