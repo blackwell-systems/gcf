@@ -1,10 +1,10 @@
 <template>
   <div class="button-bar">
     <div class="button-bar-inner">
-      <a href="/guide/getting-started" class="bb-btn bb-brand">
-        <svg class="bb-arrow-before" viewBox="0 0 35 15"><path d="M27.172 5L25 2.828 27.828 0 34.9 7.071l-7.07 7.071L25 11.314 27.314 9H0V5h27.172z"/></svg>
-        <span class="bb-label">Get Started</span>
-        <svg class="bb-arrow-after" viewBox="0 0 35 15"><path d="M27.172 5L25 2.828 27.828 0 34.9 7.071l-7.07 7.071L25 11.314 27.314 9H0V5h27.172z"/></svg>
+      <a href="/guide/getting-started" class="bb-3d">
+        <span class="bb-3d__inner">
+          <span class="bb-3d__text">Get Started</span>
+        </span>
       </a>
       <a href="/playground" class="bb-btn bb-alt">Try the Playground</a>
       <a href="/calculator" class="bb-btn bb-alt">Cost Calculator</a>
@@ -23,6 +23,7 @@
 .button-bar-inner {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 12px;
   flex-wrap: wrap;
 }
@@ -33,76 +34,114 @@
   padding: 14px 32px;
   font-size: 0.9rem;
   font-weight: 600;
-  border-radius: 10px;
+  border-radius: 0;
   text-decoration: none;
   letter-spacing: 0.01em;
   border: 1.5px solid transparent;
-  transition: background 0.3s ease, color 0.3s ease,
-              box-shadow 0.3s ease, border-color 0.3s ease;
+  transition: border-color 0.3s ease, color 0.3s ease;
 }
 
-/* ── Get Started ── */
-.bb-brand {
-  border-color: var(--gcf-blue, #18befc);
-  color: var(--gcf-blue, #18befc);
-  background: transparent;
-  font-weight: 700;
+/* ── Get Started (3D parallax) ── */
+.bb-3d {
   position: relative;
-  padding: 14px 32px 14px 72px;
-  overflow: hidden;
-}
-
-.bb-brand:hover {
-  background: var(--gcf-blue, #18befc);
-  color: #000;
-  box-shadow: 0 0 28px rgba(24, 190, 252, 0.35);
-}
-
-.bb-label {
+  padding: 14px 48px;
+  color: var(--gcf-blue, #18befc);
+  text-transform: uppercase;
+  letter-spacing: 0.4em;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
   display: inline-block;
-  backface-visibility: hidden;
-  transform: translateZ(0);
-  transition: transform 0.5s cubic-bezier(0.86, 0, 0.07, 1);
+  cursor: pointer;
 }
 
-.bb-arrow-before,
-.bb-arrow-after {
-  fill: currentColor;
-  height: 14px;
-  width: 32px;
+/* Front and back faces */
+.bb-3d::before,
+.bb-3d::after {
+  content: "";
   position: absolute;
-  top: 50%;
-  margin-top: -7px;
-  backface-visibility: hidden;
-  transition: transform 0.5s cubic-bezier(0.86, 0, 0.07, 1),
-              opacity 0.4s cubic-bezier(0.86, 0, 0.07, 1);
+  top: 0;
+  left: 0;
+  outline: 1px dashed rgba(24, 190, 252, 0.3);
+  width: 100%;
+  height: 100%;
+  transition: 250ms all ease;
 }
 
-.bb-arrow-before {
-  left: 28px;
-  transform-origin: left center;
-  transform: translateZ(0);
+/* Back face */
+.bb-3d::before {
+  transform: translate(-0.75rem, -0.75rem);
 }
 
-.bb-arrow-after {
-  right: 28px;
-  opacity: 0;
-  transform: translateX(75%) scaleX(0.1);
-  transform-origin: right center;
+/* Front face */
+.bb-3d::after {
+  background-color: rgba(24, 190, 252, 0.04);
+  outline-style: solid;
+  outline-color: rgba(24, 190, 252, 0.4);
 }
 
-.bb-brand:hover .bb-label {
-  transform: translateX(-44px);
+/* Side panels */
+.bb-3d__inner::before,
+.bb-3d__inner::after {
+  content: "";
+  border: 1px dashed rgba(24, 190, 252, 0.3);
+  border-left: 0;
+  border-right: 0;
+  width: 0.75rem;
+  height: calc(100% + 2px);
+  position: absolute;
+  top: -0.375rem;
+  transform: translateX(var(--tx, 0)) skewY(var(--sy, 45deg));
+  transition: 250ms all ease;
 }
 
-.bb-brand:hover .bb-arrow-before {
-  opacity: 0;
-  transform: translateX(-75%) scaleX(0.1);
+/* Left panel */
+.bb-3d__inner::before {
+  left: -0.75rem;
 }
 
-.bb-brand:hover .bb-arrow-after {
-  opacity: 1;
-  transform: translateX(0) scaleX(1);
+/* Right panel */
+.bb-3d__inner::after {
+  left: calc(100% - 0.75rem);
+}
+
+/* Text */
+.bb-3d__text {
+  z-index: 1;
+  position: relative;
+  display: inline-block;
+  transition: 250ms all ease;
+}
+
+/* Hover: shift perspective */
+.bb-3d:hover::before {
+  transform: translate(0.75rem, -0.75rem);
+}
+
+.bb-3d:hover::after {
+  background-color: rgba(24, 190, 252, 0.1);
+}
+
+.bb-3d:hover .bb-3d__inner::before,
+.bb-3d:hover .bb-3d__inner::after {
+  --tx: 0.75rem;
+  --sy: -45deg;
+}
+
+/* Active: press in */
+.bb-3d:active::after {
+  transform: translate(0.375rem, -0.375rem);
+}
+
+.bb-3d:active .bb-3d__inner::before,
+.bb-3d:active .bb-3d__inner::after {
+  width: 0.375rem;
+  transform: translate(1.125rem, calc(-0.1875rem - 2px)) skewY(-45deg);
+}
+
+.bb-3d:active .bb-3d__text {
+  transform: translate(0.375rem, -0.375rem);
 }
 
 /* ── Alt buttons ── */
@@ -126,20 +165,18 @@
   .button-bar-inner {
     gap: 8px;
   }
-  .bb-btn {
-    padding: 10px 16px;
+  .bb-btn,
+  .bb-3d {
     font-size: 0.8rem;
     width: 100%;
+    text-align: center;
+  }
+  .bb-btn {
+    padding: 10px 16px;
     justify-content: center;
   }
-  .bb-brand {
-    padding: 10px 16px 10px 48px;
-  }
-  .bb-arrow-before {
-    left: 12px;
-  }
-  .bb-arrow-after {
-    right: 12px;
+  .bb-3d {
+    padding: 12px 24px;
   }
 }
 </style>
