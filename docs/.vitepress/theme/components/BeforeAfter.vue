@@ -139,7 +139,6 @@ onMounted(async () => {
 }
 
 .json-card:hover {
-  box-shadow: 0 8px 32px rgba(178, 128, 128, 0.08);
 }
 
 .gcf-card {
@@ -148,7 +147,6 @@ onMounted(async () => {
 }
 
 .gcf-card:hover {
-  box-shadow: 0 8px 32px rgba(24, 190, 252, 0.1);
 }
 
 .ba-header {

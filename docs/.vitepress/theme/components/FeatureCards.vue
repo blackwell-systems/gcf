@@ -109,8 +109,6 @@ const features = [
 
 .feature-card:hover {
   transform: translateY(-2px);
-  border-color: rgba(24, 190, 252, 0.25);
-  box-shadow: 0 8px 32px rgba(24, 190, 252, 0.08);
 }
 
 .feature-icon {
