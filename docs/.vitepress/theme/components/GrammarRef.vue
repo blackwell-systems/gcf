@@ -11,7 +11,6 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="grammar-band">
   <section class="grammar-section">
     <h2 class="section-title">GCF Grammar</h2>
     <p class="section-subtitle">Eight building blocks. Two profiles. No ambiguity.</p>
@@ -137,19 +136,9 @@ handle|func
       </div>
     </div>
   </section>
-  </div>
 </template>
 
 <style scoped>
-.grammar-band {
-  background: #060609;
-  padding: 8px 0;
-  width: 100vw;
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
 .grammar-section {
   padding: 3rem 1.5rem;
   max-width: 1200px;
