@@ -81,6 +81,8 @@
 .VPNavBar {
   border-bottom: 1px solid #18befc !important;
   background: #1133487d !important;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.015) 1px, transparent 1px) !important;
+  background-size: 16px 16px !important;
 }
 
 
@@ -131,6 +133,8 @@
 .VPFooter {
   border-top: 1px solid #18befc !important;
   background: #1133487d !important;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.015) 1px, transparent 1px) !important;
+  background-size: 16px 16px !important;
   backdrop-filter: blur(16px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
 }
