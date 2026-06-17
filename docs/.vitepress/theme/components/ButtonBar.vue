@@ -1,4 +1,5 @@
 <template>
+  <div class="button-band">
   <div class="button-bar">
     <div class="button-bar-inner">
       <a href="/guide/getting-started" class="bb-3d">
@@ -17,13 +18,25 @@
       </a>
     </div>
   </div>
+  </div>
 </template>
 
 <style scoped>
+.button-band {
+  background: #010102;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.012) 1px, transparent 1px);
+  background-size: 20px 20px;
+  padding: 32px 0;
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 .button-bar {
   max-width: 1152px;
   margin: 0 auto;
-  padding: 0 24px 32px;
+  padding: 0 24px;
 }
 
 .button-bar-inner {
