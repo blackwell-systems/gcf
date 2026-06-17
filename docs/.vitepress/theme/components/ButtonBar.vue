@@ -180,7 +180,7 @@
 }
 
 .bb-alt::after {
-  background-color: rgba(24, 190, 252, 0.02);
+  background-color: #d8ca0306;
   outline-style: dashed;
   outline-color: rgba(24, 190, 252, 0.2);
 }
@@ -223,7 +223,7 @@
 }
 
 .bb-alt:hover::after {
-  background-color: rgba(24, 190, 252, 0.04);
+  background-color: #d8ca030a;
   outline-color: rgba(24, 190, 252, 0.35);
 }
 
@@ -235,6 +235,7 @@
 
 .bb-alt:active::after {
   transform: translate(0.2rem, -0.2rem);
+  background-color: #d8ca030e;
 }
 
 .bb-alt:active .bb-alt__inner::before,
