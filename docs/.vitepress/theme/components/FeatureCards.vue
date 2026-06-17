@@ -86,6 +86,7 @@ const features = [
   border-radius: 14px;
   background: rgba(24, 190, 252, 0.03);
   overflow: visible;
+  cursor: pointer;
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
               box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
               border-color 0.3s;
