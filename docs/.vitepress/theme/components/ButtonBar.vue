@@ -41,7 +41,7 @@ function onRelease() {
   </div>
 </template>
 
-<style scoped>
+<style>
 .button-band {
   background: #000307b3;
   padding: 32px 0;
@@ -112,12 +112,19 @@ function onRelease() {
 /* Front face border (real DOM element for JS-driven clip-path animation) */
 .bb-3d__border {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   border: 1px solid rgba(24, 190, 252, 0.4);
   pointer-events: none;
   z-index: 3;
   clip-path: inset(0 0 0 0);
-  transition: clip-path 300ms ease-out;
+  transition: clip-path 300ms ease-out, transform 250ms ease;
+}
+
+.bb-3d:active .bb-3d__border {
+  transform: translate(0.75rem, -0.75rem);
 }
 
 .bb-3d__border.dissolving {
