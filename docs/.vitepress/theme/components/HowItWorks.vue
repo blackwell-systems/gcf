@@ -154,10 +154,16 @@ onMounted(async () => {
 .section-graph-note {
   text-align: justify;
   color: var(--gcf-blue, #18befc);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   line-height: 1.7;
   max-width: 720px;
   margin: 0 auto 3rem;
+  padding: 20px 24px;
+  background: rgba(24, 190, 252, 0.03);
+  border: 1px solid rgba(24, 190, 252, 0.08);
+  border-left: 3px solid rgba(24, 190, 252, 0.2);
+  border-radius: 8px;
+  position: relative;
 }
 
 .cards {
