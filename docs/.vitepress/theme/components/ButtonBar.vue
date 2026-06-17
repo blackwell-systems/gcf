@@ -2,11 +2,13 @@
   <div class="button-bar">
     <div class="button-bar-inner">
       <a href="/guide/getting-started" class="bb-btn bb-brand">
-        <span class="bb-left">Get</span>
-        <svg class="bb-icon-arrow" viewBox="0 0 35 15" xmlns="http://www.w3.org/2000/svg">
-          <path d="M27.5 0L35 7.5L27.5 15M0 7.5H35" stroke="currentColor" stroke-width="2" fill="none"/>
-        </svg>
-        <span class="bb-right">Started</span>
+        <span class="bb-text-wrap">
+          <span class="bb-top">Get Started</span>
+          <span class="bb-bottom">Get Started</span>
+          <svg class="bb-icon-arrow" viewBox="0 0 35 15" xmlns="http://www.w3.org/2000/svg">
+            <path d="M27.5 0L35 7.5L27.5 15M0 7.5H35" stroke="currentColor" stroke-width="2" fill="none"/>
+          </svg>
+        </span>
       </a>
       <a href="/playground" class="bb-btn bb-alt">Try the Playground</a>
       <a href="/calculator" class="bb-btn bb-alt">Cost Calculator</a>
@@ -47,9 +49,9 @@
   color: var(--gcf-blue, #18befc);
   background: transparent;
   font-weight: 700;
-  gap: 0;
   overflow: hidden;
   position: relative;
+  padding-left: 52px;
 }
 
 .bb-brand:hover {
@@ -58,46 +60,52 @@
   box-shadow: 0 0 28px rgba(24, 190, 252, 0.35);
 }
 
-.bb-left,
-.bb-right {
+.bb-text-wrap {
+  position: relative;
   display: inline-block;
-  transition: transform 0.5s cubic-bezier(0.86, 0, 0.07, 1),
-              opacity 0.5s cubic-bezier(0.86, 0, 0.07, 1);
-  white-space: nowrap;
+  overflow: visible;
 }
 
-.bb-left {
-  margin-right: 0.35em;
+.bb-top,
+.bb-bottom {
+  display: block;
+  white-space: nowrap;
+  transition: transform 0.5s cubic-bezier(0.86, 0, 0.07, 1);
+}
+
+.bb-top {
+  clip-path: inset(0 0 50% 0);
+}
+
+.bb-bottom {
+  position: absolute;
+  top: 0;
+  left: 0;
+  clip-path: inset(50% 0 0 0);
 }
 
 .bb-icon-arrow {
   height: 12px;
   width: 28px;
-  flex-shrink: 0;
   position: absolute;
-  left: 14px;
   top: 50%;
   margin-top: -6px;
-  opacity: 0;
-  transform: scaleX(0.4);
+  left: -20px;
+  opacity: 1;
   transform-origin: left center;
-  transition: left 0.6s cubic-bezier(0.86, 0, 0.07, 1),
-              opacity 0.3s cubic-bezier(0.86, 0, 0.07, 1),
-              transform 0.5s cubic-bezier(0.86, 0, 0.07, 1);
+  transition: left 0.6s cubic-bezier(0.86, 0, 0.07, 1);
 }
 
-.bb-brand:hover .bb-left {
-  transform: translateX(-12px);
+.bb-brand:hover .bb-top {
+  transform: translateY(-5px);
 }
 
-.bb-brand:hover .bb-right {
-  transform: translateX(12px);
+.bb-brand:hover .bb-bottom {
+  transform: translateY(5px);
 }
 
 .bb-brand:hover .bb-icon-arrow {
-  opacity: 1;
-  left: calc(100% - 48px);
-  transform: scaleX(1);
+  left: calc(100% + 8px);
 }
 
 .bb-alt {
