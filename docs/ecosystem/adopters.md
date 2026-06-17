@@ -19,25 +19,31 @@
 
 [NetClaw](https://github.com/automateyournetwork/netclaw) is a CCIE-level AI network engineering coworker with 113 skills and 66 MCP integrations, built by [John Capobianco](https://github.com/automateyournetwork) (Head of AI and DevRel at Itential, Google Developer Expert). 556 stars.
 
-NetClaw previously used TOON for token optimization across its MCP servers. After benchmarking GCF against TOON on NetClaw's actual network data payloads, the project replaced TOON entirely.
+NetClaw previously used TOON for token optimization across its MCP servers. After benchmarking GCF against TOON on NetClaw's actual network data payloads, the project replaced TOON entirely. This was the first external project to switch from TOON to GCF.
 
-- Replaced TOON with GCF for all MCP server responses
+Network data is a strong fit for GCF's generic profile. BGP peer tables, routing tables, interface lists, OSPF neighbor sessions, and Azure NSG rule sets are all arrays of uniform objects with 10-15 fields repeated across 50-500+ rows. TOON's YAML-style key-value encoding reduces some overhead, but still repeats key names on every record. GCF's positional encoding with inline schemas eliminates that repetition entirely.
+
+The integration was surgical: all TOON serialization flowed through a single `serialize_response()` function in the shared `netclaw_tokens` library. Replacing `toon.dumps(data)` with `gcf.encode_generic(data)` and swapping the dependency from `toon-format` to `gcf-python` was the entire change. Every MCP server in NetClaw benefited automatically with no per-server modifications.
+
 - **55.8% savings vs JSON**, 13.6% fewer tokens than TOON, wins 19/25 matchups
-- **36% fewer tokens than TOON on interface data** (IP lists, MAC addresses)
-- Benchmarked on BGP peers, route tables, interfaces, OSPF neighbors, NSG rules
-- Drop-in swap, JSON fallback on error
-- First TOON-to-GCF conversion
+- **36% fewer tokens than TOON on interface data**: GCF handles mixed-type fields (IP address lists, MAC addresses, VLAN IDs) more efficiently because positional encoding doesn't care about value type or length
+- Benchmarked with cl100k_base tokenizer on 5 network data types at 10, 50, 100, 200, and 500 rows each
+- JSON fallback on any encode error preserves reliability
 
 ## ctx
 
 [ctx](https://github.com/stevesolun/ctx) is a context budget manager for Claude Code, built by [Steve Solun](https://github.com/stevesolun). It walks a 102,928-node knowledge graph across 91K+ skills, 467 agents, and 10K+ MCP servers to recommend the right 5-15 tools per session. 510 stars.
 
-Every ctx recommendation, graph query, and wiki search result lands directly in the LLM context window. GCF encoding eliminates repeated field names across these structured payloads.
+Every ctx recommendation, graph query, and wiki search result lands directly in the LLM context window. These payloads are arrays of uniform objects (5-25 results with 6-17 fields each) where JSON repeats every field name on every record. GCF's positional encoding eliminates that repetition, cutting the token cost of every tool response roughly in half.
 
-- GCF encoding for all 4 MCP tool responses: recommend_bundle, graph_query, wiki_search, wiki_get
-- **51.5% savings vs JSON** overall, up to **57.8%** on recommendation bundles
-- Opt-in via `output_format: "gcf"`; JSON remains default
-- Optional extra: `pip install "claude-ctx[gcf]"`
+ctx has four MCP tool response methods that benefit: `recommend_bundle` returns scored skill/agent/MCP recommendations with 17 fields per result. `graph_query` returns graph traversal results with shared tags and connection paths. `wiki_search` returns entity pages with descriptions, excerpts, and metadata. `wiki_get` returns full entity pages with frontmatter and body text.
+
+GCF encoding is opt-in per tool call via `output_format: "gcf"` in the tool arguments. JSON remains the default to preserve compatibility with ctx's internal consumers (`api.py`, `mcp_server.py`). The maintainer reviewed the proof-of-concept integration and implemented his own adapter following the same opt-in design.
+
+- **51.5% savings vs JSON** overall, up to **57.8%** on recommendation bundles at 25 results
+- `graph_query`: **57.6% fewer tokens** at 25 results
+- `wiki_search`: **42.4% fewer tokens** at 15 results
+- Available as optional extra: `pip install "claude-ctx[gcf]"`
 
 ## Open Data Products SDK (Linux Foundation)
 
