@@ -1,45 +1,8 @@
-<script setup>
-import { ref } from 'vue'
-
-const scrambleChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
-const scrambleTimers = new Map()
-
-function scramble(ev) {
-  const el = ev.currentTarget.querySelector('.bb-3d__text, .bb-alt__text')
-  if (!el || scrambleTimers.has(el)) return
-
-  const original = el.dataset.original || el.textContent
-  el.dataset.original = original
-  const chars = original.split('')
-  let iteration = 0
-  const duration = 600
-  const interval = 30
-  const totalSteps = duration / interval
-
-  const timer = setInterval(() => {
-    el.textContent = chars.map((ch, i) => {
-      if (ch === ' ') return ' '
-      if (iteration > (i / chars.length) * totalSteps) return original[i]
-      return scrambleChars[Math.floor(Math.random() * scrambleChars.length)]
-    }).join('')
-
-    iteration++
-    if (iteration > totalSteps) {
-      clearInterval(timer)
-      scrambleTimers.delete(el)
-      el.textContent = original
-    }
-  }, interval)
-
-  scrambleTimers.set(el, timer)
-}
-</script>
-
 <template>
   <div class="button-band">
   <div class="button-bar">
     <div class="button-bar-inner">
-      <a href="/guide/getting-started" class="bb-3d" @mouseenter="scramble">
+      <a href="/guide/getting-started" class="bb-3d">
         <span class="bb-3d__inner">
           <span class="bb-3d__text">Get Started</span>
         </span>
