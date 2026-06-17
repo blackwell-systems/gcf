@@ -1,19 +1,63 @@
+<script setup>
+import { ref } from 'vue'
+
+const scrambleChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&*'
+const scrambleTimers = new Map()
+
+function scramble(ev) {
+  const el = ev.currentTarget.querySelector('.bb-3d__text, .bb-alt__text')
+  if (!el || scrambleTimers.has(el)) return
+
+  const original = el.dataset.original || el.textContent
+  el.dataset.original = original
+  // Lock width to prevent layout shift
+  if (!el.style.minWidth) {
+    el.style.minWidth = el.offsetWidth + 'px'
+    el.style.display = 'inline-block'
+    el.style.textAlign = 'center'
+  }
+  const chars = original.split('')
+  let iteration = 0
+  const duration = 600
+  const interval = 30
+  const totalSteps = duration / interval
+
+  const timer = setInterval(() => {
+    el.textContent = chars.map((ch, i) => {
+      if (ch === ' ') return ' '
+      const revealAt = (i / chars.length) * totalSteps
+      if (iteration > revealAt) return original[i]
+      return scrambleChars[Math.floor(Math.random() * scrambleChars.length)]
+    }).join('')
+
+    iteration++
+    if (iteration > totalSteps) {
+      clearInterval(timer)
+      scrambleTimers.delete(el)
+      el.textContent = original
+    }
+  }, interval)
+
+  scrambleTimers.set(el, timer)
+}
+</script>
+
 <template>
   <div class="button-band">
   <div class="button-bar">
     <div class="button-bar-inner">
-      <a href="/guide/getting-started" class="bb-3d">
+      <a href="/guide/getting-started" class="bb-3d" @mouseenter="scramble">
         <span class="bb-3d__inner">
           <span class="bb-3d__text">Get Started</span>
         </span>
       </a>
-      <a href="/playground" class="bb-alt">
+      <a href="/playground" class="bb-alt" @mouseenter="scramble">
         <span class="bb-alt__inner"><span class="bb-alt__text">Try the Playground</span></span>
       </a>
-      <a href="/calculator" class="bb-alt bb-calc">
+      <a href="/calculator" class="bb-alt bb-calc" @mouseenter="scramble">
         <span class="bb-alt__inner"><span class="bb-alt__text">Cost Calculator</span></span>
       </a>
-      <a href="/guide/vs-toon" class="bb-alt">
+      <a href="/guide/vs-toon" class="bb-alt" @mouseenter="scramble">
         <span class="bb-alt__inner"><span class="bb-alt__text">GCF vs TOON</span></span>
       </a>
     </div>
