@@ -1,11 +1,31 @@
+<script setup>
+import { ref } from 'vue'
+
+const borderEl = ref(null)
+
+function onPress() {
+  if (borderEl.value) {
+    borderEl.value.classList.add('dissolving')
+  }
+}
+
+function onRelease() {
+  if (borderEl.value) {
+    borderEl.value.classList.remove('dissolving')
+  }
+}
+</script>
+
 <template>
   <div class="button-band">
   <div class="button-bar">
     <div class="button-bar-inner">
-      <a href="/guide/getting-started" class="bb-3d">
+      <a href="/guide/getting-started" class="bb-3d"
+         @mousedown="onPress" @mouseup="onRelease" @mouseleave="onRelease">
         <span class="bb-3d__inner">
           <span class="bb-3d__text">Get Started</span>
         </span>
+        <span class="bb-3d__border" ref="borderEl"></span>
       </a>
       <a href="/playground" class="bb-alt">
         <span class="bb-alt__inner"><span class="bb-alt__text">Try the Playground</span></span>
@@ -84,11 +104,29 @@
   animation: pulse-outline 3.5s ease-in-out infinite;
 }
 
-/* Front face */
+/* Front face (bg only, border handled by .bb-3d__border) */
 .bb-3d::after {
   background-color: #d8ca030d;
-  outline-style: solid;
-  outline-color: rgba(24, 190, 252, 0.4);
+}
+
+/* Front face border (real DOM element for JS-driven clip-path animation) */
+.bb-3d__border {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(24, 190, 252, 0.4);
+  pointer-events: none;
+  z-index: 3;
+  clip-path: inset(0 0 0 0);
+  transition: clip-path 300ms ease-out;
+}
+
+.bb-3d__border.dissolving {
+  clip-path: inset(50% 0);
+}
+
+@keyframes border-restore {
+  from { clip-path: inset(50% 0); }
+  to { clip-path: inset(0 0 0 0); }
 }
 
 /* Side panels */
@@ -148,7 +186,6 @@
 .bb-3d:active::after {
   transform: translate(0.75rem, -0.75rem);
   background-color: #d8ca0316;
-  outline-color: transparent;
 }
 
 .bb-3d:active .bb-3d__inner::before,
