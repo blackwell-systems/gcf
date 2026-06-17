@@ -136,6 +136,7 @@
 /* Active: front pushes in to meet back (back is at 0.75rem, -0.75rem during hover) */
 .bb-3d:active::before {
   outline-style: solid;
+  background-color: #d8ca031c;
 }
 
 .bb-3d:active::after {
@@ -239,6 +240,7 @@
 
 .bb-alt:active::before {
   outline-style: solid;
+  background-color: #0f00ff0a;
 }
 
 .bb-alt:active::after {
