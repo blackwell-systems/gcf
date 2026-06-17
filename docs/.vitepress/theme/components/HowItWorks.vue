@@ -130,7 +130,7 @@ onMounted(async () => {
 }
 
 .how-it-works {
-  padding: 4rem 1.5rem;
+  padding: 2rem 1.5rem;
   max-width: 1200px;
   margin: 0 auto;
 }
