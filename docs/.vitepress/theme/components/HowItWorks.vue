@@ -92,7 +92,7 @@ onMounted(async () => {
       <p class="section-graph-note"><strong>Graph-shaped data is the fastest-growing data shape in AI:</strong> knowledge systems, ontologies, GraphRAG, code intelligence, agent memory. No other token-efficient format treats graphs as first-class. GCF is the only format with native graph syntax: local IDs, typed edges, distance grouping, and session deduplication that compounds to 92% savings across multi-turn sessions.</p>
 
       <div class="cards">
-        <div v-for="(ex, i) in examples" :key="i" class="card">
+        <div v-for="(ex, i) in examples" :key="i" class="card gcf-corners">
           <div class="card-number">{{ i + 1 }}</div>
           <h3 class="card-title">{{ ex.title }}</h3>
           <div v-if="ex.subtitle" class="card-subtitle">{{ ex.subtitle }}</div>
@@ -117,7 +117,7 @@ onMounted(async () => {
         <p class="section-subtitle">Seven building blocks. No ambiguity.</p>
 
         <div class="grammar-columns">
-          <div class="grammar-column">
+          <div class="grammar-column gcf-corners">
             <div class="grammar-column-header">Generic Profile</div>
 
             <div class="grammar-entry">
@@ -178,7 +178,7 @@ Bob|standard</code></pre>
             </div>
           </div>
 
-          <div class="grammar-column">
+          <div class="grammar-column gcf-corners">
             <div class="grammar-column-header">Graph Profile</div>
 
             <div class="grammar-entry">

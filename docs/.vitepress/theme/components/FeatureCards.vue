@@ -36,7 +36,7 @@ const features = [
 <template>
   <div class="feature-cards">
     <div class="feature-grid">
-      <div v-for="(f, i) in features" :key="i" class="feature-card">
+      <div v-for="(f, i) in features" :key="i" class="feature-card gcf-corners">
         <div class="feature-icon">{{ f.icon }}</div>
         <h3 class="feature-title">{{ f.title }}</h3>
         <p class="feature-details" v-html="f.details"></p>

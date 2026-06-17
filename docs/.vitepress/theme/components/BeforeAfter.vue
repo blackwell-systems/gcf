@@ -53,7 +53,7 @@ onMounted(async () => {
       <p class="ba-subtitle">Same data. Fewer tokens. Zero information loss.</p>
 
       <div class="ba-grid">
-        <div class="ba-card json-card">
+        <div class="ba-card json-card gcf-corners">
           <div class="ba-header">
             <span class="ba-dot json-dot"></span>
             <span class="ba-label">JSON</span>
@@ -65,7 +65,7 @@ onMounted(async () => {
           </div>
         </div>
 
-        <div class="ba-card gcf-card">
+        <div class="ba-card gcf-card gcf-corners">
           <div class="ba-header">
             <span class="ba-dot gcf-dot"></span>
             <span class="ba-label">GCF</span>
