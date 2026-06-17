@@ -85,6 +85,7 @@ onMounted(async () => {
 </script>
 
 <template>
+  <div class="hiw-band">
   <section class="how-it-works">
     <div class="container">
       <h2 class="section-title">Two Profiles. One Format.</h2>
@@ -239,9 +240,15 @@ handle|func
       </div>
     </div>
   </section>
+  </div>
 </template>
 
 <style scoped>
+.hiw-band {
+  background: #060609;
+  padding: 8px 0;
+}
+
 .how-it-works {
   padding: 4rem 1.5rem;
   max-width: 1200px;

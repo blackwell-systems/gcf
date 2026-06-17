@@ -34,6 +34,7 @@ const features = [
 </script>
 
 <template>
+  <div class="feature-band">
   <div class="feature-cards">
     <div class="feature-grid">
       <div v-for="(f, i) in features" :key="i" class="feature-card">
@@ -43,9 +44,15 @@ const features = [
       </div>
     </div>
   </div>
+  </div>
 </template>
 
 <style scoped>
+.feature-band {
+  background: #060609;
+  padding: 8px 0;
+}
+
 .feature-cards {
   max-width: 1152px;
   margin: 0 auto;
