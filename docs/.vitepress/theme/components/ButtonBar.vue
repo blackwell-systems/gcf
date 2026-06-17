@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 
-const scrambleChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&*'
+const scrambleChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
 const scrambleTimers = new Map()
 
 function scramble(ev) {
@@ -10,24 +10,27 @@ function scramble(ev) {
 
   const original = el.dataset.original || el.textContent
   el.dataset.original = original
-  // Lock width to prevent layout shift
-  if (!el.style.minWidth) {
-    el.style.minWidth = el.offsetWidth + 'px'
+  // On first hover, replace text with fixed-width character spans
+  if (!el.dataset.initialized) {
+    const w = el.offsetWidth
+    el.style.minWidth = w + 'px'
     el.style.display = 'inline-block'
-    el.style.textAlign = 'center'
+    el.dataset.initialized = '1'
   }
   const chars = original.split('')
+  // Build fixed-width spans so swapping characters doesn't jiggle
+  const charWidth = el.offsetWidth / Math.max(chars.length, 1)
   let iteration = 0
   const duration = 600
   const interval = 30
   const totalSteps = duration / interval
 
   const timer = setInterval(() => {
-    el.textContent = chars.map((ch, i) => {
-      if (ch === ' ') return ' '
-      const revealAt = (i / chars.length) * totalSteps
-      if (iteration > revealAt) return original[i]
-      return scrambleChars[Math.floor(Math.random() * scrambleChars.length)]
+    el.innerHTML = chars.map((ch, i) => {
+      const c = ch === ' ' ? '&nbsp;' :
+        (iteration > (i / chars.length) * totalSteps) ? original[i] :
+        scrambleChars[Math.floor(Math.random() * scrambleChars.length)]
+      return `<span style="display:inline-block;width:${charWidth}px;text-align:center">${c}</span>`
     }).join('')
 
     iteration++
@@ -51,13 +54,13 @@ function scramble(ev) {
           <span class="bb-3d__text">Get Started</span>
         </span>
       </a>
-      <a href="/playground" class="bb-alt" @mouseenter="scramble">
+      <a href="/playground" class="bb-alt">
         <span class="bb-alt__inner"><span class="bb-alt__text">Try the Playground</span></span>
       </a>
-      <a href="/calculator" class="bb-alt bb-calc" @mouseenter="scramble">
+      <a href="/calculator" class="bb-alt bb-calc">
         <span class="bb-alt__inner"><span class="bb-alt__text">Cost Calculator</span></span>
       </a>
-      <a href="/guide/vs-toon" class="bb-alt" @mouseenter="scramble">
+      <a href="/guide/vs-toon" class="bb-alt">
         <span class="bb-alt__inner"><span class="bb-alt__text">GCF vs TOON</span></span>
       </a>
     </div>
