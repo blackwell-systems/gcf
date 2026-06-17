@@ -2,9 +2,9 @@
   <div class="button-bar">
     <div class="button-bar-inner">
       <a href="/guide/getting-started" class="bb-btn bb-brand">
-        <svg class="bb-arrow before" viewBox="0 0 35 15"><path d="M27.172 5L25 2.828 27.828 0 34.9 7.071l-7.07 7.071L25 11.314 27.314 9H0V5h27.172z"/></svg>
+        <svg class="bb-arrow-before" viewBox="0 0 35 15"><path d="M27.172 5L25 2.828 27.828 0 34.9 7.071l-7.07 7.071L25 11.314 27.314 9H0V5h27.172z"/></svg>
         <span class="bb-label">Get Started</span>
-        <svg class="bb-arrow after" viewBox="0 0 35 15"><path d="M27.172 5L25 2.828 27.828 0 34.9 7.071l-7.07 7.071L25 11.314 27.314 9H0V5h27.172z"/></svg>
+        <svg class="bb-arrow-after" viewBox="0 0 35 15"><path d="M27.172 5L25 2.828 27.828 0 34.9 7.071l-7.07 7.071L25 11.314 27.314 9H0V5h27.172z"/></svg>
       </a>
       <a href="/playground" class="bb-btn bb-alt">Try the Playground</a>
       <a href="/calculator" class="bb-btn bb-alt">Cost Calculator</a>
@@ -49,6 +49,7 @@
   font-weight: 700;
   position: relative;
   padding: 14px 32px 14px 72px;
+  overflow: hidden;
 }
 
 .bb-brand:hover {
@@ -57,35 +58,33 @@
   box-shadow: 0 0 28px rgba(24, 190, 252, 0.35);
 }
 
-.bb-label,
-.bb-arrow {
-  backface-visibility: hidden;
-  transform: translateZ(0);
-}
-
 .bb-label {
   display: inline-block;
+  backface-visibility: hidden;
+  transform: translateZ(0);
   transition: transform 0.5s cubic-bezier(0.86, 0, 0.07, 1);
 }
 
-.bb-arrow {
+.bb-arrow-before,
+.bb-arrow-after {
   fill: currentColor;
   height: 14px;
   width: 32px;
+  position: absolute;
   top: 50%;
   margin-top: -7px;
+  backface-visibility: hidden;
+  transform: translateZ(0);
   transition: transform 0.5s cubic-bezier(0.86, 0, 0.07, 1),
               opacity 0.4s cubic-bezier(0.86, 0, 0.07, 1);
 }
 
-.bb-arrow.before {
-  position: absolute;
+.bb-arrow-before {
   left: 28px;
   transform-origin: left center;
 }
 
-.bb-arrow.after {
-  position: absolute;
+.bb-arrow-after {
   right: 28px;
   opacity: 0;
   transform: translateX(75%) scaleX(0.1);
@@ -96,12 +95,12 @@
   transform: translateX(-44px);
 }
 
-.bb-brand:hover .bb-arrow.before {
+.bb-brand:hover .bb-arrow-before {
   opacity: 0;
   transform: translateX(-75%) scaleX(0.1);
 }
 
-.bb-brand:hover .bb-arrow.after {
+.bb-brand:hover .bb-arrow-after {
   opacity: 1;
   transform: translateX(0) scaleX(1);
 }
@@ -137,10 +136,10 @@
   .bb-brand {
     padding: 10px 16px 10px 48px;
   }
-  .bb-arrow.before {
+  .bb-arrow-before {
     left: 12px;
   }
-  .bb-arrow.after {
+  .bb-arrow-after {
     right: 12px;
   }
 }
