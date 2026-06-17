@@ -32,7 +32,7 @@ The integration was surgical: all TOON serialization flowed through a single `se
 
 ## ctx
 
-[ctx](https://github.com/stevesolun/ctx) is a context budget manager for Claude Code, built by [Steve Solun](https://github.com/stevesolun). It walks a 102,928-node knowledge graph across 91K+ skills, 467 agents, and 10K+ MCP servers to recommend the right 5-15 tools per session. 510 stars.
+[ctx](https://github.com/stevesolun/ctx) solves a problem every Claude Code user hits: there are 91K+ skills, 467 agents, and 10K+ MCP servers in the ecosystem, and loading them all wastes your context window on tools you're not using. Built by [Steve Solun](https://github.com/stevesolun), ctx watches your repo in real time, detects what stack you're working in (sees `.tsx` files, detects React; sees `sqlalchemy`, detects Postgres), then queries a 102,928-node knowledge graph with 2.9M edges to recommend only the 5-15 tools relevant to your current task. Nothing loads without your approval. It also detects stale tools you installed months ago and flags them for removal. 510 stars.
 
 Every ctx recommendation, graph query, and wiki search result lands directly in the LLM context window. These payloads are arrays of uniform objects (5-25 results with 6-17 fields each) where JSON repeats every field name on every record. GCF's positional encoding eliminates that repetition, cutting the token cost of every tool response roughly in half.
 
