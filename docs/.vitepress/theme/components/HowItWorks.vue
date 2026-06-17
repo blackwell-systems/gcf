@@ -119,7 +119,7 @@ onMounted(async () => {
 
 <style scoped>
 .hiw-band {
-  background: #040407;
+  background: #020204;
   padding: 8px 0;
   width: 100vw;
   position: relative;
