@@ -2,7 +2,13 @@
   <div class="button-bar">
     <div class="button-bar-inner">
       <a href="/guide/getting-started" class="bb-btn bb-brand">
-        Get Started <span class="bb-arrow">→</span>
+        <svg class="bb-icon-arrow before" viewBox="0 0 35 15" xmlns="http://www.w3.org/2000/svg">
+          <path d="M27.5 0L35 7.5L27.5 15M0 7.5H35" stroke="currentColor" stroke-width="2" fill="none"/>
+        </svg>
+        <span class="bb-label">Get Started</span>
+        <svg class="bb-icon-arrow after" viewBox="0 0 35 15" xmlns="http://www.w3.org/2000/svg">
+          <path d="M27.5 0L35 7.5L27.5 15M0 7.5H35" stroke="currentColor" stroke-width="2" fill="none"/>
+        </svg>
       </a>
       <a href="/playground" class="bb-btn bb-alt">Try the Playground</a>
       <a href="/calculator" class="bb-btn bb-alt">Cost Calculator</a>
@@ -42,24 +48,66 @@
   border-color: var(--gcf-blue, #18befc);
   color: var(--gcf-blue, #18befc);
   background: transparent;
-  gap: 8px;
   font-weight: 700;
+  position: relative;
+  padding: 14px 32px 14px 72px;
+  overflow: hidden;
 }
 
 .bb-brand:hover {
   background: var(--gcf-blue, #18befc);
   color: #000;
   box-shadow: 0 0 28px rgba(24, 190, 252, 0.35);
-  transform: translateY(-2px);
 }
 
-.bb-arrow {
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  font-size: 1.1em;
+.bb-label,
+.bb-icon-arrow {
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
-.bb-brand:hover .bb-arrow {
-  transform: translateX(4px);
+.bb-label {
+  display: inline-block;
+  transition: transform 0.5s cubic-bezier(0.86, 0, 0.07, 1);
+}
+
+.bb-icon-arrow {
+  height: 13px;
+  width: 30px;
+  transition: transform 0.5s cubic-bezier(0.86, 0, 0.07, 1),
+              opacity 0.4s cubic-bezier(0.86, 0, 0.07, 1);
+}
+
+.bb-icon-arrow.before {
+  position: absolute;
+  left: 28px;
+  top: 50%;
+  margin-top: -6.5px;
+  transform-origin: left center;
+}
+
+.bb-icon-arrow.after {
+  position: absolute;
+  right: 28px;
+  top: 50%;
+  margin-top: -6.5px;
+  opacity: 0;
+  transform: translateX(75%) scaleX(0.1);
+  transform-origin: right center;
+}
+
+.bb-brand:hover .bb-label {
+  transform: translateX(-20px);
+}
+
+.bb-brand:hover .bb-icon-arrow.before {
+  opacity: 0;
+  transform: translateX(-75%) scaleX(0.1);
+}
+
+.bb-brand:hover .bb-icon-arrow.after {
+  opacity: 1;
+  transform: translateX(0) scaleX(1);
 }
 
 .bb-alt {
