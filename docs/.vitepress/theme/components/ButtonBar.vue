@@ -116,22 +116,6 @@
   left: calc(100% - 0.75rem);
 }
 
-/* Corner brackets on front face */
-.bb-3d__text::after {
-  content: '';
-  position: absolute;
-  inset: -8px;
-  border: 1px solid rgba(24, 190, 252, 0.06);
-  pointer-events: none;
-  z-index: 2;
-  clip-path: polygon(
-    0 0, 10px 0, 10px 1px, 1px 1px, 1px 10px, 0 10px,
-    0 calc(100% - 10px), 1px calc(100% - 10px), 1px calc(100% - 1px), 10px calc(100% - 1px), 10px 100%, 0 100%,
-    100% 100%, calc(100% - 10px) 100%, calc(100% - 10px) calc(100% - 1px), calc(100% - 1px) calc(100% - 1px), calc(100% - 1px) calc(100% - 10px), 100% calc(100% - 10px),
-    100% 10px, calc(100% - 1px) 10px, calc(100% - 1px) 1px, calc(100% - 10px) 1px, calc(100% - 10px) 0, 100% 0
-  );
-}
-
 /* Text */
 .bb-3d__text {
   z-index: 1;
