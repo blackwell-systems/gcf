@@ -74,7 +74,6 @@
   top: 50%;
   margin-top: -7px;
   backface-visibility: hidden;
-  transform: translateZ(0);
   transition: transform 0.5s cubic-bezier(0.86, 0, 0.07, 1),
               opacity 0.4s cubic-bezier(0.86, 0, 0.07, 1);
 }
@@ -82,6 +81,7 @@
 .bb-arrow-before {
   left: 28px;
   transform-origin: left center;
+  transform: translateZ(0);
 }
 
 .bb-arrow-after {
