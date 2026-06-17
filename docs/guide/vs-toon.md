@@ -246,6 +246,52 @@ On 15 real-world datasets, GCF wins 13. Overall: 25.5% fewer tokens.
 
 The gap widens over time. First call: GCF saves 34% vs TOON. Fifth call: GCF saves 92.7% vs JSON while TOON is stuck at 69%. No format change can close that gap without adding session state, which requires local IDs, which requires a fundamental redesign.
 
+---
+
+## TOON Is Not Lossless
+
+TOON claims "deterministic, lossless round-trips" on their landing page. We tested it.
+
+10 million random structured values encoded with `@toon-format/toon` (their official npm package), decoded back, and compared to the original.
+
+| | GCF | TOON |
+|---|---|---|
+| **Round-trips tested** | 33,000,000,000+ | 10,000,000 |
+| **Success rate** | 100% | 92.46% |
+| **Decode errors** | 0 | 577,717 |
+| **Silent data corruption** | 0 | 176,487 |
+| **Total failures** | 0 | 754,204 |
+
+**7.54% of TOON round-trips fail.** 176,487 of those are silent: the encode and decode both "succeed" but the output doesn't match the input. The data is quietly corrupted with no error.
+
+### What breaks TOON
+
+TOON's encoder does not quote strings containing structural characters (`[`, `]`, `{`, `}`, `:`). The decoder then misparses those strings as format syntax.
+
+Example (seed 132): the string `"name[3]: a,b,c"` is encoded as a bare value. The decoder sees `name[3]:` and interprets it as an inline array declaration, returning `["a","b","c"]` instead of the original string. Silent corruption.
+
+Example (seed 2780): the string `"1x#[3tyevb6L][_:qE"` causes a decode error because the decoder tries to parse `[_` as an array bracket.
+
+### The test
+
+The fuzz test generates random JSON values (objects, arrays, scalars, nested to depth 3-4) using a seeded PRNG. Values include strings with commas, brackets, braces, colons, newlines, tabs, unicode, and other characters that probe format boundary handling. Every test is deterministic and reproducible from its seed.
+
+```bash
+# Reproduce
+git clone https://github.com/blackwell-systems/gcf
+cd gcf/eval
+npm install @toon-format/toon
+node toon-fuzz.mjs 10000000
+```
+
+Full log: [toon-fuzz-10M-2026-06-16.log](https://github.com/blackwell-systems/gcf/blob/main/eval/results/toon-fuzz-10M-2026-06-16.log)
+
+### Why GCF doesn't have this problem
+
+GCF's scalar grammar quotes any string that contains pipe (`|`), newline, or could be misinterpreted as a typed literal. The quoting rules are specified in the grammar and enforced by all 6 implementations. 33 billion round-trips across 5 formats with zero mismatches is the proof.
+
+---
+
 **[Try both formats in the playground](https://gcformat.com/playground.html)** with your own data.
 
 **[Get started in 5 minutes](https://gcformat.com/guide/getting-started.html)** with any of 6 languages.
