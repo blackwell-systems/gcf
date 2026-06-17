@@ -139,22 +139,22 @@
 
 /* Custom scrollbar (disabled when Seuss scrollbar is active) */
 html:not(.seuss-scrollbar)::-webkit-scrollbar {
-  width: 16px;
-  height: 16px;
+  width: 10px;
+  height: 10px;
 }
 
 html:not(.seuss-scrollbar)::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.03);
+  background: transparent;
 }
 
 html:not(.seuss-scrollbar)::-webkit-scrollbar-thumb {
-  background: var(--gcf-blue, #18befc);
-  border-radius: 6px;
-  opacity: 0.7;
+  background: linear-gradient(180deg, #18befc 0%, #0d5f7e 50%, #18befc 100%);
+  border-radius: 5px;
+  border: 2px solid #000;
 }
 
 html:not(.seuss-scrollbar)::-webkit-scrollbar-thumb:hover {
-  opacity: 1;
+  background: linear-gradient(180deg, #3dd4ff 0%, #18befc 50%, #3dd4ff 100%);
 }
 
 html:not(.seuss-scrollbar) {
