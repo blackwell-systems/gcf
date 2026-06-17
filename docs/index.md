@@ -22,6 +22,8 @@ hero:
 
 <BeforeAfter />
 
+<ComparisonMatrix />
+
 <HowItWorks />
 
 <GrammarRef />
