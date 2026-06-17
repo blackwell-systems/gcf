@@ -45,18 +45,26 @@ GCF was designed for knowing's use case and extracted into a standalone format o
 
 ## bb (Bitbucket Cloud CLI)
 
-[bb](https://github.com/payfacto/bb) is a Go CLI and TUI for the Bitbucket Cloud REST API, built by [Payfacto](https://github.com/payfacto). Designed for AI agent consumption with a human-friendly TUI mode. **First third-party project to make GCF the default output format over JSON.**
+[bb](https://github.com/payfacto/bb) is a Go CLI and TUI for the Bitbucket Cloud REST API, built by [Payfacto](https://github.com/payfacto). Designed for AI agent consumption with a human-friendly TUI mode.
 
 - Imports `github.com/blackwell-systems/gcf-go` directly in Go source
-- GCF is the **default output format** for all commands
-- JSON and text are opt-in via `--format json` or `--format text`
-- When stdout is piped (non-terminal), output auto-coerces to GCF unless text was explicitly requested
-- Format precedence: built-in default (gcf) < config file < env var < CLI flag
+- GCF supported as opt-in output format via `--format gcf`, `BB_FORMAT=gcf`, or config file
+- JSON is the default; GCF is the token-efficient alternative for agent consumers
+- Imports `github.com/blackwell-systems/gcf-go` directly in Go source
 - Full design spec documenting the GCF integration decision (2026-06-15)
-- Migration instructions for existing JSON consumers
-- Describes GCF as "~71% more token-efficient than JSON"
 - Links to the GCF spec in both README and llms.txt
 - Independent third-party adoption: no affiliation with Blackwell Systems
+
+## NetClaw
+
+[NetClaw](https://github.com/automateyournetwork/netclaw) is a CCIE-level AI network engineering coworker with 113 skills and 66 MCP integrations. 556 stars.
+
+- Replaced TOON with GCF for all MCP server responses ([PR #67](https://github.com/automateyournetwork/netclaw/pull/67))
+- 55.8% token savings vs JSON (13.6% fewer tokens than TOON)
+- Uses `gcf-python` via shared `netclaw_tokens` library
+- Benchmarked on 5 network data types: BGP peers, route tables, interfaces, OSPF neighbors, NSG rules
+- JSON fallback on any encode error
+- First external TOON-to-GCF conversion
 
 ## Your project here
 
