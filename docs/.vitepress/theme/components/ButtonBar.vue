@@ -13,7 +13,7 @@
   </div>
 </template>
 
-<style scoped>
+<style>
 .button-bar {
   max-width: 1152px;
   margin: 0 auto;
