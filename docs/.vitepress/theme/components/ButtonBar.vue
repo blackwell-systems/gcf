@@ -120,43 +120,6 @@
   transition: 250ms all ease;
 }
 
-/* Scanline sweep */
-@keyframes scanline {
-  0% { left: -30%; opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { left: 130%; opacity: 0; }
-}
-
-.bb-3d__text::before {
-  content: "";
-  position: absolute;
-  top: -14px;
-  left: -30%;
-  width: 20%;
-  height: calc(100% + 28px);
-  background: linear-gradient(90deg, transparent, rgba(24, 190, 252, 0.07), transparent);
-  pointer-events: none;
-  animation: scanline 4.5s ease-in-out infinite;
-  z-index: 2;
-}
-
-/* Corner tick marks on front face */
-.bb-3d__text::after {
-  content: "";
-  position: absolute;
-  inset: -6px;
-  border: 1px solid rgba(24, 190, 252, 0.15);
-  pointer-events: none;
-  z-index: 2;
-  clip-path: polygon(
-    0 0, 8px 0, 8px 1px, 1px 1px, 1px 8px, 0 8px,
-    0 calc(100% - 8px), 1px calc(100% - 8px), 1px calc(100% - 1px), 8px calc(100% - 1px), 8px 100%, 0 100%,
-    100% 100%, calc(100% - 8px) 100%, calc(100% - 8px) calc(100% - 1px), calc(100% - 1px) calc(100% - 1px), calc(100% - 1px) calc(100% - 8px), 100% calc(100% - 8px),
-    100% 8px, calc(100% - 1px) 8px, calc(100% - 1px) 1px, calc(100% - 8px) 1px, calc(100% - 8px) 0, 100% 0
-  );
-}
-
 /* Hover: shift perspective */
 .bb-3d:hover::before {
   transform: translate(0.75rem, -0.75rem);
