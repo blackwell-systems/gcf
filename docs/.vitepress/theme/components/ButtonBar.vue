@@ -10,16 +10,20 @@ function scramble(ev) {
 
   const original = el.dataset.original || el.textContent
   el.dataset.original = original
-  // On first hover, replace text with fixed-width character spans
+  // Measure each character's natural width on first hover
   if (!el.dataset.initialized) {
-    const w = el.offsetWidth
-    el.style.minWidth = w + 'px'
+    el.innerHTML = original.split('').map(ch =>
+      `<span style="display:inline-block">${ch === ' ' ? '&nbsp;' : ch}</span>`
+    ).join('')
+    const spans = el.querySelectorAll('span')
+    el.dataset.charWidths = JSON.stringify(Array.from(spans).map(s => s.offsetWidth))
+    el.textContent = original
     el.style.display = 'inline-block'
+    el.style.minWidth = el.offsetWidth + 'px'
     el.dataset.initialized = '1'
   }
+  const charWidths = JSON.parse(el.dataset.charWidths)
   const chars = original.split('')
-  // Build fixed-width spans so swapping characters doesn't jiggle
-  const charWidth = el.offsetWidth / Math.max(chars.length, 1)
   let iteration = 0
   const duration = 600
   const interval = 30
@@ -27,10 +31,11 @@ function scramble(ev) {
 
   const timer = setInterval(() => {
     el.innerHTML = chars.map((ch, i) => {
+      const w = charWidths[i] || 0
       const c = ch === ' ' ? '&nbsp;' :
         (iteration > (i / chars.length) * totalSteps) ? original[i] :
         scrambleChars[Math.floor(Math.random() * scrambleChars.length)]
-      return `<span style="display:inline-block;width:${charWidth}px;text-align:center">${c}</span>`
+      return `<span style="display:inline-block;width:${w}px;text-align:center">${c}</span>`
     }).join('')
 
     iteration++
