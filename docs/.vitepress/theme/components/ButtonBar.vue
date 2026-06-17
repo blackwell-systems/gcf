@@ -146,15 +146,20 @@
 
 /* ── Alt buttons ── */
 .bb-alt {
-  border-color: rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.6);
+  border: 1px dashed rgba(24, 190, 252, 0.2);
+  color: rgba(255, 255, 255, 0.5);
   background: transparent;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 12px 28px;
 }
 
 .bb-alt:hover {
-  border-color: var(--gcf-blue, #18befc);
+  border-color: rgba(24, 190, 252, 0.5);
   color: var(--gcf-blue, #18befc);
-  transform: translateY(-2px);
+  background: rgba(24, 190, 252, 0.04);
 }
 
 /* ── Mobile ── */
