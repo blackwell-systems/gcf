@@ -46,7 +46,6 @@ const plugins = [
 </script>
 
 <template>
-  <div class="plugin-band">
   <div class="plugin-strip">
     <div class="plugin-strip-inner">
       <div class="plugin-grid">
@@ -58,13 +57,9 @@ const plugins = [
       </div>
     </div>
   </div>
-  </div>
 </template>
 
 <style scoped>
-.plugin-band {
-}
-
 .plugin-strip {
   max-width: 1152px;
   margin: 0 auto;
