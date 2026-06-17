@@ -244,6 +244,17 @@ code.terminal { color: #4ade80; background: #0a1a0a; border: 1px solid #1a3a1a; 
   );
 }
 
+.gcf-corners::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
 /* Prevent horizontal scrollbar on full-width page layouts */
 .VPPage {
   overflow-x: clip;
