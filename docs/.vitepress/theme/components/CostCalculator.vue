@@ -106,7 +106,7 @@ function formatCurrency(n: number): string {
     <p class="subtitle">Plug in your numbers. See what you could save.</p>
 
     <div class="layout">
-      <div class="left">
+      <div class="left gcf-corners">
         <h3>Your Pipeline</h3>
 
         <div class="param">
@@ -140,7 +140,7 @@ function formatCurrency(n: number): string {
         </div>
       </div>
 
-      <div class="right">
+      <div class="right gcf-corners">
         <!-- What you're paying now -->
         <div class="current-cost">
           <div class="current-label">YOUR CURRENT MONTHLY COST</div>
@@ -244,8 +244,10 @@ function formatCurrency(n: number): string {
 
 .left, .right {
   padding: 1.5rem;
-  background: var(--vp-c-bg-soft);
-  border-radius: 12px;
+  background: rgba(24, 190, 252, 0.03);
+  border: 1px solid rgba(24, 190, 252, 0.1);
+  border-radius: 14px;
+  position: relative;
 }
 
 .left h3 {
@@ -282,9 +284,9 @@ function formatCurrency(n: number): string {
 .number-input::-webkit-inner-spin-button,
 .number-input::-webkit-outer-spin-button { opacity: 1; }
 
-.number-input:focus { outline: none; border-color: #2563eb; }
+.number-input:focus { outline: none; border-color: var(--gcf-blue, #18befc); }
 
-.param input[type="range"] { width: 100%; accent-color: #2563eb; }
+.param input[type="range"] { width: 100%; accent-color: var(--gcf-blue, #18befc); }
 
 .param-range {
   display: flex;
@@ -298,8 +300,8 @@ function formatCurrency(n: number): string {
   width: 100%;
   padding: 0.5rem 0.75rem;
   border-radius: 6px;
-  border: 2px solid #2563eb;
-  background: rgba(37, 99, 235, 0.05);
+  border: 2px solid var(--gcf-blue, #18befc);
+  background: rgba(24, 190, 252, 0.05);
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--vp-c-text-1);
@@ -313,9 +315,9 @@ function formatCurrency(n: number): string {
 
 .current-cost {
   padding: 1.25rem;
-  background: rgba(239, 68, 68, 0.06);
-  border: 1px solid rgba(239, 68, 68, 0.2);
-  border-radius: 10px;
+  background: rgba(239, 68, 68, 0.04);
+  border: 1px solid rgba(239, 68, 68, 0.12);
+  border-radius: 14px;
 }
 
 .current-label {
@@ -381,7 +383,7 @@ function formatCurrency(n: number): string {
 
 .bar-fill.json { background: rgba(107, 114, 128, 0.3); }
 .bar-fill.toon { background: rgba(245, 158, 11, 0.25); }
-.bar-fill.gcf { background: rgba(37, 99, 235, 0.25); }
+.bar-fill.gcf { background: rgba(24, 190, 252, 0.25); }
 
 .bar-amount {
   font-size: 0.85rem;
@@ -394,9 +396,9 @@ function formatCurrency(n: number): string {
 .savings-hero {
   text-align: center;
   padding: 1.25rem;
-  background: rgba(34, 197, 94, 0.06);
-  border: 1px solid rgba(34, 197, 94, 0.2);
-  border-radius: 10px;
+  background: rgba(34, 197, 94, 0.04);
+  border: 1px solid rgba(34, 197, 94, 0.12);
+  border-radius: 14px;
   margin-bottom: 1rem;
 }
 
@@ -430,7 +432,7 @@ function formatCurrency(n: number): string {
 }
 
 .monthly-pill.green { color: #22c55e; }
-.monthly-pill.blue { color: #2563eb; }
+.monthly-pill.blue { color: var(--gcf-blue, #18befc); }
 
 .savings-pills {
   display: flex;
@@ -452,8 +454,8 @@ function formatCurrency(n: number): string {
 }
 
 .pill.blue {
-  color: #2563eb;
-  background: rgba(37, 99, 235, 0.12);
+  color: var(--gcf-blue, #18befc);
+  background: rgba(24, 190, 252, 0.12);
 }
 
 /* Token details toggle */
@@ -486,8 +488,9 @@ function formatCurrency(n: number): string {
 .note {
   margin-top: 2rem;
   padding: 1rem 1.25rem;
-  background: var(--vp-c-bg-soft);
-  border-radius: 8px;
+  background: rgba(24, 190, 252, 0.03);
+  border: 1px solid rgba(24, 190, 252, 0.08);
+  border-radius: 10px;
   font-size: 0.8rem;
   color: var(--vp-c-text-3);
 }
