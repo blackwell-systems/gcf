@@ -124,7 +124,11 @@
   transition: 250ms all ease;
 }
 
-/* Hover: shift perspective */
+/* Hover: shift perspective + tighten kerning */
+.bb-3d:hover .bb-3d__text {
+  letter-spacing: 0.3em;
+}
+
 .bb-3d:hover::before {
   transform: translate(0.75rem, -0.75rem);
 }
@@ -232,6 +236,7 @@
 
 .bb-alt:hover {
   color: var(--gcf-blue, #18befc);
+  letter-spacing: 0.15em;
 }
 
 .bb-alt:hover::before {
