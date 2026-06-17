@@ -113,9 +113,8 @@
 }
 
 .bb-alt:hover {
-  border-color: rgba(24, 190, 252, 0.4);
+  border-color: var(--gcf-blue, #18befc);
   color: var(--gcf-blue, #18befc);
-  box-shadow: 0 0 20px rgba(24, 190, 252, 0.15);
   transform: translateY(-2px);
 }
 
