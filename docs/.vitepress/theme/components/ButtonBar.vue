@@ -116,11 +116,11 @@ function onRelease() {
   left: 0;
   width: 100%;
   height: 100%;
-  border: 1px solid rgba(24, 190, 252, 0.4);
+  border: 2px solid rgba(24, 190, 252, 0.6);
   pointer-events: none;
   z-index: 3;
   clip-path: inset(0 0 0 0);
-  transition: clip-path 300ms ease-out, transform 250ms ease;
+  transition: clip-path 500ms ease-out, transform 250ms ease;
 }
 
 .bb-3d:active .bb-3d__border {
