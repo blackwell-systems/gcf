@@ -12,14 +12,26 @@ hero:
 
 <ButtonBar />
 
+<SectionDivider :variant="1" />
+
 <ProxyCallout />
+
+<SectionDivider :variant="2" />
 
 <PluginStrip />
 
+<SectionDivider :variant="3" />
+
 <LanguageStrip />
+
+<SectionDivider :variant="1" />
 
 <FeatureCards />
 
+<SectionDivider :variant="2" />
+
 <BeforeAfter />
+
+<SectionDivider :variant="3" />
 
 <HowItWorks />
