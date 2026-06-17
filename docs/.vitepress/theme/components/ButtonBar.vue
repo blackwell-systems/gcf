@@ -73,9 +73,15 @@
   transition: 250ms all ease;
 }
 
+@keyframes pulse-outline {
+  0%, 100% { outline-color: rgba(24, 190, 252, 0.2); }
+  50% { outline-color: rgba(24, 190, 252, 0.4); }
+}
+
 /* Back face */
 .bb-3d::before {
   transform: translate(-0.75rem, -0.75rem);
+  animation: pulse-outline 3.5s ease-in-out infinite;
 }
 
 /* Front face */
