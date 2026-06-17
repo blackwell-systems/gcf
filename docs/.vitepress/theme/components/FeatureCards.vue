@@ -95,7 +95,7 @@ const features = [
   content: '';
   position: absolute;
   inset: 6px;
-  border: 1px solid rgba(24, 190, 252, 0.08);
+  border: 1px solid rgba(24, 190, 252, 0.035);
   border-radius: 2px;
   pointer-events: none;
   z-index: 1;
