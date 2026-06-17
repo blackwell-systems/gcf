@@ -3,6 +3,11 @@ eval/**/*.py linguist-vendored
 docs/.vitepress/**/*.ts linguist-vendored
 docs/.vitepress/**/*.vue linguist-vendored
 docs/.vitepress/**/*.css linguist-vendored
+docs/.vitepress/dist/** linguist-vendored
+docs/.vitepress/cache/** linguist-vendored
+docs/public/** linguist-vendored
 tests/*.mjs linguist-vendored
 tests/*.py linguist-vendored
 scripts/*.sh linguist-vendored
+*.json linguist-vendored
+*.lock linguist-vendored
