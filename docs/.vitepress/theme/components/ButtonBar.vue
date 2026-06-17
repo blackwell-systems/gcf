@@ -234,18 +234,18 @@
 }
 
 .bb-alt:active::after {
-  transform: translate(0.2rem, -0.2rem);
+  transform: translate(0.4rem, -0.4rem);
   background-color: #18befc0e;
 }
 
 .bb-alt:active .bb-alt__inner::before,
 .bb-alt:active .bb-alt__inner::after {
-  width: 0.2rem;
-  transform: translate(0.6rem, calc(-0.1rem - 2px)) skewY(-45deg);
+  width: 0;
+  opacity: 0;
 }
 
 .bb-alt:active .bb-alt__text {
-  transform: translate(0.2rem, -0.2rem);
+  transform: translate(0.4rem, -0.4rem);
 }
 
 /* ── Mobile ── */
