@@ -1781,6 +1781,14 @@ onMounted(async () => {
 .pg-format-select {
   font-weight: 600;
   min-width: 80px;
+  border: 1.5px solid var(--gcf-blue, #18befc);
+  color: var(--gcf-blue, #18befc);
+  background: rgba(24, 190, 252, 0.05);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pg-format-select:hover {
+  background: rgba(24, 190, 252, 0.1);
 }
 
 /* TOON error state */
