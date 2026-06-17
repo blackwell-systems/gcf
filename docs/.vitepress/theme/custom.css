@@ -253,6 +253,15 @@ code.terminal { color: #4ade80; background: #0a1a0a; border: 1px solid #1a3a1a; 
   z-index: 0;
   background-image: radial-gradient(circle, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
   background-size: 16px 16px;
+  mask-image: linear-gradient(#000, #000);
+}
+
+.gcf-corners pre,
+.gcf-corners .code-block,
+.gcf-corners .grammar-code,
+.gcf-corners .ba-code-wrap {
+  position: relative;
+  z-index: 2;
 }
 
 /* Prevent horizontal scrollbar on full-width page layouts */
