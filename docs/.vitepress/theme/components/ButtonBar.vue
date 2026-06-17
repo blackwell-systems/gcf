@@ -1,36 +1,16 @@
-<script setup>
-import { ref } from 'vue'
-
-const borderEl = ref(null)
-
-function onPress() {
-  if (borderEl.value) {
-    borderEl.value.classList.add('dissolving')
-  }
-}
-
-function onRelease() {
-  if (borderEl.value) {
-    borderEl.value.classList.remove('dissolving')
-  }
-}
-</script>
-
 <template>
   <div class="button-band">
   <div class="button-bar">
     <div class="button-bar-inner">
-      <a href="/guide/getting-started" class="bb-3d"
-         @mousedown="onPress" @mouseup="onRelease" @mouseleave="onRelease">
+      <a href="/guide/getting-started" class="bb-3d">
         <span class="bb-3d__inner">
           <span class="bb-3d__text">Get Started</span>
         </span>
-        <span class="bb-3d__border" ref="borderEl"></span>
       </a>
       <a href="/playground" class="bb-alt">
         <span class="bb-alt__inner"><span class="bb-alt__text">Try the Playground</span></span>
       </a>
-      <a href="/calculator" class="bb-alt bb-calc">
+      <a href="/calculator" class="bb-alt">
         <span class="bb-alt__inner"><span class="bb-alt__text">Cost Calculator</span></span>
       </a>
       <a href="/guide/vs-toon" class="bb-alt">
@@ -41,7 +21,7 @@ function onRelease() {
   </div>
 </template>
 
-<style>
+<style scoped>
 .button-band {
   background: #000307b3;
   padding: 32px 0;
@@ -104,36 +84,11 @@ function onRelease() {
   animation: pulse-outline 3.5s ease-in-out infinite;
 }
 
-/* Front face (bg only, border handled by .bb-3d__border) */
+/* Front face */
 .bb-3d::after {
   background-color: #d8ca030d;
-}
-
-/* Front face border (real DOM element for JS-driven clip-path animation) */
-.bb-3d__border {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: 2px solid rgba(24, 190, 252, 0.6);
-  pointer-events: none;
-  z-index: 3;
-  clip-path: inset(0 0 0 0);
-  transition: clip-path 500ms ease-out, transform 250ms ease;
-}
-
-.bb-3d:active .bb-3d__border {
-  transform: translate(0.75rem, -0.75rem);
-}
-
-.bb-3d__border.dissolving {
-  clip-path: inset(50% 0);
-}
-
-@keyframes border-restore {
-  from { clip-path: inset(50% 0); }
-  to { clip-path: inset(0 0 0 0); }
+  outline-style: solid;
+  outline-color: rgba(24, 190, 252, 0.4);
 }
 
 /* Side panels */
@@ -308,25 +263,6 @@ function onRelease() {
 
 .bb-alt:active .bb-alt__text {
   transform: translate(0.4rem, -0.4rem);
-}
-
-/* ── Calculator green tint on hover ── */
-.bb-calc:hover {
-  color: #4ade80;
-}
-
-.bb-calc:hover::after {
-  background-color: #4ade800a;
-  outline-color: rgba(74, 222, 128, 0.25);
-}
-
-.bb-calc:hover::before {
-  outline-color: rgba(74, 222, 128, 0.15);
-}
-
-.bb-calc:hover .bb-alt__inner::before,
-.bb-calc:hover .bb-alt__inner::after {
-  border-color: rgba(74, 222, 128, 0.15);
 }
 
 /* ── Mobile ── */
