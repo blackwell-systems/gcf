@@ -90,7 +90,7 @@
   position: absolute;
   top: 50%;
   margin-top: -6px;
-  left: -20px;
+  left: -40px;
   opacity: 1;
   transform-origin: left center;
   transition: left 0.6s cubic-bezier(0.86, 0, 0.07, 1);
