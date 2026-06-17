@@ -124,7 +124,7 @@
 }
 
 .bb-3d:hover::after {
-  background-color: rgba(24, 190, 252, 0.1);
+  background-color: #d8ca0318;
 }
 
 .bb-3d:hover .bb-3d__inner::before,
@@ -136,6 +136,7 @@
 /* Active: press in */
 .bb-3d:active::after {
   transform: translate(0.375rem, -0.375rem);
+  background-color: #d8ca0324;
 }
 
 .bb-3d:active .bb-3d__inner::before,
