@@ -134,6 +134,10 @@
 }
 
 /* Active: front pushes in to meet back (back is at 0.75rem, -0.75rem during hover) */
+.bb-3d:active::before {
+  outline-style: solid;
+}
+
 .bb-3d:active::after {
   transform: translate(0.75rem, -0.75rem);
   background-color: #d8ca031c;
@@ -233,9 +237,14 @@
   --sy: -45deg;
 }
 
+.bb-alt:active::before {
+  outline-style: solid;
+}
+
 .bb-alt:active::after {
   transform: translate(0.4rem, -0.4rem);
   background-color: #18befc0e;
+  outline-style: solid;
 }
 
 .bb-alt:active .bb-alt__inner::before,
