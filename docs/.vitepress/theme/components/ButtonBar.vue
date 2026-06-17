@@ -10,7 +10,7 @@
       <a href="/playground" class="bb-alt">
         <span class="bb-alt__inner"><span class="bb-alt__text">Try the Playground</span></span>
       </a>
-      <a href="/calculator" class="bb-alt">
+      <a href="/calculator" class="bb-alt bb-calc">
         <span class="bb-alt__inner"><span class="bb-alt__text">Cost Calculator</span></span>
       </a>
       <a href="/guide/vs-toon" class="bb-alt">
@@ -263,6 +263,25 @@
 
 .bb-alt:active .bb-alt__text {
   transform: translate(0.4rem, -0.4rem);
+}
+
+/* ── Calculator green tint on hover ── */
+.bb-calc:hover {
+  color: #4ade80;
+}
+
+.bb-calc:hover::after {
+  background-color: #4ade800a;
+  outline-color: rgba(74, 222, 128, 0.25);
+}
+
+.bb-calc:hover::before {
+  outline-color: rgba(74, 222, 128, 0.15);
+}
+
+.bb-calc:hover .bb-alt__inner::before,
+.bb-calc:hover .bb-alt__inner::after {
+  border-color: rgba(74, 222, 128, 0.15);
 }
 
 /* ── Mobile ── */
