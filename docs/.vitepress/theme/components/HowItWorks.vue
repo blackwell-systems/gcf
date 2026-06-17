@@ -119,7 +119,7 @@ onMounted(async () => {
 
 <style scoped>
 .hiw-band {
-  background: #020204;
+  background: #010102;
   background-image: radial-gradient(circle, rgba(255, 255, 255, 0.012) 1px, transparent 1px);
   background-size: 20px 20px;
   padding: 8px 0;
