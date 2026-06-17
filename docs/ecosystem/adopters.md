@@ -21,14 +21,12 @@
 
 NetClaw previously used TOON for token optimization across its MCP servers. After benchmarking GCF against TOON on NetClaw's actual network data payloads, the project replaced TOON entirely.
 
-- Replaced TOON with GCF for all MCP server responses ([PR #67](https://github.com/automateyournetwork/netclaw/pull/67))
-- **55.8% token savings vs JSON** (13.6% fewer tokens than TOON)
-- GCF wins 19/25 head-to-head matchups against TOON
-- On interface data specifically: **36% fewer tokens than TOON** due to GCF's positional encoding handling mixed-type fields (IP lists, MAC addresses) more efficiently
-- Benchmarked on 5 network data types at 10-500 rows each: BGP peers, route tables, interfaces, OSPF neighbors, NSG rules
-- Drop-in swap: `serialize_response()` API unchanged, all MCP servers benefit automatically
-- Uses `gcf-python` via shared `netclaw_tokens` library with JSON fallback on any encode error
-- First external TOON-to-GCF conversion
+- Replaced TOON with GCF for all MCP server responses
+- **55.8% savings vs JSON**, 13.6% fewer tokens than TOON, wins 19/25 matchups
+- **36% fewer tokens than TOON on interface data** (IP lists, MAC addresses)
+- Benchmarked on BGP peers, route tables, interfaces, OSPF neighbors, NSG rules
+- Drop-in swap, JSON fallback on error
+- First TOON-to-GCF conversion
 
 ## ctx
 
@@ -36,14 +34,10 @@ NetClaw previously used TOON for token optimization across its MCP servers. Afte
 
 Every ctx recommendation, graph query, and wiki search result lands directly in the LLM context window. GCF encoding eliminates repeated field names across these structured payloads.
 
-- GCF encoding for all 4 MCP tool response methods: `recommend_bundle`, `graph_query`, `wiki_search`, `wiki_get`
-- **51.5% token savings vs JSON** across all tool response payloads
-- `recommend_bundle` at 25 results: **57.8% fewer tokens**
-- `graph_query` at 25 results: **57.6% fewer tokens**
-- `wiki_search` at 15 results: **42.4% fewer tokens**
-- GCF is opt-in via `output_format: "gcf"` tool argument; JSON remains the default
-- `gcf-python` available as optional extra: `pip install "claude-ctx[gcf]"`
-- Maintainer implemented his own adapter ([PR #127](https://github.com/stevesolun/ctx/pull/127)) based on the proof-of-concept ([PR #126](https://github.com/stevesolun/ctx/pull/126))
+- GCF encoding for all 4 MCP tool responses: recommend_bundle, graph_query, wiki_search, wiki_get
+- **51.5% savings vs JSON** overall, up to **57.8%** on recommendation bundles
+- Opt-in via `output_format: "gcf"`; JSON remains default
+- Optional extra: `pip install "claude-ctx[gcf]"`
 
 ## Open Data Products SDK (Linux Foundation)
 
