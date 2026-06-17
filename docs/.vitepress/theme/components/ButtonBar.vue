@@ -133,9 +133,9 @@
   --sy: -45deg;
 }
 
-/* Active: front pushes in to meet back */
+/* Active: front pushes in to meet back (back is at 0.75rem, -0.75rem during hover) */
 .bb-3d:active::after {
-  transform: translate(-0.75rem, -0.75rem);
+  transform: translate(0.75rem, -0.75rem);
   background-color: #d8ca031c;
 }
 
@@ -146,7 +146,7 @@
 }
 
 .bb-3d:active .bb-3d__text {
-  transform: translate(-0.75rem, -0.75rem);
+  transform: translate(0.75rem, -0.75rem);
 }
 
 /* ── Alt buttons (subtle 3D) ── */
