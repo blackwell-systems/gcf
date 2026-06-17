@@ -1,5 +1,59 @@
 # Who Uses GCF
 
+## NeuroNest
+
+[NeuroNest](https://github.com/NETGVai/NeuroNest) is an agent-first IDE built by [Network Guardian](https://netgv.ai). First independent commercial adoption of GCF.
+
+- GCF across 4 encoding surfaces: tool executor, swarm coordinator, MCP server manager, graph export
+- Session dedup with 1-hour eviction and background sweep
+- Delta encoding with Jaccard similarity threshold (0.5)
+- Per-provider comprehension gate: validates each LLM can read GCF before enabling it
+- Shadow mode (A/B testing): compute GCF for telemetry while sending JSON to LLM
+- Non-throwing failure contract with JSON fallback
+- Per-surface savings ratio metrics
+- Uses `@blackwell-systems/gcf` v1.0.0
+
+[Full case study](/ecosystem/case-study-neuronest)
+
+## NetClaw
+
+[NetClaw](https://github.com/automateyournetwork/netclaw) is a CCIE-level AI network engineering coworker with 113 skills and 66 MCP integrations. 556 stars.
+
+- Replaced TOON with GCF for all MCP server responses ([PR #67](https://github.com/automateyournetwork/netclaw/pull/67))
+- 55.8% token savings vs JSON (13.6% fewer tokens than TOON)
+- Uses `gcf-python` via shared `netclaw_tokens` library
+- Benchmarked on 5 network data types: BGP peers, route tables, interfaces, OSPF neighbors, NSG rules
+- JSON fallback on any encode error
+- First external TOON-to-GCF conversion
+
+## ctx
+
+[ctx](https://github.com/stevesolun/ctx) is a context budget manager for Claude Code with a 102K-node knowledge graph of 91K+ skills, 467 agents, and 10K+ MCP servers. 508 stars.
+
+- GCF encoding for all 4 MCP tool response methods ([PR #126](https://github.com/stevesolun/ctx/pull/126))
+- 51.5% token savings vs JSON across recommend_bundle, graph_query, and wiki_search payloads
+- Uses `gcf-python` via `_encode_response()` helper with JSON fallback
+- Benchmarked on realistic ctx recommendation data at 5-25 result sizes
+
+## Open Data Products SDK (Linux Foundation)
+
+[Open Data Products SDK](https://opendataproducts.org/sdk/) is a Python toolkit and MCP server for working with data product standards under the Linux Foundation. It validates, generates, and publishes Open Data Product specifications.
+
+- GCF sidecars for ODPC and ODPG workflows (agent-ready graph context)
+- Packed for agent prompts and review automation
+- Status: experimental integration
+
+## bb (Bitbucket Cloud CLI)
+
+[bb](https://github.com/payfacto/bb) is a Go CLI and TUI for the Bitbucket Cloud REST API, built by [Payfacto](https://github.com/payfacto). Designed for AI agent consumption with a human-friendly TUI mode.
+
+- GCF supported as opt-in output format via `--format gcf`, `BB_FORMAT=gcf`, or config file
+- JSON is the default; GCF is the token-efficient alternative for agent consumers
+- Imports `github.com/blackwell-systems/gcf-go` directly in Go source
+- Full design spec documenting the GCF integration decision (2026-06-15)
+- Links to the GCF spec in both README and llms.txt
+- Independent third-party adoption: no affiliation with Blackwell Systems
+
 ## knowing
 
 [knowing](https://github.com/blackwell-systems/knowing) is a self-adapting code intelligence engine. It uses GCF as the primary wire format for all 28 MCP tool responses.
@@ -19,52 +73,6 @@ GCF was designed for knowing's use case and extracted into a standalone format o
 - 34-44% token savings on structured tool responses (symbol lists, references, diagnostics, call hierarchies)
 - JSON remains the default; GCF is opt-in via session configuration
 - Uses `gcf-go` `EncodeGeneric` for generic profile encoding
-
-## NeuroNest
-
-[NeuroNest](https://github.com/NETGVai/NeuroNest) is an agent-first IDE built by [Network Guardian](https://netgv.ai). First independent commercial adoption of GCF.
-
-- GCF across 4 encoding surfaces: tool executor, swarm coordinator, MCP server manager, graph export
-- Session dedup with 1-hour eviction and background sweep
-- Delta encoding with Jaccard similarity threshold (0.5)
-- Per-provider comprehension gate: validates each LLM can read GCF before enabling it
-- Shadow mode (A/B testing): compute GCF for telemetry while sending JSON to LLM
-- Non-throwing failure contract with JSON fallback
-- Per-surface savings ratio metrics
-- Uses `@blackwell-systems/gcf` v1.0.0
-
-[Full case study](/ecosystem/case-study-neuronest)
-
-## Open Data Products SDK (Linux Foundation)
-
-[Open Data Products SDK](https://opendataproducts.org/sdk/) is a Python toolkit and MCP server for working with data product standards under the Linux Foundation. It validates, generates, and publishes Open Data Product specifications.
-
-- GCF sidecars for ODPC and ODPG workflows (agent-ready graph context)
-- Packed for agent prompts and review automation
-- Status: experimental integration
-
-## bb (Bitbucket Cloud CLI)
-
-[bb](https://github.com/payfacto/bb) is a Go CLI and TUI for the Bitbucket Cloud REST API, built by [Payfacto](https://github.com/payfacto). Designed for AI agent consumption with a human-friendly TUI mode.
-
-- Imports `github.com/blackwell-systems/gcf-go` directly in Go source
-- GCF supported as opt-in output format via `--format gcf`, `BB_FORMAT=gcf`, or config file
-- JSON is the default; GCF is the token-efficient alternative for agent consumers
-- Imports `github.com/blackwell-systems/gcf-go` directly in Go source
-- Full design spec documenting the GCF integration decision (2026-06-15)
-- Links to the GCF spec in both README and llms.txt
-- Independent third-party adoption: no affiliation with Blackwell Systems
-
-## NetClaw
-
-[NetClaw](https://github.com/automateyournetwork/netclaw) is a CCIE-level AI network engineering coworker with 113 skills and 66 MCP integrations. 556 stars.
-
-- Replaced TOON with GCF for all MCP server responses ([PR #67](https://github.com/automateyournetwork/netclaw/pull/67))
-- 55.8% token savings vs JSON (13.6% fewer tokens than TOON)
-- Uses `gcf-python` via shared `netclaw_tokens` library
-- Benchmarked on 5 network data types: BGP peers, route tables, interfaces, OSPF neighbors, NSG rules
-- JSON fallback on any encode error
-- First external TOON-to-GCF conversion
 
 ## Your project here
 
