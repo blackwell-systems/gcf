@@ -231,23 +231,23 @@ code.terminal { color: #4ade80; background: #0a1a0a; border: 1px solid #1a3a1a; 
 .gcf-corners::after {
   content: '';
   position: absolute;
-  width: 14px;
-  height: 14px;
-  border-color: rgba(24, 190, 252, 0.3);
+  width: 12px;
+  height: 12px;
+  border-color: rgba(255, 255, 255, 0.12);
   pointer-events: none;
   z-index: 1;
 }
 
 .gcf-corners::before {
-  top: 6px;
-  left: 6px;
+  top: 10px;
+  left: 10px;
   border-top: 1px solid;
   border-left: 1px solid;
 }
 
 .gcf-corners::after {
-  bottom: 6px;
-  right: 6px;
+  bottom: 10px;
+  right: 10px;
   border-bottom: 1px solid;
   border-right: 1px solid;
 }
