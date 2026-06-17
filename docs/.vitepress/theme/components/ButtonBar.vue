@@ -250,14 +250,14 @@
 }
 
 .bb-alt:active::before {
-  outline-style: solid;
+  outline-color: transparent;
   background-color: #0f00ff0a;
 }
 
 .bb-alt:active::after {
   transform: translate(0.4rem, -0.4rem);
   background-color: #18befc0e;
-  outline-style: solid;
+  outline-color: transparent;
 }
 
 .bb-alt:active .bb-alt__inner::before,
