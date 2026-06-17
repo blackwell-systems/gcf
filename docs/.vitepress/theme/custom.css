@@ -19,6 +19,10 @@
   --vp-c-bg-soft: #111 !important;
 }
 
+.VPHome {
+  overflow-x: clip;
+}
+
 /* Hide hero name entirely */
 .VPHero .name {
   display: none !important;
