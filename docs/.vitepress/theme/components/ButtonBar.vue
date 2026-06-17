@@ -133,20 +133,20 @@
   --sy: -45deg;
 }
 
-/* Active: press in */
+/* Active: front pushes in to meet back */
 .bb-3d:active::after {
-  transform: translate(0.375rem, -0.375rem);
+  transform: translate(-0.75rem, -0.75rem);
   background-color: #d8ca031c;
 }
 
 .bb-3d:active .bb-3d__inner::before,
 .bb-3d:active .bb-3d__inner::after {
-  width: 0.375rem;
-  transform: translate(1.125rem, calc(-0.1875rem - 2px)) skewY(-45deg);
+  width: 0;
+  opacity: 0;
 }
 
 .bb-3d:active .bb-3d__text {
-  transform: translate(0.375rem, -0.375rem);
+  transform: translate(-0.75rem, -0.75rem);
 }
 
 /* ── Alt buttons (subtle 3D) ── */
