@@ -73,6 +73,16 @@
   transition: 250ms all ease;
 }
 
+@keyframes click-flash {
+  0% { background-color: #d8ca0340; }
+  100% { background-color: #d8ca031c; }
+}
+
+@keyframes click-flash-alt {
+  0% { background-color: #18befc30; }
+  100% { background-color: #18befc0e; }
+}
+
 @keyframes pulse-outline {
   0%, 100% { outline-color: rgba(24, 190, 252, 0.2); }
   50% { outline-color: rgba(24, 190, 252, 0.4); }
@@ -147,7 +157,7 @@
 
 .bb-3d:active::after {
   transform: translate(0.75rem, -0.75rem);
-  background-color: #d8ca031c;
+  animation: click-flash 150ms ease-out forwards;
 }
 
 .bb-3d:active .bb-3d__inner::before,
@@ -251,7 +261,7 @@
 
 .bb-alt:active::after {
   transform: translate(0.4rem, -0.4rem);
-  background-color: #18befc0e;
+  animation: click-flash-alt 150ms ease-out forwards;
   outline-style: solid;
 }
 
