@@ -23,9 +23,7 @@
 
 <style scoped>
 .button-band {
-  background: #010102;
-  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.012) 1px, transparent 1px);
-  background-size: 20px 20px;
+  background: #000307b3;
   padding: 32px 0;
   width: 100vw;
   position: relative;
