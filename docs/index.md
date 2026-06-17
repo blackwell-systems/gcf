@@ -12,6 +12,8 @@ hero:
 
 <ButtonBar />
 
+<StatsBar />
+
 <ProxyCallout />
 
 <PluginStrip />
