@@ -17,7 +17,7 @@
 
 ## NetClaw
 
-[NetClaw](https://github.com/automateyournetwork/netclaw) is a CCIE-level AI network engineering coworker with 113 skills and 66 MCP integrations, built by [John Capobianco](https://github.com/automateyournetwork) (Head of AI and DevRel at Itential, Google Developer Expert). 556 stars.
+[NetClaw](https://github.com/automateyournetwork/netclaw) is an AI-powered network automation platform with 113 skills and 66 MCP integrations, built by [John Capobianco](https://github.com/automateyournetwork) (Head of AI and DevRel at Itential, Google Developer Expert). It automates network engineering workflows across Cisco, Juniper, Arista, Palo Alto, F5, AWS, and dozens of other platforms, with live BGP/OSPF control-plane participation, gNMI streaming telemetry, ITSM gating, and immutable audit trails. 556 stars.
 
 NetClaw previously used TOON for token optimization across its MCP servers. After benchmarking GCF against TOON on NetClaw's actual network data payloads, the project replaced TOON entirely. This was the first external project to switch from TOON to GCF.
 
