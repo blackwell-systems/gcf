@@ -49,7 +49,7 @@ const features = [
 
 <style scoped>
 .feature-band {
-  background: #060609;
+  background: #040407;
   padding: 8px 0;
   width: 100vw;
   position: relative;
