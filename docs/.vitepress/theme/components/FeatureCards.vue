@@ -80,13 +80,31 @@ const features = [
 }
 
 .feature-card {
+  position: relative;
   padding: 24px;
   border: 1px solid rgba(24, 190, 252, 0.1);
   border-radius: 14px;
   background: rgba(24, 190, 252, 0.03);
+  overflow: visible;
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
               box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
               border-color 0.3s;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border: 1px solid rgba(24, 190, 252, 0.08);
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 1;
+  clip-path: polygon(
+    0 0, 14px 0, 14px 1px, 1px 1px, 1px 14px, 0 14px,
+    0 calc(100% - 14px), 1px calc(100% - 14px), 1px calc(100% - 1px), 14px calc(100% - 1px), 14px 100%, 0 100%,
+    100% 100%, calc(100% - 14px) 100%, calc(100% - 14px) calc(100% - 1px), calc(100% - 1px) calc(100% - 1px), calc(100% - 1px) calc(100% - 14px), 100% calc(100% - 14px),
+    100% 14px, calc(100% - 1px) 14px, calc(100% - 1px) 1px, calc(100% - 14px) 1px, calc(100% - 14px) 0, 100% 0
+  );
 }
 
 .feature-card:hover {
