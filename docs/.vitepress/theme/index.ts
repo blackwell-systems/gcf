@@ -11,7 +11,6 @@ import ProxyCallout from './components/ProxyCallout.vue'
 import BeforeAfter from './components/BeforeAfter.vue'
 import NotAToon from './components/NotAToon.vue'
 import GrammarRef from './components/GrammarRef.vue'
-import ComparisonMatrix from './components/ComparisonMatrix.vue'
 import './custom.css'
 import mediumZoom from 'medium-zoom'
 import { onMounted, watch, nextTick } from 'vue'
@@ -32,7 +31,6 @@ export default {
     app.component('BeforeAfter', BeforeAfter)
     app.component('NotAToon', NotAToon)
     app.component('GrammarRef', GrammarRef)
-    app.component('ComparisonMatrix', ComparisonMatrix)
   },
   setup() {
     const route = useRoute()
