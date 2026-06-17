@@ -84,11 +84,21 @@
   animation: pulse-outline 3.5s ease-in-out infinite;
 }
 
-/* Front face */
+/* Front face (bg only) */
 .bb-3d::after {
   background-color: #d8ca030d;
-  outline-style: solid;
-  outline-color: rgba(24, 190, 252, 0.4);
+}
+
+/* Front face border (separate layer for clip-path animation) */
+.bb-3d__text::after {
+  content: "";
+  position: absolute;
+  inset: -14px -48px;
+  border: 1px solid rgba(24, 190, 252, 0.4);
+  pointer-events: none;
+  z-index: 3;
+  clip-path: inset(0 0 0 0);
+  transition: clip-path 300ms ease-out;
 }
 
 /* Side panels */
@@ -148,6 +158,11 @@
 .bb-3d:active::after {
   transform: translate(0.75rem, -0.75rem);
   background-color: #d8ca0316;
+}
+
+/* Border dissolve: gaps open from center-top/bottom, spread to corners */
+.bb-3d:active .bb-3d__text::after {
+  clip-path: inset(50% -1px);
 }
 
 .bb-3d:active .bb-3d__inner::before,
