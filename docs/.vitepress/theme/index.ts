@@ -10,7 +10,6 @@ import PluginStrip from './components/PluginStrip.vue'
 import ProxyCallout from './components/ProxyCallout.vue'
 import BeforeAfter from './components/BeforeAfter.vue'
 import NotAToon from './components/NotAToon.vue'
-import SectionDivider from './components/SectionDivider.vue'
 import './custom.css'
 import mediumZoom from 'medium-zoom'
 import { onMounted, watch, nextTick } from 'vue'
@@ -30,7 +29,6 @@ export default {
     app.component('ProxyCallout', ProxyCallout)
     app.component('BeforeAfter', BeforeAfter)
     app.component('NotAToon', NotAToon)
-    app.component('SectionDivider', SectionDivider)
   },
   setup() {
     const route = useRoute()
