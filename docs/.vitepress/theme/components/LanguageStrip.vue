@@ -21,6 +21,7 @@ const languages = [
           <div class="lang-registry">{{ lang.registry }}</div>
         </a>
       </div>
+      <p class="lang-deps">Zero runtime dependencies. Zero supply chain risk. MIT licensed.</p>
     </div>
   </div>
 </template>
@@ -197,10 +198,13 @@ const languages = [
 }
 
 .lang-deps {
-  margin-top: 16px;
+  margin-top: 20px;
   text-align: center;
-  font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.3);
-  letter-spacing: 0.03em;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--gcf-blue, #18befc);
+  opacity: 0.55;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 </style>
