@@ -172,7 +172,8 @@ An encoder MUST quote a string value when its bare form would be parsed as a non
 - it contains `"`, `\`, a C0 control character (U+0000 through U+001F), or a C1 control character (U+0080 through U+009F);
 - it contains non-ASCII Unicode whitespace, including U+00A0, U+2028, U+2029, U+FEFF, or any code point greater than U+007F classified as whitespace by the implementation's Unicode character database;
 - it contains the active context delimiter: `|` in tabular rows, `,` in primitive arrays;
-- it contains `\n` (newline) or `\r` (carriage return).
+- it contains `\n` (newline) or `\r` (carriage return);
+- it contains a substring matching the inline array pattern `[` ... `]` `:` (would be parsed as an inline array header at the line level; e.g. `ERR[404]: Not Found`, `[Speaker 1]: Hello`).
 
 An encoder MUST NOT quote numbers or booleans. An encoder MUST NOT quote null (null is always bare `-`). The strings `"~"` and `"^"` MUST be quoted in every context, even though their bare tokens are only structural inside tabular rows.
 
