@@ -86,7 +86,7 @@
   height: 14px;
   width: auto;
   display: inline;
-  vertical-align: middle;
+  vertical-align: text-top;
   opacity: 0.6;
   margin-right: 2px;
 }
