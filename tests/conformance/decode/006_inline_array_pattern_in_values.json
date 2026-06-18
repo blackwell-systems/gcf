@@ -1,0 +1,23 @@
+{
+  "name": "inline_array_pattern_in_values",
+  "description": "String values containing [N]: patterns must survive round-trip. The encoder MUST quote these to prevent the decoder from parsing them as inline array headers.",
+  "input": {
+    "error": "ERR[404]: Not Found",
+    "speaker": "[Speaker 1]: Hello",
+    "array_like": "[0]: looks like array",
+    "timestamp": "00:01:23,456",
+    "url": "http://example.com:8080/api",
+    "brackets_no_colon": "value[0] ok",
+    "colon_no_brackets": "key: value"
+  },
+  "expected": {
+    "error": "ERR[404]: Not Found",
+    "speaker": "[Speaker 1]: Hello",
+    "array_like": "[0]: looks like array",
+    "timestamp": "00:01:23,456",
+    "url": "http://example.com:8080/api",
+    "brackets_no_colon": "value[0] ok",
+    "colon_no_brackets": "key: value"
+  },
+  "operation": "roundtrip"
+}
