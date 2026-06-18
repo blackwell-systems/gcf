@@ -21,7 +21,6 @@ const languages = [
           <div class="lang-registry">{{ lang.registry }}</div>
         </a>
       </div>
-      <p class="lang-deps">Zero runtime dependencies, zero supply chain risk. MIT licensed.</p>
     </div>
   </div>
 </template>

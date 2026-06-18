@@ -12,6 +12,7 @@ import BeforeAfter from './components/BeforeAfter.vue'
 import NotAToon from './components/NotAToon.vue'
 import GrammarRef from './components/GrammarRef.vue'
 import CodeSnippet from './components/CodeSnippet.vue'
+import ZeroDepBanner from './components/ZeroDepBanner.vue'
 import './custom.css'
 import mediumZoom from 'medium-zoom'
 import { onMounted, watch, nextTick } from 'vue'
@@ -33,6 +34,7 @@ export default {
     app.component('NotAToon', NotAToon)
     app.component('GrammarRef', GrammarRef)
     app.component('CodeSnippet', CodeSnippet)
+    app.component('ZeroDepBanner', ZeroDepBanner)
   },
   setup() {
     const route = useRoute()
