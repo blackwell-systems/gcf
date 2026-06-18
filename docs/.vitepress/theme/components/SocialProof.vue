@@ -11,7 +11,7 @@
         <span class="proof-sep">·</span>
         <a href="https://github.com/NETGVai/NeuroNest" target="_blank" class="proof-item">NeuroNest</a>
         <span class="proof-sep">·</span>
-        <a href="https://github.com/payfacto/bb" target="_blank" class="proof-item">bb</a>
+        <a href="https://github.com/blackwell-systems/agent-lsp" target="_blank" class="proof-item">agent-lsp</a>
         <span class="proof-sep">·</span>
         <a href="/ecosystem/adopters" class="proof-item proof-more">and more</a>
       </span>
