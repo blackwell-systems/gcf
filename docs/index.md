@@ -12,6 +12,8 @@ hero:
 
 <ButtonBar />
 
+<CodeSnippet />
+
 <ProxyCallout />
 
 <PluginStrip />
