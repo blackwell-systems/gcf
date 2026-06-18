@@ -43,16 +43,33 @@ const original  = decodeGeneric(gcfString)  // exact same data back`,
     label: 'Go',
     code: `import gcf "github.com/blackwell-systems/gcf-go"
 
-gcfString := gcf.EncodeGeneric(data)    // any interface{}
-original  := gcf.DecodeGeneric(gcfString)  // exact same data back`,
+gcfString := gcf.EncodeGeneric(data)              // any interface{}
+original, err := gcf.DecodeGeneric(gcfString)      // exact same data back`,
   },
   {
     id: 'rust',
     label: 'Rust',
     code: `use gcf::{encode_generic, decode_generic};
 
-let gcf_string = encode_generic(&data)?;    // any serde Value
-let original   = decode_generic(&gcf_string)?;  // exact same data back`,
+let gcf_string = encode_generic(&data);            // any serde Value
+let original   = decode_generic(&gcf_string)?;      // exact same data back`,
+  },
+  {
+    id: 'swift',
+    label: 'Swift',
+    code: `import GCF
+
+let gcfString = encodeGeneric(data)                // any Swift value
+let original  = try decodeGeneric(gcfString)        // exact same data back`,
+  },
+  {
+    id: 'kotlin',
+    label: 'Kotlin',
+    code: `import com.blackwellsystems.gcf.encodeGeneric
+import com.blackwellsystems.gcf.decodeGeneric
+
+val gcfString = encodeGeneric(data)                // any Any?
+val original  = decodeGeneric(gcfString)            // exact same data back`,
   },
 ]
 </script>
