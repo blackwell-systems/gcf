@@ -85,6 +85,7 @@
 .proof-logo {
   height: 14px;
   width: auto;
+  display: inline;
   vertical-align: middle;
   opacity: 0.6;
   margin-right: 2px;
