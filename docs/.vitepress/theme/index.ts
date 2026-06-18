@@ -13,6 +13,7 @@ import NotAToon from './components/NotAToon.vue'
 import GrammarRef from './components/GrammarRef.vue'
 import CodeSnippet from './components/CodeSnippet.vue'
 import ZeroDepBanner from './components/ZeroDepBanner.vue'
+import SocialProof from './components/SocialProof.vue'
 import './custom.css'
 import mediumZoom from 'medium-zoom'
 import { onMounted, watch, nextTick } from 'vue'
@@ -35,6 +36,7 @@ export default {
     app.component('GrammarRef', GrammarRef)
     app.component('CodeSnippet', CodeSnippet)
     app.component('ZeroDepBanner', ZeroDepBanner)
+    app.component('SocialProof', SocialProof)
   },
   setup() {
     const route = useRoute()

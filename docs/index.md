@@ -12,6 +12,8 @@ hero:
 
 <ButtonBar />
 
+<SocialProof />
+
 <ProxyCallout />
 
 <PluginStrip />
