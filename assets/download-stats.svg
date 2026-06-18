@@ -39,10 +39,10 @@
   <text x="24" y="272" fill="#94a3b8" font-family="ui-monospace,monospace" font-size="12">github (gcf-go)</text>
   <text x="296" y="272" fill="#e2e8f0" font-family="ui-monospace,monospace" font-size="13" font-weight="600" text-anchor="end">21</text>
   <text x="24" y="294" fill="#94a3b8" font-family="ui-monospace,monospace" font-size="12">github (gcf-proxy)</text>
-  <text x="296" y="294" fill="#e2e8f0" font-family="ui-monospace,monospace" font-size="13" font-weight="600" text-anchor="end">163</text>
+  <text x="296" y="294" fill="#e2e8f0" font-family="ui-monospace,monospace" font-size="13" font-weight="600" text-anchor="end">175</text>
 
   <line x1="24" y1="298" x2="296" y2="298" stroke="#334155" stroke-width="1"/>
 
-  <text x="24" y="326" fill="url(#accent)" font-family="system-ui,-apple-system,sans-serif" font-size="16" font-weight="700">24251 total</text>
+  <text x="24" y="326" fill="url(#accent)" font-family="system-ui,-apple-system,sans-serif" font-size="16" font-weight="700">24263 total</text>
   <text x="296" y="326" fill="#64748b" font-family="system-ui,-apple-system,sans-serif" font-size="10" text-anchor="end">cumulative downloads</text>
 </svg>
