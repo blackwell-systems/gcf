@@ -1,5 +1,20 @@
 # Who Uses GCF
 
+## OmniRoute
+
+[OmniRoute](https://github.com/diegosouzapw/OmniRoute) is an AI gateway, registry, and proxy that sits between AI clients and model providers, built by [Diego Souza](https://github.com/diegosouzapw). MCP servers, A2A agents, REST/gRPC APIs: everything flows through it with centralized discovery, guardrails, rate limiting, auth, and observability. 6.1K stars.
+
+GCF's generic profile encoder is vendored directly into OmniRoute's headroom compression engine, replacing their custom `omni-tabular` encoder. Zero new dependencies added. This is GCF's first infrastructure-layer integration: a gateway that every request passes through.
+
+The previous encoder only handled homogeneous arrays with uniform column types. GCF handles heterogeneous arrays, mixed-type columns, and nested objects natively, increasing payload coverage from ~60% to 100%.
+
+- **55-62% savings** on homogeneous arrays (was 38-48%)
+- **42% savings** on heterogeneous arrays (was 0%, previous encoder couldn't handle them)
+- **47% savings** on nested objects (was 7%)
+- 100% payload coverage, all round-trips lossless
+- 44 tests passing, full backward compatibility with existing encoded content
+- OmniRoute rejected TOON because it required an npm dependency. GCF's zero-dep TypeScript source was vendored directly.
+
 ## NeuroNest
 
 [NeuroNest](https://github.com/NETGVai/NeuroNest) is an agent-first IDE built by [Network Guardian](https://netgv.ai). First independent commercial adoption of GCF.
