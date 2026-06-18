@@ -9,7 +9,7 @@
         <span class="proof-sep">·</span>
         <a href="https://github.com/stevesolun/ctx" target="_blank" class="proof-item">ctx <span class="proof-stars">510 ★</span></a>
         <span class="proof-sep">·</span>
-        <a href="https://opendataproducts.org/sdk/" target="_blank" class="proof-item"><img src="/logos/odps-logo.png" alt="ODPS" class="proof-logo"> Open Data Products SDK <span class="proof-stars">(Linux Foundation)</span></a>
+        <a href="https://opendataproducts.org/sdk/" target="_blank" class="proof-item"><img src="/logos/odps-logo.png" alt="ODPS" class="proof-logo"> SDK <span class="proof-stars">(A Linux Foundation Project)</span></a>
         <span class="proof-sep">·</span>
         <a href="https://github.com/NETGVai/NeuroNest" target="_blank" class="proof-item"><span class="nn-logo">🧠</span> NeuroNest</a>
         <span class="proof-sep">·</span>
