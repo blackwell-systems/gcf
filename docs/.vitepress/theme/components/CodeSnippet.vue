@@ -76,7 +76,7 @@ val original  = decodeGeneric(gcfString)            // exact same data back`,
 
 <style scoped>
 .snippet-wrap {
-  max-width: 700px;
+  max-width: 1152px;
   margin: 0 auto;
   padding: 0 24px 32px;
 }
