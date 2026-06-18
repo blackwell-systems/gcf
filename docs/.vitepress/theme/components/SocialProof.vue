@@ -11,7 +11,7 @@
         <span class="proof-sep">·</span>
         <a href="https://opendataproducts.org/sdk/" target="_blank" class="proof-item">Open Data Products SDK <span class="proof-stars">(Linux Foundation)</span></a>
         <span class="proof-sep">·</span>
-        <a href="https://github.com/NETGVai/NeuroNest" target="_blank" class="proof-item">NeuroNest</a>
+        <a href="https://github.com/NETGVai/NeuroNest" target="_blank" class="proof-item"><span class="nn-logo">🧠</span> NeuroNest</a>
         <span class="proof-sep">·</span>
         <a href="/ecosystem/adopters" class="proof-item proof-more">and more</a>
       </span>
@@ -80,6 +80,33 @@
 
 .proof-more:hover {
   color: var(--gcf-blue, #18befc);
+}
+
+@keyframes nn-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.nn-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  font-size: 10px;
+  border-radius: 50%;
+  position: relative;
+  vertical-align: middle;
+}
+
+.nn-logo::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  background: conic-gradient(#a855f7, #4ade80, #a855f7);
+  animation: nn-spin 6s linear infinite;
+  z-index: -1;
 }
 
 @media (max-width: 640px) {
