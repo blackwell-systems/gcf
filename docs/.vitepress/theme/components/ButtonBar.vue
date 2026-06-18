@@ -13,7 +13,7 @@ function init() {
   for (let i = 0; i < DOLLAR_COUNT; i++) {
     signs.push({
       x: 5 + Math.random() * 75,
-      y: 20 + Math.random() * 45,
+      y: 15 + Math.random() * 35,
       vx: (Math.random() - 0.5) * SPEED * 2,
       vy: (Math.random() - 0.5) * SPEED * 2,
       size: 17 + Math.random() * 5,
@@ -28,9 +28,9 @@ function tick() {
     d.x += d.vx
     d.y += d.vy
     if (d.x < 3 || d.x > 85) d.vx *= -1
-    if (d.y < 15 || d.y > 70) d.vy *= -1
+    if (d.y < 10 || d.y > 55) d.vy *= -1
     d.x = Math.max(3, Math.min(85, d.x))
-    d.y = Math.max(15, Math.min(70, d.y))
+    d.y = Math.max(10, Math.min(55, d.y))
   }
   frame = requestAnimationFrame(tick)
 }
