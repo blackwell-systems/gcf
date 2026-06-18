@@ -1,3 +1,50 @@
+<script setup>
+import { ref, onMounted, onUnmounted } from 'vue'
+
+const calcRef = ref(null)
+const dollars = ref([])
+let frame = 0
+
+const DOLLAR_COUNT = 4
+const SPEED = 0.4
+
+function init() {
+  const signs = []
+  for (let i = 0; i < DOLLAR_COUNT; i++) {
+    signs.push({
+      x: 5 + Math.random() * 75,
+      y: 20 + Math.random() * 45,
+      vx: (Math.random() - 0.5) * SPEED * 2,
+      vy: (Math.random() - 0.5) * SPEED * 2,
+      size: 17 + Math.random() * 5,
+      opacity: 0.15 + Math.random() * 0.10,
+    })
+  }
+  dollars.value = signs
+}
+
+function tick() {
+  for (const d of dollars.value) {
+    d.x += d.vx
+    d.y += d.vy
+    if (d.x < 3 || d.x > 85) d.vx *= -1
+    if (d.y < 15 || d.y > 70) d.vy *= -1
+    d.x = Math.max(3, Math.min(85, d.x))
+    d.y = Math.max(15, Math.min(70, d.y))
+  }
+  frame = requestAnimationFrame(tick)
+}
+
+onMounted(() => {
+  init()
+  frame = requestAnimationFrame(tick)
+})
+
+onUnmounted(() => {
+  cancelAnimationFrame(frame)
+})
+</script>
+
 <template>
   <div class="button-band">
   <div class="button-bar">
@@ -10,7 +57,18 @@
       <a href="/playground" class="bb-alt">
         <span class="bb-alt__inner"><span class="bb-alt__text">Try the Playground</span></span>
       </a>
-      <a href="/calculator" class="bb-alt bb-calc">
+      <a href="/calculator" class="bb-alt bb-calc" ref="calcRef">
+        <span
+          v-for="(d, i) in dollars"
+          :key="i"
+          class="bb-calc__dollar"
+          :style="{
+            left: d.x + '%',
+            top: d.y + '%',
+            fontSize: d.size + 'px',
+            opacity: d.opacity,
+          }"
+        >$</span>
         <span class="bb-alt__inner"><span class="bb-alt__text">Cost Calculator</span></span>
       </a>
       <a href="/guide/vs-toon" class="bb-alt">
@@ -264,6 +322,18 @@
 
 .bb-alt:active .bb-alt__text {
   transform: translate(0.4rem, -0.4rem);
+}
+
+/* ── Calculator bouncing dollars ── */
+.bb-calc__dollar {
+  position: absolute;
+  color: #4ade80;
+  font-weight: 700;
+  font-family: ui-monospace, monospace;
+  pointer-events: none;
+  z-index: 0;
+  user-select: none;
+  will-change: left, top;
 }
 
 /* ── Calculator green tint on hover ── */
