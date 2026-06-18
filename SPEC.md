@@ -2,7 +2,7 @@
 
 ## Graph Compact Format: A Token-Optimized Wire Format for LLM Interactions
 
-**Version:** 3.0
+**Version:** 3.1.1
 
 **Date:** 2026-06-12
 
@@ -1506,7 +1506,7 @@ This specification follows a three-stage lifecycle:
 | **Stable** | The grammar is frozen. No breaking changes. Additive extensions only. Implementations may depend on stability for production use. |
 | **Frozen** | No changes of any kind. The specification is archived. |
 
-Current status: **Stable** (v3.0 designated 2026-06-12).
+Current status: **Stable** (v3.1.1 designated 2026-06-18).
 
 ### 19.3 Version history
 
