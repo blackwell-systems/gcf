@@ -107,6 +107,8 @@
   background: conic-gradient(#a855f7, #4ade80, #a855f7);
   animation: nn-spin 6s linear infinite;
   z-index: -1;
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 2px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 2px));
 }
 
 @media (max-width: 640px) {
