@@ -5,7 +5,7 @@
       <span class="proof-items">
         <a href="https://github.com/diegosouzapw/OmniRoute" target="_blank" class="proof-item">♦️ OmniRoute <span class="proof-stars">6.1K ★</span></a>
         <span class="proof-sep">·</span>
-        <a href="https://github.com/automateyournetwork/netclaw" target="_blank" class="proof-item">NetClaw <span class="proof-stars">556 ★</span></a>
+        <a href="https://github.com/automateyournetwork/netclaw" target="_blank" class="proof-item">🦞 NetClaw <span class="proof-stars">556 ★</span></a>
         <span class="proof-sep">·</span>
         <a href="https://github.com/stevesolun/ctx" target="_blank" class="proof-item">ctx <span class="proof-stars">510 ★</span></a>
         <span class="proof-sep">·</span>
