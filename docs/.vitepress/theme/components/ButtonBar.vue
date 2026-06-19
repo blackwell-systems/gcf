@@ -17,7 +17,7 @@ function init() {
       vx: (Math.random() - 0.5) * SPEED * 2,
       vy: (Math.random() - 0.5) * SPEED * 2,
       size: 17 + Math.random() * 5,
-      opacity: 0.15 + Math.random() * 0.10,
+      opacity: 0.08 + Math.random() * 0.07,
     })
   }
   dollars.value = signs
