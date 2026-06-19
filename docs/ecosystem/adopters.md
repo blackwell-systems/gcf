@@ -101,7 +101,7 @@ GCF was designed for knowing's use case and extracted into a standalone format o
 
 ## SkyElite
 
-[SkyElite](https://skyelite.tech) is an AI-powered travel planner built as a multi-agent system using LangGraph and LangChain. Built by Muhammad Hassaan, Muhammad Ahmad Abbas, and Muhammad Abdullah at FAST-NUCES. Won 3rd place at the National AI Hackathon organized by atomcamp, Islamabad.
+SkyElite is an AI-powered travel planner built as a multi-agent system using LangGraph and LangChain. Built by Muhammad Hassaan, Muhammad Ahmad Abbas, and Muhammad Abdullah at FAST-NUCES. Won 3rd place at the National AI Hackathon organized by atomcamp, Islamabad.
 
 The team used GCF for cross-agent context passing in their multi-agent architecture, replacing JSON for token optimization and efficient context sharing between agents handling destination ranking, visa accessibility, flight pricing, and hotel availability.
 
