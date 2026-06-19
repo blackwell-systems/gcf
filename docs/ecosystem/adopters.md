@@ -99,6 +99,16 @@ GCF was designed for knowing's use case and extracted into a standalone format o
 - JSON remains the default; GCF is opt-in via session configuration
 - Uses `gcf-go` `EncodeGeneric` for generic profile encoding
 
+## SkyElite
+
+[SkyElite](https://skyelite.tech) is an AI-powered travel planner built as a multi-agent system using LangGraph and LangChain. Built by Muhammad Hassaan, Muhammad Ahmad Abbas, and Muhammad Abdullah at FAST-NUCES. Won 3rd place at the National AI Hackathon organized by atomcamp, Islamabad.
+
+The team used GCF for cross-agent context passing in their multi-agent architecture, replacing JSON for token optimization and efficient context sharing between agents handling destination ranking, visa accessibility, flight pricing, and hotel availability.
+
+- Multi-agent system with LangGraph orchestration
+- GCF used for inter-agent context sharing
+- 3rd place, National AI Hackathon (Pakistan, 2026)
+
 ## Your project here
 
 If you're using GCF in production, [open an issue](https://github.com/blackwell-systems/gcf/issues) to be listed here.
