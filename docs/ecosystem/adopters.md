@@ -17,7 +17,7 @@ The previous encoder only handled homogeneous arrays with uniform column types. 
 
 ## NeuroNest
 
-[NeuroNest](https://github.com/NETGVai/NeuroNest) is an agent-first IDE built by [Network Guardian](https://netgv.ai). First independent commercial adoption of GCF.
+[NeuroNest](https://neuronest.cc/) is an agent-first IDE built by [Network Guardian](https://netgv.ai). First independent commercial adoption of GCF.
 
 - GCF across 4 encoding surfaces: tool executor, swarm coordinator, MCP server manager, graph export
 - Session dedup with 1-hour eviction and background sweep
