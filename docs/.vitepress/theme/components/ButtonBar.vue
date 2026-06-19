@@ -301,6 +301,7 @@ onUnmounted(() => {
 .bb-alt:hover::after {
   background-color: #18befc0a;
   outline-color: rgba(24, 190, 252, 0.35);
+  outline-style: solid;
 }
 
 .bb-alt:hover .bb-alt__inner::before,
@@ -350,6 +351,7 @@ onUnmounted(() => {
 .bb-calc:hover::after {
   background-color: #4ade800a;
   outline-color: rgba(74, 222, 128, 0.25);
+  outline-style: solid;
 }
 
 .bb-calc:hover::before {
