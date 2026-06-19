@@ -21,7 +21,7 @@ function init() {
       vx: (Math.random() - 0.5) * SPEED * 2 * speedFactor,
       vy: (Math.random() - 0.5) * SPEED * 2 * speedFactor,
       size: 17 + Math.random() * 5,
-      opacity: 0.04 + Math.random() * 0.11,
+      opacity: 0.07 + Math.random() * 0.11,
       color: `rgb(${r}, ${g}, ${b})`,
     })
   }
