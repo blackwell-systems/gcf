@@ -361,14 +361,6 @@ onUnmounted(() => {
   border-color: rgba(74, 222, 128, 0.15);
 }
 
-.bb-calc:active::before {
-  outline-color: transparent;
-  background-color: #4ade800a;
-}
-
-.bb-calc:active::after {
-  outline-color: transparent;
-}
 
 /* ── Mobile ── */
 @media (max-width: 640px) {
@@ -390,5 +382,32 @@ onUnmounted(() => {
   .bb-3d {
     padding: 12px 24px;
   }
+}
+</style>
+
+<style>
+.bb-3d:active::before,
+.bb-3d:active::after,
+.bb-alt:active::before,
+.bb-alt:active::after {
+  outline-color: transparent !important;
+  transition: 400ms all ease !important;
+}
+
+.bb-3d:active .bb-3d__inner::before,
+.bb-3d:active .bb-3d__inner::after,
+.bb-alt:active .bb-alt__inner::before,
+.bb-alt:active .bb-alt__inner::after {
+  width: 0 !important;
+  opacity: 0 !important;
+  transition: 400ms all ease !important;
+}
+
+.bb-3d:active .bb-3d__text {
+  transition: 400ms all ease !important;
+}
+
+.bb-alt:active .bb-alt__text {
+  transition: 400ms all ease !important;
 }
 </style>
