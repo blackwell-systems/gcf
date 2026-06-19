@@ -361,6 +361,17 @@ onUnmounted(() => {
   border-color: rgba(74, 222, 128, 0.15);
 }
 
+.bb-calc:active::before {
+  outline-style: solid;
+  outline-color: rgba(74, 222, 128, 0.3);
+  background-color: #4ade800a;
+}
+
+.bb-calc:active::after {
+  outline-style: solid;
+  outline-color: rgba(74, 222, 128, 0.4);
+}
+
 /* ── Mobile ── */
 @media (max-width: 640px) {
   .button-bar {
