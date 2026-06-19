@@ -12,6 +12,9 @@ function init() {
   const signs = []
   for (let i = 0; i < DOLLAR_COUNT; i++) {
     const speedFactor = 0.4 + Math.random() * 0.6
+    const g = 170 + Math.floor(Math.random() * 50)
+    const r = 60 + Math.floor(Math.random() * 20)
+    const b = 100 + Math.floor(Math.random() * 30)
     signs.push({
       x: 5 + Math.random() * 75,
       y: 15 + Math.random() * 35,
@@ -19,6 +22,7 @@ function init() {
       vy: (Math.random() - 0.5) * SPEED * 2 * speedFactor,
       size: 17 + Math.random() * 5,
       opacity: 0.04 + Math.random() * 0.11,
+      color: `rgb(${r}, ${g}, ${b})`,
     })
   }
   dollars.value = signs
@@ -68,6 +72,7 @@ onUnmounted(() => {
             top: d.y + '%',
             fontSize: d.size + 'px',
             opacity: d.opacity,
+            color: d.color,
           }"
         >$</span>
         <span class="bb-alt__inner"><span class="bb-alt__text">Cost Calculator</span></span>
