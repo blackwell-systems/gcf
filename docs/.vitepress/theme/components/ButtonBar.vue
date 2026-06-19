@@ -134,7 +134,7 @@ onUnmounted(() => {
   outline: 1px dashed rgba(24, 190, 252, 0.3);
   width: 100%;
   height: 100%;
-  transition: 250ms all ease;
+  transition: 400ms all ease;
 }
 
 @keyframes pulse-outline {
@@ -167,7 +167,7 @@ onUnmounted(() => {
   position: absolute;
   top: -0.375rem;
   transform: translateX(var(--tx, 0)) skewY(var(--sy, 45deg));
-  transition: 250ms all ease;
+  transition: 400ms all ease;
 }
 
 /* Left panel */
@@ -185,7 +185,7 @@ onUnmounted(() => {
   z-index: 1;
   position: relative;
   display: inline-block;
-  transition: 250ms all ease;
+  transition: 400ms all ease;
 }
 
 /* Hover: shift perspective */
@@ -248,7 +248,7 @@ onUnmounted(() => {
   outline: 1px dashed rgba(24, 190, 252, 0.12);
   width: 100%;
   height: 100%;
-  transition: 250ms all ease;
+  transition: 400ms all ease;
 }
 
 .bb-alt::before {
@@ -272,7 +272,7 @@ onUnmounted(() => {
   position: absolute;
   top: -0.2rem;
   transform: translateX(var(--tx, 0)) skewY(var(--sy, 45deg));
-  transition: 250ms all ease;
+  transition: 400ms all ease;
 }
 
 .bb-alt__inner::before {
@@ -287,7 +287,7 @@ onUnmounted(() => {
   z-index: 1;
   position: relative;
   display: inline-block;
-  transition: 250ms all ease;
+  transition: 400ms all ease;
 }
 
 .bb-alt:hover {
