@@ -6,11 +6,11 @@ Six official implementations, all MIT licensed and zero runtime dependencies. Th
 
 | Language | Package | Install | Registry | Status |
 |----------|---------|---------|----------|--------|
-| Go | `gcf-go` | `go get github.com/blackwell-systems/gcf-go@v1.2.0` | [pkg.go.dev](https://pkg.go.dev/github.com/blackwell-systems/gcf-go) | v1.2.0 · 157/157 · 1B+ RT |
-| TypeScript | `@blackwell-systems/gcf` | `npm install @blackwell-systems/gcf@2.1.1` | [npm](https://www.npmjs.com/package/@blackwell-systems/gcf) | v2.1.1 · 157/157 · 20M RT |
-| Python | `gcf-python` | `pip install gcf-python==2.1.0` | [PyPI](https://pypi.org/project/gcf-python/) | v2.1.0 · 157/157 · 10M RT |
-| Rust | `gcf` | `cargo add gcf@2.1.0` | [crates.io](https://crates.io/crates/gcf) | v2.1.0 · 157/157 · 43B+ RT |
-| Swift | `GCF` | `.package(url: "https://github.com/blackwell-systems/gcf-swift", from: "2.1.0")` | [GitHub](https://github.com/blackwell-systems/gcf-swift) | v2.1.0 · 157/157 · 20M RT |
+| Go | `gcf-go` | `go get github.com/blackwell-systems/gcf-go@v1.2.3` | [pkg.go.dev](https://pkg.go.dev/github.com/blackwell-systems/gcf-go) | v1.2.3 · 157/157 · 1B+ RT |
+| TypeScript | `@blackwell-systems/gcf` | `npm install @blackwell-systems/gcf@2.1.2` | [npm](https://www.npmjs.com/package/@blackwell-systems/gcf) | v2.1.2 · 157/157 · 20M RT |
+| Python | `gcf-python` | `pip install gcf-python==2.1.1` | [PyPI](https://pypi.org/project/gcf-python/) | v2.1.1 · 157/157 · 10M RT |
+| Rust | `gcf` | `cargo add gcf@2.1.1` | [crates.io](https://crates.io/crates/gcf) | v2.1.1 · 157/157 · 43B+ RT |
+| Swift | `GCF` | `.package(url: "https://github.com/blackwell-systems/gcf-swift", from: "2.1.1")` | [GitHub](https://github.com/blackwell-systems/gcf-swift) | v2.1.1 · 157/157 · 20M RT |
 | Kotlin | `gcf` | `implementation("com.github.blackwell-systems:gcf-kotlin:2.1.0")` | [JitPack](https://jitpack.io/#blackwell-systems/gcf-kotlin) | v2.1.0 · 157/157 · 10M RT |
 
 All six support both encoding profiles:
