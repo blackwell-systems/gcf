@@ -359,14 +359,14 @@ onMounted(() => {
         <p>or misplaced, and then..."</p>
       </div>
 
-      <img src="/not-a-toon-prove-it.png" alt="Skeptical judges demand proof while GCF sits calmly before a wall of 33 billion evidence" class="chapter-img wide reveal" />
+      <img src="/not-a-toon-prove-it.png" alt="Skeptical judges demand proof while GCF sits calmly before a wall of 43 billion evidence" class="chapter-img wide reveal" />
 
       <div class="big-number reveal">
         <span class="big-number-value">{{ counterValue }}</span>
         <span class="big-number-label">round-trips. zero failures.</span>
       </div>
 
-      <img src="/not-a-toon-33-billion.png" alt="A towering stack of 33 billion round-trips with a green checkmark" class="chapter-img small reveal" />
+      <img src="/not-a-toon-33-billion.png" alt="A towering stack of 43 billion round-trips with a green checkmark" class="chapter-img small reveal" />
 
       <div class="stanza reveal">
         <p>JSON: eleven billion.</p>

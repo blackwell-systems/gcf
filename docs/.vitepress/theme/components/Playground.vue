@@ -1069,7 +1069,7 @@ onMounted(async () => {
               </div>
               <div class="toon-error-verified">
                 GCF encodes any structured data, regardless of source format.
-                Verified lossless across 33B+ round-trips in JSON, YAML, TOML, CSV, and MessagePack.
+                Verified lossless across 43B+ round-trips in JSON, YAML, TOML, CSV, and MessagePack.
               </div>
             </div>
           </div>

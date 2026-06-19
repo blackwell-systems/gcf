@@ -12,7 +12,7 @@ AI agents consume and produce structured data under fixed token budgets. The dom
 
 We present GCF, a bidirectional text-based wire format that serves as a universal pivot for structured data. GCF encodes any structured value from any source format (JSON, YAML, TOML, CSV, MessagePack) into a compact, LLM-optimized representation, and decodes back to any target format. Two encoding profiles share a common grammar: a **generic profile** encoding arbitrary structured data with positional rows, pipe separators, inline schemas, and nested object attachments; and a **graph profile** adding referential identity (local IDs), topological encoding (edge arrows), hierarchical grouping (section headers), and session deduplication.
 
-Lossless fidelity is verified across **33 billion+ round-trips** spanning 5 input formats and 6 language implementations. Zero failures.
+Lossless fidelity is verified across **43 billion+ round-trips** spanning 5 input formats and 6 language implementations. Zero failures.
 
 We evaluated GCF across **1,700+ LLM evaluations** spanning 10+ models and 3 providers (Anthropic, OpenAI, Google). No model has been trained on GCF.
 
@@ -26,7 +26,7 @@ We evaluated GCF across **1,700+ LLM evaluations** spanning 10+ models and 3 pro
 
 **Token efficiency:** 25.5% fewer tokens than TOON and 53% fewer than JSON across 15 real-world datasets (13/15 wins).
 
-Session deduplication (92.7% savings by the 5th call), delta encoding (81.2% on re-queries), and streaming encoding (zero-buffering with O(1) memory) compound savings across multi-turn interactions. The format is implemented in six languages, verified across 33 billion+ lossless round-trips in 5 formats, with 157 cross-language conformance fixtures. A bidirectional MCP proxy enables zero-code adoption. Specification v3.1 Stable: gcformat.com.
+Session deduplication (92.7% savings by the 5th call), delta encoding (81.2% on re-queries), and streaming encoding (zero-buffering with O(1) memory) compound savings across multi-turn interactions. The format is implemented in six languages, verified across 43 billion+ lossless round-trips in 5 formats, with 157 cross-language conformance fixtures. A bidirectional MCP proxy enables zero-code adoption. Specification v3.1 Stable: gcformat.com.
 
 ![100% on standard workloads (6 frontier models), 90.7% under structural stress (10 models, 23 runs). 1,700+ evaluations across 3 providers.](/charts/hero.png)
 
@@ -60,7 +60,7 @@ The optimization target is not bytes on wire. It is tokens in the context window
 
 The problem extends beyond JSON. Production AI pipelines ingest data from YAML configs, TOML manifests, CSV exports, and MessagePack streams. Each format serializes the same structured values (objects, arrays, scalars) with different syntax. A wire format that only handles JSON misses the broader opportunity: a single encoding that accepts any structured input format and produces the same compact output.
 
-GCF operates on structured values, not on JSON syntax. Whether the input arrives as JSON, YAML, TOML, CSV, or MessagePack, GCF encodes it identically. This is verified across 33 billion+ lossless round-trips spanning all five formats.
+GCF operates on structured values, not on JSON syntax. Whether the input arrives as JSON, YAML, TOML, CSV, or MessagePack, GCF encodes it identically. This is verified across 43 billion+ lossless round-trips spanning all five formats.
 
 ---
 
@@ -331,12 +331,12 @@ Streaming mode enables zero-buffering encode: rows emit the instant they are pro
 
 ## 4. Implementation Status
 
-GCF is implemented in six languages, published to seven package registries, covered by 157 conformance fixtures, and verified across 33 billion+ lossless round-trips in 5 formats.
+GCF is implemented in six languages, published to seven package registries, covered by 157 conformance fixtures, and verified across 43 billion+ lossless round-trips in 5 formats.
 
 - **Go** (`github.com/blackwell-systems/gcf-go`, v1.2.0): EncodeGeneric, DecodeGeneric, Encode, Decode, EncodeWithSession, EncodeDelta, StreamEncoder, GenericStreamEncoder. CLI with both profiles. 1B+ round-trips (native Go fuzzing). Zero dependencies.
 - **TypeScript** (`@blackwell-systems/gcf` on npm, v2.1.1): encodeGeneric, decodeGeneric, encode, decode, encodeWithSession, encodeDelta, StreamEncoder, GenericStreamEncoder. Browser-safe entry point. CLI with both profiles. Zero dependencies, ESM + CJS.
 - **Python** (`gcf-python` on PyPI, v2.1.0): encode_generic, decode_generic, encode, decode, encode_with_session, encode_delta, StreamEncoder, GenericStreamEncoder. CLI with both profiles. Zero dependencies, Python 3.9+.
-- **Rust** (`gcf` on crates.io, v2.1.0): encode_generic, decode_generic, encode, decode, encode_with_session, encode_delta, StreamEncoder, GenericStreamEncoder. CLI with both profiles. **33B+ multi-format round-trips** (definitive fuzz suite). Minimal dependencies (serde_json).
+- **Rust** (`gcf` on crates.io, v2.1.0): encode_generic, decode_generic, encode, decode, encode_with_session, encode_delta, StreamEncoder, GenericStreamEncoder. CLI with both profiles. **43B+ multi-format round-trips** (definitive fuzz suite). Minimal dependencies (serde_json).
 - **Swift** (`gcf-swift` via SPM, v2.1.0): encodeGeneric, decodeGeneric, encode, decode, encodeWithSession, encodeDelta, StreamEncoder, GenericStreamEncoder. CLI with both profiles. Zero dependencies.
 - **Kotlin** (`gcf-kotlin` via JitPack, v2.0.0): encodeGeneric, decodeGeneric, encode, decode, encodeWithSession, encodeDelta, StreamEncoder, GenericStreamEncoder. CLI with both profiles. Zero dependencies.
 - **MCP proxy** (`github.com/blackwell-systems/gcf-proxy`, v0.10.3): bidirectional translation (JSON-to-GCF responses, GCF-to-JSON requests), session dedup (40% savings proven e2e), proxy-level delta encoding (68% savings on incremental changes), HTTP backend (`--upstream`), HTTP/SSE frontend (`--http`), response caching (`--cache`), min-size bypass (default 100 bytes), streaming progress notifications. Zero code changes to upstream.
@@ -346,7 +346,7 @@ GCF is implemented in six languages, published to seven package registries, cove
 
 ### 4.1 Multi-Format Lossless Verification
 
-The claim that GCF handles any structured data is backed by 33 billion+ round-trip encode/decode cycles:
+The claim that GCF handles any structured data is backed by 43 billion+ round-trip encode/decode cycles:
 
 | Format | Round-trips | Failures |
 |--------|------------|----------|
@@ -554,7 +554,7 @@ TOON is a tabular encoding format for JSON that declares array fields once and u
 - **Streaming:** TOON's spec mandates upfront `[N]` counts with no deferred mechanism. GCF streams with zero buffering using `[?]` and `##!` trailers.
 - **Generation:** TOON's official decoder rejects LLM-generated output on 7 of 9 models due to a structural design flaw in flat tabular encoding (integer-encoded semantic categories). GCF achieves 5/5 on every frontier model.
 - **Comprehension:** TOON reports 76.4% accuracy on their own benchmark (209 questions, 4 models). GCF achieves 100% on generic data and 90.7% on graph data across 1,700+ evaluations on 10+ models.
-- **Verification:** GCF has 33 billion+ lossless round-trips across 5 formats. TOON has published zero fuzz data and zero round-trip counts.
+- **Verification:** GCF has 43 billion+ lossless round-trips across 5 formats. TOON has published zero fuzz data and zero round-trip counts.
 
 These are structural limitations that cannot be added without a fundamental redesign.
 
@@ -598,13 +598,13 @@ GCF's token savings compound with delta encoding: when the agent passes a `pack_
 
 JSON is the default encoding for LLM interactions because it is universal, not because it is efficient. For structured data, JSON wastes more than half its tokens on structural overhead that carries no semantic content.
 
-GCF eliminates this waste through two encoding profiles sharing a common grammar. The generic profile uses positional rows with pipe separators, inline object schemas, and inline primitive arrays for arbitrary structured data from any source format. The graph profile adds referential identity, topological encoding, hierarchical grouping, and session deduplication for graph-structured data. Both are verified lossless across 33 billion+ round-trips in 5 formats.
+GCF eliminates this waste through two encoding profiles sharing a common grammar. The generic profile uses positional rows with pipe separators, inline object schemas, and inline primitive arrays for arbitrary structured data from any source format. The graph profile adds referential identity, topological encoding, hierarchical grouping, and session deduplication for graph-structured data. Both are verified lossless across 43 billion+ round-trips in 5 formats.
 
 GCF is bidirectional. 1,700+ LLM evaluations across 10+ models and 3 providers prove it. Comprehension: 100% on every frontier model on standard workloads; 90.7% on structurally complex code graphs where JSON averages 53.6% and TOON averages 68.5%. Generation: 5/5 validity on every frontier model where TOON fails on 7 of 9 models. Output: 63% fewer tokens than JSON, 33% fewer than TOON. Session deduplication (92.7% by the fifth call), delta encoding (81.2% on re-queries), and streaming encode (zero-buffering with trailer summary) compound savings across multi-turn interactions. No competing format offers these features.
 
 At production scale (1000 records), the advantage becomes existential: JSON (161K tokens) doesn't fit in a 200K context window. TOON (84K) also exceeds the effective limit on some models. GCF (47K) is the only format that works.
 
-The format is text-based, LLM-optimized, and implementable in any language. Implementations exist in six languages, all with CLIs, zero or minimal runtime dependencies, and 33 billion+ verified lossless round-trips across 5 formats. A bidirectional MCP proxy enables adoption with zero code changes. JSON Schema validation works on decoded output unchanged.
+The format is text-based, LLM-optimized, and implementable in any language. Implementations exist in six languages, all with CLIs, zero or minimal runtime dependencies, and 43 billion+ verified lossless round-trips across 5 formats. A bidirectional MCP proxy enables adoption with zero code changes. JSON Schema validation works on decoded output unchanged.
 
 GCF is a wire format. Wire formats are not optimized for human readability. HTTP headers are not readable. Protobuf is not readable. Nobody cares; they use a viewer. GCF is the wire format; JSON is the viewer format. The agent reads GCF (cheap, accurate), does its work, then calls `decode()` at the end if a human needs to see the result. Human readability is a last-mile rendering concern, not a wire format property.
 

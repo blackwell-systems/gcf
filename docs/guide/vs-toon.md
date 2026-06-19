@@ -256,7 +256,7 @@ TOON claims "deterministic, lossless round-trips" on their landing page. We test
 
 | | GCF | TOON |
 |---|---|---|
-| **Round-trips tested** | 33,000,000,000+ | 10,000,000 |
+| **Round-trips tested** | 43,000,000,000+ | 10,000,000 |
 | **Success rate** | 100% | 92.46% |
 | **Decode errors** | 0 | 577,717 |
 | **Silent data corruption** | 0 | 176,487 |
@@ -288,7 +288,7 @@ Full log: [toon-fuzz-10M-2026-06-16.log](https://github.com/blackwell-systems/gc
 
 ### Why GCF doesn't have this problem
 
-GCF's scalar grammar quotes any string that contains pipe (`|`), newline, or could be misinterpreted as a typed literal. The quoting rules are specified in the grammar and enforced by all 6 implementations. 33 billion round-trips across 5 formats with zero mismatches is the proof.
+GCF's scalar grammar quotes any string that contains pipe (`|`), newline, or could be misinterpreted as a typed literal. The quoting rules are specified in the grammar and enforced by all 6 implementations. 43 billion round-trips across 5 formats with zero mismatches is the proof.
 
 ---
 

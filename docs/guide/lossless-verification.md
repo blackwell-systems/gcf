@@ -13,7 +13,7 @@ GCF guarantees `decode(encode(value)) == value` for every structured value. This
 | TOML | 100,000,000 | 0 |
 | **Total** | **33,270,000,000+** | **0** |
 
-33 billion+ random structured values generated, serialized through each format, parsed back, encoded as GCF, decoded from GCF, and compared to the original. Zero mismatches.
+43 billion+ random structured values generated, serialized through each format, parsed back, encoded as GCF, decoded from GCF, and compared to the original. Zero mismatches.
 
 ## What this proves
 
@@ -27,7 +27,7 @@ Six language implementations, all passing the same 157 conformance fixtures:
 
 | Language | Package | Conformance | Round-trip fuzz |
 |----------|---------|-------------|-----------------|
-| Rust | gcf | 157/157 | **33B+ multi-format** (definitive suite) |
+| Rust | gcf | 157/157 | **43B+ multi-format** (definitive suite) |
 | Go | gcf-go | 157/157 | 1B+ (native Go fuzzing) |
 | TypeScript | @blackwell-systems/gcf | 157/157 | Conformance-based |
 | Python | gcf-python | 157/157 | Conformance-based |
@@ -112,7 +112,8 @@ Every implementation must pass every fixture. New fixtures are added when edge c
 
 All fuzz run logs are archived in [eval/results/multiformat/](https://github.com/blackwell-systems/gcf/tree/main/eval/results/multiformat). Every claimed number has a corresponding log file.
 
-**JSON (11.25B total):**
+**JSON (21.25B total):**
+- `rust-json10B-parallel-2026-06-19.log` (10B, 2.79M/s, parallel)
 - `rust-json10B-parallel-2026-06-14.log` (10B, 2.94M/s, parallel)
 - `rust-json1B-extra-2026-06-14.log` (1B, 2.52M/s, parallel)
 - `rust-rerun-json250M-msgpack250M-2026-06-14.log` (250M JSON + 250M MessagePack)

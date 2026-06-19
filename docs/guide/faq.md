@@ -22,7 +22,7 @@ Yes. No model has ever been trained on GCF. The format didn't exist before we bu
 
 GCF handles data from any format. If your pipeline produces YAML, parse it, call `encodeGeneric()`. Same for TOML, CSV, MessagePack, or anything else that deserializes to structured values.
 
-We've verified this lossless across 33 billion+ round-trips in 5 formats (JSON 11.25B, YAML 21B, MessagePack 584M, CSV 335M, TOML 100M). GCF is 36% fewer tokens than YAML on the same data. The format decisions that make GCF less human-readable (positional fields, no repeated keys, pipe-delimited rows) are exactly what make it more LLM-readable and more token-efficient.
+We've verified this lossless across 43 billion+ round-trips in 5 formats (JSON 21.25B, YAML 21B, MessagePack 584M, CSV 335M, TOML 100M). GCF is 36% fewer tokens than YAML on the same data. The format decisions that make GCF less human-readable (positional fields, no repeated keys, pipe-delimited rows) are exactly what make it more LLM-readable and more token-efficient.
 
 ## What if my consumer can't parse GCF?
 
@@ -92,7 +92,7 @@ Yes. MIT licensed. The [spec](https://github.com/blackwell-systems/gcf), all six
 
 ## How stable is the spec?
 
-[Spec v3.1](https://github.com/blackwell-systems/gcf/blob/main/SPEC.md) is designated Stable. Six implementations at v2.1.0+ (Go v1.2.0), 157 conformance fixtures, <strong style="color: var(--vp-c-brand-1)">[33 billion+ lossless round-trips](/guide/lossless-verification)</strong> verified across 5 formats (JSON, YAML, TOML, CSV, MessagePack) and 6 language implementations, cross-language 6x6 matrix passing.
+[Spec v3.1](https://github.com/blackwell-systems/gcf/blob/main/SPEC.md) is designated Stable. Six implementations at v2.1.0+ (Go v1.2.0), 157 conformance fixtures, <strong style="color: var(--vp-c-brand-1)">[43 billion+ lossless round-trips](/guide/lossless-verification)</strong> verified across 5 formats (JSON, YAML, TOML, CSV, MessagePack) and 6 language implementations, cross-language 6x6 matrix passing.
 
 ## Why not just compress JSON with gzip?
 

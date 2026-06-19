@@ -2,7 +2,7 @@
 
 GCF is an AI-native wire format for **structured data**. It sits at the boundary between your data and the LLM context window: 71% fewer tokens than JSON, 100% comprehension on every frontier model.
 
-**The grammar expresses any structured data regardless of source format**, verified lossless across 33 billion+ round-trips with JSON, YAML, TOML, CSV, and MessagePack.
+**The grammar expresses any structured data regardless of source format**, verified lossless across 43 billion+ round-trips with JSON, YAML, TOML, CSV, and MessagePack.
 
 Two profiles, one grammar. The **generic profile** encodes any structured data. The **graph profile** is a superset that adds local IDs, typed edges, and session deduplication for relationship-heavy data. You never read or write GCF by hand: call `encode()`, the LLM reads it natively, call `decode()` when a human needs the data back.
 
@@ -10,7 +10,7 @@ Two profiles, one grammar. The **generic profile** encodes any structured data. 
 - **90.7% under structural stress** (500-symbol code graphs), where JSON drops to 53.6% and TOON to 68.5%.
 - **71% fewer tokens than JSON.** At 1000 records, JSON exceeds 200K context limits entirely. GCF fits in 47K.
 - **25.5% fewer tokens than TOON** across 15 real-world datasets (13/15 wins).
-- **33,000,000,000+ lossless round-trips** across 5 formats and 6 language implementations. Zero data corruption.
+- **43,000,000,000+ lossless round-trips** across 5 formats and 6 language implementations. Zero data corruption.
 - **Zero training.** No model has ever seen GCF in training data. Every frontier model reads it natively.
 
 ## Why not just use JSON?

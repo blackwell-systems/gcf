@@ -80,7 +80,7 @@ GCF does not encode JSON. GCF encodes structured values. The source format is ir
 
 To prove this was not theoretical, the fuzz testing started. Not hundreds of round-trips. Not thousands. Billions.
 
-JSON: 11.25 billion round-trips. YAML: 21 billion. MessagePack: 584 million. CSV: 335 million. TOML: 100 million. Total: 33 billion, 269 million. Zero failures. Not one mismatched value in 33 billion attempts.
+JSON: 21.25 billion round-trips. YAML: 21 billion. MessagePack: 584 million. CSV: 335 million. TOML: 100 million. Total: 43 billion, 269 million. Zero failures. Not one mismatched value in 43 billion attempts.
 
 The Rust implementation drove the headline numbers: 2.94 million JSON round-trips per second across 10 cores. The 10-billion-JSON run finished in 56 minutes. The 10-billion-YAML run took 10.7 hours. They ran overnight because the numbers needed to be undeniable.
 
@@ -98,7 +98,7 @@ The same standard applies everywhere:
 
 - 1,700+ LLM evaluations across 10 models, 3 providers, 51 independent test runs. Deterministic answers, no LLM-as-judge methodology. If the model says 320 and the answer is 500, that is a failure. No spin.
 - 157 conformance fixtures across 10 categories, verified on all 6 implementations.
-- 33 billion+ round-trips across 5 formats and 6 languages.
+- 43 billion+ round-trips across 5 formats and 6 languages.
 - 15-dataset token efficiency benchmark forked from TOON's own repo, using their tokenizer, their methodology, plus 9 additional datasets representing real MCP tool responses.
 - Independent AI reviews: Claude, GPT, and Gemini were each given the JSON RFC, TOON spec, and GCF spec with zero priming. All three chose GCF for agent replacement.
 
@@ -167,7 +167,7 @@ This is not a side project or a portfolio piece. This is the thing.
 
 ## Where it's going
 
-The spec is at v3.1 Stable. The foundation is solid. Six languages, 157 conformance fixtures, 33 billion round-trips, 1,700+ evaluations.
+The spec is at v3.1 Stable. The foundation is solid. Six languages, 157 conformance fixtures, 43 billion round-trips, 1,700+ evaluations.
 
 What comes next:
 

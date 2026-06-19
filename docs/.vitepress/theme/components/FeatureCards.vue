@@ -3,7 +3,7 @@ const features = [
   {
     icon: '🔄',
     title: 'The universal pivot for structured data',
-    details: 'JSON, YAML, TOML, CSV, MessagePack: any format in, GCF in the context window, any format out. One format that speaks every format. No other wire format operates across format boundaries.<br><br><code class="terminal">decode(encode(value)) == value</code> for every structured value. Verified across <a href="/guide/lossless-verification" style="color: var(--gcf-blue, #18befc); font-weight: 800; font-style: italic; text-decoration: none;">33,000,000,000+ lossless round-trips</a> in 5 formats and 6 languages.',
+    details: 'JSON, YAML, TOML, CSV, MessagePack: any format in, GCF in the context window, any format out. One format that speaks every format. No other wire format operates across format boundaries.<br><br><code class="terminal">decode(encode(value)) == value</code> for every structured value. Verified across <a href="/guide/lossless-verification" style="color: var(--gcf-blue, #18befc); font-weight: 800; font-style: italic; text-decoration: none;">43,000,000,000+ lossless round-trips</a> in 5 formats and 6 languages.',
   },
   {
     icon: '📉',
@@ -23,7 +23,7 @@ const features = [
   {
     icon: '🔒',
     title: 'Proven lossless. 6 languages. Spec v3.1 Stable.',
-    details: '33B+ (yes, really) round-trips across JSON, YAML, TOML, CSV, and MessagePack. Zero failures. 157 conformance fixtures. Cross-language 6x6 encode/decode matrix verified. <a href="https://github.com/blackwell-systems/gcf/blob/main/SPEC.md">Read the spec</a>.',
+    details: '43B+ (yes, really) round-trips across JSON, YAML, TOML, CSV, and MessagePack. Zero failures. 157 conformance fixtures. Cross-language 6x6 encode/decode matrix verified. <a href="https://github.com/blackwell-systems/gcf/blob/main/SPEC.md">Read the spec</a>.',
   },
   {
     icon: '🏆',
