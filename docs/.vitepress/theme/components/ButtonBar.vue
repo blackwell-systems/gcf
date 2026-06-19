@@ -27,9 +27,9 @@ function tick() {
   for (const d of dollars.value) {
     d.x += d.vx
     d.y += d.vy
-    if (d.x < 3 || d.x > 91) d.vx *= -1
+    if (d.x < 3 || d.x > 93) d.vx *= -1
     if (d.y < 10 || d.y > 55) d.vy *= -1
-    d.x = Math.max(3, Math.min(91, d.x))
+    d.x = Math.max(3, Math.min(93, d.x))
     d.y = Math.max(10, Math.min(55, d.y))
   }
   frame = requestAnimationFrame(tick)
