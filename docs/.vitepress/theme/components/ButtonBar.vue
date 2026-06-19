@@ -134,7 +134,7 @@ onUnmounted(() => {
   outline: 1px dashed rgba(24, 190, 252, 0.3);
   width: 100%;
   height: 100%;
-  transition: 300ms all ease;
+  transition: 220ms all ease;
 }
 
 @keyframes pulse-outline {
@@ -167,7 +167,7 @@ onUnmounted(() => {
   position: absolute;
   top: -0.375rem;
   transform: translateX(var(--tx, 0)) skewY(var(--sy, 45deg));
-  transition: 300ms all ease;
+  transition: 220ms all ease;
 }
 
 /* Left panel */
@@ -185,7 +185,7 @@ onUnmounted(() => {
   z-index: 1;
   position: relative;
   display: inline-block;
-  transition: 300ms all ease;
+  transition: 220ms all ease;
 }
 
 /* Hover: shift perspective */
@@ -248,7 +248,7 @@ onUnmounted(() => {
   outline: 1px dashed rgba(24, 190, 252, 0.12);
   width: 100%;
   height: 100%;
-  transition: 300ms all ease;
+  transition: 220ms all ease;
 }
 
 .bb-alt::before {
@@ -272,7 +272,7 @@ onUnmounted(() => {
   position: absolute;
   top: -0.2rem;
   transform: translateX(var(--tx, 0)) skewY(var(--sy, 45deg));
-  transition: 300ms all ease;
+  transition: 220ms all ease;
 }
 
 .bb-alt__inner::before {
@@ -287,7 +287,7 @@ onUnmounted(() => {
   z-index: 1;
   position: relative;
   display: inline-block;
-  transition: 300ms all ease;
+  transition: 220ms all ease;
 }
 
 .bb-alt:hover {
@@ -393,7 +393,7 @@ onUnmounted(() => {
 .bb-alt:active::before,
 .bb-alt:active::after {
   outline-color: transparent !important;
-  transition: 300ms all ease !important;
+  transition: 220ms all ease !important;
 }
 
 .bb-3d:active .bb-3d__inner::before,
@@ -402,14 +402,14 @@ onUnmounted(() => {
 .bb-alt:active .bb-alt__inner::after {
   width: 0 !important;
   opacity: 0 !important;
-  transition: 300ms all ease !important;
+  transition: 220ms all ease !important;
 }
 
 .bb-3d:active .bb-3d__text {
-  transition: 300ms all ease !important;
+  transition: 220ms all ease !important;
 }
 
 .bb-alt:active .bb-alt__text {
-  transition: 300ms all ease !important;
+  transition: 220ms all ease !important;
 }
 </style>
