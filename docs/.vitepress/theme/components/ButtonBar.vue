@@ -11,13 +11,14 @@ const SPEED = 0.4
 function init() {
   const signs = []
   for (let i = 0; i < DOLLAR_COUNT; i++) {
+    const speedFactor = 0.4 + Math.random() * 0.6
     signs.push({
       x: 5 + Math.random() * 75,
       y: 15 + Math.random() * 35,
-      vx: (Math.random() - 0.5) * SPEED * 2,
-      vy: (Math.random() - 0.5) * SPEED * 2,
+      vx: (Math.random() - 0.5) * SPEED * 2 * speedFactor,
+      vy: (Math.random() - 0.5) * SPEED * 2 * speedFactor,
       size: 17 + Math.random() * 5,
-      opacity: 0.08 + Math.random() * 0.07,
+      opacity: 0.04 + Math.random() * 0.11,
     })
   }
   dollars.value = signs
