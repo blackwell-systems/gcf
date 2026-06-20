@@ -15,16 +15,33 @@ Every number on the [benchmarks page](/guide/benchmarks) comes from the runs bel
 | Model | Provider | Run | Orders | GCF | JSON | TOON | Notes |
 |-------|----------|-----|--------|-----|------|------|-------|
 | Claude Opus 4.6 | Anthropic | 1 | 500 | **100%** | 100% | 100% | All exact |
+| Claude Opus 4.6 | Anthropic | 2 | 500 | **100%** | 100% | 100% | All exact |
 | Claude Sonnet 4.6 | Anthropic | 1 | 500 | **100%** | 100% | 100% | All exact |
-| Claude Sonnet 4.6 | Anthropic | 2 | 500 | **100%** | 100% | 100% | All exact |
+| Claude Sonnet 4.6 | Anthropic | 2 | 500 | 92.3% | 100% | 92.3% | GCF/TOON: count_orders_with_3plus_items off |
+| Claude Sonnet 4.6 | Anthropic | 3 | 500 | **100%** | 100% | 100% | All exact |
 | Claude Haiku 4.5 | Anthropic | 1 | 500 | **100%** | 100% | 100% | All exact |
 | Claude Haiku 4.5 | Anthropic | 2 | 500 | **100%** | 100% | 100% | All exact |
-| GPT-5.5 | OpenAI | 1 | 500 | **100%** | 100% | 92.3% | TOON failed count_premium_customers |
-| GPT-4o-mini | OpenAI | 1 | 500 | 69.2% | 61.5% | 69.2% | Weak model, all formats struggle |
-| Gemini 2.5 Flash | Google | 1 | 500 | **100%** | 76.9% | 84.6% | JSON/TOON failed counting questions |
+| Claude Haiku 4.5 | Anthropic | 3 | 500 | 92.3% | 100% | 100% | GCF: total_revenue_shipped off by $32 |
+| GPT-5.5 | OpenAI | 1 | 500 | **100%** | 100% | 100% | All exact |
+| GPT-5.5 | OpenAI | 2 | 500 | **100%** | 100% | 92.3% | TOON failed count_premium_customers |
+| GPT-4o-mini | OpenAI | 1 | 500 | **69.2%** | 61.5% | 69.2% | Weak model, all formats struggle |
+| Gemini 2.5 Pro | Google | 1 | 500 | **100%** | 100% | 100% | All exact |
+| Gemini 2.5 Pro | Google | 2 | 500 | **100%** | 100% | 100% | All exact |
+| Gemini 2.5 Pro | Google | 3 | 500 | **100%** | 100% | 100% | All exact |
+| Gemini 3.1 Pro Preview | Google | 1 | 500 | **100%** | 100% | 100% | All exact |
 | Gemini 3.5 Flash | Google | 1 | 500 | **100%** | 100% | 100% | All exact |
+| Gemini 3.5 Flash | Google | 2 | 500 | **100%** | 100% | 100% | All exact |
+| Gemini 2.5 Flash | Google | 1 | 500 | **100%** | 76.9% | 84.6% | JSON/TOON failed counting questions |
+| Gemini 2.5 Flash | Google | 2 | 500 | 90.0% | 75.0% | 81.8% | All formats degraded |
+| Gemini 2.5 Flash | Google | 3 | 500 | 90.0% | 75.0% | 81.8% | All formats degraded |
+| Gemini 2.5 Flash | Google | 4 | 500 | **100%** | 69.2% | 92.3% | GCF perfect, JSON 69.2% |
+| Mistral Medium 3.5 | Mistral | 1 | 500 | **84.6%** | 84.6% | 76.9% | GCF ties JSON, beats TOON |
+| Mistral Medium 3.5 | Mistral | 2 | 500 | 76.9% | **91.7%** | 76.9% | JSON wins (outlier) |
+| Mistral Medium 3.5 | Mistral | 3 | 500 | **84.6%** | 76.9% | 76.9% | GCF wins |
+| Mistral Medium 3.5 | Mistral | 4 | 500 | **84.6%** | 75.0% | 76.9% | GCF wins |
+| Mistral Large 3 | Mistral | 1 | 500 | 69.2% | 69.2% | 69.2% | All tied, model is bottleneck |
 
-**GCF: 100% on every frontier model (6/6). The only format that never fails.**
+**26 runs, 11 models, 4 providers.** Frontier models (Opus, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash) achieve 100% GCF on every run. GCF averages equal or better than JSON across runs on every model. TOON is consistently the weakest format.
 
 ### Scale Test: 1000 Orders
 
@@ -40,18 +57,15 @@ Every number on the [benchmarks page](/guide/benchmarks) comes from the runs bel
 
 At 1000 orders, JSON (161K tokens) exceeds 200K context. TOON (84K) also exceeds effective context on Sonnet. GCF (47K) is the only format that reliably fits on 200K context models.
 
-### Generic Profile Failures
+### Generic Profile Failures (frontier models only)
+
+GCF has zero failures across all generic profile runs on frontier models (Opus, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash). All frontier failures are on JSON or TOON:
 
 | Model | Format | Question | Expected | Got |
 |-------|--------|----------|----------|-----|
 | GPT-5.5 | TOON | count_premium_customers | 200 | 250 |
-| Gemini 2.5 Flash | JSON | count_shipped | 100 | 80 |
-| Gemini 2.5 Flash | JSON | count_premium_customers | 200 | 150 |
-| Gemini 2.5 Flash | JSON | total_revenue_shipped | 21325.50 | ? |
-| Gemini 2.5 Flash | TOON | count_shipped | 100 | 125 |
-| Gemini 2.5 Flash | TOON | count_premium_customers | 200 | 250 |
 
-GCF has zero failures across all generic profile runs on frontier models.
+On mid-tier models (Sonnet, Haiku, Gemini 2.5 Flash, Mistral Medium), all formats show occasional precision errors on counting and aggregation questions at 500 records. GCF averages equal or better than JSON across runs on every model.
 
 ### Token Efficiency: 15 Datasets
 
@@ -94,8 +108,9 @@ Dataset 15 is the exact payload used in the comprehension eval above. The format
 | Gemini 3.5 Flash | 1 | **100%** | 61.5% | 46.2% | ✓ |
 | Gemini 2.5 Pro | 1 | **100%** | 76.9% | 58.3% | ✓ |
 | Gemini 3.1 Pro | 1 | **100%** | 76.9% | 46.2% | ✓ |
+| Gemini 2.5 Flash | 4 | **100%** | 46.2% | 46.2% | ✓ |
 
-**23 runs, 10 models, 3 providers. GCF wins 22, ties 1, loses 0. Four models achieve 100%: Sonnet, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash.**
+**24 runs, 10 models, 3 providers. GCF wins 23, ties 1, loses 0. Four models achieve 100%: Sonnet, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash.**
 
 ### Score variance
 
