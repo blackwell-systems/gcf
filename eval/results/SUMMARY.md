@@ -21,11 +21,11 @@
 
 ## Comprehension Eval (Input: Can LLMs read GCF?)
 
-Two tiers of evaluation:
+Evaluated at two scales:
 
-**General structured data (generic profile):** 100% comprehension accuracy on every frontier model tested. Standard structured payloads, the kind most MCP servers return. No model has ever failed on general GCF.
+**Standard workloads (up to 100 records):** 100% GCF comprehension accuracy on every frontier model tested. This is the scale of typical MCP tool responses. Both generic and graph profiles. No model has ever failed on GCF at this scale.
 
-**Adversarial graph payloads (graph profile):** 500 symbols, 200 edges, 13 structured extraction questions, zero format instructions. This is a stress test designed to break formats at scale. Results below.
+**Stress scale (500+ records):** GCF averages 90.7% across 24 runs, 10 models, 3 providers. All formats degrade at this scale; GCF degrades the least. JSON averages 53.6%, TOON averages 67.7%. The margin between formats widens as record count increases. Adversarial runs below use 500 symbols, 200 edges, 13 structured extraction questions, zero format instructions.
 
 ### All runs
 
@@ -56,9 +56,9 @@ Two tiers of evaluation:
 | Gemini 3.1 Pro | 1 | **100%** | 76.9% | 46.2% | ✓ |
 | Gemini 3.5 Flash | 2 | **100%** | 46.2% | 46.2% | ✓ |
 
-**24 adversarial runs, 10 models, 3 providers. GCF wins 23, ties 1, loses 0.**
+**24 stress-scale runs, 10 models, 3 providers. GCF wins 23, ties 1, loses 0.**
 
-### Averages by model (adversarial, 500-symbol payloads)
+### Averages by model (stress scale, 500 symbols)
 
 | Model | Runs | GCF avg | TOON avg | JSON avg | GCF margin |
 |-------|------|---------|----------|----------|------------|
