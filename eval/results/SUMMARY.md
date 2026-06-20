@@ -40,10 +40,10 @@ Evaluated at two scales:
 | Gemini 2.5 Pro | 3 | **100.0%** | 100.0% | 100.0% |
 | Gemini 3.1 Pro Preview | 1 | **100.0%** | 100.0% | 100.0% |
 | Gemini 3.5 Flash | 2 | **100.0%** | 100.0% | 100.0% |
-| Gemini 2.5 Flash | 3 | **93.3%** | 82.7% | 75.6% |
+| Gemini 2.5 Flash | 4 | **95.0%** | 85.1% | 74.0% |
 | GPT-4o-mini | 1 | **69.2%** | 69.2% | 61.5% |
 
-**20 runs, 9 models.** Frontier models (Opus, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash) achieve 100% GCF on every run. Mid-tier models (Sonnet, Haiku) show occasional precision errors at 500 records. GCF equals or beats TOON on 19/20 runs, equals or beats JSON on 17/20 runs. Infra-failure runs (all formats 0%) excluded.
+**21 runs, 9 models.** Frontier models (Opus, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash) achieve 100% GCF on every run. Mid-tier models (Sonnet, Haiku, Gemini 2.5 Flash) show occasional precision errors at 500 records. GCF equals or beats TOON on 20/21 runs, equals or beats JSON on 18/21 runs. Infra-failure runs (all formats 0%) excluded.
 
 ---
 
