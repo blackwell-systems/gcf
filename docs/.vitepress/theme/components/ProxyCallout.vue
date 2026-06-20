@@ -1,3 +1,23 @@
+<script setup>
+import { ref } from 'vue'
+
+const copiedIndex = ref(-1)
+
+async function copyCmd(text, index) {
+  try {
+    await navigator.clipboard.writeText(text)
+    copiedIndex.value = index
+    setTimeout(() => { copiedIndex.value = -1 }, 1500)
+  } catch {}
+}
+
+const commands = [
+  'pip install gcf-proxy',
+  'npm i -g @blackwell-systems/gcf-proxy',
+  'go install github.com/blackwell-systems/gcf-proxy@latest',
+]
+</script>
+
 <template>
   <div class="proxy-wrap">
     <h2 class="proxy-headline">Zero-code option for MCP servers</h2>
@@ -9,9 +29,17 @@
       </div>
       <div class="proxy-right">
         <div class="proxy-cmds">
-          <code class="proxy-cmd">pip install gcf-proxy</code>
-          <code class="proxy-cmd">npm i -g @blackwell-systems/gcf-proxy</code>
-          <code class="proxy-cmd">go install github.com/blackwell-systems/gcf-proxy@latest</code>
+          <div
+            v-for="(cmd, i) in commands"
+            :key="i"
+            class="proxy-cmd-wrap"
+            @click="copyCmd(cmd, i)"
+          >
+            <code class="proxy-cmd">{{ cmd }}</code>
+            <span class="proxy-copy" :class="{ 'proxy-copied': copiedIndex === i }">
+              {{ copiedIndex === i ? 'Copied!' : 'Copy' }}
+            </span>
+          </div>
         </div>
         <a href="https://github.com/blackwell-systems/gcf-proxy" target="_blank" class="proxy-link">GitHub</a>
       </div>
@@ -81,6 +109,19 @@
   gap: 6px;
 }
 
+.proxy-cmd-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.15s ease;
+}
+
+.proxy-cmd-wrap:hover {
+  background: rgba(24, 190, 252, 0.06);
+}
+
 .proxy-cmd {
   font-family: var(--vp-font-family-mono);
   font-size: 0.85rem;
@@ -91,11 +132,27 @@
   border-radius: 8px;
   color: var(--gcf-blue, #18befc);
   white-space: nowrap;
+  flex: 1;
 }
 
-.proxy-hook {
-  color: var(--gcf-blue, #18befc);
-  font-weight: 700;
+.proxy-copy {
+  position: absolute;
+  right: 8px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: rgba(24, 190, 252, 0.5);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  pointer-events: none;
+  user-select: none;
+}
+
+.proxy-cmd-wrap:hover .proxy-copy {
+  opacity: 1;
+}
+
+.proxy-copied {
+  color: #4ade80;
 }
 
 .proxy-link {
