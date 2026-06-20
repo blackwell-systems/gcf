@@ -23,7 +23,7 @@
 
 Evaluated at two scales:
 
-**Generic profile (500 orders, nested structured data):** 18 runs, 8 models, 3 providers. GCF averages 96.3%, TOON 94.6%, JSON 93.8%. Frontier models (Opus, GPT-5.5, Gemini 2.5 Pro) score 100% on GCF. Margins are narrow on generic data; the primary value is token savings (53-71%), not comprehension gaps.
+**Generic profile (500 orders, nested structured data):** 20 runs, 9 models, 3 providers. Frontier models (Opus, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash) score 100% GCF on every run. Margins are narrow on generic data; the primary value is token savings (53-71%), not comprehension gaps.
 
 **Graph profile, stress scale (500 symbols, 200 edges):** 24 runs, 10 models, 3 providers. GCF averages 91.2%, TOON 68.2%, JSON 53.4%. The margin between formats widens dramatically at scale. GCF wins 23, ties 1, loses 0.
 
@@ -38,11 +38,12 @@ Evaluated at two scales:
 | Claude Haiku 4.5 | 3 | 97.4% | 100.0% | 100.0% |
 | GPT-5.5 | 2 | **100.0%** | 96.2% | 100.0% |
 | Gemini 2.5 Pro | 3 | **100.0%** | 100.0% | 100.0% |
-| Gemini 3.5 Flash | 1 | **100.0%** | 100.0% | 100.0% |
+| Gemini 3.1 Pro Preview | 1 | **100.0%** | 100.0% | 100.0% |
+| Gemini 3.5 Flash | 2 | **100.0%** | 100.0% | 100.0% |
 | Gemini 2.5 Flash | 3 | **93.3%** | 82.7% | 75.6% |
 | GPT-4o-mini | 1 | **69.2%** | 69.2% | 61.5% |
 
-**18 runs.** Frontier models (Opus, GPT-5.5, Gemini 2.5 Pro) achieve 100% GCF on every run. Mid-tier models (Sonnet, Haiku) show occasional precision errors at 500 records. GCF equals or beats TOON on 17/18 runs, equals or beats JSON on 15/18 runs. Infra-failure runs (all formats 0%) excluded.
+**20 runs, 9 models.** Frontier models (Opus, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash) achieve 100% GCF on every run. Mid-tier models (Sonnet, Haiku) show occasional precision errors at 500 records. GCF equals or beats TOON on 19/20 runs, equals or beats JSON on 17/20 runs. Infra-failure runs (all formats 0%) excluded.
 
 ---
 
