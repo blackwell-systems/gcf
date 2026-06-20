@@ -1,6 +1,6 @@
 # Benchmarks (Full Data)
 
-Every number on the [benchmarks page](/guide/benchmarks) comes from the runs below. This page has the complete per-run data, failure analysis, and generation results across all 10+ models and 3 providers. All raw logs are in the [eval/results](https://github.com/blackwell-systems/gcf/tree/main/eval/results) directory.
+Every number on the [benchmarks page](/guide/benchmarks) comes from the runs below. This page has the complete per-run data, failure analysis, and generation results across 11 models and 4 providers. All raw logs are in the [eval/results](https://github.com/blackwell-systems/gcf/tree/main/eval/results) directory.
 
 ![Comprehension and Generation](/charts/hero.png)
 
@@ -17,11 +17,12 @@ Every number on the [benchmarks page](/guide/benchmarks) comes from the runs bel
 | Claude Opus 4.6 | Anthropic | 1 | 500 | **100%** | 100% | 100% | All exact |
 | Claude Opus 4.6 | Anthropic | 2 | 500 | **100%** | 100% | 100% | All exact |
 | Claude Sonnet 4.6 | Anthropic | 1 | 500 | **100%** | 100% | 100% | All exact |
-| Claude Sonnet 4.6 | Anthropic | 4 | 500 | **100%** | 100% | 92.3% | TOON: count_premium_customers off |
-| Claude Sonnet 4.6 | Anthropic | 3 | 500 | **100%** | 100% | 100% | All exact |
+| Claude Sonnet 4.6 | Anthropic | 2 | 500 | **100%** | 100% | 100% | All exact |
+| Claude Sonnet 4.6 | Anthropic | 3 | 500 | **100%** | 100% | 92.3% | TOON: count_premium_customers off |
 | Claude Haiku 4.5 | Anthropic | 1 | 500 | **100%** | 100% | 100% | All exact |
 | Claude Haiku 4.5 | Anthropic | 2 | 500 | **100%** | 100% | 100% | All exact |
 | Claude Haiku 4.5 | Anthropic | 3 | 500 | **100%** | 100% | 100% | All exact |
+| Claude Haiku 4.5 | Anthropic | 4 | 500 | **100%** | 100% | 100% | All exact |
 | GPT-5.5 | OpenAI | 1 | 500 | **100%** | 100% | 100% | All exact |
 | GPT-5.5 | OpenAI | 2 | 500 | **100%** | 100% | 92.3% | TOON failed count_premium_customers |
 | GPT-4o-mini | OpenAI | 1 | 500 | **69.2%** | 61.5% | 69.2% | Weak model, all formats struggle |
@@ -41,7 +42,7 @@ Every number on the [benchmarks page](/guide/benchmarks) comes from the runs bel
 | Mistral Medium 3.5 | Mistral | 4 | 500 | **84.6%** | 75.0% | 76.9% | GCF wins |
 | Mistral Large 3 | Mistral | 1 | 500 | 69.2% | 69.2% | 69.2% | All tied, model is bottleneck |
 
-**26 runs, 11 models, 4 providers.** Frontier models (Opus, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash) achieve 100% GCF on every run. GCF averages equal or better than JSON across runs on every model. TOON is consistently the weakest format.
+**27 runs, 11 models, 4 providers.** Frontier models (Opus, Sonnet, Haiku, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash) achieve 100% GCF on every run. GCF averages equal or better than JSON across runs on every model. TOON is consistently the weakest format.
 
 ### Scale Test: 1000 Orders
 
@@ -59,13 +60,14 @@ At 1000 orders, JSON (161K tokens) exceeds 200K context. TOON (84K) also exceeds
 
 ### Generic Profile Failures (frontier models only)
 
-GCF has zero failures across all generic profile runs on frontier models (Opus, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash). All frontier failures are on JSON or TOON:
+GCF has zero failures across all generic profile runs on Anthropic and Google frontier models (Opus, Sonnet, Haiku, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash). The only frontier-model failure on any format:
 
 | Model | Format | Question | Expected | Got |
 |-------|--------|----------|----------|-----|
 | GPT-5.5 | TOON | count_premium_customers | 200 | 250 |
+| Sonnet 4.6 | TOON | count_premium_customers | 200 | 125 |
 
-On mid-tier models (Sonnet, Haiku, Gemini 2.5 Flash, Mistral Medium), all formats show occasional precision errors on counting and aggregation questions at 500 records. GCF averages equal or better than JSON across runs on every model.
+On mid-tier models (Gemini 2.5 Flash, Mistral Medium), all formats show occasional precision errors on counting and aggregation questions at 500 records. GCF averages equal or better than JSON across runs on every model.
 
 ### Token Efficiency: 15 Datasets
 
@@ -134,7 +136,7 @@ GCF occupies the top-left quadrant: fewest tokens, highest accuracy. JSON occupi
 
 ## Failure Taxonomy
 
-Every wrong answer across all 23 runs was classified by failure type. The pattern is consistent: GCF fails differently than TOON and JSON. GCF errors are small (off by 1-2) because the model understood the structure but misread a number. TOON and JSON errors are large (off by 50-140) because the model couldn't extract the answer at all and guessed.
+Every wrong answer across all 24 runs was classified by failure type. The pattern is consistent: GCF fails differently than TOON and JSON. GCF errors are small (off by 1-2) because the model understood the structure but misread a number. TOON and JSON errors are large (off by 50-140) because the model couldn't extract the answer at all and guessed.
 
 ![Error Magnitude](/charts/error-magnitude.png)
 
@@ -142,7 +144,7 @@ GCF median error: **4**. TOON median error: **53**. JSON median error: **56**. G
 
 ### GCF failures: precision errors
 
-GCF fails on precision (off by 1-7). The structure is understood; the count is slightly misread. 36 total failures across 23 runs.
+GCF fails on precision (off by 1-7). The structure is understood; the count is slightly misread. 36 total failures across 24 runs.
 
 | Type | Count | Models | Cause |
 |------|-------|--------|-------|
@@ -154,7 +156,7 @@ GCF fails on precision (off by 1-7). The structure is understood; the count is s
 
 ### TOON failures: comprehension errors
 
-TOON fails on comprehension (wrong by 50-140). The model cannot filter a flat list by column value at scale. 94 total failures across 23 runs.
+TOON fails on comprehension (wrong by 50-140). The model cannot filter a flat list by column value at scale. 94 total failures across 24 runs.
 
 | Type | Count | Models | Cause |
 |------|-------|--------|-------|
@@ -167,7 +169,7 @@ TOON fails on comprehension (wrong by 50-140). The model cannot filter a flat li
 
 ### JSON failures: structural overwhelm
 
-JSON fails on structure (empty responses, massive undercounts, chain-of-thought enumeration). The format itself prevents comprehension at scale. 131 total failures across 23 runs.
+JSON fails on structure (empty responses, massive undercounts, chain-of-thought enumeration). The format itself prevents comprehension at scale. 131 total failures across 24 runs.
 
 | Type | Count | Models | Cause |
 |------|-------|--------|-------|
@@ -192,7 +194,7 @@ Each model tier has a distinct failure signature. Opus/Sonnet never fail on GCF.
 | Model | GCF failure mode | TOON failure mode | JSON failure mode |
 |-------|-----------------|-------------------|-------------------|
 | Opus/Sonnet | None | Off-by-2 extended_count; last_symbol_kind wrong (attention decay at row 500) | Undercounts (356 vs 500); 143-line chain-of-thought enumeration, still wrong answer |
-| Haiku 4.5 | Off-by-1 (1 of 2 runs) | Distance grouping (100, 200, 214 vs 166); last_symbol_kind wrong | Undercounts; distance filter failures |
+| Haiku 4.5 | None | Distance grouping (100, 200, 214 vs 166); last_symbol_kind wrong | Undercounts; distance filter failures |
 | GPT-5.5 | Empty strings (context overwhelm at 53k input tokens) | Empty strings; distance grouping failures | Returns nothing on most questions (53k tokens of repeated field names overwhelms attention) |
 | GPT-5.4 | Deterministic: edge_count=198, function_count=84 every run | Distance grouping wildly inconsistent (169, 229, 200 vs 166); round-number guessing | symbol_count 326-404; massive undercounts everywhere |
 | GPT-5.4-mini | Same as 5.4 (198, 84) plus larger misses (250, 100) | Worst distance grouping (26, 28 vs 166); defaults to round-number guessing | 300 vs 500 symbol_count; consistent failure across all question types |
