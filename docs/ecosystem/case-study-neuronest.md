@@ -1,6 +1,6 @@
 # Case Study: NeuroNest
 
-**[NeuroNest](https://github.com/NETGVai/NeuroNest)** is an agent-first IDE built by [Network Guardian](https://netgv.ai). It is the first independent commercial adoption of GCF.
+**[NeuroNest](https://neuronest.cc/)** is an agent-first IDE built by [Network Guardian](https://netgv.ai). It is the first independent commercial adoption of GCF.
 
 ## Integration scope
 
