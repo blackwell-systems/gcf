@@ -40,7 +40,7 @@ This is what most MCP tool responses look like: arrays of objects with nested me
 | Model | Provider | Runs | GCF avg | TOON avg | JSON avg |
 |-------|----------|------|---------|----------|----------|
 | Claude Opus 4.6 | Anthropic | 2 | **100%** | 100% | 100% |
-| Claude Sonnet 4.6 | Anthropic | 3 | **97.4%** | 97.4% | 100% |
+| Claude Sonnet 4.6 | Anthropic | 3 | **100%** | 97.4% | 100% |
 | Claude Haiku 4.5 | Anthropic | 4 | **100%** | 100% | 100% |
 | GPT-5.5 | OpenAI | 2 | **100%** | 96.2% | 100% |
 | Gemini 2.5 Pro | Google | 3 | **100%** | 100% | 100% |

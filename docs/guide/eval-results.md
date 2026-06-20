@@ -17,7 +17,7 @@ Every number on the [benchmarks page](/guide/benchmarks) comes from the runs bel
 | Claude Opus 4.6 | Anthropic | 1 | 500 | **100%** | 100% | 100% | All exact |
 | Claude Opus 4.6 | Anthropic | 2 | 500 | **100%** | 100% | 100% | All exact |
 | Claude Sonnet 4.6 | Anthropic | 1 | 500 | **100%** | 100% | 100% | All exact |
-| Claude Sonnet 4.6 | Anthropic | 2 | 500 | 92.3% | 100% | 92.3% | GCF/TOON: count_orders_with_3plus_items off |
+| Claude Sonnet 4.6 | Anthropic | 4 | 500 | **100%** | 100% | 92.3% | TOON: count_premium_customers off |
 | Claude Sonnet 4.6 | Anthropic | 3 | 500 | **100%** | 100% | 100% | All exact |
 | Claude Haiku 4.5 | Anthropic | 1 | 500 | **100%** | 100% | 100% | All exact |
 | Claude Haiku 4.5 | Anthropic | 2 | 500 | **100%** | 100% | 100% | All exact |
