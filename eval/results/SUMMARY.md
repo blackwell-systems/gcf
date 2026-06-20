@@ -23,11 +23,30 @@
 
 Evaluated at two scales:
 
-**Standard workloads (up to 100 records):** 100% GCF comprehension accuracy on every frontier model tested. This is the scale of typical MCP tool responses. Both generic and graph profiles. No model has ever failed on GCF at this scale.
+**Generic profile (500 orders, nested structured data):** 18 runs, 8 models, 3 providers. GCF averages 96.3%, TOON 94.6%, JSON 93.8%. Frontier models (Opus, GPT-5.5, Gemini 2.5 Pro) score 100% on GCF. Margins are narrow on generic data; the primary value is token savings (53-71%), not comprehension gaps.
 
-**Stress scale (500+ records):** GCF averages 91.2% across 24 runs, 10 models, 3 providers. All formats degrade at this scale; GCF degrades the least. JSON averages 53.4%, TOON averages 68.2%. The margin between formats widens as record count increases. Stress-scale runs below use 500 symbols, 200 edges, 13 structured extraction questions, zero format instructions.
+**Graph profile, stress scale (500 symbols, 200 edges):** 24 runs, 10 models, 3 providers. GCF averages 91.2%, TOON 68.2%, JSON 53.4%. The margin between formats widens dramatically at scale. GCF wins 23, ties 1, loses 0.
 
-### All runs
+---
+
+### Generic profile runs (500 orders, nested structured data)
+
+| Model | Runs | GCF avg | TOON avg | JSON avg |
+|-------|------|---------|----------|----------|
+| Claude Opus 4.6 | 2 | **100.0%** | 100.0% | 100.0% |
+| Claude Sonnet 4.6 | 3 | 97.4% | 97.4% | 100.0% |
+| Claude Haiku 4.5 | 3 | 97.4% | 100.0% | 100.0% |
+| GPT-5.5 | 2 | **100.0%** | 96.2% | 100.0% |
+| Gemini 2.5 Pro | 3 | **100.0%** | 100.0% | 100.0% |
+| Gemini 3.5 Flash | 1 | **100.0%** | 100.0% | 100.0% |
+| Gemini 2.5 Flash | 3 | **93.3%** | 82.7% | 75.6% |
+| GPT-4o-mini | 1 | **69.2%** | 69.2% | 61.5% |
+
+**18 runs.** Frontier models (Opus, GPT-5.5, Gemini 2.5 Pro) achieve 100% GCF on every run. Mid-tier models (Sonnet, Haiku) show occasional precision errors at 500 records. GCF equals or beats TOON on 17/18 runs, equals or beats JSON on 15/18 runs. Infra-failure runs (all formats 0%) excluded.
+
+---
+
+### Graph profile, stress-scale runs (500 symbols, 200 edges)
 
 | Model | Run | GCF | TOON | JSON | GCF wins? |
 |-------|-----|-----|------|------|-----------|
