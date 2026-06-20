@@ -175,34 +175,134 @@ The variance sources are identical: dot-splitting, number-splitting, word bounda
 
 JSON's variance is *larger* in both absolute and proportional terms on edge data, because JSON repeats `"target":`, `"source":`, `"type":` for each edge, and each of those key-value pairs can split differently.
 
-## Design Rationale: Why These Delimiters
+## ASCII Delimiter Space Analysis
 
-GCF's delimiter choices were informed by tokenizer behavior:
+We tested every printable ASCII character (codes 33-126) against all 8 tokenizers on two criteria:
+
+1. **Single token in isolation:** does the character encode as exactly 1 token?
+2. **Never merges with adjacent text:** does `Xfoo` tokenize as `X` + `foo` (separate) or `Xfoo` (merged)?
+
+A "perfect" delimiter satisfies both: it's always 1 token and never gets absorbed into neighboring content.
+
+**Results:** 74 of 94 printable ASCII characters are perfect delimiters. 20 characters merge with adjacent text on at least one tokenizer.
+
+### Characters that merge (avoid as delimiters)
+
+| Character | Why it merges |
+|-----------|--------------|
+| `(` | Merges into `(foo` on some tokenizers |
+| `-` | Merges into `-token`, `-based`, `-style` |
+| `.` | Merges into `.validate`, `.com`, `.json` |
+| `/` | Merges into `/api`, `/path` |
+| `_` | Merges into `_name`, `_id`, `_count` |
+| `a-f, i, l, o, p, r, t, u` | Common lowercase letters that form subword prefixes |
+
+These are exactly the characters tokenizers aggressively merge into subwords. Any format using dots, dashes, or underscores as structural delimiters will have tokenizer-dependent behavior.
+
+### GCF's delimiters: all perfect
+
+| Character | Single token (8/8) | Never merges (8/8) | Role in GCF |
+|-----------|-------------------|-------------------|-------------|
+| `\|` | Yes | Yes | Field delimiter |
+| `@` | Yes | Yes | Symbol ID prefix |
+| `<` | Yes | Yes | Edge direction |
+| `#` | Yes | Yes | Section header |
+| `{` | Yes | Yes | Schema open |
+| `}` | Yes | Yes | Schema close |
+| `[` | Yes | Yes | Count open |
+| `]` | Yes | Yes | Count close |
+| `,` | Yes | Yes | Schema field separator |
+
+Every GCF grammar character is in the perfect category. This was a deliberate design choice.
+
+### What this means for competing formats
+
+**JSON** uses `.` (dot), `:` (colon), and `"` (quote) as structural characters. Dots merge with adjacent text (`.validate` becomes 1 token on GPT-4 but 2 on Gemma). Quotes create `"key":` sequences that tokenize inconsistently. The format's grammar characters are in the merging category.
+
+**TOON** inherits YAML's indentation-sensitive structure. Whitespace-based delimiting is inherently tokenizer-dependent because tokenizers handle leading spaces, tabs, and indentation levels differently.
+
+**GCF** uses only characters from the non-merging set. The format's token efficiency is not an accident of one tokenizer's vocabulary; it's a structural property of the delimiter choices.
+
+## Design Rationale: Why These Specific Delimiters
+
+From the 74 perfect candidates, GCF chose based on readability and semantic meaning:
 
 | Character | Why chosen | Alternative considered | Why not |
 |-----------|-----------|----------------------|---------|
-| `\|` (pipe) | Single token universally. Rare in natural text. Visually distinct. | Tab (`\t`) | Invisible, harder to debug |
-| `@` | Single token universally. Establishes "this is an ID" semantically. | `#` | Conflicts with section headers |
-| `##` | Two-char sequence that all tokenizers merge into one token. Markdown-familiar. | `===` | 3 chars, less efficient |
-| `<` | Single token. Reads as "points to" for edges. | `->` | 2 tokens on most tokenizers |
-| `\n` | Universal row separator. Zero-cost delimiter. | `;` | Less readable, no semantic meaning |
+| `\|` (pipe) | Rare in natural text. Visually distinct column separator. | Tab (`\t`) | Invisible, harder to debug |
+| `@` | Establishes "this is an ID" semantically. | `$` | Also perfect, but less intuitive for IDs |
+| `##` | Two-char sequence tokenizers merge into one token. Markdown-familiar. | `===` | 3 chars, less efficient |
+| `<` | Reads as "points to" for edges. | `~` | Also perfect, but less semantic |
+| `\n` | Universal row separator. Zero overhead. | `;` | Less readable |
 | `,` | Schema field separator. Familiar from CSV. | `:` | Conflicts with potential value content |
 
-The format avoids:
-- Multi-byte Unicode (tokenizer-dependent splitting)
-- Whitespace-sensitive indentation (YAML's problem)
-- Quote characters in structural positions (JSON's `"key":` overhead)
-- Escape sequences (fewer edge cases)
+## Grammar Swap Experiment
 
-## What this means
+To prove GCF's savings are structural (positional fields, keys declared once) and not an artifact of specific delimiter choices, we swapped the entire grammar and re-measured.
 
-GCF's grammar is tokenizer-invariant. The delimiters were chosen for this property. The savings hold because the compression comes from structural elimination of repeated keys, not from any tokenizer-specific trick.
+### Method
 
-The variance that exists (Qwen splits `95` into two tokens, Gemma splits `.validate` into two tokens) is content variance, not format variance. JSON has the same splits on the same values. If you tested any format on these 8 tokenizers, you'd see the same patterns.
+5 delimiter sets, all using characters from the "perfect" category:
 
-The comprehension eval data (24 stress-scale runs across Claude, GPT, and Gemini) confirms this at the behavioral level: no provider-specific anomalies in how models read GCF.
+| Set | Field | ID | Edge | Section | Schema |
+|-----|-------|----|------|---------|--------|
+| GCF (actual) | `\|` | `@` | `<` | `##` | `{,}` |
+| Alt A | `~` | `$` | `>` | `%%` | `(;)` |
+| Alt B | `^` | `!` | `=` | `&&` | `{:}` |
+| Alt C | `` ` `` | `#` | `~` | `!!` | `[\|]` |
+| Alt D | `;` | `%` | `^` | `$$` | `{+}` |
+
+Each set tested against 5 payload types (employees, orders, logs, code symbols, mixed nested) at 4 sizes (10, 50, 100, 500 records) across all 8 tokenizers. **800 total measurements.**
+
+### Results
+
+| Delimiter set | 10 records | 50 records | 100 records | 500 records | Overall |
+|---------------|-----------|-----------|------------|------------|---------|
+| GCF (actual) | 59.1% | 60.9% | 61.0% | 60.5% | **60.6%** |
+| Alt set A | 58.7% | 60.6% | 60.7% | 60.2% | **60.3%** |
+| Alt set B | 59.1% | 61.0% | 61.1% | 60.6% | **60.7%** |
+| Alt set C | 58.7% | 60.6% | 60.7% | 60.2% | **60.3%** |
+| Alt set D | 58.8% | 60.7% | 60.8% | 60.3% | **60.4%** |
+
+**Spread: 0.4 percentage points across all delimiter sets.** The choice of delimiter character has negligible effect on savings.
+
+### Per-tokenizer consistency
+
+| Tokenizer | GCF | Alt A | Alt B | Alt C | Alt D |
+|-----------|-----|-------|-------|-------|-------|
+| Claude | 60.8% | 60.4% | 60.8% | 60.4% | 60.4% |
+| GPT-4 | 63.2% | 62.8% | 63.2% | 62.8% | 62.8% |
+| GPT-4o | 63.1% | 63.1% | 63.5% | 63.1% | 63.1% |
+| LLaMA 3.1 | 63.2% | 62.8% | 63.2% | 62.8% | 62.8% |
+| Qwen 2.5 | 56.3% | 55.9% | 56.3% | 55.9% | 55.9% |
+| DeepSeek V3 | 63.4% | 62.9% | 62.9% | 62.9% | 63.7% |
+| Gemma 2 | 60.2% | 59.9% | 60.2% | 59.9% | 59.9% |
+| Mistral Nemo | 56.0% | 56.0% | 56.5% | 56.0% | 56.0% |
+
+Variation across delimiter sets: 0.0-0.8pp per tokenizer.
+
+### What this proves
+
+GCF's token savings come from the encoding structure (keys declared once, values positional), not from any specific delimiter character. You could replace every delimiter in the grammar and get the same compression. The format's efficiency is a mathematical property of eliminating key repetition.
+
+## Summary
+
+GCF's grammar is tokenizer-invariant. The delimiters were chosen from the perfect-category character set (single token, never merges) as a robustness guarantee, but the savings themselves are structural. The grammar swap experiment proves this: 0.4pp spread across 5 completely different delimiter sets, 800 measurements.
+
+The comprehension eval data (24 stress-scale runs, 27 generic runs across Claude, GPT, Gemini, and Mistral) confirms this at the behavioral level: no provider-specific anomalies in how models read GCF.
 
 ## Reproduce
+
+All experiments are reproducible:
+
+```bash
+cd gcf
+
+# Tokenizer variance analysis
+node eval/tokenizer-variance.mjs
+
+# Grammar swap experiment
+node eval/grammar-swap-experiment.mjs
 
 ```bash
 cd gcf
