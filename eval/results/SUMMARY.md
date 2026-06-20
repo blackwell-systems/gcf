@@ -25,7 +25,7 @@ Evaluated at two scales:
 
 **Standard workloads (up to 100 records):** 100% GCF comprehension accuracy on every frontier model tested. This is the scale of typical MCP tool responses. Both generic and graph profiles. No model has ever failed on GCF at this scale.
 
-**Stress scale (500+ records):** GCF averages 90.7% across 24 runs, 10 models, 3 providers. All formats degrade at this scale; GCF degrades the least. JSON averages 53.6%, TOON averages 67.7%. The margin between formats widens as record count increases. Adversarial runs below use 500 symbols, 200 edges, 13 structured extraction questions, zero format instructions.
+**Stress scale (500+ records):** GCF averages 91.2% across 24 runs, 10 models, 3 providers. All formats degrade at this scale; GCF degrades the least. JSON averages 53.4%, TOON averages 68.2%. The margin between formats widens as record count increases. Stress-scale runs below use 500 symbols, 200 edges, 13 structured extraction questions, zero format instructions.
 
 ### All runs
 
@@ -54,7 +54,7 @@ Evaluated at two scales:
 | Gemini 3.5 Flash | 1 | **100%** | 61.5% | 46.2% | ✓ |
 | Gemini 2.5 Pro | 1 | **100%** | 76.9% | 58.3% | ✓ |
 | Gemini 3.1 Pro | 1 | **100%** | 76.9% | 46.2% | ✓ |
-| Gemini 3.5 Flash | 2 | **100%** | 46.2% | 46.2% | ✓ |
+| Gemini 2.5 Flash | 4 | **100%** | 46.2% | 46.2% | ✓ |
 
 **24 stress-scale runs, 10 models, 3 providers. GCF wins 23, ties 1, loses 0.**
 
@@ -68,8 +68,8 @@ Evaluated at two scales:
 | GPT-5.4 | 4 | **78.0%** | 56.0% | 44.1% | +22.0 vs TOON |
 | Claude Haiku 4.5 | 2 | **96.2%** | 69.2% | 57.7% | +27.0 vs TOON |
 | GPT-5.4-mini | 2 | **71.8%** | 64.1% | 54.2% | +7.7 vs TOON |
-| Gemini 2.5 Flash | 3 | **80.6%** | 54.6% | 57.0% | +26.0 vs TOON |
-| Gemini 3.5 Flash | 2 | **100%** | 53.9% | 46.2% | +46.1 vs TOON |
+| Gemini 2.5 Flash | 4 | **85.5%** | 52.5% | 54.3% | +32.9 vs TOON |
+| Gemini 3.5 Flash | 1 | **100%** | 61.5% | 46.2% | +38.5 vs TOON |
 | Gemini 2.5 Pro | 1 | **100%** | 76.9% | 58.3% | +23.1 vs TOON |
 | Gemini 3.1 Pro | 1 | **100%** | 76.9% | 46.2% | +23.1 vs TOON |
 

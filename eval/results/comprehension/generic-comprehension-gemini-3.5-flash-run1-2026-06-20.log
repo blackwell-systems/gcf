@@ -1,0 +1,42 @@
+=== RUN   TestGenericComprehension
+    generic_comprehension_test.go:449: === Generic-Profile Comprehension Eval ===
+    generic_comprehension_test.go:450: Backend:    google (gemini-3.5-flash)
+    generic_comprehension_test.go:451: Orders:     100
+    generic_comprehension_test.go:452: Questions:  13
+    generic_comprehension_test.go:453: Formats:    gcf, json, toon
+    generic_comprehension_test.go:454: 
+    generic_comprehension_test.go:456: gcf       18853 bytes, ~4713 tokens
+    generic_comprehension_test.go:456: json      64452 bytes, ~16113 tokens
+    generic_comprehension_test.go:456: toon      33644 bytes, ~8411 tokens
+    generic_comprehension_test.go:458: 
+    generic_comprehension_test.go:480: Generic-Profile Comprehension Eval
+    generic_comprehension_test.go:480: Backend: google (gemini-3.5-flash)
+    generic_comprehension_test.go:480: Orders: 100, Questions: 13, Formats: gcf, json, toon
+    generic_comprehension_test.go:480: gcf       18853 bytes, ~4713 tokens
+    generic_comprehension_test.go:480: json      64452 bytes, ~16113 tokens
+    generic_comprehension_test.go:480: toon      33644 bytes, ~8411 tokens
+    generic_comprehension_test.go:480: 
+    generic_comprehension_test.go:480:   PASS order_count               gcf      [exact] expected="100" got="100"
+    generic_comprehension_test.go:480:   PASS order_count               json     [exact] expected="100" got="100"
+    generic_comprehension_test.go:480:   PASS order_count               toon     [exact] expected="100" got="100"
+    generic_comprehension_test.go:480:   PASS first_customer_name       gcf      [exact] expected="Alice Chen" got="Alice Chen"
+    generic_comprehension_test.go:480:   PASS first_customer_name       json     [exact] expected="Alice Chen" got="Alice Chen"
+    generic_comprehension_test.go:480:   PASS first_customer_name       toon     [exact] expected="Alice Chen" got="Alice Chen"
+    generic_comprehension_test.go:480:   PASS last_order_status         gcf      [exact] expected="cancelled" got="cancelled"
+    generic_comprehension_test.go:480:   PASS last_order_status         json     [exact] expected="cancelled" got="cancelled"
+    generic_comprehension_test.go:480:   PASS last_order_status         toon     [exact] expected="cancelled" got="cancelled"
+    generic_comprehension_test.go:480:   PASS total_items_first_order   gcf      [exact] expected="1" got="1"
+    generic_comprehension_test.go:480:   PASS total_items_first_order   json     [exact] expected="1" got="1"
+    generic_comprehension_test.go:480:   PASS total_items_first_order   toon     [exact] expected="1" got="1"
+    generic_comprehension_test.go:480:   PASS customer_email_order5     gcf      [exact] expected="eva.johansson@example.com" got="eva.johansson@example.com"
+    generic_comprehension_test.go:480:   PASS customer_email_order5     json     [exact] expected="eva.johansson@example.com" got="eva.johansson@example.com"
+    generic_comprehension_test.go:480:   PASS customer_email_order5     toon     [exact] expected="eva.johansson@example.com" got="eva.johansson@example.com"
+    generic_comprehension_test.go:480:   PASS count_shipped             gcf      [exact] expected="20" got="20"
+    generic_comprehension_test.go:480:   PASS count_shipped             json     [exact] expected="20" got="20"
+    generic_comprehension_test.go:480:   PASS count_shipped             toon     [exact] expected="20" got="20"
+    generic_comprehension_test.go:480:   PASS count_premium_customers   gcf      [exact] expected="40" got="40"
+    generic_comprehension_test.go:480:   PASS count_premium_customers   json     [exact] expected="40" got="40"
+    generic_comprehension_test.go:480:   PASS count_premium_customers   toon     [exact] expected="40" got="40"
+    generic_comprehension_test.go:480:   PASS highest_total             gcf      [exact] expected="464.32" got="464.32"
+    generic_comprehension_test.go:480:   PASS highest_total             json     [exact] expected="464.32" got="464.32"
+    generic_comprehension_test.go:480:   PASS highest_total             toon     [exact] expected="464.32" got="464.32"
