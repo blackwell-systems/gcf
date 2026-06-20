@@ -137,15 +137,9 @@ onUnmounted(() => {
   transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1), background-color 150ms ease, outline-color 150ms ease;
 }
 
-@keyframes pulse-outline {
-  0%, 100% { outline-color: rgba(24, 190, 252, 0.2); }
-  50% { outline-color: rgba(24, 190, 252, 0.4); }
-}
-
 /* Back face */
 .bb-3d::before {
   transform: translate(-0.75rem, -0.75rem);
-  animation: pulse-outline 3.5s ease-in-out infinite;
 }
 
 /* Front face */
@@ -387,7 +381,21 @@ onUnmounted(() => {
 
 <style>
 /* Transitions on pseudo-elements must be global (Vue scoped CSS limitation) */
-.bb-3d::before,
+
+@keyframes drift-back {
+  0%, 100% { transform: translate(-0.75rem, -0.75rem); outline-color: rgba(24, 190, 252, 0.2); }
+  33% { transform: translate(calc(-0.75rem - 1.5px), calc(-0.75rem - 1px)); outline-color: rgba(24, 190, 252, 0.35); }
+  66% { transform: translate(calc(-0.75rem + 1px), calc(-0.75rem + 1px)); outline-color: rgba(24, 190, 252, 0.25); }
+}
+
+.bb-3d::before {
+  animation: drift-back 4.5s ease-in-out infinite !important;
+  transition: none !important;
+}
+.bb-3d:hover::before {
+  animation: none !important;
+  transition: transform 180ms ease, background-color 150ms ease, outline-color 150ms ease !important;
+}
 .bb-3d::after {
   transition: transform 180ms ease, background-color 150ms ease, outline-color 150ms ease !important;
 }
