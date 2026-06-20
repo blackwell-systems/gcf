@@ -59,7 +59,7 @@ All questions have deterministic ground truth computed from the payload. No LLM 
 |-------|----------|------|---------|----------|----------|
 | Claude Opus 4.6 | Anthropic | 2 | **100.0%** | 100.0% | 100.0% |
 | Claude Sonnet 4.6 | Anthropic | 3 | 97.4% | 97.4% | 100.0% |
-| Claude Haiku 4.5 | Anthropic | 4 | 98.1% | 100.0% | 100.0% |
+| Claude Haiku 4.5 | Anthropic | 4 | **100.0%** | 100.0% | 100.0% |
 | GPT-5.5 | OpenAI | 2 | **100.0%** | 96.2% | 100.0% |
 | Gemini 2.5 Pro | Google | 3 | **100.0%** | 100.0% | 100.0% |
 | Gemini 3.1 Pro Preview | Google | 1 | **100.0%** | 100.0% | 100.0% |

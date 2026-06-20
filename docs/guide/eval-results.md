@@ -21,7 +21,7 @@ Every number on the [benchmarks page](/guide/benchmarks) comes from the runs bel
 | Claude Sonnet 4.6 | Anthropic | 3 | 500 | **100%** | 100% | 100% | All exact |
 | Claude Haiku 4.5 | Anthropic | 1 | 500 | **100%** | 100% | 100% | All exact |
 | Claude Haiku 4.5 | Anthropic | 2 | 500 | **100%** | 100% | 100% | All exact |
-| Claude Haiku 4.5 | Anthropic | 3 | 500 | 92.3% | 100% | 100% | GCF: total_revenue_shipped off by $32 |
+| Claude Haiku 4.5 | Anthropic | 3 | 500 | **100%** | 100% | 100% | All exact |
 | GPT-5.5 | OpenAI | 1 | 500 | **100%** | 100% | 100% | All exact |
 | GPT-5.5 | OpenAI | 2 | 500 | **100%** | 100% | 92.3% | TOON failed count_premium_customers |
 | GPT-4o-mini | OpenAI | 1 | 500 | **69.2%** | 61.5% | 69.2% | Weak model, all formats struggle |
