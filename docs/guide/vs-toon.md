@@ -4,7 +4,7 @@ GCF has two profiles. TOON has one. The comparison plays out on both dimensions,
 
 **On structured data** (generic profile, the common case): GCF achieves 100% comprehension on every frontier model tested. TOON fails on GPT-5.5 and Gemini Flash. Both formats can encode flat tabular data, but GCF is 25.5% smaller across 15 real-world datasets. LLMs produce valid GCF at 5/5 on every frontier model. TOON's own decoder rejects LLM-generated output on 7 of 9 models.
 
-**On relationship data** (graph profile): TOON has no grammar for this. No local IDs, no edge notation, no session dedup, no distance grouping. TOON must repeat full identifiers on every edge (~30-100 tokens each). GCF uses `@0<@1 calls` (~4 tokens). On 500-symbol code graphs, GCF scores 90.7% comprehension. TOON scores 68.5%. This isn't a gap that closes with optimization. TOON structurally cannot represent relationships efficiently without becoming a different format.
+**On relationship data** (graph profile): TOON has no grammar for this. No local IDs, no edge notation, no session dedup, no distance grouping. TOON must repeat full identifiers on every edge (~30-100 tokens each). GCF uses `@0<@1 calls` (~4 tokens). On 500-symbol code graphs, GCF scores 91.2% comprehension. TOON scores 68.2%. This isn't a gap that closes with optimization. TOON structurally cannot represent relationships efficiently without becoming a different format.
 
 **On TOON's own benchmark**: We forked [their benchmark](https://github.com/blackwell-systems/toon-benchmark), ran their original 6 datasets with their tokenizer and methodology, then added 9 more representing real-world MCP tool responses. GCF wins 13 of 15 overall. TOON's two wins total 104 tokens combined. GCF's 13 wins save 107,679 tokens.
 
@@ -27,7 +27,7 @@ GCF has two profiles. TOON has one. The comparison plays out on both dimensions,
 | **Streaming encode** | **Yes (true zero-buffering, O(1) memory, `[?]` + trailer)** | **Output-side only (requires full value in memory)** |
 | Key folding (dotted paths) | No | Yes |
 | LLM comprehension (generic, 500 orders) | **100%** on every frontier model | 92.3% (fails on GPT-5.5, Gemini Flash) |
-| LLM comprehension (graph, 500 symbols) | **90.7%** avg (23 runs, 10 models) | 68.5% avg |
+| LLM comprehension (graph, 500 symbols) | **91.2%** avg (24 runs, 10 models) | 68.2% avg |
 | **LLM generation (output tokens)** | **75% fewer than JSON** | **40% fewer than JSON** |
 | Human-readable | Dense, agent-optimized | YAML-like, human-friendly |
 | Zero dependencies | Yes | Yes |
@@ -202,11 +202,11 @@ GCF: 100% on every frontier model. TOON fails on GPT-5.5 (count_premium_customer
 
 | Format | Avg accuracy | Tokens |
 |--------|-------------|--------|
-| **GCF** | **90.7%** | **11,090** |
-| TOON | 68.5% | 16,378 |
-| JSON | 53.6% | 53,341 |
+| **GCF** | **91.2%** | **11,090** |
+| TOON | 68.2% | 16,378 |
+| JSON | 53.4% | 53,341 |
 
-23 runs. GCF wins 22, ties 1, loses 0. The difference between formats is invisible at 100 rows and undeniable at 500.
+24 runs. GCF wins 23, ties 1, loses 0. The difference between formats is invisible at 100 rows and undeniable at 500.
 
 **Scale test (1000 orders):** JSON doesn't fit in 200K context. TOON doesn't fit on Sonnet. GCF (47K tokens) is the only format that works.
 

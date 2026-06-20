@@ -18,7 +18,7 @@ const features = [
   {
     icon: '🧠',
     title: '100% comprehension on every frontier model',
-    details: 'The only format that never fails. Tested across Claude, GPT-5.5, and Gemini with zero format instructions. On structurally complex code graphs, GCF scores 90.7% where <span class="json">JSON</span> drops to 53.6% and <span class="toon">TOON</span> to 68.5%. 1,700+ evaluations, 3 providers.',
+    details: 'The only format that never fails. Tested across Claude, GPT-5.5, Gemini, and Mistral with zero format instructions. On structurally complex code graphs, GCF scores 91.2% where <span class="json">JSON</span> drops to 53.4% and <span class="toon">TOON</span> to 68.2%. 2,400+ evaluations, 4 providers.',
   },
   {
     icon: '🔒',
