@@ -98,15 +98,109 @@ The pipe delimiters are always single tokens. Variance comes from how tokenizers
 
 All tokenizers produce 17-18 tokens. `##`, `[`, `]`, `{`, `}` are consistently handled. Variance is only in how field names merge with adjacent punctuation.
 
-## Key Findings
+## Delimiter Character Universality
 
-1. **GCF structural delimiters (`|`, `@`, `<`, `##`) are single tokens on every tokenizer.** These are the characters that define the format's grammar. Zero ambiguity, zero cross-tokenizer divergence on format syntax.
+Every character in GCF's grammar is a single token on every tokenizer tested:
 
-2. **Token variance is in the values, not the format.** The same qualified names, numbers, and email addresses vary across tokenizers whether they're encoded in GCF or JSON. This is a property of the content, not the encoding.
+| Character | Purpose in GCF | Single token on all 8? |
+|-----------|---------------|----------------------|
+| `\|` (pipe) | Field delimiter | Yes |
+| `@` | Symbol ID prefix | Yes |
+| `<` | Edge direction | Yes |
+| `#` | Section header | Yes |
+| `{` | Schema open | Yes |
+| `}` | Schema close | Yes |
+| `[` | Count open | Yes |
+| `]` | Count close | Yes |
+| `,` | Schema field separator | Yes |
+| `\n` | Row separator | Yes |
 
-3. **Savings are format-inherent.** GCF's advantage comes from declaring keys once (header) instead of repeating them per row. This structural property produces consistent savings regardless of how individual values tokenize.
+10 characters, 8 tokenizers, 80 checks, zero exceptions. GCF's grammar characters are universally unambiguous at the token level.
 
-4. **Comprehension is unaffected.** Whether `.validateToken` is 1 or 2 tokens, the model reads the same semantic content. This is confirmed by 24 stress-scale eval runs across 3 providers showing no tokenizer-specific anomalies.
+## JSON Tokenization Comparison
+
+The same data encoded as JSON shows identical variance patterns. This proves the variance is content-driven, not format-driven.
+
+### Example: Full symbol object
+
+**JSON:** `{"id": 0, "kind": "function", "qualified_name": "auth.validateToken", "score": 0.95, "provenance": "definition"}`
+
+| Tokenizer | Tokens | Key variance |
+|-----------|--------|-------------|
+| Claude | 37 | Splits `_` + `name`, `.` + `validate` |
+| GPT-4 | 37 | Merges `_name`, `.validate` |
+| GPT-4o | 37 | Same as GPT-4 |
+| LLaMA 3.1 | 37 | Same as GPT-4 |
+| Qwen 2.5 | 38 | Splits `9` + `5` |
+| DeepSeek V3 | 37 | Same as GPT-4 |
+| Gemma 2 | 39 | Splits `_` + `name`, `.` + `validate`, `9` + `5` |
+| Mistral Nemo | 39 | Splits `qual` + `ified`, `9` + `5` |
+
+**JSON variance: 37-39 tokens (5.4% spread).**
+
+**GCF equivalent:** `@0|function|auth.validateToken|0.95|definition`
+
+| Tokenizer | Tokens |
+|-----------|--------|
+| GPT-4 | 14 |
+| Qwen 2.5 | 15 |
+| Gemma 2 | 16 |
+
+**GCF variance: 14-16 tokens (14% spread proportionally, but 2 tokens absolute).**
+
+The variance sources are identical: dot-splitting, number-splitting, word boundaries. JSON has the same patterns. GCF just has fewer total tokens to vary.
+
+### Example: Edge array (2 edges)
+
+**JSON:** `[{"target": 0, "source": 2, "type": "implements"}, {"target": 1, "source": 2, "type": "implements"}]`
+
+| Tokenizer | JSON tokens |
+|-----------|-------------|
+| Claude | 33 |
+| GPT-4 | 38 |
+| DeepSeek V3 | 40 |
+| Mistral Nemo | 40 |
+
+**JSON variance: 33-40 tokens (21% spread).**
+
+**GCF equivalent:** Two lines: `@0<@2|implements` and `@1<@2|implements`
+
+| Tokenizer | GCF tokens |
+|-----------|------------|
+| GPT-4 | 14 |
+| DeepSeek V3 | 16 |
+| Mistral Nemo | 16 |
+
+**GCF variance: 14-16 tokens (14% spread), but only 2 tokens absolute difference.**
+
+JSON's variance is *larger* in both absolute and proportional terms on edge data, because JSON repeats `"target":`, `"source":`, `"type":` for each edge, and each of those key-value pairs can split differently.
+
+## Design Rationale: Why These Delimiters
+
+GCF's delimiter choices were informed by tokenizer behavior:
+
+| Character | Why chosen | Alternative considered | Why not |
+|-----------|-----------|----------------------|---------|
+| `\|` (pipe) | Single token universally. Rare in natural text. Visually distinct. | Tab (`\t`) | Invisible, harder to debug |
+| `@` | Single token universally. Establishes "this is an ID" semantically. | `#` | Conflicts with section headers |
+| `##` | Two-char sequence that all tokenizers merge into one token. Markdown-familiar. | `===` | 3 chars, less efficient |
+| `<` | Single token. Reads as "points to" for edges. | `->` | 2 tokens on most tokenizers |
+| `\n` | Universal row separator. Zero-cost delimiter. | `;` | Less readable, no semantic meaning |
+| `,` | Schema field separator. Familiar from CSV. | `:` | Conflicts with potential value content |
+
+The format avoids:
+- Multi-byte Unicode (tokenizer-dependent splitting)
+- Whitespace-sensitive indentation (YAML's problem)
+- Quote characters in structural positions (JSON's `"key":` overhead)
+- Escape sequences (fewer edge cases)
+
+## What this means
+
+GCF's grammar is tokenizer-invariant. The delimiters were chosen for this property. The savings hold because the compression comes from structural elimination of repeated keys, not from any tokenizer-specific trick.
+
+The variance that exists (Qwen splits `95` into two tokens, Gemma splits `.validate` into two tokens) is content variance, not format variance. JSON has the same splits on the same values. If you tested any format on these 8 tokenizers, you'd see the same patterns.
+
+The comprehension eval data (24 stress-scale runs across Claude, GPT, and Gemini) confirms this at the behavioral level: no provider-specific anomalies in how models read GCF.
 
 ## Reproduce
 
