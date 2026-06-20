@@ -23,7 +23,7 @@
 
 Evaluated at two scales:
 
-**Generic profile (500 orders, nested structured data):** 23 runs, 11 models, 4 providers. Frontier models (Opus, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash) score 100% GCF on every run. GCF never loses to JSON on any model tested. On mid-tier models, the primary value is token savings (53-71%) with equal or better comprehension.
+**Generic profile (500 orders, nested structured data):** 26 runs, 11 models, 4 providers. Frontier models (Opus, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash) score 100% GCF on every run. On mid-tier models, GCF averages equal or better than JSON across runs. TOON is consistently the weakest format. The primary value on generic data is token savings (53-71%) with equal or better comprehension.
 
 **Graph profile, stress scale (500 symbols, 200 edges):** 24 runs, 10 models, 3 providers. GCF averages 91.2%, TOON 68.2%, JSON 53.4%. The margin between formats widens dramatically at scale. GCF wins 23, ties 1, loses 0.
 
@@ -65,11 +65,11 @@ All questions have deterministic ground truth computed from the payload. No LLM 
 | Gemini 3.1 Pro Preview | Google | 1 | **100.0%** | 100.0% | 100.0% |
 | Gemini 3.5 Flash | Google | 2 | **100.0%** | 100.0% | 100.0% |
 | Gemini 2.5 Flash | Google | 4 | **95.0%** | 85.1% | 74.0% |
-| Mistral Medium 3.5 | Mistral | 1 | **84.6%** | 76.9% | 84.6% |
+| Mistral Medium 3.5 | Mistral | 4 | **82.7%** | 76.9% | 82.0% |
 | Mistral Large 3 | Mistral | 1 | 69.2% | 69.2% | 69.2% |
 | GPT-4o-mini | OpenAI | 1 | **69.2%** | 69.2% | 61.5% |
 
-**23 runs, 11 models, 4 providers.** Frontier models (Opus, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash) achieve 100% GCF on every run. Mid-tier models show occasional precision errors at 500 records. GCF never loses to JSON on any model. Infra-failure runs (all formats 0%) excluded.
+**26 runs, 11 models, 4 providers.** Frontier models (Opus, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash) achieve 100% GCF on every run. Mid-tier models show variance at 500 records; GCF averages equal or better than JSON across runs on every model tested. TOON is consistently the weakest format. Infra-failure runs (all formats 0%) excluded.
 
 ---
 
