@@ -1,6 +1,6 @@
 === RUN   TestGenericComprehension
     generic_comprehension_test.go:449: === Generic-Profile Comprehension Eval ===
-    generic_comprehension_test.go:450: Backend:    google (gemini-3.5-flash)
+    generic_comprehension_test.go:450: Backend:    google (gemini-2.5-pro)
     generic_comprehension_test.go:451: Orders:     100
     generic_comprehension_test.go:452: Questions:  13
     generic_comprehension_test.go:453: Formats:    gcf, json, toon
@@ -10,7 +10,7 @@
     generic_comprehension_test.go:456: toon      33644 bytes, ~8411 tokens
     generic_comprehension_test.go:458: 
     generic_comprehension_test.go:480: Generic-Profile Comprehension Eval
-    generic_comprehension_test.go:480: Backend: google (gemini-3.5-flash)
+    generic_comprehension_test.go:480: Backend: google (gemini-2.5-pro)
     generic_comprehension_test.go:480: Orders: 100, Questions: 13, Formats: gcf, json, toon
     generic_comprehension_test.go:480: gcf       18853 bytes, ~4713 tokens
     generic_comprehension_test.go:480: json      64452 bytes, ~16113 tokens
@@ -26,7 +26,14 @@
     generic_comprehension_test.go:480:   PASS last_order_status         json     [exact] expected="cancelled" got="cancelled"
     generic_comprehension_test.go:480:   PASS last_order_status         toon     [exact] expected="cancelled" got="cancelled"
     generic_comprehension_test.go:480:   PASS total_items_first_order   gcf      [exact] expected="1" got="1"
-    generic_comprehension_test.go:480:   PASS total_items_first_order   json     [exact] expected="1" got="1"
+    generic_comprehension_test.go:480:   SKIP total_items_first_order   json     error: Google API 503: {
+          "error": {
+            "code": 503,
+            "message": "This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+            "status": "UNAVAILABLE"
+          }
+        }
+        
     generic_comprehension_test.go:480:   PASS total_items_first_order   toon     [exact] expected="1" got="1"
     generic_comprehension_test.go:480:   PASS customer_email_order5     gcf      [exact] expected="eva.johansson@example.com" got="eva.johansson@example.com"
     generic_comprehension_test.go:480:   PASS customer_email_order5     json     [exact] expected="eva.johansson@example.com" got="eva.johansson@example.com"
@@ -43,26 +50,39 @@
     generic_comprehension_test.go:480:   PASS sku_first_item_order3     gcf      [exact] expected="SKU-HP07" got="SKU-HP07"
     generic_comprehension_test.go:480:   PASS sku_first_item_order3     json     [exact] expected="SKU-HP07" got="SKU-HP07"
     generic_comprehension_test.go:480:   PASS sku_first_item_order3     toon     [exact] expected="SKU-HP07" got="SKU-HP07"
-    generic_comprehension_test.go:480:   PASS total_revenue_shipped     gcf      [close] expected="4265.10" got="4265.1"
+    generic_comprehension_test.go:480:   PASS total_revenue_shipped     gcf      [exact] expected="4265.10" got="4265.10"
     generic_comprehension_test.go:480:   PASS total_revenue_shipped     json     [close] expected="4265.10" got="4265.1"
-    generic_comprehension_test.go:480:   PASS total_revenue_shipped     toon     [exact] expected="4265.10" got="4265.10"
-    generic_comprehension_test.go:480:   PASS unique_statuses           gcf      [exact] expected="cancelled, delivered, pending, processing, shipped" got="cancelled, delivered, pending, processing, shipped"
+    generic_comprehension_test.go:480:   PASS total_revenue_shipped     toon     [close] expected="4265.10" got="4265.1"
+    generic_comprehension_test.go:480:   PASS unique_statuses           gcf      [exact] expected="cancelled, delivered, pending, processing, shipped" got="cancelled,delivered,pending,processing,shipped"
     generic_comprehension_test.go:480:   PASS unique_statuses           json     [exact] expected="cancelled, delivered, pending, processing, shipped" got="cancelled, delivered, pending, processing, shipped"
-    generic_comprehension_test.go:480:   PASS unique_statuses           toon     [exact] expected="cancelled, delivered, pending, processing, shipped" got="cancelled, delivered, pending, processing, shipped"
-    generic_comprehension_test.go:480:   PASS count_orders_with_3plus_items gcf      [exact] expected="50" got="50"
-    generic_comprehension_test.go:480:   PASS count_orders_with_3plus_items json     [exact] expected="50" got="50"
+    generic_comprehension_test.go:480:   PASS unique_statuses           toon     [exact] expected="cancelled, delivered, pending, processing, shipped" got="cancelled,delivered,pending,processing,shipped"
+    generic_comprehension_test.go:480:   SKIP count_orders_with_3plus_items gcf      error: Google API 503: {
+          "error": {
+            "code": 503,
+            "message": "This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+            "status": "UNAVAILABLE"
+          }
+        }
+        
+    generic_comprehension_test.go:480:   FAIL count_orders_with_3plus_items json     [got "40"] expected="50" got="40"
     generic_comprehension_test.go:480:   PASS count_orders_with_3plus_items toon     [exact] expected="50" got="50"
     generic_comprehension_test.go:480:   PASS customer_tier_last_order  gcf      [exact] expected="premium" got="premium"
     generic_comprehension_test.go:480:   PASS customer_tier_last_order  json     [exact] expected="premium" got="premium"
-    generic_comprehension_test.go:480:   PASS customer_tier_last_order  toon     [exact] expected="premium" got="premium"
+    generic_comprehension_test.go:480:   SKIP customer_tier_last_order  toon     error: Google API 503: {
+          "error": {
+            "code": 503,
+            "message": "This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+            "status": "UNAVAILABLE"
+          }
+        }
+        
     generic_comprehension_test.go:480: 
     generic_comprehension_test.go:480: === Summary ===
     generic_comprehension_test.go:480: Format     Accuracy   Pass/Total
-    generic_comprehension_test.go:480: gcf          100.0%     13/13
-    generic_comprehension_test.go:480: json         100.0%     13/13
-    generic_comprehension_test.go:480: toon         100.0%     13/13
+    generic_comprehension_test.go:480: gcf          100.0%     12/12
+    generic_comprehension_test.go:480: json          91.7%     11/12
+    generic_comprehension_test.go:480: toon         100.0%     12/12
     generic_comprehension_test.go:480: 
-    generic_comprehension_test.go:480: Log: results/v3/comprehension/generic-100orders-google-gemini-3.5-flash-2026-06-20-072443.log
---- PASS: TestGenericComprehension (199.13s)
+    generic_comprehension_test.go:480: Log: results/v3/comprehension/generic-100orders-google-gemini-2.5-pro-2026-06-20-073153.log
+--- PASS: TestGenericComprehension (751.75s)
 PASS
-ok  	github.com/blackwell-systems/gcf-go/eval	199.630s
