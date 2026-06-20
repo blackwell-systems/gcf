@@ -14,26 +14,26 @@
   <rect x="1" y="1" width="318" height="352" rx="11" fill="none" stroke="#334155" stroke-width="1"/>
 
   <text x="24" y="36" fill="#e2e8f0" font-family="system-ui,-apple-system,sans-serif" font-size="14" font-weight="600">GCF ecosystem downloads</text>
-  <text x="296" y="36" fill="#64748b" font-family="system-ui,-apple-system,sans-serif" font-size="10" text-anchor="end">2026-06-20</text>
+  <text x="296" y="36" fill="#64748b" font-family="system-ui,-apple-system,sans-serif" font-size="10" text-anchor="end">2026-06-19</text>
 
   <line x1="24" y1="48" x2="296" y2="48" stroke="#334155" stroke-width="1"/>
 
   <text x="24" y="74" fill="#94a3b8" font-family="ui-monospace,monospace" font-size="12">npm (gcf library)</text>
-  <text x="296" y="74" fill="#e2e8f0" font-family="ui-monospace,monospace" font-size="13" font-weight="600" text-anchor="end">2775</text>
+  <text x="296" y="74" fill="#e2e8f0" font-family="ui-monospace,monospace" font-size="13" font-weight="600" text-anchor="end">2,751</text>
   <text x="24" y="96" fill="#94a3b8" font-family="ui-monospace,monospace" font-size="12">npm (gcf-proxy)</text>
-  <text x="296" y="96" fill="#e2e8f0" font-family="ui-monospace,monospace" font-size="13" font-weight="600" text-anchor="end">2069</text>
+  <text x="296" y="96" fill="#e2e8f0" font-family="ui-monospace,monospace" font-size="13" font-weight="600" text-anchor="end">2,049</text>
   <text x="24" y="118" fill="#94a3b8" font-family="ui-monospace,monospace" font-size="12">npm (n8n-nodes-gcf)</text>
-  <text x="296" y="118" fill="#e2e8f0" font-family="ui-monospace,monospace" font-size="13" font-weight="600" text-anchor="end">574</text>
+  <text x="296" y="118" fill="#e2e8f0" font-family="ui-monospace,monospace" font-size="13" font-weight="600" text-anchor="end">569</text>
   <text x="24" y="140" fill="#94a3b8" font-family="ui-monospace,monospace" font-size="12">npm (tree-sitter-gcf)</text>
   <text x="296" y="140" fill="#e2e8f0" font-family="ui-monospace,monospace" font-size="13" font-weight="600" text-anchor="end">202</text>
   <text x="24" y="162" fill="#94a3b8" font-family="ui-monospace,monospace" font-size="12">pypi (gcf-python)</text>
-  <text x="296" y="162" fill="#e2e8f0" font-family="ui-monospace,monospace" font-size="13" font-weight="600" text-anchor="end">7946</text>
+  <text x="296" y="162" fill="#e2e8f0" font-family="ui-monospace,monospace" font-size="13" font-weight="600" text-anchor="end">7,590</text>
   <text x="24" y="184" fill="#94a3b8" font-family="ui-monospace,monospace" font-size="12">pypi (gcf-proxy)</text>
-  <text x="296" y="184" fill="#e2e8f0" font-family="ui-monospace,monospace" font-size="13" font-weight="600" text-anchor="end">13450</text>
+  <text x="296" y="184" fill="#e2e8f0" font-family="ui-monospace,monospace" font-size="13" font-weight="600" text-anchor="end">12,829</text>
   <text x="24" y="206" fill="#94a3b8" font-family="ui-monospace,monospace" font-size="12">crates.io (gcf)</text>
-  <text x="296" y="206" fill="#e2e8f0" font-family="ui-monospace,monospace" font-size="13" font-weight="600" text-anchor="end">177</text>
+  <text x="296" y="206" fill="#e2e8f0" font-family="ui-monospace,monospace" font-size="13" font-weight="600" text-anchor="end">176</text>
   <text x="24" y="228" fill="#94a3b8" font-family="ui-monospace,monospace" font-size="12">vscode marketplace</text>
-  <text x="296" y="228" fill="#e2e8f0" font-family="ui-monospace,monospace" font-size="13" font-weight="600" text-anchor="end">30</text>
+  <text x="296" y="228" fill="#e2e8f0" font-family="ui-monospace,monospace" font-size="13" font-weight="600" text-anchor="end">25</text>
   <text x="24" y="250" fill="#94a3b8" font-family="ui-monospace,monospace" font-size="12">jetbrains marketplace</text>
   <text x="296" y="250" fill="#e2e8f0" font-family="ui-monospace,monospace" font-size="13" font-weight="600" text-anchor="end">0?</text>
   <text x="24" y="272" fill="#94a3b8" font-family="ui-monospace,monospace" font-size="12">github (gcf-go)</text>
@@ -43,6 +43,6 @@
 
   <line x1="24" y1="298" x2="296" y2="298" stroke="#334155" stroke-width="1"/>
 
-  <text x="24" y="326" fill="url(#accent)" font-family="system-ui,-apple-system,sans-serif" font-size="16" font-weight="700">27419 total</text>
+  <text x="24" y="326" fill="url(#accent)" font-family="system-ui,-apple-system,sans-serif" font-size="16" font-weight="700">26,387 total</text>
   <text x="296" y="326" fill="#64748b" font-family="system-ui,-apple-system,sans-serif" font-size="10" text-anchor="end">cumulative downloads</text>
 </svg>
