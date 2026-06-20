@@ -134,7 +134,7 @@ onUnmounted(() => {
   outline: 1px dashed rgba(24, 190, 252, 0.3);
   width: 100%;
   height: 100%;
-  transition: 150ms all ease;
+  transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1), background-color 150ms ease, outline-color 150ms ease;
 }
 
 @keyframes pulse-outline {
@@ -166,8 +166,8 @@ onUnmounted(() => {
   height: calc(100% + 2px);
   position: absolute;
   top: -0.375rem;
-  transform: translateX(var(--tx, 0)) skewY(var(--sy, 45deg));
-  transition: 150ms all ease;
+  transform: translateX(0) skewY(45deg);
+  transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1), width 150ms ease, opacity 150ms ease, border-color 150ms ease;
 }
 
 /* Left panel */
@@ -199,8 +199,7 @@ onUnmounted(() => {
 
 .bb-3d:hover .bb-3d__inner::before,
 .bb-3d:hover .bb-3d__inner::after {
-  --tx: 0.75rem;
-  --sy: -45deg;
+  transform: translateX(0.75rem) skewY(-45deg);
 }
 
 /* Active: front pushes in to meet back (back is at 0.75rem, -0.75rem during hover) */
@@ -248,7 +247,7 @@ onUnmounted(() => {
   outline: 1px dashed rgba(24, 190, 252, 0.12);
   width: 100%;
   height: 100%;
-  transition: 150ms all ease;
+  transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1), background-color 150ms ease, outline-color 150ms ease, outline-style 150ms ease;
 }
 
 .bb-alt::before {
@@ -271,8 +270,8 @@ onUnmounted(() => {
   height: calc(100% + 2px);
   position: absolute;
   top: -0.2rem;
-  transform: translateX(var(--tx, 0)) skewY(var(--sy, 45deg));
-  transition: 150ms all ease;
+  transform: translateX(0) skewY(45deg);
+  transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1), width 150ms ease, opacity 150ms ease, border-color 150ms ease;
 }
 
 .bb-alt__inner::before {
@@ -306,8 +305,7 @@ onUnmounted(() => {
 
 .bb-alt:hover .bb-alt__inner::before,
 .bb-alt:hover .bb-alt__inner::after {
-  --tx: 0.4rem;
-  --sy: -45deg;
+  transform: translateX(0.4rem) skewY(-45deg);
 }
 
 .bb-alt:active::before {
@@ -388,6 +386,32 @@ onUnmounted(() => {
 </style>
 
 <style>
+/* Transitions on pseudo-elements must be global (Vue scoped CSS limitation) */
+.bb-3d::before,
+.bb-3d::after {
+  transition: transform 180ms ease, background-color 150ms ease, outline-color 150ms ease !important;
+}
+
+.bb-3d__inner::before,
+.bb-3d__inner::after {
+  transition: transform 180ms ease, width 150ms ease, opacity 150ms ease, border-color 150ms ease !important;
+}
+
+.bb-alt::before,
+.bb-alt::after {
+  transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1), background-color 200ms ease, outline-color 200ms ease, outline-style 0ms !important;
+}
+
+.bb-alt__inner::before,
+.bb-alt__inner::after {
+  transition: transform 180ms ease, width 150ms ease, opacity 150ms ease, border-color 150ms ease !important;
+}
+
+.bb-3d__text,
+.bb-alt__text {
+  transition: transform 180ms ease !important;
+}
+
 .bb-3d:active::before,
 .bb-3d:active::after,
 .bb-alt:active::before,
