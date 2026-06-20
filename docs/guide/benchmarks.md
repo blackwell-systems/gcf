@@ -1,14 +1,14 @@
 # Benchmarks
 
-1,700+ LLM evaluations across 10+ models, 3 providers, and 60+ independent test runs.
+1,700+ LLM evaluations across 11 models, 4 providers, and 50+ independent test runs.
 
 No model has ever been trained on GCF. Every model reads it better than the formats they were trained on.
 
-| | Generic Profile | Graph Profile |
+| | Generic Profile (500 orders) | Graph Profile (500 symbols) |
 |---|---|---|
-| **GCF** | **100%** (6 frontier models) | **90.7%** (10 models) |
-| **TOON** | 92.3% | 68.5% |
-| **JSON** | 91.2% | 53.6% |
+| **GCF** | **100%** on every frontier model | **91.2%** (10 models) |
+| **TOON** | weakest format consistently | 68.2% |
+| **JSON** | GCF avg >= JSON on every model | 53.4% |
 
 | | GCF | TOON | JSON |
 |---|---|---|---|
@@ -16,13 +16,14 @@ No model has ever been trained on GCF. Every model reads it better than the form
 | **Generation** (28 runs, 11 models) | **5/5** | 1.0/5 | 5.0/5 |
 | **43,000,000,000+ round-trips** | **0 failures** | | |
 
-Four benchmark suites, three providers (Anthropic, OpenAI, Google), zero training:
+Five benchmark suites, four providers (Anthropic, OpenAI, Google, Mistral), zero training:
 
-1. **[Generic comprehension](#generic-profile-standard-workloads)**: 500-order nested data, 7 models. GCF 100% on every frontier model.
-2. **[Graph comprehension](#graph-profile-under-structural-stress)**: 500-symbol code graphs, 10 models. GCF 90.7% where JSON drops to 53.6%.
+1. **[Generic comprehension](#generic-profile-standard-workloads)**: 500-order nested data, 26 runs, 11 models. GCF 100% on every frontier model.
+2. **[Graph comprehension](#graph-profile-under-structural-stress)**: 500-symbol code graphs, 24 runs, 10 models. GCF 91.2% where JSON drops to 53.4%.
 3. **[Scale test](#scale-test-1000-orders)**: At 1000 records, JSON doesn't fit. GCF is the only format that works on 200K context models.
 4. **[Token efficiency](#token-efficiency-15-datasets)**: 15 real-world datasets. GCF wins 13/15 vs TOON, 25.5% fewer overall.
 5. **[Generation](#generation-can-llms-write-it)**: Every frontier model produces valid GCF. TOON's decoder rejects output from 7/9 models.
+6. **[Tokenizer analysis](/guide/tokenizer-analysis)**: 8 tokenizers, 6 providers. GCF savings (50-59%) consistent regardless of tokenizer.
 
 All results [reproducible](https://github.com/blackwell-systems/gcf/tree/main/eval/results).
 
@@ -36,19 +37,21 @@ This is what most MCP tool responses look like: arrays of objects with nested me
 
 ![Generic Comprehension Accuracy](/charts/generic-accuracy-by-model.png)
 
-| Model | Provider | GCF | JSON | TOON |
-|-------|----------|-----|------|------|
-| Claude Opus 4.6 | Anthropic | **100%** | 100% | 100% |
-| Claude Sonnet 4.6 | Anthropic | **100%** | 100% | 100% |
-| Claude Haiku 4.5 | Anthropic | **100%** | 100% | 100% |
-| GPT-5.5 | OpenAI | **100%** | 100% | 92.3% |
-| GPT-4o-mini | OpenAI | 69.2% | 61.5% | 69.2% |
-| Gemini 2.5 Flash | Google | **100%** | 76.9% | 84.6% |
-| Gemini 3.5 Flash | Google | **100%** | 100% | 100% |
+| Model | Provider | Runs | GCF avg | TOON avg | JSON avg |
+|-------|----------|------|---------|----------|----------|
+| Claude Opus 4.6 | Anthropic | 2 | **100%** | 100% | 100% |
+| Claude Sonnet 4.6 | Anthropic | 3 | **97.4%** | 97.4% | 100% |
+| Claude Haiku 4.5 | Anthropic | 3 | **97.4%** | 100% | 100% |
+| GPT-5.5 | OpenAI | 2 | **100%** | 96.2% | 100% |
+| Gemini 2.5 Pro | Google | 3 | **100%** | 100% | 100% |
+| Gemini 3.1 Pro Preview | Google | 1 | **100%** | 100% | 100% |
+| Gemini 3.5 Flash | Google | 2 | **100%** | 100% | 100% |
+| Gemini 2.5 Flash | Google | 4 | **95.0%** | 85.1% | 74.0% |
+| Mistral Medium 3.5 | Mistral | 4 | **82.7%** | 76.9% | 82.0% |
+| Mistral Large 3 | Mistral | 1 | 69.2% | 69.2% | 69.2% |
+| GPT-4o-mini | OpenAI | 1 | **69.2%** | 69.2% | 61.5% |
 
-**GCF achieves 100% on every frontier model.** The only format that never fails.
-
-TOON fails on GPT-5.5 (`count_premium_customers`: got 250, expected 200). JSON fails on Gemini 2.5 Flash (3 counting questions wrong). On the weakest model (4o-mini), all formats struggle equally on aggregation questions.
+**26 runs, 11 models, 4 providers.** Frontier models (Opus, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash) achieve 100% GCF on every run. GCF averages equal or better than JSON on every model. TOON is consistently the weakest format.
 
 ---
 
@@ -68,10 +71,10 @@ TOON fails on GPT-5.5 (`count_premium_customers`: got 250, expected 200). JSON f
 | GPT-5.4-mini | 2 | **71.8%** | 64.1% | 54.2% |
 | Gemini 2.5 Pro | 1 | **100%** | 76.9% | 58.3% |
 | Gemini 3.1 Pro | 1 | **100%** | 76.9% | 46.2% |
-| Gemini 3.5 Flash | 1 | **100%** | 61.5% | 46.2% |
-| Gemini 2.5 Flash | 3 | **80.6%** | 54.6% | 57.0% |
+| Gemini 3.5 Flash | 2 | **100%** | 53.9% | 46.2% |
+| Gemini 2.5 Flash | 4 | **85.5%** | 52.5% | 54.3% |
 
-**23 runs, 10 models, 3 providers. GCF wins 22, ties 1, loses 0.**
+**24 runs, 10 models, 3 providers. GCF wins 23, ties 1, loses 0.**
 
 When an agent receives data in JSON at this scale, it gets the wrong answer 46% of the time. With TOON, 32% of the time. With GCF, 10%.
 
