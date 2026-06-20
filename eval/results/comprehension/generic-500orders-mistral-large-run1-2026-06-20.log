@@ -1,0 +1,68 @@
+=== RUN   TestGenericComprehension
+    generic_comprehension_test.go:449: === Generic-Profile Comprehension Eval ===
+    generic_comprehension_test.go:450: Backend:    openai (mistral-large-latest)
+    generic_comprehension_test.go:451: Orders:     500
+    generic_comprehension_test.go:452: Questions:  13
+    generic_comprehension_test.go:453: Formats:    gcf, json, toon
+    generic_comprehension_test.go:454: 
+    generic_comprehension_test.go:456: gcf       94613 bytes, ~23653 tokens
+    generic_comprehension_test.go:456: json     322612 bytes, ~80653 tokens
+    generic_comprehension_test.go:456: toon     168604 bytes, ~42151 tokens
+    generic_comprehension_test.go:458: 
+    generic_comprehension_test.go:480: Generic-Profile Comprehension Eval
+    generic_comprehension_test.go:480: Backend: openai (mistral-large-latest)
+    generic_comprehension_test.go:480: Orders: 500, Questions: 13, Formats: gcf, json, toon
+    generic_comprehension_test.go:480: gcf       94613 bytes, ~23653 tokens
+    generic_comprehension_test.go:480: json     322612 bytes, ~80653 tokens
+    generic_comprehension_test.go:480: toon     168604 bytes, ~42151 tokens
+    generic_comprehension_test.go:480: 
+    generic_comprehension_test.go:480:   PASS order_count               gcf      [exact] expected="500" got="500"
+    generic_comprehension_test.go:480:   PASS order_count               json     [exact] expected="500" got="500"
+    generic_comprehension_test.go:480:   PASS order_count               toon     [exact] expected="500" got="500"
+    generic_comprehension_test.go:480:   PASS first_customer_name       gcf      [exact] expected="Alice Chen" got="Alice Chen"
+    generic_comprehension_test.go:480:   PASS first_customer_name       json     [exact] expected="Alice Chen" got="Alice Chen"
+    generic_comprehension_test.go:480:   PASS first_customer_name       toon     [exact] expected="Alice Chen" got="Alice Chen"
+    generic_comprehension_test.go:480:   PASS last_order_status         gcf      [exact] expected="cancelled" got="cancelled"
+    generic_comprehension_test.go:480:   PASS last_order_status         json     [exact] expected="cancelled" got="cancelled"
+    generic_comprehension_test.go:480:   PASS last_order_status         toon     [exact] expected="cancelled" got="cancelled"
+    generic_comprehension_test.go:480:   PASS total_items_first_order   gcf      [exact] expected="1" got="1"
+    generic_comprehension_test.go:480:   PASS total_items_first_order   json     [exact] expected="1" got="1"
+    generic_comprehension_test.go:480:   PASS total_items_first_order   toon     [exact] expected="1" got="1"
+    generic_comprehension_test.go:480:   PASS customer_email_order5     gcf      [exact] expected="eva.johansson@example.com" got="eva.johansson@example.com"
+    generic_comprehension_test.go:480:   PASS customer_email_order5     json     [exact] expected="eva.johansson@example.com" got="eva.johansson@example.com"
+    generic_comprehension_test.go:480:   PASS customer_email_order5     toon     [exact] expected="eva.johansson@example.com" got="eva.johansson@example.com"
+    generic_comprehension_test.go:480:   FAIL count_shipped             gcf      [got "125"] expected="100" got="125"
+    generic_comprehension_test.go:480:   FAIL count_shipped             json     [got "125"] expected="100" got="125"
+    generic_comprehension_test.go:480:   FAIL count_shipped             toon     [got "200"] expected="100" got="200"
+    generic_comprehension_test.go:480:   FAIL count_premium_customers   gcf      [got "125"] expected="200" got="125"
+    generic_comprehension_test.go:480:   FAIL count_premium_customers   json     [got "150"] expected="200" got="150"
+    generic_comprehension_test.go:480:   FAIL count_premium_customers   toon     [got "150"] expected="200" got="150"
+    generic_comprehension_test.go:480:   PASS highest_total             gcf      [exact] expected="464.32" got="464.32"
+    generic_comprehension_test.go:480:   PASS highest_total             json     [exact] expected="464.32" got="464.32"
+    generic_comprehension_test.go:480:   PASS highest_total             toon     [exact] expected="464.32" got="464.32"
+    generic_comprehension_test.go:480:   PASS sku_first_item_order3     gcf      [exact] expected="SKU-HP07" got="SKU-HP07"
+    generic_comprehension_test.go:480:   PASS sku_first_item_order3     json     [exact] expected="SKU-HP07" got="SKU-HP07"
+    generic_comprehension_test.go:480:   PASS sku_first_item_order3     toon     [exact] expected="SKU-HP07" got="SKU-HP07"
+    generic_comprehension_test.go:480:   FAIL total_revenue_shipped     gcf      [got "11811.66"] expected="21325.50" got="11811.66"
+    generic_comprehension_test.go:480:   FAIL total_revenue_shipped     json     [got "11878.50"] expected="21325.50" got="11878.50"
+    generic_comprehension_test.go:480:   FAIL total_revenue_shipped     toon     [got "13878.46"] expected="21325.50" got="13878.46"
+    generic_comprehension_test.go:480:   PASS unique_statuses           gcf      [exact] expected="cancelled, delivered, pending, processing, shipped" got="cancelled,delivered,pending,processing,shipped"
+    generic_comprehension_test.go:480:   PASS unique_statuses           json     [exact] expected="cancelled, delivered, pending, processing, shipped" got="cancelled, delivered, pending, processing, shipped"
+    generic_comprehension_test.go:480:   PASS unique_statuses           toon     [exact] expected="cancelled, delivered, pending, processing, shipped" got="cancelled, delivered, pending, processing, shipped"
+    generic_comprehension_test.go:480:   FAIL count_orders_with_3plus_items gcf      [got "200"] expected="250" got="200"
+    generic_comprehension_test.go:480:   FAIL count_orders_with_3plus_items json     [got "100"] expected="250" got="100"
+    generic_comprehension_test.go:480:   FAIL count_orders_with_3plus_items toon     [got "200"] expected="250" got="200"
+    generic_comprehension_test.go:480:   PASS customer_tier_last_order  gcf      [exact] expected="premium" got="premium"
+    generic_comprehension_test.go:480:   PASS customer_tier_last_order  json     [exact] expected="premium" got="premium"
+    generic_comprehension_test.go:480:   PASS customer_tier_last_order  toon     [exact] expected="premium" got="premium"
+    generic_comprehension_test.go:480: 
+    generic_comprehension_test.go:480: === Summary ===
+    generic_comprehension_test.go:480: Format     Accuracy   Pass/Total
+    generic_comprehension_test.go:480: gcf           69.2%      9/13
+    generic_comprehension_test.go:480: json          69.2%      9/13
+    generic_comprehension_test.go:480: toon          69.2%      9/13
+    generic_comprehension_test.go:480: 
+    generic_comprehension_test.go:480: Log: results/v3/comprehension/generic-500orders-openai-mistral-large-latest-2026-06-20-102251.log
+--- PASS: TestGenericComprehension (574.74s)
+PASS
+ok  	github.com/blackwell-systems/gcf-go/eval	575.031s
