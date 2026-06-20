@@ -59,7 +59,7 @@ All questions have deterministic ground truth computed from the payload. No LLM 
 |-------|----------|------|---------|----------|----------|
 | Claude Opus 4.6 | Anthropic | 2 | **100.0%** | 100.0% | 100.0% |
 | Claude Sonnet 4.6 | Anthropic | 3 | 97.4% | 97.4% | 100.0% |
-| Claude Haiku 4.5 | Anthropic | 3 | 97.4% | 100.0% | 100.0% |
+| Claude Haiku 4.5 | Anthropic | 4 | 98.1% | 100.0% | 100.0% |
 | GPT-5.5 | OpenAI | 2 | **100.0%** | 96.2% | 100.0% |
 | Gemini 2.5 Pro | Google | 3 | **100.0%** | 100.0% | 100.0% |
 | Gemini 3.1 Pro Preview | Google | 1 | **100.0%** | 100.0% | 100.0% |
@@ -69,7 +69,7 @@ All questions have deterministic ground truth computed from the payload. No LLM 
 | Mistral Large 3 | Mistral | 1 | 69.2% | 69.2% | 69.2% |
 | GPT-4o-mini | OpenAI | 1 | **69.2%** | 69.2% | 61.5% |
 
-**26 runs, 11 models, 4 providers.** Frontier models (Opus, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash) achieve 100% GCF on every run. Mid-tier models show variance at 500 records; GCF averages equal or better than JSON across runs on every model tested. TOON is consistently the weakest format. Infra-failure runs (all formats 0%) excluded.
+**27 runs, 11 models, 4 providers.** Frontier models (Opus, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash) achieve 100% GCF on every run. Mid-tier models show variance at 500 records; GCF averages equal or better than JSON across runs on every model tested. TOON is consistently the weakest format. Infra-failure runs (all formats 0%) excluded.
 
 ---
 
