@@ -145,16 +145,18 @@ const languages = [
   border-radius: 14px;
   background: rgba(24, 190, 252, 0.03);
   text-decoration: none;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.3s;
+  cursor: pointer;
+  transition: transform 0.2s ease,
+              box-shadow 0.2s ease,
+              border-color 0.2s ease,
+              background 0.2s ease;
 }
 
 .lang-card:hover {
-  border-color: rgba(24, 190, 252, 0.25);
-  background: rgba(24, 190, 252, 0.06);
+  border-color: rgba(24, 190, 252, 0.2);
+  background: rgba(24, 190, 252, 0.05);
   transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(24, 190, 252, 0.08);
+  box-shadow: 0 4px 16px rgba(24, 190, 252, 0.04);
 }
 
 .lang-icon {
