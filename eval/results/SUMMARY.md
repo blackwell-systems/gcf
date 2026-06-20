@@ -50,8 +50,9 @@
 | Gemini 3.5 Flash | 1 | **100%** | 61.5% | 46.2% | ✓ |
 | Gemini 2.5 Pro | 1 | **100%** | 76.9% | 58.3% | ✓ |
 | Gemini 3.1 Pro | 1 | **100%** | 76.9% | 46.2% | ✓ |
+| Gemini 3.5 Flash | 2 | **100%** | 46.2% | 46.2% | ✓ |
 
-**23 runs, 10 models, 3 providers. GCF wins 22, ties 1, loses 0.**
+**24 runs, 10 models, 3 providers. GCF wins 23, ties 1, loses 0.**
 
 ### Averages by model
 
@@ -64,7 +65,7 @@
 | Claude Haiku 4.5 | 2 | **96.2%** | 69.2% | 57.7% | +27.0 vs TOON |
 | GPT-5.4-mini | 2 | **71.8%** | 64.1% | 54.2% | +7.7 vs TOON |
 | Gemini 2.5 Flash | 3 | **80.6%** | 54.6% | 57.0% | +26.0 vs TOON |
-| Gemini 3.5 Flash | 1 | **100%** | 61.5% | 46.2% | +38.5 vs TOON |
+| Gemini 3.5 Flash | 2 | **100%** | 53.9% | 46.2% | +46.1 vs TOON |
 | Gemini 2.5 Pro | 1 | **100%** | 76.9% | 58.3% | +23.1 vs TOON |
 | Gemini 3.1 Pro | 1 | **100%** | 76.9% | 46.2% | +23.1 vs TOON |
 
