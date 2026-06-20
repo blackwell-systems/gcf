@@ -23,7 +23,7 @@
 
 Two tiers of evaluation:
 
-**General structured data (generic profile):** 100% comprehension accuracy on every frontier model tested. Standard structured payloads, the kind most MCP servers return. No model has ever failed on general GCF.
+**General structured data (generic profile):** 96.5% GCF average across 21 runs (15 perfect 100% runs). TOON 94.6%, JSON 94.0%. All formats perform well on standard nested data (orders, customers, items). GCF leads but the margin is narrow. GCF equals or beats TOON on 20/21 runs, equals or beats JSON on 18/21. At 100 orders GCF is 100% while JSON and TOON start dropping counting tasks.
 
 **Adversarial graph payloads (graph profile):** 500 symbols, 200 edges, 13 structured extraction questions, zero format instructions. This is a stress test designed to break formats at scale. Results below.
 
