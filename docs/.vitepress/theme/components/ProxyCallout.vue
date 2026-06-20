@@ -119,7 +119,7 @@ const commands = [
 }
 
 .proxy-cmd-wrap:hover {
-  background: rgba(24, 190, 252, 0.06);
+  background: transparent;
 }
 
 .proxy-cmd {
@@ -144,6 +144,8 @@ const commands = [
   pointer-events: none;
   user-select: none;
   white-space: nowrap;
+  width: 42px;
+  text-align: center;
   padding-left: 8px;
   flex-shrink: 0;
 }
@@ -153,7 +155,7 @@ const commands = [
 }
 
 .proxy-copied {
-  color: #4ade80;
+  color: rgba(24, 190, 252, 0.5);
 }
 
 .proxy-link {
