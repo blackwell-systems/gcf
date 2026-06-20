@@ -23,7 +23,7 @@ const languages = [
       </div>
       <div class="lang-deps">
         <span class="lang-deps-rule"></span>
-        <span class="lang-deps-text">Zero runtime dependencies · No transitive deps · No supply chain risk · Permanent commitment · MIT licensed</span>
+        <span class="lang-deps-text">Zero runtime dependencies · No transitive deps · No supply chain risk · <span class="lang-deps-em">Permanent commitment</span> · MIT licensed</span>
         <span class="lang-deps-rule"></span>
       </div>
     </div>
@@ -224,5 +224,9 @@ const languages = [
   text-transform: uppercase;
   white-space: nowrap;
   flex-shrink: 0;
+}
+
+.lang-deps-em {
+  color: rgba(255, 255, 255, 0.5);
 }
 </style>
