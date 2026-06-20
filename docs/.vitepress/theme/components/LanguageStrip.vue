@@ -21,7 +21,11 @@ const languages = [
           <div class="lang-registry">{{ lang.registry }}</div>
         </a>
       </div>
-      <p class="lang-deps">Zero runtime dependencies. Permanently. No transitive deps, no supply chain risk. MIT licensed.</p>
+      <div class="lang-deps">
+        <span class="lang-deps-rule"></span>
+        <span class="lang-deps-text">Zero runtime dependencies · No transitive deps · No supply chain risk · Permanent commitment · MIT licensed</span>
+        <span class="lang-deps-rule"></span>
+      </div>
     </div>
   </div>
 </template>
@@ -200,13 +204,25 @@ const languages = [
 }
 
 .lang-deps {
-  margin-top: 20px;
-  text-align: center;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--gcf-blue, #18befc);
-  opacity: 0.55;
-  letter-spacing: 0.12em;
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.lang-deps-rule {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(24, 190, 252, 0.15), transparent);
+}
+
+.lang-deps-text {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.3);
+  letter-spacing: 0.1em;
   text-transform: uppercase;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 </style>
