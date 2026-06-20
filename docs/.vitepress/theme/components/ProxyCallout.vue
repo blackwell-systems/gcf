@@ -26,6 +26,7 @@ const commands = [
       <div class="proxy-left">
         <div class="proxy-title">Zero-code adoption</div>
         <div class="proxy-desc">Drop-in proxy for existing MCP servers. Or integrate natively with any of 6 languages below.</div>
+        <a href="https://github.com/blackwell-systems/gcf-proxy" target="_blank" class="proxy-link">View on GitHub →</a>
       </div>
       <div class="proxy-right">
         <div class="proxy-cmds">
@@ -41,7 +42,6 @@ const commands = [
             </span>
           </div>
         </div>
-        <a href="https://github.com/blackwell-systems/gcf-proxy" target="_blank" class="proxy-link">GitHub</a>
       </div>
     </div>
   </div>
@@ -136,8 +136,6 @@ const commands = [
 }
 
 .proxy-copy {
-  position: absolute;
-  right: 8px;
   font-size: 0.7rem;
   font-weight: 600;
   color: rgba(24, 190, 252, 0.5);
@@ -145,6 +143,9 @@ const commands = [
   transition: opacity 0.15s ease;
   pointer-events: none;
   user-select: none;
+  white-space: nowrap;
+  padding-left: 8px;
+  flex-shrink: 0;
 }
 
 .proxy-cmd-wrap:hover .proxy-copy {
@@ -160,6 +161,8 @@ const commands = [
   font-weight: 600;
   color: var(--gcf-blue, #18befc);
   text-decoration: none;
+  margin-top: 10px;
+  display: inline-block;
 }
 
 .proxy-link:hover {
