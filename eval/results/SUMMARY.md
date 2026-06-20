@@ -23,7 +23,7 @@
 
 Evaluated at two scales:
 
-**Generic profile (500 orders, nested structured data):** 20 runs, 9 models, 3 providers. Frontier models (Opus, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash) score 100% GCF on every run. Margins are narrow on generic data; the primary value is token savings (53-71%), not comprehension gaps.
+**Generic profile (500 orders, nested structured data):** 23 runs, 11 models, 4 providers. Frontier models (Opus, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash) score 100% GCF on every run. GCF never loses to JSON on any model tested. On mid-tier models, the primary value is token savings (53-71%) with equal or better comprehension.
 
 **Graph profile, stress scale (500 symbols, 200 edges):** 24 runs, 10 models, 3 providers. GCF averages 91.2%, TOON 68.2%, JSON 53.4%. The margin between formats widens dramatically at scale. GCF wins 23, ties 1, loses 0.
 
@@ -31,19 +31,45 @@ Evaluated at two scales:
 
 ### Generic profile runs (500 orders, nested structured data)
 
-| Model | Runs | GCF avg | TOON avg | JSON avg |
-|-------|------|---------|----------|----------|
-| Claude Opus 4.6 | 2 | **100.0%** | 100.0% | 100.0% |
-| Claude Sonnet 4.6 | 3 | 97.4% | 97.4% | 100.0% |
-| Claude Haiku 4.5 | 3 | 97.4% | 100.0% | 100.0% |
-| GPT-5.5 | 2 | **100.0%** | 96.2% | 100.0% |
-| Gemini 2.5 Pro | 3 | **100.0%** | 100.0% | 100.0% |
-| Gemini 3.1 Pro Preview | 1 | **100.0%** | 100.0% | 100.0% |
-| Gemini 3.5 Flash | 2 | **100.0%** | 100.0% | 100.0% |
-| Gemini 2.5 Flash | 4 | **95.0%** | 85.1% | 74.0% |
-| GPT-4o-mini | 1 | **69.2%** | 69.2% | 61.5% |
+#### Questions (13)
 
-**21 runs, 9 models.** Frontier models (Opus, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash) achieve 100% GCF on every run. Mid-tier models (Sonnet, Haiku, Gemini 2.5 Flash) show occasional precision errors at 500 records. GCF equals or beats TOON on 20/21 runs, equals or beats JSON on 18/21 runs. Infra-failure runs (all formats 0%) excluded.
+500 e-commerce orders with nested customers and items. Questions test counting, extraction, filtering, and aggregation on real-world nested data.
+
+| Question | What it tests |
+|----------|---------------|
+| order_count | Record counting |
+| first_customer_name | Field extraction (first record) |
+| last_order_status | Field extraction (last record) |
+| total_items_first_order | Nested array length |
+| customer_email_order5 | Lookup by ID, nested field |
+| count_shipped | Filter by status, count |
+| count_premium_customers | Filter by nested field, count |
+| highest_total | Find max numeric value |
+| sku_first_item_order3 | Lookup by ID, nested array index |
+| total_revenue_shipped | Filter + aggregate (sum) |
+| unique_statuses | Deduplication, sort |
+| count_orders_with_3plus_items | Filter by nested array length |
+| customer_tier_last_order | Field extraction (last record, nested) |
+
+All questions have deterministic ground truth computed from the payload. No LLM judge.
+
+#### Results by model
+
+| Model | Provider | Runs | GCF avg | TOON avg | JSON avg |
+|-------|----------|------|---------|----------|----------|
+| Claude Opus 4.6 | Anthropic | 2 | **100.0%** | 100.0% | 100.0% |
+| Claude Sonnet 4.6 | Anthropic | 3 | 97.4% | 97.4% | 100.0% |
+| Claude Haiku 4.5 | Anthropic | 3 | 97.4% | 100.0% | 100.0% |
+| GPT-5.5 | OpenAI | 2 | **100.0%** | 96.2% | 100.0% |
+| Gemini 2.5 Pro | Google | 3 | **100.0%** | 100.0% | 100.0% |
+| Gemini 3.1 Pro Preview | Google | 1 | **100.0%** | 100.0% | 100.0% |
+| Gemini 3.5 Flash | Google | 2 | **100.0%** | 100.0% | 100.0% |
+| Gemini 2.5 Flash | Google | 4 | **95.0%** | 85.1% | 74.0% |
+| Mistral Medium 3.5 | Mistral | 1 | **84.6%** | 76.9% | 84.6% |
+| Mistral Large 3 | Mistral | 1 | 69.2% | 69.2% | 69.2% |
+| GPT-4o-mini | OpenAI | 1 | **69.2%** | 69.2% | 61.5% |
+
+**23 runs, 11 models, 4 providers.** Frontier models (Opus, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash) achieve 100% GCF on every run. Mid-tier models show occasional precision errors at 500 records. GCF never loses to JSON on any model. Infra-failure runs (all formats 0%) excluded.
 
 ---
 
