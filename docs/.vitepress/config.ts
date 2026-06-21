@@ -29,7 +29,7 @@ export default defineConfig({
       { text: 'Guide', link: '/guide/getting-started' },
       { text: 'GCF vs TOON', link: '/guide/vs-toon' },
       { text: 'Benchmarks', link: '/guide/benchmarks' },
-      { text: 'Whitepaper', link: '/whitepaper' },
+      { text: 'GCF: A Token-Optimized Wire Format', link: '/whitepaper' },
       { text: 'Reference', link: '/reference/spec' },
     ],
     sidebar: [
@@ -63,7 +63,7 @@ export default defineConfig({
           { text: 'GCF vs TOON', link: '/guide/vs-toon' },
           { text: 'Benchmarks (Full Data)', link: '/guide/eval-results' },
           { text: 'Lossless Verification', link: '/guide/lossless-verification' },
-          { text: 'Whitepaper', link: '/whitepaper' },
+          { text: 'GCF: A Token-Optimized Wire Format', link: '/whitepaper' },
           { text: 'Independent AI Reviews', link: '/reviews/' },
         ],
       },
