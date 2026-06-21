@@ -234,7 +234,21 @@ TOON's `encodeLines()` is output-side streaming only (the full value must be in 
 
 ## The bottom line
 
-GCF also has a tokenization advantage that TOON inherits from YAML: TOON's indentation-based structure is tokenizer-dependent because tokenizers handle whitespace differently. GCF's pipe-based delimiters have [near-zero vocabulary merges](/guide/tokenizer-analysis#part-8-root-cause-vocabulary-entry-analysis) across all 8 tested tokenizers.
+### Tokenization: TOON's tab delimiter is worse than JSON's quote
+
+We ran the same [tokenizer analysis](/guide/tokenizer-analysis) on TOON's grammar symbols. TOON uses tab characters as column delimiters. Tabs merge with adjacent content **more aggressively** than JSON's quotes:
+
+| Format | Delimiter merge rate (1,344 checks) |
+|--------|-------------------------------------|
+| TOON (tab) | **59.82%** |
+| JSON (quote) | 39.29% |
+| GCF (pipe) | **0.00%** |
+
+GPT-4's vocabulary has **60 of 64** tested words as tab+letter entries (vs 15 quote+letter entries for JSON). Tab-separated data was so common in training corpora that the tokenizer absorbed tabs into adjacent words even more aggressively than quotes.
+
+TOON's indentation also tokenizes inconsistently across models: the same 4-space indent produces 4 different tokenizations across 8 tokenizers. The model sees different nesting depth depending on which tokenizer processes it.
+
+GCF's pipe-based delimiters have [zero vocabulary merges with field names](/guide/tokenizer-analysis#part-8-root-cause-vocabulary-entry-analysis) across all 8 tested tokenizers.
 
 GCF does everything TOON does, plus five things TOON structurally cannot add without becoming a different format:
 
