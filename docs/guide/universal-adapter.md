@@ -17,16 +17,16 @@ GCF operates on structured values (objects, arrays, strings, numbers, booleans, 
 
 ## The Proof: Format Gauntlet
 
-We converted the same data through **13 different formats** with GCF as the bridge between each one:
+We converted the same data through **14 different formats** with GCF as the bridge between each one:
 
 ```
 JSON → GCF → XML → GCF → MessagePack → GCF → YAML → GCF → 
-BSON → GCF → TOML → GCF → CBOR → GCF → CSV → GCF → 
-JSON5 → GCF → Pickle → GCF → INI → GCF → NDJSON → GCF → 
-Plist → GCF → JSON
+BSON → GCF → TOML → GCF → CBOR → GCF → Protobuf → GCF → 
+CSV → GCF → JSON5 → GCF → Pickle → GCF → INI → GCF → 
+NDJSON → GCF → Plist → GCF → JSON
 ```
 
-**Result:** After 12 conversions through GCF across 13 formats, the final JSON data **exactly matched** the original. Zero data loss. Zero corruption.
+**Result:** After 13 conversions through GCF across 14 formats (including Protobuf with schema), the final JSON data **exactly matched** the original. Zero data loss. Zero corruption.
 
 You can run this yourself:
 
@@ -240,15 +240,49 @@ GCF has been validated across:
 - JSON, YAML, TOML, XML, CSV, INI, JSON5, NDJSON
 
 **Binary formats:**
-- MessagePack, BSON, CBOR, Pickle, Plist
+- MessagePack, BSON, CBOR, Pickle, Plist, **Protocol Buffers** (with schema)
 
-**And by extension, any format that deserializes to structured values:**
-- Protocol Buffers (with schema)
-- Apache Avro
-- Amazon Ion
-- And more
+**Schema-based formats:**
+- Protocol Buffers (requires `.proto` schema definition)
+- Apache Avro (requires schema)
+- Apache Thrift (requires schema)
+
+**And by extension, any format that deserializes to structured values.**
 
 If it deserializes to objects/arrays/primitives, it works with GCF.
+
+### Protocol Buffers (Special Case)
+
+Protobuf requires a schema but works losslessly through GCF:
+
+```python
+from google.protobuf import json_format
+from gcf import encode_generic, decode_generic
+import my_schema_pb2
+
+# Parse protobuf message
+message = my_schema_pb2.MyMessage()
+message.ParseFromString(protobuf_bytes)
+
+# Convert to dict (preserving all fields including defaults)
+data = json_format.MessageToDict(
+    message, 
+    preserving_proto_field_name=True,
+    including_default_value_fields=True
+)
+
+# Through GCF
+gcf_str = encode_generic(data)
+data_back = decode_generic(gcf_str)
+
+# Back to protobuf
+new_message = json_format.ParseDict(data_back, my_schema_pb2.MyMessage())
+protobuf_bytes = new_message.SerializeToString()
+```
+
+**Important:** Use `including_default_value_fields=True` when converting from Protobuf to preserve `false` booleans and other default values.
+
+The mega-gauntlet validates this with a complete round-trip through Protobuf alongside 13 other formats.
 
 ---
 
@@ -272,13 +306,21 @@ python3 examples/format-gauntlet.py
 
 Shows: JSON → GCF → YAML → GCF → CSV → GCF → JSON, proving round-trip losslessness.
 
-### 3. The Mega Gauntlet (13 formats)
+### 3. The Mega Gauntlet (14 formats including Protobuf)
 
 ```bash
-python3 examples/mega-gauntlet.py
+# Install all format libraries first
+pip install msgpack pyyaml pymongo tomli tomli_w cbor2 json5 protobuf
+
+# Compile the protobuf schema
+cd examples
+protoc --python_out=. test_data.proto
+
+# Run the gauntlet
+python3 mega-gauntlet.py
 ```
 
-Shows: 12 conversions through GCF across 13 formats. Completely obnoxious. Absolutely proves the point.
+Shows: 13 conversions through GCF across 14 formats (including Protobuf with schema). Completely obnoxious. Absolutely proves the point.
 
 ---
 
