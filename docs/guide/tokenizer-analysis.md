@@ -2,6 +2,14 @@
 
 Every LLM uses a different tokenizer. A format designed for one tokenizer might perform poorly on another. This page proves GCF's token savings and structural consistency hold across all major tokenizers, and explains *why* JSON breaks down at the tokenization level.
 
+::: tip Key Numbers
+- **JSON boundary merge rate:** 8.93% (field names fuse with quotes on half the LLM market)
+- **GCF boundary merge rate:** 1.00% (88.8% fewer hidden boundaries)
+- **Worst offenders:** `"id":`, `"name":`, `"time":`, `"title":` merge on 63% of tokenizers
+- **JSON overhead at 500 rows:** 81% noise, 19% data
+- **GCF savings range:** 50-92% depending on features used (session dedup at ceiling)
+:::
+
 ## The Core Question
 
 When you send structured data to an LLM, the tokenizer converts it into a sequence of integer IDs. Different models use different tokenizers (trained on different corpora, with different vocabulary sizes). This raises two questions:
@@ -517,3 +525,15 @@ node eval/json-tokenization-analysis.mjs
 # Grammar swap experiment (proves savings are structural)
 node eval/grammar-swap-experiment.mjs
 ```
+
+---
+
+## What To Do About This
+
+If your structured data enters LLM context windows at scale (100+ records), you have two options:
+
+1. **Use GCF.** Encode with `encode_generic()` before sending to the LLM. Decode with `decode_generic()` afterward. Six language implementations, zero dependencies, drop-in.
+
+2. **Keep using JSON and accept the consequences.** Your most common field names (`id`, `name`, `type`, `value`, `title`, `time`, `text`, `url`, `path`, `description`) have hidden structural boundaries on GPT-4, GPT-4o, LLaMA, and Qwen. This compounds per row. At 500 rows, you're asking the model to comprehend data through 1,500+ ambiguous token boundaries while 81% of its input is structural noise.
+
+There is no option 3. You cannot fix JSON's tokenization without changing JSON's grammar, which would make it not JSON.
