@@ -373,7 +373,7 @@ Across 24 stress-scale runs (500 symbols, 200 edges, 13 questions per run), we c
 
 | Model | Format | Failure pattern | Tokenization explanation |
 |-------|--------|----------------|------------------------|
-| GPT-5.4 | JSON | Always answers `edge_count=198` (correct: 200). Same wrong number every run. | GPT-4o tokenizer merges `"id":`, `"name":`, `"type":` on every row. Consistent merge = consistent parsing offset. |
+| GPT-5.4 | JSON | Always answers `edge_count=198` (correct: 200). Same wrong number every run. | Consistent with cl100k/o200k merge patterns: `"id":`, `"name":`, `"type":` merge on every row. |
 | GPT-5.4 | JSON | Always answers `function_count=84` (correct: varies). Deterministic. | Same mechanism. Column scan across 500 merged-boundary rows produces repeatable miscount. |
 | GPT-5.5 | JSON | Returns empty string on most questions. | 53K tokens, 81% overhead. Attention has nothing to lock onto. Context overwhelm. |
 | All models | JSON | Distance-filtering wrong by 50-140 (e.g., 143 vs 167). | Must attend to 500 identical `"distance":` patterns and filter by value. No structural marker distinguishes the 150th from the 350th. |
@@ -639,7 +639,7 @@ Four properties make this unfixable:
 
 4. **Retraining the tokenizer requires retraining the model.** A new vocabulary means new token IDs, new embeddings, new attention patterns. The entire model must be retrained from scratch.
 
-This means: for every model using GPT-4's cl100k tokenizer (including GPT-4, GPT-4o, GPT-5.x), the string `"name` will always be one token. The structural boundary will always be hidden. No amount of prompting, fine-tuning, or RLHF can change this. It's a dictionary entry.
+This means: for every model using GPT-4's cl100k or GPT-4o's o200k tokenizer, the string `"name` will always be one token. The structural boundary will always be hidden. No amount of prompting, fine-tuning, or RLHF can change this. It's a dictionary entry. GPT-5.4's deterministic comprehension errors are consistent with these merge patterns, though OpenAI has not published which tokenizer GPT-5.x uses.
 
 ### What about GCF's pipe?
 
