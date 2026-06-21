@@ -121,6 +121,8 @@ All numbers cross-tokenizer validated (8 tokenizers, 6 providers).
 
 Data from `eval/structural-variance.mjs`, `eval/common-field-merge-analysis.mjs`, and `eval/worst-json-tokenization.mjs`.
 
+![Field Merge Rates](/charts/field-merge-rates.png)
+
 ### The structural boundary problem
 
 JSON uses quote-colon patterns (`"fieldName":`) to mark each field. These patterns repeat on every row. We discovered that these patterns **tokenize inconsistently across models**: the opening quote sometimes merges with the field name into a single token.
@@ -265,6 +267,8 @@ Before choosing GCF's grammar, we tested all 94 printable ASCII characters (code
 JSON uses `.`, `"`, and `:` as structural characters. All three can create merge patterns. GCF uses only characters from the safe set (`|`, `@`, `<`, `#`, `{`, `}`, `[`, `]`, `,`, `\n`).
 
 ---
+
+![Overhead Scaling](/charts/overhead-scaling.png)
 
 ## Part 4: JSON's Token Overhead Problem
 
@@ -494,6 +498,8 @@ From the 74 perfect candidates, GCF chose based on semantics and readability:
 | `,` | Schema field separator. Familiar from CSV. | `:` | Conflicts with potential value content |
 
 ---
+
+![Vocabulary Merge Entries](/charts/vocab-merge-entries.png)
 
 ## Part 8: Root Cause — Vocabulary Entry Analysis
 
