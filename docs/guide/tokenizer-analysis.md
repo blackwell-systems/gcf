@@ -175,6 +175,69 @@ The variance sources are identical: dot-splitting, number-splitting, word bounda
 
 JSON's variance is *larger* in both absolute and proportional terms on edge data, because JSON repeats `"target":`, `"source":`, `"type":` for each edge, and each of those key-value pairs can split differently.
 
+## Structural Variance: JSON vs GCF
+
+JSON's tokenization variance lives in its **structural grammar** (field boundaries, quotes, colons). GCF's variance lives only in **value content** (how numbers and words split). This distinction matters: structural variance means the LLM sees different field boundaries depending on which model processes the data.
+
+### JSON field-name patterns: 4/15 vary across tokenizers
+
+| Pattern | Claude | GPT-4 | GPT-4o | LLaMA | Qwen | DeepSeek | Gemma | Mistral | Verdict |
+|---------|--------|-------|--------|-------|------|----------|-------|---------|---------|
+| `"value":` | 3 | 2 | 2 | 2 | 2 | 3 | 3 | 3 | VARIES |
+| `"orderId":` | 4 | 3 | 4 | 3 | 3 | 4 | 3 | 4 | VARIES |
+| `"name":` | 3 | 2 | 2 | 2 | 2 | 3 | 3 | 2 | VARIES |
+| `"tier":` | 3 | 3 | 3 | 3 | 3 | 4 | 3 | 4 | VARIES |
+
+These patterns repeat on **every row**. At 500 rows, that's 2,000+ structural tokens whose boundaries shift per model.
+
+### GCF delimiters: 0/10 vary across tokenizers
+
+| Delimiter | All 8 tokenizers | Purpose |
+|-----------|-----------------|---------|
+| `\|` | 1 token | Field separator |
+| `@` | 1 token | Symbol ID prefix |
+| `<` | 1 token | Edge direction |
+| `##` | 1 token | Section header |
+| `\n` | 1 token | Row separator |
+| `{` `}` `[` `]` `,` | 1 token each | Schema/count |
+
+Zero exceptions across 80 checks (10 characters x 8 tokenizers).
+
+### Token merging: the structural boundary problem
+
+JSON's quote character merges with adjacent content on multiple tokenizers:
+
+```
+"value":"hello"  →  ["value][":"][hello]["]     (GPT-4, GPT-4o, LLaMA, Qwen)
+                 →  ["][value][":"][hello]["]    (Claude, DeepSeek, Gemma, Mistral)
+```
+
+The field name `value` becomes part of the delimiter token on 4/8 tokenizers. The LLM sees a different token boundary at the exact point where structure matters.
+
+GCF's pipe never merges:
+
+```
+hello|world      →  [hello][|][world]           (ALL 8 tokenizers)
+|150|            →  [|][150][|]                 (ALL 8 tokenizers)
+@0|function      →  [@][0][|][function]         (ALL 8 tokenizers)
+```
+
+Field boundaries are **always unambiguous** regardless of which model processes the data.
+
+### Implication for comprehension
+
+JSON: different models see different structural boundaries at scale. This contributes to model-dependent comprehension failures (why GPT-5.4 gets deterministically wrong answers that other models don't).
+
+GCF: all models see identical structural boundaries. This contributes to consistent 100% comprehension across all frontier models on standard workloads.
+
+### Reproduce
+
+```bash
+node eval/structural-variance.mjs
+```
+
+---
+
 ## JSON Structural Overhead: Where The Tokens Go
 
 JSON's token inefficiency isn't just about whitespace. Even compact (minified) JSON wastes the majority of its tokens on structural overhead that carries zero information for the reader.
