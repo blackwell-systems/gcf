@@ -89,6 +89,22 @@ Token savings translate directly to cost savings. If your tool produces 500-reco
 
 These savings are predictable regardless of which model processes the data.
 
+### The full savings picture
+
+The 50-59% range above is for one data type (generic profile) proving cross-tokenizer consistency. The actual savings depend on data complexity and usage pattern:
+
+| Scenario | GCF vs JSON (pretty) | GCF vs JSON (compact) | What drives it |
+|----------|---------------------|----------------------|----------------|
+| Generic profile (flat/nested, 500 orders) | 50-59% | ~30% | Header factorization, inline schemas |
+| 15-dataset benchmark (mixed real payloads) | 43-65% | varies | Data complexity determines savings |
+| Graph profile (500 symbols + 200 edges) | 63-69% | 40-49% | `@id` refs, edge encoding, section headers |
+| Session dedup (90% overlap, call 3 of 5) | **89-90%** | — | Bare references for previously-seen symbols |
+| Session dedup (full 5-call session total) | **84.3%** | — | Format + dedup combined |
+
+The graph profile and session deduplication benchmarks show that GCF's advanced features (compact edge encoding, bare references) push savings well beyond the baseline 50-59%. In a real agent session with repeated tool calls to the same codebase, cumulative savings reach 84-92%.
+
+All numbers cross-tokenizer validated (8 tokenizers, 6 providers).
+
 ---
 
 ## Part 2: Why JSON Breaks Down
