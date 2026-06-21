@@ -201,6 +201,18 @@ Each model tier has a distinct failure signature. Opus/Sonnet never fail on GCF.
 
 GCF failures on Claude are near-zero. GCF failures on OpenAI are deterministic and repeatable (same wrong number every run), suggesting a tokenizer-level parsing difference rather than a comprehension issue.
 
+### Mechanistic explanation: tokenization
+
+The [tokenizer analysis](/guide/tokenizer-analysis) provides the mechanistic link between format choice and these failure patterns:
+
+- **GPT-5.4's deterministic errors** (always 198, always 84): GPT-4/4o's tokenizer merges `"id":`, `"name":`, `"type":`, `"value":` with the opening quote on every row (62.5% merge rate). This creates a consistent token-boundary offset that produces the same parsing error every run.
+- **GPT-5.5's empty responses**: at 53K tokens, 81% are structural overhead (repeated field names + braces). The attention mechanism has nothing to attend to except noise.
+- **JSON distance-filtering failures across all models**: filtering by a field value requires attending to 500 positions where `"distance":` repeats identically. The model cannot distinguish the 150th occurrence from the 350th using positional encoding alone.
+- **GCF's off-by-1-2 precision errors only**: GCF's pipe delimiters are always separate tokens (1.00% merge rate vs JSON's 8.93%), so structure is always parseable. Errors come from misreading numbers in headers, not from failing to find the structure.
+- **Claude never fails on GCF but fails on JSON**: Claude's tokenizer keeps all boundaries clean (0% merge on common fields), giving it an advantage on JSON. But 81% overhead still dilutes attention on counting tasks regardless of boundary clarity.
+
+See [Tokenizer Analysis: Part 5](/guide/tokenizer-analysis#part-5-why-this-explains-comprehension-failures) for the full analysis.
+
 ### Artifacts: What JSON failure looks like in practice
 
 When asked "how many symbols have distance 1 (related)?", the answer is 167. GCF encodes it in the section header: `## related [167]`. The model reads it directly.
