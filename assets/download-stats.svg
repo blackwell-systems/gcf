@@ -31,7 +31,7 @@
   <text x="24" y="184" fill="#94a3b8" font-family="ui-monospace,monospace" font-size="12">pypi (gcf-proxy)</text>
   <text x="296" y="184" fill="#e2e8f0" font-family="ui-monospace,monospace" font-size="13" font-weight="600" text-anchor="end">13822</text>
   <text x="24" y="206" fill="#94a3b8" font-family="ui-monospace,monospace" font-size="12">crates.io (gcf)</text>
-  <text x="296" y="206" fill="#e2e8f0" font-family="ui-monospace,monospace" font-size="13" font-weight="600" text-anchor="end">178</text>
+  <text x="296" y="206" fill="#e2e8f0" font-family="ui-monospace,monospace" font-size="13" font-weight="600" text-anchor="end">190</text>
   <text x="24" y="228" fill="#94a3b8" font-family="ui-monospace,monospace" font-size="12">vscode marketplace</text>
   <text x="296" y="228" fill="#e2e8f0" font-family="ui-monospace,monospace" font-size="13" font-weight="600" text-anchor="end">33</text>
   <text x="24" y="250" fill="#94a3b8" font-family="ui-monospace,monospace" font-size="12">jetbrains marketplace</text>
@@ -43,6 +43,6 @@
 
   <line x1="24" y1="298" x2="296" y2="298" stroke="#334155" stroke-width="1"/>
 
-  <text x="24" y="326" fill="url(#accent)" font-family="system-ui,-apple-system,sans-serif" font-size="16" font-weight="700">27946 total</text>
+  <text x="24" y="326" fill="url(#accent)" font-family="system-ui,-apple-system,sans-serif" font-size="16" font-weight="700">27958 total</text>
   <text x="296" y="326" fill="#64748b" font-family="system-ui,-apple-system,sans-serif" font-size="10" text-anchor="end">cumulative downloads</text>
 </svg>
