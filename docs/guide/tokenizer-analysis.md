@@ -495,6 +495,135 @@ From the 74 perfect candidates, GCF chose based on semantics and readability:
 
 ---
 
+## Part 8: Root Cause — Vocabulary Entry Analysis
+
+Data from `eval/tokenizer-vocabulary-analysis.mjs` and `eval/vocabulary-full-scan.mjs`.
+
+Parts 2-3 showed that JSON's grammar merges with payload content. Part 4 showed the overhead. Part 5 connected it to comprehension failures. But none of those answered the fundamental question: **why does the merge happen?**
+
+The answer is in the tokenizer vocabularies themselves.
+
+### How BPE tokenizers work
+
+Every BPE tokenizer has a fixed vocabulary: a table mapping strings to integer IDs. GPT-4's cl100k vocabulary has 100,256 entries. Gemma's has 256,128. These are built during tokenizer training (separate from model training) by iteratively merging the most frequent byte pairs in the training corpus.
+
+When the tokenizer encounters input text, it greedily matches the longest vocabulary entry at each position. If `"name` exists as entry #32586, the tokenizer will always select it as a single token rather than splitting into `"` (#1) + `name` (#609). This is deterministic. There is no probability or context-dependence. If the entry exists, it wins.
+
+### JSON field names are vocabulary entries
+
+We looked up specific merged tokens by ID across all 8 tokenizers:
+
+| Pattern | GPT-4 | GPT-4o | Claude | LLaMA | Qwen | DeepSeek | Gemma | Mistral |
+|---------|-------|--------|--------|-------|------|----------|-------|---------|
+| `"id` | #29800 | #60094 | — | #29800 | #28700 | — | — | #117579 |
+| `"name` | #32586 | #74800 | — | #32586 | #31486 | — | — | #117753 |
+| `"type` | #45570 | #91290 | — | #45570 | #44470 | — | — | — |
+| `"value` | #64407 | #180654 | — | #64407 | #63307 | — | — | — |
+| `"time` | #33239 | #74035 | — | #33239 | #32139 | — | — | #79174 |
+| `"title` | #83827 | #187286 | — | #83827 | #82727 | — | — | #110760 |
+| `"text` | #67351 | #171858 | — | #67351 | #66251 | — | — | — |
+| `"url` | #61360 | #124415 | — | #61360 | #60260 | — | — | — |
+| `"path` | #71788 | #184610 | — | #71788 | #70688 | — | — | — |
+| `"description` | #69093 | #150676 | — | #69093 | #67993 | — | — | — |
+| `"user` | #77622 | #167975 | — | #77622 | #76522 | — | — | — |
+
+**These are actual token IDs in the vocabulary.** Entry #32586 in GPT-4's vocabulary IS the string `"name`. It will always be selected. This is not a context-dependent merge decision. It's a dictionary lookup.
+
+**Claude and Gemma have zero quote+field entries.** That's why they keep boundaries clean: the merged token doesn't exist in their vocabulary, so the tokenizer is forced to split `"` and `name` into separate tokens.
+
+### Cross-verification: vocabulary entries are actually used
+
+We confirmed that every vocabulary entry is selected during real tokenization:
+
+```
+"name":"Alice"
+
+GPT-4:   CONFIRMED — vocab entry #32586 selected → ["name][":"][Alice]["]
+Claude:  clean — not in vocab, not selected       → ["][name][":"][Alice]["]
+```
+
+The entry isn't dead vocabulary. It actively causes boundary hiding in every JSON payload that contains a `name` field.
+
+### Full vocabulary scan: exhaustive counts
+
+We decoded every single entry in each tokenizer's vocabulary and classified it:
+
+| Tokenizer | Vocab size | Quote+letter entries | Pipe+letter entries | Ratio | Mixed grammar+payload |
+|-----------|-----------|---------------------|---------------------|-------|----------------------|
+| GPT-4 | ~100K | **114** | 17 | **6.7:1** | 787 |
+| GPT-4o | ~200K | **86** | 6 | **14.3:1** | 641 |
+| Claude | ~65K | **0** | 0 | clean | 0 |
+| LLaMA 3.1 | ~128K | **114** | 18 | **6.3:1** | 787 |
+| Qwen 2.5 | ~131K | **114** | 17 | **6.7:1** | 787 |
+| DeepSeek V3 | ~128K | **42** | 4 | **10.5:1** | 348 |
+| Gemma 2 | ~256K | **0** | 0 | clean | 2 |
+| Mistral Nemo | ~131K | **31** | 3 | **10.3:1** | 355 |
+
+GPT-4 has **114 vocabulary entries** where a quote character is fused with a following word. It has **17** where a pipe is fused with a following word. The ratio is 6.7:1. The quote is nearly 7x more likely to appear in a merged vocabulary entry than the pipe.
+
+Claude and Gemma have **zero** quote+letter entries. This is why they handle JSON's structural boundaries cleanly: the merged token simply doesn't exist in their dictionary.
+
+### Multi-grammar vocabulary entries
+
+Some vocabulary entries contain multiple JSON grammar symbols fused together:
+
+| Token | Grammar chars | Present in |
+|-------|--------------|------------|
+| `":"` | `"` `:` `"` | **8/8** tokenizers |
+| `","` | `"` `,` `"` | **8/8** tokenizers |
+| `{"` | `{` `"` | **8/8** tokenizers |
+| `":{"` | `"` `:` `{` `"` | **8/8** tokenizers |
+| `":["` | `"` `:` `[` `"` | **6/8** tokenizers |
+| `"},` | `"` `}` `,` | **8/8** tokenizers |
+| `"],` | `"` `]` `,` | **8/8** tokenizers |
+| `},{"` | `}` `,` `{` `"` | **6/8** tokenizers |
+
+`":"` (close-quote, colon, open-quote) exists as a single token on **every tokenizer**. This means the entire field-value separator in JSON (`"field":"value"`) is tokenized as three chunks: `["field][":][ "value"]["]`. The colon that separates key from value is fused with quotes on both sides. The structural operation "this is where the key ends and the value begins" is buried inside a token.
+
+`":{"` exists on 8/8 tokenizers. This single token represents: close a string, start a key-value pair, open an object, start a new string. Four structural operations in one token.
+
+### Why these entries exist
+
+BPE builds vocabulary by counting byte-pair frequencies in the training corpus. JSON is one of the most common data formats in code training data:
+
+- Every GitHub repository has `package.json`, `tsconfig.json`, configuration files
+- Every API documentation shows JSON request/response examples
+- Every Stack Overflow answer about web development demonstrates JSON parsing
+- Every log file, data dump, and test fixture contains JSON
+
+The byte sequence `"name` appears in training data billions of times. The tokenizer learned it as a high-frequency merge and added it to the vocabulary. This is efficient for compression (fewer tokens to represent common patterns), but it creates structural ambiguity: the grammar symbol (`"`) and the payload content (`name`) become inseparable.
+
+### Why this is irrecoverable
+
+Four properties make this unfixable:
+
+1. **Vocabulary is frozen.** Once the tokenizer is trained, its vocabulary never changes. Model fine-tuning adjusts weights but cannot add, remove, or modify vocabulary entries.
+
+2. **All existing weights depend on the vocabulary.** Token ID #32586 has a learned embedding vector in GPT-4's weights. If you removed it, every layer that references that embedding would break.
+
+3. **The merge is pre-model.** Tokenization happens before the model sees the input. By the time the transformer processes the sequence, `"name` is already a single integer. The model cannot "see inside" a token to decompose it.
+
+4. **Retraining the tokenizer requires retraining the model.** A new vocabulary means new token IDs, new embeddings, new attention patterns. The entire model must be retrained from scratch.
+
+This means: for every model using GPT-4's cl100k tokenizer (including GPT-4, GPT-4o, GPT-5.x), the string `"name` will always be one token. The structural boundary will always be hidden. No amount of prompting, fine-tuning, or RLHF can change this. It's a dictionary entry.
+
+### What about GCF's pipe?
+
+The pipe character does have a small number of merged entries:
+
+| Tokenizer | Pipe+letter entries | Examples |
+|-----------|--------------------| ---------|
+| GPT-4 | 17 | `\|null`, `\|string`, `\|max`, `\|min`, `\|required` |
+| Claude | 0 | (none) |
+| LLaMA | 18 | `\|null`, `\|string`, `\|max`, `\|min`, `\|required` |
+| Gemma | 0 | (none) |
+
+The pipe merges that exist are with **programming keywords** (`null`, `string`, `max`, `min`, `required`) from TypeScript/Go type union syntax (`string|null`). Critically, `|name`, `|id`, `|type`, `|value` never exist as vocabulary entries on any tokenizer. The pipe never merges with the field names that matter for structured data comprehension.
+
+The quote merges with the most common field names in computing. The pipe merges with a handful of type-system keywords. This is the root cause of the 6.7:1 to 14.3:1 ratio in vocabulary merge entries.
+
+---
+
 ## Summary
 
 | Claim | Evidence |
@@ -508,6 +637,9 @@ From the 74 perfect candidates, GCF chose based on semantics and readability:
 | JSON overhead grows linearly | O(n) per row, ratio 1,545:1 at 1000 rows |
 | GCF savings are structural, not delimiter-specific | Grammar swap: 0.4pp spread across 5 delimiter sets, 800 measurements |
 | No delimiter is perfect under adversarial conditions | All candidates merge on some right-contexts; GCF chose lowest merge-rate set |
+| JSON merges are hardcoded vocabulary entries | `"name` = #32586 on GPT-4. Exists in dictionary. Always selected. |
+| Quote+letter vocab entries outnumber pipe 6.7:1 to 14.3:1 | GPT-4: 114 quote vs 17 pipe. Claude/Gemma: 0 vs 0. |
+| Merges are irrecoverable | Can't fix with prompting, fine-tuning, or RLHF. Vocabulary is frozen. |
 | This explains comprehension failures | 53.4% JSON at stress scale (ambiguous boundaries + attention dilution) vs 91.2% GCF |
 
 ---
@@ -536,6 +668,12 @@ node eval/worst-json-tokenization.mjs
 # JSON overhead analysis (token distribution, scaling)
 node eval/json-tokenization-analysis.mjs
 
+# Vocabulary entry analysis (root cause: merged tokens are dictionary entries)
+node eval/tokenizer-vocabulary-analysis.mjs
+
+# Full vocabulary scan (exhaustive: every entry in every vocabulary)
+node eval/vocabulary-full-scan.mjs
+
 # Grammar swap experiment (proves savings are structural)
 node eval/grammar-swap-experiment.mjs
 ```
@@ -550,4 +688,4 @@ If your structured data enters LLM context windows at scale (100+ records), you 
 
 2. **Keep using JSON and accept the consequences.** Your most common field names (`id`, `name`, `type`, `value`, `title`, `time`, `text`, `url`, `path`, `description`) have hidden structural boundaries on GPT-4, GPT-4o, LLaMA, and Qwen. This compounds per row. At 500 rows, you're asking the model to comprehend data through 1,500+ ambiguous token boundaries while 81% of its input is structural noise.
 
-There is no option 3. You cannot fix JSON's tokenization without changing JSON's grammar, which would make it not JSON.
+There is no option 3. You cannot fix JSON's tokenization without changing JSON's grammar, which would make it not JSON. And you cannot fix the tokenizer without retraining the model from scratch: the merged vocabulary entries (`"name` = #32586, `"id` = #29800, `"type` = #45570) are permanent, and all model weights depend on them.
