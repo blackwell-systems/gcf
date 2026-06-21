@@ -30,7 +30,7 @@ The same data in GCF:
 
 No noise. Every token is content. On code graph data, GCF averages 91.2% across 24 runs and 10 models (vs TOON 68.2%, JSON 53.4%). On nested order data (27 runs, 11 models, 4 providers), GCF achieves 100% on every frontier model (Opus, Sonnet, Haiku, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash).
 
-The format is optimized for the actual consumer. Every character carries meaning. No decoration, no repeated field names, no structural tokens that exist only for human scanners. The result is a format that agents understand perfectly and costs a fraction of the "readable" alternative.
+The format is optimized for the actual consumer. Every character carries meaning. No decoration, no repeated field names, no structural tokens that exist only for human scanners. The result is a format that agents understand perfectly and costs a fraction of the "readable" alternative. The [tokenizer analysis](/guide/tokenizer-analysis) explains the mechanism: JSON's grammar symbols merge with field names at the vocabulary level, hiding structural boundaries from the model.
 
 ## Readability is a last-mile rendering concern
 

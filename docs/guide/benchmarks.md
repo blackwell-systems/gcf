@@ -23,7 +23,7 @@ Five benchmark suites, three providers (Anthropic, OpenAI, Google), zero trainin
 3. **[Scale test](#scale-test-1000-orders)**: At 1000 records, JSON doesn't fit. GCF is the only format that works on 200K context models.
 4. **[Token efficiency](#token-efficiency-15-datasets)**: 15 real-world datasets. GCF wins 13/15 vs TOON, 25.5% fewer overall.
 5. **[Generation](#generation-can-llms-write-it)**: Every frontier model produces valid GCF. TOON's decoder rejects output from 7/9 models.
-6. **[Tokenizer analysis](/guide/tokenizer-analysis)**: 8 tokenizers, 6 providers. GCF savings (50-59%) consistent regardless of tokenizer.
+6. **[Tokenizer analysis](/guide/tokenizer-analysis)**: 8 tokenizers, 6 providers. GCF savings (50-92%) consistent regardless of tokenizer. JSON's grammar merges with field names at the vocabulary level on half the LLM market.
 
 All results [reproducible](https://github.com/blackwell-systems/gcf/tree/main/eval/results).
 

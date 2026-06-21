@@ -234,6 +234,8 @@ TOON's `encodeLines()` is output-side streaming only (the full value must be in 
 
 ## The bottom line
 
+GCF also has a tokenization advantage that TOON inherits from YAML: TOON's indentation-based structure is tokenizer-dependent because tokenizers handle whitespace differently. GCF's pipe-based delimiters have [near-zero vocabulary merges](/guide/tokenizer-analysis#part-8-root-cause-vocabulary-entry-analysis) across all 8 tested tokenizers.
+
 GCF does everything TOON does, plus five things TOON structurally cannot add without becoming a different format:
 
 - **Local IDs and edge encoding** (requires `@N` references)

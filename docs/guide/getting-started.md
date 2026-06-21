@@ -67,7 +67,7 @@ Graph-shaped data is the fastest-growing data shape in AI. Knowledge systems, on
 
 ## "But I need human-readable output"
 
-Use GCF for the wire format and JSON for the display format. The agent reads GCF (cheap: 50-69% fewer tokens than JSON in the context window), does its work, then calls `decode()` at the end to render JSON for a human. The context window savings are already banked. Readability is a last-mile rendering concern, not a wire format property.
+Use GCF for the wire format and JSON for the display format. The agent reads GCF (cheap: 50-69% fewer tokens than JSON in the context window), does its work, then calls `decode()` at the end to render JSON for a human. The context window savings are already banked. Readability is a last-mile rendering concern, not a wire format property. See the [tokenizer analysis](/guide/tokenizer-analysis) for why JSON's structural grammar causes comprehension failures at scale.
 
 ## Install
 
