@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+message User {
+  int32 id = 1;
+  string name = 2;
+  double score = 3;
+  bool active = 4;
+}
+
+message TestData {
+  repeated User users = 1;
+  int32 total = 2;
+  string version = 3;
+}

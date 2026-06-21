@@ -180,6 +180,33 @@ except ImportError:
     print("⚠ cbor2 not installed, skipping (pip install cbor2)")
     print()
 
+# ROUND 6.5: GCF → Protobuf (requires schema)
+print("🔄 ROUND 6.5: GCF → Protobuf → GCF (with schema)")
+print("-" * 80)
+try:
+    from google.protobuf import json_format
+    import test_data_pb2
+
+    # Convert to protobuf message (requires schema)
+    message = json_format.ParseDict(current_value, test_data_pb2.TestData())
+    protobuf_bytes = message.SerializeToString()
+    print(f"Protobuf size: {len(protobuf_bytes)} bytes")
+    print(f"Protobuf (hex): {protobuf_bytes.hex()[:100]}...")
+    formats_used.append("Protobuf")
+
+    # Parse back (including default values like false booleans)
+    message_back = test_data_pb2.TestData()
+    message_back.ParseFromString(protobuf_bytes)
+    current_value = json_format.MessageToDict(message_back, preserving_proto_field_name=True, including_default_value_fields=True)
+    current_value = convert_via_gcf(current_value, "Protobuf")
+    print()
+except ImportError as e:
+    print(f"⚠ Protobuf not installed, skipping (pip install protobuf)")
+    print()
+except Exception as e:
+    print(f"⚠ Protobuf conversion error: {e}")
+    print()
+
 # ROUND 7: GCF → CSV
 print("🔄 ROUND 7: GCF → CSV → GCF")
 print("-" * 80)
