@@ -16,9 +16,18 @@ First, we need to draw attention to an important distinction in the data. A form
 - **Grammar symbols** (delimiters, structural markers): These define where fields start and end. A format designer controls these.
 - **Payload content** (the actual data values): These are the user's data. `userName`, `req_xyz789`, `Alice Chen`. A format designer cannot control how these tokenize without changing the data itself, which is unacceptable.
 
-**GCF's claim is not that all tokenization is consistent.** Payload content will always tokenize differently across models (`userName` may be 1 or 2 tokens depending on the tokenizer). That's fine. What matters is that the **boundaries between fields** are always unambiguous. The pipe separating `userName` from `req_xyz789` is always its own token, so the model always knows where one field ends and the next begins, regardless of how the values themselves split.
+This leads to two types of equivalence across tokenizers:
 
-JSON's problem: its grammar symbols (quotes, colons) merge with payload content, making field boundaries invisible at the token level. The structure and the data become one token.
+- **Structural equivalence**: all models see field boundaries at the same token positions. They agree on WHERE the structure is.
+- **Semantic equivalence**: all models see the same data values. They agree on WHAT the content is.
+
+Semantic equivalence is always preserved regardless of format: whether `userName` is 1 token or 2, the model reads the same characters. Tokenizer differences in payload content don't affect meaning.
+
+Structural equivalence is the critical one. If models disagree on where fields start and end, they're parsing different structures from the same input. This is what causes model-dependent comprehension failures.
+
+**GCF guarantees structural equivalence.** The pipe is always its own token, so every model sees field boundaries at the same position, regardless of how values split.
+
+**JSON does not.** Its grammar symbols (quotes, colons) merge with payload content on half of tokenizers, making field boundaries invisible at the token level. The structure and the data become one token. Models disagree on where fields start.
 
 ---
 
