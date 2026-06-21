@@ -11,9 +11,7 @@ When you send structured data to an LLM, the tokenizer converts it into a sequen
 
 The answer to both: **yes, GCF is consistent. JSON is not.** I'll explain why.
 
-### An important distinction: grammar symbols vs payload content
-
-A format has two types of content:
+First, we need to draw attention to an important distinction in the data. A format has two types of content:
 
 - **Grammar symbols** (delimiters, structural markers): These define where fields start and end. A format designer controls these.
 - **Payload content** (the actual data values): These are the user's data. `userName`, `req_xyz789`, `Alice Chen`. A format designer cannot control how these tokenize without changing the data itself, which is unacceptable.
