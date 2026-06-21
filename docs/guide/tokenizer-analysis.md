@@ -365,7 +365,13 @@ The tokenization analysis connects directly to the [comprehension eval data](/gu
 2. **Zero repetition** (field names declared once). No identical tokens competing for attention.
 3. **99.8% signal** (almost every token is data). The attention mechanism focuses on content.
 
-The model doesn't fail because JSON is "too long." It fails because at 500+ rows, there are thousands of structurally ambiguous token boundaries diluting attention, while 80% of token positions carry no information. GCF eliminates both problems simultaneously.
+The model doesn't fail because JSON is "too long." It fails because these three problems **compound at scale**:
+
+At 10 rows: 10 merged boundaries, small attention budget, manageable. The model has seen enough JSON to work around it.
+
+At 500 rows: ~1,500 merged boundaries (`"name`:, `"id":`, `"type":` on every row), all producing the **same token IDs** (e.g., #32586 repeated 500 times). The model can't distinguish the 150th `"name` from the 350th; it relies on positional encoding alone, which degrades over long sequences. Meanwhile, 81% of the sequence is noise that the attention mechanism must scan through. The merged boundaries make the noise harder to skip because the model can't cleanly identify where structure ends and data begins.
+
+This is why JSON errors at scale are off by 50-140 (the model couldn't find the answer at all), not off by 1-2 (slightly misread a number). GCF at 500 rows has zero merged boundaries on field names, 99.8% signal, and structure that answers questions directly (`## related [167]`). Nothing compounds because there's nothing to compound.
 
 ### Observed failure patterns from 2,400+ evaluations
 

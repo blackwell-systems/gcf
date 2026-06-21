@@ -440,15 +440,31 @@ TOON also uses indentation for nested structure. The same 4-space indent produce
 
 The training familiarity paradox applies doubly to TOON: its chosen delimiter (tab) is the most overrepresented structural character in code training data, producing the highest merge rates of any format tested.
 
-### 5.6 Attention Dilution Mechanism
+### 5.6 Why Merging Causes Higher Degradation at Scale
 
-Self-attention allocates a fixed budget across all input positions. When 80% of the sequence is structural noise (repeated field names, braces, colons), the attention budget is diluted across positions that carry no information for answering the question.
+At 10 rows, `"name` being one token instead of two does not matter. The model has seen enough JSON to handle it. There are only 10 merged boundaries. The attention mechanism can work around it.
 
-Consider the task "how many records have status = shipped?" given 500 JSON objects. The model must attend to every `"status":` pattern (500 occurrences), read the following value, compare to "shipped," and count matches. The 500 `"status":` patterns produce the same tokens every time. The model has no structural marker distinguishing the 150th occurrence from the 350th. It must rely on positional encoding alone.
+At 500 rows, three problems compound simultaneously:
 
-In a header-factored format, the equivalent task requires attending to a column of values with pipe delimiters at known, consistent positions. No ambiguity. No repetition competing for attention.
+**1. The merged boundary repeats 500 times.** Each row contains `"name":`, `"id":`, `"type":`. That creates approximately 1,500 positions where the structural boundary is inside a merged token. The model must decompose structure from inside merged tokens at 1,500 positions, not 10.
 
-This mechanism explains why errors are larger at scale (more noise produces more dilution), concentrate on counting tasks (which require attention to every row), are model-dependent (tokenization differences affect which positions compete), and do not occur with formats that eliminate repetition and maintain unambiguous boundaries.
+**2. All 1,500 positions are identical token sequences.** The token for `"name` on row 1 is the same integer (#32586) as on row 500. The model cannot distinguish them. It relies on positional encoding alone to track "which `"name` am I looking at?" Positional encoding degrades over long sequences.
+
+**3. 81% of the sequence is noise.** The repeated field names and braces are not just merged; they are also redundant. The attention mechanism is spread across approximately 8,500 tokens that carry no information, trying to find the approximately 2,000 tokens that do. The merged boundaries make the noise harder to skip because the model cannot cleanly identify where structure ends and data begins.
+
+The compounding is critical. At 10 rows: 10 merged boundaries, small attention budget, manageable. At 500 rows: 1,500 merged boundaries, massive noise, positional encoding stretched to capacity, attention diluted across thousands of identical tokens. The model stops trying to find precise answers and guesses. This is why JSON errors at scale are off by 50-140 (comprehension failure), not off by 1-2 (precision error). The model did not slightly misread a number. It could not find the answer at all.
+
+GCF at 500 rows: zero merged boundaries on field names, 99.8% signal, and structure answers questions directly (e.g., `## related [167]` encodes the count in the section header). Nothing compounds because there is no ambiguity, no repetition, and no noise to dilute attention.
+
+### 5.7 Attention Dilution in Detail
+
+Self-attention allocates a fixed budget across all input positions. When a query token looks for relevant keys, it must attend over the entire sequence. When 80% of that sequence is structural noise, the budget is diluted across positions that carry no information.
+
+Consider the task "how many records have status = shipped?" given 500 JSON objects. The model must attend to every `"status":` pattern (500 occurrences), read the following value, compare to "shipped," and count matches. The 500 `"status":` patterns produce the same tokens every time. The model has no structural marker distinguishing the 150th occurrence from the 350th.
+
+Ildiz et al. (2024) demonstrated a "winner-takes-all" phenomenon in self-attention: the mechanism collapses into attending to a limited subset of tokens. When the sequence is dominated by repetitive structural patterns, attention collapses onto noise rather than signal.
+
+In a header-factored format with pipe delimiters, the equivalent task requires attending to a column of values at known, consistent positions. No ambiguity. No repetition competing for attention. The structural delimiter (pipe) is always at the same relative position within each row.
 
 ---
 
