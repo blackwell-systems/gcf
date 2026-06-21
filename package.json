@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "@blackwell-systems/gcf": "^2.1.2",
+    "@lenml/tokenizer-claude": "^3.7.2",
+    "@lenml/tokenizer-deepseek_v3": "^3.7.2",
+    "@lenml/tokenizer-gemma2": "^3.7.2",
+    "@lenml/tokenizer-gpt4": "^3.7.2",
+    "@lenml/tokenizer-gpt4o": "^3.7.2",
+    "@lenml/tokenizer-llama3_1": "^3.7.2",
+    "@lenml/tokenizer-mistral_nemo": "^3.7.2",
+    "@lenml/tokenizer-qwen2_5": "^3.7.2",
+    "@lenml/tokenizers": "^3.7.2"
+  }
+}

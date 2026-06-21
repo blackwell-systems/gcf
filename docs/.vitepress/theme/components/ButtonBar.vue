@@ -185,7 +185,6 @@ onUnmounted(() => {
 /* Hover: shift perspective */
 .bb-3d:hover::before {
   transform: translate(0.75rem, -0.75rem);
-  transition: transform 180ms ease, background-color 150ms ease, outline-color 150ms ease;
 }
 
 .bb-3d:hover::after {
