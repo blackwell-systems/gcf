@@ -38,6 +38,7 @@ export default defineConfig({
         items: [
           { text: 'Getting Started', link: '/guide/getting-started' },
           { text: 'Format Overview', link: '/guide/format-overview' },
+          { text: 'Universal Format Adapter', link: '/guide/universal-adapter' },
           { text: 'Using GCF with LLMs', link: '/guide/llm-integration' },
           { text: 'MCP Integration', link: '/guide/mcp' },
           { text: 'MCP Proxy (Zero-Code)', link: '/guide/proxy' },
@@ -58,7 +59,6 @@ export default defineConfig({
       {
         text: 'Evidence',
         items: [
-          { text: 'Universal Format Adapter', link: '/guide/universal-adapter' },
           { text: 'Lossless Verification', link: '/guide/lossless-verification' },
           { text: 'Benchmarks', link: '/guide/benchmarks' },
           { text: 'Benchmarks (Full Data)', link: '/guide/eval-results' },
