@@ -184,7 +184,7 @@ onUnmounted(() => {
 
 /* Hover: shift perspective */
 .bb-3d:hover::before {
-  /* transform moved to global style block for transition */
+  transform: translate(0.75rem, -0.75rem);
 }
 
 .bb-3d:hover::after {
@@ -382,20 +382,8 @@ onUnmounted(() => {
 <style>
 /* Transitions on pseudo-elements must be global (Vue scoped CSS limitation) */
 
-@keyframes drift-back {
-  0%, 100% { transform: translate(-0.75rem, -0.75rem); outline-color: rgba(24, 190, 252, 0.2); }
-  33% { transform: translate(calc(-0.75rem - 1.5px), calc(-0.75rem - 1px)); outline-color: rgba(24, 190, 252, 0.35); }
-  66% { transform: translate(calc(-0.75rem + 1px), calc(-0.75rem + 1px)); outline-color: rgba(24, 190, 252, 0.25); }
-}
-
-.bb-3d::before {
-  animation: drift-back 4.5s ease-in-out infinite !important;
-}
-.bb-3d:hover::before {
-  animation: none !important;
-  transform: translate(0.75rem, -0.75rem) !important;
-  transition: transform 180ms ease, background-color 150ms ease, outline-color 150ms ease !important;
-}
+/* Drift animation removed - too problematic with hover transitions */
+.bb-3d::before,
 .bb-3d::after {
   transition: transform 180ms ease, background-color 150ms ease, outline-color 150ms ease !important;
 }
