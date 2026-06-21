@@ -1,6 +1,6 @@
 # Using GCF with LLMs
 
-GCF works in both directions: tools produce it, LLMs read it, and LLMs can produce it too. No model has ever been trained on GCF. Reading requires no primer: 100% accuracy on standard workloads (every frontier model), 90.7% on structurally complex code graphs (vs TOON 68.5%, JSON 53.6%). Writing requires a 3-line example and produces valid output with **63% fewer tokens than JSON** and **33% fewer than TOON**.
+GCF works in both directions: tools produce it, LLMs read it, and LLMs can produce it too. No model has ever been trained on GCF. Reading requires no primer: 100% accuracy on standard workloads (every frontier model), 91.2% on structurally complex code graphs (vs TOON 68.2%, JSON 53.4%). Writing requires a 3-line example and produces valid output with **63% fewer tokens than JSON** and **33% fewer than TOON**.
 
 ## Designed for agent comprehension, not human scanning
 
@@ -28,7 +28,7 @@ The same data in GCF:
 ... 497 more, each one line, no repeated field names ...
 ```
 
-No noise. Every token is content. On code graph data, GCF averages 90.7% across 23 runs and 10 models (vs TOON 68.5%, JSON 53.6%). On nested order data, GCF achieves 100% on every frontier model tested (Claude, GPT-5.5, Gemini).
+No noise. Every token is content. On code graph data, GCF averages 91.2% across 24 runs and 10 models (vs TOON 68.2%, JSON 53.4%). On nested order data (27 runs, 11 models, 4 providers), GCF achieves 100% on every frontier model (Opus, Sonnet, Haiku, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash).
 
 The format is optimized for the actual consumer. Every character carries meaning. No decoration, no repeated field names, no structural tokens that exist only for human scanners. The result is a format that agents understand perfectly and costs a fraction of the "readable" alternative.
 
@@ -57,25 +57,26 @@ The gcf-proxy proves this pattern works in reverse: the MCP server outputs JSON,
 
 GCF payloads are immediately comprehensible to frontier models without any format description in the prompt. This isn't a claim; it's measured.
 
-The [comprehension eval](https://github.com/blackwell-systems/gcf-go/tree/main/eval) sends payloads to LLMs with **zero format instructions**: only the raw payload and a question. 13 questions per run, all deterministic. Tested across 10+ models and 3 providers (Anthropic, OpenAI, Google).
+The [comprehension eval](https://github.com/blackwell-systems/gcf-go/tree/main/eval) sends payloads to LLMs with **zero format instructions**: only the raw payload and a question. 13 questions per run, all deterministic. Tested across 11 models and 4 providers (Anthropic, OpenAI, Google, Mistral).
 
 **Generic profile (500 orders, nested data):**
 
-| Format | Frontier models (6) |
-|--------|---------------------|
-| **GCF** | **100%** on every model |
-| TOON | 92.3% (fails on GPT-5.5) |
-| JSON | 76.9% (fails on Gemini 2.5 Flash) |
+| Model Class | GCF | TOON | JSON |
+|-------------|-----|------|------|
+| Frontier (7 models) | **100%** on every run | 97.4% avg | 100% avg |
+| Mid-tier (4 models) | **79.3%** avg | 77.7% avg | 75.6% avg |
+
+**27 runs, 11 models, 4 providers.** Frontier models (Opus, Sonnet, Haiku, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash) achieve 100% GCF on every run. GCF averages equal or better than JSON on every model.
 
 **Graph profile (500 symbols + 200 edges):**
 
 | Format | Avg accuracy (10 models) | Tokens |
 |--------|--------------------------|--------|
-| **GCF** | **90.7%** | **11,090** |
-| TOON | 68.5% | 16,378 |
-| JSON | 53.6% | 53,341 |
+| **GCF** | **91.2%** | **11,090** |
+| TOON | 68.2% | 16,378 |
+| JSON | 53.4% | 53,341 |
 
-GCF wins 22 of 23 graph profile runs (1 tie, 0 losses). JSON fails on counting tasks because field-name repetition overwhelms attention. TOON fails on distance grouping (no section headers). GCF answers structurally. See the [full benchmarks](/guide/benchmarks) for per-model results.
+**24 runs, 10 models, 3 providers. GCF wins 23, ties 1, loses 0.** JSON fails on counting tasks because field-name repetition overwhelms attention. TOON fails on distance grouping (no section headers). GCF answers structurally. See the [full benchmarks](/guide/benchmarks) for per-model results.
 
 The model was never told what `@0`, `##`, or `<` mean. It figured it out from the structure. The format is regular enough (positional fields, consistent prefixes, section headers) that pattern recognition handles it.
 
