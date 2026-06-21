@@ -599,6 +599,20 @@ BPE builds vocabulary by counting byte-pair frequencies in the training corpus. 
 
 The byte sequence `"name` appears in training data billions of times. The tokenizer learned it as a high-frequency merge and added it to the vocabulary. This is efficient for compression (fewer tokens to represent common patterns), but it creates structural ambiguity: the grammar symbol (`"`) and the payload content (`name`) become inseparable.
 
+### The training familiarity paradox
+
+The conventional wisdom is that LLMs "know" JSON best because they've been trained on more JSON than any other structured format. This is true at the model level. But at the tokenizer level, the opposite happens: **the more JSON the tokenizer saw, the more aggressively it merged JSON patterns, and the more structural boundaries it hid.**
+
+The models that saw the MOST JSON have the WORST JSON boundaries:
+
+- GPT-4 (massive code corpus): **114 merged entries**
+- LLaMA (large code mix): **114 merged entries**
+- Claude (different tokenizer strategy): **0 merged entries**
+
+The training familiarity didn't create structural understanding. It created compression. The tokenizer optimized for representing JSON in fewer tokens, which is exactly what a compression algorithm should do. But compression hides structure. The quote and the field name became one token because that's more efficient for storage. It's less efficient for comprehension.
+
+This inverts the standard argument entirely. "Trained on JSON" is not an advantage for structural comprehension. It's the mechanism that causes structural ambiguity. The tokenizer's efficiency is the model's handicap.
+
 ### Why this is irrecoverable
 
 Four properties make this unfixable:
