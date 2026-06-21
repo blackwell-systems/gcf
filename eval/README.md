@@ -101,18 +101,25 @@ npm install @blackwell-systems/gcf @lenml/tokenizers \
 |--------|-----------------|
 | `tokenizer-variance.mjs` | GCF savings consistency across 8 tokenizers at multiple scales |
 | `structural-variance.mjs` | Boundary merge analysis: JSON 8.93% vs GCF 1.00% on real data |
+| `common-field-merge-analysis.mjs` | 155 business field names: 15 merge on 50-63% of tokenizers |
 | `json-tokenization-analysis.mjs` | JSON overhead breakdown (81% waste) and linear scaling |
 | `worst-json-tokenization.mjs` | Maximum variance search: 7 distinct tokenizations for one string |
 | `exhaustive-json-boundary-search.mjs` | 8,434 patterns tested, multi-grammar merge discovery |
+| `graph-token-efficiency.mjs` | Graph profile: 68% savings vs pretty JSON, 48% vs compact |
+| `session-dedup-efficiency.mjs` | 5-call session: 84.3% savings with deduplication |
 | `grammar-swap-experiment.mjs` | 5 delimiter sets prove savings are structural (0.4pp spread) |
+| `toon-fuzz.mjs` | TOON round-trip accuracy testing |
 
 ```bash
 # Run all
 node eval/tokenizer-variance.mjs
 node eval/structural-variance.mjs
+node eval/common-field-merge-analysis.mjs
 node eval/json-tokenization-analysis.mjs
 node eval/worst-json-tokenization.mjs
 node eval/exhaustive-json-boundary-search.mjs
+node eval/graph-token-efficiency.mjs
+node eval/session-dedup-efficiency.mjs
 node eval/grammar-swap-experiment.mjs
 ```
 
