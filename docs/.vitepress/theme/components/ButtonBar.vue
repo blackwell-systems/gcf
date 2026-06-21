@@ -390,7 +390,6 @@ onUnmounted(() => {
 
 .bb-3d::before {
   animation: drift-back 4.5s ease-in-out infinite !important;
-  transition: none !important;
 }
 .bb-3d:hover::before {
   animation: none !important;
