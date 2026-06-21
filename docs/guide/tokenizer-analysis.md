@@ -175,6 +175,87 @@ The variance sources are identical: dot-splitting, number-splitting, word bounda
 
 JSON's variance is *larger* in both absolute and proportional terms on edge data, because JSON repeats `"target":`, `"source":`, `"type":` for each edge, and each of those key-value pairs can split differently.
 
+## JSON Structural Overhead: Where The Tokens Go
+
+JSON's token inefficiency isn't just about whitespace. Even compact (minified) JSON wastes the majority of its tokens on structural overhead that carries zero information for the reader.
+
+### The breakdown (500-row frequency table)
+
+| Category | JSON tokens | % of total |
+|----------|------------|------------|
+| Repeated field names | 5,500 | **52.4%** |
+| Structural chars ({}, [], :, commas) | 3,001 | **28.6%** |
+| Actual data values | 1,995 | **19.0%** |
+| **Total** | **10,496** | |
+
+**Over 80% of JSON's tokens are overhead.** Only 19% carry actual information.
+
+GCF for the same data:
+
+| Category | GCF tokens | % of total |
+|----------|-----------|------------|
+| Header (field names, once) | 10 | **0.2%** |
+| Data rows | 6,500 | **99.8%** |
+| **Total** | **6,510** | |
+
+**Result: 38% fewer tokens, 99.8% signal.**
+
+### Per-field waste
+
+Each field name in JSON costs tokens **on every single row**:
+
+| Field name | Tokens per row | × 500 rows | Total waste |
+|-----------|---------------|------------|-------------|
+| `"field":` | 3 | × 500 | 1,500 tokens |
+| `"value":` | 2 | × 500 | 1,000 tokens |
+| `"count":` | 3 | × 500 | 1,500 tokens |
+| `"percentage":` | 3 | × 500 | 1,500 tokens |
+
+In GCF, all four field names appear **once** in the header:
+```
+## [500]{field,value,count,percentage}
+```
+Cost: 10 tokens total.
+
+### Scaling: JSON overhead grows linearly, GCF overhead is constant
+
+| Rows | JSON overhead | GCF overhead | JSON:GCF ratio |
+|------|--------------|--------------|---------------|
+| 10 | 171 tokens | 10 tokens | 17:1 |
+| 50 | 851 tokens | 10 tokens | 85:1 |
+| 100 | 1,701 tokens | 10 tokens | 170:1 |
+| 500 | 8,501 tokens | 10 tokens | 850:1 |
+| 1000 | 17,001 tokens | 11 tokens | 1,545:1 |
+
+At 1000 rows, JSON burns **17,001 tokens** on overhead (repeated field names + structural chars). GCF uses **11 tokens**. The ratio is 1,545:1.
+
+This linear growth is why LLMs struggle with JSON at scale: the signal-to-noise ratio degrades as records increase. At 500 records, the model is processing 5x more noise than data. GCF maintains near-100% signal throughout.
+
+### Cross-tokenizer validation (500-row frequency table)
+
+The overhead pattern holds across all 8 tokenizers:
+
+| Tokenizer | JSON tokens | GCF tokens | Savings | JSON field-name overhead |
+|-----------|------------|-----------|---------|------------------------|
+| Claude (Anthropic) | 10,996 | 7,013 | **36.2%** | 54.6% |
+| GPT-4 (OpenAI cl100k) | 10,494 | 6,508 | **38.0%** | 52.4% |
+| GPT-4o (OpenAI o200k) | 10,494 | 6,508 | **38.0%** | 52.4% |
+| LLaMA 3.1 (Meta) | 10,494 | 6,508 | **38.0%** | 52.4% |
+| Qwen 2.5 (Alibaba) | 13,150 | 9,166 | **30.3%** | 41.8% |
+| DeepSeek V3 | 10,494 | 6,509 | **38.0%** | 57.2% |
+| Gemma 2 (Google) | 14,149 | 9,669 | **31.7%** | 42.4% |
+| Mistral Nemo | 13,649 | 9,167 | **32.8%** | 44.0% |
+
+Every tokenizer confirms: JSON spends **42-57% of its tokens on repeated field names**. GCF eliminates this overhead entirely.
+
+### Reproduce
+
+```bash
+node eval/json-tokenization-analysis.mjs
+```
+
+---
+
 ## ASCII Delimiter Space Analysis
 
 We tested every printable ASCII character (codes 33-126) against all 8 tokenizers on two criteria:
