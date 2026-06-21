@@ -415,7 +415,7 @@ Any format that makes these three structural choices would achieve similar savin
 
 ## Part 7: Syntactic Deep Dive
 
-For completeness, here is exactly how each tokenizer handles GCF's core syntax elements.
+For completeness, here is exactly how each tokenizer handles GCF's core syntax elements. This data is produced by `eval/tokenizer-variance.mjs`.
 
 ### Edge declaration: `@0<@2|implements`
 
