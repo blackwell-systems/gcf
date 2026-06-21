@@ -97,7 +97,7 @@ Different formats have different capabilities. Here's what works and what doesn'
 | **MessagePack** | ✓ | ✓ | ✓ | ✗ | 136 bytes | Binary, efficient |
 | **BSON** | ✓ | ✓ | ✓ | ✗ | 209 bytes | Larger than MessagePack |
 | **CBOR** | ✓ | ✓ | ✓ | ✗ | 137 bytes | IETF standard |
-| **Protobuf** | ✓ | ✓ | ✓ | ✓ | 71 bytes | Requires schema |
+| **Protobuf** | ✓ | ✓ | ✓ | ✓ | 71 bytes (compiled) | Requires schema |
 | **JSON5** | ✓ | ✓ | ✗ | ✗ | 187 bytes | JSON + comments/trailing commas |
 | **NDJSON** | ✓ | ✓ | ✗ | ✗ | 172 bytes | Newline-delimited JSON |
 | **Pickle** | ✓ | ✓ | ✓ | ✗ | 166 bytes | Python-specific |
@@ -293,7 +293,7 @@ class Pipeline:
         return encode_generic({"processed": result})
     
     def analyze_with_agent(self, gcf_input):
-        # Agent reads GCF directly (91% comprehension)
+        # LLM reads GCF with 91% comprehension
         # No conversion needed - send GCF to LLM
         response = llm.analyze(gcf_input)  # GCF in, GCF out
         return response
@@ -335,6 +335,7 @@ pipeline.output_yaml_config(gcf_data)
 ```python
 # config_migrator.py
 import os
+import json
 import toml
 import yaml
 from gcf import encode_generic, decode_generic
@@ -384,10 +385,12 @@ Five years ago, nobody cared about format adapters. You picked JSON or MessagePa
 
 **1. Agents Need to Read Data (Comprehension)**
 
-Your agent receives tool responses. If they're in JSON, the agent gets the wrong answer 46% of the time at scale (500+ records). If they're in GCF, 91.2% accuracy.
+Your agent receives tool responses. If they're in JSON, the agent gets the wrong answer 46% of the time at scale (500+ records, structurally complex data). If they're in GCF, 91.2% accuracy.
 
-**Without GCF:** Write tool responses in JSON, accept 53% comprehension.  
-**With GCF:** Write tool responses in GCF, get 91% comprehension. Or convert JSON → GCF before sending to agent.
+On standard workloads, GCF achieves 100% comprehension on every frontier model.
+
+**Without GCF:** Write tool responses in JSON, accept 53% comprehension (stress scale) or 100% (standard workloads).  
+**With GCF:** Get 100% comprehension on standard data, 91.2% on stress-scale complexity.
 
 **2. Agents Burn Tokens (Cost)**
 
@@ -432,7 +435,7 @@ Here's why it's a **multiplier effect**:
 
 | Without GCF | With GCF |
 |-------------|----------|
-| Agents read JSON poorly (53%) | Agents read GCF well (91%) → **1.7x comprehension** |
+| LLMs read JSON poorly at scale (53% stress) | LLMs read GCF well (100% standard, 91% stress) → **1.7x+ comprehension** |
 | JSON costs 53K tokens | GCF costs 11K tokens → **4.8x token savings** |
 | Write N×(N-1) converters | Write 1 universal adapter → **N² → 1 complexity reduction** |
 | Force all agents to JSON | Each agent uses optimal format → **format flexibility** |
@@ -470,107 +473,19 @@ That's why universal adapters matter now. The AI revolution created a format pro
 
 ---
 
-## Use Cases
-
-### 1. API Gateway Format Translation
-
-Your backend speaks MessagePack for efficiency, but clients send JSON:
-
-```python
-from gcf import encode_generic, decode_generic
-import json
-import msgpack
-
-# Client sends JSON
-json_request = request.body
-
-# Parse JSON
-data = json.loads(json_request)
-
-# Encode to GCF (optional, for LLM processing)
-gcf_str = encode_generic(data)
-
-# Decode and send as MessagePack to backend
-data = decode_generic(gcf_str)
-backend_payload = msgpack.packb(data)
-```
-
-One adapter, any format combination.
-
-### 2. Data Pipeline Format Conversion
-
-Ingest CSV from legacy systems, process in Python, output as YAML configs:
-
-```python
-import csv
-import yaml
-from gcf import encode_generic, decode_generic
-
-# Read CSV
-with open('data.csv') as f:
-    reader = csv.DictReader(f)
-    rows = list(reader)
-
-# Through GCF
-gcf_str = encode_generic({"records": rows})
-data = decode_generic(gcf_str)
-
-# Write YAML
-with open('config.yaml', 'w') as f:
-    yaml.dump(data, f)
-```
-
-### 3. Multi-Agent Format Negotiation
-
-Different agents prefer different formats. GCF bridges them:
-
-```python
-# Agent A produces MessagePack
-msgpack_output = agent_a.process()
-
-# Convert to GCF for LLM context
-data = msgpack.unpackb(msgpack_output)
-gcf_for_llm = encode_generic(data)
-
-# LLM processes (reads GCF 91% better than JSON)
-result = llm.process(gcf_for_llm)
-
-# Agent B wants YAML
-data = decode_generic(result)
-yaml_input = yaml.dump(data)
-agent_b.process(yaml_input)
-```
-
-### 4. Configuration File Migration
-
-Migrate from one config format to another without rewriting parsers:
-
-```python
-import toml
-import json
-from gcf import encode_generic, decode_generic
-
-# Read old TOML config
-with open('config.toml') as f:
-    config = toml.load(f)
-
-# Through GCF
-gcf_str = encode_generic(config)
-config = decode_generic(gcf_str)
-
-# Write new JSON config
-with open('config.json', 'w') as f:
-    json.dump(config, f, indent=2)
-```
-
----
-
 ## And By The Way: LLMs Read It Better
 
 While GCF is acting as your universal format adapter, it also happens to be the format LLMs comprehend best:
 
-| Format | Comprehension (500 symbols) | Tokens |
-|--------|---------------------------|--------|
+**Standard workloads (500 orders, nested data):**
+- GCF: **100%** on every frontier model
+- JSON: 100% on frontier models (76.9% on mid-tier)
+- TOON: 97.4% average
+
+**Stress-scale workloads (500 symbols, 200 edges, high complexity):**
+
+| Format | Comprehension | Tokens |
+|--------|---------------|--------|
 | **GCF** | **91.2%** | **11,090** |
 | TOON | 68.2% | 16,378 |
 | JSON | 53.4% | 53,341 |
@@ -718,7 +633,7 @@ GCF isn't just an optimization for AI agents. It's a universal format adapter th
 
 1. **Bridges any structured formats** (JSON, YAML, MessagePack, TOML, etc.)
 2. **Maintains perfect data integrity** (43 billion+ round-trips, zero failures)
-3. **Is more readable to LLMs** than the formats it replaces (91.2% vs 53.4% JSON)
+3. **Is more readable to LLMs** than the formats it replaces (100% on standard workloads, 91.2% vs 53.4% JSON on stress-scale)
 4. **Uses fewer tokens** (50-71% smaller than JSON)
 
 This makes GCF the universal pivot for structured data in LLM systems. Any format in, optimal format for LLM comprehension in the middle, any format out.
