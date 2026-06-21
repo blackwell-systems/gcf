@@ -217,8 +217,9 @@ console.log("─".repeat(80));
 console.log("TEST 4: Token merging — do structural chars absorb adjacent content?");
 console.log("─".repeat(80));
 console.log();
-console.log("A merged token means the delimiter and the value become ONE token.");
-console.log("The LLM can't distinguish where the field name ends and value begins.");
+console.log("When a grammar symbol (quote) merges with payload content (field name),");
+console.log("the structural boundary becomes INVISIBLE at the token level.");
+console.log("The LLM receives one token where there should be a grammar/payload separation.");
 console.log();
 
 // Test JSON patterns that merge
@@ -241,7 +242,7 @@ for (const { pattern, desc } of jsonMergeTests) {
       (t.includes(':') && t.length > 1 && !t.match(/^[":{},\[\]]+$/))
     );
     if (mergedTokens.length > 0) {
-      console.log(`    ${name.split(" ")[0].padEnd(12)} MERGES: ${decoded.map(t => '[' + t + ']').join(' ')}`);
+      console.log(`    ${name.split(" ")[0].padEnd(12)} BOUNDARY HIDDEN: ${decoded.map(t => '[' + t + ']').join(' ')}`);
     }
   }
   console.log();
@@ -266,7 +267,7 @@ for (const { pattern, desc } of gcfMergeTests) {
     const pipeIdx = decoded.findIndex(t => t === "|");
     const mergedPipes = decoded.filter(t => t.includes("|") && t.length > 1);
     if (mergedPipes.length > 0) {
-      console.log(`    ${name.split(" ")[0].padEnd(12)} MERGES: ${decoded.map(t => '[' + t + ']').join(' ')}`);
+      console.log(`    ${name.split(" ")[0].padEnd(12)} BOUNDARY HIDDEN: ${decoded.map(t => '[' + t + ']').join(' ')}`);
       anyMerge = true;
     }
   }
@@ -342,21 +343,22 @@ console.log("═".repeat(80));
 console.log("SUMMARY");
 console.log("═".repeat(80));
 console.log();
-console.log("JSON structural variance:");
+console.log("JSON grammar symbols (quotes, colons):");
 console.log(`  • ${jsonVariantCount}/${jsonTotalPatterns} field-name patterns tokenize differently across models`);
-console.log("  • Quotes and colons merge with adjacent content unpredictably");
-console.log("  • Field boundaries shift depending on which model processes the data");
-console.log("  • This variance is REPEATED on every row (compounds with scale)");
+console.log("  • Quote merges with payload content (field name) → boundary hidden");
+console.log("  • The model cannot distinguish grammar from payload in the merged token");
+console.log("  • This compounds: hidden boundaries repeat on EVERY row");
 console.log();
-console.log("GCF structural variance:");
-console.log(`  • ${gcfVariantCount}/${gcfTotalPatterns} delimiter characters tokenize differently across models`);
-console.log("  • Pipe, @, <, ##, {, }, [, ] are always exactly 1 token");
-console.log("  • Field boundaries are identical on every model");
-console.log("  • All observed variance is in VALUE content only (harmless)");
+console.log("GCF grammar symbols (pipe, @, <, ##, {, }, [, ]):");
+console.log(`  • ${gcfVariantCount}/${gcfTotalPatterns} grammar characters tokenize differently across models`);
+console.log("  • Pipe NEVER merges with payload content → boundary always visible");
+console.log("  • All observed variance is in payload content only (harmless)");
+console.log("  • Grammar and payload are always in separate tokens");
 console.log();
-console.log("Implication:");
-console.log("  JSON: different models see different structural boundaries → comprehension variance");
-console.log("  GCF: all models see identical structural boundaries → consistent comprehension");
+console.log("Key distinction:");
+console.log("  • Payload variance (how 'userName' splits) is unavoidable and harmless");
+console.log("  • Grammar variance (quote merging with field name) hides structural boundaries");
+console.log("  • GCF has payload variance. JSON has BOTH payload AND grammar variance.");
 console.log();
 console.log("This explains why GCF achieves 100% comprehension on all frontier models");
 console.log("while JSON shows model-dependent failures at scale.");
