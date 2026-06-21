@@ -156,34 +156,41 @@ A complete JSON object `{"orderId":"ORD-001","value":"shipped"}` produces **4 di
 
 ## Part 3: GCF's Delimiters Never Merge
 
-### 0/200 checks show any merge
+### Real-world merge rates: JSON 8.93% vs GCF 1.00%
 
-We tested all 10 GCF grammar characters against all 8 tokenizers (80 checks), plus 15 realistic field+value patterns across all 8 tokenizers (120 checks). **Zero merges.**
+We tested boundary merge rates using actual data from our comprehension eval (14 field names, 25 values, 2,800 checks per format across all 8 tokenizers):
 
-| Character | Purpose | All 8 tokenizers |
-|-----------|---------|-----------------|
-| `\|` (pipe) | Field delimiter | **Always 1 token** |
-| `@` | Symbol ID prefix | **Always 1 token** |
-| `<` | Edge direction | **Always 1 token** |
-| `##` | Section header | **Always 1 token** |
-| `\n` | Row separator | **Always 1 token** |
-| `{` | Schema open | **Always 1 token** |
-| `}` | Schema close | **Always 1 token** |
-| `[` | Count open | **Always 1 token** |
-| `]` | Count close | **Always 1 token** |
-| `,` | Schema separator | **Always 1 token** |
+| Format | Boundary merges | Rate | Cause |
+|--------|----------------|------|-------|
+| JSON | 250/2,800 | **8.93%** | `"id":` and `"name":` merge on 5/8 tokenizers (62.5%) |
+| GCF | 28/2,800 | **1.00%** | Only `cancelled` value triggers merge (25% on 2 tokenizers) |
 
-And with adjacent content:
+**GCF has 88.8% fewer boundary merges on real data.**
+
+The critical difference: JSON's merges are caused by **field names** (which repeat on every row, compounding at scale). GCF's merges are caused by one **value** (which appears occasionally). At 500 rows with `"id"` and `"name"` fields, JSON has ~625 hidden boundaries. GCF has a handful.
+
+GCF's grammar characters are always 1 token in isolation on all 8 tokenizers:
+
+| Character | Purpose | Single token (8/8) |
+|-----------|---------|-------------------|
+| `\|` (pipe) | Field delimiter | Yes |
+| `@` | Symbol ID prefix | Yes |
+| `<` | Edge direction | Yes |
+| `##` | Section header | Yes |
+| `\n` | Row separator | Yes |
+| `{` `}` `[` `]` `,` | Schema/count | Yes |
+
+With typical adjacent content (alphabetic values, numbers), pipe remains separate:
 
 ```
-value|pending            → [value][|][pending]          ALL 8 tokenizers
-name|Alice               → [name][|][Alice]             ALL 8 tokenizers
-orderId|ORD-001          → [orderId][|][ORD][-][001]    ALL 8 tokenizers
-userName|req_xyz789      → [userName][|][req]...        ALL 8 tokenizers (pipe always separate)
-email|alice@example.com  → [email][|][alice][@]...      ALL 8 tokenizers
+value|pending        → [value][|][pending]       ALL 8 tokenizers
+name|Alice           → [name][|][Alice]          ALL 8 tokenizers
+orderId|ORD-001      → [orderId][|][ORD][-][001] ALL 8 tokenizers
 ```
 
-**The pipe character never absorbs adjacent content.** Field boundaries are at the same token position regardless of which model processes the data.
+Under adversarial conditions (values starting with `/`, `.`, `-`), pipe can merge on some tokenizers (e.g., `[|/]` on LLaMA and Gemma when value starts with `/`). However, even when this occurs, the pipe is always at the **start** of the merged token, meaning the boundary position is still identifiable. In JSON, the quote merges with the field name **after** it (`["value]`), hiding the boundary inside.
+
+On real eval data (14 fields, 25 values), this adversarial merge happens on only 1.00% of checks vs JSON's 8.93%.
 
 ### The same data in both formats
 
@@ -435,11 +442,13 @@ From the 74 perfect candidates, GCF chose based on semantics and readability:
 |-------|----------|
 | GCF savings are 50-59% on all tokenizers | 8 tokenizers tested, worst case 50.3% |
 | GCF savings are stable at all scales | 10 to 500 records, spread < 9pp |
-| GCF boundaries are identical on all models | 0/200 checks show any merge |
-| JSON boundaries shift per model | 22/120 (18.3%) of field patterns merge |
+| GCF has 88.8% fewer boundary merges than JSON | Real eval data: GCF 1.00% vs JSON 8.93% (2,800 checks) |
+| JSON merges compound at scale | Caused by field names (repeat per row): "id" and "name" merge on 62.5% of tokenizers |
+| GCF merges are rare and non-compounding | Caused by one value ("cancelled"), not field names |
 | JSON overhead is 81% at 500 rows | Cross-tokenizer validated |
 | JSON overhead grows linearly | O(n) per row, ratio 1,545:1 at 1000 rows |
 | GCF savings are structural, not delimiter-specific | Grammar swap: 0.4pp spread across 5 delimiter sets, 800 measurements |
+| No delimiter is perfect under adversarial conditions | All candidates merge on some right-contexts; GCF chose lowest merge-rate set |
 | This explains comprehension failures | 53.4% JSON at stress scale (ambiguous boundaries + attention dilution) vs 91.2% GCF |
 
 ---
