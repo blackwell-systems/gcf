@@ -52,6 +52,8 @@ These tokenizers were trained on different corpora with different merge prioriti
 
 ## Part 1: GCF Savings Are Consistent
 
+Data from `eval/tokenizer-variance.mjs` and `eval/graph-token-efficiency.mjs`.
+
 ### 50-59% savings on every tokenizer
 
 | Tokenizer | GCF Tokens | JSON Tokens | Savings |
@@ -108,6 +110,8 @@ All numbers cross-tokenizer validated (8 tokenizers, 6 providers).
 ---
 
 ## Part 2: Why JSON Breaks Down
+
+Data from `eval/structural-variance.mjs`, `eval/common-field-merge-analysis.mjs`, and `eval/worst-json-tokenization.mjs`.
 
 ### The structural boundary problem
 
@@ -179,7 +183,9 @@ A complete JSON object `{"orderId":"ORD-001","value":"shipped"}` produces **4 di
 
 ---
 
-## Part 3: GCF's Delimiters Never Merge
+## Part 3: GCF Grammar Merges 88.8% Less
+
+Data from `eval/structural-variance.mjs` and `eval/common-field-merge-analysis.mjs`.
 
 ### Real-world merge rates: JSON 8.93% vs GCF 1.00%
 
@@ -254,6 +260,8 @@ JSON uses `.`, `"`, and `:` as structural characters. All three can create merge
 
 ## Part 4: JSON's Token Overhead Problem
 
+Data from `eval/json-tokenization-analysis.mjs`.
+
 Beyond structural ambiguity, JSON also burns the majority of its tokens on content that carries zero information after the first row.
 
 ### Where tokens go (500-row frequency table)
@@ -325,6 +333,8 @@ Every tokenizer confirms: JSON spends **42-57% of its tokens on repeated field n
 
 ## Part 5: Why This Explains Comprehension Failures
 
+Connects tokenization findings to comprehension eval data (2,400+ LLM calls across 11 models).
+
 The tokenization analysis connects directly to the [comprehension eval data](/guide/benchmarks):
 
 - JSON accuracy on stress-scale data: **53.4%** (10 models, 24 runs)
@@ -358,6 +368,8 @@ The tokenization analysis suggests why: GPT-4's tokenizer (which GPT-5.4 likely 
 ---
 
 ## Part 6: The Grammar Swap Experiment
+
+Data from `eval/grammar-swap-experiment.mjs`.
 
 To prove GCF's savings are structural (positional fields, keys declared once) and not an artifact of specific delimiter choices, we swapped the entire grammar and re-measured.
 
