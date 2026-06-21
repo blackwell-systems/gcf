@@ -84,11 +84,36 @@ python3 generation_gcf_eval.py    # GCF generation
 python3 generation_toon_eval.py   # TOON generation (requires node + @toon-format/toon)
 ```
 
-### Tokenizer variance
+### Tokenizer analysis
+
+All tokenizer scripts require 8 tokenizer packages. Install once:
 
 ```bash
 cd gcf
+npm install @blackwell-systems/gcf @lenml/tokenizers \
+  @lenml/tokenizer-claude @lenml/tokenizer-gpt4 @lenml/tokenizer-gpt4o \
+  @lenml/tokenizer-llama3_1 @lenml/tokenizer-qwen2_5 \
+  @lenml/tokenizer-deepseek_v3 @lenml/tokenizer-gemma2 \
+  @lenml/tokenizer-mistral_nemo
+```
+
+| Script | What it measures |
+|--------|-----------------|
+| `tokenizer-variance.mjs` | GCF savings consistency across 8 tokenizers at multiple scales |
+| `structural-variance.mjs` | Boundary merge analysis: JSON 8.93% vs GCF 1.00% on real data |
+| `json-tokenization-analysis.mjs` | JSON overhead breakdown (81% waste) and linear scaling |
+| `worst-json-tokenization.mjs` | Maximum variance search: 7 distinct tokenizations for one string |
+| `exhaustive-json-boundary-search.mjs` | 8,434 patterns tested, multi-grammar merge discovery |
+| `grammar-swap-experiment.mjs` | 5 delimiter sets prove savings are structural (0.4pp spread) |
+
+```bash
+# Run all
 node eval/tokenizer-variance.mjs
+node eval/structural-variance.mjs
+node eval/json-tokenization-analysis.mjs
+node eval/worst-json-tokenization.mjs
+node eval/exhaustive-json-boundary-search.mjs
+node eval/grammar-swap-experiment.mjs
 ```
 
 ## Results
@@ -100,4 +125,4 @@ All logs stored in `eval/results/`:
 
 **Full results:** [SUMMARY.md](results/SUMMARY.md) (per-model averages, questions, failure taxonomy, methodology notes)
 
-**Tokenizer analysis:** [tokenizer-variance.mjs](tokenizer-variance.mjs) (8 tokenizers, 6 providers, syntactic proof)
+**Tokenizer analysis:** 6 scripts, 8 tokenizers, 6 providers. Key finding: JSON grammar merges with payload at 8.93% vs GCF at 1.00% on real data. See [tokenizer analysis docs](https://gcformat.com/guide/tokenizer-analysis).
