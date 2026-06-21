@@ -9,7 +9,7 @@ When you send structured data to an LLM, the tokenizer converts it into a sequen
 1. **Are GCF's token savings consistent?** If GCF saves 58% on GPT-4 but only 20% on Claude, the savings claims are misleading.
 2. **Are GCF's structural boundaries consistent?** If different models see the data's field boundaries at different token positions, comprehension will vary per model.
 
-The answer to both: **yes, GCF is consistent. JSON is not.**
+The answer to both: **yes, GCF is consistent. JSON is not.** I'll explain why.
 
 ### An important distinction: grammar symbols vs payload content
 
