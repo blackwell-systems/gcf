@@ -15,7 +15,7 @@ GCF operates on structured values (objects, arrays, strings, numbers, booleans, 
 
 ---
 
-## The Proof: Format Gauntlet
+## The Proof: Format Mega-Gauntlet
 
 We converted the same data through **14 different formats** with GCF as the bridge between each one:
 
