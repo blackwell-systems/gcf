@@ -184,7 +184,7 @@ onUnmounted(() => {
 
 /* Hover: shift perspective */
 .bb-3d:hover::before {
-  transform: translate(0.75rem, -0.75rem);
+  /* transform moved to global style block for transition */
 }
 
 .bb-3d:hover::after {
@@ -390,10 +390,12 @@ onUnmounted(() => {
 
 .bb-3d::before {
   animation: drift-back 4.5s ease-in-out infinite !important;
+  transition: none !important;
 }
 .bb-3d:hover::before {
   animation: none !important;
-  transition: transform 180ms ease !important;
+  transform: translate(0.75rem, -0.75rem) !important;
+  transition: transform 180ms ease, background-color 150ms ease, outline-color 150ms ease !important;
 }
 .bb-3d::after {
   transition: transform 180ms ease, background-color 150ms ease, outline-color 150ms ease !important;
