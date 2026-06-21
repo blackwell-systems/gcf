@@ -21,7 +21,7 @@ const commands = [
 <template>
   <div class="proxy-wrap">
     <h2 class="proxy-headline">Zero-code option for MCP servers</h2>
-    <p class="proxy-subtitle">One command. 61-71% fewer tokens. Zero code changes.</p>
+    <p class="proxy-subtitle">One command. 50-92% fewer tokens. Zero code changes.</p>
     <div class="proxy-callout">
       <div class="proxy-left">
         <div class="proxy-title">Zero-code adoption</div>

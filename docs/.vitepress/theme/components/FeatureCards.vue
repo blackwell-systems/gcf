@@ -7,8 +7,8 @@ const features = [
   },
   {
     icon: '📉',
-    title: '53-71% fewer input tokens',
-    details: 'At 500 orders: <span class="json">JSON</span> uses 80K tokens, <span class="gcf">GCF</span> uses 24K.<br><br>At 1000 orders, JSON doesn\'t even fit in a 200K context window. GCF fits in 47K. Positional fields, inline schemas, and hierarchical grouping eliminate per-record overhead.',
+    title: '50-92% fewer input tokens',
+    details: '50-69% on a single call (generic to graph profile). Up to 92% with session deduplication across repeated tool calls.<br><br>At 1000 orders, JSON doesn\'t even fit in a 200K context window. GCF fits in 47K. Positional fields, inline schemas, and hierarchical grouping eliminate per-record overhead.',
   },
   {
     icon: '✍️',

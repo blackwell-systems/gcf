@@ -586,7 +586,7 @@ The MCP specification does not define a standard for tool response encoding beyo
 
 We propose that MCP tool responses should support format negotiation: the client specifies a preferred encoding in the tool call, and the server returns the response in that encoding.
 
-The token savings are too large to ignore. A 61-71% reduction in tool response tokens translates directly to: lower API costs, faster time-to-first-token, more room in the context window for reasoning, and fewer multi-turn loops caused by context window exhaustion. At 1000 records, the difference is existential: JSON doesn't fit in a 200K context window at all.
+The token savings are too large to ignore. A 50-92% reduction in tool response tokens (depending on data complexity and session reuse) translates directly to: lower API costs, faster time-to-first-token, more room in the context window for reasoning, and fewer multi-turn loops caused by context window exhaustion. At 1000 records, the difference is existential: JSON doesn't fit in a 200K context window at all.
 
 ### 8.1 Delta Encoding
 
