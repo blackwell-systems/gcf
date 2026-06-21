@@ -378,7 +378,7 @@ Across 24 stress-scale runs (500 symbols, 200 edges, 13 questions per run), we c
 | GPT-5.4 | GCF | Off-by-1-2 on `edge_count`, `function_count`. Deterministic. | Pipe is always separate (structure parseable), but value content (`fn` vs `function`) may split differently. Precision error, not comprehension error. |
 | All frontier | GCF | 100% on standard workloads. | 1% merge rate + 99.8% signal + structural answers = no failure mechanism. |
 
-**The key insight:** GCF's errors are small (off by 1-2) because the model understood the structure but slightly misread a value. JSON's errors are large (off by 50-140) because the model couldn't find the structure at all. The difference is structural ambiguity: hidden boundaries compound into comprehension failure; clean boundaries enable structural extraction.
+GCF's errors are small (off by 1-2) because the model understood the structure but slightly misread a value. JSON's errors are large (off by 50-140) because the model couldn't find the structure at all. Hidden boundaries compound into comprehension failure. Clean boundaries enable structural extraction.
 
 **Error magnitude:**
 - GCF median error: **4** (precision)
