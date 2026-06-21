@@ -17,16 +17,14 @@ GCF operates on structured values (objects, arrays, strings, numbers, booleans, 
 
 ## The Proof: Format Mega-Gauntlet
 
-We converted the same data through **14 different formats** with GCF as the bridge between each one:
+We converted the same data through **17 different formats** with GCF as the bridge between each one:
 
 ```
-JSON → GCF → XML → GCF → MessagePack → GCF → YAML → GCF → 
-BSON → GCF → TOML → GCF → CBOR → GCF → Protobuf → GCF → 
-CSV → GCF → JSON5 → GCF → Pickle → GCF → INI → GCF → 
-NDJSON → GCF → Plist → GCF → JSON
+JSON → XML → MessagePack → YAML → BSON → TOML → CBOR → Protobuf → 
+CSV → JSON5 → Avro → Arrow → Parquet → Pickle → INI → NDJSON → Plist → JSON
 ```
 
-**Result:** After 13 conversions through GCF across 14 formats (including Protobuf with schema), the final JSON data **exactly matched** the original. Zero data loss. Zero corruption.
+**Result:** After 15 conversions through GCF across 17 formats (text, binary, schema-based, and columnar), the final JSON data **exactly matched** the original. Zero data loss. Zero corruption.
 
 You can run this yourself:
 
@@ -538,20 +536,30 @@ The only requirement: the format must deserialize to objects, arrays, and primit
 
 ## Supported Formats
 
-GCF has been validated across:
+GCF has been validated across 17 distinct serialization formats:
 
-**Text formats:**
+**Text formats (8):**
 - JSON, YAML, TOML, XML, CSV, INI, JSON5, NDJSON
 
-**Binary formats:**
-- MessagePack, BSON, CBOR, Pickle, Plist, **Protocol Buffers** (with schema)
+**Binary formats (6):**
+- MessagePack, BSON, CBOR, Pickle, Plist, Protocol Buffers
 
-**Schema-based formats:**
-- Protocol Buffers (requires `.proto` schema definition, validated in mega-gauntlet)
+**Schema-based (2):**
+- Protocol Buffers (requires `.proto` schema definition)
+- Apache Avro (requires schema definition)
+
+**Columnar/analytics (3):**
+- Apache Arrow (in-memory IPC format)
+- Apache Parquet (on-disk columnar)
+- CSV (flat tabular)
 
 **And by extension, any format that deserializes to structured values.**
 
 If it deserializes to objects/arrays/primitives, it works with GCF.
+
+### Protocols vs Formats
+
+The mega-gauntlet tests distinct serialization formats, not protocol wrappers. Protocols like gRPC (uses Protobuf), JSON-RPC (uses JSON), and GraphQL (uses JSON) are already covered because GCF bridges the underlying format they serialize to.
 
 ### Protocol Buffers (Special Case)
 
@@ -584,7 +592,7 @@ protobuf_bytes = new_message.SerializeToString()
 
 **Important:** Use `including_default_value_fields=True` when converting from Protobuf to preserve `false` booleans and other default values.
 
-The mega-gauntlet validates this with a complete round-trip through Protobuf alongside 13 other formats.
+The mega-gauntlet validates this with a complete round-trip through Protobuf alongside 16 other formats.
 
 ---
 
@@ -608,11 +616,11 @@ python3 examples/format-gauntlet.py
 
 Shows: JSON → GCF → YAML → GCF → CSV → GCF → JSON, proving round-trip losslessness.
 
-### 3. The Mega Gauntlet (14 formats including Protobuf)
+### 3. The Mega Gauntlet (17 formats)
 
 ```bash
 # Install all format libraries first
-pip install msgpack pyyaml pymongo tomli tomli_w cbor2 json5 protobuf
+pip install msgpack pyyaml pymongo tomli tomli_w cbor2 json5 protobuf avro-python3 pyarrow
 
 # Compile the protobuf schema
 cd examples
@@ -622,7 +630,7 @@ protoc --python_out=. test_data.proto
 python3 mega-gauntlet.py
 ```
 
-Shows: 13 conversions through GCF across 14 formats (including Protobuf with schema). The most comprehensive format interop test we could design.
+Shows: 15 conversions through GCF across 17 formats (text, binary, schema-based, columnar). The most comprehensive format interop test we could design.
 
 ---
 
