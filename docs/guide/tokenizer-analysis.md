@@ -179,18 +179,46 @@ JSON's variance is *larger* in both absolute and proportional terms on edge data
 
 JSON's tokenization variance lives in its **structural grammar** (field boundaries, quotes, colons). GCF's variance lives only in **value content** (how numbers and words split). This distinction matters: structural variance means the LLM sees different field boundaries depending on which model processes the data.
 
-### JSON field-name patterns: 4/15 vary across tokenizers
+### JSON quote-field merge rate: 22/120 (18.3%)
 
-| Pattern | Claude | GPT-4 | GPT-4o | LLaMA | Qwen | DeepSeek | Gemma | Mistral | Verdict |
-|---------|--------|-------|--------|-------|------|----------|-------|---------|---------|
-| `"value":` | 3 | 2 | 2 | 2 | 2 | 3 | 3 | 3 | VARIES |
-| `"orderId":` | 4 | 3 | 4 | 3 | 3 | 4 | 3 | 4 | VARIES |
-| `"name":` | 3 | 2 | 2 | 2 | 2 | 3 | 3 | 2 | VARIES |
-| `"tier":` | 3 | 3 | 3 | 3 | 3 | 4 | 3 | 4 | VARIES |
+We tested 15 common field-name patterns across all 8 tokenizers. The opening quote merges with the field name on 22 of 120 checks:
 
-These patterns repeat on **every row**. At 500 rows, that's 2,000+ structural tokens whose boundaries shift per model.
+| Pattern | Merge rate | Models that merge |
+|---------|-----------|-------------------|
+| `"name":` | **5/8** | GPT-4, GPT-4o, LLaMA, Qwen, Mistral |
+| `"value":` | **4/8** | GPT-4, GPT-4o, LLaMA, Qwen |
+| `"userName":` | **1/8** | GPT-4o |
 
-### GCF delimiters: 0/10 vary across tokenizers
+Full variance table (tokens per occurrence):
+
+| Pattern | Claude | GPT-4 | GPT-4o | LLaMA | Qwen | DeepSeek | Gemma | Mistral |
+|---------|--------|-------|--------|-------|------|----------|-------|---------|
+| `"value":` | 3 | 2 | 2 | 2 | 2 | 3 | 3 | 3 |
+| `"orderId":` | 4 | 3 | 4 | 3 | 3 | 4 | 3 | 4 |
+| `"name":` | 3 | 2 | 2 | 2 | 2 | 3 | 3 | 2 |
+| `"tier":` | 3 | 3 | 3 | 3 | 3 | 4 | 3 | 4 |
+
+These patterns repeat on **every row**. At 500 rows with a field like `"name":`, that's 500 positions where 5/8 models see a merged boundary.
+
+### Worst case: 7 distinct tokenizations
+
+`"userName":"req_xyz789"` produces 7 distinct token sequences across 8 models:
+
+```
+GPT-4, LLaMA:     ["][userName][":"][req][_xyz][789]["]
+GPT-4o:           ["user][Name][":"][req][_xyz][789]["]
+Claude:           ["][userName][":"][req][_][xyz][789]["]
+Qwen 2.5:        ["][userName][":"][req][_xyz][7][8][9]["]
+DeepSeek V3:     ["][user][Name][":"][req][_][xyz][789]["]
+Gemma 2:         ["][userName][":"][req][_][xyz][7][8][9]["]
+Mistral Nemo:    ["][user][Name][":"][req][_x][yz][7][8][9]["]
+```
+
+A full JSON object `{"orderId":"ORD-001","value":"shipped"}` produces **4 different token counts** (12, 13, 14, 15) depending on the model.
+
+### GCF pipe merge rate: 0/120 (0%)
+
+We tested 15 realistic field+value patterns across all 8 tokenizers. The pipe never merges:
 
 | Delimiter | All 8 tokenizers | Purpose |
 |-----------|-----------------|---------|
@@ -201,7 +229,7 @@ These patterns repeat on **every row**. At 500 rows, that's 2,000+ structural to
 | `\n` | 1 token | Row separator |
 | `{` `}` `[` `]` `,` | 1 token each | Schema/count |
 
-Zero exceptions across 80 checks (10 characters x 8 tokenizers).
+Zero exceptions across 80 delimiter checks (10 characters x 8 tokenizers) AND 120 field+value checks (15 patterns x 8 tokenizers). **0/200 total checks show any GCF structural merge.**
 
 ### Token merging: the structural boundary problem
 
@@ -441,20 +469,24 @@ All experiments are reproducible:
 
 ```bash
 cd gcf
-
-# Tokenizer variance analysis
-node eval/tokenizer-variance.mjs
-
-# Grammar swap experiment
-node eval/grammar-swap-experiment.mjs
-
-```bash
-cd gcf
 npm install @blackwell-systems/gcf @lenml/tokenizers \
   @lenml/tokenizer-claude @lenml/tokenizer-gpt4 @lenml/tokenizer-gpt4o \
   @lenml/tokenizer-llama3_1 @lenml/tokenizer-qwen2_5 \
   @lenml/tokenizer-deepseek_v3 @lenml/tokenizer-gemma2 \
   @lenml/tokenizer-mistral_nemo
 
+# Tokenizer variance analysis (savings consistency)
 node eval/tokenizer-variance.mjs
+
+# Structural variance (merge analysis, boundary consistency)
+node eval/structural-variance.mjs
+
+# Worst-case JSON tokenization (maximum variance search)
+node eval/worst-json-tokenization.mjs
+
+# JSON overhead analysis (token distribution, scaling)
+node eval/json-tokenization-analysis.mjs
+
+# Grammar swap experiment (proves savings are structural)
+node eval/grammar-swap-experiment.mjs
 ```
