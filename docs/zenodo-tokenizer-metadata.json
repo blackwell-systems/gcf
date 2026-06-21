@@ -1,0 +1,99 @@
+{
+  "upload_type": "publication",
+  "publication_type": "article",
+  "title": "Structural Ambiguity in JSON Tokenization: A Cross-Tokenizer Analysis",
+  "description": "JSON's structural grammar creates hidden boundaries in BPE tokenizer vocabularies. The opening quote character merges with common field names into single tokens on 4-5 of 8 tested tokenizers. We present a systematic cross-tokenizer analysis across 8 tokenizers from 6 providers (Anthropic, OpenAI, Meta, Alibaba, DeepSeek, Google, Mistral). Fifteen common JSON field names (id, name, type, value, title, time, text, url, path, description, user_id, in, is, encoding, dns) exist as merged vocabulary entries on 50-63% of tokenizers. GPT-4 contains 114 quote+letter vocabulary entries; Claude and Gemma contain zero. On real evaluation data, JSON exhibits a boundary merge rate of 8.93% vs 1.00% for pipe-delimited formats (88.8% fewer merges). JSON overhead reaches 81% at 500 rows, growing O(n) per row. A grammar swap experiment (800 measurements) confirms token savings are structural, not delimiter-specific (0.4pp spread). These findings are irrecoverable: tokenizer vocabularies are frozen post-training, all model weights depend on them, and tokenization occurs before the transformer processes input. Correlation evidence from 2,400+ LLM evaluations shows JSON comprehension drops to 53.4% at 500-record scale.",
+  "creators": [
+    {
+      "name": "Blackwell, Dayna",
+      "affiliation": "Blackwell Systems",
+      "orcid": ""
+    }
+  ],
+  "keywords": [
+    "BPE tokenization",
+    "JSON",
+    "structural ambiguity",
+    "vocabulary merge",
+    "LLM comprehension",
+    "wire format",
+    "attention dilution",
+    "tokenizer analysis",
+    "byte-pair encoding",
+    "structured data",
+    "GCF",
+    "Graph Compact Format",
+    "token efficiency",
+    "cross-tokenizer analysis"
+  ],
+  "license": "CC-BY-4.0",
+  "access_right": "open",
+  "language": "eng",
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/blackwell-systems/gcf",
+      "relation": "isSupplementedBy",
+      "resource_type": "software",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://arxiv.org/abs/2604.17512",
+      "relation": "cites",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://arxiv.org/abs/2604.05400",
+      "relation": "cites",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://arxiv.org/abs/2605.29676",
+      "relation": "cites",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://arxiv.org/abs/2402.13512",
+      "relation": "cites",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://arxiv.org/abs/2508.01685",
+      "relation": "cites",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://arxiv.org/abs/2305.13062",
+      "relation": "cites",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://arxiv.org/abs/2603.03306",
+      "relation": "cites",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://arxiv.org/abs/2601.21665",
+      "relation": "cites",
+      "scheme": "url"
+    },
+    {
+      "identifier": "http://webdatacommons.org/structureddata/",
+      "relation": "cites",
+      "resource_type": "dataset",
+      "scheme": "url"
+    }
+  ],
+  "subjects": [
+    {
+      "term": "Computer Science - Computation and Language",
+      "scheme": "url",
+      "identifier": "https://arxiv.org/archive/cs.CL"
+    },
+    {
+      "term": "Computer Science - Artificial Intelligence",
+      "scheme": "url",
+      "identifier": "https://arxiv.org/archive/cs.AI"
+    }
+  ],
+  "notes": "All experiments are reproducible from open-source scripts in the GCF repository (github.com/blackwell-systems/gcf/eval/). Comprehension evaluation data from 2,400+ LLM calls across 11 models."
+}
