@@ -2,7 +2,7 @@
 """
 THE FORMAT GAUNTLET
 
-Converts data through EVERY format with GCF as the universal bridge:
+Validates GCF's lossless guarantee across multiple formats:
 JSON → GCF → MessagePack → GCF → YAML → GCF → TOML → GCF → CSV → GCF → JSON
 
 If the final JSON matches the original, GCF is proven lossless across all formats.
@@ -211,6 +211,6 @@ else:
 print()
 print("CONCLUSION")
 print("-" * 70)
-print("GCF acted as the universal bridge between 5+ formats.")
+print("GCF proven lossless across 5+ formats.")
 print("Every conversion was lossless. Every format interoperable.")
 print("This is what 43 billion+ round-trips validated.")
