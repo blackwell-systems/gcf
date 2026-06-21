@@ -107,6 +107,8 @@ npm install @blackwell-systems/gcf @lenml/tokenizers \
 | `exhaustive-json-boundary-search.mjs` | 8,434 patterns tested, multi-grammar merge discovery |
 | `graph-token-efficiency.mjs` | Graph profile: 68% savings vs pretty JSON, 48% vs compact |
 | `session-dedup-efficiency.mjs` | 5-call session: 84.3% savings with deduplication |
+| `tokenizer-vocabulary-analysis.mjs` | Vocab entry lookup: 114 quote-merged entries on GPT-4 vs 0 on Claude |
+| `vocabulary-full-scan.mjs` | Exhaustive full-vocabulary scan + cross-verification |
 | `grammar-swap-experiment.mjs` | 5 delimiter sets prove savings are structural (0.4pp spread) |
 | `toon-fuzz.mjs` | TOON round-trip accuracy testing |
 
@@ -120,6 +122,8 @@ node eval/worst-json-tokenization.mjs
 node eval/exhaustive-json-boundary-search.mjs
 node eval/graph-token-efficiency.mjs
 node eval/session-dedup-efficiency.mjs
+node eval/tokenizer-vocabulary-analysis.mjs
+node eval/vocabulary-full-scan.mjs
 node eval/grammar-swap-experiment.mjs
 ```
 
