@@ -405,9 +405,9 @@ The failure mechanism has three compounding components:
 2. **Overwhelming repetition** (52% of tokens are repeated field names). The attention mechanism has 5,500 tokens that all look identical competing for attention budget.
 3. **Low signal-to-noise ratio** (19% data, 81% overhead). The model must find relevant information buried in structural noise.
 
-Ildiz et al. (2024) demonstrated a "winner-takes-all" phenomenon in self-attention: the mechanism collapses into attending to a limited subset of tokens. When the sequence is dominated by repetitive structural patterns, the attention mechanism can lock onto those patterns rather than the data values buried within them.
+Ildiz et al. (2024) proved mathematically that self-attention weights tokens proportionally to their frequency in the input sequence. Their Context-Conditioned Markov Chain (CCMC) formulation shows that P(next_token = j | X) includes m_j (the count of token j) in the numerator. Tokens appearing more frequently receive more attention weight purely by count. In a 500-row JSON array, structural tokens account for ~80% of occurrences, meaning the model's attention budget is mathematically dominated by semantically redundant content, while data values (numerically outnumbered) receive proportionally less attention. The paper analyzes single-layer models; multi-layer architectures partially mitigate this, but our comprehension data shows the mitigation is insufficient at 500+ rows.
 
-Observed failure patterns are consistent with the tokenization mechanism:
+Observed failure patterns are consistent with this mechanism:
 
 | Pattern | Example | Tokenization Explanation |
 |---------|---------|------------------------|
@@ -462,7 +462,7 @@ Self-attention allocates a fixed budget across all input positions. When a query
 
 Consider the task "how many records have status = shipped?" given 500 JSON objects. The model must attend to every `"status":` pattern (500 occurrences), read the following value, compare to "shipped," and count matches. The 500 `"status":` patterns produce the same tokens every time. The model has no structural marker distinguishing the 150th occurrence from the 350th.
 
-Ildiz et al. (2024) demonstrated a "winner-takes-all" phenomenon in self-attention: the mechanism collapses into attending to a limited subset of tokens. When the sequence is dominated by repetitive structural patterns, attention collapses onto noise rather than signal.
+Ildiz et al. (2024) proved that self-attention weights tokens proportionally to their frequency (the CCMC formula includes m_j in the numerator). When 80% of the sequence is repetitive structural tokens, the formula guarantees those tokens dominate the attention budget by count, leaving proportionally less for the data values.
 
 In a header-factored format with pipe delimiters, the equivalent task requires attending to a column of values at known, consistent positions. No ambiguity. No repetition competing for attention. The structural delimiter (pipe) is always at the same relative position within each row.
 
@@ -476,7 +476,7 @@ In a header-factored format with pipe delimiters, the equivalent task requires a
 
 **Kutschka and Geiger (2024)** found that token-efficient formats can hurt accuracy in some configurations, arguing that training distribution favoring JSON compensates for inefficiency. Our data partially confirms this at small scale (all formats achieve near-100% at 10-50 records) but shows the compensation fails at 500+ records where JSON drops to 53.4%.
 
-**Ildiz et al. (2024)** demonstrated a "winner-takes-all" phenomenon in self-attention where the mechanism collapses into attending to a limited subset of tokens. This provides the theoretical basis for our attention dilution hypothesis: when the majority of tokens are repetitive structural patterns, attention collapses onto noise rather than signal.
+**Ildiz et al. (2024)** proved that self-attention implements a Context-Conditioned Markov Chain where the probability of attending to token j includes m_j (its frequency in the sequence) in the numerator. This is the mathematical basis for our attention dilution finding: when structural tokens like `"name":` account for 80% of occurrences in a JSON array, they dominate the attention budget by count. The paper analyzes single-layer models; our comprehension data confirms the effect persists in production multi-layer architectures at 500+ rows.
 
 **Karim and Batatia (2025)** proposed using fixed tokens for structure and BPE for values. GCF achieves a similar result through grammar design: choosing structural characters from the set that BPE tokenizers never merge with adjacent content.
 
@@ -553,7 +553,7 @@ Repository: [github.com/blackwell-systems/gcf](https://github.com/blackwell-syst
 
 Deekeswar, A. (2024). ONTO: Optimized Notation for Tabular Objects. arXiv:2604.17512.
 
-Ildiz, M. E., Huang, Y., Wang, Y., & Li, L. (2024). Self-Attention in Transformers: A Winner-Takes-All Phenomenon. arXiv:2402.13512.
+Ildiz, M. E., Huang, Y., Li, Y., Rawat, A. S., & Oymak, S. (2024). From Self-Attention to Markov Models: Unveiling the Dynamics of Generative Transformers. arXiv:2402.13512.
 
 Karim, N. & Batatia, H. (2025). Fixed-token structure for LLM data representation. arXiv:2508.01685.
 
