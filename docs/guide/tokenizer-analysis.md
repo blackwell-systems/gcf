@@ -351,27 +351,41 @@ The tokenization analysis connects directly to the [comprehension eval data](/gu
 
 **Why does JSON fail at scale?**
 
-1. **Ambiguous structural boundaries** (22/120 field patterns merge with quotes). The model sees different structure depending on which model reads it.
+1. **Ambiguous structural boundaries** (8.93% merge rate on real data). The model sees different structure depending on which model reads it.
 2. **Overwhelming repetition** (52% of tokens are repeated field names). The attention mechanism has 5,500 tokens that all look identical competing for attention budget.
 3. **Low signal-to-noise ratio** (19% data, 81% overhead). The model must find relevant information buried in structural noise.
 
 **Why does GCF succeed?**
 
-1. **Unambiguous boundaries** (0/200 checks show any merge). Every model sees identical structure.
+1. **Near-zero boundary merging** (1.00% merge rate). Every model sees consistent structure.
 2. **Zero repetition** (field names declared once). No identical tokens competing for attention.
 3. **99.8% signal** (almost every token is data). The attention mechanism focuses on content.
 
 The model doesn't fail because JSON is "too long." It fails because at 500+ rows, there are thousands of structurally ambiguous token boundaries diluting attention, while 80% of token positions carry no information. GCF eliminates both problems simultaneously.
 
-### Model-dependent failures explained
+### Observed failure patterns from 2,400+ evaluations
 
-Our eval data shows model-specific failure patterns:
+Across 24 stress-scale runs (500 symbols, 200 edges, 13 questions per run), we classified every wrong answer by failure type. The patterns connect directly to the tokenization findings:
 
-- **GPT-5.4 produces deterministic wrong answers** (always says `edge_count=198` when correct is 200)
-- **Claude Opus handles JSON better than GPT** (96.2% vs 78.0%) but still fails on counting tasks
-- **All models achieve 100% on GCF** for standard workloads
+| Model | Format | Failure pattern | Tokenization explanation |
+|-------|--------|----------------|------------------------|
+| GPT-5.4 | JSON | Always answers `edge_count=198` (correct: 200). Same wrong number every run. | GPT-4o tokenizer merges `"id":`, `"name":`, `"type":` on every row. Consistent merge = consistent parsing offset. |
+| GPT-5.4 | JSON | Always answers `function_count=84` (correct: varies). Deterministic. | Same mechanism. Column scan across 500 merged-boundary rows produces repeatable miscount. |
+| GPT-5.5 | JSON | Returns empty string on most questions. | 53K tokens, 81% overhead. Attention has nothing to lock onto. Context overwhelm. |
+| All models | JSON | Distance-filtering wrong by 50-140 (e.g., 143 vs 167). | Must attend to 500 identical `"distance":` patterns and filter by value. No structural marker distinguishes the 150th from the 350th. |
+| Opus | JSON | Manually enumerates 143 lines trying to count, still wrong. | Model falls back to chain-of-thought enumeration because it can't structurally extract the answer. |
+| Claude | GCF | Never fails. | Claude's tokenizer keeps all boundaries clean. GCF's structure answers questions directly (`## related [167]`). |
+| GPT-5.4 | GCF | Off-by-1-2 on `edge_count`, `function_count`. Deterministic. | Pipe is always separate (structure parseable), but value content (`fn` vs `function`) may split differently. Precision error, not comprehension error. |
+| All frontier | GCF | 100% on standard workloads. | 1% merge rate + 99.8% signal + structural answers = no failure mechanism. |
 
-The tokenization analysis suggests why: GPT-4's tokenizer (which GPT-5.4 likely inherits) merges `"value` into a single token on common fields. Claude's tokenizer keeps them separate. This creates different attention patterns at boundary positions. GCF eliminates the variable entirely because all models see identical boundaries.
+**The key insight:** GCF's errors are small (off by 1-2) because the model understood the structure but slightly misread a value. JSON's errors are large (off by 50-140) because the model couldn't find the structure at all. The difference is structural ambiguity: hidden boundaries compound into comprehension failure; clean boundaries enable structural extraction.
+
+**Error magnitude:**
+- GCF median error: **4** (precision)
+- TOON median error: **53** (comprehension failure)
+- JSON median error: **56** (comprehension failure)
+
+For the complete per-run failure data, see [Benchmarks (Full Data): Failure Taxonomy](/guide/eval-results#failure-taxonomy).
 
 ---
 
