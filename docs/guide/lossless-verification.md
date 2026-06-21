@@ -6,12 +6,12 @@ GCF guarantees `decode(encode(value)) == value` for every structured value. This
 
 | Format | Round-trips | Failures |
 |--------|------------|----------|
-| JSON | 11,250,000,000+ | 0 |
+| JSON | 21,250,000,000 | 0 |
 | YAML | 21,000,000,000 | 0 |
 | MessagePack | 584,000,000 | 0 |
 | CSV | 335,000,000 | 0 |
 | TOML | 100,000,000 | 0 |
-| **Total** | **33,270,000,000+** | **0** |
+| **Total** | **43,270,000,000+** | **0** |
 
 43 billion+ random structured values generated, serialized through each format, parsed back, encoded as GCF, decoded from GCF, and compared to the original. Zero mismatches.
 
