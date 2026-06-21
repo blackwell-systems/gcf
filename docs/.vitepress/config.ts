@@ -58,6 +58,7 @@ export default defineConfig({
       {
         text: 'Evidence',
         items: [
+          { text: 'Universal Format Adapter', link: '/guide/universal-adapter' },
           { text: 'Lossless Verification', link: '/guide/lossless-verification' },
           { text: 'Benchmarks', link: '/guide/benchmarks' },
           { text: 'Benchmarks (Full Data)', link: '/guide/eval-results' },
