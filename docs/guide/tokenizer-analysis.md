@@ -65,7 +65,9 @@ These tokenizers were trained on different corpora with different merge prioriti
 | Gemma 2 (Google) | 55,301 | 124,620 | **55.6%** |
 | Mistral Nemo | 55,998 | 112,569 | **50.3%** |
 
-Every tokenizer produces 50%+ savings. The worst case (Mistral Nemo, 50.3%) still halves the token count. This is measured on 500-order nested data (the generic profile from our comprehension eval).
+Every tokenizer produces 50%+ savings. The worst case (Mistral Nemo, 50.3%) still halves the token count. This is measured on 500-order nested data (the generic profile from our comprehension eval) vs pretty-printed JSON (2-space indent), which is what LLMs typically receive from tool responses.
+
+On the [15-dataset token efficiency benchmark](/guide/benchmarks#token-efficiency-15-datasets), GCF vs JSON savings range from 43-65% depending on data complexity, with an overall average of 54.8%.
 
 ### Stable from 10 to 500 records
 
