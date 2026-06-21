@@ -393,8 +393,7 @@ onUnmounted(() => {
 }
 .bb-3d:hover::before {
   animation: none !important;
-  transform: translate(0.75rem, -0.75rem) !important;
-  transition: transform 180ms ease, background-color 150ms ease, outline-color 150ms ease !important;
+  transition: transform 180ms ease !important;
 }
 .bb-3d::after {
   transition: transform 180ms ease, background-color 150ms ease, outline-color 150ms ease !important;
