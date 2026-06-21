@@ -78,7 +78,7 @@ GCF sits in the middle. Any format can flow in, any format can flow out. This is
 | TOML | 100,000,000 | 0 |
 | **Total** | **43,270,000,000+** | **0** |
 
-Those tests didn't just prove JSON→GCF→JSON works. They proved **JSON→GCF→YAML**, **MessagePack→GCF→TOML**, and every other combination works losslessly.
+Those tests proved each format round-trips through GCF losslessly. Since GCF operates on structured values (not format syntax), the same guarantee extends to cross-format conversions: if JSON→GCF and GCF→YAML are both lossless, then JSON→GCF→YAML is lossless. The mega-gauntlet validates this empirically across 14 formats.
 
 ---
 
@@ -163,7 +163,7 @@ class FormatBridge:
         
         # Optional: if you have LLM-based routing/validation
         gcf_str = encode_generic(data)
-        # LLM reads GCF 91% better, can validate/route intelligently
+        # LLM reads GCF with 100% accuracy on standard data
         
         # Convert to MessagePack for backend
         data = decode_generic(gcf_str)
@@ -189,11 +189,10 @@ class FormatBridge:
 - Nginx module: C bindings to gcf-rust
 - Python middleware: gcf-python (shown above)
 
-**Cost savings:** MessagePack is ~50% smaller than JSON. If you're processing 1M API calls/day with 10KB average payload:
-- Before: 10GB/day JSON between gateway and backend
-- After: 5GB/day MessagePack between gateway and backend
-- Network cost reduction: 50%
-- Backend parsing faster (binary vs text)
+**Why GCF, not just MessagePack directly?** If there's an LLM in the loop (routing, validation, augmentation), GCF is the format it reads best. Without an LLM, you'd use MessagePack directly. With one, GCF is the universal step that both the LLM and the backend can consume:
+- LLM reads GCF at 100% accuracy (standard data)
+- Backend receives MessagePack (binary efficiency)
+- One adapter handles both directions
 
 ### Pattern 2: Multi-Agent System with Format Negotiation
 
@@ -231,7 +230,7 @@ class AgentBus:
         gcf_msg = encode_generic(value)
         
         # Optional: LLM reads the message for orchestration decisions
-        # GCF is 91% more comprehensible than JSON for the LLM
+        # GCF comprehension: 100% standard, 91.2% stress (vs JSON 53.4%)
         # routing_decision = llm.route(gcf_msg)
         
         # Decode and convert to target format
@@ -249,7 +248,7 @@ class AgentBus:
 **Why this works:**
 - One conversion path: source → GCF → target
 - No N×(N-1) converter matrix
-- LLM orchestrator can read GCF directly (91.2% comprehension)
+- LLM orchestrator reads GCF natively (100% on standard data, 91.2% on complex graphs)
 - Add new agents without touching existing code
 
 ### Pattern 3: Data Pipeline with Multi-Format I/O
@@ -389,8 +388,10 @@ Your agent receives tool responses. If they're in JSON, the agent gets the wrong
 
 On standard workloads, GCF achieves 100% comprehension on every frontier model.
 
-**Without GCF:** Write tool responses in JSON, accept 53% comprehension (stress scale) or 100% (standard workloads).  
-**With GCF:** Get 100% comprehension on standard data, 91.2% on stress-scale complexity.
+On standard workloads (nested arrays, metadata), all formats work on frontier models. At scale (500+ records with complex cross-references), JSON drops to 53.4% while GCF maintains 91.2%.
+
+**Without GCF:** Works fine at small scale, breaks at production scale.  
+**With GCF:** 100% on standard data. Still 91.2% when complexity overwhelms JSON.
 
 **2. Agents Burn Tokens (Cost)**
 
@@ -427,7 +428,7 @@ You have 5 agents. Each prefers a different format. They need to communicate.
 - Each agent outputs its preferred format
 - GCF bridges between them
 - Agents can read each other's messages (via GCF)
-- LLM orchestrator reads GCF natively (91% comprehension)
+- LLM orchestrator reads GCF natively (100% standard, 91% stress vs JSON's 53%)
 
 ### The Multiplication
 
@@ -459,13 +460,13 @@ Now (2024-2026):
 
 **The market opened in the last 18 months. GCF is positioned exactly where the industry is going.**
 
-### The Future State
+### The Current Direction
 
-Within 2 years, every production AI system will need:
+Production AI systems increasingly require:
 1. **Format interop** (agents talk to legacy systems)
 2. **Token efficiency** (context costs matter at scale)
 3. **LLM comprehension** (wrong answers aren't acceptable)
-4. **Multi-agent coordination** (single-agent systems won't scale)
+4. **Multi-agent coordination** (single-agent systems aren't scaling)
 
 GCF solves all four. Today.
 
@@ -546,9 +547,7 @@ GCF has been validated across:
 - MessagePack, BSON, CBOR, Pickle, Plist, **Protocol Buffers** (with schema)
 
 **Schema-based formats:**
-- Protocol Buffers (requires `.proto` schema definition)
-- Apache Avro (requires schema)
-- Apache Thrift (requires schema)
+- Protocol Buffers (requires `.proto` schema definition, validated in mega-gauntlet)
 
 **And by extension, any format that deserializes to structured values.**
 
@@ -623,7 +622,7 @@ protoc --python_out=. test_data.proto
 python3 mega-gauntlet.py
 ```
 
-Shows: 13 conversions through GCF across 14 formats (including Protobuf with schema). Completely obnoxious. Absolutely proves the point.
+Shows: 13 conversions through GCF across 14 formats (including Protobuf with schema). The most comprehensive format interop test we could design.
 
 ---
 

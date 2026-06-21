@@ -293,6 +293,124 @@ except Exception as e:
     print(f"⚠ Pickle conversion error: {e}")
     print()
 
+# ROUND 10.5: GCF → Avro (schema-based)
+print("🔄 ROUND 10.5: GCF → Avro → GCF (with schema)")
+print("-" * 80)
+try:
+    import avro.schema
+    import avro.io
+    import io
+
+    avro_schema = avro.schema.parse(json.dumps({
+        "type": "record",
+        "name": "TestData",
+        "fields": [
+            {"name": "users", "type": {"type": "array", "items": {
+                "type": "record",
+                "name": "User",
+                "fields": [
+                    {"name": "id", "type": "int"},
+                    {"name": "name", "type": "string"},
+                    {"name": "score", "type": "double"},
+                    {"name": "active", "type": "boolean"}
+                ]
+            }}},
+            {"name": "total", "type": "int"},
+            {"name": "version", "type": "string"}
+        ]
+    }))
+
+    # Encode to Avro
+    avro_buffer = io.BytesIO()
+    encoder = avro.io.BinaryEncoder(avro_buffer)
+    writer = avro.io.DatumWriter(avro_schema)
+    writer.write(current_value, encoder)
+    avro_bytes = avro_buffer.getvalue()
+    print(f"Avro size: {len(avro_bytes)} bytes")
+    print(f"Avro (hex): {avro_bytes.hex()[:100]}...")
+    formats_used.append("Avro")
+
+    # Decode from Avro
+    avro_buffer = io.BytesIO(avro_bytes)
+    decoder = avro.io.BinaryDecoder(avro_buffer)
+    reader = avro.io.DatumReader(avro_schema)
+    current_value = reader.read(decoder)
+    current_value = convert_via_gcf(current_value, "Avro")
+    print()
+except ImportError:
+    print("⚠ avro-python3 not installed, skipping (pip install avro-python3)")
+    print()
+except Exception as e:
+    print(f"⚠ Avro conversion error: {e}")
+    print()
+
+# ROUND 10.55: GCF → Arrow (in-memory columnar)
+print("🔄 ROUND 10.55: GCF → Arrow → GCF (in-memory columnar)")
+print("-" * 80)
+try:
+    import pyarrow as pa
+
+    if "users" in current_value and isinstance(current_value["users"], list):
+        users = current_value["users"]
+        table = pa.Table.from_pylist(users)
+
+        # Serialize to Arrow IPC format
+        sink = pa.BufferOutputStream()
+        writer = pa.ipc.new_stream(sink, table.schema)
+        writer.write_table(table)
+        writer.close()
+        arrow_bytes = sink.getvalue()
+        print(f"Arrow IPC size: {len(arrow_bytes)} bytes")
+        formats_used.append("Arrow")
+
+        # Read back from Arrow IPC
+        reader = pa.ipc.open_stream(arrow_bytes)
+        table_back = reader.read_all()
+        users_back = table_back.to_pylist()
+        current_value["users"] = users_back
+        current_value = convert_via_gcf(current_value, "Arrow")
+    print()
+except ImportError:
+    print("⚠ pyarrow not installed, skipping (pip install pyarrow)")
+    print()
+except Exception as e:
+    print(f"⚠ Arrow conversion error: {e}")
+    print()
+
+# ROUND 10.6: GCF → Parquet (columnar)
+print("🔄 ROUND 10.6: GCF → Parquet → GCF (columnar)")
+print("-" * 80)
+try:
+    import pyarrow as pa
+    import pyarrow.parquet as pq
+    import tempfile
+
+    if "users" in current_value and isinstance(current_value["users"], list):
+        # Convert users array to Parquet table
+        users = current_value["users"]
+        table = pa.Table.from_pylist(users)
+
+        # Write to Parquet
+        parquet_buffer = pa.BufferOutputStream()
+        pq.write_table(table, parquet_buffer)
+        parquet_bytes = parquet_buffer.getvalue()
+        print(f"Parquet size: {len(parquet_bytes)} bytes")
+        formats_used.append("Parquet")
+
+        # Read back from Parquet
+        parquet_reader = pa.BufferReader(parquet_bytes)
+        table_back = pq.read_table(parquet_reader)
+        users_back = table_back.to_pylist()
+        current_value["users"] = users_back
+        current_value = convert_via_gcf(current_value, "Parquet")
+    print()
+except ImportError:
+    print("⚠ pyarrow not installed, skipping (pip install pyarrow)")
+    print()
+except Exception as e:
+    print(f"⚠ Parquet conversion error: {e}")
+    print()
+
 # ROUND 11: GCF → INI
 print("🔄 ROUND 11: GCF → INI → GCF")
 print("-" * 80)
