@@ -216,7 +216,7 @@ TOON publishes zero multi-model comprehension data and zero generation validity 
 
 Neither is protobuf. Neither are HTTP headers. Readability is a last-mile rendering concern, not a wire format property.
 
-The agent reads GCF (cheap, 53-71% fewer tokens than JSON in the context window), does its work, then calls `decode()` at the end if a human needs to see the result. The context window savings are already banked. The decode costs one function call.
+The agent reads GCF (cheap, 50-69% fewer tokens than JSON in the context window), does its work, then calls `decode()` at the end if a human needs to see the result. The context window savings are already banked. The decode costs one function call.
 
 TOON optimizes for the case where a human is scanning the raw wire format. GCF optimizes for the case where an agent is consuming it and a human can view the decoded output if they need to. The second case is the common case. The first case is debugging.
 

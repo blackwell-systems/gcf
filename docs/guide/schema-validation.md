@@ -20,7 +20,7 @@ A travel booking agent receives structured data from tools and produces structur
 User: "Book me a flight from SFO to JFK next Friday under $500"
 
 1. Agent calls search_flights tool
-   Tool returns flight data as GCF (53-71% fewer tokens in context)
+   Tool returns flight data as GCF (50-69% fewer tokens in context)
    Agent validates decoded response against FlightSearchResult schema
 
 2. Agent reasons over the results, selects a flight
