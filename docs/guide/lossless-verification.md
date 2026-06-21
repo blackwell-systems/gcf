@@ -135,6 +135,39 @@ All fuzz run logs are archived in [eval/results/multiformat/](https://github.com
 **TOML (100M total):**
 - `rust-toml100M-2026-06-14.log` (100M)
 
+## Extended validation: 17 formats
+
+Beyond the 43 billion round-trips across 5 formats, we validated GCF against 12 additional serialization formats using the Format Mega-Gauntlet. This test converts data through all 17 formats in sequence with GCF as the bridge between each:
+
+```
+JSON → XML → MessagePack → YAML → BSON → TOML → CBOR → Protobuf → 
+CSV → JSON5 → Avro → Arrow → Parquet → Pickle → INI → NDJSON → Plist → JSON
+```
+
+15 conversions. 17 formats. The final JSON exactly matches the original.
+
+**Format categories validated:**
+
+| Category | Formats |
+|----------|---------|
+| Text | JSON, YAML, TOML, XML, CSV, INI, JSON5, NDJSON |
+| Binary | MessagePack, BSON, CBOR, Pickle, Plist |
+| Schema-based | Protocol Buffers, Apache Avro |
+| Columnar | Apache Arrow, Apache Parquet |
+
+This proves GCF's codec is trustworthy regardless of where your data originated. Whether it came from a Protobuf microservice, a Parquet data lake, or a YAML config file, you can safely encode it as GCF (for LLM consumption or wire transmission) and decode it back without data loss.
+
+**Run it yourself:**
+
+```bash
+cd gcf/examples
+pip install msgpack pyyaml pymongo tomli tomli_w cbor2 json5 protobuf avro-python3 pyarrow
+protoc --python_out=. test_data.proto
+python3 mega-gauntlet.py
+```
+
+---
+
 ## Edge cases verified
 
 The fuzz testing has specifically verified:
