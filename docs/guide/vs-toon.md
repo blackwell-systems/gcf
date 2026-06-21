@@ -250,6 +250,8 @@ TOON's indentation also tokenizes inconsistently across models: the same 4-space
 
 GCF's pipe-based delimiters have [zero vocabulary merges with field names](/guide/tokenizer-analysis#part-8-root-cause-vocabulary-entry-analysis) across all 8 tested tokenizers.
 
+This matters for comprehension at scale: [Ildiz et al. proved](https://arxiv.org/abs/2402.13512) that self-attention weights tokens proportionally to their frequency in the sequence. When TOON's merged tab-field tokens account for 60%+ of the sequence, the attention budget is mathematically dominated by structural noise. See the [full tokenizer analysis](/guide/tokenizer-analysis#part-5-why-this-explains-comprehension-failures) for how this compounds at 500+ rows.
+
 GCF does everything TOON does, plus five things TOON structurally cannot add without becoming a different format:
 
 - **Local IDs and edge encoding** (requires `@N` references)
