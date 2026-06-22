@@ -1,7 +1,6 @@
 # Structural Ambiguity in JSON Tokenization: A Cross-Tokenizer Analysis
 
-**Dayna Blackwell**
-Blackwell Systems
+**Dayna Blackwell, Blackwell Systems** · dayna@blackwell-systems.com
 
 **Date:** 2026-06-21 · **DOI:** [10.5281/zenodo.20789620](https://doi.org/10.5281/zenodo.20789620)
 
@@ -575,4 +574,4 @@ University of Mannheim. (2024). Web Data Commons: JSON-LD Knowledge Graphs from 
 
 ---
 
-*Corresponding author: Dayna Blackwell, Blackwell Systems (daynajblackwell@gmail.com)*
+*Corresponding author: Dayna Blackwell, Blackwell Systems (dayna@blackwell-systems.com)*
