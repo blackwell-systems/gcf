@@ -109,6 +109,27 @@ The team used GCF for cross-agent context passing in their multi-agent architect
 - GCF used for inter-agent context sharing
 - 3rd place, National AI Hackathon (Pakistan, 2026)
 
+## Speakeasy
+
+[Speakeasy](https://github.com/speakeasy-api/openapi) builds API tooling for the OpenAPI ecosystem. Their `oq` CLI queries and transforms OpenAPI specifications from the command line.
+
+GCF was added as a native output format (`--format gcf`) in [PR #216](https://github.com/speakeasy-api/openapi/pull/216). The Speakeasy team conducted a dependency audit of `gcf-go`, confirming no data is sent to third parties; all encoding happens in-memory.
+
+- `oq --format gcf` outputs OpenAPI query results in GCF
+- Merged after thorough code review and dependency audit by Speakeasy maintainers
+- Uses `github.com/blackwell-systems/gcf-go` v1.2.2
+- Independent third-party adoption with full security review
+
+## Raycast
+
+[Raycast](https://raycast.com) is a productivity launcher for macOS with 7.5K stars on their extensions repo.
+
+The [JSON to GCF Converter](https://raycast.com/blackwell-systems/json-to-gcf-converter) extension converts JSON data into GCF from the clipboard or selected text. Published to the Raycast Store.
+
+- No-view command: copy JSON, run command, GCF on clipboard
+- Uses `@blackwell-systems/gcf` npm package
+- Approved by Raycast maintainers (Greptile 5/5 confidence score)
+
 ## Your project here
 
 If you're using GCF in production, [open an issue](https://github.com/blackwell-systems/gcf/issues) to be listed here.
