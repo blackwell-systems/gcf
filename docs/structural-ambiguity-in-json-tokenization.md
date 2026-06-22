@@ -552,6 +552,8 @@ Repository: [github.com/blackwell-systems/gcf](https://github.com/blackwell-syst
 
 ## References
 
+Blackwell, D. (2026). GCF: A Token-Optimized Wire Format for Structured LLM Interactions. DOI: [10.5281/zenodo.20579817](https://doi.org/10.5281/zenodo.20579817).
+
 Deekeswar, A. (2024). ONTO: Optimized Notation for Tabular Objects. arXiv:2604.17512.
 
 Ildiz, M. E., Huang, Y., Li, Y., Rawat, A. S., & Oymak, S. (2024). From Self-Attention to Markov Models: Unveiling the Dynamics of Generative Transformers. arXiv:2402.13512.
