@@ -145,9 +145,43 @@ This is verified across all 8 tokenizers for this specific example:
 - **Merged** (4 tokens): GPT-4, GPT-4o, LLaMA, Qwen
 - **Separate** (5 tokens): Claude, DeepSeek, Gemma, Mistral
 
-### The merge rate: 22/120 (18.3%)
+### Common business field analysis (155 fields tested)
 
-We tested 15 common JSON field-name patterns across all 8 tokenizers (120 checks total). The opening quote merges with the field name on 22 of those checks.
+We tested 155 common field names from production APIs across all 8 tokenizers (`eval/common-field-merge-analysis.mjs`). **15 of the most common field names in computing merge on half or more of all tokenizers:**
+
+| Field | Merge rate | Models affected |
+|-------|-----------|----------------|
+| `"id":` | **63%** (5/8) | GPT-4, GPT-4o, LLaMA, Qwen, Mistral |
+| `"name":` | **63%** (5/8) | GPT-4, GPT-4o, LLaMA, Qwen, Mistral |
+| `"time":` | **63%** (5/8) | GPT-4, GPT-4o, LLaMA, Qwen, Mistral |
+| `"title":` | **63%** (5/8) | GPT-4, GPT-4o, LLaMA, Qwen, Mistral |
+| `"type":` | **50%** (4/8) | GPT-4, GPT-4o, LLaMA, Qwen |
+| `"value":` | **50%** (4/8) | GPT-4, GPT-4o, LLaMA, Qwen |
+| `"url":` | **50%** (4/8) | GPT-4, GPT-4o, LLaMA, Qwen |
+| `"user_id":` | **50%** (4/8) | GPT-4, GPT-4o, LLaMA, Qwen |
+| `"text":` | **50%** (4/8) | GPT-4, GPT-4o, LLaMA, Qwen |
+| `"path":` | **50%** (4/8) | GPT-4, GPT-4o, LLaMA, Qwen |
+| `"description":` | **50%** (4/8) | GPT-4, GPT-4o, LLaMA, Qwen |
+
+These are not obscure fields. According to the [Web Data Commons](http://webdatacommons.org/structureddata/) dataset (University of Mannheim, 2024), `name` is the #1 most common JSON property on the web (3.5 billion occurrences across 2.39 billion pages) and `url` is #2 (2.6 billion occurrences). Both merge on 50-63% of tokenizers.
+
+At 500 rows with just `id` + `name` + `type`, that's **1,500 field boundaries** where the majority of models see a hidden merge.
+
+### TOON's tab delimiter is worse
+
+TOON, the primary competing token-efficient format, uses tab characters as column delimiters. The same analysis shows TOON's tab merges **more aggressively** than JSON's quote:
+
+| Format | Delimiter merge rate (1,344 checks) |
+|--------|-------------------------------------|
+| TOON (tab) | **59.82%** |
+| JSON (quote) | 39.29% |
+| GCF (pipe) | **0.00%** |
+
+GPT-4's vocabulary has 60/64 tested words as tab+letter entries (94%). Tab-separated data was so common in training corpora that the tokenizer absorbed tabs even more aggressively than quotes. See [GCF vs TOON](/guide/vs-toon) for the full comparison.
+
+### Earlier merge rate analysis: 22/120 (18.3%)
+
+In an earlier, narrower test of 15 field-name patterns across all 8 tokenizers (120 checks), the opening quote merged on 22 checks.
 
 | Pattern | Merge rate | Models that merge |
 |---------|-----------|-------------------|
