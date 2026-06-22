@@ -156,7 +156,7 @@ The header line identifies the format and carries payload metadata:
 GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=10 edges=8
 ```
 
-`tool` identifies the MCP tool that produced this response. `budget` and `tokens` enable the consumer to assess utilization. `symbols` and `edges` give counts without scanning.
+`tool` identifies the MCP tool that produced this response. It is optional: recommended for MCP workloads, omitted for non-MCP applications. Making `tool` optional decouples the graph profile from MCP-specific usage, so the same encoding works in standalone code intelligence tools, data pipelines, or any context where graph-structured data enters an LLM without an MCP server in the loop. `budget` and `tokens` enable the consumer to assess utilization. `symbols` and `edges` give counts without scanning.
 
 ### 3.3 Node Lines
 
