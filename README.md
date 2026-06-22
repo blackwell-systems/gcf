@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://gcformat.com/playground.html"><img src="https://img.shields.io/badge/playground-live-2563eb?style=for-the-badge" alt="Playground"></a>
-  <a href="https://gcformat.com/guide/benchmarks.html"><img src="https://img.shields.io/badge/benchmarks-1%2C700%2B%20evals-22c55e?style=for-the-badge" alt="Benchmarks"></a>
+  <a href="https://gcformat.com/guide/benchmarks.html"><img src="https://img.shields.io/badge/benchmarks-2%2C400%2B%20evals-22c55e?style=for-the-badge" alt="Benchmarks"></a>
   <a href="https://github.com/blackwell-systems/gcf"><img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/blackwell-systems/gcf/main/assets/downloads-badge.json&style=for-the-badge" alt="Downloads"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-333?style=for-the-badge" alt="License"></a>
 </p>
@@ -14,12 +14,15 @@
 <h3 align="center">The AI-native wire format for structured data.</h3>
 
 > [!IMPORTANT]
-> **Graph Compact Format (GCF): A Token-Efficient Wire Format for LLM Tool Interactions**
+> **GCF: A Token-Optimized Wire Format for Structured LLM Interactions**
 > Dayna Blackwell, 2026. DOI: [10.5281/zenodo.20579817](https://doi.org/10.5281/zenodo.20579817)
+>
+> **Structural Ambiguity in JSON Tokenization: A Cross-Tokenizer Analysis**
+> Dayna Blackwell, 2026. DOI: [10.5281/zenodo.20789619](https://doi.org/10.5281/zenodo.20789619)
 
 ---
 
-**100% comprehension on every frontier model tested. 25.5% fewer tokens than TOON, 53% fewer than JSON across 15 datasets. 90.7% on structurally complex code graphs (vs TOON 68.5%, JSON 53.6%). Proven lossless: `decode(encode(value)) == value` for every structured value, verified across 43,000,000,000+ round-trips in 5 formats (JSON, YAML, TOML, CSV, MessagePack). Zero training required.**
+**100% comprehension on every frontier model. 50-92% fewer tokens than JSON. 91.2% on structurally complex code graphs (vs TOON 68.2%, JSON 53.4%). Proven lossless: `decode(encode(value)) == value` for every structured value, verified across 43,000,000,000+ round-trips in 5 formats and 17 serialization formats. Zero training required. JSON's grammar symbols are [hardcoded as merged vocabulary entries](https://gcformat.com/guide/tokenizer-analysis) in BPE tokenizers, creating irrecoverable structural boundaries. GCF's pipe delimiter has 0% merge rate with field names.**
 
 Encode any structured data as GCF before sending it to an LLM. JSON, YAML, TOML, CSV, MessagePack: GCF encodes them all. The model reads it natively with zero format instructions. `decode()` converts back to any format when a human needs to see it. Your existing schemas and validators work on the decoded output unchanged.
 
@@ -40,16 +43,22 @@ pip install gcf-proxy
 
 ## Benchmarks
 
-1,700+ LLM evaluations across 10 models, 3 providers, and 51 independent test runs.
+2,400+ LLM evaluations across 11 models, 3 providers, and 50+ independent test runs.
+
+| | Generic Profile (500 orders) | Graph Profile (500 symbols) |
+|---|---|---|
+| **GCF** | **100%** on every frontier model | **91.2%** (10 models) |
+| **TOON** | weakest format consistently | 68.2% |
+| **JSON** | GCF avg >= JSON on every model | 53.4% |
 
 | | GCF | TOON | JSON |
 |---|---|---|---|
-| **Comprehension** (23 runs, 10 models) | **90.7%** | 68.5% | 53.6% |
+| **Token efficiency** (15 datasets) | **wins 13/15** | wins 2/15 | wins 0/15 |
 | **Generation** (28 runs, 11 models) | **5/5** | 1.0/5 | 5.0/5 |
-| **Input tokens** (500 symbols) | **11,090** | 16,378 | 53,341 |
-| **Output tokens** (100 symbols) | **5,976** | 8,937 | 16,121 |
+| **Token savings** | **50-92%** vs JSON | 30-60% vs JSON | baseline |
+| **43,000,000,000+ round-trips** | **0 failures** | | |
 
-GCF wins 13/15 datasets on the expanded [token efficiency benchmark](https://github.com/blackwell-systems/toon). Full results: [gcformat.com/guide/benchmarks](https://gcformat.com/guide/benchmarks.html)
+Full results: [gcformat.com/guide/benchmarks](https://gcformat.com/guide/benchmarks.html)
 
 ---
 
@@ -134,7 +143,7 @@ Both profiles share the same grammar (common scalar grammar, key grammar, header
 
 ## It gets cheaper over time
 
-**Session deduplication:** Symbols sent in prior responses become bare references. By the 5th tool call: 92.7% savings vs JSON.
+**Session deduplication:** Symbols sent in prior responses become bare references (`@7` = 2 tokens vs 19 for full declaration). Over a 5-call session at production scale (500 symbols): 84.3% cumulative savings vs JSON (148K JSON tokens vs 23K GCF). By call 5: 91.9% savings.
 
 **Delta encoding:** When the context changes slightly between queries, send only the diff. 81.2% additional savings on re-queries.
 
@@ -173,16 +182,22 @@ No other format has these. They compound across multi-turn agent interactions.
 - [GCF vs TOON](https://gcformat.com/guide/vs-toon.html)
 - [Schema Validation](https://gcformat.com/guide/schema-validation.html)
 - [FAQ](https://gcformat.com/guide/faq.html)
+- [Tokenizer Analysis](https://gcformat.com/guide/tokenizer-analysis.html) (why JSON's grammar breaks at the BPE level)
 - [Independent AI Reviews](https://gcformat.com/reviews/)
 - [Playground](https://gcformat.com/playground.html)
 - [Specification](SPEC.md)
 
+## Adopted by
+
+[Speakeasy](https://speakeasy.com) (API tooling, customers include Google, Verizon, Mistral AI, DocuSign, Vercel) · [OmniRoute](https://omniroute.online) (6.1K stars) · [NetClaw](https://github.com/automateyournetwork/netclaw) (556 stars) · [ctx](https://github.com/stevesolun/ctx) (510 stars) · [NeuroNest](https://neuronest.cc) · [Open Data Products SDK](https://opendataproducts.org/sdk/) (Linux Foundation) · [Raycast](https://raycast.com/blackwell-systems/json-to-gcf-converter) · [and more](https://gcformat.com/ecosystem/adopters.html)
+
 ## Use cases
 
-- **MCP tool responses.** Any MCP server returning structured data. 61-71% fewer tokens with 100% comprehension accuracy.
+- **MCP tool responses.** Any MCP server returning structured data. 50-92% fewer tokens with 100% comprehension accuracy.
 - **Agent-to-agent communication.** 63% fewer tokens per handoff. 5/5 generation validity on every frontier model.
 - **LLM structured output.** LLMs produce valid GCF with a 3-line primer. No training required.
 - **Code intelligence.** Graph profile with local IDs, edges, and distance grouping.
+- **Multi-format interop.** Validated lossless across 17 serialization formats (JSON, XML, MessagePack, YAML, BSON, TOML, CBOR, Protobuf, CSV, JSON5, Avro, Arrow, Parquet, Pickle, INI, NDJSON, Plist).
 
 <details>
 <summary>More links</summary>
