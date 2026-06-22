@@ -440,15 +440,15 @@ GCF, TOON, and JSON produce qualitatively different failure modes. The [tokenize
 
 On two separate runs, Claude Opus responded to a JSON counting question by manually enumerating symbols one by one (143 lines on run 1, 119 on run 2), burning output tokens on a chain-of-thought enumeration and still getting the wrong answer. GCF answers the same question from a 3-character header: `[167]`.
 
-![Error Magnitude by Format](public/charts/error-magnitude.png)
+![Error Magnitude by Format](/charts/error-magnitude.png)
 
-![Failure Types by Model Tier](public/charts/failure-types.png)
+![Failure Types by Model Tier](/charts/failure-types.png)
 
-![Failure Type Distribution](public/charts/failure-types-pie.png)
+![Failure Type Distribution](/charts/failure-types-pie.png)
 
-![Comprehension Score Variance](public/charts/comprehension-variance.png)
+![Comprehension Score Variance](/charts/comprehension-variance.png)
 
-![GCF Advantage Grows on Weaker Models](public/charts/advantage-by-tier.png)
+![GCF Advantage Grows on Weaker Models](/charts/advantage-by-tier.png)
 
 #### Comprehension methodology
 
@@ -585,7 +585,7 @@ GCF is bidirectional: LLMs can produce it, not just consume it. 28 generation ru
 
 **GCF 5/5 on every frontier model. TOON fails on 7 of 9 models.**
 
-![Generation Validity by Model](public/charts/generation-validity.png)
+![Generation Validity by Model](/charts/generation-validity.png)
 
 #### Why TOON fails generation
 
@@ -595,9 +595,9 @@ This is a structural design flaw in flat tabular formats. Any time a column enco
 
 GCF expresses categories through section placement (`## targets`, `## related`). The model writes the symbol in the section matching the label. No integer mapping required. The format aligns with how LLMs naturally express grouped data.
 
-![The Distance Label Problem](public/charts/distance-label-problem.png)
+![The Distance Label Problem](/charts/distance-label-problem.png)
 
-![TOON Generation Heatmap](public/charts/toon-heatmap.png)
+![TOON Generation Heatmap](/charts/toon-heatmap.png)
 
 When TOON is given pre-encoded integers (hand-holding the model through the mapping), performance improves on some models but remains inconsistent. Even in the best case, GCF output is 28% smaller.
 
@@ -609,7 +609,7 @@ When TOON is given pre-encoded integers (hand-holding the model through the mapp
 | TOON | 8,937 B | 45% fewer |
 | JSON | 16,121 B | baseline |
 
-![Output Size at Scale](public/charts/output-cost-at-scale.png)
+![Output Size at Scale](/charts/output-cost-at-scale.png)
 
 **Implications.** GCF generation enables: (1) agent-to-agent communication at 63% fewer tokens per handoff, (2) structured output mode as an alternative to JSON mode, and (3) system prompt encoding where context packs are encoded as GCF to maximize context window utilization.
 
