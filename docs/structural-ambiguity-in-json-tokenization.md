@@ -3,6 +3,8 @@
 **Dayna Blackwell**
 Blackwell Systems
 
+**Date:** 2026-06-21 · **DOI:** [pending]
+
 ---
 
 ## Abstract
@@ -71,7 +73,7 @@ We tested 8 tokenizers from 6 providers, covering every major LLM family in prod
 |-----------|----------|-------------|-----------|
 | Claude tokenizer | Anthropic | Claude 3.5, 4.x | ~65,000 |
 | cl100k_base | OpenAI | GPT-4 | 100,256 |
-| o200k_base | OpenAI | GPT-4o, GPT-5.x | 200,019 |
+| o200k_base | OpenAI | GPT-4o | 200,019 |
 | LLaMA 3.1 tokenizer | Meta | LLaMA 3.x | 128,256 |
 | Qwen 2.5 tokenizer | Alibaba | Qwen 2.5 | 151,936 |
 | DeepSeek V3 tokenizer | DeepSeek | DeepSeek V3 | 128,000 |
@@ -82,7 +84,7 @@ These tokenizers were each trained on different corpora with different merge pri
 
 ### 3.2 Measurements
 
-We measured four properties:
+We measured six properties:
 
 1. **Boundary merge rate**: For each format, we tested all combinations of field names and values from our evaluation dataset (14 fields, 25 values) across all 8 tokenizers (2,800 checks per format). A boundary merge occurs when a structural delimiter (quote in JSON, pipe in GCF) fuses with adjacent content into a single token.
 
@@ -98,7 +100,7 @@ We measured four properties:
 
 ### 3.3 Evaluation Data
 
-Comprehension correlation data comes from 2,400+ LLM evaluation calls across 11 models and 4 providers (Anthropic, OpenAI, Google, Meta), using structurally complex payloads (500 symbols, 200 edges, 13 questions per run). These evaluations are described elsewhere; we reference the results here to connect tokenization mechanics to observed comprehension outcomes.
+Comprehension correlation data comes from 2,400+ LLM evaluation calls across 11 models and 3 providers (Anthropic, OpenAI, Google), using both standard workloads (500 orders, nested data) and structurally complex payloads (500 symbols, 200 edges, 13 questions per run). These evaluations are described in the companion paper "GCF: A Token-Optimized Wire Format for Structured LLM Interactions" (DOI: 10.5281/zenodo.20579817); we reference the results here to connect tokenization mechanics to observed comprehension outcomes.
 
 ### 3.4 Field Name Frequency Data
 
