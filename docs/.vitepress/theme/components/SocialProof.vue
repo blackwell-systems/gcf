@@ -3,7 +3,7 @@
     <div class="proof-inner">
       <span class="proof-label">Adopted by</span>
       <span class="proof-items">
-        <a href="https://speakeasy.com" target="_blank" class="proof-item"><img src="/logos/speakeasy-logo.svg" alt="Speakeasy" class="proof-logo"> Speakeasy</a>
+        <a href="https://speakeasy.com" target="_blank" class="proof-item"><img src="/logos/speakeasy-logo.svg" alt="Speakeasy" class="proof-logo"></a>
         <span class="proof-sep">·</span>
         <a href="https://omniroute.online" target="_blank" class="proof-item">♦️ OmniRoute <span class="proof-stars">6.1K ★</span></a>
         <span class="proof-sep">·</span>
