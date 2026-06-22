@@ -13,6 +13,8 @@
         <span class="proof-sep">·</span>
         <a href="https://neuronest.cc/" target="_blank" class="proof-item"><span class="nn-logo">🧠</span> NeuroNest</a>
         <span class="proof-sep">·</span>
+        <a href="https://github.com/speakeasy-api/openapi" target="_blank" class="proof-item"><img src="/logos/speakeasy-logo.svg" alt="Speakeasy" class="proof-logo"> Speakeasy</a>
+        <span class="proof-sep">·</span>
         <a href="/ecosystem/adopters" class="proof-item proof-more">and more</a>
       </span>
     </div>
