@@ -22,7 +22,7 @@ For natural language, tokenizer variance is well understood and largely harmless
 
 This paper presents a mechanistic analysis of how and why JSON's structural grammar breaks down under BPE tokenization. We distinguish between two types of content in any structured format: grammar symbols (delimiters that define structure) and payload content (the actual data values). When grammar symbols merge with payload content into single tokens, we call this a "boundary merge." The resulting token conflates structural markup with semantic content, forcing the model to decompose structure from within a single embedding rather than reading it from token boundaries.
 
-Prior work has noted JSON's token overhead in passing. Deekeswar (2024) measured that 1,000 JSON records consume approximately 80,000 tokens with the majority being repeated keys and punctuation. Nandakishore (2024) argued that "optimizing for tokenizer efficiency, not just human readability, is going to matter." However, no prior work has performed a systematic mechanistic analysis of exactly how and where JSON's structure breaks down at the BPE level, which tokenizers are affected, and whether the problem is recoverable.
+Prior work has noted JSON's token overhead in passing. Deekeswar (2024) measured that 1,000 JSON records consume approximately 80,000 tokens with the majority being repeated keys and punctuation. Karim and Batatia (2025) explored structured tokenization for LLM training data. However, no prior work has performed a systematic mechanistic analysis of exactly how and where JSON's structure breaks down at the BPE level, which tokenizers are affected, and whether the problem is recoverable.
 
 We fill this gap with three contributions:
 
@@ -473,9 +473,7 @@ In a header-factored format with pipe delimiters, the equivalent task requires a
 
 **Deekeswar (2024)** measured that 1,000 JSON records consume approximately 80,000 tokens with the majority being repeated keys and punctuation, proposing ONTO as an alternative format. Our analysis explains the mechanism: 52% of tokens are repeated field names, and these names fuse with structural delimiters on half of tokenizers.
 
-**Nandakishore (2024)** proposed JTON, a header-factored tabular encoding achieving 15-60% token reduction. The approach independently mirrors GCF's structural design (field names declared once, positional values). Our grammar swap experiment (Section 4.7) confirms that any format making these structural choices achieves similar savings regardless of delimiter characters.
-
-**Kutschka and Geiger (2024)** found that token-efficient formats can hurt accuracy in some configurations, arguing that training distribution favoring JSON compensates for inefficiency. Our data partially confirms this at small scale (all formats achieve near-100% at 10-50 records) but shows the compensation fails at 500+ records where JSON drops to 53.4%.
+**Kutschka and Geiger (2026)** found that token-efficient formats can hurt accuracy in some configurations, arguing that training distribution favoring JSON compensates for inefficiency. Our data partially confirms this at small scale (all formats achieve near-100% at 10-50 records) but shows the compensation fails at 500+ records where JSON drops to 53.4%.
 
 **Ildiz et al. (2024)** proved that self-attention implements a Context-Conditioned Markov Chain where the probability of attending to token j includes m_j (its frequency in the sequence) in the numerator. This is the mathematical basis for our attention dilution finding: when structural tokens like `"name":` account for 80% of occurrences in a JSON array, they dominate the attention budget by count. The paper analyzes single-layer models; our comprehension data confirms the effect persists in production multi-layer architectures at 500+ rows.
 
@@ -483,7 +481,7 @@ In a header-factored format with pipe delimiters, the equivalent task requires a
 
 **Sui et al. (2023)** showed that table format affects LLM performance across multiple tasks. Our analysis explains this finding at the BPE level: different formats produce different merge patterns, different overhead ratios, and different signal-to-noise ratios.
 
-**Matveev (2024)** argued that JSON's advantage from training distribution scales with data complexity, proposing that alternative formats only separate past a complexity threshold. Our evaluation data confirms the threshold exists at approximately 100-200 records for nested data and approximately 500 for flat tables.
+**Matveev (2026)** argued that JSON's advantage from training distribution scales with data complexity, proposing that alternative formats only separate past a complexity threshold. Our evaluation data confirms the threshold exists at approximately 100-200 records for nested data and approximately 500 for flat tables.
 
 **Liyanage and Yvon (2025)** studied post-training tokenizer adaptation, demonstrating that tokenizer changes after model training degrade performance. This supports our irrecoverability argument: modifying a tokenizer's vocabulary to fix JSON merge patterns would require retraining the model from scratch.
 
@@ -554,25 +552,23 @@ Repository: [github.com/blackwell-systems/gcf](https://github.com/blackwell-syst
 
 Blackwell, D. (2026). GCF: A Token-Optimized Wire Format for Structured LLM Interactions. DOI: [10.5281/zenodo.20579817](https://doi.org/10.5281/zenodo.20579817).
 
-Deekeswar, A. (2024). ONTO: Optimized Notation for Tabular Objects. arXiv:2604.17512.
+Deekeswar, H. (2024). ONTO: A Token-Efficient Columnar Notation for LLM Input Optimization. arXiv:2604.17512.
 
 Ildiz, M. E., Huang, Y., Li, Y., Rawat, A. S., & Oymak, S. (2024). From Self-Attention to Markov Models: Unveiling the Dynamics of Generative Transformers. arXiv:2402.13512.
 
-Karim, N. & Batatia, H. (2025). Fixed-token structure for LLM data representation. arXiv:2508.01685.
+Karim, K. & Batatia, H. (2025). Innovative Tokenisation of Structured Data for LLM Training. arXiv:2508.01685.
 
-Kutschka, M. & Geiger, L. (2024). Token-efficient formats and LLM accuracy tradeoffs. arXiv:2605.29676.
+Kutschka, L. & Geiger, B. (2026). Notation Matters: A Benchmark Study of Token-Optimized Formats in Agentic AI Systems. arXiv:2605.29676.
 
-Liyanage, V. & Yvon, F. (2025). Post-training tokenizer adaptation for language models. arXiv:2601.21665.
+Liyanage, V. & Yvon, F. (2025). AdaptBPE: From General Purpose to Specialized Tokenizers. arXiv:2601.21665.
 
-Matveev, A. (2024). JSON scaling hypothesis for LLM comprehension. arXiv:2603.03306.
-
-Nandakishore, R. (2024). JTON: Header-factored tabular encoding for LLMs. arXiv:2604.05400.
+Matveev, I. (2026). Token-Oriented Object Notation vs JSON: A Benchmark of Plain and Constrained Decoding Generation. arXiv:2603.03306.
 
 Sennrich, R., Haddow, B., & Birch, A. (2016). Neural Machine Translation of Rare Words with Subword Units. In Proceedings of the 54th Annual Meeting of the ACL (pp. 1715-1725).
 
-Sui, Y., He, M., Zhang, Z., Wang, Y., & Zhao, J. (2023). Table Meets LLM: Can Large Language Models Understand Structured Table Data? arXiv:2305.13062.
+Sui, Y., He, M., Zhang, Z., Wang, Y., & Zhao, J. (2023). Table Meets LLM: Can Large Language Models Understand Structured Table Data? A Benchmark and Empirical Study. arXiv:2305.13062.
 
-University of Mannheim. (2024). Web Data Commons: JSON-LD Knowledge Graphs from the Common Crawl. http://webdatacommons.org/structureddata/
+University of Mannheim. (2024). Web Data Commons: RDFa, Microdata, and Microformat Data Sets. http://webdatacommons.org/structureddata/
 
 ---
 
