@@ -26,7 +26,7 @@ We benchmark against JSON and TOON (Token-Oriented Object Notation), a tabular e
 
 Session deduplication (84.3% cumulative savings over a 5-call session) and delta encoding (81.2% on re-queries) compound savings across multi-turn interactions. A streaming encoding extension enables zero-buffering encode with O(1) memory per row. The format is implemented in six languages (Go, TypeScript, Python, Rust, Swift, Kotlin), 157 conformance fixtures, and deployed in production MCP servers. Specification v3.1 Stable: gcformat.com.
 
-A companion paper, "Structural Ambiguity in JSON Tokenization" [DOI pending], presents a cross-tokenizer vocabulary analysis proving that JSON's grammar symbols are hardcoded as merged entries in BPE tokenizer vocabularies, creating irrecoverable structural boundaries that compound at scale.
+A companion paper, "Structural Ambiguity in JSON Tokenization" [DOI: 10.5281/zenodo.20789620](https://doi.org/10.5281/zenodo.20789620), presents a cross-tokenizer vocabulary analysis proving that JSON's grammar symbols are hardcoded as merged entries in BPE tokenizer vocabularies, creating irrecoverable structural boundaries that compound at scale.
 
 ![Comprehension and Generation across 11 models and 3 providers](/charts/hero.png)
 
@@ -430,7 +430,7 @@ Frontier models (Opus, Sonnet, Haiku, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, G
 
 #### Failure taxonomy
 
-GCF, TOON, and JSON produce qualitatively different failure modes. The [tokenizer analysis](https://gcformat.com/guide/tokenizer-analysis) provides the mechanistic link: JSON's grammar symbols merge with field names in BPE tokenizer vocabularies, creating hidden structural boundaries that compound per row. See "Structural Ambiguity in JSON Tokenization" [DOI pending] for the full analysis.
+GCF, TOON, and JSON produce qualitatively different failure modes. The [tokenizer analysis](https://gcformat.com/guide/tokenizer-analysis) provides the mechanistic link: JSON's grammar symbols merge with field names in BPE tokenizer vocabularies, creating hidden structural boundaries that compound per row. See "Structural Ambiguity in JSON Tokenization" [DOI: 10.5281/zenodo.20789620](https://doi.org/10.5281/zenodo.20789620) for the full analysis.
 
 **GCF fails on precision** (median error: 4). Off-by-1-2 header misreads (8 occurrences), deterministic column scan miscounts on GPT-5.4 (11), field confusion (2), miscellaneous (5), and context overwhelm empty responses on GPT-5.5 (10). The format structure is understood; the count is slightly misread. 36 total failures across 24 runs.
 
@@ -527,7 +527,7 @@ The structural difference: TOON puts all symbols in one flat table with a `dista
 
 **Methodology:** We forked TOON's benchmark repository (`github.com/blackwell-systems/toon-benchmark`), added GCF as one additional formatter, and expanded from their original 6 datasets to 15 representing real-world MCP tool responses. Tokenizer (o200k_base) and methodology are upstream. GCF wins 13 of 15, 25.5% fewer tokens overall, 54.8% fewer than JSON. See [benchmarks](https://gcformat.com/guide/benchmarks#token-efficiency-15-datasets) for the full 15-dataset table.
 
-**Tokenization analysis:** TOON's tab delimiter merges with adjacent content more aggressively than JSON's quote character. On real data (1,344 checks): TOON tab merge rate 59.82%, JSON quote merge rate 39.29%, GCF pipe merge rate 0.00%. GPT-4's vocabulary contains 60/64 tested words as tab+letter entries vs 15/64 as quote+letter entries. TOON's chosen delimiter is the worst of all three formats for BPE tokenizer compatibility. See [tokenizer analysis](https://gcformat.com/guide/tokenizer-analysis) and "Structural Ambiguity in JSON Tokenization" [DOI pending].
+**Tokenization analysis:** TOON's tab delimiter merges with adjacent content more aggressively than JSON's quote character. On real data (1,344 checks): TOON tab merge rate 59.82%, JSON quote merge rate 39.29%, GCF pipe merge rate 0.00%. GPT-4's vocabulary contains 60/64 tested words as tab+letter entries vs 15/64 as quote+letter entries. TOON's chosen delimiter is the worst of all three formats for BPE tokenizer compatibility. See [tokenizer analysis](https://gcformat.com/guide/tokenizer-analysis) and "Structural Ambiguity in JSON Tokenization" [DOI: 10.5281/zenodo.20789620](https://doi.org/10.5281/zenodo.20789620).
 
 **GCF wins 13 of 15 datasets** (25.5% fewer tokens overall). TOON's two wins total 104 tokens combined on edge cases (nested config and one tokenizer artifact).
 
@@ -652,7 +652,7 @@ The format that looks clean to humans (JSON) is the one that breaks for agents a
 - **Kotlin library:** `gcf-kotlin` via JitPack (v0.5.1)
 - **MCP proxy:** `github.com/blackwell-systems/gcf-proxy`: streaming progress notifications, drop-in wrapper, zero code changes
 - **Comprehension eval:** `github.com/blackwell-systems/gcf-go/eval` (generic profile: 500 orders, 27 runs, 11 models; graph profile: 500 symbols, 24 runs, 10 models; 13 questions, 3 formats)
-- **Tokenizer analysis:** `github.com/blackwell-systems/gcf/eval` (13 scripts, 8 tokenizers, 6 providers). See "Structural Ambiguity in JSON Tokenization" [DOI pending].
+- **Tokenizer analysis:** `github.com/blackwell-systems/gcf/eval` (13 scripts, 8 tokenizers, 6 providers). See "Structural Ambiguity in JSON Tokenization" [DOI: 10.5281/zenodo.20789620](https://doi.org/10.5281/zenodo.20789620).
 - **Generation eval:** `github.com/blackwell-systems/gcf-go/eval` (5-100 symbols, GCF vs TOON vs JSON, 9 models, validated through real decoders)
 - **Eval results:** `github.com/blackwell-systems/gcf/eval/results` (all raw logs, failure taxonomy, artifacts)
 - **TOON benchmark fork:** `github.com/blackwell-systems/toon` (branch: gcf-comparison, their datasets, their tokenizer)
