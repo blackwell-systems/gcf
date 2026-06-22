@@ -89,8 +89,14 @@
   width: auto;
   display: inline;
   vertical-align: text-top;
-  opacity: 0.6;
+  opacity: 0.5;
   margin-right: 2px;
+  transition: opacity 0.2s ease, filter 0.2s ease;
+}
+
+.proof-item:hover .proof-logo {
+  opacity: 1;
+  filter: drop-shadow(0 0 4px rgba(24, 190, 252, 0.5));
 }
 
 @keyframes nn-spin {
