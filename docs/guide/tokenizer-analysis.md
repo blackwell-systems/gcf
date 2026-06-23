@@ -105,14 +105,45 @@ On the [15-dataset token efficiency benchmark](/guide/benchmarks#token-efficienc
 | 100 orders | 50.0% | 71.9% | 56.7% | 21.8pp |
 | 500 orders | 49.0% | 71.5% | 55.9% | 22.5pp |
 
-The mean savings holds at 55-57% across all 43 tokenizers at every scale. The wider spread compared to narrower tokenizer subsets reflects the inclusion of older architectures (GPT-2 at 71% savings due to its smaller vocabulary producing more JSON tokens) and code-specialized tokenizers (StarCoder2 at 49%). If you measure 56% savings on one model, you can expect 49-60% on the vast majority of production models.
+The mean savings holds at 55-57% across all 43 tokenizers at every scale.
+
+### Per-tokenizer stability (10 to 500 records)
+
+Each tokenizer's savings are remarkably stable across payload sizes. The widest per-tokenizer spread is 3.1pp (T5). Most are under 2pp.
+
+| Tokenizer | Min | Max | Mean | Range |
+|-----------|-----|-----|------|-------|
+| GPT-4 (OpenAI cl100k) | 57.5% | 59.6% | 58.9% | 2.0pp |
+| GPT-4o (OpenAI o200k) | 57.2% | 59.3% | 58.6% | 2.1pp |
+| Claude (Anthropic) | 52.8% | 55.2% | 54.5% | 2.4pp |
+| LLaMA 2 (Meta) | 54.2% | 55.3% | 54.8% | 1.1pp |
+| LLaMA 3/3.1 (Meta) | 57.5% | 59.6% | 58.9% | 2.0pp |
+| Qwen 2-3 (Alibaba) | 52.1% | 53.4% | 52.9% | 1.3pp |
+| DeepSeek V3/R1 | 55.6% | 57.8% | 57.1% | 2.1pp |
+| Gemma 2 (Google) | 56.0% | 57.2% | 56.7% | 1.2pp |
+| Gemma 3 (Google) | 55.6% | 56.7% | 56.2% | 1.1pp |
+| Mistral 7B | 55.1% | 56.1% | 55.6% | 1.1pp |
+| Mistral Nemo | 51.0% | 52.1% | 51.6% | 1.2pp |
+| Phi-2 (Microsoft) | 57.9% | 60.1% | 59.4% | 2.2pp |
+| Phi-4 (Microsoft) | 57.5% | 59.6% | 58.9% | 2.0pp |
+| Falcon (TII) | 57.4% | 59.7% | 59.0% | 2.3pp |
+| Yi Coder (01.AI) | 56.9% | 57.9% | 57.4% | 1.0pp |
+| StarCoder2 (BigCode) | 49.0% | 50.1% | 49.6% | 1.1pp |
+| Nemotron (NVIDIA) | 55.5% | 56.7% | 56.2% | 1.1pp |
+| Jamba (AI21) | 57.1% | 58.1% | 57.5% | 1.0pp |
+| StableLM 2 | 52.1% | 53.4% | 52.9% | 1.3pp |
+| Pythia (EleutherAI) | 58.1% | 59.8% | 59.3% | 1.7pp |
+| OLMo (AllenAI) | 58.1% | 59.8% | 59.3% | 1.7pp |
+| Arctic (Snowflake) | 54.2% | 55.3% | 54.8% | 1.1pp |
+
+Every tokenizer stays within a 1.0-3.1pp band from 10 to 500 records. Savings are a structural property of the encoding (header factorization, positional values), not a tokenizer artifact. If you measure 55% on a test payload, you will get 53-57% on production payloads of any size.
 
 ### Why this matters
 
 Token savings translate directly to cost savings. If your tool produces 500-record responses:
-- On GPT-4o: you save 57,000 tokens per response (57.9% of 98,348)
-- On Claude: you save 52,500 tokens per response (54.4% of 96,619)
-- On Gemma: you save 69,300 tokens per response (55.6% of 124,620)
+- On GPT-4o: you save 58,000 tokens per response (58.8% of 98,548)
+- On Claude: you save 53,000 tokens per response (54.8% of 96,719)
+- On Gemma 2: you save 69,800 tokens per response (56.0% of 124,719)
 
 These savings are predictable regardless of which model processes the data.
 
