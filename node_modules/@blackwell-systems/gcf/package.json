@@ -1,7 +1,7 @@
 {
   "name": "@blackwell-systems/gcf",
-  "version": "2.1.2",
-  "description": "Drop-in JSON replacement for AI pipelines. 79% fewer tokens. 90.7% comprehension across 10 models. Zero dependencies.",
+  "version": "2.2.0",
+  "description": "The AI-native wire format for structured data. 50-92% fewer tokens than JSON. 100% comprehension on every frontier model. Zero dependencies.",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

@@ -220,7 +220,7 @@ GCF wins 13/15 datasets on the expanded [token efficiency benchmark](https://git
 | n8n | `npm install n8n-nodes-gcf` | [gcf-n8n-nodes](https://github.com/blackwell-systems/gcf-n8n-nodes) (workflow encode/decode) |
 | Tree-sitter | `npm install tree-sitter-gcf` | [tree-sitter-gcf](https://github.com/blackwell-systems/tree-sitter-gcf) |
 
-Zero runtime dependencies. MIT licensed. All implementations support both generic profile (`encodeGeneric`) and graph profile (`encode`). CLI included in all 6 languages.
+**Zero runtime dependencies. Permanently.** All six implementations depend only on their language's standard library. No transitive dependencies. No supply chain risk. This is a permanent commitment: GCF will never take on external runtime dependencies. MIT licensed. All implementations support both generic profile (`encodeGeneric`) and graph profile (`encode`). CLI included in all 6 languages.
 
 **Specification:** [SPEC v3.1 Stable](https://github.com/blackwell-systems/gcf/blob/main/SPEC.md) with 157 conformance fixtures, 33,000,000,000+ lossless round-trips verified across 5 formats and 6 languages. All implementations at v2.1.0+ (Go v1.2.0). Cross-language 6x6 matrix verified.
 

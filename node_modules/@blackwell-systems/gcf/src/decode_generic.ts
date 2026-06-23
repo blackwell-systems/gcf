@@ -258,10 +258,67 @@ function findClosingBrace(s: string): number {
   return -1;
 }
 
+function unflattenPaths(
+  pathColumns: Map<string, string[]>,
+  flatValues: Map<string, any>,
+  flatAbsent: Set<string>,
+): Record<string, any> {
+  // Group by top-level parent.
+  const groups = new Map<string, string[]>();
+  const groupOrder: string[] = [];
+  for (const [fieldName, paths] of pathColumns) {
+    if (paths.length === 0) continue;
+    const top = paths[0];
+    if (!groups.has(top)) {
+      groups.set(top, []);
+      groupOrder.push(top);
+    }
+    groups.get(top)!.push(fieldName);
+  }
+
+  const result: Record<string, any> = {};
+
+  for (const top of groupOrder) {
+    const fieldNames = groups.get(top)!;
+    const allAbsent = fieldNames.every(f => flatAbsent.has(f));
+    const allNull = fieldNames.every(f => {
+      if (flatAbsent.has(f)) return false;
+      const val = flatValues.get(f);
+      return val === null;
+    });
+
+    if (allAbsent) continue;
+    if (allNull) { result[top] = null; continue; }
+
+    for (const fieldName of fieldNames) {
+      if (flatAbsent.has(fieldName)) continue;
+      const paths = pathColumns.get(fieldName)!;
+      const val = flatValues.has(fieldName) ? flatValues.get(fieldName) : null;
+
+      let current = result;
+      for (let k = 0; k < paths.length - 1; k++) {
+        if (!(paths[k] in current)) current[paths[k]] = {};
+        current = current[paths[k]];
+      }
+      current[paths[paths.length - 1]] = val;
+    }
+  }
+
+  return result;
+}
+
 function parseTabularBody(lines: string[], start: number, depth: number, fields: string[], expectedCount: number): [any[], number] {
   const ind = '  '.repeat(depth);
   const rows: any[] = [];
   let i = start;
+
+  // Detect path columns: fields containing ">".
+  const pathColumnMap = new Map<string, string[]>();
+  for (const f of fields) {
+    if (f.includes('>')) {
+      pathColumnMap.set(f, f.split('>'));
+    }
+  }
 
   // Track inline schemas and shared array schemas.
   const inlineSchemas = new Map<string, string[]>();
@@ -303,8 +360,23 @@ function parseTabularBody(lines: string[], start: number, depth: number, fields:
     const inlineAttOrder: string[] = [];
     const missingFields = new Set<string>();
 
+    // Collect path column values for unflattening.
+    const flatValues = new Map<string, any>();
+    const flatAbsent = new Set<string>();
+
     for (let j = 0; j < fields.length; j++) {
       const cellVal = vals[j];
+
+      // Path columns: store values for later unflattening.
+      if (pathColumnMap.has(fields[j])) {
+        const parsed = parseScalar(cellVal, true);
+        if (parsed === MISSING) {
+          flatAbsent.add(fields[j]);
+        } else {
+          flatValues.set(fields[j], parsed);
+        }
+        continue;
+      }
 
       // Check for ^{fields} inline schema declaration.
       if (cellVal.startsWith('^{') && cellVal.endsWith('}')) {
@@ -464,6 +536,14 @@ function parseTabularBody(lines: string[], start: number, depth: number, fields:
       if (i < lines.length && lines[i].startsWith(attIndent)) {
         const peek = lines[i].slice(attIndent.length);
         if (peek.startsWith('.')) throw new Error(`orphan_attachment: ${peek}`);
+      }
+    }
+
+    // Unflatten path columns into nested objects.
+    if (pathColumnMap.size > 0) {
+      const nested = unflattenPaths(pathColumnMap, flatValues, flatAbsent);
+      for (const [k, v] of Object.entries(nested)) {
+        row[k] = v;
       }
     }
 

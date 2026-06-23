@@ -141,21 +141,149 @@ function sharedArraySchema(arr: unknown[], fieldName: string): string[] | null {
   return canonicalFields;
 }
 
+// ── Nested object flattening (v3.2) ──────────────────────────────────────
+
+interface FlatLeaf {
+  path: string;     // ">" separated path (e.g. "customer>name")
+  keys: string[];   // key chain to traverse from row object
+}
+
+function analyzeFlattenable(arr: unknown[], fieldName: string, parentPath: string): FlatLeaf[] | null {
+  let canonicalShape: Record<string, 'scalar' | 'nested'> | null = null;
+
+  for (const item of arr) {
+    const obj = item as Record<string, unknown>;
+    if (!(fieldName in obj) || obj[fieldName] === null || obj[fieldName] === undefined) continue;
+    const v = obj[fieldName];
+    if (typeof v !== 'object' || Array.isArray(v)) return null;
+
+    const keys = Object.keys(v as Record<string, unknown>);
+
+    if (!canonicalShape) {
+      canonicalShape = {};
+      for (const k of keys) {
+        if (k.includes('>')) return null;
+        const val = (v as Record<string, unknown>)[k];
+        if (val !== null && val !== undefined && typeof val === 'object' && !Array.isArray(val)) {
+          canonicalShape[k] = 'nested';
+        } else if (Array.isArray(val)) {
+          return null;
+        } else {
+          canonicalShape[k] = 'scalar';
+        }
+      }
+    } else {
+      if (keys.length !== Object.keys(canonicalShape).length) return null;
+      for (const k of keys) {
+        if (!(k in canonicalShape)) return null;
+        const val = (v as Record<string, unknown>)[k];
+        const expected = canonicalShape[k];
+        if (expected === 'scalar') {
+          if (val !== null && val !== undefined && typeof val === 'object') return null;
+        } else if (expected === 'nested') {
+          if (val !== null && val !== undefined) {
+            if (typeof val !== 'object' || Array.isArray(val)) return null;
+          }
+        }
+      }
+    }
+  }
+
+  if (!canonicalShape) return null;
+
+  const currentPath = parentPath ? parentPath + '>' + fieldName : fieldName;
+  const parentKeys = parentPath ? [...parentPath.split('>'), fieldName] : [fieldName];
+
+  const leaves: FlatLeaf[] = [];
+  for (const k of Object.keys(canonicalShape)) {
+    if (canonicalShape[k] === 'scalar') {
+      leaves.push({ path: currentPath + '>' + k, keys: [...parentKeys, k] });
+    } else {
+      const subArr = arr.map(item => {
+        const obj = item as Record<string, unknown>;
+        if (!(fieldName in obj) || obj[fieldName] === null || obj[fieldName] === undefined) return {};
+        return obj[fieldName];
+      });
+      const subLeaves = analyzeFlattenable(subArr as unknown[], k, currentPath);
+      if (!subLeaves || subLeaves.length === 0) return null;
+      leaves.push(...subLeaves);
+    }
+  }
+
+  // Guard: reject if any row has non-null object with all-null leaves.
+  if (leaves.length > 0) {
+    for (const item of arr) {
+      const obj = item as Record<string, unknown>;
+      if (!(fieldName in obj) || obj[fieldName] === null || obj[fieldName] === undefined) continue;
+      const allNull = leaves.every(leaf => {
+        const val = resolveKeyChain(item, leaf.keys);
+        return val.exists && val.value === null;
+      });
+      if (allNull) return null;
+    }
+  }
+
+  return leaves;
+}
+
+function resolveKeyChain(item: unknown, keys: string[]): { value: unknown; exists: boolean } {
+  if (keys.length === 0) return { value: undefined, exists: false };
+  const obj = item as Record<string, unknown>;
+  if (typeof obj !== 'object' || obj === null) return { value: undefined, exists: false };
+  if (!(keys[0] in obj)) return { value: undefined, exists: false };
+  let current: unknown = obj[keys[0]];
+  if (current === null || current === undefined) return { value: current, exists: true };
+  for (let i = 1; i < keys.length; i++) {
+    if (typeof current !== 'object' || current === null) return { value: undefined, exists: false };
+    const c = current as Record<string, unknown>;
+    if (!(keys[i] in c)) return { value: undefined, exists: false };
+    current = c[keys[i]];
+  }
+  return { value: current, exists: true };
+}
+
+// ── End flattening helpers ───────────────────────────────────────────────
+
 function encodeTabular(headerPrefix: string, arr: unknown[], fields: string[], depth: number): string {
   const prefix = indent(depth);
 
-  // Pre-compute inline schemas and shared array schemas.
+  // Phase 0: Analyze fields for flattening.
+  const flattenMap = new Map<string, FlatLeaf[]>();
+  for (const f of fields) {
+    const leaves = analyzeFlattenable(arr, f, '');
+    if (leaves && leaves.length > 0) {
+      flattenMap.set(f, leaves);
+    }
+  }
+
+  // Build expanded column list.
+  type ColType = 'flat' | 'original';
+  interface FlatColumn { headerName: string; colType: ColType; field: string; keys: string[]; }
+  const columns: FlatColumn[] = [];
+  for (const f of fields) {
+    const leaves = flattenMap.get(f);
+    if (leaves) {
+      for (const leaf of leaves) {
+        columns.push({ headerName: formatKey(leaf.path), colType: 'flat', field: f, keys: leaf.keys });
+      }
+    } else {
+      columns.push({ headerName: formatKey(f), colType: 'original', field: f, keys: [] });
+    }
+  }
+
+  // Pre-compute inline schemas and shared array schemas (skip flattened fields).
   const inlineSchemas = new Map<string, string[]>();
   const sharedArrSchemas = new Map<string, string[]>();
   for (const f of fields) {
+    if (flattenMap.has(f)) continue;
     const ifs = inlineSchemaFields(arr, f);
     if (ifs) inlineSchemas.set(f, ifs);
     const sas = sharedArraySchema(arr, f);
     if (sas) sharedArrSchemas.set(f, sas);
   }
 
-  const fmtFields = fields.map(f => formatKey(f));
-  let out = `${headerPrefix}[${arr.length}]{${fmtFields.join(',')}}\n`;
+  const headerFields = columns.map(c => c.headerName);
+  let out = `${headerPrefix}[${arr.length}]{${headerFields.join(',')}}\n`;
 
   for (let i = 0; i < arr.length; i++) {
     const obj = arr[i] as Record<string, unknown>;
@@ -163,14 +291,38 @@ function encodeTabular(headerPrefix: string, arr: unknown[], fields: string[], d
     const attachments: { name: string; value: unknown; inline: boolean; inlineFields?: string[] }[] = [];
     let rowHasAttachment = false;
 
-    for (const f of fields) {
+    for (const col of columns) {
+      if (col.colType === 'flat') {
+        // Resolve value via key chain.
+        if (!(col.keys[0] in obj)) {
+          cells.push('~');
+        } else {
+          // Check if top-level field is null.
+          const topVal = obj[col.keys[0]];
+          if (topVal === null || topVal === undefined) {
+            cells.push(topVal === null ? '-' : '~');
+          } else {
+            const resolved = resolveKeyChain(obj, col.keys);
+            if (!resolved.exists) {
+              cells.push('~');
+            } else if (resolved.value === null || resolved.value === undefined) {
+              cells.push('-');
+            } else {
+              cells.push(formatScalar(resolved.value, 0x7c));
+            }
+          }
+        }
+        continue;
+      }
+
+      // Original (non-flattened) field.
+      const f = col.field;
       if (!(f in obj)) { cells.push('~'); continue; }
       const v = obj[f];
       if (v === null || v === undefined) { cells.push('-'); continue; }
       if (typeof v === 'object') {
         const ifs = inlineSchemas.get(f);
         if (ifs && !Array.isArray(v)) {
-          // Inline schema: first row declares, subsequent use bare ^.
           if (i === 0) {
             const fmtIF = ifs.map(k => formatKey(k));
             cells.push(`^{${fmtIF.join(',')}}`);
