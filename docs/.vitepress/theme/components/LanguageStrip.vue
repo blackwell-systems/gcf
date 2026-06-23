@@ -17,7 +17,7 @@ const languages = [
           <img :src="lang.icon" :alt="lang.name" :class="['lang-icon', { 'lang-icon-invert': lang.invert }]" />
           <div class="lang-name">{{ lang.name }}</div>
           <div class="lang-version">{{ lang.version }}</div>
-          <div class="lang-check">157/157</div>
+          <div class="lang-check">174/174</div>
           <div class="lang-registry">{{ lang.registry }}</div>
         </a>
       </div>
