@@ -184,6 +184,12 @@ code.terminal { color: #4ade80; background: #0a1a0a; border: 1px solid #1a3a1a; 
   color: var(--gcf-blue, #18befc) !important;
 }
 
+/* Hero text not selectable */
+.VPHero .container .main {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
 /* Hero structured data highlight */
 .hero-highlight {
   color: var(--gcf-blue) !important;
