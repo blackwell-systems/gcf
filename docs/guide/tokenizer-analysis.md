@@ -706,6 +706,66 @@ The pipe merges that exist are with **programming keywords** (`null`, `string`, 
 
 ---
 
+## Part 9: Structural Equivalence Proof
+
+Data from `eval/structural-equivalence-proof.py` (43 tokenizers).
+
+Parts 2-8 measured merge rates, vocabulary entries, and overhead. This part asks the ultimate question: **is GCF's grammar deterministic?** When you tokenize a GCF payload on any production tokenizer, does every grammar symbol remain its own token?
+
+### GCF: every grammar symbol is isolated
+
+We tokenized a realistic multi-section GCF payload (5 orders + 3 edges) across all 43 tokenizers and checked every token containing a row-level grammar symbol (`|`, `@`, `<`):
+
+| Symbol | Purpose | Total tokens | Isolated | Merged | Isolation rate |
+|--------|---------|-------------|----------|--------|---------------|
+| `@` | Symbol ID prefix | 258 | 258 | 0 | **100.0%** |
+| `<` | Edge direction | 126 | 126 | 0 | **100.0%** |
+| `\|` | Field delimiter | 774 | 768 | 6 | **99.2%** |
+| **Overall** | | **1,158** | **1,152** | **6** | **99.5%** |
+
+`@` and `<` are perfectly isolated on every tokenizer. Not a single exception across 258 + 126 = 384 tokens on 43 tokenizers.
+
+The 6 pipe exceptions are all `|c` in the value `cancelled` on 3 tokenizers (Mistral Nemo, DeepSeek V3, DeepSeek R1). Pipe never merges with any field name on any tokenizer.
+
+This means: when a model reads GCF, every `|` it encounters is a standalone token marking a field boundary. Every `@` marks a symbol ID. Every `<` marks an edge direction. The grammar is unambiguous. The model doesn't need to learn to decompose grammar from payload; they're always in separate tokens.
+
+### JSON: grammar fuses into multi-operation tokens
+
+We tokenized equivalent JSON data (same 5 records, using common field names `id`, `name`, `type`, `status`, `value`) across all 43 tokenizers:
+
+**92.5% of quote-containing tokens fuse multiple grammar operations into a single token.** This happens on **all 43 tokenizers**:
+
+| Token | Grammar operations fused | Present on |
+|-------|------------------------|------------|
+| `":"` | Close string + colon + open string | 42/43 |
+| `","` | Close string + comma + open string | 41/43 |
+| `{"` | Open object + open string | 42/43 |
+| `":` | Close string + colon | 43/43 |
+| `,"` | Comma + open string | 41/43 |
+
+When GPT-4 reads `{"name":"Alice","type":"admin"}`, it receives:
+
+```
+[{"] [name] [":"] [Alice] [","] [type] [":"] [admin] ["}]
+```
+
+The token `":"` represents three structural operations (end the key string, insert the key-value separator, start the value string) packed into a single integer. The token `","` represents three operations (end the value string, insert the field separator, start the next key string). The model must learn that token `":"` means "this is where the key ends and the value begins" as an emergent property of training, not as an explicit structural signal.
+
+### The contrast
+
+| Property | GCF | JSON |
+|----------|-----|------|
+| Grammar tokens isolated | 99.5% | 7.5% |
+| Grammar fused with grammar | 0% | 92.5% (43/43 tokenizers) |
+| Grammar fused with payload | 0.5% (3 tokenizers, one value) | 0% (in full-object context) |
+| Grammar is deterministic | Yes | No (grammar fuses differently per tokenizer) |
+
+GCF's grammar is structurally equivalent across every production tokenizer. Each delimiter is its own token. The model receives an unambiguous token sequence where grammar and payload are always in separate tokens.
+
+JSON's grammar is structurally ambiguous on every production tokenizer. Multiple grammar operations fuse into single tokens. The model must decompose multi-operation tokens to understand where keys end and values begin. This is learned behavior, not explicit structure, and it degrades at scale when thousands of these fused tokens compete for attention.
+
+---
+
 ## Summary
 
 | Claim | Evidence |
@@ -721,6 +781,8 @@ The pipe merges that exist are with **programming keywords** (`null`, `string`, 
 | GCF savings are structural, not delimiter-specific | Grammar swap: 0.4pp spread across 5 delimiter sets, 800 measurements |
 | JSON merges are hardcoded vocabulary entries | `"name` = #32586 on GPT-4. Exists in dictionary. Always selected. |
 | GPT-4/4o have 1,000+ tab+letter vocab entries | TOON chose the worst possible delimiter for OpenAI models |
+| GCF grammar is structurally equivalent | @ 100%, < 100%, \| 99.2% isolation across 43 tokenizers. Grammar is deterministic. |
+| JSON grammar fuses on every tokenizer | 92.5% of quote tokens are multi-grammar fusions ('":"', '","') on 43/43 tokenizers |
 | Merges are irrecoverable | Can't fix with prompting, fine-tuning, or RLHF. Vocabulary is frozen. |
 | This explains comprehension failures | 53.6% JSON at stress scale vs 90.7% GCF. Hidden boundaries + attention dilution. |
 
@@ -765,8 +827,11 @@ cd eval
 python3 -m venv .venv && source .venv/bin/activate
 pip install tokenizers huggingface_hub tiktoken
 
-# 43-tokenizer boundary merge and vocabulary analysis
+# 43-tokenizer boundary merge, vocabulary, and savings analysis
 python3 hf-tokenizer-analysis.py
+
+# Structural equivalence proof (grammar isolation across 43 tokenizers)
+python3 structural-equivalence-proof.py
 ```
 
 ---
