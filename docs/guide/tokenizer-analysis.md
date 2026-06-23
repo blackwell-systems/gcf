@@ -97,7 +97,7 @@ Representative results at 500 orders (all 43 tokenizers tested):
 
 Every tokenizer produces 49%+ savings. The worst case (StarCoder2, 49.0%) still nearly halves the token count. This is measured on 500-order nested data (the generic profile from our comprehension eval) vs pretty-printed JSON (2-space indent), which is what LLMs typically receive from tool responses.
 
-On the [15-dataset token efficiency benchmark](/guide/benchmarks#token-efficiency-15-datasets), GCF vs JSON savings range from 43-65% depending on data complexity, with an overall average of 54.8%.
+On the [16-dataset token efficiency benchmark](/guide/benchmarks#token-efficiency-16-datasets), GCF vs JSON savings range from 43-65% depending on data complexity, with an overall average of 54.8%.
 
 ### Stable from 10 to 500 records
 
@@ -259,7 +259,7 @@ The degradation is caused by the combination of ambiguous boundaries AND token r
 
 We searched 840 JSON field+value patterns (40 field names x 21 values) to find maximum variance. The worst:
 
-`"userName":"req_xyz789"` produces **7 distinct tokenizations** across 8 representative tokenizers:
+`"userName":"req_xyz789"` produces **7 distinct tokenizations** across tokenizers:
 
 ```
 GPT-4, LLaMA:     ["][userName][":"][req][_xyz][789]["]
@@ -409,7 +409,7 @@ At 1,000 rows, JSON burns 17,001 tokens on overhead. GCF uses 11. Every addition
 
 ### Cross-tokenizer validation
 
-This pattern holds across all tokenizers tested:
+Representative cross-tokenizer validation (500-row frequency table):
 
 | Tokenizer | JSON tokens | GCF tokens | Savings | JSON field-name overhead |
 |-----------|------------|-----------|---------|------------------------|
@@ -853,6 +853,9 @@ npm install @blackwell-systems/gcf @lenml/tokenizers \
   @lenml/tokenizer-llama3_1 @lenml/tokenizer-qwen2_5 \
   @lenml/tokenizer-deepseek_v3 @lenml/tokenizer-gemma2 \
   @lenml/tokenizer-mistral_nemo
+
+# Syntactic deep dive (per-tokenizer token splits)
+node eval/tokenizer-variance.mjs
 
 # JSON overhead analysis (token distribution, scaling)
 node eval/json-tokenization-analysis.mjs
