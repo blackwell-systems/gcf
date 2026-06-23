@@ -699,24 +699,46 @@ Four properties make this unfixable:
 
 This means: for every model using GPT-4's cl100k or GPT-4o's o200k tokenizer, the string `"name` will always be one token. The structural boundary will always be hidden. No amount of prompting, fine-tuning, or RLHF can change this. It's a dictionary entry.
 
-### What about GCF's pipe?
+### The complete adversarial surface
 
-The pipe character does have vocabulary entries on some tokenizers:
+Data from `eval/adversarial-vocab-dump.py`.
 
-| Tokenizer family | Pipe+letter entries | Context |
-|-----------------|--------------------| --------|
-| LLaMA 3/3.1 | 277 | TypeScript union syntax (`string\|null`) |
-| Yi Coder | 173 | Same |
-| Phi-4 | 116 | Same |
-| Qwen 2.5 | 40 | Same |
-| GPT-4 | 22 | `\|null`, `\|string`, `\|max`, `\|min` |
-| Jamba | 1,543 | Markdown table syntax |
-| Claude | 0 | (none) |
-| Gemma 2/3 | 0 | (none) |
+BPE is deterministic. If `|foo` exists as a vocabulary entry, the tokenizer WILL select it as a single token. If `|foo` does NOT exist in the vocabulary, `|` and `foo` MUST be separate tokens. No context, no probability, no exceptions. So the definitive answer to "what can merge with the pipe?" is: dump every vocabulary entry that starts with `|` from every tokenizer. That's the complete adversarial surface.
 
-Jamba v0.1 is an outlier with 1,543 pipe+letter entries (from markdown table syntax in training data). LLaMA 3 has 277 (from TypeScript union types). But critically, **none of these entries cause merges on real GCF field data**: the 45 common field names tested show 0% pipe merge rate on every tokenizer except for the specific value `cancelled` on 3 tokenizers.
+We scanned all 43 tokenizer vocabularies (32K to 262K entries each). The pipe delimiter has exactly **24 words** that can ever merge across any tokenizer:
 
-The pipe merges that exist are with **programming keywords** (`null`, `string`, `max`, `min`, `required`) from type union syntax. `|name`, `|id`, `|type`, `|value` never exist as vocabulary entries on any of the 43 tokenizers tested.
+| Entry | Tokenizers | Origin |
+|-------|-----------|--------|
+| `\|null` | 15/43 | TypeScript union: `string\|null` |
+| `\|x` | 13/43 | Single character |
+| `\|string` | 12/43 | TypeScript union: `number\|string` |
+| `\|required` | 12/43 | Schema syntax: `optional\|required` |
+| `\|max` | 12/43 | TypeScript union |
+| `\|min` | 12/43 | TypeScript union |
+| `\|array` | 11/43 | TypeScript type |
+| `\|int` | 11/43 | TypeScript/Go union |
+| `\|unique` | 11/43 | SQL/schema keyword |
+| `\|m`, `\|r`, `\|h`, `\|i`, `\|M`, `\|R` | 11/43 | Single characters |
+| `\|RF`, `\|wx` | 11/43 | Abbreviations |
+| `\|l` | 5/43 | Single character |
+| `\|c` | 3/43 | Single character (causes `\|cancelled` merge) |
+| `\|get` | 1/43 | HTTP method (Jamba only) |
+
+**8 are programming keywords** (`null`, `string`, `required`, `array`, `max`, `min`, `int`, `unique`). The rest are single characters or abbreviations. None are data field names. None are common data values.
+
+For comparison, the same exhaustive scan on JSON's quote and TOON's tab:
+
+| Delimiter | Unique mergeable words | Ratio to pipe |
+|-----------|----------------------|---------------|
+| `\|` (pipe) | **24** | 1x |
+| `"` (quote) | **193** | 8x |
+| `\t` (tab) | **1,238** | 52x |
+
+The quote has 8x more mergeable words than the pipe. The tab has **52x more**. TOON chose the delimiter with the largest adversarial surface of any common separator character. GCF chose the one with the smallest.
+
+GPT-4 cl100k has 1,173 tab+letter vocabulary entries and 22 pipe+letter entries. GPT-4o o200k has 1,036 tab+letter entries and 6 pipe+letter entries. Tab-separated data was so prevalent in tokenizer training corpora (TSV files, terminal output, log formatting) that nearly every common word is fused with the tab character in these vocabularies.
+
+`|name`, `|id`, `|type`, `|value`, `|status`, `|title` do not exist as vocabulary entries on any of the 43 tokenizers. The pipe will never merge with any common field name. This is not a statistical claim from sampling. It is a dictionary fact.
 
 ---
 
@@ -791,8 +813,8 @@ JSON's grammar is structurally ambiguous on every production tokenizer. Multiple
 | Both savings are stable at all scales | vs JSON 1.0-3.1pp range, vs TOON 1.0-4.3pp range per tokenizer |
 | GCF has 94% fewer boundary merges than JSON | 43 tokenizers: GCF 0.47% vs JSON 8.17% (29,025 + 1,935 checks) |
 | JSON merges compound at scale | `"id"` and `"name"` merge on 30% of tokenizers, repeating per row |
-| GCF merges are rare and non-compounding | Only `\|cancelled` on 3 of 43 tokenizers. Never on field names. |
-| TOON tab merge is 71x worse than GCF pipe | TOON 32.91% vs GCF 0.47%. GPT-4o: 100% tab merge rate. |
+| GCF's adversarial surface is 24 words | Exhaustive vocab dump: pipe has 24 mergeable words vs quote 193 vs tab 1,238 |
+| TOON tab merge is 71x worse than GCF pipe | TOON 32.91% vs GCF 0.47%. GPT-4o: 100% tab merge rate. Tab has 52x more mergeable words. |
 | JSON overhead is 81% at 500 rows | Cross-tokenizer validated |
 | JSON overhead grows linearly | O(n) per row, ratio 1,545:1 at 1000 rows |
 | GCF savings are structural, not delimiter-specific | Grammar swap: 0.4pp spread across 5 delimiter sets, 800 measurements |
