@@ -708,6 +708,8 @@ The pipe merges that exist are with **programming keywords** (`null`, `string`, 
 
 ## Part 9: Structural Equivalence Proof
 
+![Structural Equivalence](/charts/structural-equivalence.png)
+
 Data from `eval/structural-equivalence-proof.py` (43 tokenizers).
 
 Parts 2-8 measured merge rates, vocabulary entries, and overhead. This part asks the ultimate question: **is GCF's grammar deterministic?** When you tokenize a GCF payload on any production tokenizer, does every grammar symbol remain its own token?

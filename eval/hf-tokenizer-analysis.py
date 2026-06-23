@@ -526,11 +526,59 @@ def main():
         print()
 
     if savings_results:
-        print("Scale summary:")
+        print("Scale summary (GCF vs JSON):")
         print("Rows".rjust(8) + "Min".rjust(8) + "Max".rjust(8) + "Mean".rjust(8) + "Spread".rjust(10))
         print("-" * 42)
         for n_orders, s in savings_results.items():
             print(f"{n_orders:>8}{s['min']:>7.1f}%{s['max']:>7.1f}%{s['mean']:>7.1f}%{s['spread']:>9.1f}pp")
+        print()
+
+    # ===================================================================
+    # TEST 6: GCF vs TOON savings
+    # ===================================================================
+    print()
+    print("=" * 80)
+    print(f"TEST 6: GCF vs TOON SAVINGS ({n_tok} tokenizers)")
+    print("=" * 80)
+    print()
+
+    toon_savings_results = {}
+
+    for n_orders in [10, 50, 100, 500]:
+        gcf_file = payload_dir / f".payload-gcf-{n_orders}.txt"
+        toon_file = payload_dir / f".payload-toon-{n_orders}.txt"
+        if not gcf_file.exists() or not toon_file.exists():
+            print(f"  SKIP {n_orders} orders (TOON payload not found, run node generator first)")
+            continue
+
+        gcf_text = gcf_file.read_text()
+        toon_text = toon_file.read_text()
+
+        per_tok = []
+        print(f"--- {n_orders} orders ---")
+        print("Tokenizer".ljust(32) + "GCF".rjust(8) + "TOON".rjust(8) + "Savings".rjust(10))
+        print("-" * 58)
+
+        for tname, tok in tokenizers.items():
+            gcf_tokens = len(encode(tok, gcf_text))
+            toon_tokens = len(encode(tok, toon_text))
+            sav = (1 - gcf_tokens / toon_tokens) * 100 if toon_tokens > 0 else 0
+            per_tok.append(sav)
+            print(f"{tname[:31].ljust(32)}{gcf_tokens:>8}{toon_tokens:>8}{sav:>9.1f}%")
+
+        min_s = min(per_tok)
+        max_s = max(per_tok)
+        mean_s = sum(per_tok) / len(per_tok)
+        toon_savings_results[n_orders] = {"min": min_s, "max": max_s, "mean": mean_s}
+        print(f"  Min: {min_s:.1f}%  Max: {max_s:.1f}%  Mean: {mean_s:.1f}%")
+        print()
+
+    if toon_savings_results:
+        print("Scale summary (GCF vs TOON):")
+        print("Rows".rjust(8) + "Min".rjust(8) + "Max".rjust(8) + "Mean".rjust(8))
+        print("-" * 32)
+        for n_orders, s in toon_savings_results.items():
+            print(f"{n_orders:>8}{s['min']:>7.1f}%{s['max']:>7.1f}%{s['mean']:>7.1f}%")
         print()
 
     # ===================================================================
@@ -581,6 +629,7 @@ def main():
         "field_merge_ranking": [(f, c) for f, c in field_merge_counts],
         "vocab_analysis": {k: v for k, v in vocab_results.items()},
         "savings_consistency": savings_results,
+        "toon_savings": toon_savings_results,
     }
 
     results_dir = Path(__file__).parent / "results" / "tokenizer"
