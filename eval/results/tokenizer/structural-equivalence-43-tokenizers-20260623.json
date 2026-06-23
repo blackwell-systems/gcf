@@ -1,0 +1,18 @@
+{
+  "timestamp": "2026-06-23T23:06:55Z",
+  "tokenizer_count": 43,
+  "gcf_row_grammar": {
+    "pipe_isolation": 99.2248062015504,
+    "at_isolation": 100.0,
+    "lt_isolation": 100.0,
+    "overall_isolation": 99.48186528497409,
+    "pipe_exceptions": 6,
+    "pipe_exception_tokenizers": [
+      "Mistral Nemo (12B)",
+      "DeepSeek R1",
+      "DeepSeek V3 (671B)"
+    ]
+  },
+  "json_quote_isolation": 100.0,
+  "json_merging_tokenizers": 0
+}
