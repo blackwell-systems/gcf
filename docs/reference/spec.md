@@ -23,7 +23,7 @@ It covers:
 
 ## Version
 
-Current: **GCF v3.1** (stable, 2026-06-14)
+Current: **GCF v3.2** (stable, 2026-06-22)
 
 ## Conventions
 
@@ -56,4 +56,4 @@ Conformance fixtures live in [tests/conformance](https://github.com/blackwell-sy
 
 ## Stability guarantee
 
-**Stable** (v3.1 designated 2026-06-14). V3 is the only supported encoding. v3.1 makes the `tool` field optional in the graph profile header. The graph profile and `GCF profile=generic` header are unchanged.
+**Stable** (v3.2 designated 2026-06-22). V3 is the only supported encoding. v3.2 adds nested object flattening (Section 7.4.6) with opt-out support. The graph profile and `GCF profile=generic` header are unchanged.
