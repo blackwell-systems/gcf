@@ -45,7 +45,7 @@ jsonschema.validate(data, existing_schema)
 
 ## How does GCF compare to TOON?
 
-GCF wins on every measured dimension. 29% fewer tokens across 16 real-world datasets (15/16 wins). 90.7% comprehension where TOON averages 68.5%. 5/5 generation validity on every frontier model while TOON's decoder rejects output from 7 of 9 models. Session deduplication that compounds to 92% savings by the 5th tool call, a feature TOON structurally cannot add.
+GCF wins on every measured dimension. 29% fewer tokens across 16 real-world datasets (15/16 wins; TOON's one win is 77 tokens on a single dataset). 90.7% comprehension where TOON averages 68.5%. 5/5 generation validity on every frontier model while TOON's decoder rejects output from 7 of 9 models. Session deduplication that compounds to 92% savings by the 5th tool call, a feature TOON structurally cannot add.
 
 TOON is a tree serializer: YAML with counted arrays. It encodes flat tabular data efficiently. It cannot encode relationships, cross-references, session state, or deltas. Adding local IDs would require a new grammar. Adding session dedup would require local IDs. TOON would have to become a different format to match what GCF already ships.
 
@@ -63,6 +63,19 @@ Six official implementations, all MIT licensed, zero runtime dependencies:
 - **Kotlin** ([JitPack](https://jitpack.io/#blackwell-systems/gcf-kotlin)) v2.2.1
 
 All pass 174/174 conformance fixtures. All support both generic and graph profiles, streaming, session dedup, delta encoding, and CLI. [Full details](/ecosystem/implementations).
+
+## Does GCF work with open-weight models?
+
+Yes. GCF outperforms JSON on every open-weight model tested (LLaMA, Mistral, Granite, Qwen). Open-weight models currently comprehend GCF's expanded encoding (attachment syntax for nested objects) better than the flattened path column encoding. All 6 SDKs and the proxy support this:
+
+```python
+encode_generic(data, GenericOptions(no_flatten=True))   # Python
+```
+```bash
+gcf-proxy --no-flatten your-mcp-server                  # Proxy
+```
+
+Proprietary frontier models (Claude, GPT-5.5, Gemini, Grok) handle both encodings identically at 100%. This gap is expected to close as open-weight models improve. [Full findings](/guide/llm-integration#nested-object-flattening-proprietary-vs-open-weight-split).
 
 ## What's the encoding/decoding overhead?
 
@@ -113,7 +126,7 @@ With GCF:      Service -> JSON -> encode -> GCF text -> LLM (11,090 tokens)
 
 Protobuf competes with JSON at the transport layer. GCF competes with JSON at the LLM-ingestion layer. They're complementary. If your backend uses protobuf, decode to a native object, then `encodeGeneric()` to GCF before handing it to the model.
 
-Protobuf also requires `.proto` schema files, code generation, and version management. GCF is schemaless like JSON. And protobuf has no comprehension data: nobody has tested whether LLMs reason better over protobuf-decoded-to-JSON vs raw JSON. We have [1,700+ evaluations](/guide/benchmarks) proving GCF outperforms JSON at the reading step.
+Protobuf also requires `.proto` schema files, code generation, and version management. GCF is schemaless like JSON. And protobuf has no comprehension data: nobody has tested whether LLMs reason better over protobuf-decoded-to-JSON vs raw JSON. We have [2,400+ evaluations](/guide/benchmarks) proving GCF outperforms JSON at the reading step.
 
 ## Why not MessagePack or CBOR?
 
