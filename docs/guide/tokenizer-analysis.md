@@ -71,6 +71,8 @@ These tokenizers were trained on different corpora with different merge prioriti
 
 ## Part 1: GCF Savings Are Consistent
 
+![Three Format Savings](/charts/three-format-savings.png)
+
 Data from `eval/hf-tokenizer-analysis.py` (43 tokenizers, 20 providers).
 
 ### 49-72% savings on every tokenizer
