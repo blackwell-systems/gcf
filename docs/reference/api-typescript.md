@@ -6,9 +6,11 @@ npm install @blackwell-systems/gcf
 
 ## Functions
 
-### `encodeGeneric(data: unknown): string`
+### `encodeGeneric(data: unknown, opts?: GenericOptions): string`
 
 Encode any JS value into GCF tabular format. Unlike `encode` (which handles the graph `Payload` type), `encodeGeneric` works on arbitrary objects, arrays, and primitives.
+
+Pass `{ noFlatten: true }` to use expanded encoding for nested objects (open-weight models currently comprehend this form better; GCF still outperforms JSON either way).
 
 ```typescript
 import { encodeGeneric } from '@blackwell-systems/gcf';

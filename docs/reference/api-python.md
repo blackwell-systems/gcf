@@ -6,9 +6,11 @@ pip install gcf-python
 
 ## Functions
 
-### `encode_generic(data: Any) -> str`
+### `encode_generic(data: Any, opts: GenericOptions | None = None) -> str`
 
 Encode any Python value into GCF tabular format. Unlike `encode` (which handles the graph `Payload` type), `encode_generic` works on arbitrary dicts, lists, and primitives.
+
+Pass `GenericOptions(no_flatten=True)` to use expanded encoding for nested objects (open-weight models currently comprehend this form better; GCF still outperforms JSON either way).
 
 ```python
 from gcf import encode_generic

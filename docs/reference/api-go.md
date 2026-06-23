@@ -6,9 +6,11 @@ go get github.com/blackwell-systems/gcf-go
 
 ## Functions
 
-### `EncodeGeneric(data any) string`
+### `EncodeGeneric(data any, opts ...GenericOptions) string`
 
 Encode any Go value into GCF tabular format. Unlike `Encode` (which handles the graph `Payload` type), `EncodeGeneric` works on arbitrary maps, slices, structs, and primitives.
+
+Pass `GenericOptions{NoFlatten: true}` to use expanded encoding for nested objects (open-weight models currently comprehend this form better; GCF still outperforms JSON either way).
 
 ```go
 data := map[string]any{

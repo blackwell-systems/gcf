@@ -12,9 +12,11 @@ dependencies {
 
 ## Functions
 
-### `encodeGeneric(data: Any?): String`
+### `encodeGeneric(data: Any?, opts: GenericOptions = GenericOptions()): String`
 
 Encode any value into GCF tabular format. Uniform object arrays get tabular rows. Primitive arrays are inlined (`tags[3]: a,b,c`). Nested objects use `## key` section headers.
+
+Pass `GenericOptions(noFlatten = true)` to use expanded encoding for nested objects (open-weight models currently comprehend this form better; GCF still outperforms JSON either way).
 
 ```kotlin
 import com.blackwellsystems.gcf.*

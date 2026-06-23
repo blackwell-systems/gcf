@@ -6,9 +6,11 @@ cargo add gcf
 
 ## Functions
 
-### `encode_generic(data: &serde_json::Value) -> String`
+### `encode_generic(data: &Value) -> String` / `encode_generic_with_options(data: &Value, opts: &GenericOptions) -> String`
 
 Encode any JSON value into GCF tabular format. Unlike `encode` (which handles the graph `Payload` type), `encode_generic` works on arbitrary `serde_json::Value` input.
+
+Pass `&GenericOptions { no_flatten: true }` to use expanded encoding for nested objects (open-weight models currently comprehend this form better; GCF still outperforms JSON either way).
 
 ```rust
 use gcf::encode_generic;

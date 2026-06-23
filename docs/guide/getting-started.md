@@ -21,9 +21,11 @@ At 500 records, JSON scores [53.6% comprehension accuracy](/guide/benchmarks) ac
 
 At 1000 records, JSON consumes 161K tokens: it doesn't even fit in a 200K context window. The task becomes impossible regardless of model capability.
 
-GCF declares field names once in a header. Rows are positional values. The same 500-record payload uses 11,090 tokens and scores [90.7% accuracy](/guide/benchmarks) on code graphs. On nested order data, GCF achieves [100% accuracy on every frontier model tested](/guide/eval-results): Claude Opus, Sonnet, Haiku, GPT-5.5, Gemini 2.5 Flash, and Gemini 3.5 Flash.
+**The problem goes deeper than repetition.** We [tested 155 common field names across 8 tokenizers from 6 providers](/guide/tokenizer-analysis). JSON's quote-colon patterns (`"fieldName":`) don't just waste tokens; they tokenize *inconsistently* across models. When GPT-4o sees `"value":"pending"`, the opening quote merges with the field name into one token. Claude keeps them separate. The structural boundary (where the field name starts) is at a different token position depending on which model reads it. 15 of the most common field names in computing (`"id":`, `"name":`, `"type":`, `"status":`, `"time":`) merge on 50-63% of tokenizers. The format designed for human readability doesn't even have consistent structure at the token level.
 
-The format designed for human readability is incomprehensible to the systems actually reading it. [Full benchmark data](/guide/eval-results).
+GCF declares field names once in a header. Rows are positional values. The pipe separator (`|`) has a [0% merge rate across all 8 tokenizers](/guide/tokenizer-analysis): every model sees the same token boundaries. The same 500-record payload uses 11,090 tokens and scores [90.7% accuracy](/guide/benchmarks) on code graphs. On nested order data, GCF achieves [100% accuracy on every frontier model tested](/guide/eval-results): Claude Opus, Sonnet, Haiku, GPT-5.5, Gemini 2.5 Flash, and Gemini 3.5 Flash.
+
+The format designed for human readability is incomprehensible to the systems actually reading it. [Full benchmark data.](/guide/eval-results) [Tokenizer analysis.](/guide/tokenizer-analysis)
 
 ## When to use GCF
 
@@ -91,12 +93,12 @@ cargo add gcf
 
 ```bash [Swift]
 # Package.swift
-.package(url: "https://github.com/blackwell-systems/gcf-swift", from: "2.0.0")
+.package(url: "https://github.com/blackwell-systems/gcf-swift", from: "2.2.1")
 ```
 
 ```bash [Kotlin]
 # build.gradle.kts
-implementation("com.github.blackwell-systems:gcf-kotlin:v2.1.0")
+implementation("com.github.blackwell-systems:gcf-kotlin:v2.2.1")
 ```
 
 :::

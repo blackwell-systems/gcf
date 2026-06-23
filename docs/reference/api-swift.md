@@ -6,9 +6,11 @@
 
 ## Functions
 
-### `encodeGeneric(_ data: Any) -> String`
+### `encodeGeneric(_ data: Any?, opts: GenericOptions = GenericOptions()) -> String`
 
 Encode any value into GCF tabular format. Uniform object arrays get tabular rows. Primitive arrays are inlined (`tags[3]: a,b,c`). Nested objects use `## key` section headers.
+
+Pass `GenericOptions(noFlatten: true)` to use expanded encoding for nested objects (open-weight models currently comprehend this form better; GCF still outperforms JSON either way).
 
 ```swift
 import GCF
@@ -192,7 +194,7 @@ public enum DecodeError: Error, CustomStringConvertible {
 ## CLI
 
 ```bash
-# In Package.swift: .package(url: "https://github.com/blackwell-systems/gcf-swift", from: "2.0.0")
+# In Package.swift: .package(url: "https://github.com/blackwell-systems/gcf-swift", from: "2.2.1")
 swift run GCFCLI encode-generic < data.json
 swift run GCFCLI decode-generic < data.gcf
 ```
