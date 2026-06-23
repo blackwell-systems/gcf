@@ -1,6 +1,6 @@
 {
-  "description": "Row has both inline object (^{fields}) and traditional array attachment",
-  "expected": "GCF profile=generic\n## orders [2]{customer,id,items,total}\n@0 ^{email,name,tier}|1|^|69.97\nalice@test.com|Alice|premium\n.items [2]{name,price,qty,sku}\n    Widget|19.99|2|A1\n    Gadget|29.99|1|B2\n@1 ^|2|^|29.97\nbob@test.com|Bob|standard\n.items [1]\n    Gizmo|9.99|3|C3\n",
+  "description": "Row has flattened object columns and traditional array attachment",
+  "expected": "GCF profile=generic\n## orders [2]{\"customer>email\",\"customer>name\",\"customer>tier\",id,items,total}\n@0 alice@test.com|Alice|premium|1|^|69.97\n.items [2]{name,price,qty,sku}\n    Widget|19.99|2|A1\n    Gadget|29.99|1|B2\n@1 bob@test.com|Bob|standard|2|^|29.97\n.items [1]\n    Gizmo|9.99|3|C3\n",
   "input": {
     "orders": [
       {

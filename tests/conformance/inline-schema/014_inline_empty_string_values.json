@@ -1,6 +1,6 @@
 {
-  "description": "Inline schema with empty string values in cells",
-  "expected": "GCF profile=generic\n## records [2]{id,info}\n@0 1|^{desc,name,tag}\n\"\"|test|active\n@1 2|^\nsomething|\"\"|\"\"\n",
+  "description": "Flattened path columns with empty string values in cells",
+  "expected": "GCF profile=generic\n## records [2]{id,\"info>desc\",\"info>name\",\"info>tag\"}\n1|\"\"|test|active\n2|something|\"\"|\"\"\n",
   "input": {
     "records": [
       {

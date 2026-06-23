@@ -1,6 +1,6 @@
 {
   "name": "tabular_with_object_attachment",
-  "description": "Nested object in tabular row uses ^ marker and .field {} attachment",
+  "description": "Nested object with same keys across rows is flattened into path columns",
   "input": {
     "orders": [
       {
@@ -21,6 +21,6 @@
       }
     ]
   },
-  "expected": "GCF profile=generic\n## orders [2]{id,total,customer}\n@0 1|249.99|^\n.customer {}\n    name=Alice\n    tier=premium\n@1 2|89.5|^\n.customer {}\n    name=Bob\n    tier=standard\n",
+  "expected": "GCF profile=generic\n## orders [2]{id,total,\"customer>name\",\"customer>tier\"}\n1|249.99|Alice|premium\n2|89.5|Bob|standard\n",
   "operation": "encode"
 }

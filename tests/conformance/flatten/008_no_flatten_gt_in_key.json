@@ -1,0 +1,10 @@
+{
+  "name": "no_flatten_gt_in_key",
+  "description": "Nested objects whose keys contain > MUST NOT be flattened; must use attachment",
+  "operation": "encode",
+  "input": [
+    {"id": 1, "config": {"a>b": "val1", "c": "val2"}},
+    {"id": 2, "config": {"a>b": "val3", "c": "val4"}}
+  ],
+  "expected": "GCF profile=generic\n## [2]{id,config}\n@0 1|^\n.config {}\n    \"a>b\"=val1\n    c=val2\n@1 2|^\n.config {}\n    \"a>b\"=val3\n    c=val4\n"
+}

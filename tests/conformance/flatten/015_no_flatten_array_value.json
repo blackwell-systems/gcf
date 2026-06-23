@@ -1,0 +1,10 @@
+{
+  "name": "no_flatten_array_value",
+  "description": "Nested objects containing arrays in their values MUST NOT be flattened",
+  "operation": "encode",
+  "input": [
+    {"id": 1, "config": {"name": "test", "tags": ["a", "b"]}},
+    {"id": 2, "config": {"name": "prod", "tags": ["c"]}}
+  ],
+  "expected": "GCF profile=generic\n## [2]{id,config}\n@0 1|^\n.config {}\n    name=test\n    tags[2]: a,b\n@1 2|^\n.config {}\n    name=prod\n    tags[1]: c\n"
+}

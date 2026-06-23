@@ -1,6 +1,6 @@
 {
-  "description": "Inline schema handles null values within the object and absent fields across rows",
-  "expected": "GCF profile=generic\n## users [2]{id,profile}\n@0 1|^{bio,name,role}\n-|Alice|admin\n@1 2|^\nDeveloper|Bob|user\n",
+  "description": "Flattened path columns handle null values within the nested object",
+  "expected": "GCF profile=generic\n## users [2]{id,\"profile>bio\",\"profile>name\",\"profile>role\"}\n1|-|Alice|admin\n2|Developer|Bob|user\n",
   "input": {
     "users": [
       {

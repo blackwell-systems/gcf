@@ -1,0 +1,11 @@
+{
+  "name": "decode_flatten",
+  "description": "Decoder reconstructs nested objects from > path columns",
+  "operation": "decode",
+  "input": "GCF profile=generic\n## [3]{id,\"customer>name\",\"customer>email\",total}\n1|Alice|alice@co.com|99.99\n2|Bob|bob@co.com|49.99\n3|Carol|carol@co.com|29.99\n",
+  "expected": [
+    {"id": 1, "customer": {"name": "Alice", "email": "alice@co.com"}, "total": 99.99},
+    {"id": 2, "customer": {"name": "Bob", "email": "bob@co.com"}, "total": 49.99},
+    {"id": 3, "customer": {"name": "Carol", "email": "carol@co.com"}, "total": 29.99}
+  ]
+}

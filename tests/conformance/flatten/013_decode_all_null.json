@@ -1,0 +1,10 @@
+{
+  "name": "decode_all_null",
+  "description": "When all leaf columns are -, the nested object key is null (not an object with null values)",
+  "operation": "decode",
+  "input": "GCF profile=generic\n## [2]{id,\"meta>version\",\"meta>tag\"}\n1|1|alpha\n2|-|-\n",
+  "expected": [
+    {"id": 1, "meta": {"version": 1, "tag": "alpha"}},
+    {"id": 2, "meta": null}
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "name": "absent_nested_object",
+  "description": "When nested object is absent from a record, all leaf columns emit ~",
+  "operation": "encode",
+  "input": [
+    {"id": 1, "name": "Alice", "address": {"city": "Seattle", "state": "WA"}},
+    {"id": 2, "name": "Bob"},
+    {"id": 3, "name": "Carol", "address": {"city": "Portland", "state": "OR"}}
+  ],
+  "expected": "GCF profile=generic\n## [3]{id,name,\"address>city\",\"address>state\"}\n1|Alice|Seattle|WA\n2|Bob|~|~\n3|Carol|Portland|OR\n"
+}

@@ -1,5 +1,30 @@
 # Changelog
 
+## v3.2 (2026-06-22)
+
+### Spec changes: Nested Object Flattening (Section 7.4.6)
+
+- Encoders MAY flatten fixed-shape nested objects into `>` path column names
+- `"customer>name"` in a tabular header means the `name` field inside the `customer` object
+- Decoder MUST reconstruct nesting when field names contain `>`
+- Multiple levels chain: `"billing>address>city"` produces 3-level nesting
+- All-absent leaves (`~`) omit the parent key; all-null leaves (`-`) set parent to null
+- Encoders MUST NOT flatten when keys contain `>`, keys differ across rows, leaves are non-scalar, or nested objects are empty
+- Flattened and attachment columns MAY coexist in the same header
+- Round-trip guarantee preserved: `decode(encode(value)) == value`
+- Alternative to inline schema (Section 7.4.5.1); both remain valid
+
+### Comprehension validation
+
+- 40+ eval runs across 9 models, 7 providers (Anthropic, OpenAI, Google, xAI, Moonshot, DeepSeek, Mistral, Meta, Amazon)
+- 100% comprehension on every frontier model with flattened encoding
+- Generation validity: 0% (current GCF) to 96-100% (flat GCF) on Mistral Medium
+- Budget experiment: GCF fits 1.9x more data than JSON in the same token budget
+
+### Conformance
+
+- 15 new conformance fixtures in `tests/conformance/flatten/`
+
 ## v3.1 (2026-06-14)
 
 ### Spec changes

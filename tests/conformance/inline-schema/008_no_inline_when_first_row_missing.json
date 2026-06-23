@@ -1,6 +1,6 @@
 {
-  "description": "Inline schema not used when first row does not have the field (decoder needs ^{} on row 0)",
-  "expected": "GCF profile=generic\n## items [2]{id,total,meta}\n1|50|~\n@1 2|75|^\n.meta {}\n    region=us-east\n    source=api\n    version=\"2.1\"\n",
+  "description": "When first row is missing a nested field, path columns emit ~ for absent leaves",
+  "expected": "GCF profile=generic\n## items [2]{id,total,\"meta>region\",\"meta>source\",\"meta>version\"}\n1|50|~|~|~\n2|75|us-east|api|\"2.1\"\n",
   "input": {
     "items": [
       {

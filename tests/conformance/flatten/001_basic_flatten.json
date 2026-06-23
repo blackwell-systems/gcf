@@ -1,0 +1,12 @@
+{
+  "name": "basic_flatten",
+  "description": "Nested object with uniform keys across all rows is flattened into path columns using >",
+  "operation": "encode",
+  "input": {
+    "orders": [
+      {"id": 1, "customer": {"name": "Alice", "email": "alice@co.com"}, "total": 99.99},
+      {"id": 2, "customer": {"name": "Bob", "email": "bob@co.com"}, "total": 49.99}
+    ]
+  },
+  "expected": "GCF profile=generic\n## orders [2]{id,\"customer>name\",\"customer>email\",total}\n1|Alice|alice@co.com|99.99\n2|Bob|bob@co.com|49.99\n"
+}

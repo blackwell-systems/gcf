@@ -1,6 +1,6 @@
 {
-  "description": "Inline schema values requiring quoting (pipes, commas, special strings)",
-  "expected": "GCF profile=generic\n## records [2]{id,meta}\n@0 1|^{flag,note,tag}\n\"true\"|\"hello, world\"|\"a|b\"\n@1 2|^\n\"false\"|\"-\"|c\n",
+  "description": "Flattened path columns with values requiring quoting (pipes, commas, special strings)",
+  "expected": "GCF profile=generic\n## records [2]{id,\"meta>flag\",\"meta>note\",\"meta>tag\"}\n1|\"true\"|\"hello, world\"|\"a|b\"\n2|\"false\"|\"-\"|c\n",
   "input": {
     "records": [
       {

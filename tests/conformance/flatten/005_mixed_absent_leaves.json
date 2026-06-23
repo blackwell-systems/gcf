@@ -1,0 +1,10 @@
+{
+  "name": "mixed_absent_leaves",
+  "description": "Individual leaf ~ means that key is absent from the nested object; other leaves retain values",
+  "operation": "decode",
+  "input": "GCF profile=generic\n## [2]{id,\"address>city\",\"address>state\"}\n1|Seattle|~\n2|~|OR\n",
+  "expected": [
+    {"id": 1, "address": {"city": "Seattle"}},
+    {"id": 2, "address": {"state": "OR"}}
+  ]
+}
