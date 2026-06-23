@@ -1597,7 +1597,7 @@ This specification follows a three-stage lifecycle:
 | **Stable** | The grammar is frozen. No breaking changes. Additive extensions only. Implementations may depend on stability for production use. |
 | **Frozen** | No changes of any kind. The specification is archived. |
 
-Current status: **Stable** (v3.1.1 designated 2026-06-18).
+Current status: **Stable** (v3.2.0 designated 2026-06-22).
 
 ### 19.3 Version history
 

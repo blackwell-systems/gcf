@@ -185,9 +185,31 @@ GCF profile=generic
 - Pipe `|` separator, no spaces
 - No `@id` on flat rows (only when nested fields need cross-referencing)
 
+### Tabular with nested fields (flattened, v3.2)
+
+When nested objects have the same keys in every row and all values are scalars, they are flattened into `>` path columns:
+
+```
+## orders [2]{id,"customer>name","customer>email",items,total}
+@0 ORD-1|Alice|alice@co.com|^|59.98
+.items [1]{sku}
+    A1
+@1 ORD-2|Bob|bob@co.com|^|29.99
+.items [2]
+    B2
+    B3
+```
+
+- `"customer>name"` means the `name` field inside the `customer` object
+- Multiple levels chain: `"billing>address>city"`
+- Variable-length arrays still use `^` attachment (items above)
+- If nested object is absent, all leaf columns get `~`
+- If nested object is null, all leaf columns get `-`
+- 20-48% fewer tokens than inline schema on deeply nested data
+
 ### Tabular with nested fields (inline schema)
 
-When nested objects have 3+ scalar fields, they use inline schema encoding:
+When nested objects have 3+ scalar fields and can't be flattened (e.g., different keys across rows), they use inline schema encoding:
 
 ```
 ## orders [2]{id,total,status,customer}
