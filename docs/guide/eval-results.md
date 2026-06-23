@@ -73,7 +73,7 @@ On mid-tier models (Gemini 2.5 Flash, Mistral Medium), all formats show occasion
 
 ![Token Efficiency](/charts/token-efficiency-15.png)
 
-16 real-world datasets. GCF wins 15/16 vs TOON, -25.5% overall, -53.3% vs JSON.
+16 real-world datasets. GCF wins 15/16 vs TOON, -29% overall, -56% vs JSON.
 
 Dataset 15 is the exact payload used in the comprehension eval above. The format that achieves 100% accuracy uses 32% fewer tokens than TOON and 57.5% fewer than JSON.
 
