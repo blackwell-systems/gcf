@@ -53,7 +53,7 @@ pip install gcf-proxy
 
 | | GCF | TOON | JSON |
 |---|---|---|---|
-| **Token efficiency** (15 datasets) | **wins 13/15** | wins 2/15 | wins 0/15 |
+| **Token efficiency** (16 datasets) | **wins 15/16** | wins 1/16 | wins 0/16 |
 | **Generation** (28 runs, 11 models) | **5/5** | 1.0/5 | 5.0/5 |
 | **Token savings** | **50-92%** vs JSON | 30-60% vs JSON | baseline |
 | **43,000,000,000+ round-trips** | **0 failures** | | |

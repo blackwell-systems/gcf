@@ -12,7 +12,7 @@ No model has ever been trained on GCF. Every model reads it better than the form
 
 | | GCF | TOON | JSON |
 |---|---|---|---|
-| **Token efficiency** (15 datasets) | **wins 13/15** | wins 2/15 | wins 0/15 |
+| **Token efficiency** (16 datasets) | **wins 15/16** | wins 1/16 | wins 0/16 |
 | **Generation** (28 runs, 11 models) | **5/5** | 1.0/5 | 5.0/5 |
 | **43,000,000,000+ round-trips** | **0 failures** | | |
 
@@ -21,7 +21,7 @@ Five benchmark suites, three providers (Anthropic, OpenAI, Google), zero trainin
 1. **[Generic comprehension](#generic-profile-standard-workloads)**: 500-order nested data, 27 runs, 11 models. GCF 100% on every frontier model.
 2. **[Graph comprehension](#graph-profile-under-structural-stress)**: 500-symbol code graphs, 24 runs, 10 models. GCF 91.2% where JSON drops to 53.4%.
 3. **[Scale test](#scale-test-1000-orders)**: At 1000 records, JSON doesn't fit. GCF is the only format that works on 200K context models.
-4. **[Token efficiency](#token-efficiency-15-datasets)**: 15 real-world datasets. GCF wins 13/15 vs TOON, 25.5% fewer overall.
+4. **[Token efficiency](#token-efficiency-16-datasets)**: 16 real-world datasets. GCF wins 15/16 vs TOON, 29% fewer overall.
 5. **[Generation](#generation-can-llms-write-it)**: Every frontier model produces valid GCF. TOON's decoder rejects output from 7/9 models.
 6. **[Tokenizer analysis](/guide/tokenizer-analysis)**: 8 tokenizers, 6 providers. GCF savings (50-92%) consistent regardless of tokenizer. JSON's grammar merges with field names at the vocabulary level on half the LLM market.
 
@@ -133,7 +133,7 @@ GCF encodes the same data in 47K tokens (71% smaller than JSON). This means:
 | 15 | Comprehension eval payload | 41,213 | 60,603 | -32.0% |
 | | **TOTAL** | **313,978** | **421,657** | **-25.5%** |
 
-**GCF wins 13/15 vs TOON.** Two TOON wins: nested config (27 tokens, pure key-value tree) and LSP symbols (77 tokens, tokenizer artifact).
+**GCF wins 15/16 vs TOON.** TOON's one win: LSP symbols (77 tokens, 1.4%, tokenizer artifact where the pipe delimiter tokenizes slightly worse than comma on this specific data shape).
 
 Dataset 15 is the exact payload used in the comprehension eval. The format that achieves 100% accuracy uses 32% fewer tokens.
 
@@ -184,7 +184,7 @@ EVAL_BACKEND=google GOOGLE_API_KEY=... EVAL_MODEL=gemini-2.5-flash GOWORK=off go
 # Generation
 GOWORK=off go test -run "TestGeneration$|TestGenerationTOON|TestGenerationJSON" -v -timeout 0
 
-# Token efficiency (15 datasets)
+# Token efficiency (16 datasets)
 git clone https://github.com/blackwell-systems/toon-benchmark
 cd toon-benchmark
 node --experimental-strip-types benchmarks/scripts/token-efficiency-benchmark.ts
