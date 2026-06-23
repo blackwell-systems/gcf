@@ -151,6 +151,7 @@ The LLM gets the first symbols in its context within milliseconds. Without `prog
 | `--session` | off | Session dedup (bare refs for known symbols) |
 | `--delta` | off | Send only changed symbols when responses change slightly |
 | `--cache` | off | Cache encoded responses for identical tool calls |
+| `--no-flatten` | off | Disable nested object flattening (for open-weight models like LLaMA, Mistral) |
 | `--min-size N` | 100 | Skip encoding for responses smaller than N bytes |
 | `--stream-threshold N` | 5 | Min symbols before streaming activates |
 | `--no-progress` | false | Disable progress notifications |

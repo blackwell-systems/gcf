@@ -38,6 +38,7 @@ Additional flags:
 - `--session`: enable session deduplication (92% savings by 5th call)
 - `--cache`: cache encoded responses for identical tool calls
 - `--delta`: send only changed symbols on re-queries
+- `--no-flatten`: disable nested object flattening (for open-weight models)
 - `--stats-file <path>`: write JSON stats for plugin hooks
 
 Available on [npm](https://www.npmjs.com/package/@blackwell-systems/gcf-proxy), [PyPI](https://pypi.org/project/gcf-proxy/), and [Go](https://github.com/blackwell-systems/gcf-proxy). Claude Code and Codex plugins available for one-command install.
