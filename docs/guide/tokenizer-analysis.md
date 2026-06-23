@@ -810,45 +810,36 @@ JSON's grammar is structurally ambiguous on every production tokenizer. Multiple
 All experiments are reproducible:
 
 ```bash
-# === JavaScript-based analyses (token savings, grammar swap, syntactic deep dive) ===
-cd gcf
+# === Primary analysis (43 tokenizers, Python) ===
+cd eval
+python3 -m venv .venv && source .venv/bin/activate
+pip install tokenizers huggingface_hub tiktoken
+
+# 43-tokenizer: merge rates, vocab entries, savings vs JSON & TOON
+python3 hf-tokenizer-analysis.py
+
+# Structural equivalence proof (grammar isolation across 43 tokenizers)
+python3 structural-equivalence-proof.py
+
+# Exhaustive vocabulary dump (complete adversarial surface)
+python3 adversarial-vocab-dump.py
+
+# === Supplementary analyses (8 tokenizers, JS) ===
+cd gcf  # repo root
 npm install @blackwell-systems/gcf @lenml/tokenizers \
   @lenml/tokenizer-claude @lenml/tokenizer-gpt4 @lenml/tokenizer-gpt4o \
   @lenml/tokenizer-llama3_1 @lenml/tokenizer-qwen2_5 \
   @lenml/tokenizer-deepseek_v3 @lenml/tokenizer-gemma2 \
   @lenml/tokenizer-mistral_nemo
 
-# Token savings consistency (43 tokenizers, multiple scales)
-node eval/tokenizer-variance.mjs
-
-# Structural variance (merge analysis, boundary consistency)
-node eval/structural-variance.mjs
+# JSON overhead analysis (token distribution, scaling)
+node eval/json-tokenization-analysis.mjs
 
 # Worst-case JSON tokenization (maximum variance search)
 node eval/worst-json-tokenization.mjs
 
-# JSON overhead analysis (token distribution, scaling)
-node eval/json-tokenization-analysis.mjs
-
-# Vocabulary entry analysis (root cause: merged tokens are dictionary entries)
-node eval/tokenizer-vocabulary-analysis.mjs
-
-# Full vocabulary scan (exhaustive: every entry in every vocabulary)
-node eval/vocabulary-full-scan.mjs
-
 # Grammar swap experiment (proves savings are structural)
 node eval/grammar-swap-experiment.mjs
-
-# === Python-based analysis (43-tokenizer expanded study) ===
-cd eval
-python3 -m venv .venv && source .venv/bin/activate
-pip install tokenizers huggingface_hub tiktoken
-
-# 43-tokenizer boundary merge, vocabulary, and savings analysis
-python3 hf-tokenizer-analysis.py
-
-# Structural equivalence proof (grammar isolation across 43 tokenizers)
-python3 structural-equivalence-proof.py
 ```
 
 ---
