@@ -128,7 +128,7 @@ Local IDs (`@0`, `@1`) replace full names in edges. 233 tokens instead of 965 fo
 Lossless structured data encoding. Arrays, nested objects, mixed types, primitives, root scalars. Works on any data that deserializes to objects and arrays, regardless of source format.
 
 1. **Arrays of objects.** `## name [count]{field1,field2}` declares field names once. Rows are pipe-separated values. Absent fields use `~`, null uses `-`.
-2. **Nested objects.** `## key` becomes a section. In tabular rows, nested values use `^` cell marker with `.field {}` attachment.
+2. **Nested objects.** Fixed-shape nested objects are flattened into `>` path columns: `"customer>name"` becomes a column, values go directly in the row. 20-48% fewer tokens on deeply nested API data. Variable-length arrays and irregular shapes use `^` attachment fallback.
 3. **Primitive arrays.** Inlined: `tags[2]: admin,user`. Strings containing commas are quoted.
 4. **Scalars.** `key=value` at the top level. Strings that collide with typed literals (`"true"`, `"123"`, `"-"`) are quoted automatically.
 5. **Root values.** Objects, arrays, and scalars at the document root. Every JSON value has a GCF representation.
