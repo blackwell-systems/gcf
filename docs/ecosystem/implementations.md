@@ -23,6 +23,7 @@ All six support both encoding profiles:
 | Generic decode (`decodeGeneric`) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Session deduplication | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Delta encoding | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Flatten opt-out (`noFlatten`) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Streaming encode (`StreamEncoder`) | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Thread-safe Session | ✓ | n/a | ✓ | ✓ | ✓ | ✓ |
 | CLI | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
@@ -53,13 +54,11 @@ Your server keeps outputting JSON. The LLM receives GCF. [Full setup guide](/gui
 
 ## Editor Support
 
-Syntax highlighting for GCF files via [tree-sitter](https://github.com/blackwell-systems/tree-sitter-gcf). Supports Neovim, Helix, Zed, and any tree-sitter-compatible editor.
-
-```bash
-npm install tree-sitter-gcf
-```
-
-[GitHub](https://github.com/blackwell-systems/tree-sitter-gcf) · [npm](https://www.npmjs.com/package/tree-sitter-gcf)
+| Editor | Install | Source |
+|--------|---------|--------|
+| VS Code | [Marketplace](https://marketplace.visualstudio.com/items?itemName=blackwell-systems.gcf) | [gcf-vscode](https://github.com/blackwell-systems/gcf-vscode) |
+| JetBrains | [Marketplace](https://plugins.jetbrains.com/plugin/gcf) | [gcf-jetbrains](https://github.com/blackwell-systems/gcf-jetbrains) |
+| Neovim, Helix, Zed | tree-sitter | [tree-sitter-gcf](https://github.com/blackwell-systems/tree-sitter-gcf) |
 
 ## Output compatibility
 
