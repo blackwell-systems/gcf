@@ -162,13 +162,7 @@ The LLM gets the first symbols in its context within milliseconds. Without `prog
 
 By default, GCF flattens fixed-shape nested objects into path columns (`"customer>name"` instead of a separate attachment block). This saves 20-48% more tokens on deeply nested API data and maintains 100% comprehension on every frontier model (Claude, GPT-5.5, Gemini, Grok).
 
-However, [40+ eval runs across 20 models and 8 providers](https://gcformat.com/guide/eval-results.html) revealed a split: **open-weight models show 8-15% comprehension regression on flattened encoding at scale** (500+ rows). Specifically:
-
-- LLaMA 3.3 70B: ~10% regression on flattened vs non-flattened
-- Mistral Medium: ~8% regression at 500 rows
-- Smaller models (LLaMA 8B, Granite Micro): larger regression
-
-Proprietary models (Claude, GPT-5.5, Gemini, Grok) show zero regression on flattened encoding.
+However, [40+ eval runs across 20 models and 8 providers](https://gcformat.com/guide/eval-results.html) revealed a split: **proprietary frontier models show zero regression, while open-weight models show measurable comprehension regression on flattened encoding at 500+ rows.** See the [full findings](/guide/llm-integration#nested-object-flattening-proprietary-vs-open-weight-split) for details.
 
 If you're deploying against open-weight models, use `--no-flatten`:
 

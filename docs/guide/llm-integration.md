@@ -88,9 +88,8 @@ GCF v3.2 introduced nested object flattening, which promotes fixed-shape nested 
 
 | Model class | Flattened vs non-flattened | Recommendation |
 |-------------|---------------------------|----------------|
-| **Proprietary** (Claude, GPT-5.5, Gemini, Grok) | Zero regression | Use default (flatten on) |
-| **Open-weight large** (LLaMA 70B, Mistral Medium) | 8-15% regression at 500 rows | Consider `noFlatten` at scale |
-| **Open-weight small** (LLaMA 8B, Granite Micro) | Larger regression | Use `noFlatten` |
+| **Proprietary frontier** (Claude, GPT-5.5, Gemini, Grok) | Zero regression | Use default (flatten on) |
+| **Open-weight** (LLaMA, Mistral, Granite, Qwen) | 8-23pp regression at 500 rows | Use `noFlatten` |
 
 Flattening is on by default because frontier models handle it perfectly and the token savings are significant. If you're deploying against open-weight models, all 6 SDKs and the proxy support an opt-out:
 
