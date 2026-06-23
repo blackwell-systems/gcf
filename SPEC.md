@@ -2,9 +2,9 @@
 
 ## Graph Compact Format: A Token-Optimized Wire Format for LLM Interactions
 
-**Version:** 3.1.1
+**Version:** 3.2.0
 
-**Date:** 2026-06-12
+**Date:** 2026-06-22
 
 **Status:** Stable (see Section 19 for status lifecycle)
 
@@ -800,6 +800,97 @@ When a decoder encounters `.field [N]` without `{fields}`:
 
 1. If a shared array schema was established for that field by an earlier row in the same containing tabular array, parse the body as tabular using that schema.
 2. Otherwise, parse the body as an expanded array according to Section 7.6.
+
+#### 7.4.6 Nested object flattening
+
+When a tabular array contains a field that is a non-null object with the same ordered key set in every row where that field is present, and all values within that object are scalars, an encoder MAY flatten the nested object's keys into the tabular header as path columns using `>` as the path separator.
+
+This is an alternative to the inline object schema mechanism (Section 7.4.5.1). Both produce valid GCF. Flattening promotes nested object values directly into the tabular row; inline schemas place them in a separate positional attachment body.
+
+##### 7.4.6.1 Encoder rules
+
+1. The encoder MUST verify that every row containing the nested object has exactly the same keys in exactly the same order. If any row has a different key set, the encoder MUST NOT flatten that field and MUST use the attachment mechanism (Section 7.4.4) or inline schema (Section 7.4.5.1) instead.
+
+2. All final leaf values within the nested object MUST be scalars. Intermediate nested objects that themselves meet the flattening criteria (same keys in every row, all scalar leaves) are flattened recursively (see rule 5). If any final leaf is an object or array, the encoder MUST NOT flatten that field.
+
+3. The encoder MUST NOT flatten a nested object whose keys contain the `>` character. Such fields MUST use the attachment mechanism.
+
+4. Each leaf key becomes a quoted column name in the header, formed by joining the path from the parent field to the leaf with `>`. For a field `customer` containing keys `id`, `name`, `email`: the header columns are `"customer>id"`, `"customer>name"`, `"customer>email"`.
+
+5. Multiple nesting levels chain. A field `billing` containing an object `address` with keys `city`, `country` produces columns `"billing>address>city"`, `"billing>address>country"`. The same eligibility rules apply recursively: all intermediate objects must have the same keys in every row, and all leaves must be scalars.
+
+6. Flattened columns appear in the header at the position of the original nested object field, in the key order of the nested object.
+
+7. In each row, the flattened leaf values appear as ordinary pipe-separated cells at their column positions. No `^` marker, no attachment body.
+
+8. If the entire nested object is absent from a record, all leaf columns for that object emit `~`.
+
+9. If the entire nested object is null in a record, all leaf columns for that object emit `-`.
+
+10. Flattened path columns and attachment marker columns (`^`) MAY coexist in the same tabular header. A row may have some fields flattened and others using attachments.
+
+##### 7.4.6.2 Decoder rules
+
+1. When a decoder encounters a quoted field name containing `>` in a tabular header, it MUST interpret `>` as a path separator and reconstruct the nested object structure. `"customer>name"` with cell value `Alice` decodes to `{"customer": {"name": "Alice"}}`.
+
+2. Multiple `>` characters chain: `"billing>address>city"` with value `Seattle` decodes to `{"billing": {"address": {"city": "Seattle"}}}`.
+
+3. Individual leaf columns follow the standard scalar grammar: `~` means the leaf key is absent from the nested object, `-` means the leaf value is null. For example, `"customer>name"` = `Alice` and `"customer>email"` = `~` decodes to `{"customer": {"name": "Alice"}}` (email key omitted). `"customer>name"` = `-` and `"customer>email"` = `bob@co.com` decodes to `{"customer": {"name": null, "email": "bob@co.com"}}`.
+
+4. When ALL leaf columns for a nested object contain `~`, the decoder MUST omit the nested object key entirely from the decoded record (the object is absent, not empty).
+
+5. When ALL leaf columns for a nested object contain `-`, the decoder MUST emit the nested object key with value `null` (not an object with null-valued keys).
+
+6. Decoders MUST support both flattened path columns and traditional attachment columns in the same payload.
+
+##### 7.4.6.3 Round-trip guarantee
+
+`decode(encode(value)) == value` MUST hold for flattened encoding. The decoder MUST reconstruct the exact nested object structure that the encoder received, preserving key order and value types.
+
+##### 7.4.6.4 Example
+
+Source data:
+
+```json
+[
+  {"id": "ORD-001", "customer": {"name": "Alice", "email": "alice@co.com"}, "items": [{"sku": "A1"}], "total": 59.98},
+  {"id": "ORD-002", "customer": {"name": "Bob", "email": "bob@co.com"}, "items": [{"sku": "B2"}, {"sku": "B3"}], "total": 29.99}
+]
+```
+
+Flattened encoding:
+
+```
+GCF profile=generic
+## [2]{id,"customer>name","customer>email",items,total}
+@0 ORD-001|Alice|alice@co.com|^|59.98
+.items [1]{sku}
+    A1
+@1 ORD-002|Bob|bob@co.com|^|29.99
+.items [2]
+    B2
+    B3
+```
+
+The `customer` object is flattened into two path columns. The `items` array, which varies in length across rows, uses the existing attachment mechanism.
+
+Equivalent inline-schema encoding (Section 7.4.5.1):
+
+```
+GCF profile=generic
+## [2]{id,customer,items,total}
+@0 ORD-001|^{name,email}|^|59.98
+Alice|alice@co.com
+.items [1]{sku}
+    A1
+@1 ORD-002|^|^|29.99
+Bob|bob@co.com
+.items [2]
+    B2
+    B3
+```
+
+Both are valid. Flattening produces fewer lines and tokens. Decoders MUST accept both forms.
 
 ### 7.5 Primitive array encoding (inline)
 

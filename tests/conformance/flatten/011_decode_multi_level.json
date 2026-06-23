@@ -1,0 +1,10 @@
+{
+  "name": "decode_multi_level",
+  "description": "Decoder handles multi-level > paths: billing>address>city reconstructs 3-level nesting",
+  "operation": "decode",
+  "input": "GCF profile=generic\n## [2]{id,\"billing>address>city\",\"billing>address>country\"}\nch_1|Seattle|US\nch_2|London|GB\n",
+  "expected": [
+    {"id": "ch_1", "billing": {"address": {"city": "Seattle", "country": "US"}}},
+    {"id": "ch_2", "billing": {"address": {"city": "London", "country": "GB"}}}
+  ]
+}

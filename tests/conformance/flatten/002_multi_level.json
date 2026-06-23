@@ -1,0 +1,10 @@
+{
+  "name": "multi_level_flatten",
+  "description": "Three-level nesting flattened: billing > address > city chains with >",
+  "operation": "encode",
+  "input": [
+    {"id": "ch_1", "amount": 5000, "billing": {"address": {"city": "Seattle", "country": "US"}}, "status": "succeeded"},
+    {"id": "ch_2", "amount": 3000, "billing": {"address": {"city": "London", "country": "GB"}}, "status": "pending"}
+  ],
+  "expected": "GCF profile=generic\n## [2]{id,amount,\"billing>address>city\",\"billing>address>country\",status}\nch_1|5000|Seattle|US|succeeded\nch_2|3000|London|GB|pending\n"
+}

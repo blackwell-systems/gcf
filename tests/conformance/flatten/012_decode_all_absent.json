@@ -1,0 +1,10 @@
+{
+  "name": "decode_all_absent",
+  "description": "When all leaf columns are ~, the nested object key is omitted entirely",
+  "operation": "decode",
+  "input": "GCF profile=generic\n## [2]{id,name,\"address>city\",\"address>state\"}\n1|Alice|Seattle|WA\n2|Bob|~|~\n",
+  "expected": [
+    {"id": 1, "name": "Alice", "address": {"city": "Seattle", "state": "WA"}},
+    {"id": 2, "name": "Bob"}
+  ]
+}

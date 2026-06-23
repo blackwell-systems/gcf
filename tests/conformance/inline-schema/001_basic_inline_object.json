@@ -1,6 +1,6 @@
 {
-  "description": "Nested object with 3+ fields uses ^{fields} inline schema on first row, bare ^ on subsequent",
-  "expected": "GCF profile=generic\n## orders [2]{customer,id,total}\n@0 ^{email,name,tier}|1|99.99\nalice@test.com|Alice|premium\n@1 ^|2|49.99\nbob@test.com|Bob|standard\n",
+  "description": "Nested object with 3+ same-shape scalar fields is flattened into path columns",
+  "expected": "GCF profile=generic\n## orders [2]{\"customer>email\",\"customer>name\",\"customer>tier\",id,total}\nalice@test.com|Alice|premium|1|99.99\nbob@test.com|Bob|standard|2|49.99\n",
   "input": {
     "orders": [
       {

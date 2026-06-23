@@ -1,0 +1,11 @@
+{
+  "name": "null_nested_object",
+  "description": "When nested object is null, all leaf columns emit -",
+  "operation": "encode",
+  "input": [
+    {"id": 1, "meta": {"version": 1, "tag": "alpha"}},
+    {"id": 2, "meta": null},
+    {"id": 3, "meta": {"version": 3, "tag": "gamma"}}
+  ],
+  "expected": "GCF profile=generic\n## [3]{id,\"meta>version\",\"meta>tag\"}\n1|1|alpha\n2|-|-\n3|3|gamma\n"
+}

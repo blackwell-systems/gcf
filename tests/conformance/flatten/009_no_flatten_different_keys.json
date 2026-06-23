@@ -1,0 +1,10 @@
+{
+  "name": "no_flatten_different_keys",
+  "description": "Nested objects with different keys across rows MUST NOT be flattened; must use attachment",
+  "operation": "encode",
+  "input": [
+    {"id": 1, "meta": {"version": 1, "tag": "alpha"}},
+    {"id": 2, "meta": {"version": 2, "label": "beta"}}
+  ],
+  "expected": "GCF profile=generic\n## [2]{id,meta}\n@0 1|^\n.meta {}\n    version=1\n    tag=alpha\n@1 2|^\n.meta {}\n    version=2\n    label=beta\n"
+}

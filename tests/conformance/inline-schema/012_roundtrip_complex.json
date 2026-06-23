@@ -1,6 +1,6 @@
 {
-  "description": "Full round-trip: encode then decode a complex nested structure with all v3 features",
-  "expected": "GCF profile=generic\n## orders [2]{customer,items,orderId,status,subtotal,tax,total}\n@0 ^{email,id,name,tier}|^|ORD-001|shipped|74.97|6|80.97\nalice@example.com|1|Alice Chen|premium\n.items [2]{name,price,quantity,sku}\n    Wireless Mouse|29.99|2|SKU-WM01\n    USB-C Cable|14.99|1|SKU-UC02\n@1 ^|^|ORD-002|pending|89.99|7.2|97.19\nbob@example.com|2|Bob Martinez|standard\n.items [1]\n    Mechanical Keyboard|89.99|1|SKU-MK04\n",
+  "description": "Full round-trip: encode then decode a complex nested structure with flattened objects and array attachments",
+  "expected": "GCF profile=generic\n## orders [2]{\"customer>email\",\"customer>id\",\"customer>name\",\"customer>tier\",items,orderId,status,subtotal,tax,total}\n@0 alice@example.com|1|Alice Chen|premium|^|ORD-001|shipped|74.97|6|80.97\n.items [2]{name,price,quantity,sku}\n    Wireless Mouse|29.99|2|SKU-WM01\n    USB-C Cable|14.99|1|SKU-UC02\n@1 bob@example.com|2|Bob Martinez|standard|^|ORD-002|pending|89.99|7.2|97.19\n.items [1]\n    Mechanical Keyboard|89.99|1|SKU-MK04\n",
   "input": {
     "orders": [
       {

@@ -1,0 +1,10 @@
+{
+  "name": "mixed_null_leaves",
+  "description": "Individual leaf - means that key is null within the nested object",
+  "operation": "decode",
+  "input": "GCF profile=generic\n## [2]{id,\"customer>name\",\"customer>email\"}\n1|-|alice@co.com\n2|Bob|-\n",
+  "expected": [
+    {"id": 1, "customer": {"name": null, "email": "alice@co.com"}},
+    {"id": 2, "customer": {"name": "Bob", "email": null}}
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "name": "coexist_with_attachment",
+  "description": "Flattened path columns and attachment columns coexist in the same header",
+  "operation": "encode",
+  "input": [
+    {"id": "ORD-1", "customer": {"name": "Alice", "email": "alice@co.com"}, "items": [{"sku": "A1", "qty": 2}], "total": 59.98},
+    {"id": "ORD-2", "customer": {"name": "Bob", "email": "bob@co.com"}, "items": [{"sku": "B1", "qty": 1}, {"sku": "B2", "qty": 3}], "total": 29.99}
+  ],
+  "expected": "GCF profile=generic\n## [2]{id,\"customer>name\",\"customer>email\",items,total}\n@0 ORD-1|Alice|alice@co.com|^|59.98\n.items [1]{sku,qty}\n    A1|2\n@1 ORD-2|Bob|bob@co.com|^|29.99\n.items [2]\n    B1|1\n    B2|3\n"
+}

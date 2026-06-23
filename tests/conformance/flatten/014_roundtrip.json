@@ -1,0 +1,11 @@
+{
+  "name": "roundtrip_flatten",
+  "description": "decode(encode(value)) == value for flattened nested objects",
+  "operation": "roundtrip",
+  "input": [
+    {"id": "ORD-1", "customer": {"name": "Alice", "email": "alice@co.com", "tier": "premium"}, "total": 99.99, "status": "shipped"},
+    {"id": "ORD-2", "customer": {"name": "Bob", "email": "bob@co.com", "tier": "standard"}, "total": 49.99, "status": "pending"},
+    {"id": "ORD-3", "total": 0, "status": "cancelled"}
+  ],
+  "expected": "GCF profile=generic\n## [3]{id,\"customer>name\",\"customer>email\",\"customer>tier\",total,status}\nORD-1|Alice|alice@co.com|premium|99.99|shipped\nORD-2|Bob|bob@co.com|standard|49.99|pending\nORD-3|~|~|~|0|cancelled\n"
+}
