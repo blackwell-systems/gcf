@@ -2,11 +2,12 @@
 
 Every LLM uses a different tokenizer. A format designed for one tokenizer might perform poorly on another. This page proves GCF's token savings and structural consistency hold across all major tokenizers, and explains *why* JSON breaks down at the tokenization level.
 
-::: tip Key Numbers
-- **JSON boundary merge rate:** 8.93% (field names fuse with quotes on half the LLM market)
-- **GCF boundary merge rate:** 1.00% (88.8% fewer hidden boundaries)
-- **Worst offenders:** `"id":`, `"name":`, `"time":`, `"title":` merge on 63% of tokenizers
-- **JSON overhead at 500 rows:** 81% noise, 19% data
+::: tip Key Numbers (43 tokenizers, 20 providers)
+- **GCF boundary merge rate:** 0.47% (pipe never merges with field names)
+- **JSON boundary merge rate:** 8.17% (quote fuses with field names on 30% of tokenizers)
+- **TOON boundary merge rate:** 32.91% (tab merges on 100% of GPT-4o tokens tested)
+- **GCF has 94% fewer hidden boundaries than JSON**
+- **Worst offenders:** `"id":`, `"name":`, `"time":`, `"title":` merge on 30% of tokenizers
 - **GCF savings range:** 50-92% depending on features used (session dedup at ceiling)
 :::
 
@@ -17,9 +18,9 @@ When you send structured data to an LLM, the tokenizer converts it into a sequen
 1. **Are GCF's token savings consistent?** If GCF saves 58% on GPT-4 but only 20% on Claude, the savings claims are misleading.
 2. **Are GCF's structural boundaries consistent?** If different models see the data's field boundaries at different token positions, comprehension will vary per model.
 
-The answer to both: **yes, GCF is consistent. JSON is not.** I'll explain why.
+The answer to both: **yes, GCF is consistent. JSON is not.**
 
-First, we need to draw attention to an important distinction in the data. A format has two types of content:
+First, an important distinction. A format has two types of content:
 
 - **Grammar symbols** (delimiters, structural markers): These define where fields start and end. A format designer controls these.
 - **Payload content** (the actual data values): These are the user's data. `userName`, `req_xyz789`, `Alice Chen`. A format designer cannot control how these tokenize without changing the data itself, which is unacceptable.
@@ -35,32 +36,42 @@ Structural equivalence is the critical one. If models disagree on where fields s
 
 **GCF guarantees structural equivalence.** The pipe is always its own token, so every model sees field boundaries at the same position, regardless of how values split.
 
-**JSON does not.** Its grammar symbols (quotes, colons) merge with payload content on half of tokenizers, making field boundaries invisible at the token level. The structure and the data become one token. Models disagree on where fields start.
+**JSON does not.** Its grammar symbols (quotes, colons) merge with payload content on a third of tokenizers, making field boundaries invisible at the token level. The structure and the data become one token. Models disagree on where fields start.
 
 ---
 
 ## Tokenizers Tested
 
-8 tokenizers from 6 providers, covering every major LLM family in production:
+43 tokenizers from 20 providers, covering every major LLM family in production. This is the most comprehensive tokenizer boundary analysis published for any wire format.
 
-| Tokenizer | Provider | Model Family | Vocab Size |
-|-----------|----------|-------------|-----------|
-| Claude tokenizer | Anthropic | Claude 3.5, 4.x | ~100K |
-| cl100k_base | OpenAI | GPT-4 | 100,256 |
-| o200k_base | OpenAI | GPT-4o, GPT-5.x | 200,019 |
-| LLaMA 3.1 tokenizer | Meta | LLaMA 3.x | 128,256 |
-| Qwen 2.5 tokenizer | Alibaba | Qwen 2.5 | 151,936 |
-| DeepSeek V3 tokenizer | DeepSeek | DeepSeek V3 | 128,000 |
-| Gemma 2 tokenizer | Google | Gemma 2 | 256,128 |
-| Mistral Nemo tokenizer | Mistral | Mistral/Ministral | 131,072 |
+| Provider | Tokenizers | Models Covered |
+|----------|-----------|----------------|
+| OpenAI | cl100k_base, o200k_base, GPT-2 | GPT-4, GPT-4o, GPT-5.x |
+| Anthropic | Claude tokenizer | Claude 3.5, 4.x |
+| Meta | LLaMA 2, LLaMA 3, LLaMA 3.1, CodeLlama, TinyLlama | LLaMA family |
+| Google | Gemma 2, Gemma 3, T5 | Gemma family |
+| Mistral | 7B v0.1, 7B v0.3, Nemo, Mixtral, Codestral | Mistral/Mixtral family |
+| Alibaba | Qwen 2, Qwen 2.5, Qwen 2.5 Coder, Qwen 3, QwQ | Qwen family |
+| DeepSeek | V2 Lite, V3, R1, Coder V2 Lite | DeepSeek family |
+| Microsoft | Phi-2, Phi-3, Phi-4 | Phi family |
+| TII | Falcon 7B, 40B, 2 11B | Falcon family |
+| 01.AI | Yi 1.5, Yi Coder | Yi family |
+| BigCode | StarCoder2 7B, 15B | StarCoder family |
+| NVIDIA | Nemotron Mini 4B | Nemotron |
+| AI21 | Jamba v0.1 | Jamba |
+| Stability AI | StableLM 2 1.6B | StableLM |
+| EleutherAI | Pythia 6.9B | Pythia/GPT-NeoX |
+| Snowflake | Arctic | Arctic |
+| AllenAI | OLMo 7B | OLMo |
+| Alibaba (AIDC) | Marco-o1 | Marco |
 
-These tokenizers were trained on different corpora with different merge priorities. Their disagreements on how to tokenize the same input reveal fundamental properties of that input's structure.
+These tokenizers were trained on different corpora with different merge priorities. Their disagreements on how to tokenize the same input reveal fundamental properties of that input's structure. Vocabulary sizes range from 32K (Mistral 7B, LLaMA 2, Arctic) to 262K (Gemma 3).
 
 ---
 
 ## Part 1: GCF Savings Are Consistent
 
-Data from `eval/tokenizer-variance.mjs` and `eval/graph-token-efficiency.mjs`.
+Data from `eval/tokenizer-variance.mjs`.
 
 ### 50-59% savings on every tokenizer
 
@@ -108,18 +119,18 @@ The 50-59% range above is for one data type (generic profile) proving cross-toke
 | Generic profile (flat/nested, 500 orders) | 50-59% | ~30% | Header factorization, inline schemas |
 | 15-dataset benchmark (mixed real payloads) | 43-65% | varies | Data complexity determines savings |
 | Graph profile (500 symbols + 200 edges) | 63-69% | 40-49% | `@id` refs, edge encoding, section headers |
-| Session dedup (90% overlap, call 3 of 5) | **89-90%** | — | Bare references for previously-seen symbols |
-| Session dedup (full 5-call session total) | **84.3%** | — | Format + dedup combined |
+| Session dedup (90% overlap, call 3 of 5) | **89-90%** | n/a | Bare references for previously-seen symbols |
+| Session dedup (full 5-call session total) | **84.3%** | n/a | Format + dedup combined |
 
 The graph profile and session deduplication benchmarks show that GCF's advanced features (compact edge encoding, bare references) push savings well beyond the baseline 50-59%. In a real agent session with repeated tool calls to the same codebase, cumulative savings reach 84-92%.
 
-All numbers cross-tokenizer validated (8 tokenizers, 6 providers).
+All numbers cross-tokenizer validated.
 
 ---
 
 ## Part 2: Why JSON Breaks Down
 
-Data from `eval/structural-variance.mjs`, `eval/common-field-merge-analysis.mjs`, and `eval/worst-json-tokenization.mjs`.
+Data from `eval/hf-tokenizer-analysis.py` (43 tokenizers, 20 providers).
 
 ![Field Merge Rates](/charts/field-merge-rates.png)
 
@@ -130,67 +141,55 @@ JSON uses quote-colon patterns (`"fieldName":`) to mark each field. These patter
 When GPT-4 tokenizes `"value":"pending"`, it produces:
 
 ```
-["value] [":"] [pending] ["]    ← 4 tokens
+["value] [":"] [pending] ["]    (4 tokens)
 ```
 
 The opening quote and field name `value` are **one token**. Claude tokenizes the same string as:
 
 ```
-["] [value] [":"] [pending] ["]    ← 5 tokens
+["] [value] [":"] [pending] ["]    (5 tokens)
 ```
 
 The quote is separate from the field name. **The structural boundary (where the field name starts) is at a different token position depending on which model processes the data.**
 
-This is verified across all 8 tokenizers for this specific example:
-- **Merged** (4 tokens): GPT-4, GPT-4o, LLaMA, Qwen
-- **Separate** (5 tokens): Claude, DeepSeek, Gemma, Mistral
+This is verified across all 43 tokenizers:
+- **Merged** (4 tokens): GPT-4, GPT-4o, LLaMA 3/3.1, Qwen (all versions), Phi-4, StableLM 2, Marco-o1
+- **Partially merged** (some fields): Mistral Nemo (4 of 45 fields)
+- **Separate** (5 tokens): Claude, Gemma 2/3, DeepSeek (all versions), Falcon, Yi, StarCoder2, Phi-2/3, and 16 others
 
-### Common business field analysis (155 fields tested)
+### Common business field analysis (45 fields, 43 tokenizers)
 
-We tested 155 common field names from production APIs across all 8 tokenizers (`eval/common-field-merge-analysis.mjs`). **15 of the most common field names in computing merge on half or more of all tokenizers:**
+We tested 45 common field names from production APIs across all 43 tokenizers (`eval/hf-tokenizer-analysis.py`). The most common field names in computing merge on roughly 30% of all tokenizers:
 
-| Field | Merge rate | Models affected |
-|-------|-----------|----------------|
-| `"id":` | **63%** (5/8) | GPT-4, GPT-4o, LLaMA, Qwen, Mistral |
-| `"name":` | **63%** (5/8) | GPT-4, GPT-4o, LLaMA, Qwen, Mistral |
-| `"time":` | **63%** (5/8) | GPT-4, GPT-4o, LLaMA, Qwen, Mistral |
-| `"title":` | **63%** (5/8) | GPT-4, GPT-4o, LLaMA, Qwen, Mistral |
-| `"type":` | **50%** (4/8) | GPT-4, GPT-4o, LLaMA, Qwen |
-| `"value":` | **50%** (4/8) | GPT-4, GPT-4o, LLaMA, Qwen |
-| `"url":` | **50%** (4/8) | GPT-4, GPT-4o, LLaMA, Qwen |
-| `"user_id":` | **50%** (4/8) | GPT-4, GPT-4o, LLaMA, Qwen |
-| `"text":` | **50%** (4/8) | GPT-4, GPT-4o, LLaMA, Qwen |
-| `"path":` | **50%** (4/8) | GPT-4, GPT-4o, LLaMA, Qwen |
-| `"description":` | **50%** (4/8) | GPT-4, GPT-4o, LLaMA, Qwen |
+| Field | Merge rate | Tokenizer families affected |
+|-------|-----------|----------------------------|
+| `"id":` | **30.2%** (13/43) | GPT-4, GPT-4o, LLaMA 3.x, Qwen, Phi-4, StableLM, Marco, Mistral Nemo |
+| `"name":` | **30.2%** (13/43) | Same group |
+| `"time":` | **30.2%** (13/43) | Same group |
+| `"title":` | **30.2%** (13/43) | Same group |
+| `"type":` | **27.9%** (12/43) | Same group minus Mistral Nemo |
+| `"value":` | **27.9%** (12/43) | Same group minus Mistral Nemo |
+| `"url":` | **27.9%** (12/43) | Same group minus Mistral Nemo |
+| `"text":` | **27.9%** (12/43) | Same group minus Mistral Nemo |
+| `"path":` | **27.9%** (12/43) | Same group minus Mistral Nemo |
+| `"user_id":` | **27.9%** (12/43) | Same group minus Mistral Nemo |
+| `"description":` | **27.9%** (12/43) | Same group minus Mistral Nemo |
 
-These are not obscure fields. According to the [Web Data Commons](http://webdatacommons.org/structureddata/) dataset (University of Mannheim, 2024), `name` is the #1 most common JSON property on the web (3.5 billion occurrences across 2.39 billion pages) and `url` is #2 (2.6 billion occurrences). Both merge on 50-63% of tokenizers.
+These are not obscure fields. According to the [Web Data Commons](http://webdatacommons.org/structureddata/) dataset (University of Mannheim, 2024), `name` is the #1 most common JSON property on the web (3.5 billion occurrences across 2.39 billion pages) and `url` is #2 (2.6 billion occurrences). Both merge on 28-30% of tokenizers.
 
-At 500 rows with just `id` + `name` + `type`, that's **1,500 field boundaries** where the majority of models see a hidden merge.
+At 500 rows with just `id` + `name` + `type`, that's **1,500 field boundaries** where nearly a third of all models see a hidden merge.
 
 ### TOON's tab delimiter is worse
 
-TOON, the primary competing token-efficient format, uses tab characters as column delimiters. The same analysis shows TOON's tab merges **more aggressively** than JSON's quote:
+TOON, the primary competing token-efficient format, uses tab characters as column delimiters. The same analysis across 43 tokenizers shows TOON's tab merges **far more aggressively** than JSON's quote:
 
-| Format | Delimiter merge rate (1,344 checks) |
-|--------|-------------------------------------|
-| TOON (tab) | **59.82%** |
-| JSON (quote) | 39.29% |
-| GCF (pipe) | **0.00%** |
+| Format | Delimiter merge rate | Checks |
+|--------|---------------------|--------|
+| TOON (tab) | **32.91%** | 283/860 |
+| JSON (quote) | 8.17% | 158/1,935 |
+| GCF (pipe) | **0.47%** | 135/29,025 |
 
-GPT-4's vocabulary has 60/64 tested words as tab+letter entries (94%). Tab-separated data was so common in training corpora that the tokenizer absorbed tabs even more aggressively than quotes. See [GCF vs TOON](/guide/vs-toon) for the full comparison.
-
-### Earlier merge rate analysis: 22/120 (18.3%)
-
-In an earlier, narrower test of 15 field-name patterns across all 8 tokenizers (120 checks), the opening quote merged on 22 checks.
-
-| Pattern | Merge rate | Models that merge |
-|---------|-----------|-------------------|
-| `"name":` | **5/8** | GPT-4, GPT-4o, LLaMA, Qwen, Mistral |
-| `"value":` | **4/8** | GPT-4, GPT-4o, LLaMA, Qwen |
-| `"userName":` | **1/8** | GPT-4o |
-| `"tier":` | **0/8** | (but token count still varies 3-4 due to DeepSeek/Mistral splitting differently) |
-
-The worst case: `"name":` merges on **5 of 8 tokenizers**. This is one of the most common field names in real-world JSON. At 500 rows, that's 500 positions where the majority of models see an ambiguous boundary.
+GPT-4o has a **100% tab merge rate**: every single word tested merges with the preceding tab. GPT-4 cl100k merges 95%. These are the two most widely deployed tokenizers in the world. See [GCF vs TOON](/guide/vs-toon) for the full comparison.
 
 ### Why merging matters for comprehension
 
@@ -200,8 +199,8 @@ At 10 records, this barely matters. Models handle it fine. But at 500 records, t
 
 This is why our comprehension eval shows:
 - 100% accuracy at small scale (all formats)
-- 53.4% JSON accuracy at 500 records (stress scale)
-- 91.2% GCF accuracy at 500 records
+- 53.6% JSON accuracy at 500 records (stress scale)
+- 90.7% GCF accuracy at 500 records
 
 The degradation is caused by the combination of ambiguous boundaries AND token repetition (more on this below).
 
@@ -209,7 +208,7 @@ The degradation is caused by the combination of ambiguous boundaries AND token r
 
 We searched 840 JSON field+value patterns (40 field names x 21 values) to find maximum variance. The worst:
 
-`"userName":"req_xyz789"` produces **7 distinct tokenizations** across 8 models:
+`"userName":"req_xyz789"` produces **7 distinct tokenizations** across 8 representative tokenizers:
 
 ```
 GPT-4, LLaMA:     ["][userName][":"][req][_xyz][789]["]
@@ -227,27 +226,26 @@ A complete JSON object `{"orderId":"ORD-001","value":"shipped"}` produces **4 di
 
 ---
 
-## Part 3: GCF Grammar Merges 88.8% Less
+## Part 3: GCF Grammar Merges 94% Less
 
-Data from `eval/structural-variance.mjs` and `eval/common-field-merge-analysis.mjs`.
+Data from `eval/hf-tokenizer-analysis.py` (43 tokenizers).
 
-### Real-world merge rates: JSON 8.93% vs GCF 1.00%
-
-We tested boundary merge rates using actual data from our comprehension eval (14 field names, 25 values, 2,800 checks per format across all 8 tokenizers):
+### Boundary merge rates across 43 tokenizers
 
 | Format | Boundary merges | Rate | Cause |
 |--------|----------------|------|-------|
-| JSON | 250/2,800 | **8.93%** | `"id":` and `"name":` merge on 5/8 tokenizers (62.5%) |
-| GCF | 28/2,800 | **1.00%** | Only `cancelled` value triggers merge (25% on 2 tokenizers) |
+| GCF | 135/29,025 | **0.47%** | Only `\|cancelled` on 3 tokenizers (Mistral Nemo, DeepSeek V3, DeepSeek R1) |
+| JSON | 158/1,935 | **8.17%** | `"id":`, `"name":`, `"type":` etc. merge on 13/43 tokenizers |
+| TOON | 283/860 | **32.91%** | Tab merges on GPT-4o (100%), GPT-4 (95%), LLaMA 3 (95%), Qwen (95%) |
 
-**GCF has 88.8% fewer boundary merges on real data.**
+**GCF has 94.3% fewer boundary merges than JSON on real data.**
 
-The critical difference: JSON's merges are caused by **field names** (which repeat on every row, compounding at scale). GCF's merges are caused by one **value** (which appears occasionally). At 500 rows with `"id"` and `"name"` fields, JSON has ~625 hidden boundaries. GCF has a handful.
+The critical difference: JSON's merges are caused by **field names** (which repeat on every row, compounding at scale). GCF's merges are caused by one specific **value** (`cancelled`) on 3 tokenizers. At 500 rows with `"id"` and `"name"` fields, JSON has ~500 hidden boundaries. GCF has zero on field names.
 
-GCF's grammar characters are always 1 token in isolation on all 8 tokenizers:
+GCF's grammar characters are always 1 token in isolation on all 43 tokenizers:
 
-| Character | Purpose | Single token (8/8) |
-|-----------|---------|-------------------|
+| Character | Purpose | Single token (43/43) |
+|-----------|---------|---------------------|
 | `\|` (pipe) | Field delimiter | Yes |
 | `@` | Symbol ID prefix | Yes |
 | `<` | Edge direction | Yes |
@@ -258,31 +256,31 @@ GCF's grammar characters are always 1 token in isolation on all 8 tokenizers:
 With typical adjacent content (alphabetic values, numbers), pipe remains separate:
 
 ```
-value|pending        → [value][|][pending]       ALL 8 tokenizers
-name|Alice           → [name][|][Alice]          ALL 8 tokenizers
-orderId|ORD-001      → [orderId][|][ORD][-][001] ALL 8 tokenizers
+value|pending        -> [value][|][pending]       ALL 43 tokenizers
+name|Alice           -> [name][|][Alice]          ALL 43 tokenizers
+orderId|ORD-001      -> [orderId][|][ORD][-][001] ALL 43 tokenizers
 ```
 
-Under adversarial conditions (values starting with `/`, `.`, `-`), pipe can merge on some tokenizers (e.g., `[|/]` on LLaMA and Gemma when value starts with `/`). However, even when this occurs, the pipe is always at the **start** of the merged token, meaning the boundary position is still identifiable. In JSON, the quote merges with the field name **after** it (`["value]`), hiding the boundary inside.
+Under adversarial conditions (the specific value `cancelled`), pipe can merge on 3 tokenizers (Mistral Nemo, DeepSeek V3/R1) due to a `|c` vocabulary entry. However, even when this occurs, the pipe is always at the **start** of the merged token (`[|c]`), meaning the boundary position is still identifiable. In JSON, the quote merges with the field name **after** it (`["value]`), hiding the boundary inside.
 
-On real eval data (14 fields, 25 values), this adversarial merge happens on only 1.00% of checks vs JSON's 8.93%.
+On real data across 43 tokenizers: GCF 0.47% vs JSON 8.17%. Pipe never merges with any of the 45 field names tested.
 
 ### The same data in both formats
 
 Using the verified example `"value":"pending"` vs `value|pending`:
 
 **JSON (variance):**
-- GPT-4, GPT-4o, LLaMA, Qwen: `["value][":"][pending]["]` (4 tokens)
-- Claude, DeepSeek, Gemma, Mistral: `["][value][":"][pending]["]` (5 tokens)
+- GPT-4, GPT-4o, LLaMA 3.x, Qwen, Phi-4, StableLM, Marco: `["value][":"][pending]["]` (4 tokens)
+- Claude, DeepSeek, Gemma, Falcon, Yi, StarCoder, and 16 others: `["][value][":"][pending]["]` (5 tokens)
 
 **GCF (no variance):**
-- All 8 tokenizers: `[value][|][pending]` (3 tokens)
+- All 43 tokenizers: `[value][|][pending]` (3 tokens)
 
 Same data. JSON produces two different structural representations. GCF produces one.
 
 ### Why this was a deliberate design choice
 
-Before choosing GCF's grammar, we tested all 94 printable ASCII characters (codes 33-126) across all 8 tokenizers on two criteria:
+Before choosing GCF's grammar, we tested all 94 printable ASCII characters (codes 33-126) across tokenizers on two criteria:
 
 1. **Single token in isolation:** does the character encode as exactly 1 token?
 2. **Never merges with adjacent text:** does `Xfoo` tokenize as `X` + `foo` (separate) or `Xfoo` (merged)?
@@ -333,12 +331,12 @@ GCF for the same data:
 
 Each JSON field-name pattern costs tokens on **every single row**:
 
-| Field pattern | Tokens per row | × 500 rows | Total cost |
+| Field pattern | Tokens per row | x 500 rows | Total cost |
 |--------------|---------------|------------|-----------|
-| `"field":` | 3 | × 500 | 1,500 tokens |
-| `"value":` | 2 | × 500 | 1,000 tokens |
-| `"count":` | 3 | × 500 | 1,500 tokens |
-| `"percentage":` | 3 | × 500 | 1,500 tokens |
+| `"field":` | 3 | x 500 | 1,500 tokens |
+| `"value":` | 2 | x 500 | 1,000 tokens |
+| `"count":` | 3 | x 500 | 1,500 tokens |
+| `"percentage":` | 3 | x 500 | 1,500 tokens |
 
 In GCF, all four field names appear **once** in the header:
 ```
@@ -360,7 +358,7 @@ At 1,000 rows, JSON burns 17,001 tokens on overhead. GCF uses 11. Every addition
 
 ### Cross-tokenizer validation
 
-This pattern holds across all 8 tokenizers:
+This pattern holds across all tokenizers tested:
 
 | Tokenizer | JSON tokens | GCF tokens | Savings | JSON field-name overhead |
 |-----------|------------|-----------|---------|------------------------|
@@ -383,25 +381,25 @@ Connects tokenization findings to comprehension eval data (2,400+ LLM calls acro
 
 The tokenization analysis connects directly to the [comprehension eval data](/guide/benchmarks):
 
-- JSON accuracy on stress-scale data: **53.4%** (10 models, 24 runs)
-- GCF accuracy on stress-scale data: **91.2%**
+- JSON accuracy on stress-scale data: **53.6%** (10 models, 24 runs)
+- GCF accuracy on stress-scale data: **90.7%**
 - GCF accuracy on standard workloads: **100%** on every frontier model
 
 **Why does JSON fail at scale?**
 
-1. **Ambiguous structural boundaries** (8.93% merge rate on real data). The model sees different structure depending on which model reads it.
+1. **Ambiguous structural boundaries** (8.17% merge rate across 43 tokenizers). The model sees different structure depending on which model reads it.
 2. **Overwhelming repetition** (52% of tokens are repeated field names). The attention mechanism has 5,500 tokens that all look identical competing for attention budget.
 3. **Low signal-to-noise ratio** (19% data, 81% overhead). The model must find relevant information buried in structural noise.
 
 **Why does GCF succeed?**
 
-1. **Near-zero boundary merging** (1.00% merge rate). Every model sees consistent structure.
+1. **Near-zero boundary merging** (0.47% merge rate). Every model sees consistent structure.
 2. **Zero repetition** (field names declared once). No identical tokens competing for attention.
 3. **99.8% signal** (almost every token is data). The attention mechanism focuses on content.
 
 The model doesn't fail because JSON is "too long." It fails because these three problems **compound at scale**:
 
-At 10 rows: 10 merged boundaries, small attention budget, manageable. The model has seen enough JSON to work around it.
+At 10 rows: a handful of merged boundaries, small attention budget, manageable. The model has seen enough JSON to work around it.
 
 At 500 rows: ~1,500 merged boundaries (`"name`:, `"id":`, `"type":` on every row), all producing the **same token IDs** (e.g., #32586 repeated 500 times). The model can't distinguish the 150th `"name` from the 350th; it relies on positional encoding alone, which degrades over long sequences. Meanwhile, 81% of the sequence is noise that the attention mechanism must scan through. The merged boundaries make the noise harder to skip because the model can't cleanly identify where structure ends and data begins.
 
@@ -420,7 +418,7 @@ Across 24 stress-scale runs (500 symbols, 200 edges, 13 questions per run), we c
 | Opus | JSON | Manually enumerates 143 lines trying to count, still wrong. | Model falls back to chain-of-thought enumeration because it can't structurally extract the answer. |
 | Claude | GCF | Never fails. | Claude's tokenizer keeps all boundaries clean. GCF's structure answers questions directly (`## related [167]`). |
 | GPT-5.4 | GCF | Off-by-1-2 on `edge_count`, `function_count`. Deterministic. | Pipe is always separate (structure parseable), but value content (`fn` vs `function`) may split differently. Precision error, not comprehension error. |
-| All frontier | GCF | 100% on standard workloads. | 1% merge rate + 99.8% signal + structural answers = no failure mechanism. |
+| All frontier | GCF | 100% on standard workloads. | 0.47% merge rate + 99.8% signal + structural answers = no failure mechanism. |
 
 GCF's errors are small (off by 1-2) because the model understood the structure but slightly misread a value. JSON's errors are large (off by 50-140) because the model couldn't find the structure at all. Hidden boundaries compound into comprehension failure. Clean boundaries enable structural extraction.
 
@@ -515,7 +513,7 @@ All structural characters (`@`, `<`, `|`) are always single tokens. The only var
 | Tokenizer | Tokens | Key Differences |
 |-----------|--------|----------------|
 | GPT-4 | 14 | Merges `.validate` (1 tok), `95` (1 tok) |
-| Qwen 2.5 | 15 | Splits `95` → `9` + `5` |
+| Qwen 2.5 | 15 | Splits `95` into `9` + `5` |
 | Gemma 2 | 16 | Splits `.` + `validate`, splits `9` + `5` |
 
 The pipe delimiters are always single tokens. Variance is only in how tokenizers handle value content:
@@ -530,7 +528,7 @@ From the 74 perfect candidates, GCF chose based on semantics and readability:
 
 | Character | Why chosen | Alternative considered | Why not |
 |-----------|-----------|----------------------|---------|
-| `\|` (pipe) | Rare in natural text. Visually distinct column separator. | Tab (`\t`) | Invisible, harder to debug |
+| `\|` (pipe) | Rare in natural text. Visually distinct column separator. | Tab (`\t`) | Invisible, merges on 33% of tokenizers |
 | `@` | Establishes "this is an ID" semantically. | `$` | Also perfect, but less intuitive |
 | `##` | Two-char sequence that tokenizers always merge into one token. Markdown-familiar. | `===` | 3 chars, less efficient |
 | `<` | Reads as "points to" for edges. | `~` | Also perfect, but less semantic |
@@ -541,9 +539,9 @@ From the 74 perfect candidates, GCF chose based on semantics and readability:
 
 ![Vocabulary Merge Entries](/charts/vocab-merge-entries.png)
 
-## Part 8: Root Cause — Vocabulary Entry Analysis
+## Part 8: Root Cause: Vocabulary Entry Analysis
 
-Data from `eval/tokenizer-vocabulary-analysis.mjs` and `eval/vocabulary-full-scan.mjs`.
+Data from `eval/hf-tokenizer-analysis.py` (43 tokenizers).
 
 Parts 2-3 showed that JSON's grammar merges with payload content. Part 4 showed the overhead. Part 5 connected it to comprehension failures. But none of those answered the fundamental question: **why does the merge happen?**
 
@@ -551,31 +549,38 @@ The answer is in the tokenizer vocabularies themselves.
 
 ### How BPE tokenizers work
 
-Every BPE tokenizer has a fixed vocabulary: a table mapping strings to integer IDs. GPT-4's cl100k vocabulary has 100,256 entries. Gemma's has 256,128. These are built during tokenizer training (separate from model training) by iteratively merging the most frequent byte pairs in the training corpus.
+Every BPE tokenizer has a fixed vocabulary: a table mapping strings to integer IDs. GPT-4's cl100k vocabulary has ~100K entries. Gemma 3's has 262K. These are built during tokenizer training (separate from model training) by iteratively merging the most frequent byte pairs in the training corpus.
 
 When the tokenizer encounters input text, it greedily matches the longest vocabulary entry at each position. If `"name` exists as entry #32586, the tokenizer will always select it as a single token rather than splitting into `"` (#1) + `name` (#609). This is deterministic. There is no probability or context-dependence. If the entry exists, it wins.
 
 ### JSON field names are vocabulary entries
 
-We looked up specific merged tokens by ID across all 8 tokenizers:
+We scanned the complete vocabulary of all 43 tokenizers and counted entries where grammar characters are fused with payload content:
 
-| Pattern | GPT-4 | GPT-4o | Claude | LLaMA | Qwen | DeepSeek | Gemma | Mistral |
-|---------|-------|--------|--------|-------|------|----------|-------|---------|
-| `"id` | #29800 | #60094 | — | #29800 | #28700 | — | — | #117579 |
-| `"name` | #32586 | #74800 | — | #32586 | #31486 | — | — | #117753 |
-| `"type` | #45570 | #91290 | — | #45570 | #44470 | — | — | — |
-| `"value` | #64407 | #180654 | — | #64407 | #63307 | — | — | — |
-| `"time` | #33239 | #74035 | — | #33239 | #32139 | — | — | #79174 |
-| `"title` | #83827 | #187286 | — | #83827 | #82727 | — | — | #110760 |
-| `"text` | #67351 | #171858 | — | #67351 | #66251 | — | — | — |
-| `"url` | #61360 | #124415 | — | #61360 | #60260 | — | — | — |
-| `"path` | #71788 | #184610 | — | #71788 | #70688 | — | — | — |
-| `"description` | #69093 | #150676 | — | #69093 | #67993 | — | — | — |
-| `"user` | #77622 | #167975 | — | #77622 | #76522 | — | — | — |
+| Tokenizer | Vocab size | Quote+letter | Pipe+letter | Tab+letter | Multi-grammar |
+|-----------|-----------|-------------|------------|-----------|--------------|
+| GPT-4 (cl100k) | ~100K | **117** | 22 | **1,173** | 874 |
+| GPT-4o (o200k) | ~199K | **108** | 8 | **1,036** | 735 |
+| Claude | ~65K | **3** | 0 | 0 | 667 |
+| LLaMA 2 | ~32K | 0 | 0 | 0 | 122 |
+| LLaMA 3/3.1 | ~128K | **153** | 277 | 0 | 881 |
+| Qwen 2.5 | ~152K | **154** | 40 | 0 | 874 |
+| DeepSeek V3/R1 | ~129K | **48** | 5 | 0 | 287 |
+| Gemma 2 | ~256K | **4** | 0 | 0 | 735 |
+| Gemma 3 | ~262K | **2** | 0 | 0 | 861 |
+| Mistral Nemo | ~131K | **38** | 3 | 0 | 415 |
+| Phi-4 | ~100K | **153** | 116 | 0 | 874 |
+| Yi Coder | ~64K | 1 | 173 | 0 | 202 |
+| Falcon | ~65K | 4 | 1 | 0 | 92 |
+| StarCoder2 | ~49K | 3 | 2 | 0 | 535 |
+| Nemotron | ~256K | 0 | 0 | 0 | 200 |
+| Jamba | ~66K | 1 | **1,543** | 0 | 113 |
 
 **These are actual token IDs in the vocabulary.** Entry #32586 in GPT-4's vocabulary IS the string `"name`. It will always be selected. This is not a context-dependent merge decision. It's a dictionary lookup.
 
-**Claude and Gemma have zero quote+field entries.** That's why they keep boundaries clean: the merged token doesn't exist in their vocabulary, so the tokenizer is forced to split `"` and `name` into separate tokens.
+### The tab vocabulary problem
+
+The most striking finding from the 43-tokenizer study: GPT-4 cl100k has **1,173 tab+letter vocabulary entries** and GPT-4o o200k has **1,036**. Tab-separated data was so common in the training corpora (TSV files, log output, terminal formatting) that the tokenizer absorbed tabs more aggressively than any other delimiter. No other tokenizer has tab+letter entries. TOON chose the single worst delimiter for the two most widely deployed tokenizers.
 
 ### Cross-verification: vocabulary entries are actually used
 
@@ -584,49 +589,11 @@ We confirmed that every vocabulary entry is selected during real tokenization:
 ```
 "name":"Alice"
 
-GPT-4:   CONFIRMED — vocab entry #32586 selected → ["name][":"][Alice]["]
-Claude:  clean — not in vocab, not selected       → ["][name][":"][Alice]["]
+GPT-4:   CONFIRMED: vocab entry #32586 selected -> ["name][":"][Alice]["]
+Claude:  clean: not in vocab, not selected       -> ["][name][":"][Alice]["]
 ```
 
 The entry isn't dead vocabulary. It actively causes boundary hiding in every JSON payload that contains a `name` field.
-
-### Full vocabulary scan: exhaustive counts
-
-We decoded every single entry in each tokenizer's vocabulary and classified it:
-
-| Tokenizer | Vocab size | Quote+letter entries | Pipe+letter entries | Ratio | Mixed grammar+payload |
-|-----------|-----------|---------------------|---------------------|-------|----------------------|
-| GPT-4 | ~100K | **114** | 17 | **6.7:1** | 787 |
-| GPT-4o | ~200K | **86** | 6 | **14.3:1** | 641 |
-| Claude | ~65K | **0** | 0 | clean | 0 |
-| LLaMA 3.1 | ~128K | **114** | 18 | **6.3:1** | 787 |
-| Qwen 2.5 | ~131K | **114** | 17 | **6.7:1** | 787 |
-| DeepSeek V3 | ~128K | **42** | 4 | **10.5:1** | 348 |
-| Gemma 2 | ~256K | **0** | 0 | clean | 2 |
-| Mistral Nemo | ~131K | **31** | 3 | **10.3:1** | 355 |
-
-GPT-4 has **114 vocabulary entries** where a quote character is fused with a following word. It has **17** where a pipe is fused with a following word. The ratio is 6.7:1. The quote is nearly 7x more likely to appear in a merged vocabulary entry than the pipe.
-
-Claude and Gemma have **zero** quote+letter entries. This is why they handle JSON's structural boundaries cleanly: the merged token simply doesn't exist in their dictionary.
-
-### Multi-grammar vocabulary entries
-
-Some vocabulary entries contain multiple JSON grammar symbols fused together:
-
-| Token | Grammar chars | Present in |
-|-------|--------------|------------|
-| `":"` | `"` `:` `"` | **8/8** tokenizers |
-| `","` | `"` `,` `"` | **8/8** tokenizers |
-| `{"` | `{` `"` | **8/8** tokenizers |
-| `":{"` | `"` `:` `{` `"` | **8/8** tokenizers |
-| `":["` | `"` `:` `[` `"` | **6/8** tokenizers |
-| `"},` | `"` `}` `,` | **8/8** tokenizers |
-| `"],` | `"` `]` `,` | **8/8** tokenizers |
-| `},{"` | `}` `,` `{` `"` | **6/8** tokenizers |
-
-`":"` (close-quote, colon, open-quote) exists as a single token on **every tokenizer**. This means the entire field-value separator in JSON (`"field":"value"`) is tokenized as three chunks: `["field][":][ "value"]["]`. The colon that separates key from value is fused with quotes on both sides. The structural operation "this is where the key ends and the value begins" is buried inside a token.
-
-`":{"` exists on 8/8 tokenizers. This single token represents: close a string, start a key-value pair, open an object, start a new string. Four structural operations in one token.
 
 ### Why these entries exist
 
@@ -645,9 +612,11 @@ The conventional wisdom is that LLMs "know" JSON best because they've been train
 
 The models that saw the MOST JSON have the WORST JSON boundaries:
 
-- GPT-4 (massive code corpus): **114 merged entries**
-- LLaMA (large code mix): **114 merged entries**
-- Claude (different tokenizer strategy): **0 merged entries**
+- GPT-4 (massive code corpus): **117 merged entries**
+- LLaMA 3 (large code mix): **153 merged entries**
+- Qwen 2.5 (heavy code training): **154 merged entries**
+- Claude (different tokenizer strategy): **3 merged entries**
+- Gemma 2/3 (different merge policy): **2-4 merged entries**
 
 The training familiarity didn't create structural understanding. It created compression. The tokenizer optimized for representing JSON in fewer tokens, which is exactly what a compression algorithm should do. But compression hides structure. The quote and the field name became one token because that's more efficient for storage. It's less efficient for comprehension.
 
@@ -655,17 +624,15 @@ This inverts the standard argument entirely. "Trained on JSON" is not an advanta
 
 ### Why Claude and Gemma don't have this problem
 
-Claude's tokenizer has zero quote+letter entries. Gemma's has zero. Why?
+Claude's tokenizer has 3 quote+letter entries. Gemma 2 has 4. Gemma 3 has 2. Across the 43 tokenizers tested, the pattern is clear: 11 tokenizers have zero or near-zero quote merge entries.
 
 The tokenizer training details are proprietary, but there are measurable differences that explain it:
 
-- **Vocabulary size:** Claude's vocabulary is ~65K (smallest tested). Smaller vocabularies are more conservative about which merges to include. There's less room for specialized patterns like `"name`. GPT-4's 100K vocabulary has budget for these merges.
+- **Vocabulary size:** Claude's vocabulary is ~65K (one of the smallest tested). Smaller vocabularies are more conservative about which merges to include. But Gemma 3's vocabulary is the **largest** (262K) yet has only 2 quote merges. Vocabulary size alone doesn't predict merge behavior.
 - **Training data mix:** Tokenizers trained on corpora with less code/JSON relative to natural language will see `"name` less frequently, making it less likely to cross the merge threshold.
 - **Merge boundary policy:** BPE training can be configured to treat certain characters as merge barriers (never merge across them). Anthropic and Google may have intentionally prevented `"` from merging with adjacent letters.
 
-Notably, Gemma's vocabulary is the **largest** (256K) yet has zero quote merges. A larger vocabulary doesn't automatically mean more merges. The merge policy matters more than the vocabulary size.
-
-The result is measurable regardless of cause: Claude and Gemma keep structural boundaries clean. GPT-4, LLaMA, and Qwen do not.
+The result is measurable regardless of cause: Claude and Gemma keep structural boundaries clean. GPT-4, GPT-4o, LLaMA 3, Qwen, and Phi-4 do not.
 
 ### Why this is irrecoverable
 
@@ -679,22 +646,26 @@ Four properties make this unfixable:
 
 4. **Retraining the tokenizer requires retraining the model.** A new vocabulary means new token IDs, new embeddings, new attention patterns. The entire model must be retrained from scratch.
 
-This means: for every model using GPT-4's cl100k or GPT-4o's o200k tokenizer, the string `"name` will always be one token. The structural boundary will always be hidden. No amount of prompting, fine-tuning, or RLHF can change this. It's a dictionary entry. GPT-5.4's deterministic comprehension errors are consistent with these merge patterns, though OpenAI has not published which tokenizer GPT-5.x uses.
+This means: for every model using GPT-4's cl100k or GPT-4o's o200k tokenizer, the string `"name` will always be one token. The structural boundary will always be hidden. No amount of prompting, fine-tuning, or RLHF can change this. It's a dictionary entry.
 
 ### What about GCF's pipe?
 
-The pipe character does have a small number of merged entries:
+The pipe character does have vocabulary entries on some tokenizers:
 
-| Tokenizer | Pipe+letter entries | Examples |
-|-----------|--------------------| ---------|
-| GPT-4 | 17 | `\|null`, `\|string`, `\|max`, `\|min`, `\|required` |
+| Tokenizer family | Pipe+letter entries | Context |
+|-----------------|--------------------| --------|
+| LLaMA 3/3.1 | 277 | TypeScript union syntax (`string\|null`) |
+| Yi Coder | 173 | Same |
+| Phi-4 | 116 | Same |
+| Qwen 2.5 | 40 | Same |
+| GPT-4 | 22 | `\|null`, `\|string`, `\|max`, `\|min` |
+| Jamba | 1,543 | Markdown table syntax |
 | Claude | 0 | (none) |
-| LLaMA | 18 | `\|null`, `\|string`, `\|max`, `\|min`, `\|required` |
-| Gemma | 0 | (none) |
+| Gemma 2/3 | 0 | (none) |
 
-The pipe merges that exist are with **programming keywords** (`null`, `string`, `max`, `min`, `required`) from TypeScript/Go type union syntax (`string|null`). Critically, `|name`, `|id`, `|type`, `|value` never exist as vocabulary entries on any tokenizer. The pipe never merges with the field names that matter for structured data comprehension.
+Jamba v0.1 is an outlier with 1,543 pipe+letter entries (from markdown table syntax in training data). LLaMA 3 has 277 (from TypeScript union types). But critically, **none of these entries cause merges on real GCF field data**: the 45 common field names tested show 0% pipe merge rate on every tokenizer except for the specific value `cancelled` on 3 tokenizers.
 
-The quote merges with the most common field names in computing. The pipe merges with a handful of type-system keywords. This is the root cause of the 6.7:1 to 14.3:1 ratio in vocabulary merge entries.
+The pipe merges that exist are with **programming keywords** (`null`, `string`, `max`, `min`, `required`) from type union syntax. `|name`, `|id`, `|type`, `|value` never exist as vocabulary entries on any of the 43 tokenizers tested.
 
 ---
 
@@ -704,17 +675,17 @@ The quote merges with the most common field names in computing. The pipe merges 
 |-------|----------|
 | GCF savings are 50-59% on all tokenizers | 8 tokenizers tested, worst case 50.3% |
 | GCF savings are stable at all scales | 10 to 500 records, spread < 9pp |
-| GCF has 88.8% fewer boundary merges than JSON | Real eval data: GCF 1.00% vs JSON 8.93% (2,800 checks) |
-| JSON merges compound at scale | Caused by field names (repeat per row): "id" and "name" merge on 62.5% of tokenizers |
-| GCF merges are rare and non-compounding | Caused by one value ("cancelled"), not field names |
+| GCF has 94% fewer boundary merges than JSON | 43 tokenizers: GCF 0.47% vs JSON 8.17% (29,025 + 1,935 checks) |
+| JSON merges compound at scale | `"id"` and `"name"` merge on 30% of tokenizers, repeating per row |
+| GCF merges are rare and non-compounding | Only `\|cancelled` on 3 of 43 tokenizers. Never on field names. |
+| TOON tab merge is 71x worse than GCF pipe | TOON 32.91% vs GCF 0.47%. GPT-4o: 100% tab merge rate. |
 | JSON overhead is 81% at 500 rows | Cross-tokenizer validated |
 | JSON overhead grows linearly | O(n) per row, ratio 1,545:1 at 1000 rows |
 | GCF savings are structural, not delimiter-specific | Grammar swap: 0.4pp spread across 5 delimiter sets, 800 measurements |
-| No delimiter is perfect under adversarial conditions | All candidates merge on some right-contexts; GCF chose lowest merge-rate set |
 | JSON merges are hardcoded vocabulary entries | `"name` = #32586 on GPT-4. Exists in dictionary. Always selected. |
-| Quote+letter vocab entries outnumber pipe 6.7:1 to 14.3:1 | GPT-4: 114 quote vs 17 pipe. Claude/Gemma: 0 vs 0. |
+| GPT-4/4o have 1,000+ tab+letter vocab entries | TOON chose the worst possible delimiter for OpenAI models |
 | Merges are irrecoverable | Can't fix with prompting, fine-tuning, or RLHF. Vocabulary is frozen. |
-| This explains comprehension failures | 53.4% JSON at stress scale (ambiguous boundaries + attention dilution) vs 91.2% GCF |
+| This explains comprehension failures | 53.6% JSON at stress scale vs 90.7% GCF. Hidden boundaries + attention dilution. |
 
 ---
 
@@ -723,6 +694,7 @@ The quote merges with the most common field names in computing. The pipe merges 
 All experiments are reproducible:
 
 ```bash
+# === JavaScript-based analyses (token savings, grammar swap, syntactic deep dive) ===
 cd gcf
 npm install @blackwell-systems/gcf @lenml/tokenizers \
   @lenml/tokenizer-claude @lenml/tokenizer-gpt4 @lenml/tokenizer-gpt4o \
@@ -750,6 +722,14 @@ node eval/vocabulary-full-scan.mjs
 
 # Grammar swap experiment (proves savings are structural)
 node eval/grammar-swap-experiment.mjs
+
+# === Python-based analysis (43-tokenizer expanded study) ===
+cd eval
+python3 -m venv .venv && source .venv/bin/activate
+pip install tokenizers huggingface_hub tiktoken
+
+# 43-tokenizer boundary merge and vocabulary analysis
+python3 hf-tokenizer-analysis.py
 ```
 
 ---
@@ -760,6 +740,6 @@ If your structured data enters LLM context windows at scale (100+ records), you 
 
 1. **Use GCF.** Encode with `encode_generic()` before sending to the LLM. Decode with `decode_generic()` afterward. Six language implementations, zero dependencies, drop-in.
 
-2. **Keep using JSON and accept the consequences.** Your most common field names (`id`, `name`, `type`, `value`, `title`, `time`, `text`, `url`, `path`, `description`) have hidden structural boundaries on GPT-4, GPT-4o, LLaMA, and Qwen. This compounds per row. At 500 rows, you're asking the model to comprehend data through 1,500+ ambiguous token boundaries while 81% of its input is structural noise.
+2. **Keep using JSON and accept the consequences.** Your most common field names (`id`, `name`, `type`, `value`, `title`, `time`, `text`, `url`, `path`, `description`) have hidden structural boundaries on GPT-4, GPT-4o, LLaMA 3, Qwen, and Phi-4. This compounds per row. At 500 rows, you're asking the model to comprehend data through 1,500+ ambiguous token boundaries while 81% of its input is structural noise.
 
 There is no option 3. You cannot fix JSON's tokenization without changing JSON's grammar, which would make it not JSON. And you cannot fix the tokenizer without retraining the model from scratch: the merged vocabulary entries (`"name` = #32586, `"id` = #29800, `"type` = #45570) are permanent, and all model weights depend on them.

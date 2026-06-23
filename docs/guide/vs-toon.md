@@ -234,21 +234,21 @@ TOON's `encodeLines()` is output-side streaming only (the full value must be in 
 
 ### Tokenization: TOON's tab delimiter is worse than JSON's quote
 
-We ran the same [tokenizer analysis](/guide/tokenizer-analysis) on TOON's grammar symbols. TOON uses tab characters as column delimiters. Tabs merge with adjacent content **more aggressively** than JSON's quotes:
+We ran the same [tokenizer analysis](/guide/tokenizer-analysis) on TOON's grammar symbols across 43 tokenizers from 20 providers. TOON uses tab characters as column delimiters. Tabs merge with adjacent content **far more aggressively** than JSON's quotes:
 
-| Format | Delimiter merge rate (1,344 checks) |
-|--------|-------------------------------------|
-| TOON (tab) | **59.82%** |
-| JSON (quote) | 39.29% |
-| GCF (pipe) | **0.00%** |
+| Format | Delimiter merge rate | Checks |
+|--------|---------------------|--------|
+| TOON (tab) | **32.91%** | 283/860 |
+| JSON (quote) | 8.17% | 158/1,935 |
+| GCF (pipe) | **0.47%** | 135/29,025 |
 
-GPT-4's vocabulary has **60 of 64** tested words as tab+letter entries (vs 15 quote+letter entries for JSON). Tab-separated data was so common in training corpora that the tokenizer absorbed tabs into adjacent words even more aggressively than quotes.
+GPT-4o has a **100% tab merge rate**: every single word tested merges with the preceding tab. GPT-4 cl100k merges 95%. These are the two most widely deployed tokenizers in the world. GPT-4's vocabulary has **1,173 tab+letter entries** and GPT-4o has **1,036**. Tab-separated data was so common in training corpora that the tokenizer absorbed tabs into adjacent words far more aggressively than any other delimiter.
 
-TOON's indentation also tokenizes inconsistently across models: the same 4-space indent produces 4 different tokenizations across 8 tokenizers. The model sees different nesting depth depending on which tokenizer processes it.
+TOON's indentation also tokenizes inconsistently across models: the same 4-space indent produces 4 different tokenizations across tokenizers. The model sees different nesting depth depending on which tokenizer processes it.
 
-GCF's pipe-based delimiters have [zero vocabulary merges with field names](/guide/tokenizer-analysis#part-8-root-cause-vocabulary-entry-analysis) across all 8 tested tokenizers.
+GCF's pipe-based delimiters have [zero merge rate on field names](/guide/tokenizer-analysis#part-8-root-cause-vocabulary-entry-analysis) across all 43 tested tokenizers (the only merges are the value `cancelled` on 3 tokenizers).
 
-This matters for comprehension at scale: [Ildiz et al. proved](https://arxiv.org/abs/2402.13512) that self-attention weights tokens proportionally to their frequency in the sequence. When TOON's merged tab-field tokens account for 60%+ of the sequence, the attention budget is mathematically dominated by structural noise. See the [full tokenizer analysis](/guide/tokenizer-analysis#part-5-why-this-explains-comprehension-failures) for how this compounds at 500+ rows.
+This matters for comprehension at scale: [Ildiz et al. proved](https://arxiv.org/abs/2402.13512) that self-attention weights tokens proportionally to their frequency in the sequence. When TOON's merged tab-field tokens dominate the sequence, the attention budget is mathematically dominated by structural noise. See the [full tokenizer analysis](/guide/tokenizer-analysis#part-5-why-this-explains-comprehension-failures) for how this compounds at 500+ rows.
 
 GCF does everything TOON does, plus five things TOON structurally cannot add without becoming a different format:
 

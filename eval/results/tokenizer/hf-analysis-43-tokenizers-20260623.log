@@ -1,0 +1,279 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+================================================================================
+HF TOKENIZER ANALYSIS: EXPANDED BOUNDARY MERGE STUDY
+Testing 43 tokenizers from Hugging Face Hub
+================================================================================
+
+Loading tokenizers...
+  OK  GPT-4 (OpenAI cl100k) (tiktoken)
+  OK  GPT-4o (OpenAI o200k) (tiktoken)
+  OK  GPT-2 (OpenAI) (openai-community/gpt2)
+  OK  Claude (Anthropic) (local)
+  OK  LLaMA 2 7B (Meta) (NousResearch/Llama-2-7b-hf)
+  OK  LLaMA 3 8B (Meta) (NousResearch/Meta-Llama-3-8B)
+  OK  LLaMA 3.1 8B (Meta) (NousResearch/Meta-Llama-3.1-8B)
+  OK  CodeLlama 7B (Meta) (codellama/CodeLlama-7b-hf)
+  OK  TinyLlama 1.1B (TinyLlama/TinyLlama-1.1B-Chat-v1.0)
+  OK  Gemma 2 2B (Google) (unsloth/gemma-2-2b)
+  OK  Gemma 3 1B (Google) (unsloth/gemma-3-1b-pt)
+  OK  T5 Base (Google) (google-t5/t5-base)
+  OK  Mistral 7B v0.1 (mistralai/Mistral-7B-v0.1)
+  OK  Mistral 7B v0.3 (mistralai/Mistral-7B-v0.3)
+  OK  Mistral Nemo (12B) (mistralai/Mistral-Nemo-Base-2407)
+  OK  Mixtral 8x7B (mistralai/Mixtral-8x7B-v0.1)
+  OK  Codestral 22B (mistralai/Codestral-22B-v0.1)
+  OK  Qwen 2 7B (Alibaba) (Qwen/Qwen2-7B)
+  OK  Qwen 2.5 7B (Alibaba) (Qwen/Qwen2.5-7B)
+  OK  Qwen 2.5 Coder 7B (Qwen/Qwen2.5-Coder-7B)
+  OK  Qwen 3 8B (Alibaba) (Qwen/Qwen3-8B)
+  OK  QwQ 32B (Alibaba) (Qwen/QwQ-32B)
+  OK  DeepSeek V2 Lite (deepseek-ai/DeepSeek-V2-Lite)
+  OK  DeepSeek V3 (671B) (deepseek-ai/DeepSeek-V3)
+  OK  DeepSeek R1 (deepseek-ai/DeepSeek-R1)
+  OK  DeepSeek Coder V2 Lite (deepseek-ai/DeepSeek-Coder-V2-Lite-Base)
+  OK  Phi-2 (Microsoft) (microsoft/phi-2)
+  OK  Phi-3 Mini (Microsoft) (microsoft/Phi-3-mini-4k-instruct)
+  OK  Phi-4 (Microsoft) (microsoft/phi-4)
+  OK  Falcon 7B (TII) (tiiuae/falcon-7b)
+  OK  Falcon 40B (TII) (tiiuae/falcon-40b)
+  OK  Falcon 2 11B (TII) (tiiuae/falcon-11B)
+  OK  Yi 1.5 9B (01.AI) (01-ai/Yi-1.5-9B)
+  OK  Yi Coder 9B (01.AI) (01-ai/Yi-Coder-9B)
+  OK  StarCoder2 7B (bigcode/starcoder2-7b)
+  OK  StarCoder2 15B (bigcode/starcoder2-15b)
+  OK  Nemotron Mini 4B (nvidia/Nemotron-Mini-4B-Instruct)
+  OK  Jamba v0.1 (AI21) (AI21Labs/Jamba-v0.1)
+  OK  StableLM 2 1.6B (stabilityai/stablelm-2-1_6b)
+  OK  Pythia 6.9B (EleutherAI/pythia-6.9b)
+  OK  Arctic (Snowflake) (Snowflake/snowflake-arctic-base)
+  OK  OLMo 7B (AllenAI) (allenai/OLMo-7B)
+  OK  Marco-o1 (Alibaba) (AIDC-AI/Marco-o1)
+
+Loaded: 43/43
+
+================================================================================
+TEST 1: JSON QUOTE MERGE RATE (45 fields x 43 tokenizers)
+================================================================================
+
+Tokenizer                         Merges      Rate
+--------------------------------------------------
+GPT-4 (OpenAI cl100k)              13/45    28.9%
+GPT-4o (OpenAI o200k)              11/45    24.4%
+GPT-2 (OpenAI)                      0/45     0.0%
+Claude (Anthropic)                  0/45     0.0%
+LLaMA 2 7B (Meta)                   0/45     0.0%
+LLaMA 3 8B (Meta)                  13/45    28.9%
+LLaMA 3.1 8B (Meta)                13/45    28.9%
+CodeLlama 7B (Meta)                 0/45     0.0%
+TinyLlama 1.1B                      0/45     0.0%
+Gemma 2 2B (Google)                 0/45     0.0%
+Gemma 3 1B (Google)                 0/45     0.0%
+T5 Base (Google)                    0/45     0.0%
+Mistral 7B v0.1                     0/45     0.0%
+Mistral 7B v0.3                     0/45     0.0%
+Mistral Nemo (12B)                  4/45     8.9%
+Mixtral 8x7B                        0/45     0.0%
+Codestral 22B                       0/45     0.0%
+Qwen 2 7B (Alibaba)                13/45    28.9%
+Qwen 2.5 7B (Alibaba)              13/45    28.9%
+Qwen 2.5 Coder 7B                  13/45    28.9%
+Qwen 3 8B (Alibaba)                13/45    28.9%
+QwQ 32B (Alibaba)                  13/45    28.9%
+DeepSeek V2 Lite                    0/45     0.0%
+DeepSeek V3 (671B)                  0/45     0.0%
+DeepSeek R1                         0/45     0.0%
+DeepSeek Coder V2 Lite              0/45     0.0%
+Phi-2 (Microsoft)                   0/45     0.0%
+Phi-3 Mini (Microsoft)              0/45     0.0%
+Phi-4 (Microsoft)                  13/45    28.9%
+Falcon 7B (TII)                     0/45     0.0%
+Falcon 40B (TII)                    0/45     0.0%
+Falcon 2 11B (TII)                  0/45     0.0%
+Yi 1.5 9B (01.AI)                   0/45     0.0%
+Yi Coder 9B (01.AI)                 0/45     0.0%
+StarCoder2 7B                       0/45     0.0%
+StarCoder2 15B                      0/45     0.0%
+Nemotron Mini 4B                    0/45     0.0%
+Jamba v0.1 (AI21)                   0/45     0.0%
+StableLM 2 1.6B                    13/45    28.9%
+Pythia 6.9B                         0/45     0.0%
+Arctic (Snowflake)                  0/45     0.0%
+OLMo 7B (AllenAI)                   0/45     0.0%
+Marco-o1 (Alibaba)                 13/45    28.9%
+
+Worst fields (merge on most tokenizers):
+Field                   Merges      Rate
+----------------------------------------
+  "id":                  13/43     30.2%
+  "name":                13/43     30.2%
+  "title":               13/43     30.2%
+  "time":                13/43     30.2%
+  "type":                12/43     27.9%
+  "value":               12/43     27.9%
+  "text":                12/43     27.9%
+  "url":                 12/43     27.9%
+  "path":                12/43     27.9%
+  "user_id":             12/43     27.9%
+  "description":         12/43     27.9%
+  "data":                11/43     25.6%
+  "label":               11/43     25.6%
+  "status":               0/43      0.0%
+  "date":                 0/43      0.0%
+  "code":                 0/43      0.0%
+  "key":                  0/43      0.0%
+  "email":                0/43      0.0%
+  "role":                 0/43      0.0%
+  "message":              0/43      0.0%
+
+Overall JSON quote merge rate: 158/1935 (8.17%)
+
+================================================================================
+TEST 2: GCF PIPE MERGE RATE (45 fields x 15 values x 43 tokenizers)
+================================================================================
+
+  Mistral Nemo (12B)                       45/675 merges
+  DeepSeek V3 (671B)                       45/675 merges
+  DeepSeek R1                              45/675 merges
+
+Overall GCF pipe merge rate: 135/29025 (0.4651%)
+
+Merge details (135 cases):
+  Mistral Nemo (12B): id|cancelled
+  Mistral Nemo (12B): name|cancelled
+  Mistral Nemo (12B): type|cancelled
+  Mistral Nemo (12B): value|cancelled
+  Mistral Nemo (12B): status|cancelled
+  Mistral Nemo (12B): title|cancelled
+  Mistral Nemo (12B): text|cancelled
+  Mistral Nemo (12B): url|cancelled
+  Mistral Nemo (12B): path|cancelled
+  Mistral Nemo (12B): time|cancelled
+
+================================================================================
+TEST 3: TOON TAB MERGE RATE (20 words x 43 tokenizers)
+================================================================================
+
+  GPT-4 (OpenAI cl100k)                    19/20 (95%)
+  GPT-4o (OpenAI o200k)                    20/20 (100%)
+  GPT-2 (OpenAI)                           0/20 (0%)
+  Claude (Anthropic)                       0/20 (0%)
+  LLaMA 2 7B (Meta)                        0/20 (0%)
+  LLaMA 3 8B (Meta)                        19/20 (95%)
+  LLaMA 3.1 8B (Meta)                      19/20 (95%)
+  CodeLlama 7B (Meta)                      0/20 (0%)
+  TinyLlama 1.1B                           0/20 (0%)
+  Gemma 2 2B (Google)                      0/20 (0%)
+  Gemma 3 1B (Google)                      0/20 (0%)
+  T5 Base (Google)                         0/20 (0%)
+  Mistral 7B v0.1                          0/20 (0%)
+  Mistral 7B v0.3                          0/20 (0%)
+  Mistral Nemo (12B)                       14/20 (70%)
+  Mixtral 8x7B                             0/20 (0%)
+  Codestral 22B                            0/20 (0%)
+  Qwen 2 7B (Alibaba)                      19/20 (95%)
+  Qwen 2.5 7B (Alibaba)                    19/20 (95%)
+  Qwen 2.5 Coder 7B                        19/20 (95%)
+  Qwen 3 8B (Alibaba)                      19/20 (95%)
+  QwQ 32B (Alibaba)                        19/20 (95%)
+  DeepSeek V2 Lite                         13/20 (65%)
+  DeepSeek V3 (671B)                       7/20 (35%)
+  DeepSeek R1                              7/20 (35%)
+  DeepSeek Coder V2 Lite                   13/20 (65%)
+  Phi-2 (Microsoft)                        0/20 (0%)
+  Phi-3 Mini (Microsoft)                   0/20 (0%)
+  Phi-4 (Microsoft)                        19/20 (95%)
+  Falcon 7B (TII)                          0/20 (0%)
+  Falcon 40B (TII)                         0/20 (0%)
+  Falcon 2 11B (TII)                       0/20 (0%)
+  Yi 1.5 9B (01.AI)                        0/20 (0%)
+  Yi Coder 9B (01.AI)                      0/20 (0%)
+  StarCoder2 7B                            0/20 (0%)
+  StarCoder2 15B                           0/20 (0%)
+  Nemotron Mini 4B                         0/20 (0%)
+  Jamba v0.1 (AI21)                        0/20 (0%)
+  StableLM 2 1.6B                          19/20 (95%)
+  Pythia 6.9B                              0/20 (0%)
+  Arctic (Snowflake)                       0/20 (0%)
+  OLMo 7B (AllenAI)                        0/20 (0%)
+  Marco-o1 (Alibaba)                       19/20 (95%)
+
+Overall TOON tab merge rate: 283/860 (32.91%)
+
+================================================================================
+TEST 4: VOCABULARY ENTRY ANALYSIS (43 tokenizers)
+================================================================================
+
+Tokenizer                          Vocab  "+letter  |+letter   tab+ltr  multi-gram
+----------------------------------------------------------------------------------
+GPT-4 (OpenAI cl100k)              99562       117        22      1173         874
+GPT-4o (OpenAI o200k)             198797       108         8      1036         735
+GPT-2 (OpenAI)                     50257         2         1         0          80
+Claude (Anthropic)                 65000         3         0         0         667
+LLaMA 2 7B (Meta)                  32000         0         0         0         122
+LLaMA 3 8B (Meta)                 128256       153       277         0         881
+LLaMA 3.1 8B (Meta)               128256       153       277         0         881
+CodeLlama 7B (Meta)                32016         0         0         0         122
+TinyLlama 1.1B                     32000         0         0         0         122
+Gemma 2 2B (Google)               256000         4         0         0         735
+Gemma 3 1B (Google)               262145         2         0         0         861
+T5 Base (Google)                   32100         0         0         0           4
+Mistral 7B v0.1                    32000         0         0         0         129
+Mistral 7B v0.3                    32768         0         0         0         897
+Mistral Nemo (12B)                131072        38         3         0         415
+Mixtral 8x7B                       32000         0         0         0         129
+Codestral 22B                      32768         0         0         0         897
+Qwen 2 7B (Alibaba)               151646       154        23         0         874
+Qwen 2.5 7B (Alibaba)             151665       154        40         0         874
+Qwen 2.5 Coder 7B                 151665       154        40         0         874
+Qwen 3 8B (Alibaba)               151669       154        40         0         874
+QwQ 32B (Alibaba)                 151669       154        40         0         874
+DeepSeek V2 Lite                  100002         4         2         0         472
+DeepSeek V3 (671B)                128815        48         5         0         287
+DeepSeek R1                       128815        48         5         0         287
+DeepSeek Coder V2 Lite            100018         4         3         0         472
+Phi-2 (Microsoft)                  50295         2         1         0          80
+Phi-3 Mini (Microsoft)             32011         0        11         0         122
+Phi-4 (Microsoft)                 100352       153       116         0         874
+Falcon 7B (TII)                    65024         4         1         0          92
+Falcon 40B (TII)                   65024         4         1         0          92
+Falcon 2 11B (TII)                 65024         4         1         0          92
+Yi 1.5 9B (01.AI)                  63992         1       165         0         202
+Yi Coder 9B (01.AI)                64000         1       173         0         202
+StarCoder2 7B                      49152         3         2         0         535
+StarCoder2 15B                     49152         3         2         0         535
+Nemotron Mini 4B                  256000         0         0         0         200
+Jamba v0.1 (AI21)                  65536         1      1543         0         113
+StableLM 2 1.6B                   100289       153        39         0         874
+Pythia 6.9B                        50277         2         2         0         289
+Arctic (Snowflake)                 32000         0         0         0         122
+OLMo 7B (AllenAI)                  50280         2         5         0         289
+Marco-o1 (Alibaba)                151665       154        40         0         874
+
+Summary:
+  Tokenizers with quote+letter vocab entries: 32/43
+  Tokenizers with pipe+letter vocab entries:  30/43
+  Tokenizers with tab+letter vocab entries:   2/43
+  Avg quote+letter entries: 45.1
+  Avg pipe+letter entries:  67.2
+  Quote-to-pipe ratio: 0.7:1
+
+================================================================================
+GRAND SUMMARY
+================================================================================
+
+Tokenizers analyzed: 43 (from 43 model families)
+
+JSON (quote) boundary merge rate:  8.17%  (158/1935 checks)
+GCF  (pipe)  boundary merge rate:  0.4651%  (135/29025 checks)
+TOON (tab)   boundary merge rate:  32.91%  (283/860 checks)
+
+GCF pipe merges found: 135 (inspect details above)
+
+Format comparison:
+  Format  | Merge rate  | Implication
+  --------+-------------+------------------------------------------
+  GCF     |   0.4651%  | Every model sees identical structure
+  JSON    |     8.17%  | Structure varies per model
+  TOON    |    32.91%  | Worse than JSON
+
+Results saved to: /Users/dayna.blackwell/code/gcf/eval/results/tokenizer/hf-analysis-43-tokenizers-20260623.json

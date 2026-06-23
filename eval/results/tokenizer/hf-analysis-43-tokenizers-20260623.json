@@ -1,0 +1,585 @@
+{
+  "timestamp": "2026-06-23T22:34:06Z",
+  "tokenizer_count": 43,
+  "failed_count": 0,
+  "failed": [],
+  "quote_merge_rate": 0.08165374677002583,
+  "pipe_merge_rate": 0.004651162790697674,
+  "tab_merge_rate": 0.32906976744186045,
+  "per_tokenizer_quote_merges": {
+    "GPT-4 (OpenAI cl100k)": 13,
+    "GPT-4o (OpenAI o200k)": 11,
+    "GPT-2 (OpenAI)": 0,
+    "Claude (Anthropic)": 0,
+    "LLaMA 2 7B (Meta)": 0,
+    "LLaMA 3 8B (Meta)": 13,
+    "LLaMA 3.1 8B (Meta)": 13,
+    "CodeLlama 7B (Meta)": 0,
+    "TinyLlama 1.1B": 0,
+    "Gemma 2 2B (Google)": 0,
+    "Gemma 3 1B (Google)": 0,
+    "T5 Base (Google)": 0,
+    "Mistral 7B v0.1": 0,
+    "Mistral 7B v0.3": 0,
+    "Mistral Nemo (12B)": 4,
+    "Mixtral 8x7B": 0,
+    "Codestral 22B": 0,
+    "Qwen 2 7B (Alibaba)": 13,
+    "Qwen 2.5 7B (Alibaba)": 13,
+    "Qwen 2.5 Coder 7B": 13,
+    "Qwen 3 8B (Alibaba)": 13,
+    "QwQ 32B (Alibaba)": 13,
+    "DeepSeek V2 Lite": 0,
+    "DeepSeek V3 (671B)": 0,
+    "DeepSeek R1": 0,
+    "DeepSeek Coder V2 Lite": 0,
+    "Phi-2 (Microsoft)": 0,
+    "Phi-3 Mini (Microsoft)": 0,
+    "Phi-4 (Microsoft)": 13,
+    "Falcon 7B (TII)": 0,
+    "Falcon 40B (TII)": 0,
+    "Falcon 2 11B (TII)": 0,
+    "Yi 1.5 9B (01.AI)": 0,
+    "Yi Coder 9B (01.AI)": 0,
+    "StarCoder2 7B": 0,
+    "StarCoder2 15B": 0,
+    "Nemotron Mini 4B": 0,
+    "Jamba v0.1 (AI21)": 0,
+    "StableLM 2 1.6B": 13,
+    "Pythia 6.9B": 0,
+    "Arctic (Snowflake)": 0,
+    "OLMo 7B (AllenAI)": 0,
+    "Marco-o1 (Alibaba)": 13
+  },
+  "per_tokenizer_tab_merges": {
+    "GPT-4 (OpenAI cl100k)": 19,
+    "GPT-4o (OpenAI o200k)": 20,
+    "GPT-2 (OpenAI)": 0,
+    "Claude (Anthropic)": 0,
+    "LLaMA 2 7B (Meta)": 0,
+    "LLaMA 3 8B (Meta)": 19,
+    "LLaMA 3.1 8B (Meta)": 19,
+    "CodeLlama 7B (Meta)": 0,
+    "TinyLlama 1.1B": 0,
+    "Gemma 2 2B (Google)": 0,
+    "Gemma 3 1B (Google)": 0,
+    "T5 Base (Google)": 0,
+    "Mistral 7B v0.1": 0,
+    "Mistral 7B v0.3": 0,
+    "Mistral Nemo (12B)": 14,
+    "Mixtral 8x7B": 0,
+    "Codestral 22B": 0,
+    "Qwen 2 7B (Alibaba)": 19,
+    "Qwen 2.5 7B (Alibaba)": 19,
+    "Qwen 2.5 Coder 7B": 19,
+    "Qwen 3 8B (Alibaba)": 19,
+    "QwQ 32B (Alibaba)": 19,
+    "DeepSeek V2 Lite": 13,
+    "DeepSeek V3 (671B)": 7,
+    "DeepSeek R1": 7,
+    "DeepSeek Coder V2 Lite": 13,
+    "Phi-2 (Microsoft)": 0,
+    "Phi-3 Mini (Microsoft)": 0,
+    "Phi-4 (Microsoft)": 19,
+    "Falcon 7B (TII)": 0,
+    "Falcon 40B (TII)": 0,
+    "Falcon 2 11B (TII)": 0,
+    "Yi 1.5 9B (01.AI)": 0,
+    "Yi Coder 9B (01.AI)": 0,
+    "StarCoder2 7B": 0,
+    "StarCoder2 15B": 0,
+    "Nemotron Mini 4B": 0,
+    "Jamba v0.1 (AI21)": 0,
+    "StableLM 2 1.6B": 19,
+    "Pythia 6.9B": 0,
+    "Arctic (Snowflake)": 0,
+    "OLMo 7B (AllenAI)": 0,
+    "Marco-o1 (Alibaba)": 19
+  },
+  "pipe_merge_count": 135,
+  "field_merge_ranking": [
+    [
+      "id",
+      13
+    ],
+    [
+      "name",
+      13
+    ],
+    [
+      "title",
+      13
+    ],
+    [
+      "time",
+      13
+    ],
+    [
+      "type",
+      12
+    ],
+    [
+      "value",
+      12
+    ],
+    [
+      "text",
+      12
+    ],
+    [
+      "url",
+      12
+    ],
+    [
+      "path",
+      12
+    ],
+    [
+      "user_id",
+      12
+    ],
+    [
+      "description",
+      12
+    ],
+    [
+      "data",
+      11
+    ],
+    [
+      "label",
+      11
+    ],
+    [
+      "status",
+      0
+    ],
+    [
+      "date",
+      0
+    ],
+    [
+      "code",
+      0
+    ],
+    [
+      "key",
+      0
+    ],
+    [
+      "email",
+      0
+    ],
+    [
+      "role",
+      0
+    ],
+    [
+      "message",
+      0
+    ],
+    [
+      "content",
+      0
+    ],
+    [
+      "created_at",
+      0
+    ],
+    [
+      "updated_at",
+      0
+    ],
+    [
+      "score",
+      0
+    ],
+    [
+      "count",
+      0
+    ],
+    [
+      "total",
+      0
+    ],
+    [
+      "amount",
+      0
+    ],
+    [
+      "price",
+      0
+    ],
+    [
+      "method",
+      0
+    ],
+    [
+      "token",
+      0
+    ],
+    [
+      "version",
+      0
+    ],
+    [
+      "format",
+      0
+    ],
+    [
+      "state",
+      0
+    ],
+    [
+      "source",
+      0
+    ],
+    [
+      "target",
+      0
+    ],
+    [
+      "parent",
+      0
+    ],
+    [
+      "result",
+      0
+    ],
+    [
+      "error",
+      0
+    ],
+    [
+      "file",
+      0
+    ],
+    [
+      "query",
+      0
+    ],
+    [
+      "config",
+      0
+    ],
+    [
+      "host",
+      0
+    ],
+    [
+      "port",
+      0
+    ],
+    [
+      "size",
+      0
+    ],
+    [
+      "level",
+      0
+    ]
+  ],
+  "vocab_analysis": {
+    "GPT-4 (OpenAI cl100k)": {
+      "vocab_size": 99562,
+      "quote_letter": 117,
+      "pipe_letter": 22,
+      "tab_letter": 1173,
+      "multi_grammar": 874
+    },
+    "GPT-4o (OpenAI o200k)": {
+      "vocab_size": 198797,
+      "quote_letter": 108,
+      "pipe_letter": 8,
+      "tab_letter": 1036,
+      "multi_grammar": 735
+    },
+    "GPT-2 (OpenAI)": {
+      "vocab_size": 50257,
+      "quote_letter": 2,
+      "pipe_letter": 1,
+      "tab_letter": 0,
+      "multi_grammar": 80
+    },
+    "Claude (Anthropic)": {
+      "vocab_size": 65000,
+      "quote_letter": 3,
+      "pipe_letter": 0,
+      "tab_letter": 0,
+      "multi_grammar": 667
+    },
+    "LLaMA 2 7B (Meta)": {
+      "vocab_size": 32000,
+      "quote_letter": 0,
+      "pipe_letter": 0,
+      "tab_letter": 0,
+      "multi_grammar": 122
+    },
+    "LLaMA 3 8B (Meta)": {
+      "vocab_size": 128256,
+      "quote_letter": 153,
+      "pipe_letter": 277,
+      "tab_letter": 0,
+      "multi_grammar": 881
+    },
+    "LLaMA 3.1 8B (Meta)": {
+      "vocab_size": 128256,
+      "quote_letter": 153,
+      "pipe_letter": 277,
+      "tab_letter": 0,
+      "multi_grammar": 881
+    },
+    "CodeLlama 7B (Meta)": {
+      "vocab_size": 32016,
+      "quote_letter": 0,
+      "pipe_letter": 0,
+      "tab_letter": 0,
+      "multi_grammar": 122
+    },
+    "TinyLlama 1.1B": {
+      "vocab_size": 32000,
+      "quote_letter": 0,
+      "pipe_letter": 0,
+      "tab_letter": 0,
+      "multi_grammar": 122
+    },
+    "Gemma 2 2B (Google)": {
+      "vocab_size": 256000,
+      "quote_letter": 4,
+      "pipe_letter": 0,
+      "tab_letter": 0,
+      "multi_grammar": 735
+    },
+    "Gemma 3 1B (Google)": {
+      "vocab_size": 262145,
+      "quote_letter": 2,
+      "pipe_letter": 0,
+      "tab_letter": 0,
+      "multi_grammar": 861
+    },
+    "T5 Base (Google)": {
+      "vocab_size": 32100,
+      "quote_letter": 0,
+      "pipe_letter": 0,
+      "tab_letter": 0,
+      "multi_grammar": 4
+    },
+    "Mistral 7B v0.1": {
+      "vocab_size": 32000,
+      "quote_letter": 0,
+      "pipe_letter": 0,
+      "tab_letter": 0,
+      "multi_grammar": 129
+    },
+    "Mistral 7B v0.3": {
+      "vocab_size": 32768,
+      "quote_letter": 0,
+      "pipe_letter": 0,
+      "tab_letter": 0,
+      "multi_grammar": 897
+    },
+    "Mistral Nemo (12B)": {
+      "vocab_size": 131072,
+      "quote_letter": 38,
+      "pipe_letter": 3,
+      "tab_letter": 0,
+      "multi_grammar": 415
+    },
+    "Mixtral 8x7B": {
+      "vocab_size": 32000,
+      "quote_letter": 0,
+      "pipe_letter": 0,
+      "tab_letter": 0,
+      "multi_grammar": 129
+    },
+    "Codestral 22B": {
+      "vocab_size": 32768,
+      "quote_letter": 0,
+      "pipe_letter": 0,
+      "tab_letter": 0,
+      "multi_grammar": 897
+    },
+    "Qwen 2 7B (Alibaba)": {
+      "vocab_size": 151646,
+      "quote_letter": 154,
+      "pipe_letter": 23,
+      "tab_letter": 0,
+      "multi_grammar": 874
+    },
+    "Qwen 2.5 7B (Alibaba)": {
+      "vocab_size": 151665,
+      "quote_letter": 154,
+      "pipe_letter": 40,
+      "tab_letter": 0,
+      "multi_grammar": 874
+    },
+    "Qwen 2.5 Coder 7B": {
+      "vocab_size": 151665,
+      "quote_letter": 154,
+      "pipe_letter": 40,
+      "tab_letter": 0,
+      "multi_grammar": 874
+    },
+    "Qwen 3 8B (Alibaba)": {
+      "vocab_size": 151669,
+      "quote_letter": 154,
+      "pipe_letter": 40,
+      "tab_letter": 0,
+      "multi_grammar": 874
+    },
+    "QwQ 32B (Alibaba)": {
+      "vocab_size": 151669,
+      "quote_letter": 154,
+      "pipe_letter": 40,
+      "tab_letter": 0,
+      "multi_grammar": 874
+    },
+    "DeepSeek V2 Lite": {
+      "vocab_size": 100002,
+      "quote_letter": 4,
+      "pipe_letter": 2,
+      "tab_letter": 0,
+      "multi_grammar": 472
+    },
+    "DeepSeek V3 (671B)": {
+      "vocab_size": 128815,
+      "quote_letter": 48,
+      "pipe_letter": 5,
+      "tab_letter": 0,
+      "multi_grammar": 287
+    },
+    "DeepSeek R1": {
+      "vocab_size": 128815,
+      "quote_letter": 48,
+      "pipe_letter": 5,
+      "tab_letter": 0,
+      "multi_grammar": 287
+    },
+    "DeepSeek Coder V2 Lite": {
+      "vocab_size": 100018,
+      "quote_letter": 4,
+      "pipe_letter": 3,
+      "tab_letter": 0,
+      "multi_grammar": 472
+    },
+    "Phi-2 (Microsoft)": {
+      "vocab_size": 50295,
+      "quote_letter": 2,
+      "pipe_letter": 1,
+      "tab_letter": 0,
+      "multi_grammar": 80
+    },
+    "Phi-3 Mini (Microsoft)": {
+      "vocab_size": 32011,
+      "quote_letter": 0,
+      "pipe_letter": 11,
+      "tab_letter": 0,
+      "multi_grammar": 122
+    },
+    "Phi-4 (Microsoft)": {
+      "vocab_size": 100352,
+      "quote_letter": 153,
+      "pipe_letter": 116,
+      "tab_letter": 0,
+      "multi_grammar": 874
+    },
+    "Falcon 7B (TII)": {
+      "vocab_size": 65024,
+      "quote_letter": 4,
+      "pipe_letter": 1,
+      "tab_letter": 0,
+      "multi_grammar": 92
+    },
+    "Falcon 40B (TII)": {
+      "vocab_size": 65024,
+      "quote_letter": 4,
+      "pipe_letter": 1,
+      "tab_letter": 0,
+      "multi_grammar": 92
+    },
+    "Falcon 2 11B (TII)": {
+      "vocab_size": 65024,
+      "quote_letter": 4,
+      "pipe_letter": 1,
+      "tab_letter": 0,
+      "multi_grammar": 92
+    },
+    "Yi 1.5 9B (01.AI)": {
+      "vocab_size": 63992,
+      "quote_letter": 1,
+      "pipe_letter": 165,
+      "tab_letter": 0,
+      "multi_grammar": 202
+    },
+    "Yi Coder 9B (01.AI)": {
+      "vocab_size": 64000,
+      "quote_letter": 1,
+      "pipe_letter": 173,
+      "tab_letter": 0,
+      "multi_grammar": 202
+    },
+    "StarCoder2 7B": {
+      "vocab_size": 49152,
+      "quote_letter": 3,
+      "pipe_letter": 2,
+      "tab_letter": 0,
+      "multi_grammar": 535
+    },
+    "StarCoder2 15B": {
+      "vocab_size": 49152,
+      "quote_letter": 3,
+      "pipe_letter": 2,
+      "tab_letter": 0,
+      "multi_grammar": 535
+    },
+    "Nemotron Mini 4B": {
+      "vocab_size": 256000,
+      "quote_letter": 0,
+      "pipe_letter": 0,
+      "tab_letter": 0,
+      "multi_grammar": 200
+    },
+    "Jamba v0.1 (AI21)": {
+      "vocab_size": 65536,
+      "quote_letter": 1,
+      "pipe_letter": 1543,
+      "tab_letter": 0,
+      "multi_grammar": 113
+    },
+    "StableLM 2 1.6B": {
+      "vocab_size": 100289,
+      "quote_letter": 153,
+      "pipe_letter": 39,
+      "tab_letter": 0,
+      "multi_grammar": 874
+    },
+    "Pythia 6.9B": {
+      "vocab_size": 50277,
+      "quote_letter": 2,
+      "pipe_letter": 2,
+      "tab_letter": 0,
+      "multi_grammar": 289
+    },
+    "Arctic (Snowflake)": {
+      "vocab_size": 32000,
+      "quote_letter": 0,
+      "pipe_letter": 0,
+      "tab_letter": 0,
+      "multi_grammar": 122
+    },
+    "OLMo 7B (AllenAI)": {
+      "vocab_size": 50280,
+      "quote_letter": 2,
+      "pipe_letter": 5,
+      "tab_letter": 0,
+      "multi_grammar": 289
+    },
+    "Marco-o1 (Alibaba)": {
+      "vocab_size": 151665,
+      "quote_letter": 154,
+      "pipe_letter": 40,
+      "tab_letter": 0,
+      "multi_grammar": 874
+    }
+  }
+}
