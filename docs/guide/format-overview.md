@@ -172,7 +172,7 @@ GCF profile=generic
 3|Carol Wu|Marketing|85000
 ```
 
-292 bytes vs 122 bytes. Same information. 58% smaller. Across [15 real-world datasets](/guide/benchmarks#token-efficiency-15-datasets), GCF is 25.5% smaller than TOON and 53% smaller than JSON overall. The [tokenizer analysis](/guide/tokenizer-analysis) explains why these savings are consistent across all major tokenizers and why JSON's structural overhead compounds at scale.
+292 bytes vs 122 bytes. Same information. 58% smaller. Across [16 real-world datasets](/guide/benchmarks#token-efficiency-16-datasets), GCF is 29% smaller than TOON and 56% smaller than JSON overall. The [tokenizer analysis](/guide/tokenizer-analysis) explains why these savings are consistent across all major tokenizers and why JSON's structural overhead compounds at scale.
 
 ---
 
