@@ -110,7 +110,7 @@ TOON has 24,000 stars. 3 million monthly npm downloads. 10+ implementations acro
 
 GCF has six implementations, 22,000+ downloads across 11 channels, three independent adopters, and three weeks of existence. One person building everything.
 
-The gap is marketing, not product. GCF wins every measured benchmark. On structured data: 25.5% fewer tokens across 15 datasets, 13 of 15 wins. On comprehension: 90.7% versus 68.5%. On generation: 5/5 on every frontier model while TOON's decoder rejects output from 7 of 9 models. On multi-turn interactions: 92.7% savings by the fifth tool call through session dedup, a feature TOON structurally cannot add.
+The gap is marketing, not product. GCF wins every measured benchmark. On structured data: 29% fewer tokens across 16 datasets, 15 of 16 wins. On comprehension: 90.7% versus 68.5%. On generation: 5/5 on every frontier model while TOON's decoder rejects output from 7 of 9 models. On multi-turn interactions: 92.7% savings by the fifth tool call through session dedup, a feature TOON structurally cannot add.
 
 TOON is a tree serializer. YAML with counted arrays. It can encode tabular data efficiently. It cannot encode relationships, cross-references, session state, or deltas. Adding local IDs would require a new grammar. Adding session dedup would require local IDs. Adding edge encoding would require both. TOON would have to become a different format to match what GCF already ships.
 

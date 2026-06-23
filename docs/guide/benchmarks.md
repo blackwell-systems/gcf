@@ -108,20 +108,20 @@ GCF encodes the same data in 47K tokens (71% smaller than JSON). This means:
 
 ---
 
-## Token Efficiency: 15 Datasets
+## Token Efficiency: 16 Datasets
 
-15 real-world datasets representing actual LLM tool response payloads. Same tokenizer (o200k_base), deterministic data, spec-compliant encoders.
+16 real-world datasets representing actual LLM tool response payloads. Same tokenizer (o200k_base), deterministic data, spec-compliant encoders.
 
 ![Token Efficiency](/charts/token-efficiency-15.png)
 
 | # | Dataset | GCF | TOON | GCF vs TOON |
 |---|---------|-----|------|-------------|
 | 1 | Employee records (flat) | 49,061 | 49,966 | -1.8% |
-| 2 | E-commerce orders (nested) | 51,334 | 73,246 | -29.9% |
+| 2 | E-commerce orders (nested) | 50,343 | 73,246 | -31.3% |
 | 3 | Analytics time-series | 8,404 | 9,127 | -7.9% |
-| 4 | GitHub repositories | 8,582 | 8,744 | -1.9% |
-| 5 | Event logs (semi-uniform) | 95,635 | 154,032 | -37.9% |
-| 6 | Nested config | 645 | 618 | +4.4% |
+| 4 | GitHub repositories | 8,599 | 8,744 | -1.7% |
+| 5 | Event logs (semi-uniform) | 95,193 | 154,032 | -38.2% |
+| 6 | Nested config | 617 | 618 | -0.2% |
 | 7 | LSP symbol search | 5,442 | 5,365 | +1.4% |
 | 8 | PR file changes | 2,623 | 2,657 | -1.3% |
 | 9 | Distributed trace | 4,318 | 4,959 | -12.9% |
@@ -130,12 +130,11 @@ GCF encodes the same data in 47K tokens (71% smaller than JSON). This means:
 | 12 | Multi-tool composite | 3,131 | 3,192 | -1.9% |
 | 13 | Order history (shared schemas) | 13,295 | 16,454 | -19.2% |
 | 14 | Blast radius response | 6,561 | 7,831 | -16.2% |
-| 15 | Comprehension eval payload | 41,213 | 60,603 | -32.0% |
-| | **TOTAL** | **313,978** | **421,657** | **-25.5%** |
+| 15 | Kubernetes pod status | 40,097 | 60,603 | -33.8% |
+| 16 | Enterprise org hierarchy | 222,196 | 330,486 | -32.8% |
+| | **TOTAL** | **533,614** | **752,143** | **-29.0%** |
 
 **GCF wins 15/16 vs TOON.** TOON's one win: LSP symbols (77 tokens, 1.4%, tokenizer artifact where the pipe delimiter tokenizes slightly worse than comma on this specific data shape).
-
-Dataset 15 is the exact payload used in the comprehension eval. The format that achieves 100% accuracy uses 32% fewer tokens.
 
 ---
 

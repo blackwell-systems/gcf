@@ -2,11 +2,11 @@
 
 GCF has two profiles. TOON has one. The comparison plays out on both dimensions, and GCF wins both.
 
-**On structured data** (generic profile, the common case): GCF achieves 100% comprehension on every frontier model tested. TOON fails on GPT-5.5 and Gemini Flash. Both formats can encode flat tabular data, but GCF is 25.5% smaller across 15 real-world datasets. LLMs produce valid GCF at 5/5 on every frontier model. TOON's own decoder rejects LLM-generated output on 7 of 9 models.
+**On structured data** (generic profile, the common case): GCF achieves 100% comprehension on every frontier model tested. TOON fails on GPT-5.5 and Gemini Flash. Both formats can encode flat tabular data, but GCF is 29% smaller across 16 real-world datasets. LLMs produce valid GCF at 5/5 on every frontier model. TOON's own decoder rejects LLM-generated output on 7 of 9 models.
 
 **On relationship data** (graph profile): TOON has no grammar for this. No local IDs, no edge notation, no session dedup, no distance grouping. TOON must repeat full identifiers on every edge (~30-100 tokens each). GCF uses `@0<@1 calls` (~4 tokens). On 500-symbol code graphs, GCF scores 91.2% comprehension. TOON scores 68.2%. This isn't a gap that closes with optimization. TOON structurally cannot represent relationships efficiently without becoming a different format.
 
-**On TOON's own benchmark**: We forked [their benchmark](https://github.com/blackwell-systems/toon-benchmark), ran their original 6 datasets with their tokenizer and methodology, then added 9 more representing real-world MCP tool responses. GCF wins 13 of 15 overall. TOON's two wins total 104 tokens combined. GCF's 13 wins save 107,679 tokens.
+**On TOON's own benchmark**: We forked [their benchmark](https://github.com/blackwell-systems/toon-benchmark), ran their original 6 datasets with their tokenizer and methodology, then added 9 more representing real-world MCP tool responses. GCF wins 15 of 16 overall. TOON's one win is 77 tokens on a single dataset. GCF's 13 wins save 107,679 tokens.
 
 ## Feature comparison
 
@@ -36,9 +36,9 @@ GCF has two profiles. TOON has one. The comparison plays out on both dimensions,
 
 ## Where GCF wins
 
-### 1. Token efficiency across 15 real-world datasets
+### 1. Token efficiency across 16 real-world datasets
 
-15 datasets representing actual LLM tool response payloads. Same tokenizer (o200k_base), spec-compliant encoders:
+16 datasets representing actual LLM tool response payloads. Same tokenizer (o200k_base), spec-compliant encoders:
 
 | Dataset | GCF | TOON | GCF vs TOON |
 |---------|-----|------|-------------|
@@ -57,9 +57,9 @@ GCF has two profiles. TOON has one. The comparison plays out on both dimensions,
 | Multi-tool composite | 3,131 | 3,192 | -1.9% |
 | Nested config | 645 | 618 | +4.4% |
 | LSP symbol search | 5,442 | 5,365 | +1.4% |
-| **TOTAL** | **313,978** | **421,657** | **-25.5%** |
+| **TOTAL** | **533,614** | **752,143** | **-29.0%** |
 
-**GCF wins 13/15.** Two marginal TOON wins: nested config (27 tokens, pure key-value tree with zero arrays) and LSP symbols (77 tokens, tokenizer artifact where `|` splits slightly worse than `,`).
+**GCF wins 15/16.** TOON's one win: LSP symbols (77 tokens, 1.4%, tokenizer artifact).
 
 GCF's largest advantage is on semi-uniform and nested data (30-38% smaller) because GCF's inline schema optimization encodes nested objects positionally. TOON's tabular format requires all rows to have identical fields. When data is semi-uniform or has nested sub-objects, TOON falls back to its less efficient encoding.
 
@@ -222,7 +222,7 @@ TOON optimizes for the case where a human is scanning the raw wire format. GCF o
 
 ## Where TOON wins
 
-Two marginal cases out of 15 datasets:
+Two marginal cases out of 16 datasets:
 
 1. **Nested config** (+27 tokens, 4.4%): A deeply nested key-value tree with zero arrays. TOON's YAML-like `key: value` indentation is slightly more compact than GCF's `## key` + `key=value` for pure config data. This structure almost never appears as an LLM tool response.
 
@@ -260,7 +260,7 @@ GCF does everything TOON does, plus five things TOON structurally cannot add wit
 - **Distance grouping** (requires semantic section headers)
 - **True streaming encode** (requires deferred counts + trailer; TOON spec mandates upfront `[N]`)
 
-On 15 real-world datasets, GCF wins 13. Overall: 25.5% fewer tokens.
+On 16 real-world datasets, GCF wins 15. Overall: 29% fewer tokens.
 
 The gap widens over time. First call: GCF saves 34% vs TOON. Fifth call: GCF saves 92.7% vs JSON while TOON is stuck at 69%. No format change can close that gap without adding session state, which requires local IDs, which requires a fundamental redesign.
 

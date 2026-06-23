@@ -20,7 +20,7 @@ We benchmark against JSON and TOON (Token-Oriented Object Notation), a tabular e
 
 **Generation:** 28 runs across 9 models. GCF achieves 5/5 validity on every frontier model. TOON's official decoder rejects LLM-generated output on 7 of 9 models due to a structural design flaw in flat tabular encoding. GCF output is 63% smaller than JSON and 33% smaller than TOON.
 
-**Token efficiency:** GCF achieves 50-92% fewer tokens than JSON depending on data complexity and session reuse. 50-69% on a single call (generic through graph profile). Up to 92% with session deduplication across repeated tool calls. On TOON's own benchmark (their datasets, their tokenizer, their methodology), expanded from 6 to 15 datasets, GCF wins 13 of 15 (25.5% fewer tokens overall).
+**Token efficiency:** GCF achieves 50-92% fewer tokens than JSON depending on data complexity and session reuse. 50-69% on a single call (generic through graph profile). Up to 92% with session deduplication across repeated tool calls. On TOON's own benchmark (their datasets, their tokenizer, their methodology), expanded from 6 to 16 datasets, GCF wins 15 of 16 (29% fewer tokens overall).
 
 **Lossless verification:** 43 billion+ round-trips across 5 formats (JSON, YAML, MessagePack, CSV, TOML) with zero failures. Validated across 17 serialization formats in the Format Mega-Gauntlet.
 
@@ -360,7 +360,7 @@ The generic profile achieves savings through a subset of the same mechanisms:
 | Primitive arrays | `["a","b","c"]` with brackets and quotes | `name[3]: a,b,c` | ~50% per array |
 | Nesting | braces + field names | `.field {}` + `key=value` | ~50% per nested object |
 
-For 2,000 employee records with 6 fields: JSON ~127,050 tokens, GCF ~49,055 tokens (61% savings). On TOON's benchmark (expanded from 6 to 15 real-world datasets), GCF wins 13 of 15 with 25.5% fewer tokens overall and 54.8% fewer than JSON.
+For 2,000 employee records with 6 fields: JSON ~127,050 tokens, GCF ~49,055 tokens (61% savings). On TOON's benchmark (expanded from 6 to 16 real-world datasets), GCF wins 15 of 16 with 29% fewer tokens overall and 54.8% fewer than JSON.
 
 ---
 
@@ -525,11 +525,11 @@ GCF profile=graph tool=example symbols=3 edges=1
 
 The structural difference: TOON puts all symbols in one flat table with a `distance` column. GCF groups them into `## targets`, `## related`, `## extended` sections. This difference drives both the comprehension gap (models can't filter flat tables at scale) and the generation gap (models write "target" instead of 0 in TOON's distance column).
 
-**Methodology:** We forked TOON's benchmark repository (`github.com/blackwell-systems/toon-benchmark`), added GCF as one additional formatter, and expanded from their original 6 datasets to 15 representing real-world MCP tool responses. Tokenizer (o200k_base) and methodology are upstream. GCF wins 13 of 15, 25.5% fewer tokens overall, 54.8% fewer than JSON. See [benchmarks](https://gcformat.com/guide/benchmarks#token-efficiency-15-datasets) for the full 15-dataset table.
+**Methodology:** We forked TOON's benchmark repository (`github.com/blackwell-systems/toon-benchmark`), added GCF as one additional formatter, and expanded from their original 6 datasets to 16 representing real-world MCP tool responses. Tokenizer (o200k_base) and methodology are upstream. GCF wins 15 of 16, 29% fewer tokens overall, 54.8% fewer than JSON. See [benchmarks](https://gcformat.com/guide/benchmarks#token-efficiency-15-datasets) for the full 15-dataset table.
 
 **Tokenization analysis:** TOON's tab delimiter merges with adjacent content more aggressively than JSON's quote character. On real data (1,344 checks): TOON tab merge rate 59.82%, JSON quote merge rate 39.29%, GCF pipe merge rate 0.00%. GPT-4's vocabulary contains 60/64 tested words as tab+letter entries vs 15/64 as quote+letter entries. TOON's chosen delimiter is the worst of all three formats for BPE tokenizer compatibility. See [tokenizer analysis](https://gcformat.com/guide/tokenizer-analysis) and "Structural Ambiguity in JSON Tokenization" [DOI: 10.5281/zenodo.20789619](https://doi.org/10.5281/zenodo.20789619).
 
-**GCF wins 13 of 15 datasets** (25.5% fewer tokens overall). TOON's two wins total 104 tokens combined on edge cases (nested config and one tokenizer artifact).
+**GCF wins 15 of 16 datasets** (29% fewer tokens overall). TOON's one win is 77 tokens on a single dataset on edge cases (nested config and one tokenizer artifact).
 
 TOON has no local-ID system, no edge encoding, no session deduplication, no delta encoding, and no streaming mode. These are structural limitations that cannot be added without a fundamental redesign. TOON edges must repeat the full qualified name of both source and target (~100 tokens per edge vs ~4 for GCF). TOON retransmits every record on every call; GCF tracks what's been sent. TOON's spec mandates upfront `[N]` counts with no deferred mechanism; GCF streams with zero buffering.
 
@@ -551,7 +551,7 @@ JSON with shortened field names (`"qn"` instead of `"qualified_name"`) achieves 
 
 **LLM generation.** 28 generation runs across 9 models and 3 providers. GCF achieves 5/5 validity on every frontier model (Opus, Sonnet, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro) with a 3-line primer and zero prior training. TOON's official decoder rejects LLM-generated output on 7 of 9 models. The failure is structural: TOON's flat columns encode semantic categories as integers, and models write labels ("target") instead of the expected integer (0). GCF expresses categories through section placement (`## targets`), aligning with how models naturally express grouped data. GCF output is 63% smaller than JSON and 33% smaller than TOON.
 
-**Two profiles.** The graph profile is optimized for typed nodes and edges. The generic profile (`encodeGeneric`) handles arbitrary structured data (arrays of objects, nested records, mixed types). On TOON's own benchmark (expanded to 15 datasets), GCF wins 13 of 15 with 25.5% fewer tokens overall.
+**Two profiles.** The graph profile is optimized for typed nodes and edges. The generic profile (`encodeGeneric`) handles arbitrary structured data (arrays of objects, nested records, mixed types). On TOON's own benchmark (expanded to 16 datasets), GCF wins 15 of 16 with 29% fewer tokens overall.
 
 **Session statefulness requires coordination.** The session ID system assumes the server tracks which nodes have been transmitted to which client. Stateless deployments cannot use session compression. The non-session mode (full retransmission) remains available.
 
@@ -629,7 +629,7 @@ GCF's token savings compound with delta encoding: when the agent passes a `pack_
 
 JSON is the default encoding for LLM interactions because it is universal, not because it is efficient. For structured data, JSON wastes more than three-quarters of its tokens on structural overhead that carries no semantic content.
 
-GCF eliminates this waste through two encoding profiles. The graph profile uses referential identity (local IDs), topological encoding (edge arrows), and hierarchical grouping (section headers) for code graph data. The generic profile uses positional rows with pipe separators, section headers, and inline primitive arrays for arbitrary structured data. Savings range from 50-69% on a single call (generic through graph profile) to 92% with session deduplication across repeated tool calls. On 15 real-world datasets, GCF uses 25.5% fewer tokens than TOON and 54.8% fewer than JSON.
+GCF eliminates this waste through two encoding profiles. The graph profile uses referential identity (local IDs), topological encoding (edge arrows), and hierarchical grouping (section headers) for code graph data. The generic profile uses positional rows with pipe separators, section headers, and inline primitive arrays for arbitrary structured data. Savings range from 50-69% on a single call (generic through graph profile) to 92% with session deduplication across repeated tool calls. On 16 real-world datasets, GCF uses 29% fewer tokens than TOON and 54.8% fewer than JSON.
 
 GCF is bidirectional. 2,400+ LLM evaluations across 11 models and 3 providers prove it. Comprehension: 100% on every frontier model on standard workloads; 91.2% on structurally complex code graphs where JSON drops to 53.4% and TOON to 68.2%. Generation: 5/5 validity on every frontier model where TOON fails on 7 of 9 models. Output: 63% fewer tokens than JSON, 33% fewer than TOON. Session deduplication (84.3% cumulative savings over a 5-call session), delta encoding (81.2% on re-queries), and streaming encode (zero-buffering with trailer summary) compound savings across multi-turn interactions. No competing format offers these features.
 

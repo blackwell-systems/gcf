@@ -9,7 +9,7 @@ Two profiles, one grammar. The **generic profile** encodes any structured data. 
 - **100% comprehension accuracy** on every frontier model tested (Claude, Gemini, GPT). The only format that never fails.
 - **90.7% under structural stress** (500-symbol code graphs), where JSON drops to 53.6% and TOON to 68.5%.
 - **71% fewer tokens than JSON.** At 1000 records, JSON exceeds 200K context limits entirely. GCF fits in 47K.
-- **25.5% fewer tokens than TOON** across 15 real-world datasets (13/15 wins).
+- **29% fewer tokens than TOON** across 16 real-world datasets (15/16 wins).
 - **43,000,000,000+ lossless round-trips** across 5 formats and 6 language implementations. Zero data corruption.
 - **Zero training.** No model has ever seen GCF in training data. Every frontier model reads it natively.
 

@@ -73,7 +73,7 @@ On mid-tier models (Gemini 2.5 Flash, Mistral Medium), all formats show occasion
 
 ![Token Efficiency](/charts/token-efficiency-15.png)
 
-15 real-world datasets. GCF wins 13/15 vs TOON, -25.5% overall, -53.3% vs JSON.
+16 real-world datasets. GCF wins 15/16 vs TOON, -25.5% overall, -53.3% vs JSON.
 
 Dataset 15 is the exact payload used in the comprehension eval above. The format that achieves 100% accuracy uses 32% fewer tokens than TOON and 57.5% fewer than JSON.
 
@@ -353,7 +353,7 @@ EVAL_BACKEND=google GOOGLE_API_KEY=... EVAL_MODEL=gemini-2.5-flash GOWORK=off go
 # Generation (all three formats)
 GOWORK=off go test -run "TestGeneration$|TestGenerationTOON|TestGenerationJSON" -v -timeout 0
 
-# Token efficiency (15 datasets)
+# Token efficiency (16 datasets)
 git clone https://github.com/blackwell-systems/toon-benchmark
 cd toon-benchmark
 node --experimental-strip-types benchmarks/scripts/token-efficiency-benchmark.ts
