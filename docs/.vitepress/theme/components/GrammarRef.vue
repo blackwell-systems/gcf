@@ -64,15 +64,13 @@ empty=""</code></pre>
 
         <div class="grammar-entry">
           <h4>Nested Objects</h4>
-          <pre class="grammar-code"><code v-if="ready" v-html="highlightGCF(`## orders [2]{id,total,customer}\n@0 1001|249.99|^{name,tier}\nAlice|premium\n@1 1002|89.50|^\nBob|standard`)"></code><code v-else>## orders [2]{id,total,customer}
-@0 1001|249.99|^{name,tier}
-Alice|premium
-@1 1002|89.50|^
-Bob|standard</code></pre>
+          <pre class="grammar-code"><code v-if="ready" v-html="highlightGCF(`## orders [2]{id,total,&quot;customer>name&quot;,&quot;customer>tier&quot;}\n1001|249.99|Alice|premium\n1002|89.50|Bob|standard`)"></code><code v-else>## orders [2]{id,total,"customer>name","customer>tier"}
+1001|249.99|Alice|premium
+1002|89.50|Bob|standard</code></pre>
           <ul class="grammar-notes">
-            <li><code>^{fields}</code> attachment with inline schema</li>
-            <li>Subsequent rows use bare <code>^</code></li>
-            <li>Nested values follow on next line</li>
+            <li><code>"customer>name"</code> flattens nested field into column</li>
+            <li><code>></code> separates path levels</li>
+            <li>Values go directly in the row (no attachments)</li>
           </ul>
         </div>
       </div>
