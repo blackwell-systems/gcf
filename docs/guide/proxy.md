@@ -158,6 +158,47 @@ The LLM gets the first symbols in its context within milliseconds. Without `prog
 | `--verbose` | false | Log per-call savings to stderr |
 | `--stats-file <path>` | (none) | Write JSON stats after each rewrite (for plugin hooks) |
 
+## Flatten opt-out for open-weight models
+
+By default, GCF flattens fixed-shape nested objects into path columns (`"customer>name"` instead of a separate attachment block). This saves 20-48% more tokens on deeply nested API data and maintains 100% comprehension on every frontier model (Claude, GPT-5.5, Gemini, Grok).
+
+However, [40+ eval runs across 20 models and 8 providers](https://gcformat.com/guide/eval-results.html) revealed a split: **open-weight models show 8-15% comprehension regression on flattened encoding at scale** (500+ rows). Specifically:
+
+- LLaMA 3.3 70B: ~10% regression on flattened vs non-flattened
+- Mistral Medium: ~8% regression at 500 rows
+- Smaller models (LLaMA 8B, Granite Micro): larger regression
+
+Proprietary models (Claude, GPT-5.5, Gemini, Grok) show zero regression on flattened encoding.
+
+If you're deploying against open-weight models, use `--no-flatten`:
+
+```bash
+gcf-proxy --no-flatten your-mcp-server
+```
+
+This produces the pre-v3.2 attachment encoding for nested objects. Same token savings on flat data, same round-trip guarantee, just avoids the path column syntax that open-weight models struggle with.
+
+The opt-out is also available in all 6 SDK libraries:
+
+```go
+gcf.EncodeGeneric(data, gcf.GenericOptions{NoFlatten: true})          // Go
+```
+```typescript
+encodeGeneric(data, { noFlatten: true })                               // TypeScript
+```
+```python
+encode_generic(data, GenericOptions(no_flatten=True))                   # Python
+```
+```rust
+encode_generic_with_options(data, &GenericOptions { no_flatten: true }) // Rust
+```
+```swift
+encodeGeneric(data, opts: GenericOptions(noFlatten: true))             // Swift
+```
+```kotlin
+encodeGeneric(data, GenericOptions(noFlatten = true))                  // Kotlin
+```
+
 ## Delta encoding
 
 `--delta` compares each tool's response against the previous one. When only a few symbols changed, the proxy sends a delta instead of the full response:

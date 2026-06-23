@@ -80,6 +80,35 @@ The [comprehension eval](https://github.com/blackwell-systems/gcf-go/tree/main/e
 
 The model was never told what `@0`, `##`, or `<` mean. It figured it out from the structure. The format is regular enough (positional fields, consistent prefixes, section headers) that pattern recognition handles it.
 
+### Nested object flattening: proprietary vs open-weight split
+
+GCF v3.2 introduced nested object flattening, which promotes fixed-shape nested objects into path columns (`"customer>name"` in the tabular header instead of a separate attachment block). This saves 20-48% more tokens on deeply nested API data.
+
+40+ eval runs across 20 models and 8 providers revealed an important split:
+
+| Model class | Flattened vs non-flattened | Recommendation |
+|-------------|---------------------------|----------------|
+| **Proprietary** (Claude, GPT-5.5, Gemini, Grok) | Zero regression | Use default (flatten on) |
+| **Open-weight large** (LLaMA 70B, Mistral Medium) | 8-15% regression at 500 rows | Consider `noFlatten` at scale |
+| **Open-weight small** (LLaMA 8B, Granite Micro) | Larger regression | Use `noFlatten` |
+
+Flattening is on by default because frontier models handle it perfectly and the token savings are significant. If you're deploying against open-weight models, all 6 SDKs and the proxy support an opt-out:
+
+```go
+gcf.EncodeGeneric(data, gcf.GenericOptions{NoFlatten: true})  // Go
+```
+```typescript
+encodeGeneric(data, { noFlatten: true })                       // TypeScript
+```
+```python
+encode_generic(data, GenericOptions(no_flatten=True))           # Python
+```
+```bash
+gcf-proxy --no-flatten your-mcp-server                         # Proxy
+```
+
+The opt-out produces the pre-v3.2 attachment encoding for nested objects. Same data, same round-trip guarantee, same savings on flat data. Only the encoding of nested objects changes.
+
 If you want to include a primer for clarity:
 
 ```
