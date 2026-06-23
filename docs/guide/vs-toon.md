@@ -55,9 +55,9 @@ GCF has two profiles. TOON has one. The comparison plays out on both dimensions,
 | PR file changes | 2,623 | 2,657 | -1.3% |
 | Database query results | 17,716 | 17,969 | -1.4% |
 | Multi-tool composite | 3,131 | 3,192 | -1.9% |
-| Nested config | 645 | 618 | +4.4% |
+| Nested config | 617 | 618 | **-0.2%** |
 | LSP symbol search | 5,442 | 5,365 | +1.4% |
-| **TOTAL** | **533,614** | **752,143** | **-29.0%** |
+| **TOTAL** | **533,586** | **752,143** | **-29.0%** |
 
 **GCF wins 15/16.** TOON's one win: LSP symbols (77 tokens, 1.4%, tokenizer artifact).
 
@@ -222,13 +222,11 @@ TOON optimizes for the case where a human is scanning the raw wire format. GCF o
 
 ## Where TOON wins
 
-Two marginal cases out of 16 datasets:
+One case out of 16 datasets:
 
-1. **Nested config** (+27 tokens, 4.4%): A deeply nested key-value tree with zero arrays. TOON's YAML-like `key: value` indentation is slightly more compact than GCF's `## key` + `key=value` for pure config data. This structure almost never appears as an LLM tool response.
+1. **LSP symbol search** (+77 tokens, 1.4%): A flat tabular array where TOON's comma delimiter tokenizes slightly better than GCF's pipe delimiter. GCF is fewer bytes but more tokens due to how the tokenizer splits on `|` vs `,`.
 
-2. **LSP symbol search** (+77 tokens, 1.4%): A flat tabular array where TOON's comma delimiter tokenizes slightly better than GCF's pipe delimiter. GCF is fewer bytes but more tokens due to how the tokenizer splits on `|` vs `,`.
-
-Neither case is significant in practice. The total difference is 104 tokens combined, while GCF saves 107,679 tokens across the other 13 datasets.
+77 tokens. GCF saves 218,480 tokens across the other 15 datasets.
 
 TOON's `encodeLines()` is output-side streaming only (the full value must be in memory before encoding starts). GCF's `StreamEncoder` is true input-side streaming with zero buffering and O(1) memory per row. See the [streaming guide](/guide/streaming) for the full comparison.
 
