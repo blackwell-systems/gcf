@@ -71,22 +71,28 @@ These tokenizers were trained on different corpora with different merge prioriti
 
 ## Part 1: GCF Savings Are Consistent
 
-Data from `eval/tokenizer-variance.mjs`.
+Data from `eval/hf-tokenizer-analysis.py` (43 tokenizers, 20 providers).
 
-### 50-59% savings on every tokenizer
+### 49-72% savings on every tokenizer
+
+Representative results at 500 orders (all 43 tokenizers tested):
 
 | Tokenizer | GCF Tokens | JSON Tokens | Savings |
 |-----------|-----------|-------------|---------|
-| Claude (Anthropic) | 44,099 | 96,619 | **54.4%** |
-| GPT-4 (OpenAI) | 40,383 | 97,848 | **58.7%** |
-| GPT-4o (OpenAI) | 41,382 | 98,348 | **57.9%** |
-| LLaMA 3.1 (Meta) | 40,384 | 97,849 | **58.7%** |
-| Qwen 2.5 (Alibaba) | 52,595 | 109,168 | **51.8%** |
-| DeepSeek V3 | 44,234 | 101,848 | **56.6%** |
-| Gemma 2 (Google) | 55,301 | 124,620 | **55.6%** |
-| Mistral Nemo | 55,998 | 112,569 | **50.3%** |
+| GPT-4 (OpenAI cl100k) | 40,190 | 98,148 | **59.1%** |
+| GPT-4o (OpenAI o200k) | 40,591 | 98,548 | **58.8%** |
+| Claude (Anthropic) | 43,704 | 96,719 | **54.8%** |
+| LLaMA 3.1 (Meta) | 40,190 | 98,148 | **59.1%** |
+| Qwen 2.5 (Alibaba) | 52,402 | 109,468 | **52.1%** |
+| DeepSeek V3 | 43,694 | 102,348 | **57.3%** |
+| Gemma 2 (Google) | 54,906 | 124,719 | **56.0%** |
+| Mistral Nemo | 55,407 | 112,968 | **51.0%** |
+| Phi-4 (Microsoft) | 40,190 | 98,148 | **59.1%** |
+| Falcon 7B (TII) | 44,649 | 109,599 | **59.3%** |
+| Yi Coder (01.AI) | 58,867 | 136,668 | **56.9%** |
+| StarCoder2 (BigCode) | 57,356 | 112,419 | **49.0%** |
 
-Every tokenizer produces 50%+ savings. The worst case (Mistral Nemo, 50.3%) still halves the token count. This is measured on 500-order nested data (the generic profile from our comprehension eval) vs pretty-printed JSON (2-space indent), which is what LLMs typically receive from tool responses.
+Every tokenizer produces 49%+ savings. The worst case (StarCoder2, 49.0%) still nearly halves the token count. This is measured on 500-order nested data (the generic profile from our comprehension eval) vs pretty-printed JSON (2-space indent), which is what LLMs typically receive from tool responses.
 
 On the [15-dataset token efficiency benchmark](/guide/benchmarks#token-efficiency-15-datasets), GCF vs JSON savings range from 43-65% depending on data complexity, with an overall average of 54.8%.
 
@@ -94,12 +100,12 @@ On the [15-dataset token efficiency benchmark](/guide/benchmarks#token-efficienc
 
 | Payload | Min Savings | Max Savings | Mean Savings | Spread |
 |---------|------------|-------------|-------------|--------|
-| 10 orders | 51.0% | 57.6% | 55.0% | 6.6pp |
-| 50 orders | 51.5% | 59.2% | 56.3% | 7.7pp |
-| 100 orders | 51.4% | 59.3% | 56.2% | 7.9pp |
-| 500 orders | 50.3% | 58.7% | 55.5% | 8.5pp |
+| 10 orders | 49.2% | 70.3% | 55.5% | 21.1pp |
+| 50 orders | 50.1% | 71.8% | 56.7% | 21.7pp |
+| 100 orders | 50.0% | 71.9% | 56.7% | 21.8pp |
+| 500 orders | 49.0% | 71.5% | 55.9% | 22.5pp |
 
-The spread stays under 9 percentage points across all 8 tokenizers at every scale. If you measure 55% savings on one model, you can expect 50-59% on all models.
+The mean savings holds at 55-57% across all 43 tokenizers at every scale. The wider spread compared to narrower tokenizer subsets reflects the inclusion of older architectures (GPT-2 at 71% savings due to its smaller vocabulary producing more JSON tokens) and code-specialized tokenizers (StarCoder2 at 49%). If you measure 56% savings on one model, you can expect 49-60% on the vast majority of production models.
 
 ### Why this matters
 
@@ -449,7 +455,7 @@ To prove GCF's savings are structural (positional fields, keys declared once) an
 | Alt C | `` ` `` | `#` | `~` | `!!` | `[\|]` |
 | Alt D | `;` | `%` | `^` | `$$` | `{+}` |
 
-5 payload types, 4 sizes, 8 tokenizers. **800 total measurements.**
+5 payload types, 4 sizes, 8 representative tokenizers. **800 total measurements.**
 
 ### Results
 
@@ -673,8 +679,8 @@ The pipe merges that exist are with **programming keywords** (`null`, `string`, 
 
 | Claim | Evidence |
 |-------|----------|
-| GCF savings are 50-59% on all tokenizers | 8 tokenizers tested, worst case 50.3% |
-| GCF savings are stable at all scales | 10 to 500 records, spread < 9pp |
+| GCF savings are 49-72% on all tokenizers | 43 tokenizers tested, worst case 49.0% (StarCoder2), mean 55.9% |
+| GCF savings are stable at all scales | 10 to 500 records, mean 55-57% across 43 tokenizers |
 | GCF has 94% fewer boundary merges than JSON | 43 tokenizers: GCF 0.47% vs JSON 8.17% (29,025 + 1,935 checks) |
 | JSON merges compound at scale | `"id"` and `"name"` merge on 30% of tokenizers, repeating per row |
 | GCF merges are rare and non-compounding | Only `\|cancelled` on 3 of 43 tokenizers. Never on field names. |
@@ -702,7 +708,7 @@ npm install @blackwell-systems/gcf @lenml/tokenizers \
   @lenml/tokenizer-deepseek_v3 @lenml/tokenizer-gemma2 \
   @lenml/tokenizer-mistral_nemo
 
-# Token savings consistency (8 tokenizers, multiple scales)
+# Token savings consistency (43 tokenizers, multiple scales)
 node eval/tokenizer-variance.mjs
 
 # Structural variance (merge analysis, boundary consistency)

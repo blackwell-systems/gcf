@@ -1,23 +1,90 @@
 {
-  "timestamp": "2026-06-23T22:56:31Z",
-  "tokenizer_count": 43,
-  "failed_count": 0,
-  "failed": [],
-  "quote_merge_rate": 0.08165374677002583,
-  "pipe_merge_rate": 0.004651162790697674,
-  "tab_merge_rate": 0.32906976744186045,
+  "timestamp": "2026-06-23T22:26:42Z",
+  "tokenizer_count": 33,
+  "failed_count": 15,
+  "failed": [
+    [
+      "LLaMA 2 7B (Meta)",
+      "meta-llama/Llama-2-7b-hf",
+      "no tokenizer.json"
+    ],
+    [
+      "LLaMA 3 8B (Meta)",
+      "meta-llama/Llama-3.1-8B",
+      "no tokenizer.json"
+    ],
+    [
+      "LLaMA 3.2 1B (Meta)",
+      "meta-llama/Llama-3.2-1B",
+      "no tokenizer.json"
+    ],
+    [
+      "Gemma 2B (Google)",
+      "google/gemma-2b",
+      "no tokenizer.json"
+    ],
+    [
+      "Gemma 2 9B (Google)",
+      "google/gemma-2-9b",
+      "no tokenizer.json"
+    ],
+    [
+      "Gemma 3 1B (Google)",
+      "google/gemma-3-1b-pt",
+      "no tokenizer.json"
+    ],
+    [
+      "Command R (Cohere)",
+      "CohereForAI/c4ai-command-r-v01",
+      "no tokenizer.json"
+    ],
+    [
+      "Command R+ (Cohere)",
+      "CohereForAI/c4ai-command-r-plus",
+      "no tokenizer.json"
+    ],
+    [
+      "InternLM2 7B",
+      "internlm/internlm2-7b",
+      "no tokenizer.json"
+    ],
+    [
+      "Jamba 1.5 Mini (AI21)",
+      "ai21labs/AI21-Jamba-1.5-Mini",
+      "no tokenizer.json"
+    ],
+    [
+      "OpenELM 3B (Apple)",
+      "apple/OpenELM-3B",
+      "no tokenizer.json"
+    ],
+    [
+      "RWKV-5 3B",
+      "RWKV/rwkv-5-world-3b",
+      "no tokenizer.json"
+    ],
+    [
+      "DBRX Base",
+      "databricks/dbrx-base",
+      "no tokenizer.json"
+    ],
+    [
+      "Grok-1 (xAI)",
+      "xai-org/grok-1",
+      "no tokenizer.json"
+    ],
+    [
+      "OLMo 2 7B (AllenAI)",
+      "allenai/OLMo-2-0425-7B",
+      "no tokenizer.json"
+    ]
+  ],
+  "quote_merge_rate": 0.07272727272727272,
+  "pipe_merge_rate": 0.006060606060606061,
+  "tab_merge_rate": 0.31212121212121213,
   "per_tokenizer_quote_merges": {
-    "GPT-4 (OpenAI cl100k)": 13,
-    "GPT-4o (OpenAI o200k)": 11,
     "GPT-2 (OpenAI)": 0,
-    "Claude (Anthropic)": 0,
-    "LLaMA 2 7B (Meta)": 0,
-    "LLaMA 3 8B (Meta)": 13,
-    "LLaMA 3.1 8B (Meta)": 13,
     "CodeLlama 7B (Meta)": 0,
-    "TinyLlama 1.1B": 0,
-    "Gemma 2 2B (Google)": 0,
-    "Gemma 3 1B (Google)": 0,
     "T5 Base (Google)": 0,
     "Mistral 7B v0.1": 0,
     "Mistral 7B v0.3": 0,
@@ -44,7 +111,6 @@
     "StarCoder2 7B": 0,
     "StarCoder2 15B": 0,
     "Nemotron Mini 4B": 0,
-    "Jamba v0.1 (AI21)": 0,
     "StableLM 2 1.6B": 13,
     "Pythia 6.9B": 0,
     "Arctic (Snowflake)": 0,
@@ -52,17 +118,8 @@
     "Marco-o1 (Alibaba)": 13
   },
   "per_tokenizer_tab_merges": {
-    "GPT-4 (OpenAI cl100k)": 19,
-    "GPT-4o (OpenAI o200k)": 20,
     "GPT-2 (OpenAI)": 0,
-    "Claude (Anthropic)": 0,
-    "LLaMA 2 7B (Meta)": 0,
-    "LLaMA 3 8B (Meta)": 19,
-    "LLaMA 3.1 8B (Meta)": 19,
     "CodeLlama 7B (Meta)": 0,
-    "TinyLlama 1.1B": 0,
-    "Gemma 2 2B (Google)": 0,
-    "Gemma 3 1B (Google)": 0,
     "T5 Base (Google)": 0,
     "Mistral 7B v0.1": 0,
     "Mistral 7B v0.3": 0,
@@ -89,7 +146,6 @@
     "StarCoder2 7B": 0,
     "StarCoder2 15B": 0,
     "Nemotron Mini 4B": 0,
-    "Jamba v0.1 (AI21)": 0,
     "StableLM 2 1.6B": 19,
     "Pythia 6.9B": 0,
     "Arctic (Snowflake)": 0,
@@ -100,55 +156,55 @@
   "field_merge_ranking": [
     [
       "id",
-      13
+      9
     ],
     [
       "name",
-      13
+      9
     ],
     [
       "title",
-      13
+      9
     ],
     [
       "time",
-      13
+      9
     ],
     [
       "type",
-      12
+      8
     ],
     [
       "value",
-      12
+      8
     ],
     [
       "text",
-      12
+      8
     ],
     [
       "url",
-      12
+      8
     ],
     [
       "path",
-      12
-    ],
-    [
-      "user_id",
-      12
-    ],
-    [
-      "description",
-      12
+      8
     ],
     [
       "data",
-      11
+      8
+    ],
+    [
+      "user_id",
+      8
+    ],
+    [
+      "description",
+      8
     ],
     [
       "label",
-      11
+      8
     ],
     [
       "status",
@@ -280,20 +336,6 @@
     ]
   ],
   "vocab_analysis": {
-    "GPT-4 (OpenAI cl100k)": {
-      "vocab_size": 99562,
-      "quote_letter": 117,
-      "pipe_letter": 22,
-      "tab_letter": 1173,
-      "multi_grammar": 874
-    },
-    "GPT-4o (OpenAI o200k)": {
-      "vocab_size": 198797,
-      "quote_letter": 108,
-      "pipe_letter": 8,
-      "tab_letter": 1036,
-      "multi_grammar": 735
-    },
     "GPT-2 (OpenAI)": {
       "vocab_size": 50257,
       "quote_letter": 2,
@@ -301,61 +343,12 @@
       "tab_letter": 0,
       "multi_grammar": 80
     },
-    "Claude (Anthropic)": {
-      "vocab_size": 65000,
-      "quote_letter": 3,
-      "pipe_letter": 0,
-      "tab_letter": 0,
-      "multi_grammar": 667
-    },
-    "LLaMA 2 7B (Meta)": {
-      "vocab_size": 32000,
-      "quote_letter": 0,
-      "pipe_letter": 0,
-      "tab_letter": 0,
-      "multi_grammar": 122
-    },
-    "LLaMA 3 8B (Meta)": {
-      "vocab_size": 128256,
-      "quote_letter": 153,
-      "pipe_letter": 277,
-      "tab_letter": 0,
-      "multi_grammar": 881
-    },
-    "LLaMA 3.1 8B (Meta)": {
-      "vocab_size": 128256,
-      "quote_letter": 153,
-      "pipe_letter": 277,
-      "tab_letter": 0,
-      "multi_grammar": 881
-    },
     "CodeLlama 7B (Meta)": {
       "vocab_size": 32016,
       "quote_letter": 0,
       "pipe_letter": 0,
       "tab_letter": 0,
       "multi_grammar": 122
-    },
-    "TinyLlama 1.1B": {
-      "vocab_size": 32000,
-      "quote_letter": 0,
-      "pipe_letter": 0,
-      "tab_letter": 0,
-      "multi_grammar": 122
-    },
-    "Gemma 2 2B (Google)": {
-      "vocab_size": 256000,
-      "quote_letter": 4,
-      "pipe_letter": 0,
-      "tab_letter": 0,
-      "multi_grammar": 735
-    },
-    "Gemma 3 1B (Google)": {
-      "vocab_size": 262145,
-      "quote_letter": 2,
-      "pipe_letter": 0,
-      "tab_letter": 0,
-      "multi_grammar": 861
     },
     "T5 Base (Google)": {
       "vocab_size": 32100,
@@ -539,13 +532,6 @@
       "tab_letter": 0,
       "multi_grammar": 200
     },
-    "Jamba v0.1 (AI21)": {
-      "vocab_size": 65536,
-      "quote_letter": 1,
-      "pipe_letter": 1543,
-      "tab_letter": 0,
-      "multi_grammar": 113
-    },
     "StableLM 2 1.6B": {
       "vocab_size": 100289,
       "quote_letter": 153,
@@ -580,32 +566,6 @@
       "pipe_letter": 40,
       "tab_letter": 0,
       "multi_grammar": 874
-    }
-  },
-  "savings_consistency": {
-    "10": {
-      "min": 49.18504314477469,
-      "max": 70.32967032967032,
-      "mean": 55.47037046297257,
-      "spread": 21.144627184895633
-    },
-    "50": {
-      "min": 50.128393250183414,
-      "max": 71.83206106870229,
-      "mean": 56.740006938318096,
-      "spread": 21.703667818518873
-    },
-    "100": {
-      "min": 50.02939447383892,
-      "max": 71.8629301582692,
-      "mean": 56.70462889457565,
-      "spread": 21.833535684430274
-    },
-    "500": {
-      "min": 48.98015460020103,
-      "max": 71.51919904956343,
-      "mean": 55.882644698108905,
-      "spread": 22.539044449362393
     }
   }
 }

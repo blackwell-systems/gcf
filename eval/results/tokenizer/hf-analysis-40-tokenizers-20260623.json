@@ -1,16 +1,13 @@
 {
-  "timestamp": "2026-06-23T22:56:31Z",
-  "tokenizer_count": 43,
+  "timestamp": "2026-06-23T22:30:12Z",
+  "tokenizer_count": 40,
   "failed_count": 0,
   "failed": [],
-  "quote_merge_rate": 0.08165374677002583,
-  "pipe_merge_rate": 0.004651162790697674,
-  "tab_merge_rate": 0.32906976744186045,
+  "quote_merge_rate": 0.07444444444444444,
+  "pipe_merge_rate": 0.005,
+  "tab_merge_rate": 0.305,
   "per_tokenizer_quote_merges": {
-    "GPT-4 (OpenAI cl100k)": 13,
-    "GPT-4o (OpenAI o200k)": 11,
     "GPT-2 (OpenAI)": 0,
-    "Claude (Anthropic)": 0,
     "LLaMA 2 7B (Meta)": 0,
     "LLaMA 3 8B (Meta)": 13,
     "LLaMA 3.1 8B (Meta)": 13,
@@ -52,10 +49,7 @@
     "Marco-o1 (Alibaba)": 13
   },
   "per_tokenizer_tab_merges": {
-    "GPT-4 (OpenAI cl100k)": 19,
-    "GPT-4o (OpenAI o200k)": 20,
     "GPT-2 (OpenAI)": 0,
-    "Claude (Anthropic)": 0,
     "LLaMA 2 7B (Meta)": 0,
     "LLaMA 3 8B (Meta)": 19,
     "LLaMA 3.1 8B (Meta)": 19,
@@ -100,55 +94,55 @@
   "field_merge_ranking": [
     [
       "id",
-      13
+      11
     ],
     [
       "name",
-      13
+      11
     ],
     [
       "title",
-      13
+      11
     ],
     [
       "time",
-      13
+      11
     ],
     [
       "type",
-      12
+      10
     ],
     [
       "value",
-      12
+      10
     ],
     [
       "text",
-      12
+      10
     ],
     [
       "url",
-      12
+      10
     ],
     [
       "path",
-      12
-    ],
-    [
-      "user_id",
-      12
-    ],
-    [
-      "description",
-      12
+      10
     ],
     [
       "data",
-      11
+      10
+    ],
+    [
+      "user_id",
+      10
+    ],
+    [
+      "description",
+      10
     ],
     [
       "label",
-      11
+      10
     ],
     [
       "status",
@@ -280,33 +274,12 @@
     ]
   ],
   "vocab_analysis": {
-    "GPT-4 (OpenAI cl100k)": {
-      "vocab_size": 99562,
-      "quote_letter": 117,
-      "pipe_letter": 22,
-      "tab_letter": 1173,
-      "multi_grammar": 874
-    },
-    "GPT-4o (OpenAI o200k)": {
-      "vocab_size": 198797,
-      "quote_letter": 108,
-      "pipe_letter": 8,
-      "tab_letter": 1036,
-      "multi_grammar": 735
-    },
     "GPT-2 (OpenAI)": {
       "vocab_size": 50257,
       "quote_letter": 2,
       "pipe_letter": 1,
       "tab_letter": 0,
       "multi_grammar": 80
-    },
-    "Claude (Anthropic)": {
-      "vocab_size": 65000,
-      "quote_letter": 3,
-      "pipe_letter": 0,
-      "tab_letter": 0,
-      "multi_grammar": 667
     },
     "LLaMA 2 7B (Meta)": {
       "vocab_size": 32000,
@@ -580,32 +553,6 @@
       "pipe_letter": 40,
       "tab_letter": 0,
       "multi_grammar": 874
-    }
-  },
-  "savings_consistency": {
-    "10": {
-      "min": 49.18504314477469,
-      "max": 70.32967032967032,
-      "mean": 55.47037046297257,
-      "spread": 21.144627184895633
-    },
-    "50": {
-      "min": 50.128393250183414,
-      "max": 71.83206106870229,
-      "mean": 56.740006938318096,
-      "spread": 21.703667818518873
-    },
-    "100": {
-      "min": 50.02939447383892,
-      "max": 71.8629301582692,
-      "mean": 56.70462889457565,
-      "spread": 21.833535684430274
-    },
-    "500": {
-      "min": 48.98015460020103,
-      "max": 71.51919904956343,
-      "mean": 55.882644698108905,
-      "spread": 22.539044449362393
     }
   }
 }
