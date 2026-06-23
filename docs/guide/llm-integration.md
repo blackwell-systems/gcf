@@ -91,7 +91,7 @@ GCF v3.2 introduced nested object flattening, which promotes fixed-shape nested 
 | **Proprietary frontier** (Claude, GPT-5.5, Gemini, Grok) | Both encodings perform identically | Use default (flatten on) |
 | **Open-weight** (LLaMA, Mistral, Granite, Qwen) | Currently comprehend expanded (non-flat) encoding better by 8-23pp at 500 rows | Use `noFlatten` for now |
 
-Flattening is on by default because frontier models handle it perfectly and the token savings are significant. Open-weight models currently comprehend GCF better in expanded form, where nested objects use attachment syntax. This gap is expected to close as open-weight models improve; the opt-out exists so you can choose the best encoding for your deployment today and remove it when your model catches up. All 6 SDKs and the proxy support this:
+Flattening is on by default because frontier models handle it perfectly and the token savings are significant. Open-weight models currently comprehend GCF better in expanded form, where nested objects use attachment syntax. Importantly, **GCF in expanded form still outperforms JSON on every open-weight model tested**: the opt-out gives you the best of both worlds (GCF's token savings with the encoding style these models prefer). This gap is expected to close as open-weight models improve; the opt-out exists so you can choose the best encoding for your deployment today and remove it when your model catches up. All 6 SDKs and the proxy support this:
 
 ```go
 gcf.EncodeGeneric(data, gcf.GenericOptions{NoFlatten: true})  // Go
