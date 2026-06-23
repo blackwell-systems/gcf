@@ -1,7 +1,7 @@
 {
   "name": "orphan_attachment",
-  "description": "Attachment without parent row and matching ^ cell must be rejected",
+  "description": "Attachment without matching ^ cell is decoded as an extra field on the row (spec 7.4.6.1.4: field names containing > are excluded from tabular columns)",
   "input": "GCF profile=generic\n## rows [1]{id,name}\n@0 1|Alice\n.extra {}\n    key=val\n",
-  "expectedError": "orphan_attachment",
-  "operation": "error"
+  "expected": {"rows": [{"id": 1, "name": "Alice", "extra": {"key": "val"}}]},
+  "operation": "decode"
 }

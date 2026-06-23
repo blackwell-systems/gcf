@@ -1,5 +1,14 @@
 # Changelog
 
+## v3.2.1 (2026-06-23)
+
+### Spec clarification: field names containing `>`
+
+- New encoder rule 7.4.6.1.4: top-level field names containing `>` MUST NOT appear as tabular columns (emitted as per-row attachments instead)
+- Ensures any column name with `>` is always a flattened path, never a literal field name
+- Orphan attachment fixture updated: now decoded as extra row field instead of error
+- New conformance fixture: `flatten/016_gt_in_field_name.json`
+
 ## v3.2 (2026-06-22)
 
 ### Spec changes: Nested Object Flattening (Section 7.4.6)

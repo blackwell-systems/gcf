@@ -815,19 +815,21 @@ This is an alternative to the inline object schema mechanism (Section 7.4.5.1). 
 
 3. The encoder MUST NOT flatten a nested object whose keys contain the `>` character. Such fields MUST use the attachment mechanism.
 
-4. Each leaf key becomes a quoted column name in the header, formed by joining the path from the parent field to the leaf with `>`. For a field `customer` containing keys `id`, `name`, `email`: the header columns are `"customer>id"`, `"customer>name"`, `"customer>email"`.
+4. If a top-level field name contains the `>` character, the encoder MUST NOT include it as a tabular column. Such fields MUST be emitted as per-row attachments. This ensures that any column name containing `>` in a tabular header is always a flattened path column, never a literal field name.
 
-5. Multiple nesting levels chain. A field `billing` containing an object `address` with keys `city`, `country` produces columns `"billing>address>city"`, `"billing>address>country"`. The same eligibility rules apply recursively: all intermediate objects must have the same keys in every row, and all leaves must be scalars.
+5. Each leaf key becomes a quoted column name in the header, formed by joining the path from the parent field to the leaf with `>`. For a field `customer` containing keys `id`, `name`, `email`: the header columns are `"customer>id"`, `"customer>name"`, `"customer>email"`.
 
-6. Flattened columns appear in the header at the position of the original nested object field, in the key order of the nested object.
+6. Multiple nesting levels chain. A field `billing` containing an object `address` with keys `city`, `country` produces columns `"billing>address>city"`, `"billing>address>country"`. The same eligibility rules apply recursively: all intermediate objects must have the same keys in every row, and all leaves must be scalars.
 
-7. In each row, the flattened leaf values appear as ordinary pipe-separated cells at their column positions. No `^` marker, no attachment body.
+7. Flattened columns appear in the header at the position of the original nested object field, in the key order of the nested object.
 
-8. If the entire nested object is absent from a record, all leaf columns for that object emit `~`.
+8. In each row, the flattened leaf values appear as ordinary pipe-separated cells at their column positions. No `^` marker, no attachment body.
 
-9. If the entire nested object is null in a record, all leaf columns for that object emit `-`.
+9. If the entire nested object is absent from a record, all leaf columns for that object emit `~`.
 
-10. Flattened path columns and attachment marker columns (`^`) MAY coexist in the same tabular header. A row may have some fields flattened and others using attachments.
+10. If the entire nested object is null in a record, all leaf columns for that object emit `-`.
+
+11. Flattened path columns and attachment marker columns (`^`) MAY coexist in the same tabular header. A row may have some fields flattened and others using attachments.
 
 ##### 7.4.6.2 Decoder rules
 
@@ -1597,7 +1599,7 @@ This specification follows a three-stage lifecycle:
 | **Stable** | The grammar is frozen. No breaking changes. Additive extensions only. Implementations may depend on stability for production use. |
 | **Frozen** | No changes of any kind. The specification is archived. |
 
-Current status: **Stable** (v3.2.0 designated 2026-06-22).
+Current status: **Stable** (v3.2.1 designated 2026-06-23).
 
 ### 19.3 Version history
 

@@ -1,0 +1,9 @@
+{
+  "name": "gt_in_field_name",
+  "description": "Top-level field names containing > MUST be emitted as per-row attachments, not tabular columns, to avoid ambiguity with flattened path columns (spec rule 7.4.6.1.4)",
+  "operation": "roundtrip",
+  "input": [
+    {"id": 1, "a>b": "hello", "name": "Alice"},
+    {"id": 2, "a>b": "world", "name": "Bob"}
+  ]
+}
