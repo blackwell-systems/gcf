@@ -804,6 +804,8 @@ The token `":"` represents three structural operations (end the key string, inse
 | Grammar fused with payload | 0.5% (3 tokenizers, one value) | 0% (in full-object context) |
 | Grammar is deterministic | Yes | No (grammar fuses differently per tokenizer) |
 
+GCF's 0.5% payload fusion is the `|c` vocabulary entry on Mistral Nemo, DeepSeek V3, and DeepSeek R1 (from the [adversarial surface analysis](#the-complete-adversarial-surface)). It triggers only when the value `cancelled` (or `cache`, `csv`, `custom`) immediately follows a pipe. Even when it does, the pipe is at the **start** of the fused token (`[|c][ancelled]`), so the boundary position is still identifiable. This affects 3 of 43 tokenizers on a handful of specific values. It does not affect any field name.
+
 GCF's grammar is structurally equivalent across every production tokenizer. Each delimiter is its own token. The model receives an unambiguous token sequence where grammar and payload are always in separate tokens.
 
 JSON's grammar is structurally ambiguous on every production tokenizer. Multiple grammar operations fuse into single tokens. The model must decompose multi-operation tokens to understand where keys end and values begin. This is learned behavior, not explicit structure, and it degrades at scale when thousands of these fused tokens compete for attention.
