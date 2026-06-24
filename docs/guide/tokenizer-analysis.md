@@ -179,9 +179,15 @@ All numbers cross-tokenizer validated across 43 tokenizers from 20 providers.
 
 ---
 
+![Savings Stability Bands](/charts/savings-stability-bands.png)
+
+---
+
 ## Part 2: Why JSON Breaks Down
 
 Data from `eval/hf-tokenizer-analysis.py` (43 tokenizers, 20 providers).
+
+![Delimiter Merge Rates](/charts/delimiter-merge-rates.png)
 
 ![Field Merge Rates](/charts/field-merge-rates.png)
 
