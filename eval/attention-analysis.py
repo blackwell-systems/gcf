@@ -24,6 +24,17 @@ import math
 import time
 from pathlib import Path
 
+import numpy as np
+
+
+class NumpyEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, (np.floating, np.float32, np.float64)):
+            return float(obj)
+        if isinstance(obj, (np.integer, np.int32, np.int64)):
+            return int(obj)
+        return super().default(obj)
+
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
@@ -152,6 +163,15 @@ def analyze_attention(model, tokenizer, text, format_name):
     payload_attn_avg = sum(payload_shares) / len(payload_shares) if payload_shares else 0.0
     field_name_attn_avg = sum(field_name_shares) / len(field_name_shares) if field_name_shares else 0.0
 
+    # Debug: check if labels actually matched tokens
+    label_counts = {"grammar": labels.count("grammar"), "payload": labels.count("payload"),
+                    "field_name": labels.count("field_name"), "whitespace": labels.count("whitespace")}
+    unclassified = seq_len - sum(label_counts.values())
+    print(f"    DEBUG {format_name}: labels={label_counts}, unclassified={unclassified}, "
+          f"g_avg={grammar_attn_avg:.6f}, p_avg={payload_attn_avg:.6f}, "
+          f"g_shares_sum={sum(grammar_shares):.6f}, p_shares_sum={sum(payload_shares):.6f}, "
+          f"n_shares={len(grammar_shares)}")
+
     # Token repetition: how many unique token IDs vs total
     unique_ids = len(set(token_ids))
     repetition_ratio = 1 - (unique_ids / len(token_ids))
@@ -196,7 +216,7 @@ def main():
     print("Loading model...")
     t0 = time.time()
     tokenizer = AutoTokenizer.from_pretrained("EleutherAI/pythia-410m")
-    model = AutoModelForCausalLM.from_pretrained("EleutherAI/pythia-410m", attn_implementation="eager")
+    model = AutoModelForCausalLM.from_pretrained("EleutherAI/pythia-410m", attn_implementation="eager", dtype=torch.float32)
     model.eval()
     print(f"Loaded in {time.time()-t0:.1f}s")
     print()
@@ -278,7 +298,7 @@ def main():
     }
     outfile = results_dir / f"attention-pythia410m-{time.strftime('%Y%m%d')}.json"
     with open(outfile, "w") as f:
-        json.dump(output, f, indent=2)
+        json.dump(output, f, indent=2, cls=NumpyEncoder)
     print(f"\nResults: {outfile}")
 
 

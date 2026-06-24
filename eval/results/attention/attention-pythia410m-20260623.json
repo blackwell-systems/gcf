@@ -1,0 +1,146 @@
+{
+  "model": "EleutherAI/pythia-410m",
+  "timestamp": "2026-06-24T01:54:43Z",
+  "results": [
+    {
+      "n_orders": 5,
+      "gcf": {
+        "format": "GCF",
+        "seq_len": 92.0,
+        "unique_tokens": 53.0,
+        "repetition_ratio": 0.42391304347826086,
+        "n_grammar": 26.0,
+        "n_payload": 66.0,
+        "n_field_name": 0.0,
+        "mean_entropy": 3.027949571609497,
+        "grammar_attn": 0.6340463113015408,
+        "payload_attn": 0.3659536983834116,
+        "field_name_attn": 0.0,
+        "grammar_share": 63.40463051608325,
+        "payload_share": 36.59536948391675,
+        "field_share": 0.0
+      },
+      "json": {
+        "format": "JSON",
+        "seq_len": 226.0,
+        "unique_tokens": 57.0,
+        "repetition_ratio": 0.747787610619469,
+        "n_grammar": 63.0,
+        "n_payload": 87.0,
+        "n_field_name": 15.0,
+        "mean_entropy": 2.8716373443603516,
+        "grammar_attn": 0.5287577217159095,
+        "payload_attn": 0.08721909865004634,
+        "field_name_attn": 0.008427290409018665,
+        "grammar_share": 84.68197319515494,
+        "payload_share": 13.968373549270039,
+        "field_share": 1.3496532555750145
+      }
+    },
+    {
+      "n_orders": 10,
+      "gcf": {
+        "format": "GCF",
+        "seq_len": 171.0,
+        "unique_tokens": 65.0,
+        "repetition_ratio": 0.6198830409356726,
+        "n_grammar": 46.0,
+        "n_payload": 125.0,
+        "n_field_name": 0.0,
+        "mean_entropy": 3.3183958530426025,
+        "grammar_attn": 0.6274415880011452,
+        "payload_attn": 0.37255842085527396,
+        "field_name_attn": 0.0,
+        "grammar_share": 62.74415824442596,
+        "payload_share": 37.255841755574046,
+        "field_share": 0.0
+      },
+      "json": {
+        "format": "JSON",
+        "seq_len": 450.0,
+        "unique_tokens": 68.0,
+        "repetition_ratio": 0.8488888888888889,
+        "n_grammar": 123.0,
+        "n_payload": 176.0,
+        "n_field_name": 30.0,
+        "mean_entropy": 3.0056886672973633,
+        "grammar_attn": 0.510186967576788,
+        "payload_attn": 0.08791833363571055,
+        "field_name_attn": 0.007555037854931419,
+        "grammar_share": 84.23648283827735,
+        "payload_share": 14.516112078773965,
+        "field_share": 1.2474050829486942
+      }
+    },
+    {
+      "n_orders": 20,
+      "gcf": {
+        "format": "GCF",
+        "seq_len": 329.0,
+        "unique_tokens": 77.0,
+        "repetition_ratio": 0.7659574468085106,
+        "n_grammar": 86.0,
+        "n_payload": 243.0,
+        "n_field_name": 0.0,
+        "mean_entropy": 3.6632604598999023,
+        "grammar_attn": 0.6110987967720333,
+        "payload_attn": 0.3889012189238894,
+        "field_name_attn": 0.0,
+        "grammar_share": 61.10987871802739,
+        "payload_share": 38.8901212819726,
+        "field_share": 0.0
+      },
+      "json": {
+        "format": "JSON",
+        "seq_len": 898.0,
+        "unique_tokens": 81.0,
+        "repetition_ratio": 0.9097995545657016,
+        "n_grammar": 243.0,
+        "n_payload": 354.0,
+        "n_field_name": 60.0,
+        "mean_entropy": 3.15822434425354,
+        "grammar_attn": 0.4848517224188245,
+        "payload_attn": 0.08905216047929489,
+        "field_name_attn": 0.007631017353234982,
+        "grammar_share": 83.37448400934477,
+        "payload_share": 15.313295976011798,
+        "field_share": 1.3122200146434304
+      }
+    },
+    {
+      "n_orders": 50,
+      "gcf": {
+        "format": "GCF",
+        "seq_len": 805.0,
+        "unique_tokens": 132.0,
+        "repetition_ratio": 0.8360248447204969,
+        "n_grammar": 206.0,
+        "n_payload": 599.0,
+        "n_field_name": 0.0,
+        "mean_entropy": 3.9855029582977295,
+        "grammar_attn": 0.6184567066176575,
+        "payload_attn": 0.3815433434463371,
+        "field_name_attn": 0.0,
+        "grammar_share": 61.84566756552458,
+        "payload_share": 38.154332434475414,
+        "field_share": 0.0
+      },
+      "json": {
+        "format": "JSON",
+        "seq_len": 2048.0,
+        "unique_tokens": 131.0,
+        "repetition_ratio": 0.93603515625,
+        "n_grammar": 551.0,
+        "n_payload": 812.0,
+        "n_field_name": 137.0,
+        "mean_entropy": 4.501906871795654,
+        "grammar_attn": 0.3500229615415316,
+        "payload_attn": 0.3229703501024425,
+        "field_name_attn": 0.06638876284672204,
+        "grammar_share": 47.339930682338455,
+        "payload_share": 43.68111714432787,
+        "field_share": 8.978952173333685
+      }
+    }
+  ]
+}
