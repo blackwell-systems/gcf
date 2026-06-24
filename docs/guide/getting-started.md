@@ -7,7 +7,7 @@ GCF is an AI-native wire format for **structured data**. It sits at the boundary
 Two profiles, one grammar. The **generic profile** encodes any structured data. The **graph profile** is a superset that adds local IDs, typed edges, and session deduplication for relationship-heavy data. You never read or write GCF by hand: call `encode()`, the LLM reads it natively, call `decode()` when a human needs the data back.
 
 - **100% comprehension accuracy** on every frontier model tested (Claude, Gemini, GPT). The only format that never fails.
-- **90.7% under structural stress** (500-symbol code graphs), where JSON drops to 53.6% and TOON to 68.5%.
+- **91.2% under structural stress** (500-symbol code graphs), where JSON drops to 53.4% and TOON to 68.2%.
 - **71% fewer tokens than JSON.** At 1000 records, JSON exceeds 200K context limits entirely. GCF fits in 47K.
 - **29% fewer tokens than TOON** across 16 real-world datasets (15/16 wins).
 - **43,000,000,000+ lossless round-trips** across 5 formats and 6 language implementations. Zero data corruption.
@@ -17,13 +17,13 @@ Two profiles, one grammar. The **generic profile** encodes any structured data. 
 
 JSON works at small scale. At 8 records, every format scores near 100%. The problems start when payloads grow.
 
-At 500 records, JSON scores [53.6% comprehension accuracy](/guide/benchmarks) across 10 models on code graph data. GPT-5.5 [returns empty strings](https://github.com/blackwell-systems/gcf/tree/main/eval/results). Claude Opus spends [143 lines manually enumerating symbols](https://github.com/blackwell-systems/gcf/blob/main/eval/results/artifacts/opus-json-enumeration-failure.md) and still gets the wrong answer. The repeated field names (`"qualified_name":`, `"kind":`, `"score":` on every record) consume 53,341 tokens of structural noise that overwhelms the model's attention.
+At 500 records, JSON scores [53.4% comprehension accuracy](/guide/benchmarks) across 10 models on code graph data. GPT-5.5 [returns empty strings](https://github.com/blackwell-systems/gcf/tree/main/eval/results). Claude Opus spends [143 lines manually enumerating symbols](https://github.com/blackwell-systems/gcf/blob/main/eval/results/artifacts/opus-json-enumeration-failure.md) and still gets the wrong answer. The repeated field names (`"qualified_name":`, `"kind":`, `"score":` on every record) consume 53,341 tokens of structural noise that overwhelms the model's attention.
 
 At 1000 records, JSON consumes 161K tokens: it doesn't even fit in a 200K context window. The task becomes impossible regardless of model capability.
 
 **The problem goes deeper than repetition.** We [tested 45 common field names across 43 tokenizers from 20 providers](/guide/tokenizer-analysis). JSON's quote-colon patterns (`"fieldName":`) don't just waste tokens; they tokenize *inconsistently* across models. When GPT-4o sees `"value":"pending"`, the opening quote merges with the field name into one token. Claude keeps them separate. The structural boundary (where the field name starts) is at a different token position depending on which model reads it. The most common field names in computing (`"id":`, `"name":`, `"type":`, `"title":`, `"time":`) merge on 30% of all tokenizers tested. The format designed for human readability doesn't even have consistent structure at the token level.
 
-GCF declares field names once in a header. Rows are positional values. The pipe separator (`|`) has a [0% field-name merge rate across all 43 tokenizers](/guide/tokenizer-analysis): every model sees the same token boundaries. The same 500-record payload uses 11,090 tokens and scores [90.7% accuracy](/guide/benchmarks) on code graphs. On nested order data, GCF achieves [100% accuracy on every frontier model tested](/guide/eval-results): Claude Opus, Sonnet, Haiku, GPT-5.5, Gemini 2.5 Flash, and Gemini 3.5 Flash.
+GCF declares field names once in a header. Rows are positional values. The pipe separator (`|`) has a [0% field-name merge rate across all 43 tokenizers](/guide/tokenizer-analysis): every model sees the same token boundaries. The same 500-record payload uses 11,090 tokens and scores [91.2% accuracy](/guide/benchmarks) on code graphs. On nested order data, GCF achieves [100% accuracy on every frontier model tested](/guide/eval-results): Claude Opus, Sonnet, Haiku, GPT-5.5, Gemini 2.5 Flash, and Gemini 3.5 Flash.
 
 The format designed for human readability is incomprehensible to the systems actually reading it. [Full benchmark data.](/guide/eval-results) [Tokenizer analysis.](/guide/tokenizer-analysis)
 

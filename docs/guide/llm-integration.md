@@ -6,7 +6,7 @@ GCF works in both directions: tools produce it, LLMs read it, and LLMs can produ
 
 GCF looks dense to human eyes. `@0<@1 calls` is not as immediately obvious as `{"source": "pkg.Server", "target": "pkg.Auth", "edge_type": "calls"}`. That's deliberate.
 
-Human-readability and LLM-readability are different things, and they diverge at scale. At 8 records, both JSON and GCF are easy for humans and LLMs alike. At 500 records, JSON's field-name repetition creates enough structural noise that LLMs lose count (53.6% on code graphs, 76.9% on nested orders with Gemini Flash). GCF's dense, positional format cuts through that noise (100% on standard workloads, 90.7% on code graphs).
+Human-readability and LLM-readability are different things, and they diverge at scale. At 8 records, both JSON and GCF are easy for humans and LLMs alike. At 500 records, JSON's field-name repetition creates enough structural noise that LLMs lose count (53.4% on code graphs, 76.9% on nested orders with Gemini Flash). GCF's dense, positional format cuts through that noise (100% on standard workloads, 91.2% on code graphs).
 
 Here's what JSON at 500 symbols looks like to an LLM. Every record repeats five field names:
 

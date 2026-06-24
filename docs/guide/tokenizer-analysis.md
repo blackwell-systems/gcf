@@ -256,8 +256,8 @@ At 10 records, this barely matters. Models handle it fine. But at 500 records, t
 
 This is why our comprehension eval shows:
 - 100% accuracy at small scale (all formats)
-- 53.6% JSON accuracy at 500 records (stress scale)
-- 90.7% GCF accuracy at 500 records
+- 53.4% JSON accuracy at 500 records (stress scale)
+- 91.2% GCF accuracy at 500 records
 
 The degradation is caused by the combination of ambiguous boundaries AND token repetition (more on this below).
 
@@ -438,8 +438,8 @@ Connects tokenization findings to comprehension eval data (2,400+ LLM calls acro
 
 The tokenization analysis connects directly to the [comprehension eval data](/guide/benchmarks):
 
-- JSON accuracy on stress-scale data: **53.6%** (10 models, 24 runs)
-- GCF accuracy on stress-scale data: **90.7%**
+- JSON accuracy on stress-scale data: **53.4%** (10 models, 24 runs)
+- GCF accuracy on stress-scale data: **91.2%**
 - GCF accuracy on standard workloads: **100%** on every frontier model
 
 **Why does JSON fail at scale?**
@@ -831,7 +831,7 @@ JSON's grammar is structurally ambiguous on every production tokenizer. Multiple
 | GCF grammar is structurally equivalent | @ 100%, < 100%, \| 99.2% isolation across 43 tokenizers. Grammar is deterministic. |
 | JSON grammar fuses on every tokenizer | 92.5% of quote tokens are multi-grammar fusions ('":"', '","') on 43/43 tokenizers |
 | Merges are irrecoverable | Can't fix with prompting, fine-tuning, or RLHF. Vocabulary is frozen. |
-| This explains comprehension failures | 53.6% JSON at stress scale vs 90.7% GCF. Hidden boundaries + attention dilution. |
+| This explains comprehension failures | 53.4% JSON at stress scale vs 91.2% GCF. Hidden boundaries + attention dilution. |
 
 ---
 
