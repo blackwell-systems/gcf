@@ -246,7 +246,7 @@ GPT-4o has a **100% tab merge rate**: every single word tested merges with the p
 
 TOON's indentation also tokenizes inconsistently across models: the same 4-space indent produces 4 different tokenizations across tokenizers. The model sees different nesting depth depending on which tokenizer processes it.
 
-GCF's pipe-based delimiters have [zero merge rate on field names](/guide/tokenizer-analysis#part-8-root-cause-vocabulary-entry-analysis) across all 43 tested tokenizers (the only merges are the value `cancelled` on 3 tokenizers).
+An [exhaustive vocabulary scan](/guide/tokenizer-analysis#the-complete-adversarial-surface) of all 43 tokenizers found **1,238 unique words** that can merge with TOON's tab across any vocabulary. GCF's pipe has **24** (52x smaller adversarial surface). The tab has the largest merge surface of any common delimiter character. The pipe has the smallest.
 
 This matters for comprehension at scale: [Ildiz et al. proved](https://arxiv.org/abs/2402.13512) that self-attention weights tokens proportionally to their frequency in the sequence. When TOON's merged tab-field tokens dominate the sequence, the attention budget is mathematically dominated by structural noise. See the [full tokenizer analysis](/guide/tokenizer-analysis#part-5-why-this-explains-comprehension-failures) for how this compounds at 500+ rows.
 
