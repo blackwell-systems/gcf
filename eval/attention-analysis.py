@@ -213,17 +213,19 @@ def main():
     print("=" * 70)
     print()
 
-    print("Loading model...")
+    # Model selection: Gemma 2B has 8192 context (fits 100 orders in both formats)
+    model_name = "unsloth/gemma-2-2b"
+    print(f"Loading {model_name}...")
     t0 = time.time()
-    tokenizer = AutoTokenizer.from_pretrained("EleutherAI/pythia-410m")
-    model = AutoModelForCausalLM.from_pretrained("EleutherAI/pythia-410m", attn_implementation="eager", dtype=torch.float32)
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    model = AutoModelForCausalLM.from_pretrained(model_name, attn_implementation="eager", dtype=torch.float32)
     model.eval()
     print(f"Loaded in {time.time()-t0:.1f}s")
     print()
 
     results = []
 
-    for n_orders in [5, 10, 20, 50]:
+    for n_orders in [5, 10, 20, 50, 100]:
         gcf_text = build_orders_gcf(n_orders)
         json_text = build_orders_json(n_orders)
 
@@ -285,7 +287,7 @@ def main():
     results_dir = Path(__file__).parent / "results" / "attention"
     results_dir.mkdir(parents=True, exist_ok=True)
     output = {
-        "model": "EleutherAI/pythia-410m",
+        "model": model_name,
         "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         "results": [
             {
@@ -296,7 +298,8 @@ def main():
             for n, g, j in results
         ],
     }
-    outfile = results_dir / f"attention-pythia410m-{time.strftime('%Y%m%d')}.json"
+    model_short = model_name.split("/")[-1]
+    outfile = results_dir / f"attention-{model_short}-{time.strftime('%Y%m%d')}.json"
     with open(outfile, "w") as f:
         json.dump(output, f, indent=2, cls=NumpyEncoder)
     print(f"\nResults: {outfile}")
