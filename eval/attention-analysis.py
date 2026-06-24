@@ -213,7 +213,6 @@ def main():
     print("=" * 70)
     print()
 
-    # Model selection: Gemma 2B has 8192 context (fits 100 orders in both formats)
     model_name = "unsloth/gemma-2-2b"
     print(f"Loading {model_name}...")
     t0 = time.time()

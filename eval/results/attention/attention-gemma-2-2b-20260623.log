@@ -1,0 +1,97 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+/Users/dayna.blackwell/code/gcf/eval/.venv/lib/python3.13/site-packages/huggingface_hub/file_download.py:747: UserWarning: Not enough free disk space to download the file. The expected file size is: 5228.72 MB. The target location /Users/dayna.blackwell/.cache/huggingface/hub/models--unsloth--gemma-2-2b/blobs only has 1855.52 MB free disk space.
+  warnings.warn(
+======================================================================
+ATTENTION ANALYSIS: GCF vs JSON
+Pythia 410M, CPU inference, attention extraction
+======================================================================
+
+Loading unsloth/gemma-2-2b...
+Traceback (most recent call last):
+  File "/Users/dayna.blackwell/code/gcf/eval/.venv/lib/python3.13/site-packages/transformers/modeling_utils.py", line 678, in _get_resolved_checkpoint_files
+    resolved_archive_file = cached_file(pretrained_model_name_or_path, filename, **cached_file_kwargs)
+  File "/Users/dayna.blackwell/code/gcf/eval/.venv/lib/python3.13/site-packages/transformers/utils/hub.py", line 293, in cached_file
+    file = cached_files(path_or_repo_id=path_or_repo_id, filenames=[filename], **kwargs)
+  File "/Users/dayna.blackwell/code/gcf/eval/.venv/lib/python3.13/site-packages/transformers/utils/hub.py", line 527, in cached_files
+    raise e
+  File "/Users/dayna.blackwell/code/gcf/eval/.venv/lib/python3.13/site-packages/transformers/utils/hub.py", line 437, in cached_files
+    hf_hub_download(
+    ~~~~~~~~~~~~~~~^
+        path_or_repo_id,
+        ^^^^^^^^^^^^^^^^
+    ...<10 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/dayna.blackwell/code/gcf/eval/.venv/lib/python3.13/site-packages/huggingface_hub/utils/_validators.py", line 88, in _inner_fn
+    return fn(*args, **kwargs)
+  File "/Users/dayna.blackwell/code/gcf/eval/.venv/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 1016, in hf_hub_download
+    return _hf_hub_download_to_cache_dir(
+        # Destination
+    ...<15 lines>...
+        dry_run=dry_run,
+    )
+  File "/Users/dayna.blackwell/code/gcf/eval/.venv/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 1238, in _hf_hub_download_to_cache_dir
+    _download_to_tmp_and_move(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        incomplete_path=Path(blob_path + ".incomplete"),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/dayna.blackwell/code/gcf/eval/.venv/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 1861, in _download_to_tmp_and_move
+    xet_get(
+    ~~~~~~~^
+        incomplete_path=tmp_path,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/dayna.blackwell/code/gcf/eval/.venv/lib/python3.13/site-packages/huggingface_hub/file_download.py", line 566, in xet_get
+    with session.new_file_download_group(
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        token_refresh_url=xet_file_data.refresh_route,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        progress_callback=_on_progress,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ) as group:
+    ^
+RuntimeError: Task error: File reconstruction error: Internal Writer Error: Background writer channel closed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/dayna.blackwell/code/gcf/eval/attention-analysis.py", line 309, in <module>
+    main()
+    ~~~~^^
+  File "/Users/dayna.blackwell/code/gcf/eval/attention-analysis.py", line 221, in main
+    model.eval()
+            ~~^^
+  File "/Users/dayna.blackwell/code/gcf/eval/.venv/lib/python3.13/site-packages/transformers/models/auto/auto_factory.py", line 406, in from_pretrained
+    return model_class.from_pretrained(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        pretrained_model_name_or_path, *model_args, config=config, **hub_kwargs, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/dayna.blackwell/code/gcf/eval/.venv/lib/python3.13/site-packages/transformers/modeling_utils.py", line 4229, in from_pretrained
+    checkpoint_files, sharded_metadata = _get_resolved_checkpoint_files(
+                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        pretrained_model_name_or_path=pretrained_model_name_or_path,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+        tqdm_class=tqdm_class,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/dayna.blackwell/code/gcf/eval/.venv/lib/python3.13/site-packages/transformers/modeling_utils.py", line 758, in _get_resolved_checkpoint_files
+    raise OSError(
+    ...<4 lines>...
+    ) from e
+OSError: Can't load the model for 'unsloth/gemma-2-2b'. If you were trying to load it from 'https://huggingface.co/models', make sure you don't have a local directory with the same name. Otherwise, make sure 'unsloth/gemma-2-2b' is the correct path to a directory containing a file named pytorch_model.bin.

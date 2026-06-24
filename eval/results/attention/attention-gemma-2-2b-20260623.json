@@ -1,0 +1,181 @@
+{
+  "model": "unsloth/gemma-2-2b",
+  "timestamp": "2026-06-24T02:08:34Z",
+  "results": [
+    {
+      "n_orders": 5,
+      "gcf": {
+        "format": "GCF",
+        "seq_len": 110.0,
+        "unique_tokens": 41.0,
+        "repetition_ratio": 0.6272727272727272,
+        "n_grammar": 27.0,
+        "n_payload": 83.0,
+        "n_field_name": 0.0,
+        "mean_entropy": 3.443908929824829,
+        "grammar_attn": 0.537998198807328,
+        "payload_attn": 0.46200179750193704,
+        "field_name_attn": 0.0,
+        "grammar_share": 53.79982007929368,
+        "payload_share": 46.200179920706326,
+        "field_share": 0.0
+      },
+      "json": {
+        "format": "JSON",
+        "seq_len": 245.0,
+        "unique_tokens": 46.0,
+        "repetition_ratio": 0.8122448979591836,
+        "n_grammar": 63.0,
+        "n_payload": 96.0,
+        "n_field_name": 20.0,
+        "mean_entropy": 3.156054973602295,
+        "grammar_attn": 0.2344231722783709,
+        "payload_attn": 0.5335292278906297,
+        "field_name_attn": 0.0199613229856584,
+        "grammar_share": 29.75239107903647,
+        "payload_share": 67.71416872325547,
+        "field_share": 2.5334401977080687
+      }
+    },
+    {
+      "n_orders": 10,
+      "gcf": {
+        "format": "GCF",
+        "seq_len": 211.0,
+        "unique_tokens": 42.0,
+        "repetition_ratio": 0.8009478672985781,
+        "n_grammar": 47.0,
+        "n_payload": 164.0,
+        "n_field_name": 0.0,
+        "mean_entropy": 3.7289540767669678,
+        "grammar_attn": 0.52415619476513,
+        "payload_attn": 0.4758437962842284,
+        "field_name_attn": 0.0,
+        "grammar_share": 52.41561994566643,
+        "payload_share": 47.58438005433357,
+        "field_share": 0.0
+      },
+      "json": {
+        "format": "JSON",
+        "seq_len": 490.0,
+        "unique_tokens": 47.0,
+        "repetition_ratio": 0.9040816326530612,
+        "n_grammar": 123.0,
+        "n_payload": 196.0,
+        "n_field_name": 40.0,
+        "mean_entropy": 3.378220558166504,
+        "grammar_attn": 0.22949877797939763,
+        "payload_attn": 0.5250220279946949,
+        "field_name_attn": 0.017156396416933277,
+        "grammar_share": 29.740256323278754,
+        "payload_share": 68.03648291901393,
+        "field_share": 2.2232607577073082
+      }
+    },
+    {
+      "n_orders": 20,
+      "gcf": {
+        "format": "GCF",
+        "seq_len": 413.0,
+        "unique_tokens": 42.0,
+        "repetition_ratio": 0.8983050847457628,
+        "n_grammar": 87.0,
+        "n_payload": 326.0,
+        "n_field_name": 0.0,
+        "mean_entropy": 4.025688648223877,
+        "grammar_attn": 0.5078391272273828,
+        "payload_attn": 0.49216087309441237,
+        "field_name_attn": 0.0,
+        "grammar_share": 50.78391270639627,
+        "payload_share": 49.21608729360374,
+        "field_share": 0.0
+      },
+      "json": {
+        "format": "JSON",
+        "seq_len": 982.0,
+        "unique_tokens": 47.0,
+        "repetition_ratio": 0.9521384928716904,
+        "n_grammar": 243.0,
+        "n_payload": 398.0,
+        "n_field_name": 80.0,
+        "mean_entropy": 3.656493902206421,
+        "grammar_attn": 0.23001435608843973,
+        "payload_attn": 0.5110525792390234,
+        "field_name_attn": 0.016697289537954147,
+        "grammar_share": 30.354343546541994,
+        "payload_share": 67.44216241269359,
+        "field_share": 2.2034940407644177
+      }
+    },
+    {
+      "n_orders": 50,
+      "gcf": {
+        "format": "GCF",
+        "seq_len": 1019.0,
+        "unique_tokens": 42.0,
+        "repetition_ratio": 0.9587831207065751,
+        "n_grammar": 207.0,
+        "n_payload": 812.0,
+        "n_field_name": 0.0,
+        "mean_entropy": 4.454740524291992,
+        "grammar_attn": 0.48623572015209704,
+        "payload_attn": 0.5137643215176194,
+        "field_name_attn": 0.0,
+        "grammar_share": 48.62356998907932,
+        "payload_share": 51.37643001092066,
+        "field_share": 0.0
+      },
+      "json": {
+        "format": "JSON",
+        "seq_len": 2048.0,
+        "unique_tokens": 45.0,
+        "repetition_ratio": 0.97802734375,
+        "n_grammar": 503.0,
+        "n_payload": 836.0,
+        "n_field_name": 167.0,
+        "mean_entropy": 4.273849964141846,
+        "grammar_attn": 0.05976059236217958,
+        "payload_attn": 0.5960317742939621,
+        "field_name_attn": 0.035218283923602794,
+        "grammar_share": 8.6482881721203,
+        "payload_share": 86.25507780435845,
+        "field_share": 5.09663402352125
+      }
+    },
+    {
+      "n_orders": 100,
+      "gcf": {
+        "format": "GCF",
+        "seq_len": 2048.0,
+        "unique_tokens": 42.0,
+        "repetition_ratio": 0.9794921875,
+        "n_grammar": 407.0,
+        "n_payload": 1641.0,
+        "n_field_name": 0.0,
+        "mean_entropy": 4.411275386810303,
+        "grammar_attn": 0.3741128149937864,
+        "payload_attn": 0.6258872642007417,
+        "field_name_attn": 0.0,
+        "grammar_share": 37.41127853661009,
+        "payload_share": 62.588721463389916,
+        "field_share": 0.0
+      },
+      "json": {
+        "format": "JSON",
+        "seq_len": 2048.0,
+        "unique_tokens": 45.0,
+        "repetition_ratio": 0.97802734375,
+        "n_grammar": 503.0,
+        "n_payload": 836.0,
+        "n_field_name": 167.0,
+        "mean_entropy": 4.273849964141846,
+        "grammar_attn": 0.05976059236217958,
+        "payload_attn": 0.5960317742939621,
+        "field_name_attn": 0.035218283923602794,
+        "grammar_share": 8.6482881721203,
+        "payload_share": 86.25507780435845,
+        "field_share": 5.09663402352125
+      }
+    }
+  ]
+}
