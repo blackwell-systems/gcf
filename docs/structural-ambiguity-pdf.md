@@ -1,7 +1,7 @@
 ---
 title: "Structural Ambiguity in JSON Tokenization: A Cross-Tokenizer Analysis"
 author: "Dayna Blackwell, Blackwell Systems · dayna@blackwell-systems.com"
-date: "2026-06-21 · DOI: 10.5281/zenodo.20789620"
+date: "2026-06-25 · DOI: 10.5281/zenodo.20789620"
 titlepage: true
 titlepage-color: "0a0a0a"
 titlepage-text-color: "ffffff"
