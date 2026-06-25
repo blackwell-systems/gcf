@@ -132,6 +132,8 @@ To establish that the affected field names are representative of real-world usag
 
 ### 4.1 JSON Field Boundaries Tokenize Inconsistently
 
+![Field merge rates across 43 tokenizers](docs/public/charts/field-merge-rates.png){ width=85% }
+
 The most common JSON field names in computing merge with the opening quote on roughly 30% of all 43 tested tokenizers:
 
 | Field Pattern | Merge Rate | Affected Tokenizer Families |
@@ -186,6 +188,8 @@ The structural boundary (where the field name starts) is at a different token po
 
 ### 4.3 Boundary Merge Rates on Real Data
 
+![Delimiter merge rates: pipe 0.47%, quote 8.17%, tab 32.91%](docs/public/charts/delimiter-merge-rates.png){ width=85% }
+
 On real evaluation data across all 43 tokenizers:
 
 | Format | Boundary Merges | Total Checks | Merge Rate | Primary Cause |
@@ -207,6 +211,8 @@ orderId|ORD-001   -> [orderId][|][ORD][-][001]  ALL 43 tokenizers
 ```
 
 ### 4.4 Root Cause: Vocabulary Entries
+
+![Vocabulary merge entries by tokenizer](docs/public/charts/vocab-merge-entries.png){ width=85% }
 
 The merge behavior is not a context-dependent tokenizer decision. It is a dictionary lookup. We decoded every entry in each of the 43 tokenizer vocabularies and classified entries containing delimiter characters fused with alphabetic content:
 
@@ -284,6 +290,8 @@ The pipe has a small number of merged entries (17 on GPT-4), but exclusively wit
 
 ### 4.5 JSON Token Overhead
 
+![JSON overhead scaling: O(n) per row vs O(1) for header-factored formats](docs/public/charts/overhead-scaling.png){ width=85% }
+
 Beyond structural ambiguity, JSON consumes the majority of its tokens on content that carries zero information after the first row.
 
 #### Token distribution at 500 rows (4-field frequency table)
@@ -333,6 +341,8 @@ JSON overhead grows O(n) per row. Each additional row adds approximately 17 toke
 Every tokenizer confirms that JSON spends 42-57% of its tokens on repeated field names alone.
 
 ### 4.6 Token Savings Consistency
+
+![Savings stability bands across 43 tokenizers](docs/public/charts/savings-stability-bands.png){ width=85% }
 
 Across all 43 tokenizers, GCF achieves 49-72% savings vs JSON (mean 56%) and 18-43% vs TOON (mean 28%) at 500 records. Representative results:
 
@@ -397,6 +407,8 @@ Per-tokenizer consistency:
 Variation per tokenizer across delimiter sets: 0.0-0.8 percentage points.
 
 ### 4.8 Structural Equivalence Proof
+
+![Structural equivalence: pipe 99.5% isolation vs JSON 7.5%](docs/public/charts/structural-equivalence.png){ width=85% }
 
 Parts 4.1-4.7 measured merge rates, vocabulary entries, and overhead. This section asks the definitive question: is the pipe-delimited grammar deterministic? When you tokenize a payload on any production tokenizer, does every grammar symbol remain its own token?
 
