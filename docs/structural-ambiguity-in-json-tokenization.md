@@ -2,15 +2,15 @@
 
 **Dayna Blackwell, Blackwell Systems** · dayna@blackwell-systems.com
 
-**Date:** 2026-06-21 · **DOI:** [10.5281/zenodo.20789620](https://doi.org/10.5281/zenodo.20789620)
+**Date:** 2026-06-25 · **DOI:** [10.5281/zenodo.20789620](https://doi.org/10.5281/zenodo.20789620)
 
 ---
 
 ## Abstract
 
-JSON is the dominant data interchange format in large language model (LLM) tool ecosystems, yet its structural grammar interacts poorly with Byte-Pair Encoding (BPE) tokenizers at the subword level. We present a systematic cross-tokenizer analysis of JSON's structural boundaries across 8 tokenizers from 6 providers (Anthropic, OpenAI, Meta, Alibaba, DeepSeek, Google, Mistral), covering every major LLM family in production. We find that 15 of the most common JSON field names (including `id`, `name`, `type`, `value`, `title`, `time`, `text`, `url`, `path`, and `description`) exist as merged vocabulary entries where the opening quote fuses with the field name on 50-63% of tested tokenizers. These merges are hardcoded dictionary entries (e.g., `"name` is entry #32586 in GPT-4's cl100k vocabulary) and are deterministic, not context-dependent. GPT-4 contains 114 such quote+letter vocabulary entries; Claude and Gemma contain zero. On real evaluation data (14 fields, 25 values, 2,800 checks per format), JSON exhibits a boundary merge rate of 8.93% compared to 1.00% for a comparison format using pipe delimiters. We further show that JSON overhead reaches 81% at 500 rows (52% repeated field names, 29% structural characters), growing O(n) per row, while header-factored formats maintain O(1) overhead. A grammar swap experiment across 5 delimiter sets and 800 measurements confirms that token savings are structural (0.4 percentage point spread), not delimiter-specific. These findings are irrecoverable: tokenizer vocabularies are frozen post-training, all model weights depend on them, and tokenization occurs before the transformer processes input. We present correlation evidence from 2,400+ LLM evaluations showing JSON comprehension drops to 53.4% at 500-record scale where structural ambiguity and attention dilution compound.
+JSON is the dominant data interchange format in large language model (LLM) tool ecosystems, yet its structural grammar interacts poorly with Byte-Pair Encoding (BPE) tokenizers at the subword level. We present a systematic cross-tokenizer analysis of JSON's structural boundaries across 43 tokenizers from 20 providers, covering every major LLM family in production. We find that the most common JSON field names (including `id`, `name`, `type`, `value`, `title`, `time`, `text`, `url`, `path`, and `description`) exist as merged vocabulary entries where the opening quote fuses with the field name on 28-30% of tested tokenizers. These merges are hardcoded dictionary entries (e.g., `"name` is entry #32586 in GPT-4's cl100k vocabulary) and are deterministic, not context-dependent. GPT-4 contains 117 such quote+letter vocabulary entries; Claude and Gemma contain 2-3. An exhaustive vocabulary scan across all 43 tokenizers reveals that the pipe delimiter has 24 mergeable words in any vocabulary, compared to 193 for the quote and 1,238 for the tab. On real evaluation data (29,025 checks across 43 tokenizers), JSON exhibits a boundary merge rate of 8.17% compared to 0.47% for a comparison format using pipe delimiters and 32.91% for a tab-delimited format. We further show that JSON overhead reaches 81% at 500 rows (52% repeated field names, 29% structural characters), growing O(n) per row, while header-factored formats maintain O(1) overhead. A grammar swap experiment across 5 delimiter sets and 800 measurements confirms that token savings are structural (0.4 percentage point spread), not delimiter-specific. We present a structural equivalence proof showing that pipe delimiters maintain 99.5% grammar isolation across all 43 tokenizers (@ 100%, < 100%, | 99.2%), while JSON grammar fuses into multi-operation tokens on 43/43 tokenizers (92.5% of quote-containing tokens). Attention mechanism analysis on Pythia 410M and Gemma 2B reveals that JSON attention entropy crosses the comparison format at 50 orders, and JSON grammar attention collapses from 30% to 8.6% at scale. These findings are irrecoverable: tokenizer vocabularies are frozen post-training, all model weights depend on them, and tokenization occurs before the transformer processes input. We present correlation evidence from 2,400+ LLM evaluations showing JSON comprehension drops to 53.4% at 500-record scale where structural ambiguity, attention dilution, and grammar attention collapse compound.
 
-**Keywords:** BPE tokenization, JSON, structural ambiguity, vocabulary merge, LLM comprehension, wire format, attention dilution
+**Keywords:** BPE tokenization, JSON, structural ambiguity, vocabulary merge, LLM comprehension, wire format, attention dilution, structural equivalence
 
 ---
 
@@ -24,11 +24,14 @@ This paper presents a mechanistic analysis of how and why JSON's structural gram
 
 Prior work has noted JSON's token overhead in passing. Deekeswar (2024) measured that 1,000 JSON records consume approximately 80,000 tokens with the majority being repeated keys and punctuation. Karim and Batatia (2025) explored structured tokenization for LLM training data. However, no prior work has performed a systematic mechanistic analysis of exactly how and where JSON's structure breaks down at the BPE level, which tokenizers are affected, and whether the problem is recoverable.
 
-We fill this gap with three contributions:
+We fill this gap with six contributions:
 
-1. An exhaustive vocabulary scan of 8 tokenizer dictionaries identifying all entries where quote characters fuse with alphabetic content, with specific token IDs.
-2. A cross-tokenizer boundary merge analysis on real evaluation data, quantifying the rate at which JSON's structural delimiters merge with field names.
-3. A grammar swap experiment proving that token savings from header-factored formats are structural properties, not artifacts of specific delimiter choices.
+1. An exhaustive vocabulary scan of 43 tokenizer dictionaries identifying all entries where delimiter characters fuse with alphabetic content, with the complete adversarial surface for pipe (24 words), quote (193 words), and tab (1,238 words).
+2. A cross-tokenizer boundary merge analysis on real evaluation data (29,025 checks), quantifying the rate at which JSON's structural delimiters merge with field names.
+3. A structural equivalence proof showing that pipe-delimited formats maintain deterministic grammar isolation (99.5%) while JSON grammar fuses on all 43 tokenizers.
+4. A grammar swap experiment proving that token savings from header-factored formats are structural properties, not artifacts of specific delimiter choices.
+5. Attention mechanism analysis on Pythia 410M and Gemma 2B, demonstrating entropy crossover and grammar attention collapse as the transformer-level mechanism behind comprehension failures.
+6. Correlation evidence from 2,400+ LLM evaluations connecting tokenization mechanics to observed comprehension outcomes.
 
 We use Graph Compact Format (GCF), a header-factored wire format with pipe delimiters, as the comparison format throughout. GCF was selected because its grammar characters are drawn from a set empirically verified to have near-zero merge rates across all tested tokenizers.
 
@@ -66,36 +69,46 @@ Semantic equivalence is always preserved regardless of format. Whether `userName
 
 ### 3.1 Tokenizers Tested
 
-We tested 8 tokenizers from 6 providers, covering every major LLM family in production:
+We tested 43 tokenizers from 20 providers, covering every major LLM family in production. This is the most comprehensive tokenizer boundary analysis published for any wire format. Vocabulary sizes range from 32K (Mistral 7B, LLaMA 2, Arctic) to 262K (Gemma 3). Representative tokenizers:
 
-| Tokenizer | Provider | Model Family | Vocab Size |
-|-----------|----------|-------------|-----------|
-| Claude tokenizer | Anthropic | Claude 3.5, 4.x | ~65,000 |
-| cl100k_base | OpenAI | GPT-4 | 100,256 |
-| o200k_base | OpenAI | GPT-4o | 200,019 |
-| LLaMA 3.1 tokenizer | Meta | LLaMA 3.x | 128,256 |
-| Qwen 2.5 tokenizer | Alibaba | Qwen 2.5 | 151,936 |
-| DeepSeek V3 tokenizer | DeepSeek | DeepSeek V3 | 128,000 |
-| Gemma 2 tokenizer | Google | Gemma 2 | 256,128 |
-| Mistral Nemo tokenizer | Mistral | Mistral/Ministral | 131,072 |
+| Provider | Tokenizers | Models Covered |
+|----------|-----------|----------------|
+| OpenAI | cl100k_base, o200k_base, GPT-2 | GPT-4, GPT-4o, GPT-5.x |
+| Anthropic | Claude tokenizer | Claude 3.5, 4.x |
+| Meta | LLaMA 2, LLaMA 3, LLaMA 3.1, CodeLlama, TinyLlama | LLaMA family |
+| Google | Gemma 2, Gemma 3, T5 | Gemma family |
+| Mistral | 7B v0.1, 7B v0.3, Nemo, Mixtral, Codestral | Mistral/Mixtral family |
+| Alibaba | Qwen 2, Qwen 2.5, Qwen 2.5 Coder, Qwen 3, QwQ | Qwen family |
+| DeepSeek | V2 Lite, V3, R1, Coder V2 Lite | DeepSeek family |
+| Microsoft | Phi-2, Phi-3, Phi-4 | Phi family |
+| TII | Falcon 7B, 40B, 2 11B | Falcon family |
+| 01.AI | Yi 1.5, Yi Coder | Yi family |
+| BigCode | StarCoder2 7B, 15B | StarCoder family |
+| Others | Nemotron (NVIDIA), Jamba (AI21), StableLM (Stability), Pythia (EleutherAI), Arctic (Snowflake), OLMo (AllenAI), Marco-o1 (Alibaba AIDC) | Various |
 
-These tokenizers were each trained on different corpora with different merge priorities. Their disagreements on how to tokenize the same input reveal fundamental properties of that input's structure.
+These tokenizers were each trained on different corpora (the large text datasets used to learn which byte sequences to merge into tokens) with different merge priorities. Their disagreements on how to tokenize the same input reveal fundamental properties of that input's structure. Initial experiments were conducted on 8 representative tokenizers using JavaScript-based tooling; the full 43-tokenizer analysis was conducted using Python with HuggingFace tokenizer libraries.
 
 ### 3.2 Measurements
 
-We measured six properties:
+We measured nine properties:
 
-1. **Boundary merge rate**: For each format, we tested all combinations of field names and values from our evaluation dataset (14 fields, 25 values) across all 8 tokenizers (2,800 checks per format). A boundary merge occurs when a structural delimiter (quote in JSON, pipe in GCF) fuses with adjacent content into a single token.
+1. **Boundary merge rate**: For each format, we tested all combinations of field names and values across all 43 tokenizers (29,025 checks for GCF, 1,935 for JSON). A boundary merge occurs when a structural delimiter (quote in JSON, pipe in GCF, tab in TOON) fuses with adjacent content into a single token.
 
-2. **Common field merge analysis**: We tested 155 common field names from production APIs across all 8 tokenizers to identify which fields merge and at what rate (script: `common-field-merge-analysis.mjs`).
+2. **Common field merge analysis**: We tested 45 common field names from production APIs across all 43 tokenizers to identify which fields merge and at what rate (scripts: `common-field-merge-analysis.mjs`, `hf-tokenizer-analysis.py`).
 
-3. **Vocabulary scan**: We decoded every entry in each tokenizer's vocabulary and classified entries by whether they contain a grammar character (quote or pipe) fused with alphabetic content (scripts: `tokenizer-vocabulary-analysis.mjs`, `vocabulary-full-scan.mjs`).
+3. **Exhaustive vocabulary scan**: We decoded every entry in each of the 43 tokenizer vocabularies (32K to 262K entries each) and classified entries containing delimiter characters fused with alphabetic content. This produces the complete adversarial surface: every word that can ever merge with each delimiter (scripts: `vocabulary-full-scan.mjs`, `adversarial-vocab-dump.py`).
 
 4. **Token overhead analysis**: We measured the proportion of tokens consumed by repeated field names, structural characters, and actual data values at scales from 10 to 1,000 rows (script: `json-tokenization-analysis.mjs`).
 
 5. **Grammar swap experiment**: We replaced all GCF delimiters with 4 alternative sets (all drawn from the non-merging character set) and re-measured savings across 5 payload types, 4 sizes, and 8 tokenizers (800 measurements total; script: `grammar-swap-experiment.mjs`).
 
-6. **Token savings consistency**: We measured GCF vs. JSON savings across all 8 tokenizers at scales from 10 to 500 records to verify cross-tokenizer stability (scripts: `tokenizer-variance.mjs`, `graph-token-efficiency.mjs`).
+6. **Token savings consistency**: We measured GCF vs. JSON savings across all 43 tokenizers at scales from 10 to 500 records to verify cross-tokenizer stability (scripts: `hf-tokenizer-analysis.py`, `tokenizer-variance.mjs`).
+
+7. **Structural equivalence proof**: We tokenized a realistic multi-section payload across all 43 tokenizers and checked every token containing a row-level grammar symbol to determine isolation rates (script: `structural-equivalence-proof.py`).
+
+8. **Attention mechanism analysis**: We loaded Pythia 410M (24 layers, 16 heads) and Gemma 2B (26 layers, 8 heads) and extracted attention weights from every layer and head while processing identical data in GCF vs JSON at increasing scale (script: `attention-analysis.py`).
+
+9. **Grammar attention classification**: We classified every token as grammar or payload and measured what fraction of the model's total attention goes to each category across scales from 5 to 100 records.
 
 ### 3.3 Evaluation Data
 
@@ -111,27 +124,25 @@ To establish that the affected field names are representative of real-world usag
 
 ### 4.1 JSON Field Boundaries Tokenize Inconsistently
 
-Fifteen of the most common JSON field names in computing merge with the opening quote on half or more of all tested tokenizers:
+The most common JSON field names in computing merge with the opening quote on roughly 30% of all 43 tested tokenizers:
 
-| Field Pattern | Merge Rate | Affected Tokenizers |
-|--------------|-----------|-------------------|
-| `"id":` | 63% (5/8) | GPT-4, GPT-4o, LLaMA, Qwen, Mistral |
-| `"name":` | 63% (5/8) | GPT-4, GPT-4o, LLaMA, Qwen, Mistral |
-| `"time":` | 63% (5/8) | GPT-4, GPT-4o, LLaMA, Qwen, Mistral |
-| `"title":` | 63% (5/8) | GPT-4, GPT-4o, LLaMA, Qwen, Mistral |
-| `"type":` | 50% (4/8) | GPT-4, GPT-4o, LLaMA, Qwen |
-| `"value":` | 50% (4/8) | GPT-4, GPT-4o, LLaMA, Qwen |
-| `"url":` | 50% (4/8) | GPT-4, GPT-4o, LLaMA, Qwen |
-| `"user_id":` | 50% (4/8) | GPT-4, GPT-4o, LLaMA, Qwen |
-| `"text":` | 50% (4/8) | GPT-4, GPT-4o, LLaMA, Qwen |
-| `"path":` | 50% (4/8) | GPT-4, GPT-4o, LLaMA, Qwen |
-| `"description":` | 50% (4/8) | GPT-4, GPT-4o, LLaMA, Qwen |
-| `"in":` | 50% (4/8) | GPT-4, GPT-4o, LLaMA, Qwen |
-| `"is":` | 50% (4/8) | GPT-4, GPT-4o, LLaMA, Qwen |
-| `"encoding":` | 50% (4/8) | GPT-4, GPT-4o, LLaMA, Qwen |
-| `"dns":` | 50% (4/8) | GPT-4, GPT-4o, LLaMA, Qwen |
+| Field Pattern | Merge Rate | Affected Tokenizer Families |
+|--------------|-----------|---------------------------|
+| `"id":` | 30.2% (13/43) | GPT-4, GPT-4o, LLaMA 3.x, Qwen, Phi-4, StableLM, Marco, Mistral Nemo |
+| `"name":` | 30.2% (13/43) | Same group |
+| `"time":` | 30.2% (13/43) | Same group |
+| `"title":` | 30.2% (13/43) | Same group |
+| `"type":` | 27.9% (12/43) | Same group minus Mistral Nemo |
+| `"value":` | 27.9% (12/43) | Same group minus Mistral Nemo |
+| `"url":` | 27.9% (12/43) | Same group minus Mistral Nemo |
+| `"text":` | 27.9% (12/43) | Same group minus Mistral Nemo |
+| `"path":` | 27.9% (12/43) | Same group minus Mistral Nemo |
+| `"user_id":` | 27.9% (12/43) | Same group minus Mistral Nemo |
+| `"description":` | 27.9% (12/43) | Same group minus Mistral Nemo |
 
-At 500 rows with `id`, `name`, and `type` fields, this produces approximately 1,500 field boundaries where the majority of models see a hidden merge. The merge is deterministic per tokenizer: it either always occurs or never occurs for a given field name, because it depends solely on whether the merged string exists in the vocabulary.
+According to the Web Data Commons dataset (University of Mannheim, 2024), `name` is the #1 most common JSON property on the web (3.5 billion occurrences across 2.39 billion pages) and `url` is #2 (2.6 billion occurrences). Both merge on 28-30% of tokenizers.
+
+At 500 rows with `id`, `name`, and `type` fields, this produces approximately 1,500 field boundaries where nearly a third of all models see a hidden merge. The merge is deterministic per tokenizer: it either always occurs or never occurs for a given field name, because it depends solely on whether the merged string exists in the vocabulary.
 
 #### Maximum tokenization variance
 
@@ -167,41 +178,60 @@ The structural boundary (where the field name starts) is at a different token po
 
 ### 4.3 Boundary Merge Rates on Real Data
 
-On real evaluation data (14 field names, 25 values, 2,800 checks per format across all 8 tokenizers):
+On real evaluation data across all 43 tokenizers:
 
-| Format | Boundary Merges | Merge Rate | Primary Cause |
-|--------|----------------|------------|---------------|
-| JSON | 250/2,800 | 8.93% | `"id":` and `"name":` merge on 62.5% of tokenizers |
-| GCF | 28/2,800 | 1.00% | One value (`cancelled`) triggers merge on 25% of tokenizers |
+| Format | Boundary Merges | Total Checks | Merge Rate | Primary Cause |
+|--------|----------------|-------------|------------|---------------|
+| GCF (pipe) | 135 | 29,025 | **0.47%** | Only `|cancelled` on 3 tokenizers (Mistral Nemo, DeepSeek V3, DeepSeek R1) |
+| JSON (quote) | 158 | 1,935 | **8.17%** | `"id":`, `"name":`, `"type":` merge on 13/43 tokenizers |
+| TOON (tab) | 283 | 860 | **32.91%** | Tab merges on GPT-4o (100%), GPT-4 (95%), LLaMA 3 (95%), Qwen (95%) |
 
-GCF exhibits 88.8% fewer boundary merges than JSON on the same data.
+GCF exhibits 94.3% fewer boundary merges than JSON on real data, and JSON in turn merges far less than TOON.
 
-The critical difference in scaling behavior: JSON's merges are caused by field names, which repeat on every row and compound linearly. GCF's merges are caused by one value, which appears occasionally. At 500 rows with `"id"` and `"name"` fields, JSON has approximately 625 hidden boundaries. GCF has a handful.
+The critical difference in scaling behavior: JSON's merges are caused by field names, which repeat on every row and compound linearly. GCF's merges are caused by one specific value (`cancelled`) on 3 tokenizers. At 500 rows with `"id"` and `"name"` fields, JSON has approximately 500 hidden boundaries. GCF has zero on field names.
 
-All 10 GCF grammar characters (`|`, `@`, `<`, `##`, `\n`, `{`, `}`, `[`, `]`, `,`) encode as exactly 1 token on all 8 tokenizers (80 checks, zero exceptions). With typical adjacent content (alphabetic values, numbers), the pipe delimiter remains separate on all tokenizers:
+All GCF grammar characters encode as exactly 1 token on all 43 tokenizers:
 
 ```
-value|pending     -> [value][|][pending]     ALL 8 tokenizers
-name|Alice        -> [name][|][Alice]        ALL 8 tokenizers
-orderId|ORD-001   -> [orderId][|][ORD][-][001]  ALL 8 tokenizers
+value|pending     -> [value][|][pending]     ALL 43 tokenizers
+name|Alice        -> [name][|][Alice]        ALL 43 tokenizers
+orderId|ORD-001   -> [orderId][|][ORD][-][001]  ALL 43 tokenizers
 ```
 
 ### 4.4 Root Cause: Vocabulary Entries
 
-The merge behavior is not a context-dependent tokenizer decision. It is a dictionary lookup. We decoded every entry in each tokenizer's vocabulary and classified entries containing a quote or pipe character fused with alphabetic content:
+The merge behavior is not a context-dependent tokenizer decision. It is a dictionary lookup. We decoded every entry in each of the 43 tokenizer vocabularies and classified entries containing delimiter characters fused with alphabetic content:
 
-| Tokenizer | Vocab Size | Quote+Letter Entries | Pipe+Letter Entries | Ratio |
-|-----------|-----------|---------------------|---------------------|-------|
-| GPT-4 (cl100k) | ~100K | 114 | 17 | 6.7:1 |
-| GPT-4o (o200k) | ~200K | 86 | 6 | 14.3:1 |
-| Claude | ~65K | 0 | 0 | clean |
-| LLaMA 3.1 | ~128K | 114 | 18 | 6.3:1 |
-| Qwen 2.5 | ~131K | 114 | 17 | 6.7:1 |
-| DeepSeek V3 | ~128K | 42 | 4 | 10.5:1 |
-| Gemma 2 | ~256K | 0 | 0 | clean |
-| Mistral Nemo | ~131K | 31 | 3 | 10.3:1 |
+| Tokenizer | Vocab Size | Quote+Letter | Pipe+Letter | Tab+Letter | Multi-Grammar |
+|-----------|-----------|-------------|------------|-----------|--------------|
+| GPT-4 (cl100k) | ~100K | **117** | 22 | **1,173** | 874 |
+| GPT-4o (o200k) | ~199K | **108** | 8 | **1,036** | 735 |
+| Claude | ~65K | **3** | 0 | 0 | 667 |
+| LLaMA 2 | ~32K | 0 | 0 | 0 | 122 |
+| LLaMA 3/3.1 | ~128K | **153** | 277 | 0 | 881 |
+| Qwen 2.5 | ~152K | **154** | 40 | 0 | 874 |
+| DeepSeek V3/R1 | ~129K | **48** | 5 | 0 | 287 |
+| Gemma 2 | ~256K | **4** | 0 | 0 | 735 |
+| Gemma 3 | ~262K | **2** | 0 | 0 | 861 |
+| Mistral Nemo | ~131K | **38** | 3 | 0 | 415 |
+| Phi-4 | ~100K | **153** | 116 | 0 | 874 |
+| Falcon | ~65K | 4 | 1 | 0 | 92 |
+| StarCoder2 | ~49K | 3 | 2 | 0 | 535 |
+| Jamba | ~66K | 1 | **1,543** | 0 | 113 |
 
-GPT-4 has 114 vocabulary entries where a quote character is fused with a following word. Claude and Gemma have zero. The quote is 6.3x to 14.3x more likely to appear in a merged vocabulary entry than the pipe, depending on the tokenizer.
+GPT-4 has 1,173 tab+letter vocabulary entries. Tab-separated data was so common in the training corpora (TSV files, log output, terminal formatting) that the tokenizer absorbed tabs more aggressively than any other delimiter. No other non-OpenAI tokenizer has tab+letter entries. TOON chose the single worst delimiter for the two most widely deployed tokenizers.
+
+#### Complete adversarial surface
+
+BPE is deterministic. If `|foo` exists as a vocabulary entry, the tokenizer will select it as a single token. If it does not exist, `|` and `foo` must be separate tokens. The definitive answer to "what can merge with each delimiter" is an exhaustive dump of every vocabulary entry starting with that delimiter across all 43 tokenizers:
+
+| Delimiter | Unique Mergeable Words | Examples |
+|-----------|----------------------|---------|
+| `|` (pipe) | **24** | `|null`, `|string`, `|required`, `|max`, `|min`, `|array`, `|int` (TypeScript type union syntax) |
+| `"` (quote) | **193** | `"name`, `"id`, `"type`, `"value`, `"text`, `"url`, `"path`, and 186 others |
+| `\t` (tab) | **1,238** | Nearly every common English word on GPT-4/4o |
+
+The pipe has 8x fewer mergeable words than the quote and 52x fewer than the tab. The entries `|name`, `|id`, `|type`, `|value`, `|status`, `|title` do not exist as vocabulary entries on any of the 43 tokenizers. The pipe will never merge with any common field name. This is not a statistical claim from sampling; it is a dictionary fact.
 
 #### Specific token IDs
 
@@ -296,20 +326,28 @@ Every tokenizer confirms that JSON spends 42-57% of its tokens on repeated field
 
 ### 4.6 Token Savings Consistency
 
-GCF achieves 50-59% savings on every tokenizer for the generic profile (500-order nested data vs. pretty-printed JSON):
+Across all 43 tokenizers, GCF achieves 49-72% savings vs JSON (mean 56%) and 18-43% vs TOON (mean 28%) at 500 records. Representative results:
 
 | Tokenizer | GCF Tokens | JSON Tokens | Savings |
 |-----------|-----------|-------------|---------|
-| Claude (Anthropic) | 44,099 | 96,619 | 54.4% |
-| GPT-4 (cl100k) | 40,383 | 97,848 | 58.7% |
-| GPT-4o (o200k) | 41,382 | 98,348 | 57.9% |
-| LLaMA 3.1 (Meta) | 40,384 | 97,849 | 58.7% |
-| Qwen 2.5 (Alibaba) | 52,595 | 109,168 | 51.8% |
-| DeepSeek V3 | 44,234 | 101,848 | 56.6% |
-| Gemma 2 (Google) | 55,301 | 124,620 | 55.6% |
-| Mistral Nemo | 55,998 | 112,569 | 50.3% |
+| GPT-4 (OpenAI cl100k) | 40,190 | 98,148 | **59.1%** |
+| GPT-4o (OpenAI o200k) | 40,591 | 98,548 | **58.8%** |
+| Claude (Anthropic) | 43,704 | 96,719 | **54.8%** |
+| LLaMA 3.1 (Meta) | 40,190 | 98,148 | **59.1%** |
+| Qwen 2.5 (Alibaba) | 52,402 | 109,468 | **52.1%** |
+| DeepSeek V3 | 43,694 | 102,348 | **57.3%** |
+| Gemma 2 (Google) | 54,906 | 124,719 | **56.0%** |
+| Mistral Nemo | 55,407 | 112,968 | **51.0%** |
+| Phi-4 (Microsoft) | 40,190 | 98,148 | **59.1%** |
+| Falcon 7B (TII) | 44,649 | 109,599 | **59.3%** |
+| Yi Coder (01.AI) | 58,867 | 136,668 | **56.9%** |
+| StarCoder2 (BigCode) | 57,356 | 112,419 | **49.0%** |
 
-Savings remain stable across scales (spread under 9 percentage points at every tested size from 10 to 500 records).
+The worst case (StarCoder2, 49.0%) still nearly halves the token count. Savings remain stable across scales: each tokenizer stays within a 1.0-3.1pp band from 10 to 500 records. The mean holds at 55-57% vs JSON and 27-28% vs TOON across all 43 tokenizers at every scale tested.
+
+#### Delimiter character safety analysis
+
+Before choosing structural delimiters, we tested all 94 printable ASCII characters (codes 33-126) across tokenizers on two criteria: (1) whether the character encodes as exactly 1 token in isolation, and (2) whether it merges with adjacent text. 74 of 94 characters are safe. 20 characters merge, including `.` (merges into `.validate`, `.com`), `-` (merges into `-token`, `-based`), `_` (merges into `_name`, `_id`), `/` (merges into `/api`, `/path`), and lowercase letters (common subword prefixes). JSON uses `.`, `"`, and `:` as structural characters. All three can create merge patterns. The pipe-delimited comparison format uses only characters from the safe set (`|`, `@`, `<`, `#`, `{`, `}`, `[`, `]`, `,`, `\n`).
 
 ### 4.7 Grammar Swap Experiment
 
@@ -350,6 +388,95 @@ Per-tokenizer consistency:
 
 Variation per tokenizer across delimiter sets: 0.0-0.8 percentage points.
 
+### 4.8 Structural Equivalence Proof
+
+Parts 4.1-4.7 measured merge rates, vocabulary entries, and overhead. This section asks the definitive question: is the pipe-delimited grammar deterministic? When you tokenize a payload on any production tokenizer, does every grammar symbol remain its own token?
+
+We tokenized a realistic multi-section payload (5 orders + 3 edges) across all 43 tokenizers and checked every token containing a row-level grammar symbol:
+
+| Symbol | Purpose | Total Tokens | Isolated | Merged | Isolation Rate |
+|--------|---------|-------------|----------|--------|---------------|
+| `@` | Symbol ID prefix | 258 | 258 | 0 | **100.0%** |
+| `<` | Edge direction | 126 | 126 | 0 | **100.0%** |
+| `|` | Field delimiter | 774 | 768 | 6 | **99.2%** |
+| **Overall** | | **1,158** | **1,152** | **6** | **99.5%** |
+
+The 6 pipe exceptions are all `|c` in the value `cancelled` on 3 tokenizers (Mistral Nemo, DeepSeek V3, DeepSeek R1). Pipe never merges with any field name on any tokenizer.
+
+For comparison, JSON grammar tokens on the same data:
+
+92.5% of quote-containing tokens fuse multiple grammar operations into a single token on **all 43 tokenizers**:
+
+| Token | Grammar Operations Fused | Present On |
+|-------|------------------------|------------|
+| `":"` | Close string + colon + open string | 42/43 |
+| `","` | Close string + comma + open string | 41/43 |
+| `{"` | Open object + open string | 42/43 |
+| `":` | Close string + colon | 43/43 |
+| `,"` | Comma + open string | 41/43 |
+
+The token `":"` represents three structural operations packed into a single integer. The model must learn that this token means "the key ends here and the value begins" as an emergent property of training, not as an explicit structural signal.
+
+| Property | Pipe-delimited | JSON |
+|----------|---------------|------|
+| Grammar tokens isolated | 99.5% | 7.5% |
+| Grammar fused with grammar | 0% | 92.5% (43/43 tokenizers) |
+| Grammar is deterministic | Yes | No |
+
+### 4.9 Attention Mechanism Analysis
+
+Parts 4.1-4.8 operate at the tokenizer level. This section examines what happens inside the transformer when it processes merged vs. clean token sequences.
+
+We loaded Pythia 410M (24 layers, 16 heads) and Gemma 2B (26 layers, 8 heads) and extracted attention weights from every layer and head while processing identical data in pipe-delimited vs JSON format at increasing scale.
+
+#### Attention entropy crossover
+
+Attention entropy measures how spread out the model's attention is. High entropy means attention is distributed uniformly (the model is looking everywhere, finding nothing). Low entropy means attention is focused.
+
+**Pythia 410M:**
+
+| Orders | Pipe-delimited entropy | JSON entropy | Delta |
+|--------|----------------------|-------------|-------|
+| 5 | 3.03 | 2.87 | JSON lower (model knows JSON) |
+| 10 | 3.32 | 3.01 | JSON still lower |
+| 20 | 3.66 | 3.16 | JSON still lower |
+| 50 | **3.99** | **4.50** | **JSON crosses over (+13%)** |
+
+At small scale, JSON entropy is lower. The model has been trained on billions of JSON examples and has learned efficient attention patterns. At 50 orders, the crossover: JSON entropy exceeds the comparison format by 13%. The model's learned JSON parsing breaks down. The repeated field names produce thousands of identical token IDs competing for attention. The model can no longer distinguish them using positional encoding alone.
+
+#### Grammar attention collapse
+
+We classified every token as grammar or payload and measured attention allocation.
+
+**Gemma 2B:**
+
+| Orders | Pipe grammar% | Pipe payload% | JSON grammar% | JSON payload% |
+|--------|-------------|-------------|--------------|--------------|
+| 5 | 53.8% | 46.2% | 29.8% | 67.7% |
+| 10 | 52.4% | 47.6% | 29.7% | 68.0% |
+| 20 | 50.8% | 49.2% | 30.4% | 67.4% |
+| 50 | **48.6%** | **51.4%** | **8.6%** | **86.3%** |
+| 100 | **37.4%** | **62.6%** | **8.6%** | **86.3%** |
+
+At small scale, JSON's attention splits roughly 30% grammar / 68% payload. The model attends to structural tokens to understand the format, then to payload tokens to extract data. At 50 orders, JSON grammar attention collapses from 30% to 8.6%. The model stops attending to structural tokens. It is no longer parsing JSON's structure; it distributes attention uniformly across content, unable to distinguish structure from data.
+
+The pipe-delimited format does the opposite. Payload attention increases steadily from 46% to 63% at 100 orders. As the payload grows, the model progressively focuses more on data and less on grammar. The grammar is proportionally smaller (one header vs hundreds of rows) and every grammar token is unambiguous.
+
+#### Token repetition scaling
+
+The underlying cause of both phenomena is token repetition. JSON repeats the same token IDs on every row. The pipe-delimited format does not.
+
+| Orders | Pipe-delimited repeat% | JSON repeat% | Tokens |
+|--------|----------------------|-------------|--------|
+| 5 | 42.4% | 74.8% | 110 / 245 |
+| 10 | 62.0% | 84.9% | 211 / 490 |
+| 20 | 76.6% | 91.0% | 413 / 982 |
+| 50 | 83.6% | 93.6% | 1,019 / 2,048 |
+
+At 50 orders, 93.6% of JSON tokens are duplicates. The model's attention mechanism must distribute weight across hundreds of identical tokens using only positional encoding to distinguish them. This is mathematically equivalent to the attention dilution problem described by Ildiz et al. (2024): self-attention weights tokens proportionally to their frequency, so repeated tokens dominate the attention budget.
+
+This is the transformer-level mechanism behind comprehension failure: the model's attention cannot sustain structural parsing at scale when boundaries are hidden in merged tokens and the majority of the sequence is repetitive noise.
+
 ---
 
 ## 5. Discussion
@@ -360,9 +487,11 @@ The conventional wisdom holds that LLMs "know" JSON best because they have been 
 
 The models that saw the most JSON have the worst JSON boundaries:
 
-- GPT-4 (massive code corpus): 114 merged quote+field entries
-- LLaMA 3.1 (large code mix): 114 merged entries
-- Claude (different tokenizer strategy): 0 merged entries
+- GPT-4 (massive code corpus): 117 merged quote+field entries
+- LLaMA 3 (large code mix): 153 merged entries
+- Qwen 2.5 (heavy code training): 154 merged entries
+- Claude (different tokenizer strategy): 3 merged entries
+- Gemma 2/3 (different merge policy): 2-4 merged entries
 
 Training familiarity did not create structural understanding. It created compression. The tokenizer optimized for representing JSON in fewer tokens, which is exactly what a compression algorithm should do. But compression hides structure. The quote and the field name became one token because that is more efficient for storage. It is less efficient for comprehension.
 
@@ -370,13 +499,13 @@ This inverts the standard argument. "Trained on JSON" is not an advantage for st
 
 ### 5.2 Why Claude and Gemma Differ
 
-Claude's tokenizer has zero quote+letter entries. Gemma's has zero. The specific training details are proprietary, but measurable differences suggest explanations:
+Claude's tokenizer has 3 quote+letter entries. Gemma 2 has 4. Gemma 3 has 2. Across the 43 tokenizers tested, 11 tokenizers have zero or near-zero quote merge entries. The specific training details are proprietary, but measurable differences suggest explanations:
 
-- **Vocabulary size**: Claude uses approximately 65,000 entries (smallest tested). Smaller vocabularies are more conservative about which merges to include. GPT-4's 100,256-entry vocabulary has budget for specialized merges like `"name`.
+- **Vocabulary size**: Claude uses approximately 65,000 entries (one of the smallest tested). Smaller vocabularies are more conservative about which merges to include. But Gemma 3's vocabulary is the largest tested (262,000 entries) yet has only 2 quote merges. Vocabulary size alone does not predict merge behavior.
 - **Training data mix**: Tokenizers trained on corpora with less code/JSON relative to natural language will see `"name` less frequently, making it less likely to cross the merge threshold.
 - **Merge boundary policy**: BPE training can be configured to treat certain characters as merge barriers (never merge across them). Anthropic and Google may have intentionally prevented `"` from merging with adjacent letters.
 
-Gemma's vocabulary is the largest tested (256,128 entries) yet has zero quote merges. Larger vocabulary does not automatically mean more merges. The merge policy matters more than vocabulary size.
+The merge policy matters more than vocabulary size. This suggests that structure-aware tokenizer design, where delimiter characters are treated as merge barriers during BPE training, could eliminate boundary merging entirely.
 
 ### 5.3 Irrecoverability
 
@@ -422,24 +551,17 @@ GCF's errors are small (off by 1-2) because the model understood the structure b
 
 TOON, the primary competing token-efficient format, uses tab characters as column delimiters. We applied the same analysis to TOON's grammar symbols. Tab merges with adjacent content more aggressively than JSON's quote character:
 
-| Format | Delimiter | Merge rate (1,344 checks) |
-|--------|-----------|--------------------------|
-| TOON | Tab | **59.82%** |
-| JSON | Quote | 39.29% |
-| GCF | Pipe | **0.00%** |
+| Format | Delimiter | Merge Rate | Total Checks |
+|--------|-----------|------------|-------------|
+| TOON | Tab | **32.91%** | 860 |
+| JSON | Quote | 8.17% | 1,935 |
+| GCF | Pipe | **0.47%** | 29,025 |
 
-The vocabulary data explains why. GPT-4's vocabulary contains **60 of 64** tested words as tab+letter entries (e.g., `\tname`, `\ttype`, `\tstring`). This is a 94% vocabulary merge rate, compared to 23% for quote+letter entries. Tab-separated data (TSV, log files, shell output) is even more common in code training corpora than quoted JSON field names, so the tokenizer merged tabs even more aggressively.
+The exhaustive vocabulary dump explains why. GPT-4o has a **100% tab merge rate**: every single word tested merges with the preceding tab. GPT-4 cl100k merges 95%. The tab has **1,238 unique mergeable words** across all 43 tokenizer vocabularies, compared to 193 for the quote and 24 for the pipe. Tab-separated data (TSV, log files, shell output) is so common in code training corpora that nearly every common word is fused with the tab character in OpenAI's vocabularies.
 
-TOON also uses indentation for nested structure. The same 4-space indent produces 4 different tokenizations across 8 tokenizers. Models see different nesting depth depending on which tokenizer processes the data.
+GPT-4 cl100k has **1,173 tab+letter vocabulary entries** and 22 pipe+letter entries. GPT-4o o200k has **1,036 tab+letter** entries and 6 pipe+letter entries. No other tokenizer family has tab+letter entries.
 
-| Tokenizer | Tab+letter vocab | Quote+letter vocab | Pipe+letter vocab |
-|-----------|-----------------|-------------------|------------------|
-| GPT-4 | **60/64** | 15/64 | 0/64 |
-| Claude | 0/64 | 0/64 | 0/64 |
-| LLaMA 3.1 | **60/64** | 15/64 | 0/64 |
-| Gemma 2 | 0/64 | 0/64 | 0/64 |
-
-The training familiarity paradox applies doubly to TOON: its chosen delimiter (tab) is the most overrepresented structural character in code training data, producing the highest merge rates of any format tested.
+The training familiarity paradox applies doubly to TOON: its chosen delimiter (tab) is the most overrepresented structural character in code training data, producing the highest merge rates of any format tested. TOON chose the delimiter with the largest adversarial surface of any common separator character (52x larger than the pipe).
 
 ### 5.6 Why Merging Causes Higher Degradation at Scale
 
@@ -466,6 +588,16 @@ Consider the task "how many records have status = shipped?" given 500 JSON objec
 Ildiz et al. (2024) proved that self-attention weights tokens proportionally to their frequency (the CCMC formula includes m_j in the numerator). When 80% of the sequence is repetitive structural tokens, the formula guarantees those tokens dominate the attention budget by count, leaving proportionally less for the data values.
 
 In a header-factored format with pipe delimiters, the equivalent task requires attending to a column of values at known, consistent positions. No ambiguity. No repetition competing for attention. The structural delimiter (pipe) is always at the same relative position within each row.
+
+Our attention mechanism analysis (Section 4.9) provides direct empirical evidence for this theoretical prediction. Gemma 2B's grammar attention drops from 30% to 8.6% at 50 orders, confirming that the model abandons structural parsing at exactly the scale where attention dilution theory predicts failure. The entropy crossover at the same scale (Section 4.9) confirms the mechanism from a complementary angle: the model's attention distribution becomes more uniform on JSON than on the comparison format precisely when repetitive structural tokens begin to dominate.
+
+### 5.8 Implications for Tokenizer Design
+
+The results in this paper point to a design principle: BPE tokenizer training should treat structural delimiter characters as merge barriers. A tokenizer that never merges quotes, colons, tabs, pipes, or braces with adjacent content would produce clean structural boundaries by construction, regardless of vocabulary size or training corpus.
+
+The evidence that this is feasible comes from Claude and Gemma. Both have near-zero quote merge entries despite being trained on large corpora that include JSON. Whether this was intentional policy or an artifact of their training configuration, the result demonstrates that clean boundaries are achievable without sacrificing general-purpose tokenization quality.
+
+Future tokenizer designs could formalize this principle: define a set of structural characters and enforce that they never participate in BPE merges. The resulting tokenizer would produce slightly more tokens on structured data (each delimiter is its own token rather than merging into adjacent content), but every model using that tokenizer would see consistent, unambiguous structural boundaries. The tradeoff between compression and comprehension would shift explicitly in favor of comprehension for structured workloads.
 
 ---
 
@@ -503,7 +635,7 @@ Three properties make this analysis actionable:
 2. The problem is deterministic. A vocabulary entry either exists or it does not. The merge either always occurs or never occurs for a given field name on a given tokenizer.
 3. The problem is permanent for existing models. Frozen vocabularies cannot be modified post-training.
 
-Future work should investigate causal relationships between boundary merges and comprehension errors through controlled experiments with custom tokenizers, attention map visualization at merged vs. separate boundary tokens, and optimal grammar search algorithms that minimize total tokens while maximizing boundary consistency for a given vocabulary.
+Future work should investigate three directions: (1) causal relationships between boundary merges and comprehension errors through controlled experiments with structure-aware tokenizers that enforce merge barriers on delimiter characters, (2) whether models trained with barrier-aware tokenizers exhibit faster convergence on structured data tasks compared to models trained with standard BPE, and (3) optimal grammar search algorithms that minimize total tokens while maximizing boundary consistency for a given vocabulary. The attention mechanism analysis in this paper (Section 4.9) provides the first empirical evidence connecting tokenizer-level merges to transformer-level attention failure, establishing the mechanistic link that future causal studies should exploit.
 
 ---
 
@@ -513,6 +645,16 @@ All experiments are reproducible. The analysis scripts are open source and requi
 
 ### Dependencies
 
+Primary analysis (Python):
+```
+tokenizers
+huggingface_hub
+tiktoken
+torch              # attention analysis only
+transformers       # attention analysis only
+```
+
+Supplementary analysis (JavaScript):
 ```
 @blackwell-systems/gcf
 @lenml/tokenizers
@@ -528,11 +670,22 @@ All experiments are reproducible. The analysis scripts are open source and requi
 
 ### Scripts
 
+#### Primary analysis (43 tokenizers, Python)
+
+| Script | Purpose | Key Output |
+|--------|---------|------------|
+| `hf-tokenizer-analysis.py` | 43-tokenizer merge rates, vocab entries, savings vs JSON and TOON | Comprehensive cross-tokenizer tables |
+| `structural-equivalence-proof.py` | Grammar isolation across 43 tokenizers | 99.5% isolation proof |
+| `adversarial-vocab-dump.py` | Exhaustive vocabulary scan, complete adversarial surface | 24 pipe vs 193 quote vs 1,238 tab |
+| `attention-analysis.py` | Attention extraction from Pythia 410M and Gemma 2B | Entropy crossover, grammar attention collapse |
+
+#### Supplementary analyses (8 tokenizers, JavaScript)
+
 | Script | Purpose | Key Output |
 |--------|---------|------------|
 | `tokenizer-variance.mjs` | Token savings consistency across 8 tokenizers, multiple scales | Per-tokenizer savings table |
 | `structural-variance.mjs` | Boundary merge analysis, structural consistency | Merge rate comparison |
-| `common-field-merge-analysis.mjs` | 155 common field names, merge rates per tokenizer | 15 worst-offending fields |
+| `common-field-merge-analysis.mjs` | 155 common field names, merge rates per tokenizer | Worst-offending fields |
 | `json-tokenization-analysis.mjs` | Token distribution breakdown, overhead scaling | Overhead percentages by category |
 | `worst-json-tokenization.mjs` | Maximum tokenization variance search (840 patterns) | 7-way tokenization example |
 | `exhaustive-json-boundary-search.mjs` | Exhaustive boundary search (8,434 patterns) | Complete merge pattern catalog |
@@ -540,11 +693,54 @@ All experiments are reproducible. The analysis scripts are open source and requi
 | `session-dedup-efficiency.mjs` | Session deduplication savings | 84-92% cumulative savings |
 | `tokenizer-vocabulary-analysis.mjs` | Vocabulary entry lookup for specific merged tokens | Token IDs per field per tokenizer |
 | `vocabulary-full-scan.mjs` | Exhaustive full vocabulary scan, all 8 tokenizers | Quote+letter and pipe+letter entry counts |
-| `toon-tokenizer-analysis.mjs` | TOON tab delimiter merge analysis | Tab 59.82% vs quote 39.29% vs pipe 0% |
+| `toon-tokenizer-analysis.mjs` | TOON tab delimiter merge analysis | Tab vs quote vs pipe merge rates |
 | `grammar-swap-experiment.mjs` | 5 delimiter sets, 800 measurements | 0.4pp spread proving structural savings |
-| `toon-fuzz.mjs` | TOON format accuracy comparison | Fuzz testing results |
 
 Repository: [github.com/blackwell-systems/gcf](https://github.com/blackwell-systems/gcf)
+
+---
+
+## Appendix A: Syntactic Deep Dive
+
+For completeness, we provide exact tokenization of representative structured data patterns across tokenizers. This data demonstrates that grammar symbol variance is limited to payload content, not structural boundaries.
+
+### A.1 Edge declaration: `@0<@2|implements`
+
+| Tokenizer | Tokens | Split |
+|-----------|--------|-------|
+| Claude | 7 | `@` `0` `<` `@` `2` `\|` `implements` |
+| GPT-4 | 7 | `@` `0` `<` `@` `2` `\|` `implements` |
+| GPT-4o | 7 | `@` `0` `<` `@` `2` `\|` `implements` |
+| LLaMA 3.1 | 7 | `@` `0` `<` `@` `2` `\|` `implements` |
+| Qwen 2.5 | 7 | `@` `0` `<` `@` `2` `\|` `implements` |
+| DeepSeek V3 | 8 | `@` `0` `<` `@` `2` `\|` `im` `plements` |
+| Gemma 2 | 7 | `@` `0` `<` `@` `2` `\|` `implements` |
+| Mistral Nemo | 8 | `@` `0` `<` `@` `2` `\|` `im` `plements` |
+
+All structural characters (`@`, `<`, `|`) are always single tokens. The only variance is in the value `implements` (1 vs 2 tokens), which does not affect parsing.
+
+### A.2 Symbol row: `@0|function|auth.validateToken|0.95|definition`
+
+| Tokenizer | Tokens | Key Differences |
+|-----------|--------|----------------|
+| GPT-4 | 14 | Merges `.validate` (1 tok), `95` (1 tok) |
+| Qwen 2.5 | 15 | Splits `95` into `9` + `5` |
+| Gemma 2 | 16 | Splits `.` + `validate`, splits `9` + `5` |
+
+Pipe delimiters are always single tokens across all tokenizers. Variance is only in how tokenizers handle value content: dot-prefixed words (`.validate` as 1 tok on GPT-4 vs `.` + `validate` on Gemma) and two-digit numbers (`95` as 1 tok on GPT-4 vs `9` + `5` on Qwen/Gemma). This is value variance (harmless) not boundary variance (dangerous).
+
+### A.3 Delimiter selection rationale
+
+From the 74 safe ASCII characters, structural delimiters were chosen based on semantics and readability:
+
+| Character | Why chosen | Alternative considered | Why not |
+|-----------|-----------|----------------------|---------|
+| `\|` (pipe) | Rare in natural text, visually distinct column separator | Tab (`\t`) | Invisible, merges on 33% of tokenizers |
+| `@` | Establishes "this is an ID" semantically | `$` | Also safe, but less intuitive |
+| `##` | Two-char sequence tokenizers always merge into one token, Markdown-familiar | `===` | 3 chars, less efficient |
+| `<` | Reads as "points to" for edges | `~` | Also safe, but less semantic |
+| `\n` | Universal row separator, zero overhead | `;` | Less readable |
+| `,` | Schema field separator, familiar from CSV | `:` | Conflicts with potential value content |
 
 ---
 
