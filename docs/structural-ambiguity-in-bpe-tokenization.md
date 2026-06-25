@@ -1,4 +1,4 @@
-# Structural Ambiguity in JSON Tokenization: A Cross-Tokenizer Analysis
+# Structural Ambiguity in BPE Tokenization: From Vocabulary Merges to Attention Collapse
 
 **Dayna Blackwell, Blackwell Systems** · dayna@blackwell-systems.com
 

@@ -1,5 +1,5 @@
 ---
-title: "Structural Ambiguity in JSON Tokenization: A Cross-Tokenizer Analysis"
+title: "Structural Ambiguity in BPE Tokenization: From Vocabulary Merges to Attention Collapse"
 author: "Dayna Blackwell, Blackwell Systems · dayna@blackwell-systems.com"
 date: "2026-06-25 · DOI: 10.5281/zenodo.20789620"
 titlepage: true
@@ -12,7 +12,7 @@ toc-own-page: true
 colorlinks: true
 linkcolor: "blue"
 urlcolor: "blue"
-header-left: "JSON Tokenization Analysis"
+header-left: "BPE Tokenization Analysis"
 header-right: "Blackwell Systems"
 footer-left: "gcformat.com"
 footer-center: ""
