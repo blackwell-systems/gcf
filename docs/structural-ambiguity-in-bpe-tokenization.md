@@ -290,6 +290,24 @@ The token `":{"` exists on all 8 tokenizers. It represents four structural opera
 
 The pipe has a small number of merged entries (17 on GPT-4), but exclusively with programming keywords from type union syntax: `|null`, `|string`, `|max`, `|min`, `|required`. The entries `|name`, `|id`, `|type`, `|value` do not exist in any tested vocabulary. The pipe merges with type-system keywords, not with the field names that matter for structured data comprehension.
 
+#### Complete ASCII character safety ranking
+
+![ASCII adversarial surface: all 94 printable characters ranked by merge risk](docs/public/charts/ascii-adversarial-surface.png){ width=90% }
+
+To understand the adversarial surface in full context, we scanned all 94 printable ASCII characters (codes 33-126) across all 43 tokenizer vocabularies. For each character, we counted how many unique words exist as merged vocabulary entries:
+
+| Tier | Characters | Mergeable words | Examples |
+|------|-----------|----------------|---------|
+| Safe (0 words) | `0-9` | 0 | Digits never merge with adjacent text |
+| Low risk (1-10) | `` ` `` `~` | 5-8 | Rare in training data |
+| Medium (11-50) | `^` `|` `!` `]` `#` `%` `?` | 17-50 | Pipe (24) is in this tier |
+| High (51-100) | `&` `;` `+` `}` `{` | 57-97 | JSON braces are here |
+| Very high (101+) | `"` `:` `,` `[` `(` `-` `.` `_` letters | 117-11,891 | All JSON delimiters, all letters |
+
+Digits are the only perfectly safe characters, but they cannot serve as delimiters because they appear in payload data (numbers, IDs, timestamps). The pipe (24 words) is the safest practical delimiter: it has a small adversarial surface, rarely appears in payload data, and is visually distinct.
+
+JSON's total adversarial surface across all 7 grammar characters (`"`, `:`, `,`, `{`, `}`, `[`, `]`) is **1,939 unique mergeable words**. This is 81x the pipe's 24 words.
+
 ### 4.5 JSON Token Overhead
 
 ![JSON overhead scaling: O(n) per row vs O(1) for header-factored formats](docs/public/charts/overhead-scaling.png){ width=85% }

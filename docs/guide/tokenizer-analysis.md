@@ -750,6 +750,26 @@ GPT-4 cl100k has 1,173 tab+letter vocabulary entries and 22 pipe+letter entries.
 
 `|name`, `|id`, `|type`, `|value`, `|status`, `|title` do not exist as vocabulary entries on any of the 43 tokenizers. The pipe will never merge with any common field name. This is not a statistical claim from sampling. It is a dictionary fact.
 
+### Complete ASCII character safety ranking
+
+![ASCII Adversarial Surface](/charts/ascii-adversarial-surface.png)
+
+Data from `eval/ascii-adversarial-surface.py` (94 characters, 43 tokenizers).
+
+To understand the adversarial surface in full context, we scanned all 94 printable ASCII characters (codes 33-126) across all 43 tokenizer vocabularies:
+
+| Tier | Characters | Mergeable words |
+|------|-----------|----------------|
+| Safe (0 words) | `0-9` | 0 |
+| Low risk (1-10) | `` ` `` `~` | 5-8 |
+| Medium (11-50) | `^` `\|` `!` `]` `#` `%` `?` | 17-50 |
+| High (51-100) | `&` `;` `+` `}` `{` | 57-97 |
+| Very high (101+) | `"` `:` `,` `[` `(` `-` `.` `_` letters | 117-11,891 |
+
+Only digits have zero merge risk, but they cannot serve as delimiters because they appear in payload data. The pipe (24 words) is the safest practical delimiter.
+
+JSON's total adversarial surface across all 7 grammar characters (`"`, `:`, `,`, `{`, `}`, `[`, `]`) is **1,939 unique mergeable words**. This is 81x the pipe's 24 words. The `[` character alone has 1,035 mergeable words (array syntax patterns from code training data).
+
 ---
 
 ## Part 9: Structural Equivalence Proof
