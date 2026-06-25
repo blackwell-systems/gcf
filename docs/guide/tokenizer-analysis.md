@@ -732,15 +732,19 @@ We scanned all 43 tokenizer vocabularies (32K to 262K entries each). The pipe de
 
 **8 are programming keywords** (`null`, `string`, `required`, `array`, `max`, `min`, `int`, `unique`). The rest are single characters or abbreviations. None are data field names. None are common data values.
 
-For comparison, the same exhaustive scan on JSON's quote and TOON's tab:
+For comparison, the same exhaustive scan on all JSON grammar characters and TOON's tab:
 
-| Delimiter | Unique mergeable words | Ratio to pipe |
-|-----------|----------------------|---------------|
-| `\|` (pipe) | **24** | 1x |
-| `"` (quote) | **193** | 8x |
-| `\t` (tab) | **1,238** | 52x |
+| Delimiter | Unique mergeable words | Ratio to pipe | Used by |
+|-----------|----------------------|---------------|---------|
+| `\|` (pipe) | **24** | 1x | GCF |
+| `"` (quote) | **193** | 8x | JSON |
+| `:` (colon) | **232** | 10x | JSON |
+| `,` (comma) | **282** | 12x | JSON |
+| `\t` (tab) | **1,238** | 52x | TOON |
 
-The quote has 8x more mergeable words than the pipe. The tab has **52x more**. TOON chose the delimiter with the largest adversarial surface of any common separator character. GCF chose the one with the smallest.
+JSON uses three structural characters (quote, colon, comma) with a combined adversarial surface of **707 unique mergeable words**. The pipe has 24. That's a 29:1 ratio. Comma merges are driven by CSV-style patterns in training data (`,name`, `,value`, `,type`). Colon merges come from scope resolution syntax in C++/Rust (`::self`, `::string`, `::id`). LLaMA 3.1 alone has 242 comma+letter and 198 colon+letter vocabulary entries.
+
+TOON chose the delimiter with the largest adversarial surface of any common separator character. GCF chose the one with the smallest.
 
 GPT-4 cl100k has 1,173 tab+letter vocabulary entries and 22 pipe+letter entries. GPT-4o o200k has 1,036 tab+letter entries and 6 pipe+letter entries. Tab-separated data was so prevalent in tokenizer training corpora (TSV files, terminal output, log formatting) that nearly every common word is fused with the tab character in these vocabularies.
 
@@ -896,7 +900,7 @@ A format that eliminates all three problems (clean boundaries, no repetition, ex
 | Both savings are stable at all scales | vs JSON 1.0-3.1pp range, vs TOON 1.0-4.3pp range per tokenizer |
 | GCF has 94% fewer boundary merges than JSON | 43 tokenizers: GCF 0.47% vs JSON 8.17% (29,025 + 1,935 checks) |
 | JSON merges compound at scale | `"id"` and `"name"` merge on 30% of tokenizers, repeating per row |
-| GCF's adversarial surface is 24 words | Exhaustive vocab dump: pipe has 24 mergeable words vs quote 193 vs tab 1,238 |
+| GCF's adversarial surface is 24 words | Exhaustive vocab dump: pipe 24 vs JSON's combined 707 (quote 193 + colon 232 + comma 282) vs tab 1,238 |
 | TOON tab merge is 71x worse than GCF pipe | TOON 32.91% vs GCF 0.47%. GPT-4o: 100% tab merge rate. Tab has 52x more mergeable words. |
 | JSON overhead is 81% at 500 rows | Cross-tokenizer validated |
 | JSON overhead grows linearly | O(n) per row, ratio 1,545:1 at 1000 rows |

@@ -1,0 +1,869 @@
+{
+  "timestamp": "2026-06-25T13:01:20Z",
+  "tokenizer_count": 43,
+  "pipe_surface": {
+    "unique_words": 24,
+    "words": {
+      "null": [
+        "LLaMA 3 8B (Meta)",
+        "Mistral Nemo (12B)",
+        "QwQ 32B (Alibaba)",
+        "DeepSeek R1",
+        "Marco-o1 (Alibaba)",
+        "LLaMA 3.1 8B (Meta)",
+        "Qwen 2 7B (Alibaba)",
+        "GPT-4o (OpenAI o200k)",
+        "Phi-4 (Microsoft)",
+        "Qwen 3 8B (Alibaba)",
+        "GPT-4 (OpenAI cl100k)",
+        "DeepSeek V3 (671B)",
+        "StableLM 2 1.6B",
+        "Qwen 2.5 7B (Alibaba)",
+        "Qwen 2.5 Coder 7B"
+      ],
+      "x": [
+        "LLaMA 3 8B (Meta)",
+        "QwQ 32B (Alibaba)",
+        "DeepSeek R1",
+        "Marco-o1 (Alibaba)",
+        "LLaMA 3.1 8B (Meta)",
+        "Qwen 2 7B (Alibaba)",
+        "Phi-4 (Microsoft)",
+        "Qwen 3 8B (Alibaba)",
+        "GPT-4 (OpenAI cl100k)",
+        "DeepSeek V3 (671B)",
+        "StableLM 2 1.6B",
+        "Qwen 2.5 7B (Alibaba)",
+        "Qwen 2.5 Coder 7B"
+      ],
+      "max": [
+        "LLaMA 3 8B (Meta)",
+        "QwQ 32B (Alibaba)",
+        "Marco-o1 (Alibaba)",
+        "LLaMA 3.1 8B (Meta)",
+        "Qwen 2 7B (Alibaba)",
+        "GPT-4o (OpenAI o200k)",
+        "Phi-4 (Microsoft)",
+        "Qwen 3 8B (Alibaba)",
+        "GPT-4 (OpenAI cl100k)",
+        "StableLM 2 1.6B",
+        "Qwen 2.5 7B (Alibaba)",
+        "Qwen 2.5 Coder 7B"
+      ],
+      "min": [
+        "LLaMA 3 8B (Meta)",
+        "QwQ 32B (Alibaba)",
+        "Marco-o1 (Alibaba)",
+        "LLaMA 3.1 8B (Meta)",
+        "Qwen 2 7B (Alibaba)",
+        "GPT-4o (OpenAI o200k)",
+        "Phi-4 (Microsoft)",
+        "Qwen 3 8B (Alibaba)",
+        "GPT-4 (OpenAI cl100k)",
+        "StableLM 2 1.6B",
+        "Qwen 2.5 7B (Alibaba)",
+        "Qwen 2.5 Coder 7B"
+      ],
+      "required": [
+        "LLaMA 3 8B (Meta)",
+        "QwQ 32B (Alibaba)",
+        "Marco-o1 (Alibaba)",
+        "LLaMA 3.1 8B (Meta)",
+        "Qwen 2 7B (Alibaba)",
+        "GPT-4o (OpenAI o200k)",
+        "Phi-4 (Microsoft)",
+        "Qwen 3 8B (Alibaba)",
+        "GPT-4 (OpenAI cl100k)",
+        "StableLM 2 1.6B",
+        "Qwen 2.5 7B (Alibaba)",
+        "Qwen 2.5 Coder 7B"
+      ],
+      "string": [
+        "LLaMA 3 8B (Meta)",
+        "QwQ 32B (Alibaba)",
+        "Marco-o1 (Alibaba)",
+        "LLaMA 3.1 8B (Meta)",
+        "Qwen 2 7B (Alibaba)",
+        "GPT-4o (OpenAI o200k)",
+        "Phi-4 (Microsoft)",
+        "Qwen 3 8B (Alibaba)",
+        "GPT-4 (OpenAI cl100k)",
+        "StableLM 2 1.6B",
+        "Qwen 2.5 7B (Alibaba)",
+        "Qwen 2.5 Coder 7B"
+      ],
+      "M": [
+        "LLaMA 3 8B (Meta)",
+        "QwQ 32B (Alibaba)",
+        "Marco-o1 (Alibaba)",
+        "LLaMA 3.1 8B (Meta)",
+        "Qwen 2 7B (Alibaba)",
+        "Phi-4 (Microsoft)",
+        "Qwen 3 8B (Alibaba)",
+        "GPT-4 (OpenAI cl100k)",
+        "StableLM 2 1.6B",
+        "Qwen 2.5 7B (Alibaba)",
+        "Qwen 2.5 Coder 7B"
+      ],
+      "R": [
+        "LLaMA 3 8B (Meta)",
+        "QwQ 32B (Alibaba)",
+        "Marco-o1 (Alibaba)",
+        "LLaMA 3.1 8B (Meta)",
+        "Qwen 2 7B (Alibaba)",
+        "Phi-4 (Microsoft)",
+        "Qwen 3 8B (Alibaba)",
+        "GPT-4 (OpenAI cl100k)",
+        "StableLM 2 1.6B",
+        "Qwen 2.5 7B (Alibaba)",
+        "Qwen 2.5 Coder 7B"
+      ],
+      "RF": [
+        "LLaMA 3 8B (Meta)",
+        "QwQ 32B (Alibaba)",
+        "Marco-o1 (Alibaba)",
+        "LLaMA 3.1 8B (Meta)",
+        "Qwen 2 7B (Alibaba)",
+        "Phi-4 (Microsoft)",
+        "Qwen 3 8B (Alibaba)",
+        "GPT-4 (OpenAI cl100k)",
+        "StableLM 2 1.6B",
+        "Qwen 2.5 7B (Alibaba)",
+        "Qwen 2.5 Coder 7B"
+      ],
+      "array": [
+        "LLaMA 3 8B (Meta)",
+        "QwQ 32B (Alibaba)",
+        "Marco-o1 (Alibaba)",
+        "LLaMA 3.1 8B (Meta)",
+        "Qwen 2 7B (Alibaba)",
+        "Phi-4 (Microsoft)",
+        "Qwen 3 8B (Alibaba)",
+        "GPT-4 (OpenAI cl100k)",
+        "StableLM 2 1.6B",
+        "Qwen 2.5 7B (Alibaba)",
+        "Qwen 2.5 Coder 7B"
+      ],
+      "h": [
+        "LLaMA 3 8B (Meta)",
+        "QwQ 32B (Alibaba)",
+        "Marco-o1 (Alibaba)",
+        "LLaMA 3.1 8B (Meta)",
+        "Qwen 2 7B (Alibaba)",
+        "Phi-4 (Microsoft)",
+        "Qwen 3 8B (Alibaba)",
+        "GPT-4 (OpenAI cl100k)",
+        "StableLM 2 1.6B",
+        "Qwen 2.5 7B (Alibaba)",
+        "Qwen 2.5 Coder 7B"
+      ],
+      "i": [
+        "LLaMA 3 8B (Meta)",
+        "QwQ 32B (Alibaba)",
+        "Marco-o1 (Alibaba)",
+        "LLaMA 3.1 8B (Meta)",
+        "Qwen 2 7B (Alibaba)",
+        "Phi-4 (Microsoft)",
+        "Qwen 3 8B (Alibaba)",
+        "GPT-4 (OpenAI cl100k)",
+        "StableLM 2 1.6B",
+        "Qwen 2.5 7B (Alibaba)",
+        "Qwen 2.5 Coder 7B"
+      ],
+      "int": [
+        "LLaMA 3 8B (Meta)",
+        "QwQ 32B (Alibaba)",
+        "Marco-o1 (Alibaba)",
+        "LLaMA 3.1 8B (Meta)",
+        "Qwen 2 7B (Alibaba)",
+        "Phi-4 (Microsoft)",
+        "Qwen 3 8B (Alibaba)",
+        "GPT-4 (OpenAI cl100k)",
+        "StableLM 2 1.6B",
+        "Qwen 2.5 7B (Alibaba)",
+        "Qwen 2.5 Coder 7B"
+      ],
+      "m": [
+        "LLaMA 3 8B (Meta)",
+        "QwQ 32B (Alibaba)",
+        "Marco-o1 (Alibaba)",
+        "LLaMA 3.1 8B (Meta)",
+        "Qwen 2 7B (Alibaba)",
+        "Phi-4 (Microsoft)",
+        "Qwen 3 8B (Alibaba)",
+        "GPT-4 (OpenAI cl100k)",
+        "StableLM 2 1.6B",
+        "Qwen 2.5 7B (Alibaba)",
+        "Qwen 2.5 Coder 7B"
+      ],
+      "r": [
+        "LLaMA 3 8B (Meta)",
+        "QwQ 32B (Alibaba)",
+        "Marco-o1 (Alibaba)",
+        "LLaMA 3.1 8B (Meta)",
+        "Qwen 2 7B (Alibaba)",
+        "Phi-4 (Microsoft)",
+        "Qwen 3 8B (Alibaba)",
+        "GPT-4 (OpenAI cl100k)",
+        "StableLM 2 1.6B",
+        "Qwen 2.5 7B (Alibaba)",
+        "Qwen 2.5 Coder 7B"
+      ],
+      "unique": [
+        "LLaMA 3 8B (Meta)",
+        "QwQ 32B (Alibaba)",
+        "Marco-o1 (Alibaba)",
+        "LLaMA 3.1 8B (Meta)",
+        "Qwen 2 7B (Alibaba)",
+        "Phi-4 (Microsoft)",
+        "Qwen 3 8B (Alibaba)",
+        "GPT-4 (OpenAI cl100k)",
+        "StableLM 2 1.6B",
+        "Qwen 2.5 7B (Alibaba)",
+        "Qwen 2.5 Coder 7B"
+      ],
+      "wx": [
+        "LLaMA 3 8B (Meta)",
+        "QwQ 32B (Alibaba)",
+        "Marco-o1 (Alibaba)",
+        "LLaMA 3.1 8B (Meta)",
+        "Qwen 2 7B (Alibaba)",
+        "Phi-4 (Microsoft)",
+        "Qwen 3 8B (Alibaba)",
+        "GPT-4 (OpenAI cl100k)",
+        "StableLM 2 1.6B",
+        "Qwen 2.5 7B (Alibaba)",
+        "Qwen 2.5 Coder 7B"
+      ],
+      "\u010d\n": [
+        "LLaMA 3 8B (Meta)",
+        "QwQ 32B (Alibaba)",
+        "Marco-o1 (Alibaba)",
+        "LLaMA 3.1 8B (Meta)",
+        "Qwen 2 7B (Alibaba)",
+        "Phi-4 (Microsoft)",
+        "Qwen 3 8B (Alibaba)",
+        "StableLM 2 1.6B",
+        "Qwen 2.5 7B (Alibaba)",
+        "Qwen 2.5 Coder 7B"
+      ],
+      "l": [
+        "LLaMA 3 8B (Meta)",
+        "Mistral Nemo (12B)",
+        "DeepSeek R1",
+        "LLaMA 3.1 8B (Meta)",
+        "DeepSeek V3 (671B)"
+      ],
+      "c": [
+        "DeepSeek V3 (671B)",
+        "Mistral Nemo (12B)",
+        "DeepSeek R1"
+      ],
+      "get": [
+        "GPT-4o (OpenAI o200k)"
+      ],
+      "||EMAIL_ADDRESS|||": [
+        "OLMo 7B (AllenAI)"
+      ],
+      "||IP_ADDRESS|||": [
+        "OLMo 7B (AllenAI)"
+      ],
+      "||PHONE_NUMBER|||": [
+        "OLMo 7B (AllenAI)"
+      ]
+    }
+  },
+  "quote_surface": {
+    "unique_words": 193
+  },
+  "tab_surface": {
+    "unique_words": 1238
+  },
+  "comma_surface": {
+    "unique_words": 282
+  },
+  "colon_surface": {
+    "unique_words": 232
+  },
+  "per_tokenizer": {
+    "GPT-4 (OpenAI cl100k)": {
+      "pipe": [
+        "|M",
+        "|R",
+        "|RF",
+        "|array",
+        "|h",
+        "|i",
+        "|int",
+        "|m",
+        "|max",
+        "|min",
+        "|null",
+        "|r",
+        "|required",
+        "|string",
+        "|unique",
+        "|wx",
+        "|x"
+      ],
+      "pipe_count": 17,
+      "quote_count": 114,
+      "tab_count": 1173,
+      "comma_count": 231,
+      "colon_count": 192
+    },
+    "GPT-4o (OpenAI o200k)": {
+      "pipe": [
+        "|get",
+        "|max",
+        "|min",
+        "|null",
+        "|required",
+        "|string"
+      ],
+      "pipe_count": 6,
+      "quote_count": 106,
+      "tab_count": 1036,
+      "comma_count": 209,
+      "colon_count": 168
+    },
+    "GPT-2 (OpenAI)": {
+      "pipe": [],
+      "pipe_count": 0,
+      "quote_count": 2,
+      "tab_count": 0,
+      "comma_count": 1,
+      "colon_count": 0
+    },
+    "Claude (Anthropic)": {
+      "pipe": [],
+      "pipe_count": 0,
+      "quote_count": 2,
+      "tab_count": 0,
+      "comma_count": 3,
+      "colon_count": 0
+    },
+    "LLaMA 2 7B (Meta)": {
+      "pipe": [],
+      "pipe_count": 0,
+      "quote_count": 0,
+      "tab_count": 0,
+      "comma_count": 0,
+      "colon_count": 0
+    },
+    "LLaMA 3 8B (Meta)": {
+      "pipe": [
+        "|M",
+        "|R",
+        "|RF",
+        "|array",
+        "|h",
+        "|i",
+        "|int",
+        "|l",
+        "|m",
+        "|max",
+        "|min",
+        "|null",
+        "|r",
+        "|required",
+        "|string",
+        "|unique",
+        "|wx",
+        "|x",
+        "|\u010d\n"
+      ],
+      "pipe_count": 19,
+      "quote_count": 150,
+      "tab_count": 0,
+      "comma_count": 242,
+      "colon_count": 198
+    },
+    "LLaMA 3.1 8B (Meta)": {
+      "pipe": [
+        "|M",
+        "|R",
+        "|RF",
+        "|array",
+        "|h",
+        "|i",
+        "|int",
+        "|l",
+        "|m",
+        "|max",
+        "|min",
+        "|null",
+        "|r",
+        "|required",
+        "|string",
+        "|unique",
+        "|wx",
+        "|x",
+        "|\u010d\n"
+      ],
+      "pipe_count": 19,
+      "quote_count": 150,
+      "tab_count": 0,
+      "comma_count": 242,
+      "colon_count": 198
+    },
+    "CodeLlama 7B (Meta)": {
+      "pipe": [],
+      "pipe_count": 0,
+      "quote_count": 0,
+      "tab_count": 0,
+      "comma_count": 0,
+      "colon_count": 0
+    },
+    "TinyLlama 1.1B": {
+      "pipe": [],
+      "pipe_count": 0,
+      "quote_count": 0,
+      "tab_count": 0,
+      "comma_count": 0,
+      "colon_count": 0
+    },
+    "Gemma 2 2B (Google)": {
+      "pipe": [],
+      "pipe_count": 0,
+      "quote_count": 0,
+      "tab_count": 0,
+      "comma_count": 0,
+      "colon_count": 0
+    },
+    "Gemma 3 1B (Google)": {
+      "pipe": [],
+      "pipe_count": 0,
+      "quote_count": 0,
+      "tab_count": 0,
+      "comma_count": 0,
+      "colon_count": 0
+    },
+    "T5 Base (Google)": {
+      "pipe": [],
+      "pipe_count": 0,
+      "quote_count": 0,
+      "tab_count": 0,
+      "comma_count": 0,
+      "colon_count": 0
+    },
+    "Mistral 7B v0.1": {
+      "pipe": [],
+      "pipe_count": 0,
+      "quote_count": 0,
+      "tab_count": 0,
+      "comma_count": 0,
+      "colon_count": 0
+    },
+    "Mistral 7B v0.3": {
+      "pipe": [],
+      "pipe_count": 0,
+      "quote_count": 0,
+      "tab_count": 0,
+      "comma_count": 0,
+      "colon_count": 0
+    },
+    "Mistral Nemo (12B)": {
+      "pipe": [
+        "|c",
+        "|l",
+        "|null"
+      ],
+      "pipe_count": 3,
+      "quote_count": 37,
+      "tab_count": 0,
+      "comma_count": 75,
+      "colon_count": 65
+    },
+    "Mixtral 8x7B": {
+      "pipe": [],
+      "pipe_count": 0,
+      "quote_count": 0,
+      "tab_count": 0,
+      "comma_count": 0,
+      "colon_count": 0
+    },
+    "Codestral 22B": {
+      "pipe": [],
+      "pipe_count": 0,
+      "quote_count": 0,
+      "tab_count": 0,
+      "comma_count": 0,
+      "colon_count": 0
+    },
+    "Qwen 2 7B (Alibaba)": {
+      "pipe": [
+        "|M",
+        "|R",
+        "|RF",
+        "|array",
+        "|h",
+        "|i",
+        "|int",
+        "|m",
+        "|max",
+        "|min",
+        "|null",
+        "|r",
+        "|required",
+        "|string",
+        "|unique",
+        "|wx",
+        "|x",
+        "|\u010d\n"
+      ],
+      "pipe_count": 18,
+      "quote_count": 151,
+      "tab_count": 0,
+      "comma_count": 240,
+      "colon_count": 197
+    },
+    "Qwen 2.5 7B (Alibaba)": {
+      "pipe": [
+        "|M",
+        "|R",
+        "|RF",
+        "|array",
+        "|h",
+        "|i",
+        "|int",
+        "|m",
+        "|max",
+        "|min",
+        "|null",
+        "|r",
+        "|required",
+        "|string",
+        "|unique",
+        "|wx",
+        "|x",
+        "|\u010d\n"
+      ],
+      "pipe_count": 18,
+      "quote_count": 151,
+      "tab_count": 0,
+      "comma_count": 240,
+      "colon_count": 197
+    },
+    "Qwen 2.5 Coder 7B": {
+      "pipe": [
+        "|M",
+        "|R",
+        "|RF",
+        "|array",
+        "|h",
+        "|i",
+        "|int",
+        "|m",
+        "|max",
+        "|min",
+        "|null",
+        "|r",
+        "|required",
+        "|string",
+        "|unique",
+        "|wx",
+        "|x",
+        "|\u010d\n"
+      ],
+      "pipe_count": 18,
+      "quote_count": 151,
+      "tab_count": 0,
+      "comma_count": 240,
+      "colon_count": 197
+    },
+    "Qwen 3 8B (Alibaba)": {
+      "pipe": [
+        "|M",
+        "|R",
+        "|RF",
+        "|array",
+        "|h",
+        "|i",
+        "|int",
+        "|m",
+        "|max",
+        "|min",
+        "|null",
+        "|r",
+        "|required",
+        "|string",
+        "|unique",
+        "|wx",
+        "|x",
+        "|\u010d\n"
+      ],
+      "pipe_count": 18,
+      "quote_count": 151,
+      "tab_count": 0,
+      "comma_count": 240,
+      "colon_count": 197
+    },
+    "QwQ 32B (Alibaba)": {
+      "pipe": [
+        "|M",
+        "|R",
+        "|RF",
+        "|array",
+        "|h",
+        "|i",
+        "|int",
+        "|m",
+        "|max",
+        "|min",
+        "|null",
+        "|r",
+        "|required",
+        "|string",
+        "|unique",
+        "|wx",
+        "|x",
+        "|\u010d\n"
+      ],
+      "pipe_count": 18,
+      "quote_count": 151,
+      "tab_count": 0,
+      "comma_count": 240,
+      "colon_count": 197
+    },
+    "DeepSeek V2 Lite": {
+      "pipe": [],
+      "pipe_count": 0,
+      "quote_count": 3,
+      "tab_count": 0,
+      "comma_count": 0,
+      "colon_count": 0
+    },
+    "DeepSeek V3 (671B)": {
+      "pipe": [
+        "|c",
+        "|l",
+        "|null",
+        "|x"
+      ],
+      "pipe_count": 4,
+      "quote_count": 47,
+      "tab_count": 0,
+      "comma_count": 83,
+      "colon_count": 54
+    },
+    "DeepSeek R1": {
+      "pipe": [
+        "|c",
+        "|l",
+        "|null",
+        "|x"
+      ],
+      "pipe_count": 4,
+      "quote_count": 47,
+      "tab_count": 0,
+      "comma_count": 83,
+      "colon_count": 54
+    },
+    "DeepSeek Coder V2 Lite": {
+      "pipe": [],
+      "pipe_count": 0,
+      "quote_count": 3,
+      "tab_count": 0,
+      "comma_count": 0,
+      "colon_count": 0
+    },
+    "Phi-2 (Microsoft)": {
+      "pipe": [],
+      "pipe_count": 0,
+      "quote_count": 2,
+      "tab_count": 0,
+      "comma_count": 1,
+      "colon_count": 0
+    },
+    "Phi-3 Mini (Microsoft)": {
+      "pipe": [],
+      "pipe_count": 0,
+      "quote_count": 0,
+      "tab_count": 0,
+      "comma_count": 0,
+      "colon_count": 0
+    },
+    "Phi-4 (Microsoft)": {
+      "pipe": [
+        "|M",
+        "|R",
+        "|RF",
+        "|array",
+        "|h",
+        "|i",
+        "|int",
+        "|m",
+        "|max",
+        "|min",
+        "|null",
+        "|r",
+        "|required",
+        "|string",
+        "|unique",
+        "|wx",
+        "|x",
+        "|\u010d\n"
+      ],
+      "pipe_count": 18,
+      "quote_count": 150,
+      "tab_count": 0,
+      "comma_count": 240,
+      "colon_count": 197
+    },
+    "Falcon 7B (TII)": {
+      "pipe": [],
+      "pipe_count": 0,
+      "quote_count": 2,
+      "tab_count": 0,
+      "comma_count": 6,
+      "colon_count": 1
+    },
+    "Falcon 40B (TII)": {
+      "pipe": [],
+      "pipe_count": 0,
+      "quote_count": 2,
+      "tab_count": 0,
+      "comma_count": 6,
+      "colon_count": 1
+    },
+    "Falcon 2 11B (TII)": {
+      "pipe": [],
+      "pipe_count": 0,
+      "quote_count": 2,
+      "tab_count": 0,
+      "comma_count": 6,
+      "colon_count": 1
+    },
+    "Yi 1.5 9B (01.AI)": {
+      "pipe": [],
+      "pipe_count": 0,
+      "quote_count": 0,
+      "tab_count": 0,
+      "comma_count": 0,
+      "colon_count": 0
+    },
+    "Yi Coder 9B (01.AI)": {
+      "pipe": [],
+      "pipe_count": 0,
+      "quote_count": 0,
+      "tab_count": 0,
+      "comma_count": 0,
+      "colon_count": 0
+    },
+    "StarCoder2 7B": {
+      "pipe": [],
+      "pipe_count": 0,
+      "quote_count": 2,
+      "tab_count": 0,
+      "comma_count": 1,
+      "colon_count": 0
+    },
+    "StarCoder2 15B": {
+      "pipe": [],
+      "pipe_count": 0,
+      "quote_count": 2,
+      "tab_count": 0,
+      "comma_count": 1,
+      "colon_count": 0
+    },
+    "Nemotron Mini 4B": {
+      "pipe": [],
+      "pipe_count": 0,
+      "quote_count": 0,
+      "tab_count": 0,
+      "comma_count": 0,
+      "colon_count": 0
+    },
+    "Jamba v0.1 (AI21)": {
+      "pipe": [],
+      "pipe_count": 0,
+      "quote_count": 0,
+      "tab_count": 0,
+      "comma_count": 0,
+      "colon_count": 0
+    },
+    "StableLM 2 1.6B": {
+      "pipe": [
+        "|M",
+        "|R",
+        "|RF",
+        "|array",
+        "|h",
+        "|i",
+        "|int",
+        "|m",
+        "|max",
+        "|min",
+        "|null",
+        "|r",
+        "|required",
+        "|string",
+        "|unique",
+        "|wx",
+        "|x",
+        "|\u010d\n"
+      ],
+      "pipe_count": 18,
+      "quote_count": 150,
+      "tab_count": 0,
+      "comma_count": 240,
+      "colon_count": 197
+    },
+    "Pythia 6.9B": {
+      "pipe": [],
+      "pipe_count": 0,
+      "quote_count": 1,
+      "tab_count": 0,
+      "comma_count": 3,
+      "colon_count": 0
+    },
+    "Arctic (Snowflake)": {
+      "pipe": [],
+      "pipe_count": 0,
+      "quote_count": 0,
+      "tab_count": 0,
+      "comma_count": 0,
+      "colon_count": 0
+    },
+    "OLMo 7B (AllenAI)": {
+      "pipe": [
+        "|||EMAIL_ADDRESS|||",
+        "|||IP_ADDRESS|||",
+        "|||PHONE_NUMBER|||"
+      ],
+      "pipe_count": 3,
+      "quote_count": 1,
+      "tab_count": 0,
+      "comma_count": 3,
+      "colon_count": 0
+    },
+    "Marco-o1 (Alibaba)": {
+      "pipe": [
+        "|M",
+        "|R",
+        "|RF",
+        "|array",
+        "|h",
+        "|i",
+        "|int",
+        "|m",
+        "|max",
+        "|min",
+        "|null",
+        "|r",
+        "|required",
+        "|string",
+        "|unique",
+        "|wx",
+        "|x",
+        "|\u010d\n"
+      ],
+      "pipe_count": 18,
+      "quote_count": 151,
+      "tab_count": 0,
+      "comma_count": 240,
+      "colon_count": 197
+    }
+  }
+}

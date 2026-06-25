@@ -3,7 +3,7 @@
 Adversarial Vocabulary Dump
 
 Exhaustively extracts every vocabulary entry where a delimiter character
-(pipe, quote, tab) is fused with alphabetic content from all 43 tokenizers.
+(pipe, quote, tab, comma, colon) is fused with alphabetic content from all 43 tokenizers.
 
 BPE is deterministic: if |foo is a vocabulary entry, it WILL merge.
 If |foo is NOT in the vocabulary, it CAN NEVER merge. This is the
@@ -44,6 +44,8 @@ def main():
         pipe_entries = []
         quote_entries = []
         tab_entries = []
+        comma_entries = []
+        colon_entries = []
 
         for token_str in vocab:
             clean = token_str.replace("\u0120", " ").replace("\u2581", " ").replace("\u010a", "\n")
@@ -65,11 +67,23 @@ def main():
                         tab_entries.append(clean)
                         break
 
+            if clean.startswith(",") and len(clean) > 1:
+                rest = clean[1:]
+                if any(c.isalpha() for c in rest):
+                    comma_entries.append(clean)
+
+            if clean.startswith(":") and len(clean) > 1:
+                rest = clean[1:]
+                if any(c.isalpha() for c in rest):
+                    colon_entries.append(clean)
+
         all_results[tname] = {
             "vocab_size": len(vocab),
             "pipe": sorted(pipe_entries),
             "quote": sorted(quote_entries),
             "tab": sorted(tab_entries),
+            "comma": sorted(comma_entries),
+            "colon": sorted(colon_entries),
         }
 
     # Per-tokenizer summary
@@ -77,10 +91,10 @@ def main():
     print(f"EXHAUSTIVE VOCABULARY DUMP ({n} tokenizers)")
     print("=" * 80)
     print()
-    print(f"{'Tokenizer':<35} {'Vocab':>7} {'|+alpha':>8} {'chr(34)+alpha':>13} {'tab+alpha':>10}")
-    print("-" * 75)
+    print(f"{'Tokenizer':<35} {'Vocab':>7} {'|+alpha':>8} {'chr(34)+alpha':>13} {'tab+alpha':>10} {',+alpha':>8} {':+alpha':>8}")
+    print("-" * 95)
     for tname, r in all_results.items():
-        print(f"{tname[:34]:<35} {r['vocab_size']:>7} {len(r['pipe']):>8} {len(r['quote']):>13} {len(r['tab']):>10}")
+        print(f"{tname[:34]:<35} {r['vocab_size']:>7} {len(r['pipe']):>8} {len(r['quote']):>13} {len(r['tab']):>10} {len(r['comma']):>8} {len(r['colon']):>8}")
 
     # Aggregate unique words per delimiter
     def aggregate(key):
@@ -101,6 +115,8 @@ def main():
     pipe_words = aggregate("pipe")
     quote_words = aggregate("quote")
     tab_words = aggregate("tab")
+    comma_words = aggregate("comma")
+    colon_words = aggregate("colon")
 
     # Print pipe surface (small enough to list completely)
     print()
@@ -111,20 +127,44 @@ def main():
     for word, toks in sorted(pipe_words.items(), key=lambda x: (-len(x[1]), x[0])):
         print(f"  |{word:<20} {len(toks):>2}/{n} tokenizers")
 
+    # Print comma surface
+    print()
+    print("=" * 80)
+    print(f"COMMA: ADVERSARIAL SURFACE ({len(comma_words)} unique words)")
+    print("=" * 80)
+    print()
+    for word, toks in sorted(comma_words.items(), key=lambda x: (-len(x[1]), x[0]))[:30]:
+        print(f"  ,{word:<20} {len(toks):>2}/{n} tokenizers")
+    if len(comma_words) > 30:
+        print(f"  ... and {len(comma_words) - 30} more")
+
+    # Print colon surface
+    print()
+    print("=" * 80)
+    print(f"COLON: ADVERSARIAL SURFACE ({len(colon_words)} unique words)")
+    print("=" * 80)
+    print()
+    for word, toks in sorted(colon_words.items(), key=lambda x: (-len(x[1]), x[0]))[:30]:
+        print(f"  :{word:<20} {len(toks):>2}/{n} tokenizers")
+    if len(colon_words) > 30:
+        print(f"  ... and {len(colon_words) - 30} more")
+
     # Summary
     print()
     print("=" * 80)
     print("GRAND SUMMARY")
     print("=" * 80)
     print()
+    p = max(len(pipe_words), 1)
     print(f"{'Delimiter':<12} {'Unique words':>14} {'Ratio to pipe':>15}")
     print("-" * 42)
     print(f"{'| (pipe)':<12} {len(pipe_words):>14} {'1x':>15}")
-    print(f"{'\" (quote)':<12} {len(quote_words):>14} {f'{len(quote_words)/max(len(pipe_words),1):.0f}x':>15}")
-    print(f"{'\\t (tab)':<12} {len(tab_words):>14} {f'{len(tab_words)/max(len(pipe_words),1):.0f}x':>15}")
+    print(f"{'\" (quote)':<12} {len(quote_words):>14} {f'{len(quote_words)/p:.0f}x':>15}")
+    print(f"{'\\t (tab)':<12} {len(tab_words):>14} {f'{len(tab_words)/p:.0f}x':>15}")
+    print(f"{', (comma)':<12} {len(comma_words):>14} {f'{len(comma_words)/p:.0f}x':>15}")
+    print(f"{': (colon)':<12} {len(colon_words):>14} {f'{len(colon_words)/p:.0f}x':>15}")
     print()
     print("The pipe delimiter has the smallest adversarial surface of any delimiter tested.")
-    print(f"Quote has {len(quote_words)/max(len(pipe_words),1):.0f}x more mergeable words. Tab has {len(tab_words)/max(len(pipe_words),1):.0f}x more.")
 
     # Save
     results_dir = Path(__file__).parent / "results" / "tokenizer"
@@ -138,9 +178,12 @@ def main():
         },
         "quote_surface": {"unique_words": len(quote_words)},
         "tab_surface": {"unique_words": len(tab_words)},
+        "comma_surface": {"unique_words": len(comma_words)},
+        "colon_surface": {"unique_words": len(colon_words)},
         "per_tokenizer": {
             tname: {"pipe": r["pipe"], "pipe_count": len(r["pipe"]),
-                    "quote_count": len(r["quote"]), "tab_count": len(r["tab"])}
+                    "quote_count": len(r["quote"]), "tab_count": len(r["tab"]),
+                    "comma_count": len(r["comma"]), "colon_count": len(r["colon"])}
             for tname, r in all_results.items()
         },
     }
