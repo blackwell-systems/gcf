@@ -10,7 +10,7 @@
 
 JSON is the dominant data interchange format in large language model (LLM) tool ecosystems, yet its structural grammar interacts poorly with Byte-Pair Encoding (BPE) tokenizers at the subword level. We present a systematic cross-tokenizer analysis of JSON's structural boundaries across 43 tokenizers from 20 providers, covering every major LLM family in production.
 
-We find that the most common JSON field names (including `id`, `name`, `type`, `value`, `title`, `time`, `text`, `url`, `path`, and `description`) exist as merged vocabulary entries where the opening quote fuses with the field name on 28-30% of tested tokenizers. These merges are hardcoded dictionary entries (e.g., `"name` is entry #32586 in GPT-4's cl100k vocabulary) and are deterministic, not context-dependent. GPT-4 contains 117 such quote+letter vocabulary entries; Claude and Gemma contain 2-3. An exhaustive vocabulary scan across all 43 tokenizers reveals that the pipe delimiter has 24 mergeable words in any vocabulary, compared to 193 for the quote and 1,238 for the tab.
+We find that the most common JSON field names (including `id`, `name`, `type`, `value`, `title`, `time`, `text`, `url`, `path`, and `description`) exist as merged vocabulary entries where the opening quote fuses with the field name on 28-30% of tested tokenizers. These merges are hardcoded dictionary entries (e.g., `"name` is entry #32586 in GPT-4's cl100k vocabulary) and are deterministic, not context-dependent. GPT-4 contains 117 such quote+letter vocabulary entries; Claude and Gemma contain 2-3. An exhaustive vocabulary scan across all 43 tokenizers reveals that the pipe delimiter has 24 mergeable words in any vocabulary. JSON's three structural characters have a combined adversarial surface of 707 words (quote 193, colon 232, comma 282). The tab has 1,238.
 
 On real evaluation data (29,025 checks across 43 tokenizers), JSON exhibits a boundary merge rate of 8.17% compared to 0.47% for a comparison format using pipe delimiters and 32.91% for a tab-delimited format. We further show that JSON overhead reaches 81% at 500 rows (52% repeated field names, 29% structural characters), growing O(n) per row, while header-factored formats maintain O(1) overhead. A grammar swap experiment across 5 delimiter sets and 800 measurements confirms that token savings are structural (0.4 percentage point spread), not delimiter-specific.
 
@@ -239,13 +239,15 @@ GPT-4 has 1,173 tab+letter vocabulary entries. Tab-separated data was so common 
 
 BPE is deterministic. If `|foo` exists as a vocabulary entry, the tokenizer will select it as a single token. If it does not exist, `|` and `foo` must be separate tokens. The definitive answer to "what can merge with each delimiter" is an exhaustive dump of every vocabulary entry starting with that delimiter across all 43 tokenizers:
 
-| Delimiter | Unique Mergeable Words | Examples |
-|-----------|----------------------|---------|
-| `|` (pipe) | **24** | `|null`, `|string`, `|required`, `|max`, `|min`, `|array`, `|int` (TypeScript type union syntax) |
-| `"` (quote) | **193** | `"name`, `"id`, `"type`, `"value`, `"text`, `"url`, `"path`, and 186 others |
-| `\t` (tab) | **1,238** | Nearly every common English word on GPT-4/4o |
+| Delimiter | Unique Mergeable Words | Used by | Examples |
+|-----------|----------------------|---------|---------|
+| `|` (pipe) | **24** | GCF | `|null`, `|string`, `|required`, `|max`, `|min` (TypeScript unions) |
+| `"` (quote) | **193** | JSON | `"name`, `"id`, `"type`, `"value`, `"text`, `"url`, and 187 others |
+| `:` (colon) | **232** | JSON | `::self`, `::string`, `::id`, `::int` (C++/Rust scope resolution) |
+| `,` (comma) | **282** | JSON | `,name`, `,value`, `,type` (CSV-style patterns in training data) |
+| `\t` (tab) | **1,238** | TOON | Nearly every common English word on GPT-4/4o |
 
-The pipe has 8x fewer mergeable words than the quote and 52x fewer than the tab. The entries `|name`, `|id`, `|type`, `|value`, `|status`, `|title` do not exist as vocabulary entries on any of the 43 tokenizers. The pipe will never merge with any common field name. This is not a statistical claim from sampling; it is a dictionary fact.
+JSON uses three structural characters with a combined adversarial surface of **707 unique mergeable words** (quote 193 + colon 232 + comma 282). The pipe has 24. That is a 29:1 ratio. LLaMA 3.1 alone has 242 comma+letter and 198 colon+letter vocabulary entries. The entries `|name`, `|id`, `|type`, `|value`, `|status`, `|title` do not exist as vocabulary entries on any of the 43 tokenizers. The pipe will never merge with any common field name. This is not a statistical claim from sampling; it is a dictionary fact.
 
 #### Specific token IDs
 
@@ -577,7 +579,7 @@ TOON, the primary competing token-efficient format, uses tab characters as colum
 | JSON | Quote | 8.17% | 1,935 |
 | GCF | Pipe | **0.47%** | 29,025 |
 
-The exhaustive vocabulary dump explains why. GPT-4o has a **100% tab merge rate**: every single word tested merges with the preceding tab. GPT-4 cl100k merges 95%. The tab has **1,238 unique mergeable words** across all 43 tokenizer vocabularies, compared to 193 for the quote and 24 for the pipe. Tab-separated data (TSV, log files, shell output) is so common in code training corpora that nearly every common word is fused with the tab character in OpenAI's vocabularies.
+The exhaustive vocabulary dump explains why. GPT-4o has a **100% tab merge rate**: every single word tested merges with the preceding tab. GPT-4 cl100k merges 95%. The tab has **1,238 unique mergeable words** across all 43 tokenizer vocabularies. JSON's combined surface is 707 words (quote 193, colon 232, comma 282). The pipe has 24. Tab-separated data (TSV, log files, shell output) is so common in code training corpora that nearly every common word is fused with the tab character in OpenAI's vocabularies.
 
 GPT-4 cl100k has **1,173 tab+letter vocabulary entries** and 22 pipe+letter entries. GPT-4o o200k has **1,036 tab+letter** entries and 6 pipe+letter entries. No other tokenizer family has tab+letter entries.
 
@@ -696,7 +698,7 @@ Supplementary analysis (JavaScript):
 |--------|---------|------------|
 | `hf-tokenizer-analysis.py` | 43-tokenizer merge rates, vocab entries, savings vs JSON and TOON | Comprehensive cross-tokenizer tables |
 | `structural-equivalence-proof.py` | Grammar isolation across 43 tokenizers | 99.5% isolation proof |
-| `adversarial-vocab-dump.py` | Exhaustive vocabulary scan, complete adversarial surface | 24 pipe vs 193 quote vs 1,238 tab |
+| `adversarial-vocab-dump.py` | Exhaustive vocabulary scan, complete adversarial surface | Pipe 24 vs JSON combined 707 vs tab 1,238 |
 | `attention-analysis.py` | Attention extraction from Pythia 410M and Gemma 2B | Entropy crossover, grammar attention collapse |
 
 #### Supplementary analyses (8 tokenizers, JavaScript)
