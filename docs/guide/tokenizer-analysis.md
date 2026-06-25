@@ -14,7 +14,7 @@ Every LLM uses a different tokenizer. A format designed for one tokenizer might 
 
 ## The Core Question
 
-When you send structured data to an LLM, the tokenizer converts it into a sequence of integer IDs. Different models use different tokenizers (trained on different corpora, with different vocabulary sizes). This raises two questions:
+When you send structured data to an LLM, the tokenizer converts it into a sequence of integer IDs. Different models use different tokenizers, each trained on a different corpus (the large text dataset used to learn which byte sequences to merge into tokens). These corpora include code repositories, web pages, books, and other text sources. Different corpora produce different vocabularies, which means different tokenizers. This raises two questions:
 
 1. **Are GCF's token savings consistent?** If GCF saves 58% on GPT-4 but only 20% on Claude, the savings claims are misleading.
 2. **Are GCF's structural boundaries consistent?** If different models see the data's field boundaries at different token positions, comprehension will vary per model.
@@ -438,8 +438,8 @@ Connects tokenization findings to comprehension eval data (2,400+ LLM calls acro
 
 The tokenization analysis connects directly to the [comprehension eval data](/guide/benchmarks):
 
-- JSON accuracy on stress-scale data: **53.4%** (10 models, 24 runs)
-- GCF accuracy on stress-scale data: **91.2%**
+- JSON accuracy on stress-scale data: **53.4%** (10 models, 24 runs, 3 providers)
+- GCF accuracy on stress-scale data: **91.2%** (same runs, same models)
 - GCF accuracy on standard workloads: **100%** on every frontier model
 
 **Why does JSON fail at scale?**
@@ -845,13 +845,13 @@ We classified every token as grammar (delimiters, structural markers) or payload
 
 **Gemma 2B (100 orders):**
 
-| Orders | GCF payload% | JSON grammar% | JSON payload% |
-|--------|-------------|--------------|--------------|
-| 5 | 46.2% | 29.8% | 67.7% |
-| 10 | 47.6% | 29.7% | 68.0% |
-| 20 | 49.2% | 30.4% | 67.4% |
-| 50 | **51.4%** | **8.6%** | **86.3%** |
-| 100 | **62.6%** | **8.6%** | **86.3%** |
+| Orders | GCF grammar% | GCF payload% | JSON grammar% | JSON payload% |
+|--------|-------------|-------------|--------------|--------------|
+| 5 | 53.8% | 46.2% | 29.8% | 67.7% |
+| 10 | 52.4% | 47.6% | 29.7% | 68.0% |
+| 20 | 50.8% | 49.2% | 30.4% | 67.4% |
+| 50 | **48.6%** | **51.4%** | **8.6%** | **86.3%** |
+| 100 | **37.4%** | **62.6%** | **8.6%** | **86.3%** |
 
 At small scale (5-20 orders), JSON's attention splits roughly 30% grammar / 68% payload. The model attends to structural tokens (quotes, colons, braces) to understand the format, then to payload tokens to extract data. This is healthy attention behavior.
 
@@ -863,13 +863,15 @@ GCF does the opposite. Payload attention **increases steadily** from 46% to 63% 
 
 The underlying cause of both phenomena is token repetition. JSON repeats the same token IDs on every row. GCF doesn't.
 
-| Orders | GCF repeat% | JSON repeat% |
-|--------|------------|-------------|
-| 5 | 42.4% | 74.8% |
-| 10 | 62.0% | 84.9% |
-| 20 | 76.6% | 91.0% |
-| 50 | 83.6% | 93.6% |
-| 100 | 97.9% | 97.8% |
+| Orders | GCF repeat% | JSON repeat% | Tokens |
+|--------|------------|-------------|--------|
+| 5 | 42.4% | 74.8% | 110 / 245 |
+| 10 | 62.0% | 84.9% | 211 / 490 |
+| 20 | 76.6% | 91.0% | 413 / 982 |
+| 50 | 83.6% | 93.6% | 1,019 / 2,048 |
+| 100 | 97.9% | 97.8% | 2,048 / 2,048* |
+
+*At 100 orders, both formats hit Gemma 2B's 2,048-token context window. The apparent convergence is a truncation artifact: both sequences are clipped to the same length, exhausting their small unique token pools (~42-45 unique tokens). At 50 orders (the last untruncated scale), the gap is 10pp: JSON has 93.6% repetition vs GCF's 83.6%.
 
 At 50 orders, 93.6% of JSON tokens are duplicates. The model's attention mechanism must distribute weight across hundreds of identical tokens using only positional encoding to distinguish them. This is mathematically equivalent to the attention dilution problem described by [Ildiz et al. (2024)](https://arxiv.org/abs/2402.13512): self-attention weights tokens proportionally to their frequency, so repeated tokens dominate the attention budget.
 
