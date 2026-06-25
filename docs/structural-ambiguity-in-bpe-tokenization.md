@@ -304,9 +304,9 @@ To understand the adversarial surface in full context, we scanned all 94 printab
 | High (51-100) | `&` `;` `+` `}` `{` | 57-97 | JSON braces are here |
 | Very high (101+) | `"` `:` `,` `[` `(` `-` `.` `_` letters | 117-11,891 | All JSON delimiters, all letters |
 
-Digits are the only perfectly safe characters, but they cannot serve as delimiters because they appear in payload data (numbers, IDs, timestamps). The pipe (24 words) is the safest practical delimiter: it has a small adversarial surface, rarely appears in payload data, and is visually distinct.
+Digits are the only perfectly safe characters, but they cannot serve as delimiters because they appear in payload data (numbers, IDs, timestamps). Backtick (5 words) and tilde (8 words) have smaller surfaces than the pipe (24 words), but both have practical drawbacks: backtick is used in markdown, template literals, and shell commands; tilde is used in home directory paths, bitwise negation, and approximation. The pipe was selected because its 24 mergeable words are exclusively programming keywords from TypeScript union syntax (`|null`, `|string`, `|required`), none of which appear as structured data field names or values. It also provides superior readability as a visual column separator.
 
-JSON's total adversarial surface across all 7 grammar characters (`"`, `:`, `,`, `{`, `}`, `[`, `]`) is **1,939 unique mergeable words**. This is 81x the pipe's 24 words.
+JSON's total adversarial surface across all 7 grammar characters (`"`, `:`, `,`, `{`, `}`, `[`, `]`) is **1,939 unique mergeable words**. This is 81x the pipe's 24 words. The `[` character alone has 1,035 mergeable words (array indexing patterns from code training data).
 
 ### 4.5 JSON Token Overhead
 
@@ -775,8 +775,8 @@ From the 74 safe ASCII characters, structural delimiters were chosen based on se
 
 | Character | Why chosen | Alternative considered | Why not |
 |-----------|-----------|----------------------|---------|
-| `\|` (pipe) | Rare in natural text, visually distinct column separator | Tab (`\t`) | Invisible, merges on 33% of tokenizers |
-| `@` | Establishes "this is an ID" semantically | `$` | Also safe, but less intuitive |
+| `\|` (pipe) | 24-word surface (medium tier), but all are TypeScript union keywords, none are data values. Visually distinct column separator. | Backtick (5 words), Tilde (8 words) | Smaller surface but backtick conflicts with markdown/template literals, tilde with paths. Tab (`\t`) is invisible and merges on 33% of tokenizers. |
+| `@` | Establishes "this is an ID" semantically. 127-word surface, but GCF uses `@` only before digits (`@0`, `@1`), which never trigger merges. | `$` | Also safe, but less intuitive |
 | `##` | Two-char sequence tokenizers always merge into one token, Markdown-familiar | `===` | 3 chars, less efficient |
 | `<` | Reads as "points to" for edges | `~` | Also safe, but less semantic |
 | `\n` | Universal row separator, zero overhead | `;` | Less readable |

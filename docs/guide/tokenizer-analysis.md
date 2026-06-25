@@ -766,7 +766,7 @@ To understand the adversarial surface in full context, we scanned all 94 printab
 | High (51-100) | `&` `;` `+` `}` `{` | 57-97 |
 | Very high (101+) | `"` `:` `,` `[` `(` `-` `.` `_` letters | 117-11,891 |
 
-Only digits have zero merge risk, but they cannot serve as delimiters because they appear in payload data. The pipe (24 words) is the safest practical delimiter.
+Only digits have zero merge risk, but they cannot serve as delimiters because they appear in payload data. Backtick (5 words) and tilde (8 words) have smaller surfaces than the pipe (24 words), but both have practical drawbacks: backtick is used in markdown, template literals, and shell commands; tilde appears in home directory paths and approximations. The pipe was selected because its 24 mergeable words are exclusively TypeScript union syntax (`|null`, `|string`, `|required`), none of which appear as data field names or values, and it provides superior readability as a column separator.
 
 JSON's total adversarial surface across all 7 grammar characters (`"`, `:`, `,`, `{`, `}`, `[`, `]`) is **1,939 unique mergeable words**. This is 81x the pipe's 24 words. The `[` character alone has 1,035 mergeable words (array syntax patterns from code training data).
 
