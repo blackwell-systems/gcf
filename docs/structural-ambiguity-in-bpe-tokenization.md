@@ -34,7 +34,7 @@ Prior work has noted JSON's token overhead in passing. Deekeswar (2024) measured
 
 We fill this gap with six contributions:
 
-1. An exhaustive vocabulary scan of 43 tokenizer dictionaries identifying all entries where delimiter characters fuse with alphabetic content, with the complete adversarial surface for pipe (24 words), quote (193 words), and tab (1,238 words).
+1. An exhaustive vocabulary scan of 43 tokenizer dictionaries identifying all entries where delimiter characters fuse with alphabetic content, with the complete adversarial surface for pipe (24 words), JSON's combined surface (707 words: quote 193, colon 232, comma 282), and tab (1,238 words).
 2. A cross-tokenizer boundary merge analysis on real evaluation data (29,025 checks), quantifying the rate at which JSON's structural delimiters merge with field names.
 3. A structural equivalence proof showing that pipe-delimited formats maintain deterministic grammar isolation (99.5%) while JSON grammar fuses on all 43 tokenizers.
 4. A grammar swap experiment proving that token savings from header-factored formats are structural properties, not artifacts of specific delimiter choices.
