@@ -1,0 +1,573 @@
+{
+  "timestamp": "2026-06-25T13:53:53Z",
+  "tokenizer_count": 43,
+  "characters_tested": 94,
+  "safe_count": 10,
+  "safe_characters": "0123456789",
+  "ranking": [
+    {
+      "char": "0",
+      "code": 48,
+      "unique_words": 0,
+      "max_tokenizers": 0
+    },
+    {
+      "char": "1",
+      "code": 49,
+      "unique_words": 0,
+      "max_tokenizers": 0
+    },
+    {
+      "char": "2",
+      "code": 50,
+      "unique_words": 0,
+      "max_tokenizers": 0
+    },
+    {
+      "char": "3",
+      "code": 51,
+      "unique_words": 0,
+      "max_tokenizers": 0
+    },
+    {
+      "char": "4",
+      "code": 52,
+      "unique_words": 0,
+      "max_tokenizers": 0
+    },
+    {
+      "char": "5",
+      "code": 53,
+      "unique_words": 0,
+      "max_tokenizers": 0
+    },
+    {
+      "char": "6",
+      "code": 54,
+      "unique_words": 0,
+      "max_tokenizers": 0
+    },
+    {
+      "char": "7",
+      "code": 55,
+      "unique_words": 0,
+      "max_tokenizers": 0
+    },
+    {
+      "char": "8",
+      "code": 56,
+      "unique_words": 0,
+      "max_tokenizers": 0
+    },
+    {
+      "char": "9",
+      "code": 57,
+      "unique_words": 0,
+      "max_tokenizers": 0
+    },
+    {
+      "char": "`",
+      "code": 96,
+      "unique_words": 5,
+      "max_tokenizers": 15
+    },
+    {
+      "char": "~",
+      "code": 126,
+      "unique_words": 8,
+      "max_tokenizers": 2
+    },
+    {
+      "char": "^",
+      "code": 94,
+      "unique_words": 17,
+      "max_tokenizers": 14
+    },
+    {
+      "char": "|",
+      "code": 124,
+      "unique_words": 24,
+      "max_tokenizers": 15
+    },
+    {
+      "char": "!",
+      "code": 33,
+      "unique_words": 30,
+      "max_tokenizers": 19
+    },
+    {
+      "char": "]",
+      "code": 93,
+      "unique_words": 30,
+      "max_tokenizers": 13
+    },
+    {
+      "char": "#",
+      "code": 35,
+      "unique_words": 43,
+      "max_tokenizers": 15
+    },
+    {
+      "char": "%",
+      "code": 37,
+      "unique_words": 49,
+      "max_tokenizers": 15
+    },
+    {
+      "char": "?",
+      "code": 63,
+      "unique_words": 50,
+      "max_tokenizers": 19
+    },
+    {
+      "char": "&",
+      "code": 38,
+      "unique_words": 57,
+      "max_tokenizers": 15
+    },
+    {
+      "char": ";",
+      "code": 59,
+      "unique_words": 57,
+      "max_tokenizers": 15
+    },
+    {
+      "char": "+",
+      "code": 43,
+      "unique_words": 61,
+      "max_tokenizers": 15
+    },
+    {
+      "char": "}",
+      "code": 125,
+      "unique_words": 70,
+      "max_tokenizers": 15
+    },
+    {
+      "char": "{",
+      "code": 123,
+      "unique_words": 97,
+      "max_tokenizers": 15
+    },
+    {
+      "char": "*",
+      "code": 42,
+      "unique_words": 117,
+      "max_tokenizers": 15
+    },
+    {
+      "char": "@",
+      "code": 64,
+      "unique_words": 127,
+      "max_tokenizers": 15
+    },
+    {
+      "char": ">",
+      "code": 62,
+      "unique_words": 128,
+      "max_tokenizers": 15
+    },
+    {
+      "char": "$",
+      "code": 36,
+      "unique_words": 153,
+      "max_tokenizers": 15
+    },
+    {
+      "char": "X",
+      "code": 88,
+      "unique_words": 175,
+      "max_tokenizers": 42
+    },
+    {
+      "char": ")",
+      "code": 41,
+      "unique_words": 184,
+      "max_tokenizers": 21
+    },
+    {
+      "char": "\"",
+      "code": 34,
+      "unique_words": 193,
+      "max_tokenizers": 21
+    },
+    {
+      "char": "Y",
+      "code": 89,
+      "unique_words": 200,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "Z",
+      "code": 90,
+      "unique_words": 217,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "=",
+      "code": 61,
+      "unique_words": 222,
+      "max_tokenizers": 17
+    },
+    {
+      "char": ":",
+      "code": 58,
+      "unique_words": 232,
+      "max_tokenizers": 15
+    },
+    {
+      "char": ",",
+      "code": 44,
+      "unique_words": 282,
+      "max_tokenizers": 21
+    },
+    {
+      "char": "Q",
+      "code": 81,
+      "unique_words": 293,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "\\",
+      "code": 92,
+      "unique_words": 297,
+      "max_tokenizers": 15
+    },
+    {
+      "char": "x",
+      "code": 120,
+      "unique_words": 350,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "q",
+      "code": 113,
+      "unique_words": 479,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "J",
+      "code": 74,
+      "unique_words": 537,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "K",
+      "code": 75,
+      "unique_words": 645,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "'",
+      "code": 39,
+      "unique_words": 706,
+      "max_tokenizers": 22
+    },
+    {
+      "char": "V",
+      "code": 86,
+      "unique_words": 799,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "W",
+      "code": 87,
+      "unique_words": 801,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "U",
+      "code": 85,
+      "unique_words": 888,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "y",
+      "code": 121,
+      "unique_words": 965,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "[",
+      "code": 91,
+      "unique_words": 1035,
+      "max_tokenizers": 15
+    },
+    {
+      "char": "z",
+      "code": 122,
+      "unique_words": 1050,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "j",
+      "code": 106,
+      "unique_words": 1068,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "H",
+      "code": 72,
+      "unique_words": 1070,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "N",
+      "code": 78,
+      "unique_words": 1104,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "/",
+      "code": 47,
+      "unique_words": 1124,
+      "max_tokenizers": 15
+    },
+    {
+      "char": "O",
+      "code": 79,
+      "unique_words": 1139,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "G",
+      "code": 71,
+      "unique_words": 1167,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "w",
+      "code": 119,
+      "unique_words": 1280,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "L",
+      "code": 76,
+      "unique_words": 1293,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "F",
+      "code": 70,
+      "unique_words": 1383,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "k",
+      "code": 107,
+      "unique_words": 1544,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "B",
+      "code": 66,
+      "unique_words": 1637,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "R",
+      "code": 82,
+      "unique_words": 1747,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "D",
+      "code": 68,
+      "unique_words": 1829,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "E",
+      "code": 69,
+      "unique_words": 1835,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "T",
+      "code": 84,
+      "unique_words": 1875,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "v",
+      "code": 118,
+      "unique_words": 1877,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "I",
+      "code": 73,
+      "unique_words": 1957,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "M",
+      "code": 77,
+      "unique_words": 1972,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "h",
+      "code": 104,
+      "unique_words": 2027,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "f",
+      "code": 102,
+      "unique_words": 2055,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "d",
+      "code": 100,
+      "unique_words": 2347,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "(",
+      "code": 40,
+      "unique_words": 2353,
+      "max_tokenizers": 15
+    },
+    {
+      "char": "P",
+      "code": 80,
+      "unique_words": 2382,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "g",
+      "code": 103,
+      "unique_words": 2418,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "b",
+      "code": 98,
+      "unique_words": 2525,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "-",
+      "code": 45,
+      "unique_words": 2886,
+      "max_tokenizers": 15
+    },
+    {
+      "char": "A",
+      "code": 65,
+      "unique_words": 2955,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "C",
+      "code": 67,
+      "unique_words": 3003,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "m",
+      "code": 109,
+      "unique_words": 3039,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "S",
+      "code": 83,
+      "unique_words": 3091,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "t",
+      "code": 116,
+      "unique_words": 3298,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "l",
+      "code": 108,
+      "unique_words": 3314,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "n",
+      "code": 110,
+      "unique_words": 3640,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "p",
+      "code": 112,
+      "unique_words": 3646,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "u",
+      "code": 117,
+      "unique_words": 3907,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "r",
+      "code": 114,
+      "unique_words": 4235,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "s",
+      "code": 115,
+      "unique_words": 4554,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "c",
+      "code": 99,
+      "unique_words": 4586,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "_",
+      "code": 95,
+      "unique_words": 5517,
+      "max_tokenizers": 15
+    },
+    {
+      "char": "o",
+      "code": 111,
+      "unique_words": 5605,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "e",
+      "code": 101,
+      "unique_words": 5737,
+      "max_tokenizers": 43
+    },
+    {
+      "char": ".",
+      "code": 46,
+      "unique_words": 6366,
+      "max_tokenizers": 21
+    },
+    {
+      "char": "i",
+      "code": 105,
+      "unique_words": 8767,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "a",
+      "code": 97,
+      "unique_words": 9723,
+      "max_tokenizers": 43
+    },
+    {
+      "char": "<",
+      "code": 60,
+      "unique_words": 11891,
+      "max_tokenizers": 23
+    }
+  ]
+}
