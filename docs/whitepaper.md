@@ -1,9 +1,8 @@
-# GCF: A Token-Optimized Wire Format for Structured LLM Interactions
-
-**Dayna Blackwell, Blackwell Systems**
-
-**Date:** 2026-06-26 (v5) · **DOI:** [10.5281/zenodo.20579817](https://doi.org/10.5281/zenodo.20579817)
-
+---
+title: "GCF: A Token-Optimized Wire Format for Structured LLM Interactions"
+author: "Dayna Blackwell, Blackwell Systems"
+date: "2026-06-26 (v5)"
+subtitle: "dayna@blackwell-systems.com · DOI: 10.5281/zenodo.20579817"
 ---
 
 ## Abstract
