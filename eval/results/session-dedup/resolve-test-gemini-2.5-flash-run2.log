@@ -1,0 +1,57 @@
+=== RUN   TestSessionDedupResolve
+    session_dedup_test.go:511: === Bare Reference Resolution Test ===
+    session_dedup_test.go:512: Backend: google, Model: gemini-2.5-flash
+    session_dedup_test.go:513: Call 1: 5 symbols fully declared (106 tokens)
+    session_dedup_test.go:514: Call 2: 5 bare refs + 1 new (100 tokens)
+    session_dedup_test.go:515: 
+    session_dedup_test.go:516: Call 1 payload:
+    session_dedup_test.go:517: GCF profile=graph tool=blast_radius budget=5000 tokens=200 symbols=5 edges=4 session=true
+        ## targets
+        @0 fn pkg/auth.ValidateToken 0.95 lsp_resolved
+        @1 type pkg/server.HTTPHandler 0.88 ast_inferred
+        ## related
+        @2 method pkg/db.Connect 0.72 structural
+        @3 fn pkg/cache.Invalidate 0.65 lsp_resolved
+        ## extended
+        @4 iface pkg/config.LoadYAML 0.50 ast_inferred
+        ## edges [4]
+        @0<@1 calls
+        @2<@0 calls
+        @3<@1 references
+        @1<@4 implements
+    session_dedup_test.go:518: 
+    session_dedup_test.go:519: Call 2 payload:
+    session_dedup_test.go:520: GCF profile=graph tool=blast_radius budget=5000 tokens=250 symbols=6 edges=5 session=true
+        ## targets
+        @0  # previously transmitted
+        @1  # previously transmitted
+        ## related
+        @2  # previously transmitted
+        @3  # previously transmitted
+        ## extended
+        @4  # previously transmitted
+        @5 fn pkg/metrics.RecordLatency 0.45 structural
+        ## edges [5]
+        @0<@1 calls
+        @2<@0 calls
+        @3<@1 references
+        @1<@4 implements
+        @5<@1 calls
+    session_dedup_test.go:521: 
+    session_dedup_test.go:594:   resolve_kind_0: PASS expected=function got=fn
+    session_dedup_test.go:594:   resolve_kind_1: PASS expected=type got=type
+    session_dedup_test.go:594:   resolve_kind_2: PASS expected=method got=method
+    session_dedup_test.go:594:   resolve_kind_3: PASS expected=function got=fn
+    session_dedup_test.go:594:   resolve_kind_4: PASS expected=interface got=iface
+    session_dedup_test.go:594:   resolve_provenance_0: PASS expected=lsp_resolved got=lsp_resolved
+    session_dedup_test.go:594:   resolve_provenance_2: PASS expected=structural got=structural
+    session_dedup_test.go:594:   resolve_score_0: PASS expected=0.95 got=0.95
+    session_dedup_test.go:594:   resolve_score_4: PASS expected=0.50 got=0.50
+    session_dedup_test.go:596:   resolve_caller: FAIL expected=HTTPHandler got=Connect
+    session_dedup_test.go:596:   resolve_callee: FAIL expected=Connect got=HTTPHandler
+    session_dedup_test.go:594:   resolve_new_symbol: PASS expected=function got=fn
+    session_dedup_test.go:602: 
+    session_dedup_test.go:603: === Result: 10/12 (83%) ===
+--- PASS: TestSessionDedupResolve (26.07s)
+PASS
+ok  	github.com/blackwell-systems/gcf-go/eval	26.466s

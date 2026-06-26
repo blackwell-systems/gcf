@@ -1,0 +1,25 @@
+=== RUN   TestSessionDedupMaxDepth
+    session_dedup_test.go:781: === Max Depth Test (up to 15 calls) ===
+    session_dedup_test.go:782: Backend: google, Model: gemini-2.5-flash
+    session_dedup_test.go:783: Targets declared in call 1:
+    session_dedup_test.go:784:   alpha-core -> kind=function
+    session_dedup_test.go:785:   beta-edge  -> kind=type
+    session_dedup_test.go:786:   gamma-fw   -> kind=method
+    session_dedup_test.go:787: 
+    session_dedup_test.go:875:   Depth  2 ( 5 messages): 3/3 PASS
+    session_dedup_test.go:875:   Depth  3 ( 7 messages): 3/3 PASS
+    session_dedup_test.go:875:   Depth  4 ( 9 messages): 3/3 PASS
+    session_dedup_test.go:875:   Depth  5 (11 messages): 3/3 PASS
+    session_dedup_test.go:875:   Depth  6 (13 messages): 3/3 PASS
+    session_dedup_test.go:875:   Depth  7 (15 messages): 3/3 PASS
+    session_dedup_test.go:875:   Depth  8 (17 messages): 3/3 PASS
+    session_dedup_test.go:875:   Depth  9 (19 messages): 3/3 PASS
+    session_dedup_test.go:875:   Depth 10 (21 messages): 3/3 PASS
+    session_dedup_test.go:875:   Depth 11 (23 messages): 3/3 PASS
+    session_dedup_test.go:875:   Depth 12 (25 messages): 3/3 PASS
+    session_dedup_test.go:875:   Depth 13 (27 messages): 3/3 PASS
+    session_dedup_test.go:875:   Depth 14 (29 messages): 3/3 PASS
+    session_dedup_test.go:875:   Depth 15 (31 messages): 3/3 PASS
+--- PASS: TestSessionDedupMaxDepth (63.46s)
+PASS
+ok  	github.com/blackwell-systems/gcf-go/eval	63.753s
