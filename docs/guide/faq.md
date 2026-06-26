@@ -126,7 +126,7 @@ With GCF:      Service -> JSON -> encode -> GCF text -> LLM (11,090 tokens)
 
 Protobuf competes with JSON at the transport layer. GCF competes with JSON at the LLM-ingestion layer. They're complementary. If your backend uses protobuf, decode to a native object, then `encodeGeneric()` to GCF before handing it to the model.
 
-Protobuf also requires `.proto` schema files, code generation, and version management. GCF is schemaless like JSON. And protobuf has no comprehension data: nobody has tested whether LLMs reason better over protobuf-decoded-to-JSON vs raw JSON. We have [2,400+ evaluations](/guide/benchmarks) proving GCF outperforms JSON at the reading step.
+Protobuf also requires `.proto` schema files, code generation, and version management. GCF is schemaless like JSON. And protobuf has no comprehension data: nobody has tested whether LLMs reason better over protobuf-decoded-to-JSON vs raw JSON. We have [2,500+ evaluations](/guide/benchmarks) proving GCF outperforms JSON at the reading step.
 
 ## Why not MessagePack or CBOR?
 

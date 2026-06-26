@@ -1,6 +1,6 @@
 # Benchmarks
 
-2,400+ LLM evaluations across 11 models, 3 providers, and 50+ independent test runs.
+2,500+ LLM evaluations across 11 models, 4 providers, and 50+ independent test runs.
 
 No model has ever been trained on GCF. Every model reads it better than the formats they were trained on.
 

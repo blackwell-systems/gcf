@@ -466,7 +466,7 @@ At 500 rows: ~1,500 merged boundaries (`"name`:, `"id":`, `"type":` on every row
 
 This is why JSON errors at scale are off by 50-140 (the model couldn't find the answer at all), not off by 1-2 (slightly misread a number). GCF at 500 rows has zero merged boundaries on field names, 99.8% signal, and structure that answers questions directly (`## related [167]`). Nothing compounds because there's nothing to compound.
 
-### Observed failure patterns from 2,400+ evaluations
+### Observed failure patterns from 2,500+ evaluations
 
 Across 24 stress-scale runs (500 symbols, 200 edges, 13 questions per run) and 2,500+ total evaluations, we classified every wrong answer by failure type. The patterns connect directly to the tokenization findings:
 
