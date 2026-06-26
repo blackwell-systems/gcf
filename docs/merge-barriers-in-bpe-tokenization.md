@@ -2,7 +2,7 @@
 title: "Merge Barriers in BPE Tokenization: From Vocabulary Merges to Attention Collapse"
 author: "Dayna Blackwell, Blackwell Systems"
 date: "2026-06-26"
-subtitle: "dayna@blackwell-systems.com · DOI: 10.5281/zenodo.20925911"
+subtitle: "dayna@blackwell-systems.com · DOI: 10.5281/zenodo.20925910"
 keywords: [BPE, tokenization, merge barriers, structured data, attention heads, controlled experiment]
 ---
 
