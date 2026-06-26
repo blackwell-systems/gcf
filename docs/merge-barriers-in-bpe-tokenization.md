@@ -793,6 +793,48 @@ Pipe delimiters are always single tokens across all tokenizers. Variance is only
 | `\n` | Universal row separator, zero overhead. | `;` | Less readable. |
 | `,` | Schema field separator, familiar from CSV. | `:` | Conflicts with value content. |
 
+## Appendix C: Recommended Tokenizer Configuration
+
+Merge barriers require no library modifications. The HuggingFace `tokenizers` library's existing `Split` pre-tokenizer with `behavior="isolated"` prevents a character from participating in any merge. Composing 16 `Split` instances in a `Sequence` creates a complete merge barrier set.
+
+```python
+from tokenizers import Tokenizer, models, trainers, pre_tokenizers
+
+tokenizer = Tokenizer(models.BPE())
+
+tokenizer.pre_tokenizer = pre_tokenizers.Sequence([
+    pre_tokenizers.Split("|", behavior="isolated"),
+    pre_tokenizers.Split("@", behavior="isolated"),
+    pre_tokenizers.Split("<", behavior="isolated"),
+    pre_tokenizers.Split(">", behavior="isolated"),
+    pre_tokenizers.Split('"', behavior="isolated"),
+    pre_tokenizers.Split("'", behavior="isolated"),
+    pre_tokenizers.Split(":", behavior="isolated"),
+    pre_tokenizers.Split(",", behavior="isolated"),
+    pre_tokenizers.Split(";", behavior="isolated"),
+    pre_tokenizers.Split("\t", behavior="isolated"),
+    pre_tokenizers.Split("{", behavior="isolated"),
+    pre_tokenizers.Split("}", behavior="isolated"),
+    pre_tokenizers.Split("[", behavior="isolated"),
+    pre_tokenizers.Split("]", behavior="isolated"),
+    pre_tokenizers.Split("(", behavior="isolated"),
+    pre_tokenizers.Split(")", behavior="isolated"),
+    pre_tokenizers.ByteLevel(add_prefix_space=False),
+])
+
+trainer = trainers.BpeTrainer(
+    vocab_size=65536,
+    special_tokens=["<pad>", "<eos>"],
+)
+tokenizer.train(files=["corpus.txt"], trainer=trainer)
+```
+
+Each `Split` isolates one barrier character before BPE merging begins. The `ByteLevel` pre-tokenizer handles the remaining text using the standard GPT-style byte encoding. The resulting tokenizer has zero merged delimiter entries by construction.
+
+This configuration produces the tokenizer used in the controlled experiment (Sections 6-8). Models trained with this configuration develop 4.6x more delimiter-specialized attention heads, achieve 3x better structured data comprehension and 3-5x better code comprehension, with zero natural language cost.
+
+No changes to the BPE algorithm, the training pipeline, or the model architecture are required. The improvement is entirely in the pre-tokenization configuration.
+
 ---
 
 ## References
