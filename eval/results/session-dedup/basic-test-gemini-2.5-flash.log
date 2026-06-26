@@ -1,0 +1,49 @@
+=== RUN   TestSessionDedupBasic
+    session_dedup_test.go:533: === Session Dedup Basic (Production-Realistic) ===
+    session_dedup_test.go:534: Backend: google, Model: gemini-2.5-flash
+    session_dedup_test.go:535: Call 1: 10 devices, 7 edges, session=185 tok, full=182 tok
+    session_dedup_test.go:537: Call 2: 12 devices (10 bare refs + 2 new), 9 edges, session=165 tok, full=214 tok
+    session_dedup_test.go:539: 
+    session_dedup_test.go:590: --- gcf_session ---
+    session_dedup_test.go:658:   device_lookup: PASS expected=spine-east-001.dc.corp.net got=spine-east-001.dc.corp.net
+    session_dedup_test.go:639:   connection_query: ERROR empty response: {
+          "candidates": [
+            {
+              "content": {
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "index": 0
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 665,
+            "totalTokenCount": 3787,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 665
+              }
+            ],
+            "thoughtsTokenCount": 3122,
+            "serviceTier": "standard"
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "responseId": "Ffw-aobEApyAqtsPydOMGA"
+        }
+    session_dedup_test.go:658:   new_device_check: PASS expected=yes got=yes
+    session_dedup_test.go:658:   count_targets: PASS expected=4 got=4
+    session_dedup_test.go:660:   provenance_lookup: FAIL expected=structural got=lsp_resolved
+    session_dedup_test.go:666:   Score: 3/5, BareRef: 2/4
+    session_dedup_test.go:667: 
+    session_dedup_test.go:590: --- gcf_full ---
+    session_dedup_test.go:658:   device_lookup: PASS expected=spine-east-001.dc.corp.net got=spine-east-001.dc.corp.net
+    session_dedup_test.go:660:   connection_query: FAIL expected=leaf-east-001, leaf-east-002 got=leaf-east-001,leaf-east-002
+    session_dedup_test.go:658:   new_device_check: PASS expected=yes got=yes
+    session_dedup_test.go:658:   count_targets: PASS expected=4 got=4
+    session_dedup_test.go:660:   provenance_lookup: FAIL expected=structural got=0.60 lsp_resolved
+    session_dedup_test.go:666:   Score: 3/5, BareRef: 2/4
+    session_dedup_test.go:667: 
+--- PASS: TestSessionDedupBasic (39.22s)
+PASS
+ok  	github.com/blackwell-systems/gcf-go/eval	39.779s

@@ -151,12 +151,51 @@ Scripts from the v3.2 flatten feature research.
 
 ---
 
+## Session Dedup Eval
+
+Tests whether LLMs correctly resolve bare references (`@N  # previously transmitted`) to their original declarations from earlier in a multi-call conversation. Validates that session deduplication is safe to deploy in production agent pipelines.
+
+Test harness: `gcf-go/eval/session_dedup_test.go`
+
+| Test | What it measures | Result |
+|------|-----------------|--------|
+| `TestSessionDedup` | Stress test: 50-65 symbols, 3 calls, 3 formats. Counting, edge, kind questions. | gcf_session 10/12, gcf_full 10/12, json 5/12. Session matches full retransmission exactly. |
+| `TestSessionDedupResolve` | Production-realistic: 5 symbols, multi-turn, resolve kind/provenance/score/edges through bare refs. | Gemini 2.5 Flash: 10/12 (edge direction reversed). Gemini 2.5 Pro: **12/12 (100%)**. |
+| `TestSessionDedupDepth` | Depth tolerance: resolve same symbol at depths 2-5. | **4/4 PASS** on both models. |
+| `TestSessionDedupMaxDepth` | Push to failure: resolve 3 symbols at depths 2-15 (31 messages). | Gemini 2.5 Pro: **15/15 depths, 45/45 questions, 100%**. Zero degradation. |
+| `TestSessionDedupBasic` | Small production scenario: 10 devices, multi-turn, device lookup + connection query. | gcf_session 3/5, gcf_full 3/5. Identical scores. |
+
+**Key findings:**
+- Attribute resolution (kind, provenance, score) through bare refs: **100%** on frontier models
+- Depth tolerance: **no degradation through 15 calls** (31 messages) on Gemini 2.5 Pro
+- Session dedup matches full retransmission accuracy on every test
+- Token savings: 82.7% on call 1, **91.0% on call 3** vs JSON
+- Edge direction: Flash reverses `<` arrow direction; Pro reads it correctly
+
+```bash
+cd gcf-go/eval
+
+# Resolve test (recommended starting point)
+EVAL_BACKEND=google GOOGLE_API_KEY=... EVAL_MODEL=gemini-2.5-pro GOWORK=off go test -run TestSessionDedupResolve -v -timeout 10m
+
+# Max depth test
+EVAL_BACKEND=google GOOGLE_API_KEY=... EVAL_MODEL=gemini-2.5-pro GOWORK=off go test -run TestSessionDedupMaxDepth -v -timeout 30m
+
+# Full stress test (all formats compared)
+EVAL_BACKEND=google GOOGLE_API_KEY=... EVAL_MODEL=gemini-2.5-flash GOWORK=off go test -run TestSessionDedup -v -timeout 30m
+```
+
+Design doc: [SESSION-DEDUP-EVAL-DESIGN.md](SESSION-DEDUP-EVAL-DESIGN.md)
+
+---
+
 ## Results
 
 All logs stored in `results/`:
 - `comprehension/`: stress-scale and generic-profile run logs
 - `generation/`: generation eval runs
 - `tokenizer/`: 43-tokenizer analysis results (JSON data + run logs)
+- `session-dedup/`: session dedup eval logs (resolve, depth, stress)
 
 **Full results:** [SUMMARY.md](results/SUMMARY.md)
 

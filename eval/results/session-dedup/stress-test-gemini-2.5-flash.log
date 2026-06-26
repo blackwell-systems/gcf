@@ -1,0 +1,174 @@
+=== RUN   TestSessionDedup
+    session_dedup_test.go:318: === Session Dedup Eval ===
+    session_dedup_test.go:319: Backend: google, Model: gemini-2.5-flash
+    session_dedup_test.go:320: Calls: 3, Formats: 3
+    session_dedup_test.go:321: 
+    session_dedup_test.go:324: --- gcf_session ---
+    session_dedup_test.go:328:   Call 1: 50 sym (50 new, 0 bare), 49 edges, ~1150 tok
+    session_dedup_test.go:395:     symbol_count: PASS expected=50 got=50
+    session_dedup_test.go:395:     edge_count: PASS expected=49 got=49
+    session_dedup_test.go:395:     target_kind: PASS expected=function got=fn
+    session_dedup_test.go:395:     function_count: PASS expected=13 got=13
+    session_dedup_test.go:328:   Call 2: 60 sym (10 new, 50 bare), 59 edges, ~721 tok
+    session_dedup_test.go:395:     symbol_count: PASS expected=60 got=60
+    session_dedup_test.go:395:     edge_count: PASS expected=59 got=59
+    session_dedup_test.go:395:     target_kind: PASS expected=function got=function
+    session_dedup_test.go:397:     function_count: FAIL expected=15 got=3
+    session_dedup_test.go:328:   Call 3: 65 sym (5 new, 60 bare), 64 edges, ~777 tok
+    session_dedup_test.go:395:     symbol_count: PASS expected=65 got=65
+    session_dedup_test.go:395:     edge_count: PASS expected=64 got=64
+    session_dedup_test.go:395:     target_kind: PASS expected=function got=function
+    session_dedup_test.go:397:     function_count: FAIL expected=17 got=The most recent tool response is `Tool response (call 3)`.
+        
+        1.  **Identify all unique symbols mentioned in Call 3.**
+            The "targets", "related", and "extended" sections in Call 3 all list symbols as `# previously transmitted` with IDs ranging from `@0` to `@29`. Therefore, we need to determine the kind of these 30 unique symbols (`@0` through `@29`) by looking up their definitions in previous responses.
+        
+        2.  **Lookup symbol definitions from Call 1.**
+            Call 1 is the only response that provides full definitions for symbols. It defines symbols with IDs from `@20` to `@49`. This is a total of 30 distinct symbols.
+            It is standard for `session=true` graph profiles with re-indexed IDs (like `@0` in a later call referring to `previously transmitted`) to imply a sequential mapping. Thus, Call 3's `@0` refers to the first distinct symbol transmitted in Call 1 (which is `@20`), Call 3's `@1` refers to the second (`@21`), and so on, up to Call 3's `@29` referring to Call 1's `@49`.
+        
+        3.  **List the kind of each unique symbol from Call 1 (which maps to Call 3's symbols @0-@29), resolving duplicates by taking the first explicit definition for that ID or the one with the highest score if multiple definitions are given.**
+        
+            Here is the list of symbols from Call 1, ordered by their original ID, with their determined kind:
+            *   `@20 fn github.com/netclaw/network/bgp.OpenConnection` (fn)
+            *   `@21 type github.com/netclaw/network/ospf.ReadTelemetry` (type)
+            *   `@22 method github.com/netclaw/network/fabric.WriteLog` (method)
+            *   `@23 iface github.com/netclaw/network/mpls.FlushBuffer` (iface)
+            *   `@24 fn github.com/netclaw/network/vxlan.ResetCounters` (fn)
+            *   `@25 type github.com/netclaw/network/policy.ClearCache` (type)
+            *   `@26 method github.com/netclaw/network/acl.RegisterHandler` (method)
+            *   `@27 iface github.com/netclaw/network/qos.DispatchEvent` (iface)
+            *   `@28 fn github.com/netclaw/network/monitor.ExecuteAction` (fn)
+            *   `@29 type github.com/netclaw/network/telemetry.InvokeCallback` (type)
+            *   `@30 fn github.com/netclaw/network/bgp.HandlePeer` (fn - highest score: 0.95 vs 0.50 method)
+            *   `@31 type github.com/netclaw/network/ospf.ProcessRoute` (type - highest score: 0.93 vs 0.48 iface)
+            *   `@32 method github.com/netclaw/network/fabric.ValidateConfig` (method - highest score: 0.92 vs 0.47 fn)
+            *   `@33 iface github.com/netclaw/network/mpls.CreateSession` (iface - highest score: 0.90 vs 0.45 type)
+            *   `@34 fn github.com/netclaw/network/vxlan.UpdateTopology` (fn - highest score: 0.89 vs 0.44 method)
+            *   `@35 type github.com/netclaw/network/policy.DeleteNeighbor` (type - highest score: 0.88 vs 0.42 iface)
+            *   `@36 method github.com/netclaw/network/acl.GetStatus` (method - highest score: 0.86 vs 0.41 fn)
+            *   `@37 iface github.com/netclaw/network/qos.SetPolicy` (iface - highest score: 0.84 vs 0.39 type)
+            *   `@38 fn github.com/netclaw/network/monitor.CheckHealth` (fn - highest score: 0.83 vs 0.38 method)
+            *   `@39 type github.com/netclaw/network/telemetry.BuildGraph` (type - highest score: 0.81 vs 0.36 iface)
+            *   `@40 method github.com/netclaw/network/bgp.ParseUpdate` (method - highest score: 0.80 vs 0.35 fn)
+            *   `@41 iface github.com/netclaw/network/ospf.FormatOutput` (iface - highest score: 0.78 vs 0.33 type)
+            *   `@42 fn github.com/netclaw/network/fabric.EncodePacket` (fn - highest score: 0.77 vs 0.32 method)
+            *   `@43 type github.com/netclaw/network/mpls.DecodeFrame` (type - highest score: 0.76 vs 0.30 iface)
+            *   `@44 method github.com/netclaw/network/vxlan.TransformPath` (method - highest score: 0.74 vs 0.29 fn)
+            *   `@45 iface github.com/netclaw/network/policy.ConvertAddress` (iface - highest score: 0.72 vs 0.27 type)
+            *   `@46 fn github.com/netclaw/network/acl.LoadState` (fn - highest score: 0.71 vs 0.26 method)
+            *   `@47 type github.com/netclaw/network/qos.SaveCheckpoint` (type - highest score: 0.69 vs 0.24 iface)
+            *   `@48 method github.com/netclaw/network/monitor.InitProtocol` (method - highest score: 0.68 vs 0.23 fn)
+            *   `@49 iface github.com/netclaw/network/telemetry.CloseSession` (iface - highest score: 0.66 vs 0.21 type)
+        
+        4.  **Count symbols with kind 'fn' (function).**
+            The symbols identified as 'fn' are:
+            *   @20 (fn)
+            *   @24 (fn)
+            *   @28 (fn)
+            *   @30 (fn)
+            *   @34 (fn)
+            *   @38 (fn)
+            *   @42 (fn)
+            *   @46 (fn)
+        
+            There are 8 symbols with the kind 'fn'.
+        
+        8
+    session_dedup_test.go:403: 
+    session_dedup_test.go:324: --- gcf_full ---
+    session_dedup_test.go:328:   Call 1: 50 sym (50 new, 0 bare), 49 edges, ~1146 tok
+    session_dedup_test.go:395:     symbol_count: PASS expected=50 got=50
+    session_dedup_test.go:395:     edge_count: PASS expected=49 got=49
+    session_dedup_test.go:395:     target_kind: PASS expected=function got=function
+    session_dedup_test.go:395:     function_count: PASS expected=13 got=13
+    session_dedup_test.go:328:   Call 2: 60 sym (10 new, 50 bare), 59 edges, ~1372 tok
+    session_dedup_test.go:395:     symbol_count: PASS expected=60 got=60
+    session_dedup_test.go:395:     edge_count: PASS expected=59 got=59
+    session_dedup_test.go:395:     target_kind: PASS expected=function got=function
+    session_dedup_test.go:397:     function_count: FAIL expected=15 got=To determine the number of symbols with kind 'function' (or 'fn') in the most recent tool response (call 2), we need to identify all unique symbol IDs present in call 2 and determine their kind according to the specified rules:
+        
+        1.  **For symbols appearing in call 2 that were *not* previously transmitted (i.e., new symbols):** Use the kind explicitly stated in their first declaration within call 2.
+        2.  **For symbols appearing in call 2 that *were* previously transmitted (i.e., @30-@49, which were in call 1):** Look up their kind from their *first* full declaration in the *earlier response (call 1)*.
+        
+        Let's list all unique symbol IDs from Call 2 and determine their kind:
+        
+        **Symbols @30 through @49:** These were present in Call 1. We look up their kind from Call 1's targets section (which contains their first full declaration with the highest confidence score).
+        
+        *   `@30 fn github.com/netclaw/network/bgp.HandlePeer` (from Call 1 targets) -> **fn**
+        *   `@31 type github.com/netclaw/network/ospf.ProcessRoute` (from Call 1 targets) -> type
+        *   `@32 method github.com/netclaw/network/fabric.ValidateConfig` (from Call 1 targets) -> method
+        *   `@33 iface github.com/netclaw/network/mpls.CreateSession` (from Call 1 targets) -> iface
+        *   `@34 fn github.com/netclaw/network/vxlan.UpdateTopology` (from Call 1 targets) -> **fn**
+        *   `@35 type github.com/netclaw/network/policy.DeleteNeighbor` (from Call 1 targets) -> type
+        *   `@36 method github.com/netclaw/network/acl.GetStatus` (from Call 1 targets) -> method
+        *   `@37 iface github.com/netclaw/network/qos.SetPolicy` (from Call 1 targets) -> iface
+        *   `@38 fn github.com/netclaw/network/monitor.CheckHealth` (from Call 1 targets) -> **fn**
+        *   `@39 type github.com/netclaw/network/telemetry.BuildGraph` (from Call 1 targets) -> type
+        *   `@40 method github.com/netclaw/network/bgp.ParseUpdate` (from Call 1 targets) -> method
+        *   `@41 iface github.com/netclaw/network/ospf.FormatOutput` (from Call 1 targets) -> iface
+        *   `@42 fn github.com/netclaw/network/fabric.EncodePacket` (from Call 1 targets) -> **fn**
+        *   `@43 type github.com/netclaw/network/mpls.DecodeFrame` (from Call 1 targets) -> type
+        *   `@44 method github.com/netclaw/network/vxlan.TransformPath` (from Call 1 targets) -> method
+        *   `@45 iface github.com/netclaw/network/policy.ConvertAddress` (from Call 1 targets) -> iface
+        *   `@46 fn github.com/netclaw/network/acl.LoadState` (from Call 1 targets) -> **fn**
+        *   `@47 type github.com/netclaw/network/qos.SaveCheckpoint` (from Call 1 targets) -> type
+        *   `@48 method github.com/netclaw/network/monitor.InitProtocol` (from Call 1 targets) -> method
+        *   `@49 iface github.com/netclaw/network/telemetry.CloseSession` (from Call 1 targets) -> iface
+        
+        **Symbols @50 through @59:** These are new symbols, not present in Call 1. We determine their kind from their first declaration in Call 2.
+        
+        *   `@50 fn github.com/netclaw/network/bgp.OpenConnection` (from Call 2 related) -> **fn**
+        *   `@51 type github.com/netclaw/network/ospf.ReadTelemetry` (from Call 2 related) -> type
+        *   `@52 method github.com/netclaw/network/fabric.WriteLog` (from Call 2 related) -> method
+        *   `@53 iface github.com/netclaw/network/mpls.FlushBuffer` (from Call 2 related) -> iface
+        *   `@54 fn github.com/netclaw/network/vxlan.ResetCounters` (from Call 2 related) -> **fn**
+        *   `@55 type github.com/netclaw/network/policy.ClearCache` (from Call 2 related) -> type
+        *   `@56 method github.com/netclaw/network/acl.RegisterHandler` (from Call 2 related) -> method
+        *   `@57 iface github.com/netclaw/network/qos.DispatchEvent` (from Call 2 related) -> iface
+        *   `@58 fn github.com/netclaw/network/monitor.ExecuteAction` (from Call 2 related) -> **fn**
+        *   `@59 type github.com/netclaw/network/telemetry.InvokeCallback` (from Call 2 related) -> type
+        
+        Counting the symbols marked as 'fn':
+        @30, @34, @38, @42, @46, @50, @54, @58.
+        
+        There are 8 such symbols.
+        
+        8
+    session_dedup_test.go:328:   Call 3: 65 sym (5 new, 60 bare), 64 edges, ~1484 tok
+    session_dedup_test.go:395:     symbol_count: PASS expected=65 got=65
+    session_dedup_test.go:395:     edge_count: PASS expected=64 got=64
+    session_dedup_test.go:395:     target_kind: PASS expected=function got=function
+    session_dedup_test.go:397:     function_count: FAIL expected=17 got=8
+    session_dedup_test.go:403: 
+    session_dedup_test.go:324: --- json ---
+    session_dedup_test.go:328:   Call 1: 50 sym (50 new, 0 bare), 49 edges, ~6641 tok
+    session_dedup_test.go:397:     symbol_count: FAIL expected=50 got=44
+    session_dedup_test.go:397:     edge_count: FAIL expected=49 got=50
+    session_dedup_test.go:395:     target_kind: PASS expected=function got=function
+    session_dedup_test.go:397:     function_count: FAIL expected=13 got=12
+    session_dedup_test.go:328:   Call 2: 60 sym (10 new, 50 bare), 59 edges, ~7966 tok
+    session_dedup_test.go:395:     symbol_count: PASS expected=60 got=60
+    session_dedup_test.go:395:     edge_count: PASS expected=59 got=59
+    session_dedup_test.go:395:     target_kind: PASS expected=function got=function
+    session_dedup_test.go:397:     function_count: FAIL expected=15 got=8
+    session_dedup_test.go:328:   Call 3: 65 sym (5 new, 60 bare), 64 edges, ~8642 tok
+    session_dedup_test.go:397:     symbol_count: FAIL expected=65 got=60
+    session_dedup_test.go:397:     edge_count: FAIL expected=64 got=68
+    session_dedup_test.go:395:     target_kind: PASS expected=function got=function
+    session_dedup_test.go:397:     function_count: FAIL expected=17 got=15
+    session_dedup_test.go:403: 
+    session_dedup_test.go:407: === SUMMARY ===
+    session_dedup_test.go:408: Format          Accuracy  BareRef Acc
+    session_dedup_test.go:409: ----------------------------------------
+    session_dedup_test.go:420: gcf_session       10/12     4/6  
+    session_dedup_test.go:420: gcf_full          10/12     4/6  
+    session_dedup_test.go:420: json               5/12     3/6  
+    session_dedup_test.go:427: 
+    session_dedup_test.go:428: Token estimates:
+    session_dedup_test.go:437:   Call 1: session=1150 full=1146 json=6641 (session saves 82.7%)
+    session_dedup_test.go:437:   Call 2: session=721 full=1372 json=7966 (session saves 90.9%)
+    session_dedup_test.go:437:   Call 3: session=777 full=1484 json=8642 (session saves 91.0%)
+--- PASS: TestSessionDedup (359.53s)
+PASS
+ok  	github.com/blackwell-systems/gcf-go/eval	360.287s
