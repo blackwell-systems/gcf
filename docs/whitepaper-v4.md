@@ -2,17 +2,17 @@
 
 **Dayna Blackwell, Blackwell Systems**
 
-**Date:** 2026-06-26 (v5) · **DOI:** [10.5281/zenodo.20579817](https://doi.org/10.5281/zenodo.20579817)
+**Date:** 2026-06-21 (v4) · **DOI:** [10.5281/zenodo.20579817](https://doi.org/10.5281/zenodo.20579817)
 
 ---
 
 ## Abstract
 
-AI agents consume and produce structured data under fixed token budgets. The dominant encoding is JSON, which fails at scale for two compounding reasons: 81% of its tokens are structural overhead (repeated field names, delimiters, quoting), and its grammar characters merge with adjacent content in BPE tokenizer vocabularies, hiding structural boundaries inside single tokens. A cross-tokenizer analysis of 43 tokenizers from 20 providers shows this is universal: JSON's combined adversarial surface spans 1,939 mergeable words. A controlled experiment (two identical 410M-parameter models, same data, same hyperparameters, different tokenizer) proves that preventing delimiter merges produces 3x better structured data comprehension, 3-5x better code comprehension, and zero natural language cost. JSON's structural choices create both the overhead that wastes tokens and the ambiguity that wastes attention.
+AI agents consume and produce structured data under fixed token budgets. The dominant encoding is JSON, which wastes 75%+ of tokens on structural overhead: field names, delimiters, and repeated identifiers. We present GCF, a bidirectional text-based wire format for LLM interactions. GCF supports two encoding profiles: a **graph profile** exploiting referential identity (local IDs), topological encoding (edge arrows), and hierarchical grouping (section headers); and a **generic profile** encoding arbitrary structured data with positional rows, pipe separators, and inline primitive arrays.
 
-We present GCF, a bidirectional text-based wire format designed to eliminate both problems. GCF supports two encoding profiles: a **graph profile** exploiting referential identity (local IDs), topological encoding (edge arrows), and hierarchical grouping (section headers); and a **generic profile** encoding arbitrary structured data with positional rows, pipe separators, and inline primitive arrays. GCF's grammar characters were selected from the set empirically verified to have near-zero merge rates across all 43 tested tokenizers: pipe (0.47% merge rate, 24 mergeable words) vs JSON's quote (8.17%, 193 words) vs TOON's tab (32.91%, 1,238 words).
+We evaluated GCF across 2,400+ LLM evaluations spanning 11 models and 3 providers (Anthropic, OpenAI, Google). No model has been trained on GCF.
 
-We evaluated GCF across 2,500+ LLM evaluations spanning 11 models and 4 providers (Anthropic, OpenAI, Google, Mistral). No model has been trained on GCF.
+We benchmark against JSON and TOON (Token-Oriented Object Notation), a tabular encoding format that declares array field names once and uses comma-separated rows, achieving 30-60% savings versus JSON. TOON is the closest competitor to GCF in the LLM wire format space.
 
 **Comprehension (generic profile):** 27 runs across 11 models, 500-order nested data. GCF achieves **100%** on every frontier model (Opus, Sonnet, Haiku, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash). TOON is the weakest format.
 
@@ -26,9 +26,9 @@ We evaluated GCF across 2,500+ LLM evaluations spanning 11 models and 4 provider
 
 Session deduplication (84.3% cumulative savings over a 5-call session) and delta encoding (81.2% on re-queries) compound savings across multi-turn interactions. A streaming encoding extension enables zero-buffering encode with O(1) memory per row. The format is implemented in six languages (Go, TypeScript, Python, Rust, Swift, Kotlin), 157 conformance fixtures, and deployed in production MCP servers. Specification v3.1 Stable: gcformat.com.
 
-A companion paper, "Merge Barriers in BPE Tokenization: From Vocabulary Merges to Attention Collapse" [DOI: 10.5281/zenodo.20925910](https://doi.org/10.5281/zenodo.20925910), presents the full 43-tokenizer vocabulary analysis and the controlled experiment proving that delimiter choice produces measurable architectural changes in the trained transformer (4.6x more delimiter-specialized attention heads, 2.4x easier delimiter prediction, 50% more cohesive delimiter embeddings).
+A companion paper, "Merge Barriers in BPE Tokenization: From Vocabulary Merges to Attention Collapse" [DOI: 10.5281/zenodo.20925910](https://doi.org/10.5281/zenodo.20925910), presents a 43-tokenizer vocabulary analysis proving that JSON's grammar symbols are hardcoded as merged entries in BPE tokenizer vocabularies, and a controlled experiment demonstrating that merge barriers (preventing 16 delimiter characters from participating in BPE merges) produce 3x better structured data comprehension, 3-5x better code comprehension, and zero natural language cost.
 
-![Comprehension and Generation across 11 models and 4 providers](/charts/hero.png)
+![Comprehension and Generation across 11 models and 3 providers](/charts/hero.png)
 
 ---
 
@@ -36,40 +36,11 @@ A companion paper, "Merge Barriers in BPE Tokenization: From Vocabulary Merges t
 
 The Model Context Protocol (MCP) defines how AI agents interact with external tools. Tool responses are overwhelmingly encoded as JSON. This is convenient for developers but expensive for the consumer that matters most: the language model itself.
 
-JSON fails at scale for two compounding reasons, not one.
-
-### 1.1 The Overhead Problem
-
 Consider a typical MCP tool response returning 10 graph nodes and 8 edges (a blast radius query, a dependency subgraph, or a context retrieval result). In JSON, this payload consumes ~965 tokens. The same semantic content in GCF consumes ~233 tokens. The difference, 732 tokens, is pure waste: field name repetition, structural delimiters (`{`, `}`, `[`, `]`, `:`, `","`), and full qualified names repeated in every edge reference.
 
-At 500 rows, 81% of JSON's tokens are overhead. Only 19% carry actual data values. This waste compounds across a task. An agent making 5 tool calls during a code change task consumes ~4,825 tokens on JSON tool responses. In GCF, the same 5 calls consume ~1,165 tokens, and less with session statefulness enabled. The difference, ~3,660 tokens, is context window capacity that could hold source code, documentation, or additional tool results.
+This waste compounds across a task. An agent making 5 tool calls during a code change task consumes ~4,825 tokens on JSON tool responses. In GCF, the same 5 calls consume ~1,165 tokens, and less with session statefulness enabled (previously-transmitted nodes are referenced by local ID without retransmission). The difference, ~3,660 tokens, is context window capacity that could hold source code, documentation, or additional tool results.
 
-### 1.2 The Structural Ambiguity Problem
-
-Token overhead is the visible problem. The deeper problem is invisible: JSON's grammar characters merge with adjacent content in BPE tokenizer vocabularies, hiding structural boundaries inside single tokens.
-
-When GPT-4's tokenizer encounters `"name":"Alice"`, it produces `["name][":"][Alice]["]` (4 tokens). The opening quote has fused with the field name into token #32586. Claude's tokenizer produces `["][name][":"][Alice]["]` (5 tokens). The structural boundary (where the field name starts) is at a different token position depending on which model processes the data.
-
-![Delimiter merge rates: pipe 0.47%, quote 8.17%, tab 32.91%](/charts/delimiter-merge-rates.png)
-
-An exhaustive vocabulary scan across 43 tokenizers from 20 providers reveals that this is universal:
-
-- JSON's opening quote merges with common field names (`id`, `name`, `type`, `value`, `url`) on **30% of tokenizers**
-- JSON's combined adversarial surface across all 7 grammar characters: **1,939 mergeable words**
-- TOON's tab delimiter: **1,238 mergeable words** (GPT-4o has a 100% tab merge rate)
-- GCF's pipe delimiter: **24 mergeable words** (all TypeScript union keywords, none are field names)
-
-![Vocabulary merge entries by tokenizer](/charts/vocab-merge-entries.png)
-
-![ASCII adversarial surface: all 94 printable characters ranked by merge risk](/charts/ascii-adversarial-surface.png)
-
-At 500 rows, the overhead problem and the ambiguity problem compound. The model must process approximately 8,500 overhead tokens (81% of the sequence) that are also structurally ambiguous (field boundaries hidden inside merged tokens). Attention entropy crosses the comparison format at 50 rows. Grammar attention collapses from 30% to 8.6%. The model stops parsing structure entirely.
-
-A controlled experiment proves this is causal. Two identical 410M-parameter models trained on the same corpus with the same hyperparameters, differing only in whether 16 delimiter characters can participate in BPE merges, converge to identical natural language perplexity (19.4 vs 19.5) but the merge-barrier model achieves 3x lower structured data perplexity, 3-5x lower code perplexity, and develops 4.6x more delimiter-specialized attention heads. The full analysis is in the companion paper, "Merge Barriers in BPE Tokenization" [DOI: 10.5281/zenodo.20925910](https://doi.org/10.5281/zenodo.20925910).
-
-GCF was designed to eliminate both problems: header factoring eliminates the overhead, and delimiter selection from the empirically verified low-merge character set eliminates the ambiguity.
-
-### 1.3 Why This Matters Now
+### 1.1 Why This Matters Now
 
 Three trends make this problem urgent:
 
@@ -79,7 +50,7 @@ Three trends make this problem urgent:
 
 3. **Context window costs are real.** Whether measured in dollars (API billing), latency (time-to-first-token), or capability (what fits in the window), every wasted token reduces the agent's effectiveness.
 
-### 1.4 Why Not Just Use Binary?
+### 1.2 Why Not Just Use Binary?
 
 Binary formats (Protocol Buffers, MessagePack, FlatBuffers) optimize for byte size and decode speed. But LLMs consume text, not bytes. A protobuf-encoded tool response must be decoded to text before the LLM can process it, and the decoded text is typically JSON, eliminating the savings at the point of consumption.
 
@@ -395,7 +366,7 @@ For 2,000 employee records with 6 fields: JSON ~127,050 tokens, GCF ~49,055 toke
 
 ## 6. Benchmarks
 
-All benchmarks encode the same semantic content in JSON and GCF. Token counts in Section 6.1 use cl100k_base; the 500-symbol eval (Section 6.1b) and TOON comparison (Section 7.5) use o200k_base (matching TOON's benchmark methodology). Measurements taken on Apple M4 Pro.
+All benchmarks encode the same semantic content in JSON and GCF. Token counts in Section 6.1 use cl100k_base; the 500-symbol eval (Section 6.1a) and TOON comparison (Section 8.5) use o200k_base (matching TOON's benchmark methodology). Measurements taken on Apple M4 Pro.
 
 ### 6.1 Token Comparison
 
@@ -436,7 +407,7 @@ Frontier models (Opus, Sonnet, Haiku, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, G
 
 ### 6.1b Graph Profile: Under Structural Stress
 
-24 runs across 10 models. 500 symbols, 200 edges, 13 structured extraction questions with deterministic ground truth (no LLM judge). Each run generates a fresh random payload. Zero format instructions in the prompt.
+24 runs across 10 models and 3 providers. 500 symbols, 200 edges, 13 structured extraction questions with deterministic ground truth (no LLM judge). Each run generates a fresh random payload. Zero format instructions in the prompt.
 
 | Model | Runs | GCF avg | TOON avg | JSON avg |
 |-------|------|---------|----------|----------|
@@ -459,13 +430,13 @@ Frontier models (Opus, Sonnet, Haiku, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, G
 
 #### Failure taxonomy
 
-GCF, TOON, and JSON produce qualitatively different failure modes. The [tokenizer analysis](https://gcformat.com/guide/tokenizer-analysis) provides the mechanistic link: JSON's grammar symbols merge with field names in BPE tokenizer vocabularies, creating hidden structural boundaries that compound per row. A controlled experiment confirms this is causal: models trained with merge barriers (where delimiter characters cannot fuse with adjacent content) develop 4.6x more delimiter-specialized attention heads and achieve 3x lower structured data perplexity. See "Merge Barriers in BPE Tokenization" [DOI: 10.5281/zenodo.20925910](https://doi.org/10.5281/zenodo.20925910) for the full analysis.
+GCF, TOON, and JSON produce qualitatively different failure modes. The [tokenizer analysis](https://gcformat.com/guide/tokenizer-analysis) provides the mechanistic link: JSON's grammar symbols merge with field names in BPE tokenizer vocabularies, creating hidden structural boundaries that compound per row. See "Merge Barriers in BPE Tokenization" [DOI: 10.5281/zenodo.20925910](https://doi.org/10.5281/zenodo.20925910) for the full analysis.
 
-**GCF fails on precision** (median error: 4). Off-by-1-2 header misreads (8 occurrences), deterministic column scan miscounts on GPT-5.4 (11), field confusion (2), miscellaneous (5), and context overwhelm empty responses on GPT-5.5 (10). The format structure is understood; the count is slightly misread. 36 total failures across 24 runs. GCF's pipe delimiter has a 0.47% merge rate across 43 tokenizers, meaning the model always sees clean structural boundaries.
+**GCF fails on precision** (median error: 4). Off-by-1-2 header misreads (8 occurrences), deterministic column scan miscounts on GPT-5.4 (11), field confusion (2), miscellaneous (5), and context overwhelm empty responses on GPT-5.5 (10). The format structure is understood; the count is slightly misread. 36 total failures across 24 runs.
 
-**TOON fails on comprehension** (median error: 53). Distance grouping failures across all models (45 occurrences), column scan miscounts (10), attention decay on the last row (7), calls edge miscounts (10), symbol count wrong (2), and context overwhelm (20). The model cannot filter a flat 500-row table by column value. 94 total failures across 24 runs. TOON's tab delimiter has a 32.91% merge rate and 1,238 mergeable words in tokenizer vocabularies, the worst of any common separator character.
+**TOON fails on comprehension** (median error: 53). Distance grouping failures across all models (45 occurrences), column scan miscounts (10), attention decay on the last row (7), calls edge miscounts (10), symbol count wrong (2), and context overwhelm (20). The model cannot filter a flat 500-row table by column value. 94 total failures across 24 runs.
 
-**JSON fails on structural overwhelm** (median error: 56). Empty string responses where the model produces nothing (33), massive undercounts (14), distance filter failures (44), column scan miscounts (37), and attention decay (3). At 53,000 tokens of repeated field names, the format itself prevents comprehension. JSON's grammar attention collapses from 30% to 8.6% at scale as the model stops attending to structural tokens. 131 total failures across 24 runs.
+**JSON fails on structural overwhelm** (median error: 56). Empty string responses where the model produces nothing (33), massive undercounts (14), distance filter failures (44), column scan miscounts (37), and attention decay (3). At 53,000 tokens of repeated field names, the format itself prevents comprehension. 131 total failures across 24 runs.
 
 On two separate runs, Claude Opus responded to a JSON counting question by manually enumerating symbols one by one (143 lines on run 1, 119 on run 2), burning output tokens on a chain-of-thought enumeration and still getting the wrong answer. GCF answers the same question from a 3-character header: `[167]`.
 
@@ -500,7 +471,9 @@ On two separate runs, Claude Opus responded to a JSON counting question by manua
 
 By the fifth tool call in a session, GCF achieves 92.7% token savings versus JSON because 8 of 9 referenced symbols are bare ID references (`@0`, `@3`) consuming 1 token each instead of 15-20 tokens for the full qualified name.
 
-At production scale (500 symbols, 200 edges per call), session deduplication achieves 84.3% cumulative savings over 5 calls (148,360 JSON tokens vs 23,270 GCF tokens). Per bare reference: 2 tokens vs 19 tokens for a full declaration (89% savings per deduplicated symbol). Cross-tokenizer validated (86-90% savings at 90% overlap). JSON has no deduplication mechanism; every call retransmits the full payload.
+At production scale (500 symbols, 200 edges per call), session deduplication achieves 84.3% cumulative savings over 5 calls (148,360 JSON tokens vs 23,270 GCF tokens). Per bare reference: 2 tokens vs 19 tokens for a full declaration (89% savings per deduplicated symbol). Cross-tokenizer validated across all 8 tested tokenizers (86-90% savings at 90% overlap). JSON has no deduplication mechanism; every call retransmits the full payload.
+
+---
 
 ---
 
@@ -554,7 +527,7 @@ The structural difference: TOON puts all symbols in one flat table with a `dista
 
 **Methodology:** We forked TOON's benchmark repository (`github.com/blackwell-systems/toon-benchmark`), added GCF as one additional formatter, and expanded from their original 6 datasets to 16 representing real-world MCP tool responses. Tokenizer (o200k_base) and methodology are upstream. GCF wins 15 of 16, 29% fewer tokens overall, 54.8% fewer than JSON. See [benchmarks](https://gcformat.com/guide/benchmarks#token-efficiency-15-datasets) for the full 15-dataset table.
 
-**Tokenization analysis:** TOON's tab delimiter merges with adjacent content more aggressively than JSON's quote character. Across 43 tokenizers and 29,025 checks: GCF pipe merge rate 0.47%, JSON quote merge rate 8.17%, TOON tab merge rate 32.91%. An exhaustive vocabulary scan reveals GPT-4 has 1,173 tab+letter vocabulary entries vs 22 pipe+letter entries. TOON's tab has 1,238 unique mergeable words across all 43 vocabularies, 52x the pipe's 24. A controlled experiment confirms the downstream effect: models trained with merge barriers on delimiter characters (including tab) achieve 2.3x better comprehension on tab-separated data never seen during training. TOON chose the delimiter with the largest adversarial surface of any common separator character. See [tokenizer analysis](https://gcformat.com/guide/tokenizer-analysis) and "Merge Barriers in BPE Tokenization" [DOI: 10.5281/zenodo.20925910](https://doi.org/10.5281/zenodo.20925910).
+**Tokenization analysis:** TOON's tab delimiter merges with adjacent content more aggressively than JSON's quote character. On real data (1,344 checks): TOON tab merge rate 59.82%, JSON quote merge rate 39.29%, GCF pipe merge rate 0.00%. GPT-4's vocabulary contains 60/64 tested words as tab+letter entries vs 15/64 as quote+letter entries. TOON's chosen delimiter is the worst of all three formats for BPE tokenizer compatibility. See [tokenizer analysis](https://gcformat.com/guide/tokenizer-analysis) and "Merge Barriers in BPE Tokenization" [DOI: 10.5281/zenodo.20925910](https://doi.org/10.5281/zenodo.20925910).
 
 **GCF wins 15 of 16 datasets** (29% fewer tokens overall). TOON's one win is 77 tokens on a single dataset on edge cases (nested config and one tokenizer artifact).
 
@@ -574,7 +547,7 @@ JSON with shortened field names (`"qn"` instead of `"qualified_name"`) achieves 
 
 ## 8. Limitations and Validation
 
-**LLM comprehension.** 2,500+ evaluations across 11 models and 4 providers validate this design. On standard workloads (500 orders, nested data), GCF achieves 100% on every frontier model. On structurally complex code graphs (500 symbols, 200 edges), GCF averages 91.2% where JSON drops to 53.4% and TOON to 68.2%. The concern that LLMs might struggle with GCF's dense positional format was unfounded; the format improves comprehension by eliminating both structural overhead and structural ambiguity. GCF's pipe delimiter maintains 99.5% grammar isolation across 43 tokenizers (0.47% merge rate), ensuring the model always sees clean structural boundaries regardless of which tokenizer it uses.
+**LLM comprehension.** 2,400+ evaluations across 11 models and 3 providers validate this design. On standard workloads (500 orders, nested data), GCF achieves 100% on every frontier model. On structurally complex code graphs (500 symbols, 200 edges), GCF averages 91.2% where JSON drops to 53.4% and TOON to 68.2%. The concern that LLMs might struggle with GCF's dense positional format was unfounded; the format improves comprehension by eliminating structural noise. GCF's `@N` local IDs, `##` section headers, and `|` pipe separators are more comprehensible to an LLM than JSON's `"qualified_name":` repeated 500 times.
 
 **LLM generation.** 28 generation runs across 9 models and 3 providers. GCF achieves 5/5 validity on every frontier model (Opus, Sonnet, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro) with a 3-line primer and zero prior training. TOON's official decoder rejects LLM-generated output on 7 of 9 models. The failure is structural: TOON's flat columns encode semantic categories as integers, and models write labels ("target") instead of the expected integer (0). GCF expresses categories through section placement (`## targets`), aligning with how models naturally express grouped data. GCF output is 63% smaller than JSON and 33% smaller than TOON.
 
@@ -582,7 +555,7 @@ JSON with shortened field names (`"qn"` instead of `"qualified_name"`) achieves 
 
 **Session statefulness requires coordination.** The session ID system assumes the server tracks which nodes have been transmitted to which client. Stateless deployments cannot use session compression. The non-session mode (full retransmission) remains available.
 
-**Tokenizer dependency.** Token counts depend on the tokenizer. The benchmarks in this paper use o200k_base. Different tokenizers produce different token counts for the same GCF payload, though the relative savings versus JSON are consistent (within 2-3 percentage points across all 43 tested tokenizers). More importantly, GCF's structural boundaries are consistent: the pipe delimiter is always its own token on 43/43 tokenizers, while JSON's quote merges with field names on 13/43.
+**Tokenizer dependency.** Token counts depend on the tokenizer. The benchmarks in this paper use o200k_base. Different tokenizers produce different token counts for the same GCF payload, though the relative savings versus JSON are consistent (within 2-3 percentage points).
 
 ---
 
@@ -596,7 +569,7 @@ The token savings are too large to ignore. A 50-92% reduction in tool response t
 
 ### 9.1 LLM Generation: GCF as a Bidirectional Format
 
-GCF is bidirectional: LLMs can produce it, not just consume it. 28 generation runs across 9 models, validated through real decoders (including TOON's official `toon-go` library).
+GCF is bidirectional: LLMs can produce it, not just consume it. 28 generation runs across 9 models and 3 providers, validated through real decoders (including TOON's official `toon-go` library).
 
 | Model | GCF | TOON (natural) | JSON |
 |-------|-----|----------------|------|
@@ -654,17 +627,17 @@ GCF's token savings compound with delta encoding: when the agent passes a `pack_
 
 ## 10. Conclusion
 
-JSON fails at scale for two compounding reasons. The visible reason is overhead: 81% of JSON's tokens are repeated field names and structural characters. The invisible reason is structural ambiguity: JSON's grammar characters merge with adjacent content in BPE tokenizer vocabularies, hiding field boundaries inside single tokens. At 500 rows, the model must process approximately 8,500 overhead tokens that are also structurally ambiguous. Grammar attention collapses from 30% to 8.6%. Comprehension drops to 53.4%.
+JSON is the default encoding for LLM interactions because it is universal, not because it is efficient. For structured data, JSON wastes more than three-quarters of its tokens on structural overhead that carries no semantic content.
 
-GCF eliminates both problems. Header factoring eliminates the overhead (field names declared once, 97.7% signal at 500 rows vs JSON's 19%). Delimiter selection from the empirically verified low-merge character set eliminates the ambiguity (pipe: 0.47% merge rate, 24 mergeable words vs JSON's 1,939). A controlled experiment proves this is causal: a model trained with merge barriers on delimiter characters (preventing them from fusing with adjacent content) achieves 3x better structured data comprehension and 3-5x better code comprehension, with zero cost to natural language. The model develops 4.6x more attention heads dedicated to parsing structure.
+GCF eliminates this waste through two encoding profiles. The graph profile uses referential identity (local IDs), topological encoding (edge arrows), and hierarchical grouping (section headers) for code graph data. The generic profile uses positional rows with pipe separators, section headers, and inline primitive arrays for arbitrary structured data. Savings range from 50-69% on a single call (generic through graph profile) to 92% with session deduplication across repeated tool calls. On 16 real-world datasets, GCF uses 29% fewer tokens than TOON and 54.8% fewer than JSON.
 
-GCF is bidirectional. 2,500+ LLM evaluations across 11 models and 4 providers prove it. Comprehension: 100% on every frontier model on standard workloads; 91.2% on structurally complex code graphs where JSON drops to 53.4% and TOON to 68.2%. Generation: 5/5 validity on every frontier model where TOON fails on 7 of 9 models. Output: 63% fewer tokens than JSON, 33% fewer than TOON. Session deduplication (84.3% cumulative savings over a 5-call session), delta encoding (81.2% on re-queries), and streaming encode (zero-buffering with trailer summary) compound savings across multi-turn interactions. No competing format offers these features.
+GCF is bidirectional. 2,400+ LLM evaluations across 11 models and 3 providers prove it. Comprehension: 100% on every frontier model on standard workloads; 91.2% on structurally complex code graphs where JSON drops to 53.4% and TOON to 68.2%. Generation: 5/5 validity on every frontier model where TOON fails on 7 of 9 models. Output: 63% fewer tokens than JSON, 33% fewer than TOON. Session deduplication (84.3% cumulative savings over a 5-call session), delta encoding (81.2% on re-queries), and streaming encode (zero-buffering with trailer summary) compound savings across multi-turn interactions. No competing format offers these features.
 
 The format is text-based, LLM-optimized, and implementable in any language. Implementations exist in six languages (Go, TypeScript, Python, Rust, Swift, Kotlin) with zero or minimal runtime dependencies. A drop-in MCP proxy enables adoption with zero code changes and adds streaming progress notifications for immediate partial context delivery.
 
-GCF is a wire format. Wire formats are not optimized for human readability. HTTP headers are not readable. Protobuf is not readable. Nobody cares; they use a viewer. GCF is the wire format; JSON is the viewer format. The agent reads GCF (cheap, accurate), does its work, then calls `decode()` at the end if a human needs to see the result.
+The broader point: GCF is a wire format. Wire formats are not optimized for human readability. HTTP headers are not readable. Protobuf is not readable. Nobody cares; they use a viewer. GCF is the wire format; JSON is the viewer format. The agent reads GCF (cheap, accurate), does its work, then calls `decode()` at the end if a human needs to see the result. Human readability is a last-mile rendering concern, not a wire format property.
 
-The format that looks clean to humans (JSON) is the one that breaks for agents at scale: its overhead wastes tokens and its grammar hides structural boundaries. The format optimized for agentic comprehension (GCF) achieves 100% accuracy on every frontier model for standard workloads and 91.2% on structurally complex data, at the lowest token cost, with grammar that never merges with field names on any tested tokenizer. TOON's tab delimiter has 1,238 mergeable words across 43 tokenizer vocabularies, 52x the pipe's 24. Its comprehension never reaches 100%, and its generation fails on 7 of 9 models. This is not a tradeoff. It is a design choice validated by 2,500+ evaluations, a 43-tokenizer vocabulary analysis, and a controlled model training experiment.
+The format that looks clean to humans (JSON) is the one that breaks for agents at scale. The format optimized for agentic comprehension (GCF) achieves 100% accuracy on every frontier model for standard workloads and 91.2% on structurally complex data, at the lowest token cost. TOON, the format positioned as the compromise between human readability and machine efficiency, fails generation on 7 of 9 models, never achieves 100% comprehension, and its tab delimiter has a worse tokenizer merge rate than JSON's quote character (59.82% vs 39.29%). This is not a tradeoff. It is a design choice validated by 2,400+ evaluations across every major AI provider.
 
 ---
 
