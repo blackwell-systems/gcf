@@ -1,0 +1,40 @@
+=== RUN   TestSessionDedupMaxDepth
+    session_dedup_test.go:787: === Max Depth Test (up to 30 calls) ===
+    session_dedup_test.go:788: Backend: google, Model: gemini-2.5-flash
+    session_dedup_test.go:789: Targets declared in call 1:
+    session_dedup_test.go:790:   alpha-core -> kind=function
+    session_dedup_test.go:791:   beta-edge  -> kind=type
+    session_dedup_test.go:792:   gamma-fw   -> kind=method
+    session_dedup_test.go:793: 
+    session_dedup_test.go:881:   Depth  2 ( 5 messages): 3/3 PASS
+    session_dedup_test.go:881:   Depth  3 ( 7 messages): 3/3 PASS
+    session_dedup_test.go:881:   Depth  4 ( 9 messages): 3/3 PASS
+    session_dedup_test.go:881:   Depth  5 (11 messages): 3/3 PASS
+    session_dedup_test.go:881:   Depth  6 (13 messages): 3/3 PASS
+    session_dedup_test.go:881:   Depth  7 (15 messages): 3/3 PASS
+    session_dedup_test.go:881:   Depth  8 (17 messages): 3/3 PASS
+    session_dedup_test.go:881:   Depth  9 (19 messages): 3/3 PASS
+    session_dedup_test.go:881:   Depth 10 (21 messages): 3/3 PASS
+    session_dedup_test.go:881:   Depth 11 (23 messages): 3/3 PASS
+    session_dedup_test.go:881:   Depth 12 (25 messages): 3/3 PASS
+    session_dedup_test.go:881:   Depth 13 (27 messages): 3/3 PASS
+    session_dedup_test.go:881:   Depth 14 (29 messages): 3/3 PASS
+    session_dedup_test.go:881:   Depth 15 (31 messages): 3/3 PASS
+    session_dedup_test.go:881:   Depth 16 (33 messages): 3/3 PASS
+    session_dedup_test.go:881:   Depth 17 (35 messages): 3/3 PASS
+    session_dedup_test.go:881:   Depth 18 (37 messages): 3/3 PASS
+    session_dedup_test.go:881:   Depth 19 (39 messages): 3/3 PASS
+    session_dedup_test.go:881:   Depth 20 (41 messages): 3/3 PASS
+    session_dedup_test.go:881:   Depth 21 (43 messages): 3/3 PASS
+    session_dedup_test.go:881:   Depth 22 (45 messages): 3/3 PASS
+    session_dedup_test.go:881:   Depth 23 (47 messages): 3/3 PASS
+    session_dedup_test.go:881:   Depth 24 (49 messages): 3/3 PASS
+    session_dedup_test.go:881:   Depth 25 (51 messages): 3/3 PASS
+    session_dedup_test.go:881:   Depth 26 (53 messages): 3/3 PASS
+    session_dedup_test.go:881:   Depth 27 (55 messages): 3/3 PASS
+    session_dedup_test.go:881:   Depth 28 (57 messages): 3/3 PASS
+    session_dedup_test.go:881:   Depth 29 (59 messages): 3/3 PASS
+    session_dedup_test.go:881:   Depth 30 (61 messages): 3/3 PASS
+--- PASS: TestSessionDedupMaxDepth (138.73s)
+PASS
+ok  	github.com/blackwell-systems/gcf-go/eval	139.344s
