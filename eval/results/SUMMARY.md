@@ -371,6 +371,68 @@ GCF wins all 6 datasets.
 
 ---
 
+## Session Dedup Eval (Can LLMs resolve bare references?)
+
+Validates that GCF session deduplication is safe for production. When a symbol is declared in call 1 as `@0 fn pkg/auth.ValidateToken 0.95 lsp_resolved` and appears in call 2 as `@0  # previously transmitted`, can the model resolve the reference?
+
+**Models tested:** Gemini 2.5 Pro, Gemini 2.5 Flash
+
+### Bare Reference Resolution
+
+| Question type | Flash 2.5 | Pro 2.5 |
+|--------------|-----------|---------|
+| Kind resolution (5 symbols) | **5/5** | **5/5** |
+| Provenance resolution | **2/2** | **2/2** |
+| Score resolution | **2/2** | **2/2** |
+| Edge traversal (caller) | 0/1 (reversed) | **1/1** |
+| Edge traversal (callee) | 0/1 (reversed) | **1/1** |
+| New symbol (not bare ref) | **1/1** | **1/1** |
+| **Total** | **10/12 (83%)** | **12/12 (100%)** |
+
+Attribute resolution (kind, provenance, score) is **perfect on both models**. Flash reverses edge direction; Pro reads it correctly.
+
+### Depth Tolerance (15 calls, 31 messages)
+
+| Depth | Flash 2.5 | Pro 2.5 |
+|-------|-----------|---------|
+| 2 | 3/3 PASS | 3/3 PASS |
+| 5 | 3/3 PASS | 3/3 PASS |
+| 10 | 3/3 PASS | 3/3 PASS |
+| 15 | 3/3 PASS | 3/3 PASS |
+| **Total** | **45/45 (100%)** | **45/45 (100%)** |
+
+**Zero degradation through 15 calls on both models.** The model resolves bare references from call 1 perfectly at depth 15 (31 messages deep).
+
+### Token Savings
+
+| Call | Session tokens | JSON tokens | Savings |
+|------|---------------|-------------|---------|
+| 1 | 1,150 | 6,641 | 82.7% |
+| 2 | 721 | 7,966 | 90.9% |
+| 3 | 777 | 8,642 | 91.0% |
+
+### Comparison: Session vs Full Retransmission vs JSON
+
+| Format | Accuracy (stress test) |
+|--------|----------------------|
+| GCF session dedup | **10/12 (83%)** |
+| GCF full retransmit | **10/12 (83%)** |
+| JSON | 5/12 (42%) |
+
+Session dedup matches full retransmission exactly. JSON falls apart at scale.
+
+### Files
+
+- `results/session-dedup/resolve-test-gemini-2.5-flash.log`
+- `results/session-dedup/resolve-test-gemini-2.5-flash-run2.log`
+- `results/session-dedup/resolve-depth-gemini-2.5-pro.log`
+- `results/session-dedup/max-depth-15-gemini-2.5-pro.log`
+- `results/session-dedup/max-depth-15-gemini-2.5-flash.log`
+- `results/session-dedup/stress-test-gemini-2.5-flash.log`
+- `results/session-dedup/basic-test-gemini-2.5-flash.log`
+
+---
+
 ## Reproduce
 
 Comprehension eval:
