@@ -17,8 +17,8 @@
 > **GCF: A Token-Optimized Wire Format for Structured LLM Interactions**
 > Dayna Blackwell, 2026. DOI: [10.5281/zenodo.20579817](https://doi.org/10.5281/zenodo.20579817)
 >
-> **Structural Ambiguity in BPE Tokenization: From Vocabulary Merges to Attention Collapse**
-> Dayna Blackwell, 2026. DOI: [10.5281/zenodo.20789619](https://doi.org/10.5281/zenodo.20789619)
+> **Merge Barriers in BPE Tokenization: From Vocabulary Merges to Attention Collapse**
+> Dayna Blackwell, 2026. DOI: [10.5281/zenodo.20925910](https://doi.org/10.5281/zenodo.20925910)
 
 ---
 

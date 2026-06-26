@@ -1,5 +1,7 @@
 # Tokenizer Analysis
 
+**Paper:** [Merge Barriers in BPE Tokenization: From Vocabulary Merges to Attention Collapse](https://doi.org/10.5281/zenodo.20925910) (Blackwell, 2026)
+
 Every LLM uses a different tokenizer. A format designed for one tokenizer might perform poorly on another. This page proves GCF's token savings and structural consistency hold across all major tokenizers, and explains *why* JSON breaks down at the tokenization level.
 
 ::: tip Key Numbers (43 tokenizers, 20 providers)
