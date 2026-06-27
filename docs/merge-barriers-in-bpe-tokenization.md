@@ -62,7 +62,7 @@ We tested 43 tokenizers from 20 providers: OpenAI (cl100k, o200k, GPT-2), Anthro
 
 ### 3.2 Field Boundary Merge Rates
 
-![Field merge rates across 43 tokenizers](../gcf/docs/public/charts/field-merge-rates.png){ width=85% }
+![Field merge rates across 43 tokenizers](/charts/field-merge-rates.png){ width=85% }
 
 The most common JSON field names merge with the opening quote on 30% of tokenizers:
 
@@ -123,7 +123,7 @@ A complete JSON object `{"orderId":"ORD-001","value":"shipped"}` produces 4 diff
 
 ### 3.3 Adversarial Surface
 
-![Delimiter merge rates: pipe 0.47%, quote 8.17%, tab 32.91%](../gcf/docs/public/charts/delimiter-merge-rates.png){ width=85% }
+![Delimiter merge rates: pipe 0.47%, quote 8.17%, tab 32.91%](/charts/delimiter-merge-rates.png){ width=85% }
 
 We decoded every entry in all 43 vocabularies and classified entries where delimiter characters fuse with alphabetic content:
 
@@ -137,7 +137,7 @@ We decoded every entry in all 43 vocabularies and classified entries where delim
 
 JSON's total adversarial surface across all 7 grammar characters: **1,939 words**. That is 81x the pipe's 24. GPT-4 has 1,173 tab+letter vocabulary entries. TOON chose the delimiter with the largest adversarial surface of any common separator character.
 
-![Vocabulary merge entries by tokenizer](../gcf/docs/public/charts/vocab-merge-entries.png){ width=85% }
+![Vocabulary merge entries by tokenizer](/charts/vocab-merge-entries.png){ width=85% }
 
 #### Specific token IDs
 
@@ -174,7 +174,7 @@ The pipe has 24 merged entries across all 43 vocabularies, but exclusively with 
 
 #### ASCII character safety ranking
 
-![ASCII adversarial surface: all 94 printable characters ranked by merge risk](../gcf/docs/public/charts/ascii-adversarial-surface.png){ width=90% }
+![ASCII adversarial surface: all 94 printable characters ranked by merge risk](/charts/ascii-adversarial-surface.png){ width=90% }
 
 We scanned all 94 printable ASCII characters (codes 33-126) across all 43 vocabularies:
 
@@ -190,7 +190,7 @@ Digits are the only perfectly safe characters, but cannot serve as delimiters (t
 
 ### 3.4 Token Overhead
 
-![JSON overhead scaling: O(n) per row vs O(1) for header-factored formats](../gcf/docs/public/charts/overhead-scaling.png){ width=85% }
+![JSON overhead scaling: O(n) per row vs O(1) for header-factored formats](/charts/overhead-scaling.png){ width=85% }
 
 At 500 rows, JSON's token distribution:
 
@@ -212,7 +212,7 @@ GCF for the same 500-row data:
 
 GCF's overhead is 2.3%. JSON's is 81%. The difference is structural: GCF declares field names once in a header (`## orders [500]{orderId,customer,status,total}`) rather than repeating them on every row.
 
-![Savings stability bands across 43 tokenizers](../gcf/docs/public/charts/savings-stability-bands.png){ width=85% }
+![Savings stability bands across 43 tokenizers](/charts/savings-stability-bands.png){ width=85% }
 
 #### Grammar swap experiment
 
@@ -220,7 +220,7 @@ To confirm that token savings are a structural property (header factoring) and n
 
 ### 3.5 Structural Equivalence Proof
 
-![Structural equivalence: pipe 99.5% isolation vs JSON 7.5%](../gcf/docs/public/charts/structural-equivalence.png){ width=85% }
+![Structural equivalence: pipe 99.5% isolation vs JSON 7.5%](/charts/structural-equivalence.png){ width=85% }
 
 GCF grammar maintains 99.5% isolation across all 43 tokenizers (`@` 100%, `<` 100%, `|` 99.2%). JSON grammar fuses into multi-operation tokens on 43/43 tokenizers (92.5% of quote-containing tokens encode multiple grammar operations).
 
@@ -360,7 +360,7 @@ Product records with 6 fields at 5 sizes (5, 10, 20, 50, 100 records), generated
 
 ### 7.1 Core Evaluation: Structured Data Comprehension
 
-![GCF PPL scaling curve: advantage grows from 2.1x to 5.3x](charts/scaling-curve.png){ width=85% }
+![GCF PPL scaling curve: advantage grows from 2.1x to 5.3x](/charts/scaling-curve.png){ width=85% }
 
 On held-out test data, the merge-barrier model (Model A) achieves 3x lower GCF perplexity:
 
@@ -380,7 +380,7 @@ Model B reads JSON better (1.9x lower JSON PPL), as expected: standard BPE merge
 
 #### Training convergence
 
-![Training convergence: standard BPE converges faster, both reach same PPL](charts/training-convergence.png){ width=85% }
+![Training convergence: standard BPE converges faster, both reach same PPL](/charts/training-convergence.png){ width=85% }
 
 Standard BPE converges approximately 30% faster per step on overall perplexity. Model B reached PPL ~21 at step 8,000; Model A reached the same at step 10,000. But both settled to identical final PPL by step 20,000 (19.4 vs 19.5). The slower convergence is consistent with the merge-barrier tokenizer producing more tokens per text: the model needs more steps to see the same effective amount of data.
 
@@ -403,7 +403,7 @@ Tested at 1, 2, 3, 5, 10, 20, 50, 100 records:
 
 ### 7.3 Code Comprehension
 
-![Code comprehension: 3-5x better with merge barriers](charts/code-comprehension.png){ width=85% }
+![Code comprehension: 3-5x better with merge barriers](/charts/code-comprehension.png){ width=85% }
 
 An unexpected finding: merge barriers improve code comprehension 3-5x. The barrier characters (`{`, `}`, `(`, `)`, `:`, `;`) that protect structured data delimiters also protect code syntax.
 
@@ -417,7 +417,7 @@ An unexpected finding: merge barriers improve code comprehension 3-5x. The barri
 
 ### 7.4 All Formats Tested
 
-![All formats comparison: Model A wins 11/11](charts/all-formats.png){ width=90% }
+![All formats comparison: Model A wins 11/11](/charts/all-formats.png){ width=90% }
 
 | Category | Test | Model A PPL | Model B PPL | Advantage |
 |----------|------|------------|------------|-----------|
@@ -439,7 +439,7 @@ An unexpected finding: merge barriers improve code comprehension 3-5x. The barri
 
 ### 7.5 Adversarial Inputs
 
-![Adversarial robustness: Model A wins 5/5](charts/adversarial.png){ width=85% }
+![Adversarial robustness: Model A wins 5/5](/charts/adversarial.png){ width=85% }
 
 GCF payloads with deliberately ambiguous content values:
 
@@ -471,7 +471,7 @@ Model A is 2.3x better on a format it has never seen, because the tab merge barr
 
 ### 8.1 Head Specialization
 
-![Delimiter head specialization: 105 vs 23 heads](charts/delimiter-heads.png){ width=90% }
+![Delimiter head specialization: 105 vs 23 heads](/charts/delimiter-heads.png){ width=90% }
 
 We counted attention heads where >50% of attention goes to delimiter tokens:
 
@@ -485,7 +485,7 @@ Model A develops **4.6x more structural attention heads**. The model builds dedi
 
 ### 8.2 Per-Token Loss
 
-![Per-token loss: delimiters are 2.4x easier for Model A](charts/per-token-loss.png){ width=85% }
+![Per-token loss: delimiters are 2.4x easier for Model A](/charts/per-token-loss.png){ width=85% }
 
 We computed cross-entropy loss at every token position on a 10-order GCF payload:
 
@@ -501,7 +501,7 @@ This is the mechanistic explanation for the perplexity gap. Model A has learned 
 
 ### 8.3 Embedding Space
 
-![Embedding space: delimiter tokens cluster 50% more cohesively](charts/embedding-space.png){ width=85% }
+![Embedding space: delimiter tokens cluster 50% more cohesively](/charts/embedding-space.png){ width=85% }
 
 | Metric | Model A | Model B |
 |--------|--------|--------|
@@ -521,11 +521,11 @@ Model A has 22 delimiter tokens (each barrier character is its own token, never 
 | 50 | **30.5%** | 20.5% |
 | 100 | **29.7%** | 18.1% |
 
-![Grammar attention at scale: Model A maintains 50% more](charts/grammar-attention.png){ width=85% }
+![Grammar attention at scale: Model A maintains 50% more](/charts/grammar-attention.png){ width=85% }
 
 Model A allocates 50% more attention to grammar tokens at every scale and resists grammar attention collapse:
 
-![Grammar attention collapse comparison](charts/collapse-comparison.png){ width=85% }
+![Grammar attention collapse comparison](/charts/collapse-comparison.png){ width=85% }
 
 | Model | Small scale (5-10) | Large scale (50-100) | Change |
 |-------|-------------------|---------------------|--------|
@@ -544,7 +544,7 @@ Both models show some decay, but Model A starts higher and stays higher. Compare
 | 50 | 78.0% | 81.0% | 567 | 704 |
 | 100 | 83.9% | 84.6% | 1,167 | 1,423 |
 
-![Token repetition at scale](charts/token-repetition.png){ width=85% }
+![Token repetition at scale](/charts/token-repetition.png){ width=85% }
 
 Model A has lower token repetition because merge barriers prevent delimiter characters from being absorbed into content tokens. Each `|` is always its own token ID, but field values have more variety because they are not fused with delimiters. Model A also produces ~18% fewer tokens because isolated delimiters are single tokens rather than multi-byte merged tokens.
 
