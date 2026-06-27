@@ -13,7 +13,7 @@ onMounted(async () => {
 <template>
   <section class="grammar-section">
     <h2 class="section-title">GCF Grammar</h2>
-    <p class="section-subtitle">Eight building blocks. Two profiles. No ambiguity.</p>
+    <p class="section-subtitle">Two profiles. Session-aware. No ambiguity.</p>
 
     <div class="grammar-columns">
       <div class="grammar-column gcf-corners">
@@ -114,6 +114,37 @@ empty=""</code></pre>
           <ul class="grammar-notes">
             <li><code>targets</code>, <code>related</code>, <code>extended</code> by relevance</li>
             <li>LLM reads count from header, no scanning</li>
+          </ul>
+        </div>
+
+        <div class="grammar-entry">
+          <h4>Session Dedup <span class="both-badge">graph profile</span></h4>
+          <pre class="grammar-code"><code v-if="ready" v-html="highlightGCF(`GCF profile=graph tool=blast_radius symbols=6 session=true\n## targets\n@0  # previously transmitted\n@1  # previously transmitted\n@5 fn pkg.NewFunc 0.85 lsp`)"></code><code v-else>GCF profile=graph tool=blast_radius symbols=6 session=true
+## targets
+@0  # previously transmitted
+@1  # previously transmitted
+@5 fn pkg.NewFunc 0.85 lsp</code></pre>
+          <ul class="grammar-notes">
+            <li><code>session=true</code> signals bare refs present</li>
+            <li><code>@N  # previously transmitted</code> = sent in prior call</li>
+            <li>LLM already has the full declaration in context</li>
+            <li>88% savings vs JSON across multi-turn sessions</li>
+          </ul>
+        </div>
+
+        <div class="grammar-entry">
+          <h4>Delta Encoding <span class="both-badge">graph profile</span></h4>
+          <pre class="grammar-code"><code v-if="ready" v-html="highlightGCF(`GCF tool=topology delta=true tokens=30 savings=85%\n## removed\nfn pkg.OldHandler\n## added\n@0 fn pkg.NewHandler 0.85 lsp\n## edges_added\npkg.Router -> pkg.NewHandler calls`)"></code><code v-else>GCF tool=topology delta=true tokens=30 savings=85%
+## removed
+fn pkg.OldHandler
+## added
+@0 fn pkg.NewHandler 0.85 lsp
+## edges_added
+pkg.Router -> pkg.NewHandler calls</code></pre>
+          <ul class="grammar-notes">
+            <li><code>delta=true</code> signals diff from prior payload</li>
+            <li>Only added/removed symbols and edges</li>
+            <li>95% savings for small topology changes</li>
           </ul>
         </div>
 

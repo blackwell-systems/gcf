@@ -23,7 +23,7 @@
 
 Evaluated at two scales:
 
-**Generic profile (500 orders, nested structured data):** 26 runs, 11 models, 4 providers. Frontier models (Opus, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash) score 100% GCF on every run. On mid-tier models, GCF averages equal or better than JSON across runs. TOON is consistently the weakest format. The primary value on generic data is token savings (53-71%) with equal or better comprehension.
+**Generic profile (500 orders, nested structured data):** 27+ runs across initial eval + flatten experiment, 19 models, 9 providers. Frontier models (Opus, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash, Grok Build 0.1) score 100% GCF on every run. On mid-tier and open-weight models, GCF averages equal or better than JSON across runs. TOON is consistently the weakest format. The flatten experiment (June 2026) extended coverage to 12 additional models including DeepSeek V3, LLaMA 4 Maverick, Kimi K2.7, and others via OpenRouter.
 
 **Graph profile, stress scale (500 symbols, 200 edges):** 24 runs, 10 models, 3 providers. GCF averages 91.2%, TOON 68.2%, JSON 53.4%. The margin between formats widens dramatically at scale. GCF wins 23, ties 1, loses 0.
 
@@ -61,15 +61,36 @@ All questions have deterministic ground truth computed from the payload. No LLM 
 | Claude Sonnet 4.6 | Anthropic | 3 | **100.0%** | 97.4% | 100.0% |
 | Claude Haiku 4.5 | Anthropic | 4 | **100.0%** | 100.0% | 100.0% |
 | GPT-5.5 | OpenAI | 2 | **100.0%** | 96.2% | 100.0% |
+| Grok Build 0.1 | xAI | 2 | **100.0%** | 100.0% | 100.0% |
 | Gemini 2.5 Pro | Google | 3 | **100.0%** | 100.0% | 100.0% |
 | Gemini 3.1 Pro Preview | Google | 1 | **100.0%** | 100.0% | 100.0% |
 | Gemini 3.5 Flash | Google | 2 | **100.0%** | 100.0% | 100.0% |
 | Gemini 2.5 Flash | Google | 4 | **95.0%** | 85.1% | 74.0% |
+| LLaMA 3.3 70B | Meta | 2 | **84.6%** | - | 61.5% |
 | Mistral Medium 3.5 | Mistral | 4 | **82.7%** | 76.9% | 82.0% |
+| LLaMA 4 Maverick | Meta | 2 | **76.9%** | - | 61.5% |
+| DeepSeek V3 | DeepSeek | 4 | **73.1%** | - | 71.2% |
 | Mistral Large 3 | Mistral | 1 | 69.2% | 69.2% | 69.2% |
 | GPT-4o-mini | OpenAI | 1 | **69.2%** | 69.2% | 61.5% |
+| Kimi K2.7 Code | Moonshot | 4 | **65.4%** | - | 68.3% |
+| Mistral Small | Mistral | 2 | **64.6%** | - | 63.6% |
+| LLaMA 3.1 8B | Meta | 2 | **65.4%** | 53.8% | 58.3% |
+| Amazon Nova Micro | Amazon | 1 | **53.8%** | - | 41.7% |
+| IBM Granite 4.0 Micro | IBM | 1 | **30.8%** | - | - |
+| Qwen 3.6 35B A3B | Alibaba | 1 | 25.0% | - | - |
 
-**27 runs, 11 models, 4 providers.** Frontier models (Opus, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash) achieve 100% GCF on every run. Mid-tier models show variance at 500 records; GCF averages equal or better than JSON across runs on every model tested. TOON is consistently the weakest format. Infra-failure runs (all formats 0%) excluded.
+**19 models, 9 providers** (Anthropic, OpenAI, Google, xAI, Meta, Mistral, DeepSeek, Moonshot, Amazon, IBM, Alibaba). Frontier models achieve 100% GCF on every run. GCF beats or ties JSON on 17 of 19 models tested. Kimi K2.7 is the only model where JSON slightly outperforms GCF (68.3% vs 65.4%); Kimi benefits more from the flatten variant. TOON tested on a subset; consistently the weakest format. Infra-failure runs excluded.
+
+#### Flatten experiment (June 2026)
+
+The flatten experiment tested nested object flattening (using `>` as path separator) across 19 models. Key findings that informed the v3.2 SDK release:
+
+- **Proprietary frontier models**: 100% on flat encoding, zero regression (7 models)
+- **Open-weight models**: 8-23% regression on flat vs current GCF (LLaMA, Mistral, Qwen, Granite)
+- **Decision**: ship flatten as opt-out (enabled by default) since frontier models handle it perfectly, and the token savings justify it for all tiers
+- **`>` separator beats `;`**: deterministically better on Gemini 2.5 Flash (100% vs 92.3%)
+
+Full results: `gcf-go/eval/results/v3/comprehension/flatten-experiment/README.md`
 
 ---
 
