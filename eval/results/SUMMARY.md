@@ -433,6 +433,64 @@ Session dedup matches full retransmission exactly. JSON falls apart at scale.
 
 ---
 
+## Session Savings Benchmark (Token reduction from dedup + delta)
+
+Measures cumulative token savings from GCF session deduplication and delta encoding across multi-turn agent conversations. Uses 8 real production tokenizers from 8 providers (GPT-4o, Claude, LLaMA 3.1, Gemma 2, Mistral 7B, Qwen 2.5, DeepSeek V3, Phi-4). No LLM calls; purely computational.
+
+SDK: gcf-python (encode, encode_with_session, encode_delta)
+
+### Session savings by scenario (GPT-4o tokenizer)
+
+| Scenario | Calls | JSON total | GCF total | Session total | Stacked total | GCF/JSON | Session/JSON | Stacked/JSON |
+|----------|-------|-----------|-----------|---------------|---------------|----------|--------------|--------------|
+| small_5call (20 sym) | 5 | 6,912 | 2,326 | 1,498 | 1,214 | 66.3% | 78.3% | 82.4% |
+| medium_5call (100 sym) | 5 | 33,605 | 11,027 | 6,574 | 4,452 | 67.2% | 80.4% | 86.8% |
+| large_5call (500 sym) | 5 | 157,933 | 52,896 | 28,711 | 16,802 | 66.5% | 81.8% | 89.4% |
+| large_10call (500 sym) | 10 | 308,285 | 104,455 | 49,211 | 17,379 | 66.1% | 84.0% | 94.4% |
+
+"Stacked" = delta encoding + session dedup composed: delta computes the diff from the previous payload, and added symbols that were previously transmitted in earlier calls become bare references.
+
+### Cross-tokenizer validation (large_5call, 500 symbols)
+
+| Tokenizer | JSON | GCF | Session | Stacked | GCF/JSON | Session/JSON | Stacked/JSON |
+|-----------|------|-----|---------|---------|----------|--------------|--------------|
+| GPT-4o (OpenAI o200k) | 157,933 | 52,896 | 28,711 | 16,802 | 66.5% | 81.8% | 89.4% |
+| Claude (Anthropic) | 175,155 | 65,724 | 31,555 | 22,198 | 62.5% | 82.0% | 87.3% |
+| LLaMA 3.1 8B (Meta) | 156,992 | 51,444 | 28,371 | 16,475 | 67.2% | 81.9% | 89.5% |
+| Gemma 2 2B (Google) | 196,466 | 77,096 | 39,137 | 24,932 | 60.8% | 80.1% | 87.3% |
+| Mistral 7B v0.3 | 204,747 | 80,899 | 41,905 | 26,212 | 60.5% | 79.5% | 87.2% |
+| Qwen 2.5 7B (Alibaba) | 157,352 | 60,452 | 35,429 | 18,757 | 61.6% | 77.5% | 88.1% |
+| DeepSeek V3 (671B) | 168,471 | 60,814 | 30,439 | 19,780 | 63.9% | 81.9% | 88.3% |
+| Phi-4 (Microsoft) | 156,992 | 51,444 | 28,371 | 16,475 | 67.2% | 81.9% | 89.5% |
+| **AVERAGE** | | | | | **63.8%** | **80.8%** | **88.3%** |
+
+### Delta encoding savings (topology changes, 100-symbol base)
+
+| Change | Full encode | Session | Delta | Stacked | Stacked savings |
+|--------|------------|---------|-------|---------|-----------------|
+| 1 device | 2,327 | 1,100 | 110 | 113 | 95.1% |
+| 2 devices | 2,326 | 1,112 | 139 | 142 | 93.9% |
+| 5 devices | 2,325 | 1,148 | 267 | 270 | 88.4% |
+| 10 devices | 2,327 | 1,213 | 501 | 504 | 78.3% |
+| 20 devices | 2,329 | 1,340 | 920 | 923 | 60.4% |
+
+Note: stacking adds ~3 tokens overhead vs raw delta for topology changes because the "added" devices are genuinely new (never previously transmitted). Stacking shines in session scenarios where symbols cycle in and out of focus across calls.
+
+### Key findings
+
+- **Stacked (delta + dedup) saves 88.3% vs JSON** across 8 tokenizers (5-call session)
+- **94.4% savings on 10-call sessions** (only 17,379 tokens vs 308,285 JSON)
+- **99.4% per-call savings** at call 10 (171 tokens vs 29,072 JSON)
+- Three layers compose: format (63.8%) + dedup (+17.1pp) + delta (+7.5pp) = 88.3%
+- **Cross-tokenizer consistency**: 87.2% to 89.5% stacked savings range (2.3pp spread)
+- **JSON has no equivalent mechanism**: every tool call retransmits the full payload
+
+### Files
+
+- `results/session-savings/session-savings-results.json`
+
+---
+
 ## Reproduce
 
 Comprehension eval:

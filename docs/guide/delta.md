@@ -140,17 +140,82 @@ This means:
 - If one file was edited, a few symbols shift, and the root changes slightly (outcome 2: delta)
 - If the user switched branches entirely, the root is unrecognizable (outcome 3: full retransmit)
 
-## Savings in practice
+## Measured savings
 
-On the knowing MCP server (production usage):
-- **81.2% of re-queries** hit delta encoding
-- Average delta size: 18.8% of full payload
-- Combined with session dedup: 95%+ savings on repeated interactions
+Benchmarked on GPT-4o tokenizer against a 100-symbol base topology:
 
-## Combining session + delta
+![Delta topology savings](/charts/delta-topology-savings.png)
 
-Session dedup and delta encoding are orthogonal. A response can be both:
-- A delta (only changed symbols) AND
-- Session-aware (new symbols that overlap with prior responses become bare refs)
+| Change size | Full encode | Session | Delta | Delta savings |
+|-------------|------------|---------|-------|---------------|
+| 1 device | 2,327 | 1,100 | 110 | **95.3%** |
+| 2 devices | 2,326 | 1,112 | 139 | **94.0%** |
+| 5 devices | 2,325 | 1,148 | 267 | **88.5%** |
+| 10 devices | 2,327 | 1,213 | 501 | **78.5%** |
+| 20 devices | 2,329 | 1,340 | 920 | **60.5%** |
 
-In practice, most servers use one or the other per response, not both simultaneously.
+For small topology changes (1-5 devices), delta achieves 88-95% savings vs full re-encode.
+
+## Stacking with session dedup
+
+Delta and session dedup compose. When both are active:
+
+1. **Delta** computes the diff from the previous payload (only added/removed symbols)
+2. **Session** checks: are any of the "added" symbols already known from an earlier call? If so, they become bare refs instead of full declarations.
+
+This matters when symbols cycle in and out of focus. A symbol removed in call 3 and re-added in call 5 was already transmitted in call 1; the stacked encoder emits a bare ref instead of redeclaring it.
+
+Use `encode_delta_with_session` (Python/Go) to get the stacked behavior:
+
+::: code-group
+
+```python [Python]
+from gcf import encode_delta_with_session, DeltaPayload, Session
+
+sess = Session()
+# ... encode initial payloads with session ...
+
+delta = DeltaPayload(
+    tool="context_for_task",
+    base_root="a1b2c3",
+    new_root="d4e5f6",
+    removed=[...],
+    added=[...],      # added symbols checked against session
+    removed_edges=[...],
+    added_edges=[...],
+)
+
+# Stacked: delta format + bare refs for session-known symbols
+out = encode_delta_with_session(delta, sess)
+```
+
+```go [Go]
+sess := gcf.NewSession()
+// ... encode initial payloads with session ...
+
+delta := &gcf.DeltaPayload{
+    Tool:     "context_for_task",
+    BaseRoot: "a1b2c3",
+    NewRoot:  "d4e5f6",
+    Removed:  []gcf.Symbol{...},
+    Added:    []gcf.Symbol{...},  // checked against session
+}
+
+// Stacked: delta format + bare refs for session-known symbols
+out := gcf.EncodeDeltaWithSession(delta, sess)
+```
+
+:::
+
+### Stacked savings (measured)
+
+On a 10-call session with 500 symbols (GPT-4o tokenizer):
+
+| Encoding layer | Total tokens (10 calls) | Savings vs JSON |
+|----------------|------------------------|-----------------|
+| JSON | 308,285 | baseline |
+| GCF format alone | 104,455 | 66.1% |
+| + Session dedup | 49,211 | 84.0% |
+| + Delta (stacked) | **17,379** | **94.4%** |
+
+Three layers compose: format savings, session dedup, and delta encoding each add independently measured improvements.

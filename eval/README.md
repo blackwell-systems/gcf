@@ -4,7 +4,51 @@ Comprehension, generation, tokenizer analysis, and token efficiency benchmarks f
 
 For full results, per-model averages, and failure taxonomy, see [SUMMARY.md](results/SUMMARY.md).
 
+## SDK Inventory
+
+Every eval script and its SDK dependency. Test harnesses live in their respective SDK repos; benchmark scripts and results live here in the spec repo.
+
+| Script | SDK | Repo | Language |
+|--------|-----|------|----------|
+| `comprehension_test.go` | gcf-go | gcf-go/eval/ | Go |
+| `generic_comprehension_test.go` | gcf-go | gcf-go/eval/ | Go |
+| `budget_comprehension_test.go` | gcf-go | gcf-go/eval/ | Go |
+| `generation_test.go` | gcf-go | gcf-go/eval/ | Go |
+| `generic_generation_test.go` | gcf-go | gcf-go/eval/ | Go |
+| `batch_test.go` | gcf-go | gcf-go/eval/ | Go |
+| `session_dedup_test.go` | gcf-go | gcf-go/eval/ | Go |
+| `generation_gcf_eval.py` | gcf-go (decoder) | gcf/eval/ | Python |
+| `generation_toon_eval.py` | toon (decoder) | gcf/eval/ | Python |
+| `session-savings-benchmark.py` | gcf-python | gcf/eval/ | Python |
+| `hf-tokenizer-analysis.py` | none | gcf/eval/ | Python |
+| `structural-equivalence-proof.py` | none | gcf/eval/ | Python |
+| `adversarial-vocab-dump.py` | none | gcf/eval/ | Python |
+| `ascii-adversarial-surface.py` | none | gcf/eval/ | Python |
+| `attention-analysis.py` | none | gcf/eval/ | Python |
+| `flatten-charts.py` | none | gcf/eval/ | Python |
+| `graph-token-efficiency.mjs` | gcf-typescript | gcf/eval/ | JS |
+| `session-dedup-efficiency.mjs` | gcf-typescript | gcf/eval/ | JS |
+| `tokenizer-variance.mjs` | gcf-typescript | gcf/eval/ | JS |
+| `structural-variance.mjs` | gcf-typescript | gcf/eval/ | JS |
+| `json-tokenization-analysis.mjs` | gcf-typescript | gcf/eval/ | JS |
+| `worst-json-tokenization.mjs` | gcf-typescript | gcf/eval/ | JS |
+| `exhaustive-json-boundary-search.mjs` | gcf-typescript | gcf/eval/ | JS |
+| `grammar-swap-experiment.mjs` | gcf-typescript | gcf/eval/ | JS |
+| `ms365-token-benchmark.mjs` | gcf-typescript | gcf/eval/ | JS |
+| `jscpd-token-benchmark.mjs` | gcf-typescript | gcf/eval/ | JS |
+| `engram-token-benchmark.mjs` | gcf-typescript | gcf/eval/ | JS |
+| `notion-token-benchmark.mjs` | gcf-typescript | gcf/eval/ | JS |
+| `exa-token-benchmark.mjs` | gcf-typescript | gcf/eval/ | JS |
+| `encode-flat-prototype.mjs` | gcf-typescript | gcf/eval/ | JS |
+| `dot-flatten-benchmark.mjs` | gcf-typescript | gcf/eval/ | JS |
+| `cross-api-flat-benchmark.mjs` | gcf-typescript | gcf/eval/ | JS |
+| `toon-fuzz.mjs` | toon | gcf/eval/ | JS |
+
+---
+
 ## Comprehension Eval
+
+**SDK: gcf-go** (test harness in `gcf-go/eval/`)
 
 Two eval types, both using deterministic ground truth:
 
@@ -32,6 +76,8 @@ EVAL_BACKEND=google GOOGLE_API_KEY=... EVAL_MODEL=gemini-2.5-flash EVAL_FORMATS=
 
 ## Generation Eval
 
+**SDK: gcf-go** (decoder validation), **gcf-python** (generation scripts)
+
 | Script | Description |
 |--------|-------------|
 | `generation_gcf_eval.py` | Tests whether LLMs can produce valid GCF output from a 3-line primer. Output validated through `gcf-go Decode()`. All 9 models produce 5/5 valid outputs. Proves GCF is learnable from examples alone, no training needed. |
@@ -45,6 +91,8 @@ python3 generation_toon_eval.py
 ---
 
 ## Tokenizer Analysis
+
+**SDK: none** (uses HF tokenizers library and tiktoken directly)
 
 ### Primary analysis (43 tokenizers, 20 providers)
 
@@ -93,6 +141,8 @@ const { encode } = require('@toon-format/toon');
 
 ### Legacy JS scripts (8 tokenizers)
 
+**SDK: gcf-typescript** (`@blackwell-systems/gcf`)
+
 These use `@lenml/tokenizer-*` npm packages covering 8 tokenizers from 6 providers. The 43-tokenizer Python study supersedes them for headline numbers, but they remain reproducible and contain additional analyses (grammar swap, syntactic deep dive) not yet ported to the Python suite.
 
 ```bash
@@ -116,15 +166,20 @@ npm install @blackwell-systems/gcf @lenml/tokenizers \
 
 ## Token Efficiency Benchmarks
 
+**SDK: gcf-typescript** (JS scripts), **gcf-python** (savings benchmark)
+
 | Script | Description |
 |--------|-------------|
-| `graph-token-efficiency.mjs` | Measures graph profile (code intelligence payloads) across 8 tokenizers. 68% savings vs pretty JSON, 48% vs compact JSON. Tests at 10/50/100/500 symbols with 5-200 edges. Shows graph profile outperforms generic profile due to `@id` refs, edge encoding, and section headers. |
-| `session-dedup-efficiency.mjs` | Simulates a 5-call agent session where 90% of symbols overlap between calls. Measures cumulative token savings with GCF's bare reference deduplication. Result: 84.3% total savings across the session, with individual calls 3-5 reaching 89-90% savings. Proves GCF's session awareness is a major advantage for agentic workflows. |
+| `graph-token-efficiency.mjs` | Measures graph profile (code intelligence payloads) across 8 tokenizers. 68% savings vs pretty JSON, 48% vs compact JSON. Tests at 10/50/100/500 symbols with 5-200 edges. Shows graph profile outperforms generic profile due to `@id` refs, edge encoding, and section headers. SDK: gcf-typescript. |
+| `session-dedup-efficiency.mjs` | Simulates a 5-call agent session where 90% of symbols overlap between calls. Measures cumulative token savings with GCF's bare reference deduplication. Result: 84.3% total savings across the session, with individual calls 3-5 reaching 89-90% savings. SDK: gcf-typescript. |
+| `session-savings-benchmark.py` | **Cross-tokenizer session savings benchmark.** 8 real tokenizers from 8 providers, 4 scenarios (20-500 symbols, 5-10 calls), session dedup + delta encoding. Result: 80.8% avg savings vs JSON (session), 93.8% with delta on 10-call session. Also benchmarks delta encoding for topology changes (95% savings at 1-device change). SDK: gcf-python. |
 | `toon-fuzz.mjs` | TOON round-trip accuracy testing. Generates random payloads and verifies TOON encode/decode round-trip fidelity. |
 
 ---
 
 ## Integration Benchmarks
+
+**SDK: gcf-typescript** (all JS benchmarks use `@blackwell-systems/gcf`)
 
 Token savings measured on realistic data shapes from specific MCP server projects. These benchmarks informed the PR descriptions for upstream integration proposals.
 
@@ -140,22 +195,24 @@ Token savings measured on realistic data shapes from specific MCP server project
 
 ## Flatten Experiment
 
+**SDK: gcf-typescript** (JS prototypes), **none** (chart generation)
+
 Scripts from the v3.2 flatten feature research.
 
 | Script | Description |
 |--------|-------------|
-| `encode-flat-prototype.mjs` | Prototype implementation of the nested object flattening encoder. Uses `>` as path separator to flatten nested structures into tabular columns. |
-| `dot-flatten-benchmark.mjs` | Benchmarks the dot-notation flatten approach (predecessor to `>` separator). Measures token savings from flattening nested objects. |
-| `cross-api-flat-benchmark.mjs` | Cross-API comparison of flatten savings across multiple MCP server data shapes. Used to determine which integration targets benefit most from flattening. |
-| `flatten-charts.py` | Generates charts for the flatten experiment results. |
+| `encode-flat-prototype.mjs` | Prototype implementation of the nested object flattening encoder. Uses `>` as path separator to flatten nested structures into tabular columns. SDK: gcf-typescript. |
+| `dot-flatten-benchmark.mjs` | Benchmarks the dot-notation flatten approach (predecessor to `>` separator). Measures token savings from flattening nested objects. SDK: gcf-typescript. |
+| `cross-api-flat-benchmark.mjs` | Cross-API comparison of flatten savings across multiple MCP server data shapes. Used to determine which integration targets benefit most from flattening. SDK: gcf-typescript. |
+| `flatten-charts.py` | Generates charts for the flatten experiment results. No SDK dependency. |
 
 ---
 
 ## Session Dedup Eval
 
-Tests whether LLMs correctly resolve bare references (`@N  # previously transmitted`) to their original declarations from earlier in a multi-call conversation. Validates that session deduplication is safe to deploy in production agent pipelines.
+**SDK: gcf-go** (test harness in `gcf-go/eval/session_dedup_test.go`)
 
-Test harness: `gcf-go/eval/session_dedup_test.go`
+Tests whether LLMs correctly resolve bare references (`@N  # previously transmitted`) to their original declarations from earlier in a multi-call conversation. Validates that session deduplication is safe to deploy in production agent pipelines.
 
 | Test | What it measures | Result |
 |------|-----------------|--------|
@@ -196,6 +253,7 @@ All logs stored in `results/`:
 - `generation/`: generation eval runs
 - `tokenizer/`: 43-tokenizer analysis results (JSON data + run logs)
 - `session-dedup/`: session dedup eval logs (resolve, depth, stress)
+- `session-savings/`: session dedup + delta token savings benchmark results
 
 **Full results:** [SUMMARY.md](results/SUMMARY.md)
 

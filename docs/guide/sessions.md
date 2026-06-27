@@ -4,6 +4,20 @@ In multi-turn LLM tool interactions, the same symbols appear across multiple res
 
 JSON and every other format retransmit the full declaration every time. GCF's graph profile tracks what's been sent and replaces known symbols with bare references.
 
+## Measured savings
+
+Benchmarked across 8 production tokenizers (GPT-4o, Claude, LLaMA 3.1, Gemma 2, Mistral 7B, Qwen 2.5, DeepSeek V3, Phi-4) on 500-symbol payloads with realistic overlap patterns:
+
+| Encoding layer | Savings vs JSON | Incremental |
+|----------------|----------------|-------------|
+| GCF format alone | 63.8% | baseline |
+| + Session dedup | 80.8% | +17.1pp |
+| + Delta (stacked) | **88.3%** | +7.5pp |
+
+On a 10-call session: **94.4% cumulative savings** vs JSON. By call 10, each response costs **171 tokens** vs 29,072 for JSON (**99.4% per-call savings**).
+
+![Session savings curve](/charts/session-savings-curve.png)
+
 ## The problem
 
 Call 1: LLM asks "What calls AuthMiddleware?"
@@ -62,10 +76,6 @@ GCF profile=graph tool=context_for_task budget=5000 tokens=400 symbols=22 edges=
 @3 fn pkg.AuthFlow 0.91 lsp_resolved
 ...
 ```
-
-Total with sessions: 3,300 tokens (vs 7,300 with JSON). **54.8% savings by call 3.**
-
-By the 5th call in a typical session: **92.7% savings vs JSON.**
 
 ## How it works
 
@@ -152,14 +162,49 @@ Multiple tool handlers can encode concurrently within the same session.
 - Different users or conversations (don't share sessions across contexts)
 - When the LLM's context window has been truncated (bare refs to symbols outside the window will confuse the model)
 
-## Token savings curve
+## Comprehension validation
 
-| Call # | New symbols | Bare refs | Tokens saved vs JSON |
-|--------|------------|-----------|---------------------|
-| 1 | 100% | 0% | 84% (base GCF savings) |
-| 2 | 35% | 65% | 89% |
-| 3 | 20% | 80% | 91% |
-| 4 | 12% | 88% | 92.2% |
-| 5 | 8% | 92% | 92.7% |
+Session dedup was validated on Gemini 2.5 Pro and Gemini 2.5 Flash:
+
+- **Attribute resolution** (kind, provenance, score) through bare refs: **100%** on both models
+- **Depth tolerance**: zero degradation through **15 calls** (31 messages) on Gemini 2.5 Pro
+- **Session dedup matches full retransmission** accuracy on every test
+- Edge direction: Flash reverses `<` arrow direction; Pro reads it correctly
+
+Full eval results: [Session Dedup Eval](/guide/eval-results#session-dedup-eval)
+
+## Token savings curve (measured)
+
+Benchmarked on GPT-4o tokenizer, 500-symbol payloads:
+
+| Call # | JSON tokens | Session tokens | Stacked tokens | Session/JSON | Stacked/JSON |
+|--------|------------|----------------|----------------|--------------|--------------|
+| 1 | 34,854 | 11,154 | 11,154 | 68.0% | 68.0% |
+| 2 | 32,862 | 5,257 | 2,636 | 84.0% | 92.0% |
+| 3 | 31,666 | 4,380 | 1,587 | 86.2% | 95.0% |
+| 5 | 30,474 | 4,170 | 305 | 86.3% | 99.0% |
+| 10 | 29,072 | 3,925 | 171 | 86.5% | 99.4% |
+
+"Stacked" = delta encoding + session dedup composed (see [Delta Encoding](/guide/delta)).
+
+### Cross-tokenizer consistency
+
+Savings are stable across all major tokenizer families:
+
+![Cross-tokenizer savings](/charts/session-savings-cross-tokenizer.png)
+
+| Tokenizer | Stacked savings vs JSON |
+|-----------|------------------------|
+| GPT-4o (OpenAI) | 89.4% |
+| Claude (Anthropic) | 87.3% |
+| LLaMA 3.1 (Meta) | 89.5% |
+| Gemma 2 (Google) | 87.3% |
+| Mistral 7B | 87.2% |
+| Qwen 2.5 (Alibaba) | 88.1% |
+| DeepSeek V3 | 88.3% |
+| Phi-4 (Microsoft) | 89.5% |
+| **Average** | **88.3%** |
+
+Range: 87.2% to 89.5% (2.3pp spread). The savings are a structural property of the format, not an artifact of any specific tokenizer.
 
 The savings compound because code graphs have high locality: related queries tend to traverse overlapping neighborhoods.

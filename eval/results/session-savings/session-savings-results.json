@@ -1,0 +1,416 @@
+{
+  "primary_tokenizer": "GPT-4o (OpenAI o200k)",
+  "tokenizer_count": 8,
+  "scenarios": [
+    {
+      "name": "small_5call",
+      "tokenizer": "GPT-4o (OpenAI o200k)",
+      "total_json": 6912,
+      "total_gcf": 2326,
+      "total_session": 1498,
+      "total_stacked": 1214,
+      "gcf_vs_json_pct": 66.3,
+      "session_vs_json_pct": 78.3,
+      "stacked_vs_json_pct": 82.4,
+      "calls": [
+        {
+          "desc": "Initial context",
+          "new": 20,
+          "overlap": 0,
+          "edges": 10,
+          "json": 1509,
+          "gcf": 487,
+          "session": 489,
+          "stacked": 489,
+          "stacked_profile": "session"
+        },
+        {
+          "desc": "Follow-up (75%)",
+          "new": 5,
+          "overlap": 15,
+          "edges": 8,
+          "json": 1432,
+          "gcf": 474,
+          "session": 291,
+          "stacked": 253,
+          "stacked_profile": "delta+session"
+        },
+        {
+          "desc": "Refinement (80%)",
+          "new": 4,
+          "overlap": 16,
+          "edges": 7,
+          "json": 1388,
+          "gcf": 465,
+          "session": 271,
+          "stacked": 232,
+          "stacked_profile": "delta+session"
+        },
+        {
+          "desc": "Drill-down (90%)",
+          "new": 2,
+          "overlap": 18,
+          "edges": 5,
+          "json": 1310,
+          "gcf": 452,
+          "session": 232,
+          "stacked": 147,
+          "stacked_profile": "delta+session"
+        },
+        {
+          "desc": "Final (95%)",
+          "new": 1,
+          "overlap": 19,
+          "edges": 4,
+          "json": 1273,
+          "gcf": 448,
+          "session": 215,
+          "stacked": 93,
+          "stacked_profile": "delta+session"
+        }
+      ]
+    },
+    {
+      "name": "medium_5call",
+      "tokenizer": "GPT-4o (OpenAI o200k)",
+      "total_json": 33605,
+      "total_gcf": 11027,
+      "total_session": 6574,
+      "total_stacked": 4452,
+      "gcf_vs_json_pct": 67.2,
+      "session_vs_json_pct": 80.4,
+      "stacked_vs_json_pct": 86.8,
+      "calls": [
+        {
+          "desc": "Initial context",
+          "new": 100,
+          "overlap": 0,
+          "edges": 50,
+          "json": 7400,
+          "gcf": 2323,
+          "session": 2325,
+          "stacked": 2325,
+          "stacked_profile": "session"
+        },
+        {
+          "desc": "Follow-up (80%)",
+          "new": 20,
+          "overlap": 80,
+          "edges": 40,
+          "json": 6999,
+          "gcf": 2255,
+          "session": 1266,
+          "stacked": 869,
+          "stacked_profile": "delta+session"
+        },
+        {
+          "desc": "Refinement (90%)",
+          "new": 10,
+          "overlap": 90,
+          "edges": 30,
+          "json": 6599,
+          "gcf": 2183,
+          "session": 1069,
+          "stacked": 706,
+          "stacked_profile": "delta+session"
+        },
+        {
+          "desc": "Drill-down (94%)",
+          "new": 6,
+          "overlap": 94,
+          "edges": 25,
+          "json": 6403,
+          "gcf": 2152,
+          "session": 988,
+          "stacked": 311,
+          "stacked_profile": "delta+session"
+        },
+        {
+          "desc": "Final (96%)",
+          "new": 4,
+          "overlap": 96,
+          "edges": 20,
+          "json": 6204,
+          "gcf": 2114,
+          "session": 926,
+          "stacked": 241,
+          "stacked_profile": "delta+session"
+        }
+      ]
+    },
+    {
+      "name": "large_5call",
+      "tokenizer": "GPT-4o (OpenAI o200k)",
+      "total_json": 157933,
+      "total_gcf": 52896,
+      "total_session": 28711,
+      "total_stacked": 16802,
+      "gcf_vs_json_pct": 66.5,
+      "session_vs_json_pct": 81.8,
+      "stacked_vs_json_pct": 89.4,
+      "calls": [
+        {
+          "desc": "Initial context",
+          "new": 500,
+          "overlap": 0,
+          "edges": 200,
+          "json": 34854,
+          "gcf": 11152,
+          "session": 11154,
+          "stacked": 11154,
+          "stacked_profile": "session"
+        },
+        {
+          "desc": "Follow-up (80%)",
+          "new": 100,
+          "overlap": 400,
+          "edges": 150,
+          "json": 32862,
+          "gcf": 10802,
+          "session": 5257,
+          "stacked": 2636,
+          "stacked_profile": "delta+session"
+        },
+        {
+          "desc": "Refinement (90%)",
+          "new": 50,
+          "overlap": 450,
+          "edges": 100,
+          "json": 30869,
+          "gcf": 10452,
+          "session": 4240,
+          "stacked": 1934,
+          "stacked_profile": "delta+session"
+        },
+        {
+          "desc": "Drill-down (94%)",
+          "new": 30,
+          "overlap": 470,
+          "edges": 80,
+          "json": 30071,
+          "gcf": 10314,
+          "session": 4100,
+          "stacked": 575,
+          "stacked_profile": "delta+session"
+        },
+        {
+          "desc": "Final (96%)",
+          "new": 20,
+          "overlap": 480,
+          "edges": 60,
+          "json": 29277,
+          "gcf": 10176,
+          "session": 3960,
+          "stacked": 503,
+          "stacked_profile": "delta+session"
+        }
+      ]
+    },
+    {
+      "name": "large_10call",
+      "tokenizer": "GPT-4o (OpenAI o200k)",
+      "total_json": 308285,
+      "total_gcf": 104455,
+      "total_session": 49211,
+      "total_stacked": 17379,
+      "gcf_vs_json_pct": 66.1,
+      "session_vs_json_pct": 84.0,
+      "stacked_vs_json_pct": 94.4,
+      "calls": [
+        {
+          "desc": "Initial context",
+          "new": 500,
+          "overlap": 0,
+          "edges": 200,
+          "json": 34854,
+          "gcf": 11152,
+          "session": 11154,
+          "stacked": 11154,
+          "stacked_profile": "session"
+        },
+        {
+          "desc": "Call 2 (80%)",
+          "new": 100,
+          "overlap": 400,
+          "edges": 150,
+          "json": 32862,
+          "gcf": 10802,
+          "session": 5257,
+          "stacked": 2636,
+          "stacked_profile": "delta+session"
+        },
+        {
+          "desc": "Call 3 (85%)",
+          "new": 75,
+          "overlap": 425,
+          "edges": 120,
+          "json": 31666,
+          "gcf": 10590,
+          "session": 4380,
+          "stacked": 1587,
+          "stacked_profile": "delta+session"
+        },
+        {
+          "desc": "Call 4 (90%)",
+          "new": 50,
+          "overlap": 450,
+          "edges": 100,
+          "json": 30870,
+          "gcf": 10454,
+          "session": 4240,
+          "stacked": 610,
+          "stacked_profile": "delta+session"
+        },
+        {
+          "desc": "Call 5 (92%)",
+          "new": 40,
+          "overlap": 460,
+          "edges": 90,
+          "json": 30474,
+          "gcf": 10386,
+          "session": 4170,
+          "stacked": 305,
+          "stacked_profile": "delta+session"
+        },
+        {
+          "desc": "Call 6 (94%)",
+          "new": 30,
+          "overlap": 470,
+          "edges": 80,
+          "json": 30070,
+          "gcf": 10312,
+          "session": 4100,
+          "stacked": 306,
+          "stacked_profile": "delta+session"
+        },
+        {
+          "desc": "Call 7 (95%)",
+          "new": 25,
+          "overlap": 475,
+          "edges": 70,
+          "json": 29672,
+          "gcf": 10242,
+          "session": 4030,
+          "stacked": 268,
+          "stacked_profile": "delta+session"
+        },
+        {
+          "desc": "Call 8 (96%)",
+          "new": 20,
+          "overlap": 480,
+          "edges": 65,
+          "json": 29473,
+          "gcf": 10209,
+          "session": 3995,
+          "stacked": 173,
+          "stacked_profile": "delta+session"
+        },
+        {
+          "desc": "Call 9 (97%)",
+          "new": 15,
+          "overlap": 485,
+          "edges": 60,
+          "json": 29272,
+          "gcf": 10171,
+          "session": 3960,
+          "stacked": 169,
+          "stacked_profile": "delta+session"
+        },
+        {
+          "desc": "Call 10 (98%)",
+          "new": 10,
+          "overlap": 490,
+          "edges": 55,
+          "json": 29072,
+          "gcf": 10137,
+          "session": 3925,
+          "stacked": 171,
+          "stacked_profile": "delta+session"
+        }
+      ]
+    }
+  ],
+  "cross_tokenizer": [
+    {
+      "tokenizer": "GPT-4o (OpenAI o200k)",
+      "total_json": 157933,
+      "total_gcf": 52896,
+      "total_session": 28711,
+      "total_stacked": 16802,
+      "gcf_vs_json_pct": 66.5,
+      "session_vs_json_pct": 81.8,
+      "stacked_vs_json_pct": 89.4
+    },
+    {
+      "tokenizer": "Claude (Anthropic)",
+      "total_json": 175155,
+      "total_gcf": 65724,
+      "total_session": 31555,
+      "total_stacked": 22198,
+      "gcf_vs_json_pct": 62.5,
+      "session_vs_json_pct": 82.0,
+      "stacked_vs_json_pct": 87.3
+    },
+    {
+      "tokenizer": "LLaMA 3.1 8B (Meta)",
+      "total_json": 156992,
+      "total_gcf": 51444,
+      "total_session": 28371,
+      "total_stacked": 16475,
+      "gcf_vs_json_pct": 67.2,
+      "session_vs_json_pct": 81.9,
+      "stacked_vs_json_pct": 89.5
+    },
+    {
+      "tokenizer": "Gemma 2 2B (Google)",
+      "total_json": 196466,
+      "total_gcf": 77096,
+      "total_session": 39137,
+      "total_stacked": 24932,
+      "gcf_vs_json_pct": 60.8,
+      "session_vs_json_pct": 80.1,
+      "stacked_vs_json_pct": 87.3
+    },
+    {
+      "tokenizer": "Mistral 7B v0.3",
+      "total_json": 204747,
+      "total_gcf": 80899,
+      "total_session": 41905,
+      "total_stacked": 26212,
+      "gcf_vs_json_pct": 60.5,
+      "session_vs_json_pct": 79.5,
+      "stacked_vs_json_pct": 87.2
+    },
+    {
+      "tokenizer": "Qwen 2.5 7B (Alibaba)",
+      "total_json": 157352,
+      "total_gcf": 60452,
+      "total_session": 35429,
+      "total_stacked": 18757,
+      "gcf_vs_json_pct": 61.6,
+      "session_vs_json_pct": 77.5,
+      "stacked_vs_json_pct": 88.1
+    },
+    {
+      "tokenizer": "DeepSeek V3 (671B)",
+      "total_json": 168471,
+      "total_gcf": 60814,
+      "total_session": 30439,
+      "total_stacked": 19780,
+      "gcf_vs_json_pct": 63.9,
+      "session_vs_json_pct": 81.9,
+      "stacked_vs_json_pct": 88.3
+    },
+    {
+      "tokenizer": "Phi-4 (Microsoft)",
+      "total_json": 156992,
+      "total_gcf": 51444,
+      "total_session": 28371,
+      "total_stacked": 16475,
+      "gcf_vs_json_pct": 67.2,
+      "session_vs_json_pct": 81.9,
+      "stacked_vs_json_pct": 89.5
+    }
+  ],
+  "delta_changes": []
+}
