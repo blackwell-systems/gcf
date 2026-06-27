@@ -156,58 +156,11 @@ Benchmarked on GPT-4o tokenizer against a 100-symbol base topology:
 
 For small topology changes (1-5 devices), delta achieves 88-95% savings vs full re-encode.
 
-## Stacking with session dedup
+## Combining with session dedup
 
-Delta and session dedup compose. When both are active:
+Delta and session dedup are orthogonal. An MCP server uses `encode_with_session` for the full payload on each call (bare refs for known symbols), and `encode_delta` when the topology changed slightly since the last call (only added/removed symbols). The session tracks cumulative state; the delta handles per-call diffs.
 
-1. **Delta** computes the diff from the previous payload (only added/removed symbols)
-2. **Session** checks: are any of the "added" symbols already known from an earlier call? If so, they become bare refs instead of full declarations.
-
-This matters when symbols cycle in and out of focus. A symbol removed in call 3 and re-added in call 5 was already transmitted in call 1; the stacked encoder emits a bare ref instead of redeclaring it.
-
-Use `encode_delta_with_session` (Python/Go) to get the stacked behavior:
-
-::: code-group
-
-```python [Python]
-from gcf import encode_delta_with_session, DeltaPayload, Session
-
-sess = Session()
-# ... encode initial payloads with session ...
-
-delta = DeltaPayload(
-    tool="context_for_task",
-    base_root="a1b2c3",
-    new_root="d4e5f6",
-    removed=[...],
-    added=[...],      # added symbols checked against session
-    removed_edges=[...],
-    added_edges=[...],
-)
-
-# Stacked: delta format + bare refs for session-known symbols
-out = encode_delta_with_session(delta, sess)
-```
-
-```go [Go]
-sess := gcf.NewSession()
-// ... encode initial payloads with session ...
-
-delta := &gcf.DeltaPayload{
-    Tool:     "context_for_task",
-    BaseRoot: "a1b2c3",
-    NewRoot:  "d4e5f6",
-    Removed:  []gcf.Symbol{...},
-    Added:    []gcf.Symbol{...},  // checked against session
-}
-
-// Stacked: delta format + bare refs for session-known symbols
-out := gcf.EncodeDeltaWithSession(delta, sess)
-```
-
-:::
-
-### Stacked savings (measured)
+### Combined savings (measured)
 
 On a 10-call session with 500 symbols (GPT-4o tokenizer):
 
@@ -216,6 +169,6 @@ On a 10-call session with 500 symbols (GPT-4o tokenizer):
 | JSON | 308,285 | baseline |
 | GCF format alone | 104,455 | 66.1% |
 | + Session dedup | 49,211 | 84.0% |
-| + Delta (stacked) | **17,379** | **94.4%** |
+| + Delta | **17,379** | **94.4%** |
 
 Three layers compose: format savings, session dedup, and delta encoding each add independently measured improvements.

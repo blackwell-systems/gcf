@@ -36,7 +36,6 @@ from gcf import (
     encode_delta,
     encode_with_session,
 )
-from gcf.delta import encode_delta_with_session
 
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -351,7 +350,7 @@ def run_scenario(scenario: dict, tok, tok_name: str) -> dict:
         if prev_payload is not None:
             delta_payload = compute_delta(prev_payload, payload)
             if delta_payload is not None:
-                stacked_str = encode_delta_with_session(delta_payload, sess)
+                stacked_str = encode_delta(delta_payload)
                 st = token_count(tok, stacked_str)
                 if st < session_tokens:
                     stacked_tokens = st
@@ -398,7 +397,7 @@ def main():
     print()
     print("Measures cumulative token savings across multi-call agent sessions.")
     print("Uses real tokenizers (same infrastructure as hf-tokenizer-analysis.py).")
-    print("SDK: gcf-python (encode, encode_with_session, encode_delta_with_session)")
+    print("SDK: gcf-python (encode, encode_with_session, encode_delta)")
     print()
 
     # Load tokenizers
@@ -539,13 +538,11 @@ def main():
             delta_str = encode_delta(delta_payload)
             delta_tokens = token_count(primary_tok, delta_str)
 
-        # Stacked: delta + session dedup
+        # Delta encoding
         stacked_tokens = full_tokens
         if delta_payload is not None:
-            sess_stack = Session()
-            encode_with_session(base_payload, sess_stack)
-            stacked_str = encode_delta_with_session(delta_payload, sess_stack)
-            stacked_tokens = token_count(primary_tok, stacked_str)
+            delta_str = encode_delta(delta_payload)
+            stacked_tokens = token_count(primary_tok, delta_str)
 
         ratio = (1.0 - stacked_tokens / full_tokens) * 100 if full_tokens > 0 else 0
         print(f"{change_name:<24} {full_tokens:>8,} {session_tokens:>8,} {delta_tokens:>8,} {stacked_tokens:>8,} {ratio:>10.1f}%")
