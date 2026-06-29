@@ -1,11 +1,11 @@
-npm=3430
-npm_n8n=593
-npm_proxy=2434
-npm_treesitter=367
+npm=3436
+npm_n8n=595
+npm_proxy=2459
+npm_treesitter=370
 pypi=13554
 pypi_proxy=16356
 gh_go=21
 gh_proxy=199
-crates=210
+crates=214
 jetbrains=?
 vscode=64
