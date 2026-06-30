@@ -571,7 +571,13 @@ At production scale (500 symbols, 200 edges per call), session deduplication ach
 | 5 | 30,474 | 4,170 | 305 | 86.3% | 99.0% |
 | 10 | 29,072 | 3,925 | 171 | 86.5% | 99.4% |
 
-By call 10, each GCF response costs 171 tokens where JSON costs 29,072 (99.4% per-call savings). The savings are structural and tokenizer-independent: validated across 8 production tokenizers (GPT-4o, Claude, LLaMA 3.1, Gemma 2, Mistral 7B, Qwen 2.5, DeepSeek V3, Phi-4) with a range of 87.2% to 89.5% (2.3pp spread).
+By call 10, each GCF response costs 171 tokens where JSON costs 29,072 (99.4% per-call savings).
+
+![Session savings curve](/charts/session-savings-curve.png)
+
+The savings are structural and tokenizer-independent: validated across 8 production tokenizers (GPT-4o, Claude, LLaMA 3.1, Gemma 2, Mistral 7B, Qwen 2.5, DeepSeek V3, Phi-4) with a range of 87.2% to 89.5% (2.3pp spread).
+
+![Cross-tokenizer session savings](/charts/session-savings-cross-tokenizer.png)
 
 **Comprehension validation:** Session dedup was validated on Gemini 2.5 Pro and Gemini 2.5 Flash. Attribute resolution (kind, provenance, score) through bare refs: 100% on both models. Zero degradation through 15 consecutive calls (31 messages). The LLM reads bare refs (`@7`) from prior responses in its context window with perfect accuracy. Session dedup matches full retransmission accuracy on every test.
 
