@@ -559,7 +559,21 @@ On two separate runs, Claude Opus responded to a JSON counting question by manua
 
 By the fifth tool call in a session, GCF achieves 92.7% token savings versus JSON because 8 of 9 referenced symbols are bare ID references (`@0`, `@3`) consuming 1 token each instead of 15-20 tokens for the full qualified name.
 
-At production scale (500 symbols, 200 edges per call), session deduplication achieves 84.3% cumulative savings over 5 calls (148,360 JSON tokens vs 23,270 GCF tokens). Per bare reference: 2 tokens vs 19 tokens for a full declaration (89% savings per deduplicated symbol). Cross-tokenizer validated (86-90% savings at 90% overlap). JSON has no deduplication mechanism; every call retransmits the full payload.
+At production scale (500 symbols, 200 edges per call), session deduplication achieves 84.3% cumulative savings over 5 calls (148,360 JSON tokens vs 23,270 GCF tokens). Per bare reference: 2 tokens vs 19 tokens for a full declaration (89% savings per deduplicated symbol). JSON has no deduplication mechanism; every call retransmits the full payload.
+
+**Production-scale savings curve (500 symbols, 200 edges):**
+
+| Call # | JSON tokens | Session tokens | Session+Delta | Session/JSON | Stacked/JSON |
+|--------|------------|----------------|---------------|--------------|--------------|
+| 1 | 34,854 | 11,154 | 11,154 | 68.0% | 68.0% |
+| 2 | 32,862 | 5,257 | 2,636 | 84.0% | 92.0% |
+| 3 | 31,666 | 4,380 | 1,587 | 86.2% | 95.0% |
+| 5 | 30,474 | 4,170 | 305 | 86.3% | 99.0% |
+| 10 | 29,072 | 3,925 | 171 | 86.5% | 99.4% |
+
+By call 10, each GCF response costs 171 tokens where JSON costs 29,072 (99.4% per-call savings). The savings are structural and tokenizer-independent: validated across 8 production tokenizers (GPT-4o, Claude, LLaMA 3.1, Gemma 2, Mistral 7B, Qwen 2.5, DeepSeek V3, Phi-4) with a range of 87.2% to 89.5% (2.3pp spread).
+
+**Comprehension validation:** Session dedup was validated on Gemini 2.5 Pro and Gemini 2.5 Flash. Attribute resolution (kind, provenance, score) through bare refs: 100% on both models. Zero degradation through 15 consecutive calls (31 messages). The LLM reads bare refs (`@7`) from prior responses in its context window with perfect accuracy. Session dedup matches full retransmission accuracy on every test.
 
 ---
 
