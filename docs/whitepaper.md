@@ -23,7 +23,7 @@ We evaluated GCF across 2,500+ LLM evaluations spanning 11 models and 4 provider
 
 **Lossless verification:** 43 billion+ round-trips across 5 formats (JSON, YAML, MessagePack, CSV, TOML) with zero failures. Validated across 17 serialization formats in the Format Mega-Gauntlet.
 
-Session deduplication (84.3% cumulative savings over a 5-call session) and delta encoding (81.2% on re-queries) compound savings across multi-turn interactions. A streaming encoding extension enables zero-buffering encode with O(1) memory per row. The format is implemented in six languages (Go, TypeScript, Python, Rust, Swift, Kotlin), 157 conformance fixtures, and deployed in production MCP servers. Specification v3.1 Stable: gcformat.com.
+Session deduplication (84.3% cumulative savings over a 5-call session) and delta encoding (81.2% on re-queries) compound savings across multi-turn interactions. A streaming encoding extension enables zero-buffering encode with O(1) memory per row. The format is implemented in six languages (Go, TypeScript, Python, Rust, Swift, Kotlin), 157 conformance fixtures, and deployed in production MCP servers. Specification v3.2 Stable: gcformat.com.
 
 A companion paper, "Merge Barriers in BPE Tokenization: From Vocabulary Merges to Attention Collapse" [DOI: 10.5281/zenodo.20925910](https://doi.org/10.5281/zenodo.20925910), presents the full 43-tokenizer vocabulary analysis and the controlled experiment proving that delimiter choice produces measurable architectural changes in the trained transformer (4.6x more delimiter-specialized attention heads, 2.4x easier delimiter prediction, 50% more cohesive delimiter embeddings).
 
@@ -280,6 +280,16 @@ active=true
     tier=premium
 ```
 
+**Nested object flattening** eliminates attachments entirely when a nested object has the same keys in every row and all leaf values are scalars. The nested keys become path columns in the tabular header using `>` as the path separator:
+
+```
+## orders [500]{id,total,status,customer>name,customer>tier}
+1001|249.99|shipped|Alice Smith|premium
+1002|89.50|pending|Bob Chen|standard
+```
+
+At 500 rows, this eliminates 500 attachment blocks (1,000+ lines of `@{id}` markers, `.field {}` headers, and `key=value` pairs) and replaces them with inline pipe-separated values. The LLM sees a single flat table with positional columns. Flattening is applied recursively: nested objects within nested objects flatten to multi-level paths (`address>city>zip`). Fields containing the `>` character in their names are excluded from flattening and fall back to attachments, preserving the invariant that `>` in a column name always indicates a path.
+
 **Value encoding rules:**
 
 | Type | Encoding |
@@ -349,7 +359,7 @@ The implementation includes:
 - **Kotlin library** (`gcf-kotlin` via JitPack, v0.5.1): encode, decode, encodeGeneric, decodeGeneric, encodeWithSession, encodeDelta, StreamEncoder, GenericStreamEncoder. Zero dependencies.
 - **MCP proxy** (`github.com/blackwell-systems/gcf-proxy`): drop-in wrapper for any MCP server, re-encodes JSON responses as GCF with streaming progress notifications. Zero code changes to upstream.
 - **Conformance test suite** (157 v3 fixtures across both profiles): language-agnostic JSON fixtures validating encode, decode, session, delta, generic, streaming, and normative error cases.
-- **Specification** ([SPEC.md](https://github.com/blackwell-systems/gcf/blob/main/SPEC.md), v3.1 Stable): RFC 2119 keywords, conformance checklists, decoder error taxonomy, streaming extension, security considerations. Published at gcformat.com.
+- **Specification** ([SPEC.md](https://github.com/blackwell-systems/gcf/blob/main/SPEC.md), v3.2 Stable): RFC 2119 keywords, conformance checklists, decoder error taxonomy, streaming extension, security considerations. Published at gcformat.com.
 
 ### Correctness Validation
 
@@ -669,7 +679,7 @@ The format that looks clean to humans (JSON) is the one that breaks for agents a
 
 ## Reference Implementation
 
-- **Specification:** [SPEC.md](https://github.com/blackwell-systems/gcf/blob/main/SPEC.md) (v3.1 Stable, RFC 2119 keywords, conformance checklists, streaming extension, error taxonomy). Published at gcformat.com.
+- **Specification:** [SPEC.md](https://github.com/blackwell-systems/gcf/blob/main/SPEC.md) (v3.2 Stable, RFC 2119 keywords, conformance checklists, streaming extension, error taxonomy). Published at gcformat.com.
 - **Go library:** `github.com/blackwell-systems/gcf-go` (v0.6.1)
 - **TypeScript library:** `@blackwell-systems/gcf` on npm (v0.6.1)
 - **Python library:** `gcf-python` on PyPI (v0.5.1)
