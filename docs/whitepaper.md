@@ -396,9 +396,12 @@ The generic profile achieves savings through a subset of the same mechanisms:
 | Structural delimiters | `{`, `}`, `:`, `,`, `"` per record | `|` between values | ~6 tokens/record |
 | Array framing | `[`, `]`, commas | `[count]` in header | fixed |
 | Primitive arrays | `["a","b","c"]` with brackets and quotes | `name[3]: a,b,c` | ~50% per array |
-| Nesting | braces + field names | `.field {}` + `key=value` | ~50% per nested object |
+| Nested object flattening | braces + field names per row | `>` path columns in header | eliminates all nesting overhead for uniform objects |
+| Non-uniform nesting | braces + field names | `.field {}` + `key=value` or `^{fields}` inline | ~50% per nested object |
 
-For 2,000 employee records with 6 fields: JSON ~127,050 tokens, GCF ~49,055 tokens (61% savings). On TOON's benchmark (expanded from 6 to 16 real-world datasets), GCF wins 15 of 16 with 29% fewer tokens overall and 54.8% fewer than JSON.
+**Nested object flattening (v3.2)** is the largest single optimization for nested data. When a nested object has the same keys in every row (e.g., `address` with `street`, `city`, `zip`), those keys become path columns (`address>street`, `address>city`, `address>zip`) in the tabular header. The nested object disappears entirely from the row encoding: no attachment blocks, no extra indentation, no repeated field names. At 500 rows with a 3-field nested object, this eliminates 1,500 field name repetitions and 500 attachment headers. The data becomes a single flat table that the LLM reads positionally.
+
+For 2,000 employee records with 6 fields: JSON ~127,050 tokens, GCF ~49,055 tokens (61% savings). On TOON's benchmark (expanded from 6 to 16 real-world datasets), GCF wins 15 of 16 with 29% fewer tokens overall and 54.8% fewer than JSON. The gap is largest on nested/mixed payloads (26.5% fewer than TOON) where flattening eliminates overhead that TOON cannot avoid.
 
 ---
 
