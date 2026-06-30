@@ -238,15 +238,19 @@ for (let seed = START_SEED; seed < START_SEED + NUM_TESTS; seed++) {
 
 const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
 
-console.log(`\n\n=== TOON Fuzz Results ===`);
-console.log(`Tests: ${NUM_TESTS}`);
+console.log(`\n\n=== TOON Round-Trip Fuzz Results ===`);
+console.log(`Package: @toon-format/toon (official reference implementation)`);
+console.log(`Tests: ${NUM_TESTS.toLocaleString()}`);
 console.log(`Seeds: ${START_SEED} to ${START_SEED + NUM_TESTS - 1}`);
 console.log(`Time: ${elapsed}s`);
-console.log(`Pass: ${pass}`);
-console.log(`Fail: ${fail}`);
-console.log(`Encode errors: ${encodeErrors}`);
-console.log(`Decode errors: ${decodeErrors}`);
+console.log(``);
+console.log(`Pass: ${pass.toLocaleString()}`);
+console.log(`Silent data corruption: ${fail.toLocaleString()} (${((fail / NUM_TESTS) * 100).toFixed(2)}%)`);
+console.log(`Decode errors (crashes): ${decodeErrors.toLocaleString()} (${((decodeErrors / NUM_TESTS) * 100).toFixed(2)}%)`);
+console.log(`Total failures: ${(fail + decodeErrors).toLocaleString()} (${(((fail + decodeErrors) / NUM_TESTS) * 100).toFixed(2)}%)`);
+console.log(``);
 console.log(`Success rate: ${((pass / NUM_TESTS) * 100).toFixed(2)}%`);
+console.log(`Lossless: NO`);
 
 if (failures.length > 0) {
   // Classify failures
