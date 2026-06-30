@@ -438,6 +438,8 @@ GCF profile=graph tool=context_for_task tokens=120 delta=true
 
 Instead of retransmitting the full 233-token payload, the delta sends only new or changed nodes. Measured savings on re-queries: **81.2%** beyond the already-compressed GCF encoding. Combined with session dedup, a fifth re-query of overlapping data can transmit under 10 tokens where JSON would transmit 965.
 
+![Delta topology savings](/charts/delta-topology-savings.png)
+
 ### 5.5 Total Compounding
 
 The three layers compound multiplicatively:
