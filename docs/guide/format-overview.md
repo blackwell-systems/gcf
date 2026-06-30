@@ -380,4 +380,4 @@ Both profiles use the same grammar primitives: `##` headers, `@` IDs, positional
 - **Line-oriented.** One semantic unit per line.
 - **Shallow nesting.** The graph profile is flat. The generic profile supports indented nested fields for records with sub-objects.
 - **Deterministic.** Same input produces same output.
-- **LLM-parseable.** 100% comprehension on standard workloads (every frontier model). 91.2% on structurally complex code graphs (vs TOON 68.2%, JSON 53.4%). No model has been trained on GCF.
+- **LLM-parseable.** 100% comprehension on standard workloads (every frontier model). 91.6% on structurally complex code graphs (vs TOON 66.9%, JSON 54.6%). No model has been trained on GCF.

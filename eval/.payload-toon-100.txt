@@ -1,0 +1,1351 @@
+[100]:
+  - orderId: ORD-00001
+    customer:
+      id: 1000
+      name: Alice Chen
+      email: alice.chen@example.com
+      tier: standard
+    items[1]{sku,name,quantity,unitPrice}:
+      SKU-A00,Widget Pro,1,9.99
+    subtotal: 29.97
+    tax: 2.4
+    total: 32.37
+    status: pending
+  - orderId: ORD-00002
+    customer:
+      id: 1001
+      name: Bob Smith
+      email: bob.smith@example.com
+      tier: standard
+    items[2]{sku,name,quantity,unitPrice}:
+      SKU-B01,Gadget Max,1,13.49
+      SKU-C02,Tool Kit,2,16.99
+    subtotal: 42.47
+    tax: 3.4
+    total: 45.87
+    status: processing
+  - orderId: ORD-00003
+    customer:
+      id: 1002
+      name: Carla Rodriguez
+      email: carla.rodriguez@example.com
+      tier: premium
+    items[3]{sku,name,quantity,unitPrice}:
+      SKU-C02,Tool Kit,1,16.99
+      SKU-D03,Power Pack,2,20.49
+      SKU-E04,Smart Hub,3,23.99
+    subtotal: 54.97
+    tax: 4.4
+    total: 59.37
+    status: shipped
+  - orderId: ORD-00004
+    customer:
+      id: 1003
+      name: David Park
+      email: david.park@example.com
+      tier: premium
+    items[4]{sku,name,quantity,unitPrice}:
+      SKU-D03,Power Pack,1,20.49
+      SKU-E04,Smart Hub,2,23.99
+      SKU-F05,Widget Pro,3,27.49
+      SKU-G06,Gadget Max,1,30.99
+    subtotal: 67.47
+    tax: 5.4
+    total: 72.87
+    status: delivered
+  - orderId: ORD-00005
+    customer:
+      id: 1004
+      name: Eva Johansson
+      email: eva.johansson@example.com
+      tier: premium
+    items[1]{sku,name,quantity,unitPrice}:
+      SKU-E04,Smart Hub,1,23.99
+    subtotal: 79.97
+    tax: 6.4
+    total: 86.37
+    status: cancelled
+  - orderId: ORD-00006
+    customer:
+      id: 1005
+      name: Alice Chen
+      email: alice.chen@example.com
+      tier: standard
+    items[2]{sku,name,quantity,unitPrice}:
+      SKU-F05,Widget Pro,1,27.49
+      SKU-G06,Gadget Max,2,30.99
+    subtotal: 92.47
+    tax: 7.4
+    total: 99.87
+    status: pending
+  - orderId: ORD-00007
+    customer:
+      id: 1006
+      name: Bob Smith
+      email: bob.smith@example.com
+      tier: standard
+    items[3]{sku,name,quantity,unitPrice}:
+      SKU-G06,Gadget Max,1,30.99
+      SKU-H07,Tool Kit,2,34.49
+      SKU-I08,Power Pack,3,37.99
+    subtotal: 104.97
+    tax: 8.4
+    total: 113.37
+    status: processing
+  - orderId: ORD-00008
+    customer:
+      id: 1007
+      name: Carla Rodriguez
+      email: carla.rodriguez@example.com
+      tier: premium
+    items[4]{sku,name,quantity,unitPrice}:
+      SKU-H07,Tool Kit,1,34.49
+      SKU-I08,Power Pack,2,37.99
+      SKU-J09,Smart Hub,3,41.49
+      SKU-K10,Widget Pro,1,44.99
+    subtotal: 117.47
+    tax: 9.4
+    total: 126.87
+    status: shipped
+  - orderId: ORD-00009
+    customer:
+      id: 1008
+      name: David Park
+      email: david.park@example.com
+      tier: premium
+    items[1]{sku,name,quantity,unitPrice}:
+      SKU-I08,Power Pack,1,37.99
+    subtotal: 129.97
+    tax: 10.4
+    total: 140.37
+    status: delivered
+  - orderId: ORD-00010
+    customer:
+      id: 1009
+      name: Eva Johansson
+      email: eva.johansson@example.com
+      tier: premium
+    items[2]{sku,name,quantity,unitPrice}:
+      SKU-J09,Smart Hub,1,41.49
+      SKU-K10,Widget Pro,2,44.99
+    subtotal: 142.47
+    tax: 11.4
+    total: 153.87
+    status: cancelled
+  - orderId: ORD-00011
+    customer:
+      id: 1010
+      name: Alice Chen
+      email: alice.chen@example.com
+      tier: standard
+    items[3]{sku,name,quantity,unitPrice}:
+      SKU-K10,Widget Pro,1,44.99
+      SKU-L11,Gadget Max,2,48.49
+      SKU-M12,Tool Kit,3,51.99
+    subtotal: 154.97
+    tax: 12.4
+    total: 167.37
+    status: pending
+  - orderId: ORD-00012
+    customer:
+      id: 1011
+      name: Bob Smith
+      email: bob.smith@example.com
+      tier: standard
+    items[4]{sku,name,quantity,unitPrice}:
+      SKU-L11,Gadget Max,1,48.49
+      SKU-M12,Tool Kit,2,51.99
+      SKU-N13,Power Pack,3,55.49
+      SKU-O14,Smart Hub,1,58.99
+    subtotal: 167.47
+    tax: 13.4
+    total: 180.87
+    status: processing
+  - orderId: ORD-00013
+    customer:
+      id: 1012
+      name: Carla Rodriguez
+      email: carla.rodriguez@example.com
+      tier: premium
+    items[1]{sku,name,quantity,unitPrice}:
+      SKU-M12,Tool Kit,1,51.99
+    subtotal: 179.97
+    tax: 14.4
+    total: 194.37
+    status: shipped
+  - orderId: ORD-00014
+    customer:
+      id: 1013
+      name: David Park
+      email: david.park@example.com
+      tier: premium
+    items[2]{sku,name,quantity,unitPrice}:
+      SKU-N13,Power Pack,1,55.49
+      SKU-O14,Smart Hub,2,58.99
+    subtotal: 192.47
+    tax: 15.4
+    total: 207.87
+    status: delivered
+  - orderId: ORD-00015
+    customer:
+      id: 1014
+      name: Eva Johansson
+      email: eva.johansson@example.com
+      tier: premium
+    items[3]{sku,name,quantity,unitPrice}:
+      SKU-O14,Smart Hub,1,58.99
+      SKU-P15,Widget Pro,2,62.49
+      SKU-Q16,Gadget Max,3,65.99
+    subtotal: 204.97
+    tax: 16.4
+    total: 221.37
+    status: cancelled
+  - orderId: ORD-00016
+    customer:
+      id: 1015
+      name: Alice Chen
+      email: alice.chen@example.com
+      tier: standard
+    items[4]{sku,name,quantity,unitPrice}:
+      SKU-P15,Widget Pro,1,62.49
+      SKU-Q16,Gadget Max,2,65.99
+      SKU-R17,Tool Kit,3,69.49
+      SKU-S18,Power Pack,1,72.99
+    subtotal: 217.47
+    tax: 17.4
+    total: 234.87
+    status: pending
+  - orderId: ORD-00017
+    customer:
+      id: 1016
+      name: Bob Smith
+      email: bob.smith@example.com
+      tier: standard
+    items[1]{sku,name,quantity,unitPrice}:
+      SKU-Q16,Gadget Max,1,65.99
+    subtotal: 229.97
+    tax: 18.4
+    total: 248.37
+    status: processing
+  - orderId: ORD-00018
+    customer:
+      id: 1017
+      name: Carla Rodriguez
+      email: carla.rodriguez@example.com
+      tier: premium
+    items[2]{sku,name,quantity,unitPrice}:
+      SKU-R17,Tool Kit,1,69.49
+      SKU-S18,Power Pack,2,72.99
+    subtotal: 242.47
+    tax: 19.4
+    total: 261.87
+    status: shipped
+  - orderId: ORD-00019
+    customer:
+      id: 1018
+      name: David Park
+      email: david.park@example.com
+      tier: premium
+    items[3]{sku,name,quantity,unitPrice}:
+      SKU-S18,Power Pack,1,72.99
+      SKU-T19,Smart Hub,2,76.49
+      SKU-U20,Widget Pro,3,79.99
+    subtotal: 254.97
+    tax: 20.4
+    total: 275.37
+    status: delivered
+  - orderId: ORD-00020
+    customer:
+      id: 1019
+      name: Eva Johansson
+      email: eva.johansson@example.com
+      tier: premium
+    items[4]{sku,name,quantity,unitPrice}:
+      SKU-T19,Smart Hub,1,76.49
+      SKU-U20,Widget Pro,2,79.99
+      SKU-V21,Gadget Max,3,83.49
+      SKU-W22,Tool Kit,1,86.99
+    subtotal: 267.47
+    tax: 21.4
+    total: 288.87
+    status: cancelled
+  - orderId: ORD-00021
+    customer:
+      id: 1020
+      name: Alice Chen
+      email: alice.chen@example.com
+      tier: standard
+    items[1]{sku,name,quantity,unitPrice}:
+      SKU-U20,Widget Pro,1,79.99
+    subtotal: 279.97
+    tax: 22.4
+    total: 302.37
+    status: pending
+  - orderId: ORD-00022
+    customer:
+      id: 1021
+      name: Bob Smith
+      email: bob.smith@example.com
+      tier: standard
+    items[2]{sku,name,quantity,unitPrice}:
+      SKU-V21,Gadget Max,1,83.49
+      SKU-W22,Tool Kit,2,86.99
+    subtotal: 292.47
+    tax: 23.4
+    total: 315.87
+    status: processing
+  - orderId: ORD-00023
+    customer:
+      id: 1022
+      name: Carla Rodriguez
+      email: carla.rodriguez@example.com
+      tier: premium
+    items[3]{sku,name,quantity,unitPrice}:
+      SKU-W22,Tool Kit,1,86.99
+      SKU-X23,Power Pack,2,90.49
+      SKU-Y24,Smart Hub,3,93.99
+    subtotal: 304.97
+    tax: 24.4
+    total: 329.37
+    status: shipped
+  - orderId: ORD-00024
+    customer:
+      id: 1023
+      name: David Park
+      email: david.park@example.com
+      tier: premium
+    items[4]{sku,name,quantity,unitPrice}:
+      SKU-X23,Power Pack,1,90.49
+      SKU-Y24,Smart Hub,2,93.99
+      SKU-Z25,Widget Pro,3,97.49
+      SKU-A26,Gadget Max,1,100.99
+    subtotal: 317.47
+    tax: 25.4
+    total: 342.87
+    status: delivered
+  - orderId: ORD-00025
+    customer:
+      id: 1024
+      name: Eva Johansson
+      email: eva.johansson@example.com
+      tier: premium
+    items[1]{sku,name,quantity,unitPrice}:
+      SKU-Y24,Smart Hub,1,93.99
+    subtotal: 329.97
+    tax: 26.4
+    total: 356.37
+    status: cancelled
+  - orderId: ORD-00026
+    customer:
+      id: 1025
+      name: Alice Chen
+      email: alice.chen@example.com
+      tier: standard
+    items[2]{sku,name,quantity,unitPrice}:
+      SKU-Z25,Widget Pro,1,97.49
+      SKU-A26,Gadget Max,2,100.99
+    subtotal: 342.47
+    tax: 27.4
+    total: 369.87
+    status: pending
+  - orderId: ORD-00027
+    customer:
+      id: 1026
+      name: Bob Smith
+      email: bob.smith@example.com
+      tier: standard
+    items[3]{sku,name,quantity,unitPrice}:
+      SKU-A26,Gadget Max,1,100.99
+      SKU-B27,Tool Kit,2,104.49
+      SKU-C28,Power Pack,3,107.99
+    subtotal: 354.97
+    tax: 28.4
+    total: 383.37
+    status: processing
+  - orderId: ORD-00028
+    customer:
+      id: 1027
+      name: Carla Rodriguez
+      email: carla.rodriguez@example.com
+      tier: premium
+    items[4]{sku,name,quantity,unitPrice}:
+      SKU-B27,Tool Kit,1,104.49
+      SKU-C28,Power Pack,2,107.99
+      SKU-D29,Smart Hub,3,111.49
+      SKU-E30,Widget Pro,1,114.99
+    subtotal: 367.47
+    tax: 29.4
+    total: 396.87
+    status: shipped
+  - orderId: ORD-00029
+    customer:
+      id: 1028
+      name: David Park
+      email: david.park@example.com
+      tier: premium
+    items[1]{sku,name,quantity,unitPrice}:
+      SKU-C28,Power Pack,1,107.99
+    subtotal: 379.97
+    tax: 30.4
+    total: 410.37
+    status: delivered
+  - orderId: ORD-00030
+    customer:
+      id: 1029
+      name: Eva Johansson
+      email: eva.johansson@example.com
+      tier: premium
+    items[2]{sku,name,quantity,unitPrice}:
+      SKU-D29,Smart Hub,1,111.49
+      SKU-E30,Widget Pro,2,114.99
+    subtotal: 392.47
+    tax: 31.4
+    total: 423.87
+    status: cancelled
+  - orderId: ORD-00031
+    customer:
+      id: 1030
+      name: Alice Chen
+      email: alice.chen@example.com
+      tier: standard
+    items[3]{sku,name,quantity,unitPrice}:
+      SKU-E30,Widget Pro,1,114.99
+      SKU-F31,Gadget Max,2,118.49
+      SKU-G32,Tool Kit,3,121.99
+    subtotal: 404.97
+    tax: 32.4
+    total: 437.37
+    status: pending
+  - orderId: ORD-00032
+    customer:
+      id: 1031
+      name: Bob Smith
+      email: bob.smith@example.com
+      tier: standard
+    items[4]{sku,name,quantity,unitPrice}:
+      SKU-F31,Gadget Max,1,118.49
+      SKU-G32,Tool Kit,2,121.99
+      SKU-H33,Power Pack,3,125.49
+      SKU-I34,Smart Hub,1,128.99
+    subtotal: 417.47
+    tax: 33.4
+    total: 450.87
+    status: processing
+  - orderId: ORD-00033
+    customer:
+      id: 1032
+      name: Carla Rodriguez
+      email: carla.rodriguez@example.com
+      tier: premium
+    items[1]{sku,name,quantity,unitPrice}:
+      SKU-G32,Tool Kit,1,121.99
+    subtotal: 429.97
+    tax: 34.4
+    total: 464.37
+    status: shipped
+  - orderId: ORD-00034
+    customer:
+      id: 1033
+      name: David Park
+      email: david.park@example.com
+      tier: premium
+    items[2]{sku,name,quantity,unitPrice}:
+      SKU-H33,Power Pack,1,125.49
+      SKU-I34,Smart Hub,2,128.99
+    subtotal: 442.47
+    tax: 35.4
+    total: 477.87
+    status: delivered
+  - orderId: ORD-00035
+    customer:
+      id: 1034
+      name: Eva Johansson
+      email: eva.johansson@example.com
+      tier: premium
+    items[3]{sku,name,quantity,unitPrice}:
+      SKU-I34,Smart Hub,1,128.99
+      SKU-J35,Widget Pro,2,132.49
+      SKU-K36,Gadget Max,3,135.99
+    subtotal: 454.97
+    tax: 36.4
+    total: 491.37
+    status: cancelled
+  - orderId: ORD-00036
+    customer:
+      id: 1035
+      name: Alice Chen
+      email: alice.chen@example.com
+      tier: standard
+    items[4]{sku,name,quantity,unitPrice}:
+      SKU-J35,Widget Pro,1,132.49
+      SKU-K36,Gadget Max,2,135.99
+      SKU-L37,Tool Kit,3,139.49
+      SKU-M38,Power Pack,1,142.99
+    subtotal: 467.47
+    tax: 37.4
+    total: 504.87
+    status: pending
+  - orderId: ORD-00037
+    customer:
+      id: 1036
+      name: Bob Smith
+      email: bob.smith@example.com
+      tier: standard
+    items[1]{sku,name,quantity,unitPrice}:
+      SKU-K36,Gadget Max,1,135.99
+    subtotal: 479.97
+    tax: 38.4
+    total: 518.37
+    status: processing
+  - orderId: ORD-00038
+    customer:
+      id: 1037
+      name: Carla Rodriguez
+      email: carla.rodriguez@example.com
+      tier: premium
+    items[2]{sku,name,quantity,unitPrice}:
+      SKU-L37,Tool Kit,1,139.49
+      SKU-M38,Power Pack,2,142.99
+    subtotal: 492.47
+    tax: 39.4
+    total: 531.87
+    status: shipped
+  - orderId: ORD-00039
+    customer:
+      id: 1038
+      name: David Park
+      email: david.park@example.com
+      tier: premium
+    items[3]{sku,name,quantity,unitPrice}:
+      SKU-M38,Power Pack,1,142.99
+      SKU-N39,Smart Hub,2,146.49
+      SKU-O40,Widget Pro,3,149.99
+    subtotal: 504.97
+    tax: 40.4
+    total: 545.37
+    status: delivered
+  - orderId: ORD-00040
+    customer:
+      id: 1039
+      name: Eva Johansson
+      email: eva.johansson@example.com
+      tier: premium
+    items[4]{sku,name,quantity,unitPrice}:
+      SKU-N39,Smart Hub,1,146.49
+      SKU-O40,Widget Pro,2,149.99
+      SKU-P41,Gadget Max,3,153.49
+      SKU-Q42,Tool Kit,1,156.99
+    subtotal: 517.47
+    tax: 41.4
+    total: 558.87
+    status: cancelled
+  - orderId: ORD-00041
+    customer:
+      id: 1040
+      name: Alice Chen
+      email: alice.chen@example.com
+      tier: standard
+    items[1]{sku,name,quantity,unitPrice}:
+      SKU-O40,Widget Pro,1,149.99
+    subtotal: 529.97
+    tax: 42.4
+    total: 572.37
+    status: pending
+  - orderId: ORD-00042
+    customer:
+      id: 1041
+      name: Bob Smith
+      email: bob.smith@example.com
+      tier: standard
+    items[2]{sku,name,quantity,unitPrice}:
+      SKU-P41,Gadget Max,1,153.49
+      SKU-Q42,Tool Kit,2,156.99
+    subtotal: 542.47
+    tax: 43.4
+    total: 585.87
+    status: processing
+  - orderId: ORD-00043
+    customer:
+      id: 1042
+      name: Carla Rodriguez
+      email: carla.rodriguez@example.com
+      tier: premium
+    items[3]{sku,name,quantity,unitPrice}:
+      SKU-Q42,Tool Kit,1,156.99
+      SKU-R43,Power Pack,2,160.49
+      SKU-S44,Smart Hub,3,163.99
+    subtotal: 554.97
+    tax: 44.4
+    total: 599.37
+    status: shipped
+  - orderId: ORD-00044
+    customer:
+      id: 1043
+      name: David Park
+      email: david.park@example.com
+      tier: premium
+    items[4]{sku,name,quantity,unitPrice}:
+      SKU-R43,Power Pack,1,160.49
+      SKU-S44,Smart Hub,2,163.99
+      SKU-T45,Widget Pro,3,167.49
+      SKU-U46,Gadget Max,1,170.99
+    subtotal: 567.47
+    tax: 45.4
+    total: 612.87
+    status: delivered
+  - orderId: ORD-00045
+    customer:
+      id: 1044
+      name: Eva Johansson
+      email: eva.johansson@example.com
+      tier: premium
+    items[1]{sku,name,quantity,unitPrice}:
+      SKU-S44,Smart Hub,1,163.99
+    subtotal: 579.97
+    tax: 46.4
+    total: 626.37
+    status: cancelled
+  - orderId: ORD-00046
+    customer:
+      id: 1045
+      name: Alice Chen
+      email: alice.chen@example.com
+      tier: standard
+    items[2]{sku,name,quantity,unitPrice}:
+      SKU-T45,Widget Pro,1,167.49
+      SKU-U46,Gadget Max,2,170.99
+    subtotal: 592.47
+    tax: 47.4
+    total: 639.87
+    status: pending
+  - orderId: ORD-00047
+    customer:
+      id: 1046
+      name: Bob Smith
+      email: bob.smith@example.com
+      tier: standard
+    items[3]{sku,name,quantity,unitPrice}:
+      SKU-U46,Gadget Max,1,170.99
+      SKU-V47,Tool Kit,2,174.49
+      SKU-W48,Power Pack,3,177.99
+    subtotal: 604.97
+    tax: 48.4
+    total: 653.37
+    status: processing
+  - orderId: ORD-00048
+    customer:
+      id: 1047
+      name: Carla Rodriguez
+      email: carla.rodriguez@example.com
+      tier: premium
+    items[4]{sku,name,quantity,unitPrice}:
+      SKU-V47,Tool Kit,1,174.49
+      SKU-W48,Power Pack,2,177.99
+      SKU-X49,Smart Hub,3,181.49
+      SKU-Y50,Widget Pro,1,184.99
+    subtotal: 617.47
+    tax: 49.4
+    total: 666.87
+    status: shipped
+  - orderId: ORD-00049
+    customer:
+      id: 1048
+      name: David Park
+      email: david.park@example.com
+      tier: premium
+    items[1]{sku,name,quantity,unitPrice}:
+      SKU-W48,Power Pack,1,177.99
+    subtotal: 629.97
+    tax: 50.4
+    total: 680.37
+    status: delivered
+  - orderId: ORD-00050
+    customer:
+      id: 1049
+      name: Eva Johansson
+      email: eva.johansson@example.com
+      tier: premium
+    items[2]{sku,name,quantity,unitPrice}:
+      SKU-X49,Smart Hub,1,181.49
+      SKU-Y50,Widget Pro,2,184.99
+    subtotal: 642.47
+    tax: 51.4
+    total: 693.87
+    status: cancelled
+  - orderId: ORD-00051
+    customer:
+      id: 1050
+      name: Alice Chen
+      email: alice.chen@example.com
+      tier: standard
+    items[3]{sku,name,quantity,unitPrice}:
+      SKU-Y50,Widget Pro,1,184.99
+      SKU-Z51,Gadget Max,2,188.49
+      SKU-A52,Tool Kit,3,191.99
+    subtotal: 654.97
+    tax: 52.4
+    total: 707.37
+    status: pending
+  - orderId: ORD-00052
+    customer:
+      id: 1051
+      name: Bob Smith
+      email: bob.smith@example.com
+      tier: standard
+    items[4]{sku,name,quantity,unitPrice}:
+      SKU-Z51,Gadget Max,1,188.49
+      SKU-A52,Tool Kit,2,191.99
+      SKU-B53,Power Pack,3,195.49
+      SKU-C54,Smart Hub,1,198.99
+    subtotal: 667.47
+    tax: 53.4
+    total: 720.87
+    status: processing
+  - orderId: ORD-00053
+    customer:
+      id: 1052
+      name: Carla Rodriguez
+      email: carla.rodriguez@example.com
+      tier: premium
+    items[1]{sku,name,quantity,unitPrice}:
+      SKU-A52,Tool Kit,1,191.99
+    subtotal: 679.97
+    tax: 54.4
+    total: 734.37
+    status: shipped
+  - orderId: ORD-00054
+    customer:
+      id: 1053
+      name: David Park
+      email: david.park@example.com
+      tier: premium
+    items[2]{sku,name,quantity,unitPrice}:
+      SKU-B53,Power Pack,1,195.49
+      SKU-C54,Smart Hub,2,198.99
+    subtotal: 692.47
+    tax: 55.4
+    total: 747.87
+    status: delivered
+  - orderId: ORD-00055
+    customer:
+      id: 1054
+      name: Eva Johansson
+      email: eva.johansson@example.com
+      tier: premium
+    items[3]{sku,name,quantity,unitPrice}:
+      SKU-C54,Smart Hub,1,198.99
+      SKU-D55,Widget Pro,2,202.49
+      SKU-E56,Gadget Max,3,205.99
+    subtotal: 704.97
+    tax: 56.4
+    total: 761.37
+    status: cancelled
+  - orderId: ORD-00056
+    customer:
+      id: 1055
+      name: Alice Chen
+      email: alice.chen@example.com
+      tier: standard
+    items[4]{sku,name,quantity,unitPrice}:
+      SKU-D55,Widget Pro,1,202.49
+      SKU-E56,Gadget Max,2,205.99
+      SKU-F57,Tool Kit,3,209.49
+      SKU-G58,Power Pack,1,212.99
+    subtotal: 717.47
+    tax: 57.4
+    total: 774.87
+    status: pending
+  - orderId: ORD-00057
+    customer:
+      id: 1056
+      name: Bob Smith
+      email: bob.smith@example.com
+      tier: standard
+    items[1]{sku,name,quantity,unitPrice}:
+      SKU-E56,Gadget Max,1,205.99
+    subtotal: 729.97
+    tax: 58.4
+    total: 788.37
+    status: processing
+  - orderId: ORD-00058
+    customer:
+      id: 1057
+      name: Carla Rodriguez
+      email: carla.rodriguez@example.com
+      tier: premium
+    items[2]{sku,name,quantity,unitPrice}:
+      SKU-F57,Tool Kit,1,209.49
+      SKU-G58,Power Pack,2,212.99
+    subtotal: 742.47
+    tax: 59.4
+    total: 801.87
+    status: shipped
+  - orderId: ORD-00059
+    customer:
+      id: 1058
+      name: David Park
+      email: david.park@example.com
+      tier: premium
+    items[3]{sku,name,quantity,unitPrice}:
+      SKU-G58,Power Pack,1,212.99
+      SKU-H59,Smart Hub,2,216.49
+      SKU-I60,Widget Pro,3,219.99
+    subtotal: 754.97
+    tax: 60.4
+    total: 815.37
+    status: delivered
+  - orderId: ORD-00060
+    customer:
+      id: 1059
+      name: Eva Johansson
+      email: eva.johansson@example.com
+      tier: premium
+    items[4]{sku,name,quantity,unitPrice}:
+      SKU-H59,Smart Hub,1,216.49
+      SKU-I60,Widget Pro,2,219.99
+      SKU-J61,Gadget Max,3,223.49
+      SKU-K62,Tool Kit,1,226.99
+    subtotal: 767.47
+    tax: 61.4
+    total: 828.87
+    status: cancelled
+  - orderId: ORD-00061
+    customer:
+      id: 1060
+      name: Alice Chen
+      email: alice.chen@example.com
+      tier: standard
+    items[1]{sku,name,quantity,unitPrice}:
+      SKU-I60,Widget Pro,1,219.99
+    subtotal: 779.97
+    tax: 62.4
+    total: 842.37
+    status: pending
+  - orderId: ORD-00062
+    customer:
+      id: 1061
+      name: Bob Smith
+      email: bob.smith@example.com
+      tier: standard
+    items[2]{sku,name,quantity,unitPrice}:
+      SKU-J61,Gadget Max,1,223.49
+      SKU-K62,Tool Kit,2,226.99
+    subtotal: 792.47
+    tax: 63.4
+    total: 855.87
+    status: processing
+  - orderId: ORD-00063
+    customer:
+      id: 1062
+      name: Carla Rodriguez
+      email: carla.rodriguez@example.com
+      tier: premium
+    items[3]{sku,name,quantity,unitPrice}:
+      SKU-K62,Tool Kit,1,226.99
+      SKU-L63,Power Pack,2,230.49
+      SKU-M64,Smart Hub,3,233.99
+    subtotal: 804.97
+    tax: 64.4
+    total: 869.37
+    status: shipped
+  - orderId: ORD-00064
+    customer:
+      id: 1063
+      name: David Park
+      email: david.park@example.com
+      tier: premium
+    items[4]{sku,name,quantity,unitPrice}:
+      SKU-L63,Power Pack,1,230.49
+      SKU-M64,Smart Hub,2,233.99
+      SKU-N65,Widget Pro,3,237.49
+      SKU-O66,Gadget Max,1,240.99
+    subtotal: 817.47
+    tax: 65.4
+    total: 882.87
+    status: delivered
+  - orderId: ORD-00065
+    customer:
+      id: 1064
+      name: Eva Johansson
+      email: eva.johansson@example.com
+      tier: premium
+    items[1]{sku,name,quantity,unitPrice}:
+      SKU-M64,Smart Hub,1,233.99
+    subtotal: 829.97
+    tax: 66.4
+    total: 896.37
+    status: cancelled
+  - orderId: ORD-00066
+    customer:
+      id: 1065
+      name: Alice Chen
+      email: alice.chen@example.com
+      tier: standard
+    items[2]{sku,name,quantity,unitPrice}:
+      SKU-N65,Widget Pro,1,237.49
+      SKU-O66,Gadget Max,2,240.99
+    subtotal: 842.47
+    tax: 67.4
+    total: 909.87
+    status: pending
+  - orderId: ORD-00067
+    customer:
+      id: 1066
+      name: Bob Smith
+      email: bob.smith@example.com
+      tier: standard
+    items[3]{sku,name,quantity,unitPrice}:
+      SKU-O66,Gadget Max,1,240.99
+      SKU-P67,Tool Kit,2,244.49
+      SKU-Q68,Power Pack,3,247.99
+    subtotal: 854.97
+    tax: 68.4
+    total: 923.37
+    status: processing
+  - orderId: ORD-00068
+    customer:
+      id: 1067
+      name: Carla Rodriguez
+      email: carla.rodriguez@example.com
+      tier: premium
+    items[4]{sku,name,quantity,unitPrice}:
+      SKU-P67,Tool Kit,1,244.49
+      SKU-Q68,Power Pack,2,247.99
+      SKU-R69,Smart Hub,3,251.49
+      SKU-S70,Widget Pro,1,254.99
+    subtotal: 867.47
+    tax: 69.4
+    total: 936.87
+    status: shipped
+  - orderId: ORD-00069
+    customer:
+      id: 1068
+      name: David Park
+      email: david.park@example.com
+      tier: premium
+    items[1]{sku,name,quantity,unitPrice}:
+      SKU-Q68,Power Pack,1,247.99
+    subtotal: 879.97
+    tax: 70.4
+    total: 950.37
+    status: delivered
+  - orderId: ORD-00070
+    customer:
+      id: 1069
+      name: Eva Johansson
+      email: eva.johansson@example.com
+      tier: premium
+    items[2]{sku,name,quantity,unitPrice}:
+      SKU-R69,Smart Hub,1,251.49
+      SKU-S70,Widget Pro,2,254.99
+    subtotal: 892.47
+    tax: 71.4
+    total: 963.87
+    status: cancelled
+  - orderId: ORD-00071
+    customer:
+      id: 1070
+      name: Alice Chen
+      email: alice.chen@example.com
+      tier: standard
+    items[3]{sku,name,quantity,unitPrice}:
+      SKU-S70,Widget Pro,1,254.99
+      SKU-T71,Gadget Max,2,258.49
+      SKU-U72,Tool Kit,3,261.99
+    subtotal: 904.97
+    tax: 72.4
+    total: 977.37
+    status: pending
+  - orderId: ORD-00072
+    customer:
+      id: 1071
+      name: Bob Smith
+      email: bob.smith@example.com
+      tier: standard
+    items[4]{sku,name,quantity,unitPrice}:
+      SKU-T71,Gadget Max,1,258.49
+      SKU-U72,Tool Kit,2,261.99
+      SKU-V73,Power Pack,3,265.49
+      SKU-W74,Smart Hub,1,268.99
+    subtotal: 917.47
+    tax: 73.4
+    total: 990.87
+    status: processing
+  - orderId: ORD-00073
+    customer:
+      id: 1072
+      name: Carla Rodriguez
+      email: carla.rodriguez@example.com
+      tier: premium
+    items[1]{sku,name,quantity,unitPrice}:
+      SKU-U72,Tool Kit,1,261.99
+    subtotal: 929.97
+    tax: 74.4
+    total: 1004.37
+    status: shipped
+  - orderId: ORD-00074
+    customer:
+      id: 1073
+      name: David Park
+      email: david.park@example.com
+      tier: premium
+    items[2]{sku,name,quantity,unitPrice}:
+      SKU-V73,Power Pack,1,265.49
+      SKU-W74,Smart Hub,2,268.99
+    subtotal: 942.47
+    tax: 75.4
+    total: 1017.87
+    status: delivered
+  - orderId: ORD-00075
+    customer:
+      id: 1074
+      name: Eva Johansson
+      email: eva.johansson@example.com
+      tier: premium
+    items[3]{sku,name,quantity,unitPrice}:
+      SKU-W74,Smart Hub,1,268.99
+      SKU-X75,Widget Pro,2,272.49
+      SKU-Y76,Gadget Max,3,275.99
+    subtotal: 954.97
+    tax: 76.4
+    total: 1031.37
+    status: cancelled
+  - orderId: ORD-00076
+    customer:
+      id: 1075
+      name: Alice Chen
+      email: alice.chen@example.com
+      tier: standard
+    items[4]{sku,name,quantity,unitPrice}:
+      SKU-X75,Widget Pro,1,272.49
+      SKU-Y76,Gadget Max,2,275.99
+      SKU-Z77,Tool Kit,3,279.49
+      SKU-A78,Power Pack,1,282.99
+    subtotal: 967.47
+    tax: 77.4
+    total: 1044.87
+    status: pending
+  - orderId: ORD-00077
+    customer:
+      id: 1076
+      name: Bob Smith
+      email: bob.smith@example.com
+      tier: standard
+    items[1]{sku,name,quantity,unitPrice}:
+      SKU-Y76,Gadget Max,1,275.99
+    subtotal: 979.97
+    tax: 78.4
+    total: 1058.37
+    status: processing
+  - orderId: ORD-00078
+    customer:
+      id: 1077
+      name: Carla Rodriguez
+      email: carla.rodriguez@example.com
+      tier: premium
+    items[2]{sku,name,quantity,unitPrice}:
+      SKU-Z77,Tool Kit,1,279.49
+      SKU-A78,Power Pack,2,282.99
+    subtotal: 992.47
+    tax: 79.4
+    total: 1071.87
+    status: shipped
+  - orderId: ORD-00079
+    customer:
+      id: 1078
+      name: David Park
+      email: david.park@example.com
+      tier: premium
+    items[3]{sku,name,quantity,unitPrice}:
+      SKU-A78,Power Pack,1,282.99
+      SKU-B79,Smart Hub,2,286.49
+      SKU-C80,Widget Pro,3,289.99
+    subtotal: 1004.97
+    tax: 80.4
+    total: 1085.37
+    status: delivered
+  - orderId: ORD-00080
+    customer:
+      id: 1079
+      name: Eva Johansson
+      email: eva.johansson@example.com
+      tier: premium
+    items[4]{sku,name,quantity,unitPrice}:
+      SKU-B79,Smart Hub,1,286.49
+      SKU-C80,Widget Pro,2,289.99
+      SKU-D81,Gadget Max,3,293.49
+      SKU-E82,Tool Kit,1,296.99
+    subtotal: 1017.47
+    tax: 81.4
+    total: 1098.87
+    status: cancelled
+  - orderId: ORD-00081
+    customer:
+      id: 1080
+      name: Alice Chen
+      email: alice.chen@example.com
+      tier: standard
+    items[1]{sku,name,quantity,unitPrice}:
+      SKU-C80,Widget Pro,1,289.99
+    subtotal: 1029.97
+    tax: 82.4
+    total: 1112.37
+    status: pending
+  - orderId: ORD-00082
+    customer:
+      id: 1081
+      name: Bob Smith
+      email: bob.smith@example.com
+      tier: standard
+    items[2]{sku,name,quantity,unitPrice}:
+      SKU-D81,Gadget Max,1,293.49
+      SKU-E82,Tool Kit,2,296.99
+    subtotal: 1042.47
+    tax: 83.4
+    total: 1125.87
+    status: processing
+  - orderId: ORD-00083
+    customer:
+      id: 1082
+      name: Carla Rodriguez
+      email: carla.rodriguez@example.com
+      tier: premium
+    items[3]{sku,name,quantity,unitPrice}:
+      SKU-E82,Tool Kit,1,296.99
+      SKU-F83,Power Pack,2,300.49
+      SKU-G84,Smart Hub,3,303.99
+    subtotal: 1054.97
+    tax: 84.4
+    total: 1139.37
+    status: shipped
+  - orderId: ORD-00084
+    customer:
+      id: 1083
+      name: David Park
+      email: david.park@example.com
+      tier: premium
+    items[4]{sku,name,quantity,unitPrice}:
+      SKU-F83,Power Pack,1,300.49
+      SKU-G84,Smart Hub,2,303.99
+      SKU-H85,Widget Pro,3,307.49
+      SKU-I86,Gadget Max,1,310.99
+    subtotal: 1067.47
+    tax: 85.4
+    total: 1152.87
+    status: delivered
+  - orderId: ORD-00085
+    customer:
+      id: 1084
+      name: Eva Johansson
+      email: eva.johansson@example.com
+      tier: premium
+    items[1]{sku,name,quantity,unitPrice}:
+      SKU-G84,Smart Hub,1,303.99
+    subtotal: 1079.97
+    tax: 86.4
+    total: 1166.37
+    status: cancelled
+  - orderId: ORD-00086
+    customer:
+      id: 1085
+      name: Alice Chen
+      email: alice.chen@example.com
+      tier: standard
+    items[2]{sku,name,quantity,unitPrice}:
+      SKU-H85,Widget Pro,1,307.49
+      SKU-I86,Gadget Max,2,310.99
+    subtotal: 1092.47
+    tax: 87.4
+    total: 1179.87
+    status: pending
+  - orderId: ORD-00087
+    customer:
+      id: 1086
+      name: Bob Smith
+      email: bob.smith@example.com
+      tier: standard
+    items[3]{sku,name,quantity,unitPrice}:
+      SKU-I86,Gadget Max,1,310.99
+      SKU-J87,Tool Kit,2,314.49
+      SKU-K88,Power Pack,3,317.99
+    subtotal: 1104.97
+    tax: 88.4
+    total: 1193.37
+    status: processing
+  - orderId: ORD-00088
+    customer:
+      id: 1087
+      name: Carla Rodriguez
+      email: carla.rodriguez@example.com
+      tier: premium
+    items[4]{sku,name,quantity,unitPrice}:
+      SKU-J87,Tool Kit,1,314.49
+      SKU-K88,Power Pack,2,317.99
+      SKU-L89,Smart Hub,3,321.49
+      SKU-M90,Widget Pro,1,324.99
+    subtotal: 1117.47
+    tax: 89.4
+    total: 1206.87
+    status: shipped
+  - orderId: ORD-00089
+    customer:
+      id: 1088
+      name: David Park
+      email: david.park@example.com
+      tier: premium
+    items[1]{sku,name,quantity,unitPrice}:
+      SKU-K88,Power Pack,1,317.99
+    subtotal: 1129.97
+    tax: 90.4
+    total: 1220.37
+    status: delivered
+  - orderId: ORD-00090
+    customer:
+      id: 1089
+      name: Eva Johansson
+      email: eva.johansson@example.com
+      tier: premium
+    items[2]{sku,name,quantity,unitPrice}:
+      SKU-L89,Smart Hub,1,321.49
+      SKU-M90,Widget Pro,2,324.99
+    subtotal: 1142.47
+    tax: 91.4
+    total: 1233.87
+    status: cancelled
+  - orderId: ORD-00091
+    customer:
+      id: 1090
+      name: Alice Chen
+      email: alice.chen@example.com
+      tier: standard
+    items[3]{sku,name,quantity,unitPrice}:
+      SKU-M90,Widget Pro,1,324.99
+      SKU-N91,Gadget Max,2,328.49
+      SKU-O92,Tool Kit,3,331.99
+    subtotal: 1154.97
+    tax: 92.4
+    total: 1247.37
+    status: pending
+  - orderId: ORD-00092
+    customer:
+      id: 1091
+      name: Bob Smith
+      email: bob.smith@example.com
+      tier: standard
+    items[4]{sku,name,quantity,unitPrice}:
+      SKU-N91,Gadget Max,1,328.49
+      SKU-O92,Tool Kit,2,331.99
+      SKU-P93,Power Pack,3,335.49
+      SKU-Q94,Smart Hub,1,338.99
+    subtotal: 1167.47
+    tax: 93.4
+    total: 1260.87
+    status: processing
+  - orderId: ORD-00093
+    customer:
+      id: 1092
+      name: Carla Rodriguez
+      email: carla.rodriguez@example.com
+      tier: premium
+    items[1]{sku,name,quantity,unitPrice}:
+      SKU-O92,Tool Kit,1,331.99
+    subtotal: 1179.97
+    tax: 94.4
+    total: 1274.37
+    status: shipped
+  - orderId: ORD-00094
+    customer:
+      id: 1093
+      name: David Park
+      email: david.park@example.com
+      tier: premium
+    items[2]{sku,name,quantity,unitPrice}:
+      SKU-P93,Power Pack,1,335.49
+      SKU-Q94,Smart Hub,2,338.99
+    subtotal: 1192.47
+    tax: 95.4
+    total: 1287.87
+    status: delivered
+  - orderId: ORD-00095
+    customer:
+      id: 1094
+      name: Eva Johansson
+      email: eva.johansson@example.com
+      tier: premium
+    items[3]{sku,name,quantity,unitPrice}:
+      SKU-Q94,Smart Hub,1,338.99
+      SKU-R95,Widget Pro,2,342.49
+      SKU-S96,Gadget Max,3,345.99
+    subtotal: 1204.97
+    tax: 96.4
+    total: 1301.37
+    status: cancelled
+  - orderId: ORD-00096
+    customer:
+      id: 1095
+      name: Alice Chen
+      email: alice.chen@example.com
+      tier: standard
+    items[4]{sku,name,quantity,unitPrice}:
+      SKU-R95,Widget Pro,1,342.49
+      SKU-S96,Gadget Max,2,345.99
+      SKU-T97,Tool Kit,3,349.49
+      SKU-U98,Power Pack,1,352.99
+    subtotal: 1217.47
+    tax: 97.4
+    total: 1314.87
+    status: pending
+  - orderId: ORD-00097
+    customer:
+      id: 1096
+      name: Bob Smith
+      email: bob.smith@example.com
+      tier: standard
+    items[1]{sku,name,quantity,unitPrice}:
+      SKU-S96,Gadget Max,1,345.99
+    subtotal: 1229.97
+    tax: 98.4
+    total: 1328.37
+    status: processing
+  - orderId: ORD-00098
+    customer:
+      id: 1097
+      name: Carla Rodriguez
+      email: carla.rodriguez@example.com
+      tier: premium
+    items[2]{sku,name,quantity,unitPrice}:
+      SKU-T97,Tool Kit,1,349.49
+      SKU-U98,Power Pack,2,352.99
+    subtotal: 1242.47
+    tax: 99.4
+    total: 1341.87
+    status: shipped
+  - orderId: ORD-00099
+    customer:
+      id: 1098
+      name: David Park
+      email: david.park@example.com
+      tier: premium
+    items[3]{sku,name,quantity,unitPrice}:
+      SKU-U98,Power Pack,1,352.99
+      SKU-V99,Smart Hub,2,356.49
+      SKU-W00,Widget Pro,3,359.99
+    subtotal: 1254.97
+    tax: 100.4
+    total: 1355.37
+    status: delivered
+  - orderId: ORD-00100
+    customer:
+      id: 1099
+      name: Eva Johansson
+      email: eva.johansson@example.com
+      tier: premium
+    items[4]{sku,name,quantity,unitPrice}:
+      SKU-V99,Smart Hub,1,356.49
+      SKU-W00,Widget Pro,2,359.99
+      SKU-X01,Gadget Max,3,363.49
+      SKU-Y02,Tool Kit,1,366.99
+    subtotal: 1267.47
+    tax: 101.4
+    total: 1368.87
+    status: cancelled

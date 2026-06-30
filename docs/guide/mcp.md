@@ -10,7 +10,7 @@ For an MCP tool returning 500 records (search results, database rows, API respon
 - JSON: ~80,000 tokens (generic profile) / ~53,000 tokens (graph profile)
 - GCF: ~24,000 tokens (generic profile) / ~11,000 tokens (graph profile)
 
-That's 56,000-42,000 tokens freed for additional context, longer conversations, or more tool calls. The LLM comprehends GCF with 100% accuracy on standard workloads (every frontier model tested), and 91.2% on structurally complex code graphs (vs TOON 68.2%, JSON 53.4%). At 1000 records, JSON doesn't even fit in a 200K context window.
+That's 56,000-42,000 tokens freed for additional context, longer conversations, or more tool calls. The LLM comprehends GCF with 100% accuracy on standard workloads (every frontier model tested), and 91.6% on structurally complex code graphs (vs TOON 66.9%, JSON 54.6%). At 1000 records, JSON doesn't even fit in a 200K context window.
 
 ## Zero-code option: gcf-proxy
 

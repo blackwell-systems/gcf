@@ -46,7 +46,7 @@ JSON is a tree of nested braces, repeated keys, and structural tokens that carry
 
 GCF aligned with how LLMs naturally process information. Markdown-style section headers (`## targets [167]`) answered counting questions directly. Positional fields eliminated key repetition. Local IDs turned relationship queries from "scan every edge and match string identifiers" to "look up `@0`."
 
-The result: on 500-symbol code graphs, GCF scored 91.2% comprehension across 10 models and 24 runs. JSON scored 53.4%. TOON (the leading alternative) scored 68.2%. Four models hit 100% with GCF. None hit 100% with JSON or TOON.
+The result: on 500-symbol code graphs, GCF scored 91.6% comprehension across 10 models and 24 runs. JSON scored 54.6%. TOON (the leading alternative) scored 66.9%. Four models hit 100% with GCF. None hit 100% with JSON or TOON.
 
 GCF was not optimized for human readability. It was optimized for the reader that matters. The format that looks clean to human eyes (JSON with its aligned braces and pretty-printed keys) is the format that breaks the model's ability to count, filter, and extract. The format that looks dense and "messy" to humans is the one that scores 100% comprehension on every frontier model tested.
 
@@ -110,7 +110,7 @@ TOON has 24,000 stars. 3 million monthly npm downloads. 10+ implementations acro
 
 GCF has six implementations, 22,000+ downloads across 11 channels, three independent adopters, and three weeks of existence. One person building everything.
 
-The gap is marketing, not product. GCF wins every measured benchmark. On structured data: 29% fewer tokens across 16 datasets, 15 of 16 wins. On comprehension: 91.2% versus 68.2%. On generation: 5/5 on every frontier model while TOON's decoder rejects output from 7 of 9 models. On multi-turn interactions: 92.7% savings by the fifth tool call through session dedup, a feature TOON structurally cannot add.
+The gap is marketing, not product. GCF wins every measured benchmark. On structured data: 29% fewer tokens across 16 datasets, 15 of 16 wins. On comprehension: 91.6% versus 66.9%. On generation: 5/5 on every frontier model while TOON's decoder rejects output from 7 of 9 models. On multi-turn interactions: 92.7% savings by the fifth tool call through session dedup, a feature TOON structurally cannot add.
 
 TOON is a tree serializer. YAML with counted arrays. It can encode tabular data efficiently. It cannot encode relationships, cross-references, session state, or deltas. Adding local IDs would require a new grammar. Adding session dedup would require local IDs. Adding edge encoding would require both. TOON would have to become a different format to match what GCF already ships.
 

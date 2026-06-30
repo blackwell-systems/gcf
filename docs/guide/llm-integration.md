@@ -1,12 +1,12 @@
 # Using GCF with LLMs
 
-GCF works in both directions: tools produce it, LLMs read it, and LLMs can produce it too. No model has ever been trained on GCF. Reading requires no primer: 100% accuracy on standard workloads (every frontier model), 91.2% on structurally complex code graphs (vs TOON 68.2%, JSON 53.4%). Writing requires a 3-line example and produces valid output with **63% fewer tokens than JSON** and **33% fewer than TOON**.
+GCF works in both directions: tools produce it, LLMs read it, and LLMs can produce it too. No model has ever been trained on GCF. Reading requires no primer: 100% accuracy on standard workloads (every frontier model), 91.6% on structurally complex code graphs (vs TOON 66.9%, JSON 54.6%). Writing requires a 3-line example and produces valid output with **63% fewer tokens than JSON** and **33% fewer than TOON**.
 
 ## Designed for agent comprehension, not human scanning
 
 GCF looks dense to human eyes. `@0<@1 calls` is not as immediately obvious as `{"source": "pkg.Server", "target": "pkg.Auth", "edge_type": "calls"}`. That's deliberate.
 
-Human-readability and LLM-readability are different things, and they diverge at scale. At 8 records, both JSON and GCF are easy for humans and LLMs alike. At 500 records, JSON's field-name repetition creates enough structural noise that LLMs lose count (53.4% on code graphs, 76.9% on nested orders with Gemini Flash). GCF's dense, positional format cuts through that noise (100% on standard workloads, 91.2% on code graphs).
+Human-readability and LLM-readability are different things, and they diverge at scale. At 8 records, both JSON and GCF are easy for humans and LLMs alike. At 500 records, JSON's field-name repetition creates enough structural noise that LLMs lose count (54.6% on code graphs, 76.9% on nested orders with Gemini Flash). GCF's dense, positional format cuts through that noise (100% on standard workloads, 91.6% on code graphs).
 
 Here's what JSON at 500 symbols looks like to an LLM. Every record repeats five field names:
 
@@ -28,7 +28,7 @@ The same data in GCF:
 ... 497 more, each one line, no repeated field names ...
 ```
 
-No noise. Every token is content. On code graph data, GCF averages 91.2% across 24 runs and 10 models (vs TOON 68.2%, JSON 53.4%). On nested order data (27 runs, 11 models, 4 providers), GCF achieves 100% on every frontier model (Opus, Sonnet, Haiku, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash).
+No noise. Every token is content. On code graph data, GCF averages 91.6% across 23 runs and 12 models (vs TOON 66.9%, JSON 54.6%). On nested order data (27 runs, 11 models, 4 providers), GCF achieves 100% on every frontier model (Opus, Sonnet, Haiku, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash).
 
 The format is optimized for the actual consumer. Every character carries meaning. No decoration, no repeated field names, no structural tokens that exist only for human scanners. The result is a format that agents understand perfectly and costs a fraction of the "readable" alternative. The [tokenizer analysis](/guide/tokenizer-analysis) explains the mechanism: JSON's grammar symbols merge with field names at the vocabulary level, hiding structural boundaries from the model.
 
@@ -72,9 +72,9 @@ The [comprehension eval](https://github.com/blackwell-systems/gcf-go/tree/main/e
 
 | Format | Avg accuracy (10 models) | Tokens |
 |--------|--------------------------|--------|
-| **GCF** | **91.2%** | **11,090** |
-| TOON | 68.2% | 16,378 |
-| JSON | 53.4% | 53,341 |
+| **GCF** | **91.6%** | **11,090** |
+| TOON | 66.9% | 16,378 |
+| JSON | 54.6% | 53,341 |
 
 **24 runs, 10 models, 3 providers. GCF wins 23, ties 1, loses 0.** JSON fails on counting tasks because field-name repetition overwhelms attention. TOON fails on distance grouping (no section headers). GCF answers structurally. See the [full benchmarks](/guide/benchmarks) for per-model results.
 

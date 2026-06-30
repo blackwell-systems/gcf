@@ -1178,7 +1178,7 @@ onMounted(async () => {
 
         <!-- Comprehension note -->
         <div class="comprehension-note">
-          <strong>100% comprehension on every frontier model tested.</strong> Claude, GPT-5.5, Gemini: all read GCF natively with zero format instructions on standard workloads (500 orders, nested data). On adversarial workloads (500-symbol code graphs), GCF still scores <strong>91.2%</strong> where TOON drops to 68.2% and JSON to 53.4%. Human readability is a last-mile concern: call <code>decode()</code> when a human needs to see it.
+          <strong>100% comprehension on every frontier model tested.</strong> Claude, GPT-5.5, Gemini: all read GCF natively with zero format instructions on standard workloads (500 orders, nested data). On adversarial workloads (500-symbol code graphs), GCF still scores <strong>91.6%</strong> where TOON drops to 66.9% and JSON to 54.6%. Human readability is a last-mile concern: call <code>decode()</code> when a human needs to see it.
           <div class="comprehension-punchline">The "readable" formats are the ones that break.</div>
           <a href="/guide/benchmarks">See the benchmarks &rarr;</a>
         </div>

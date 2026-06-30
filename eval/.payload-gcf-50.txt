@@ -1,0 +1,225 @@
+GCF profile=generic
+## [50]{orderId,"customer>id","customer>name","customer>email","customer>tier",items,subtotal,tax,total,status}
+@0 ORD-00001|1000|Alice Chen|alice.chen@example.com|standard|^|29.97|2.4|32.37|pending
+.items [1]{sku,name,quantity,unitPrice}
+    SKU-A00|Widget Pro|1|9.99
+@1 ORD-00002|1001|Bob Smith|bob.smith@example.com|standard|^|42.47|3.4|45.87|processing
+.items [2]
+    SKU-B01|Gadget Max|1|13.49
+    SKU-C02|Tool Kit|2|16.99
+@2 ORD-00003|1002|Carla Rodriguez|carla.rodriguez@example.com|premium|^|54.97|4.4|59.37|shipped
+.items [3]
+    SKU-C02|Tool Kit|1|16.99
+    SKU-D03|Power Pack|2|20.49
+    SKU-E04|Smart Hub|3|23.99
+@3 ORD-00004|1003|David Park|david.park@example.com|premium|^|67.47|5.4|72.87|delivered
+.items [4]
+    SKU-D03|Power Pack|1|20.49
+    SKU-E04|Smart Hub|2|23.99
+    SKU-F05|Widget Pro|3|27.49
+    SKU-G06|Gadget Max|1|30.99
+@4 ORD-00005|1004|Eva Johansson|eva.johansson@example.com|premium|^|79.97|6.4|86.37|cancelled
+.items [1]
+    SKU-E04|Smart Hub|1|23.99
+@5 ORD-00006|1005|Alice Chen|alice.chen@example.com|standard|^|92.47|7.4|99.87|pending
+.items [2]
+    SKU-F05|Widget Pro|1|27.49
+    SKU-G06|Gadget Max|2|30.99
+@6 ORD-00007|1006|Bob Smith|bob.smith@example.com|standard|^|104.97|8.4|113.37|processing
+.items [3]
+    SKU-G06|Gadget Max|1|30.99
+    SKU-H07|Tool Kit|2|34.49
+    SKU-I08|Power Pack|3|37.99
+@7 ORD-00008|1007|Carla Rodriguez|carla.rodriguez@example.com|premium|^|117.47|9.4|126.87|shipped
+.items [4]
+    SKU-H07|Tool Kit|1|34.49
+    SKU-I08|Power Pack|2|37.99
+    SKU-J09|Smart Hub|3|41.49
+    SKU-K10|Widget Pro|1|44.99
+@8 ORD-00009|1008|David Park|david.park@example.com|premium|^|129.97|10.4|140.37|delivered
+.items [1]
+    SKU-I08|Power Pack|1|37.99
+@9 ORD-00010|1009|Eva Johansson|eva.johansson@example.com|premium|^|142.47|11.4|153.87|cancelled
+.items [2]
+    SKU-J09|Smart Hub|1|41.49
+    SKU-K10|Widget Pro|2|44.99
+@10 ORD-00011|1010|Alice Chen|alice.chen@example.com|standard|^|154.97|12.4|167.37|pending
+.items [3]
+    SKU-K10|Widget Pro|1|44.99
+    SKU-L11|Gadget Max|2|48.49
+    SKU-M12|Tool Kit|3|51.99
+@11 ORD-00012|1011|Bob Smith|bob.smith@example.com|standard|^|167.47|13.4|180.87|processing
+.items [4]
+    SKU-L11|Gadget Max|1|48.49
+    SKU-M12|Tool Kit|2|51.99
+    SKU-N13|Power Pack|3|55.49
+    SKU-O14|Smart Hub|1|58.99
+@12 ORD-00013|1012|Carla Rodriguez|carla.rodriguez@example.com|premium|^|179.97|14.4|194.37|shipped
+.items [1]
+    SKU-M12|Tool Kit|1|51.99
+@13 ORD-00014|1013|David Park|david.park@example.com|premium|^|192.47|15.4|207.87|delivered
+.items [2]
+    SKU-N13|Power Pack|1|55.49
+    SKU-O14|Smart Hub|2|58.99
+@14 ORD-00015|1014|Eva Johansson|eva.johansson@example.com|premium|^|204.97|16.4|221.37|cancelled
+.items [3]
+    SKU-O14|Smart Hub|1|58.99
+    SKU-P15|Widget Pro|2|62.49
+    SKU-Q16|Gadget Max|3|65.99
+@15 ORD-00016|1015|Alice Chen|alice.chen@example.com|standard|^|217.47|17.4|234.87|pending
+.items [4]
+    SKU-P15|Widget Pro|1|62.49
+    SKU-Q16|Gadget Max|2|65.99
+    SKU-R17|Tool Kit|3|69.49
+    SKU-S18|Power Pack|1|72.99
+@16 ORD-00017|1016|Bob Smith|bob.smith@example.com|standard|^|229.97|18.4|248.37|processing
+.items [1]
+    SKU-Q16|Gadget Max|1|65.99
+@17 ORD-00018|1017|Carla Rodriguez|carla.rodriguez@example.com|premium|^|242.47|19.4|261.87|shipped
+.items [2]
+    SKU-R17|Tool Kit|1|69.49
+    SKU-S18|Power Pack|2|72.99
+@18 ORD-00019|1018|David Park|david.park@example.com|premium|^|254.97|20.4|275.37|delivered
+.items [3]
+    SKU-S18|Power Pack|1|72.99
+    SKU-T19|Smart Hub|2|76.49
+    SKU-U20|Widget Pro|3|79.99
+@19 ORD-00020|1019|Eva Johansson|eva.johansson@example.com|premium|^|267.47|21.4|288.87|cancelled
+.items [4]
+    SKU-T19|Smart Hub|1|76.49
+    SKU-U20|Widget Pro|2|79.99
+    SKU-V21|Gadget Max|3|83.49
+    SKU-W22|Tool Kit|1|86.99
+@20 ORD-00021|1020|Alice Chen|alice.chen@example.com|standard|^|279.97|22.4|302.37|pending
+.items [1]
+    SKU-U20|Widget Pro|1|79.99
+@21 ORD-00022|1021|Bob Smith|bob.smith@example.com|standard|^|292.47|23.4|315.87|processing
+.items [2]
+    SKU-V21|Gadget Max|1|83.49
+    SKU-W22|Tool Kit|2|86.99
+@22 ORD-00023|1022|Carla Rodriguez|carla.rodriguez@example.com|premium|^|304.97|24.4|329.37|shipped
+.items [3]
+    SKU-W22|Tool Kit|1|86.99
+    SKU-X23|Power Pack|2|90.49
+    SKU-Y24|Smart Hub|3|93.99
+@23 ORD-00024|1023|David Park|david.park@example.com|premium|^|317.47|25.4|342.87|delivered
+.items [4]
+    SKU-X23|Power Pack|1|90.49
+    SKU-Y24|Smart Hub|2|93.99
+    SKU-Z25|Widget Pro|3|97.49
+    SKU-A26|Gadget Max|1|100.99
+@24 ORD-00025|1024|Eva Johansson|eva.johansson@example.com|premium|^|329.97|26.4|356.37|cancelled
+.items [1]
+    SKU-Y24|Smart Hub|1|93.99
+@25 ORD-00026|1025|Alice Chen|alice.chen@example.com|standard|^|342.47|27.4|369.87|pending
+.items [2]
+    SKU-Z25|Widget Pro|1|97.49
+    SKU-A26|Gadget Max|2|100.99
+@26 ORD-00027|1026|Bob Smith|bob.smith@example.com|standard|^|354.97|28.4|383.37|processing
+.items [3]
+    SKU-A26|Gadget Max|1|100.99
+    SKU-B27|Tool Kit|2|104.49
+    SKU-C28|Power Pack|3|107.99
+@27 ORD-00028|1027|Carla Rodriguez|carla.rodriguez@example.com|premium|^|367.47|29.4|396.87|shipped
+.items [4]
+    SKU-B27|Tool Kit|1|104.49
+    SKU-C28|Power Pack|2|107.99
+    SKU-D29|Smart Hub|3|111.49
+    SKU-E30|Widget Pro|1|114.99
+@28 ORD-00029|1028|David Park|david.park@example.com|premium|^|379.97|30.4|410.37|delivered
+.items [1]
+    SKU-C28|Power Pack|1|107.99
+@29 ORD-00030|1029|Eva Johansson|eva.johansson@example.com|premium|^|392.47|31.4|423.87|cancelled
+.items [2]
+    SKU-D29|Smart Hub|1|111.49
+    SKU-E30|Widget Pro|2|114.99
+@30 ORD-00031|1030|Alice Chen|alice.chen@example.com|standard|^|404.97|32.4|437.37|pending
+.items [3]
+    SKU-E30|Widget Pro|1|114.99
+    SKU-F31|Gadget Max|2|118.49
+    SKU-G32|Tool Kit|3|121.99
+@31 ORD-00032|1031|Bob Smith|bob.smith@example.com|standard|^|417.47|33.4|450.87|processing
+.items [4]
+    SKU-F31|Gadget Max|1|118.49
+    SKU-G32|Tool Kit|2|121.99
+    SKU-H33|Power Pack|3|125.49
+    SKU-I34|Smart Hub|1|128.99
+@32 ORD-00033|1032|Carla Rodriguez|carla.rodriguez@example.com|premium|^|429.97|34.4|464.37|shipped
+.items [1]
+    SKU-G32|Tool Kit|1|121.99
+@33 ORD-00034|1033|David Park|david.park@example.com|premium|^|442.47|35.4|477.87|delivered
+.items [2]
+    SKU-H33|Power Pack|1|125.49
+    SKU-I34|Smart Hub|2|128.99
+@34 ORD-00035|1034|Eva Johansson|eva.johansson@example.com|premium|^|454.97|36.4|491.37|cancelled
+.items [3]
+    SKU-I34|Smart Hub|1|128.99
+    SKU-J35|Widget Pro|2|132.49
+    SKU-K36|Gadget Max|3|135.99
+@35 ORD-00036|1035|Alice Chen|alice.chen@example.com|standard|^|467.47|37.4|504.87|pending
+.items [4]
+    SKU-J35|Widget Pro|1|132.49
+    SKU-K36|Gadget Max|2|135.99
+    SKU-L37|Tool Kit|3|139.49
+    SKU-M38|Power Pack|1|142.99
+@36 ORD-00037|1036|Bob Smith|bob.smith@example.com|standard|^|479.97|38.4|518.37|processing
+.items [1]
+    SKU-K36|Gadget Max|1|135.99
+@37 ORD-00038|1037|Carla Rodriguez|carla.rodriguez@example.com|premium|^|492.47|39.4|531.87|shipped
+.items [2]
+    SKU-L37|Tool Kit|1|139.49
+    SKU-M38|Power Pack|2|142.99
+@38 ORD-00039|1038|David Park|david.park@example.com|premium|^|504.97|40.4|545.37|delivered
+.items [3]
+    SKU-M38|Power Pack|1|142.99
+    SKU-N39|Smart Hub|2|146.49
+    SKU-O40|Widget Pro|3|149.99
+@39 ORD-00040|1039|Eva Johansson|eva.johansson@example.com|premium|^|517.47|41.4|558.87|cancelled
+.items [4]
+    SKU-N39|Smart Hub|1|146.49
+    SKU-O40|Widget Pro|2|149.99
+    SKU-P41|Gadget Max|3|153.49
+    SKU-Q42|Tool Kit|1|156.99
+@40 ORD-00041|1040|Alice Chen|alice.chen@example.com|standard|^|529.97|42.4|572.37|pending
+.items [1]
+    SKU-O40|Widget Pro|1|149.99
+@41 ORD-00042|1041|Bob Smith|bob.smith@example.com|standard|^|542.47|43.4|585.87|processing
+.items [2]
+    SKU-P41|Gadget Max|1|153.49
+    SKU-Q42|Tool Kit|2|156.99
+@42 ORD-00043|1042|Carla Rodriguez|carla.rodriguez@example.com|premium|^|554.97|44.4|599.37|shipped
+.items [3]
+    SKU-Q42|Tool Kit|1|156.99
+    SKU-R43|Power Pack|2|160.49
+    SKU-S44|Smart Hub|3|163.99
+@43 ORD-00044|1043|David Park|david.park@example.com|premium|^|567.47|45.4|612.87|delivered
+.items [4]
+    SKU-R43|Power Pack|1|160.49
+    SKU-S44|Smart Hub|2|163.99
+    SKU-T45|Widget Pro|3|167.49
+    SKU-U46|Gadget Max|1|170.99
+@44 ORD-00045|1044|Eva Johansson|eva.johansson@example.com|premium|^|579.97|46.4|626.37|cancelled
+.items [1]
+    SKU-S44|Smart Hub|1|163.99
+@45 ORD-00046|1045|Alice Chen|alice.chen@example.com|standard|^|592.47|47.4|639.87|pending
+.items [2]
+    SKU-T45|Widget Pro|1|167.49
+    SKU-U46|Gadget Max|2|170.99
+@46 ORD-00047|1046|Bob Smith|bob.smith@example.com|standard|^|604.97|48.4|653.37|processing
+.items [3]
+    SKU-U46|Gadget Max|1|170.99
+    SKU-V47|Tool Kit|2|174.49
+    SKU-W48|Power Pack|3|177.99
+@47 ORD-00048|1047|Carla Rodriguez|carla.rodriguez@example.com|premium|^|617.47|49.4|666.87|shipped
+.items [4]
+    SKU-V47|Tool Kit|1|174.49
+    SKU-W48|Power Pack|2|177.99
+    SKU-X49|Smart Hub|3|181.49
+    SKU-Y50|Widget Pro|1|184.99
+@48 ORD-00049|1048|David Park|david.park@example.com|premium|^|629.97|50.4|680.37|delivered
+.items [1]
+    SKU-W48|Power Pack|1|177.99
+@49 ORD-00050|1049|Eva Johansson|eva.johansson@example.com|premium|^|642.47|51.4|693.87|cancelled
+.items [2]
+    SKU-X49|Smart Hub|1|181.49
+    SKU-Y50|Widget Pro|2|184.99

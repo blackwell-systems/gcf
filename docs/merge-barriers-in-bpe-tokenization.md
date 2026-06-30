@@ -261,8 +261,8 @@ Ildiz et al. (2024) proved mathematically that self-attention weights tokens pro
 
 The tokenization analysis connects to observed outcomes from 2,500+ LLM evaluations across 11 models:
 
-- JSON accuracy at 500 records: **53.4%**
-- GCF accuracy at 500 records: **91.2%**
+- JSON accuracy at 500 records: **54.6%**
+- GCF accuracy at 500 records: **91.6%**
 - GCF accuracy on standard workloads: **100%** on every frontier model
 
 Error magnitude confirms the mechanism: GCF errors are small (off by 1-2, precision errors). JSON errors are large (off by 50-140, comprehension failures). The model did not slightly misread a number; it could not find the answer.
@@ -693,7 +693,7 @@ Neither model reliably detected structural corruptions in GCF payloads via PPL s
 
 ## 12. Conclusion
 
-BPE tokenizers merge delimiter characters with adjacent content, hiding structural boundaries inside single tokens. This is universal (43/43 tokenizers), deterministic (dictionary lookups), and irrecoverable for existing models. The mechanism is now fully characterized: merged boundaries produce attention entropy crossover at 50 records, grammar attention collapse from 30% to 8.6%, and comprehension failure at 53.4% accuracy on 500-record payloads.
+BPE tokenizers merge delimiter characters with adjacent content, hiding structural boundaries inside single tokens. This is universal (43/43 tokenizers), deterministic (dictionary lookups), and irrecoverable for existing models. The mechanism is now fully characterized: merged boundaries produce attention entropy crossover at 50 records, grammar attention collapse from 30% to 8.6%, and comprehension failure at 54.6% accuracy on 500-record payloads.
 
 Merge barriers fix this. Sixteen delimiter characters, forbidden from participating in BPE merges, produce a tokenizer with zero merged entries and zero adversarial surface. A controlled experiment (two identical 410M models, same data, same hyperparameters, only the tokenizer differs) proves the fix works: 3x better structured data comprehension, 3-5x better code comprehension, zero natural language cost.
 

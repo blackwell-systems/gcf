@@ -22,7 +22,7 @@
 
 ---
 
-**100% comprehension on every frontier model. 50-92% fewer tokens than JSON. 91.2% on structurally complex code graphs (vs TOON 68.2%, JSON 53.4%). Proven lossless: `decode(encode(value)) == value` for every structured value, verified across 43,000,000,000+ round-trips in 5 formats and 17 serialization formats. Zero training required. JSON's grammar symbols are [hardcoded as merged vocabulary entries](https://gcformat.com/guide/tokenizer-analysis) in BPE tokenizers, creating irrecoverable structural boundaries. GCF's pipe delimiter has 0% merge rate with field names.**
+**100% comprehension on every frontier model. 50-92% fewer tokens than JSON. 91.6% on structurally complex code graphs (vs TOON 66.9%, JSON 54.6%). Proven lossless: `decode(encode(value)) == value` for every structured value, verified across 43,000,000,000+ round-trips in 5 formats and 17 serialization formats. Zero training required. JSON's grammar symbols are [hardcoded as merged vocabulary entries](https://gcformat.com/guide/tokenizer-analysis) in BPE tokenizers, creating irrecoverable structural boundaries. GCF's pipe delimiter has 0% merge rate with field names.**
 
 Encode any structured data as GCF before sending it to an LLM. JSON, YAML, TOML, CSV, MessagePack: GCF encodes them all. The model reads it natively with zero format instructions. `decode()` converts back to any format when a human needs to see it. Your existing schemas and validators work on the decoded output unchanged.
 
@@ -47,9 +47,9 @@ pip install gcf-proxy
 
 | | Generic Profile (500 orders) | Graph Profile (500 symbols) |
 |---|---|---|
-| **GCF** | **100%** on every frontier model | **91.2%** (10 models) |
-| **TOON** | weakest format consistently | 68.2% |
-| **JSON** | GCF avg >= JSON on every model | 53.4% |
+| **GCF** | **100%** on every frontier model | **91.6%** (12 models) |
+| **TOON** | weakest format consistently | 66.9% |
+| **JSON** | GCF avg >= JSON on every model | 54.6% |
 
 | | GCF | TOON | JSON |
 |---|---|---|---|

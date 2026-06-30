@@ -1,0 +1,2966 @@
+{
+  "tokenizer_count": 43,
+  "test_words": 51,
+  "patterns_per_char": 153,
+  "results": {
+    "pipe": {
+      "char": "|",
+      "avg_merge_rate": 0.0116,
+      "min_merge_rate": 0.0,
+      "max_merge_rate": 0.0392,
+      "tokenizers_merging": 15,
+      "tokenizers_total": 43,
+      "per_tokenizer": [
+        {
+          "tokenizer": "GPT-4 (cl100k)",
+          "rate": 0.0392156862745098
+        },
+        {
+          "tokenizer": "GPT-4o (o200k)",
+          "rate": 0.026143790849673203
+        },
+        {
+          "tokenizer": "GPT-2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Claude",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "LLaMA 2 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "LLaMA 3 8B",
+          "rate": 0.0392156862745098
+        },
+        {
+          "tokenizer": "LLaMA 3.1 8B",
+          "rate": 0.0392156862745098
+        },
+        {
+          "tokenizer": "CodeLlama 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "TinyLlama 1.1B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Gemma 2 2B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Gemma 3 1B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "T5 Base",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral 7B v0.1",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral 7B v0.3",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral Nemo",
+          "rate": 0.013071895424836602
+        },
+        {
+          "tokenizer": "Mixtral 8x7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Codestral 22B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Qwen 2 7B",
+          "rate": 0.0392156862745098
+        },
+        {
+          "tokenizer": "Qwen 2.5 7B",
+          "rate": 0.0392156862745098
+        },
+        {
+          "tokenizer": "Qwen 2.5 Coder",
+          "rate": 0.0392156862745098
+        },
+        {
+          "tokenizer": "Qwen 3 8B",
+          "rate": 0.0392156862745098
+        },
+        {
+          "tokenizer": "QwQ 32B",
+          "rate": 0.0392156862745098
+        },
+        {
+          "tokenizer": "DeepSeek V2 Lite",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "DeepSeek V3",
+          "rate": 0.013071895424836602
+        },
+        {
+          "tokenizer": "DeepSeek R1",
+          "rate": 0.013071895424836602
+        },
+        {
+          "tokenizer": "DeepSeek Coder V2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-3 Mini",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-4",
+          "rate": 0.0392156862745098
+        },
+        {
+          "tokenizer": "Falcon 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Falcon 40B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Falcon 2 11B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Yi 1.5 9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Yi Coder 9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StarCoder2 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StarCoder2 15B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Nemotron Mini 4B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Jamba v0.1",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StableLM 2 1.6B",
+          "rate": 0.0392156862745098
+        },
+        {
+          "tokenizer": "Pythia 6.9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Arctic",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "OLMo 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Marco-o1",
+          "rate": 0.0392156862745098
+        }
+      ]
+    },
+    "at": {
+      "char": "@",
+      "avg_merge_rate": 0.0106,
+      "min_merge_rate": 0.0,
+      "max_merge_rate": 0.0392,
+      "tokenizers_merging": 12,
+      "tokenizers_total": 43,
+      "per_tokenizer": [
+        {
+          "tokenizer": "GPT-4 (cl100k)",
+          "rate": 0.0392156862745098
+        },
+        {
+          "tokenizer": "GPT-4o (o200k)",
+          "rate": 0.026143790849673203
+        },
+        {
+          "tokenizer": "GPT-2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Claude",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "LLaMA 2 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "LLaMA 3 8B",
+          "rate": 0.0392156862745098
+        },
+        {
+          "tokenizer": "LLaMA 3.1 8B",
+          "rate": 0.0392156862745098
+        },
+        {
+          "tokenizer": "CodeLlama 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "TinyLlama 1.1B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Gemma 2 2B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Gemma 3 1B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "T5 Base",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral 7B v0.1",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral 7B v0.3",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral Nemo",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mixtral 8x7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Codestral 22B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Qwen 2 7B",
+          "rate": 0.0392156862745098
+        },
+        {
+          "tokenizer": "Qwen 2.5 7B",
+          "rate": 0.0392156862745098
+        },
+        {
+          "tokenizer": "Qwen 2.5 Coder",
+          "rate": 0.0392156862745098
+        },
+        {
+          "tokenizer": "Qwen 3 8B",
+          "rate": 0.0392156862745098
+        },
+        {
+          "tokenizer": "QwQ 32B",
+          "rate": 0.0392156862745098
+        },
+        {
+          "tokenizer": "DeepSeek V2 Lite",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "DeepSeek V3",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "DeepSeek R1",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "DeepSeek Coder V2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-3 Mini",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-4",
+          "rate": 0.0392156862745098
+        },
+        {
+          "tokenizer": "Falcon 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Falcon 40B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Falcon 2 11B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Yi 1.5 9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Yi Coder 9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StarCoder2 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StarCoder2 15B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Nemotron Mini 4B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Jamba v0.1",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StableLM 2 1.6B",
+          "rate": 0.0392156862745098
+        },
+        {
+          "tokenizer": "Pythia 6.9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Arctic",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "OLMo 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Marco-o1",
+          "rate": 0.0392156862745098
+        }
+      ]
+    },
+    "less-than": {
+      "char": "<",
+      "avg_merge_rate": 0.0264,
+      "min_merge_rate": 0.0,
+      "max_merge_rate": 0.0915,
+      "tokenizers_merging": 15,
+      "tokenizers_total": 43,
+      "per_tokenizer": [
+        {
+          "tokenizer": "GPT-4 (cl100k)",
+          "rate": 0.0915032679738562
+        },
+        {
+          "tokenizer": "GPT-4o (o200k)",
+          "rate": 0.06535947712418301
+        },
+        {
+          "tokenizer": "GPT-2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Claude",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "LLaMA 2 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "LLaMA 3 8B",
+          "rate": 0.0915032679738562
+        },
+        {
+          "tokenizer": "LLaMA 3.1 8B",
+          "rate": 0.0915032679738562
+        },
+        {
+          "tokenizer": "CodeLlama 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "TinyLlama 1.1B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Gemma 2 2B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Gemma 3 1B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "T5 Base",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral 7B v0.1",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral 7B v0.3",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral Nemo",
+          "rate": 0.0392156862745098
+        },
+        {
+          "tokenizer": "Mixtral 8x7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Codestral 22B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Qwen 2 7B",
+          "rate": 0.0915032679738562
+        },
+        {
+          "tokenizer": "Qwen 2.5 7B",
+          "rate": 0.0915032679738562
+        },
+        {
+          "tokenizer": "Qwen 2.5 Coder",
+          "rate": 0.0915032679738562
+        },
+        {
+          "tokenizer": "Qwen 3 8B",
+          "rate": 0.0915032679738562
+        },
+        {
+          "tokenizer": "QwQ 32B",
+          "rate": 0.0915032679738562
+        },
+        {
+          "tokenizer": "DeepSeek V2 Lite",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "DeepSeek V3",
+          "rate": 0.013071895424836602
+        },
+        {
+          "tokenizer": "DeepSeek R1",
+          "rate": 0.013071895424836602
+        },
+        {
+          "tokenizer": "DeepSeek Coder V2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-3 Mini",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-4",
+          "rate": 0.0915032679738562
+        },
+        {
+          "tokenizer": "Falcon 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Falcon 40B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Falcon 2 11B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Yi 1.5 9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Yi Coder 9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StarCoder2 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StarCoder2 15B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Nemotron Mini 4B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Jamba v0.1",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StableLM 2 1.6B",
+          "rate": 0.0915032679738562
+        },
+        {
+          "tokenizer": "Pythia 6.9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Arctic",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "OLMo 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Marco-o1",
+          "rate": 0.0915032679738562
+        }
+      ]
+    },
+    "greater-than": {
+      "char": ">",
+      "avg_merge_rate": 0.0116,
+      "min_merge_rate": 0.0,
+      "max_merge_rate": 0.0392,
+      "tokenizers_merging": 13,
+      "tokenizers_total": 43,
+      "per_tokenizer": [
+        {
+          "tokenizer": "GPT-4 (cl100k)",
+          "rate": 0.0392156862745098
+        },
+        {
+          "tokenizer": "GPT-4o (o200k)",
+          "rate": 0.0392156862745098
+        },
+        {
+          "tokenizer": "GPT-2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Claude",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "LLaMA 2 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "LLaMA 3 8B",
+          "rate": 0.0392156862745098
+        },
+        {
+          "tokenizer": "LLaMA 3.1 8B",
+          "rate": 0.0392156862745098
+        },
+        {
+          "tokenizer": "CodeLlama 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "TinyLlama 1.1B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Gemma 2 2B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Gemma 3 1B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "T5 Base",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral 7B v0.1",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral 7B v0.3",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral Nemo",
+          "rate": 0.026143790849673203
+        },
+        {
+          "tokenizer": "Mixtral 8x7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Codestral 22B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Qwen 2 7B",
+          "rate": 0.0392156862745098
+        },
+        {
+          "tokenizer": "Qwen 2.5 7B",
+          "rate": 0.0392156862745098
+        },
+        {
+          "tokenizer": "Qwen 2.5 Coder",
+          "rate": 0.0392156862745098
+        },
+        {
+          "tokenizer": "Qwen 3 8B",
+          "rate": 0.0392156862745098
+        },
+        {
+          "tokenizer": "QwQ 32B",
+          "rate": 0.0392156862745098
+        },
+        {
+          "tokenizer": "DeepSeek V2 Lite",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "DeepSeek V3",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "DeepSeek R1",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "DeepSeek Coder V2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-3 Mini",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-4",
+          "rate": 0.0392156862745098
+        },
+        {
+          "tokenizer": "Falcon 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Falcon 40B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Falcon 2 11B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Yi 1.5 9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Yi Coder 9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StarCoder2 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StarCoder2 15B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Nemotron Mini 4B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Jamba v0.1",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StableLM 2 1.6B",
+          "rate": 0.0392156862745098
+        },
+        {
+          "tokenizer": "Pythia 6.9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Arctic",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "OLMo 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Marco-o1",
+          "rate": 0.0392156862745098
+        }
+      ]
+    },
+    "double-quote": {
+      "char": "\"",
+      "avg_merge_rate": 0.0258,
+      "min_merge_rate": 0.0,
+      "max_merge_rate": 0.0915,
+      "tokenizers_merging": 13,
+      "tokenizers_total": 43,
+      "per_tokenizer": [
+        {
+          "tokenizer": "GPT-4 (cl100k)",
+          "rate": 0.0915032679738562
+        },
+        {
+          "tokenizer": "GPT-4o (o200k)",
+          "rate": 0.0784313725490196
+        },
+        {
+          "tokenizer": "GPT-2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Claude",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "LLaMA 2 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "LLaMA 3 8B",
+          "rate": 0.0915032679738562
+        },
+        {
+          "tokenizer": "LLaMA 3.1 8B",
+          "rate": 0.0915032679738562
+        },
+        {
+          "tokenizer": "CodeLlama 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "TinyLlama 1.1B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Gemma 2 2B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Gemma 3 1B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "T5 Base",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral 7B v0.1",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral 7B v0.3",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral Nemo",
+          "rate": 0.026143790849673203
+        },
+        {
+          "tokenizer": "Mixtral 8x7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Codestral 22B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Qwen 2 7B",
+          "rate": 0.0915032679738562
+        },
+        {
+          "tokenizer": "Qwen 2.5 7B",
+          "rate": 0.0915032679738562
+        },
+        {
+          "tokenizer": "Qwen 2.5 Coder",
+          "rate": 0.0915032679738562
+        },
+        {
+          "tokenizer": "Qwen 3 8B",
+          "rate": 0.0915032679738562
+        },
+        {
+          "tokenizer": "QwQ 32B",
+          "rate": 0.0915032679738562
+        },
+        {
+          "tokenizer": "DeepSeek V2 Lite",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "DeepSeek V3",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "DeepSeek R1",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "DeepSeek Coder V2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-3 Mini",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-4",
+          "rate": 0.0915032679738562
+        },
+        {
+          "tokenizer": "Falcon 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Falcon 40B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Falcon 2 11B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Yi 1.5 9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Yi Coder 9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StarCoder2 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StarCoder2 15B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Nemotron Mini 4B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Jamba v0.1",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StableLM 2 1.6B",
+          "rate": 0.0915032679738562
+        },
+        {
+          "tokenizer": "Pythia 6.9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Arctic",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "OLMo 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Marco-o1",
+          "rate": 0.0915032679738562
+        }
+      ]
+    },
+    "single-quote": {
+      "char": "'",
+      "avg_merge_rate": 0.1047,
+      "min_merge_rate": 0.0,
+      "max_merge_rate": 0.2614,
+      "tokenizers_merging": 22,
+      "tokenizers_total": 43,
+      "per_tokenizer": [
+        {
+          "tokenizer": "GPT-4 (cl100k)",
+          "rate": 0.26143790849673204
+        },
+        {
+          "tokenizer": "GPT-4o (o200k)",
+          "rate": 0.1503267973856209
+        },
+        {
+          "tokenizer": "GPT-2",
+          "rate": 0.16993464052287582
+        },
+        {
+          "tokenizer": "Claude",
+          "rate": 0.16993464052287582
+        },
+        {
+          "tokenizer": "LLaMA 2 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "LLaMA 3 8B",
+          "rate": 0.26143790849673204
+        },
+        {
+          "tokenizer": "LLaMA 3.1 8B",
+          "rate": 0.26143790849673204
+        },
+        {
+          "tokenizer": "CodeLlama 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "TinyLlama 1.1B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Gemma 2 2B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Gemma 3 1B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "T5 Base",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral 7B v0.1",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral 7B v0.3",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral Nemo",
+          "rate": 0.13071895424836602
+        },
+        {
+          "tokenizer": "Mixtral 8x7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Codestral 22B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Qwen 2 7B",
+          "rate": 0.26143790849673204
+        },
+        {
+          "tokenizer": "Qwen 2.5 7B",
+          "rate": 0.26143790849673204
+        },
+        {
+          "tokenizer": "Qwen 2.5 Coder",
+          "rate": 0.26143790849673204
+        },
+        {
+          "tokenizer": "Qwen 3 8B",
+          "rate": 0.26143790849673204
+        },
+        {
+          "tokenizer": "QwQ 32B",
+          "rate": 0.26143790849673204
+        },
+        {
+          "tokenizer": "DeepSeek V2 Lite",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "DeepSeek V3",
+          "rate": 0.0784313725490196
+        },
+        {
+          "tokenizer": "DeepSeek R1",
+          "rate": 0.0784313725490196
+        },
+        {
+          "tokenizer": "DeepSeek Coder V2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-2",
+          "rate": 0.16993464052287582
+        },
+        {
+          "tokenizer": "Phi-3 Mini",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-4",
+          "rate": 0.26143790849673204
+        },
+        {
+          "tokenizer": "Falcon 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Falcon 40B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Falcon 2 11B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Yi 1.5 9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Yi Coder 9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StarCoder2 7B",
+          "rate": 0.16993464052287582
+        },
+        {
+          "tokenizer": "StarCoder2 15B",
+          "rate": 0.16993464052287582
+        },
+        {
+          "tokenizer": "Nemotron Mini 4B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Jamba v0.1",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StableLM 2 1.6B",
+          "rate": 0.26143790849673204
+        },
+        {
+          "tokenizer": "Pythia 6.9B",
+          "rate": 0.16993464052287582
+        },
+        {
+          "tokenizer": "Arctic",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "OLMo 7B",
+          "rate": 0.16993464052287582
+        },
+        {
+          "tokenizer": "Marco-o1",
+          "rate": 0.26143790849673204
+        }
+      ]
+    },
+    "colon": {
+      "char": ":",
+      "avg_merge_rate": 0.08,
+      "min_merge_rate": 0.0,
+      "max_merge_rate": 0.2745,
+      "tokenizers_merging": 15,
+      "tokenizers_total": 43,
+      "per_tokenizer": [
+        {
+          "tokenizer": "GPT-4 (cl100k)",
+          "rate": 0.27450980392156865
+        },
+        {
+          "tokenizer": "GPT-4o (o200k)",
+          "rate": 0.24836601307189543
+        },
+        {
+          "tokenizer": "GPT-2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Claude",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "LLaMA 2 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "LLaMA 3 8B",
+          "rate": 0.27450980392156865
+        },
+        {
+          "tokenizer": "LLaMA 3.1 8B",
+          "rate": 0.27450980392156865
+        },
+        {
+          "tokenizer": "CodeLlama 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "TinyLlama 1.1B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Gemma 2 2B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Gemma 3 1B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "T5 Base",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral 7B v0.1",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral 7B v0.3",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral Nemo",
+          "rate": 0.11764705882352941
+        },
+        {
+          "tokenizer": "Mixtral 8x7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Codestral 22B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Qwen 2 7B",
+          "rate": 0.27450980392156865
+        },
+        {
+          "tokenizer": "Qwen 2.5 7B",
+          "rate": 0.27450980392156865
+        },
+        {
+          "tokenizer": "Qwen 2.5 Coder",
+          "rate": 0.27450980392156865
+        },
+        {
+          "tokenizer": "Qwen 3 8B",
+          "rate": 0.27450980392156865
+        },
+        {
+          "tokenizer": "QwQ 32B",
+          "rate": 0.27450980392156865
+        },
+        {
+          "tokenizer": "DeepSeek V2 Lite",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "DeepSeek V3",
+          "rate": 0.026143790849673203
+        },
+        {
+          "tokenizer": "DeepSeek R1",
+          "rate": 0.026143790849673203
+        },
+        {
+          "tokenizer": "DeepSeek Coder V2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-3 Mini",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-4",
+          "rate": 0.27450980392156865
+        },
+        {
+          "tokenizer": "Falcon 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Falcon 40B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Falcon 2 11B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Yi 1.5 9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Yi Coder 9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StarCoder2 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StarCoder2 15B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Nemotron Mini 4B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Jamba v0.1",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StableLM 2 1.6B",
+          "rate": 0.27450980392156865
+        },
+        {
+          "tokenizer": "Pythia 6.9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Arctic",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "OLMo 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Marco-o1",
+          "rate": 0.27450980392156865
+        }
+      ]
+    },
+    "comma": {
+      "char": ",",
+      "avg_merge_rate": 0.0918,
+      "min_merge_rate": 0.0,
+      "max_merge_rate": 0.3137,
+      "tokenizers_merging": 15,
+      "tokenizers_total": 43,
+      "per_tokenizer": [
+        {
+          "tokenizer": "GPT-4 (cl100k)",
+          "rate": 0.3137254901960784
+        },
+        {
+          "tokenizer": "GPT-4o (o200k)",
+          "rate": 0.27450980392156865
+        },
+        {
+          "tokenizer": "GPT-2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Claude",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "LLaMA 2 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "LLaMA 3 8B",
+          "rate": 0.3137254901960784
+        },
+        {
+          "tokenizer": "LLaMA 3.1 8B",
+          "rate": 0.3137254901960784
+        },
+        {
+          "tokenizer": "CodeLlama 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "TinyLlama 1.1B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Gemma 2 2B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Gemma 3 1B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "T5 Base",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral 7B v0.1",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral 7B v0.3",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral Nemo",
+          "rate": 0.11764705882352941
+        },
+        {
+          "tokenizer": "Mixtral 8x7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Codestral 22B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Qwen 2 7B",
+          "rate": 0.3137254901960784
+        },
+        {
+          "tokenizer": "Qwen 2.5 7B",
+          "rate": 0.3137254901960784
+        },
+        {
+          "tokenizer": "Qwen 2.5 Coder",
+          "rate": 0.3137254901960784
+        },
+        {
+          "tokenizer": "Qwen 3 8B",
+          "rate": 0.3137254901960784
+        },
+        {
+          "tokenizer": "QwQ 32B",
+          "rate": 0.3137254901960784
+        },
+        {
+          "tokenizer": "DeepSeek V2 Lite",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "DeepSeek V3",
+          "rate": 0.05228758169934641
+        },
+        {
+          "tokenizer": "DeepSeek R1",
+          "rate": 0.05228758169934641
+        },
+        {
+          "tokenizer": "DeepSeek Coder V2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-3 Mini",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-4",
+          "rate": 0.3137254901960784
+        },
+        {
+          "tokenizer": "Falcon 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Falcon 40B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Falcon 2 11B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Yi 1.5 9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Yi Coder 9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StarCoder2 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StarCoder2 15B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Nemotron Mini 4B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Jamba v0.1",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StableLM 2 1.6B",
+          "rate": 0.3137254901960784
+        },
+        {
+          "tokenizer": "Pythia 6.9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Arctic",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "OLMo 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Marco-o1",
+          "rate": 0.3137254901960784
+        }
+      ]
+    },
+    "semicolon": {
+      "char": ";",
+      "avg_merge_rate": 0.0,
+      "min_merge_rate": 0.0,
+      "max_merge_rate": 0.0,
+      "tokenizers_merging": 0,
+      "tokenizers_total": 43,
+      "per_tokenizer": [
+        {
+          "tokenizer": "GPT-4 (cl100k)",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "GPT-4o (o200k)",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "GPT-2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Claude",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "LLaMA 2 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "LLaMA 3 8B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "LLaMA 3.1 8B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "CodeLlama 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "TinyLlama 1.1B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Gemma 2 2B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Gemma 3 1B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "T5 Base",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral 7B v0.1",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral 7B v0.3",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral Nemo",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mixtral 8x7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Codestral 22B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Qwen 2 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Qwen 2.5 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Qwen 2.5 Coder",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Qwen 3 8B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "QwQ 32B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "DeepSeek V2 Lite",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "DeepSeek V3",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "DeepSeek R1",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "DeepSeek Coder V2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-3 Mini",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-4",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Falcon 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Falcon 40B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Falcon 2 11B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Yi 1.5 9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Yi Coder 9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StarCoder2 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StarCoder2 15B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Nemotron Mini 4B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Jamba v0.1",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StableLM 2 1.6B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Pythia 6.9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Arctic",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "OLMo 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Marco-o1",
+          "rate": 0.0
+        }
+      ]
+    },
+    "tab": {
+      "char": "\t",
+      "avg_merge_rate": 0.2003,
+      "min_merge_rate": 0.0,
+      "max_merge_rate": 0.6536,
+      "tokenizers_merging": 17,
+      "tokenizers_total": 43,
+      "per_tokenizer": [
+        {
+          "tokenizer": "GPT-4 (cl100k)",
+          "rate": 0.6143790849673203
+        },
+        {
+          "tokenizer": "GPT-4o (o200k)",
+          "rate": 0.6535947712418301
+        },
+        {
+          "tokenizer": "GPT-2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Claude",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "LLaMA 2 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "LLaMA 3 8B",
+          "rate": 0.6143790849673203
+        },
+        {
+          "tokenizer": "LLaMA 3.1 8B",
+          "rate": 0.6143790849673203
+        },
+        {
+          "tokenizer": "CodeLlama 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "TinyLlama 1.1B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Gemma 2 2B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Gemma 3 1B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "T5 Base",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral 7B v0.1",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral 7B v0.3",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral Nemo",
+          "rate": 0.3660130718954248
+        },
+        {
+          "tokenizer": "Mixtral 8x7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Codestral 22B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Qwen 2 7B",
+          "rate": 0.6143790849673203
+        },
+        {
+          "tokenizer": "Qwen 2.5 7B",
+          "rate": 0.6143790849673203
+        },
+        {
+          "tokenizer": "Qwen 2.5 Coder",
+          "rate": 0.6143790849673203
+        },
+        {
+          "tokenizer": "Qwen 3 8B",
+          "rate": 0.6143790849673203
+        },
+        {
+          "tokenizer": "QwQ 32B",
+          "rate": 0.6143790849673203
+        },
+        {
+          "tokenizer": "DeepSeek V2 Lite",
+          "rate": 0.24836601307189543
+        },
+        {
+          "tokenizer": "DeepSeek V3",
+          "rate": 0.16993464052287582
+        },
+        {
+          "tokenizer": "DeepSeek R1",
+          "rate": 0.16993464052287582
+        },
+        {
+          "tokenizer": "DeepSeek Coder V2",
+          "rate": 0.24836601307189543
+        },
+        {
+          "tokenizer": "Phi-2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-3 Mini",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-4",
+          "rate": 0.6143790849673203
+        },
+        {
+          "tokenizer": "Falcon 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Falcon 40B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Falcon 2 11B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Yi 1.5 9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Yi Coder 9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StarCoder2 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StarCoder2 15B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Nemotron Mini 4B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Jamba v0.1",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StableLM 2 1.6B",
+          "rate": 0.6143790849673203
+        },
+        {
+          "tokenizer": "Pythia 6.9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Arctic",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "OLMo 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Marco-o1",
+          "rate": 0.6143790849673203
+        }
+      ]
+    },
+    "open-brace": {
+      "char": "{",
+      "avg_merge_rate": 0.0097,
+      "min_merge_rate": 0.0,
+      "max_merge_rate": 0.0392,
+      "tokenizers_merging": 15,
+      "tokenizers_total": 43,
+      "per_tokenizer": [
+        {
+          "tokenizer": "GPT-4 (cl100k)",
+          "rate": 0.026143790849673203
+        },
+        {
+          "tokenizer": "GPT-4o (o200k)",
+          "rate": 0.026143790849673203
+        },
+        {
+          "tokenizer": "GPT-2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Claude",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "LLaMA 2 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "LLaMA 3 8B",
+          "rate": 0.026143790849673203
+        },
+        {
+          "tokenizer": "LLaMA 3.1 8B",
+          "rate": 0.026143790849673203
+        },
+        {
+          "tokenizer": "CodeLlama 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "TinyLlama 1.1B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Gemma 2 2B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Gemma 3 1B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "T5 Base",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral 7B v0.1",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral 7B v0.3",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral Nemo",
+          "rate": 0.026143790849673203
+        },
+        {
+          "tokenizer": "Mixtral 8x7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Codestral 22B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Qwen 2 7B",
+          "rate": 0.026143790849673203
+        },
+        {
+          "tokenizer": "Qwen 2.5 7B",
+          "rate": 0.026143790849673203
+        },
+        {
+          "tokenizer": "Qwen 2.5 Coder",
+          "rate": 0.026143790849673203
+        },
+        {
+          "tokenizer": "Qwen 3 8B",
+          "rate": 0.026143790849673203
+        },
+        {
+          "tokenizer": "QwQ 32B",
+          "rate": 0.026143790849673203
+        },
+        {
+          "tokenizer": "DeepSeek V2 Lite",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "DeepSeek V3",
+          "rate": 0.0392156862745098
+        },
+        {
+          "tokenizer": "DeepSeek R1",
+          "rate": 0.0392156862745098
+        },
+        {
+          "tokenizer": "DeepSeek Coder V2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-3 Mini",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-4",
+          "rate": 0.026143790849673203
+        },
+        {
+          "tokenizer": "Falcon 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Falcon 40B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Falcon 2 11B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Yi 1.5 9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Yi Coder 9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StarCoder2 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StarCoder2 15B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Nemotron Mini 4B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Jamba v0.1",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StableLM 2 1.6B",
+          "rate": 0.026143790849673203
+        },
+        {
+          "tokenizer": "Pythia 6.9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Arctic",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "OLMo 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Marco-o1",
+          "rate": 0.026143790849673203
+        }
+      ]
+    },
+    "close-brace": {
+      "char": "}",
+      "avg_merge_rate": 0.0,
+      "min_merge_rate": 0.0,
+      "max_merge_rate": 0.0,
+      "tokenizers_merging": 0,
+      "tokenizers_total": 43,
+      "per_tokenizer": [
+        {
+          "tokenizer": "GPT-4 (cl100k)",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "GPT-4o (o200k)",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "GPT-2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Claude",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "LLaMA 2 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "LLaMA 3 8B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "LLaMA 3.1 8B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "CodeLlama 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "TinyLlama 1.1B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Gemma 2 2B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Gemma 3 1B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "T5 Base",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral 7B v0.1",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral 7B v0.3",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral Nemo",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mixtral 8x7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Codestral 22B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Qwen 2 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Qwen 2.5 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Qwen 2.5 Coder",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Qwen 3 8B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "QwQ 32B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "DeepSeek V2 Lite",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "DeepSeek V3",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "DeepSeek R1",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "DeepSeek Coder V2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-3 Mini",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-4",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Falcon 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Falcon 40B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Falcon 2 11B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Yi 1.5 9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Yi Coder 9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StarCoder2 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StarCoder2 15B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Nemotron Mini 4B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Jamba v0.1",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StableLM 2 1.6B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Pythia 6.9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Arctic",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "OLMo 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Marco-o1",
+          "rate": 0.0
+        }
+      ]
+    },
+    "open-bracket": {
+      "char": "[",
+      "avg_merge_rate": 0.0778,
+      "min_merge_rate": 0.0,
+      "max_merge_rate": 0.2614,
+      "tokenizers_merging": 15,
+      "tokenizers_total": 43,
+      "per_tokenizer": [
+        {
+          "tokenizer": "GPT-4 (cl100k)",
+          "rate": 0.26143790849673204
+        },
+        {
+          "tokenizer": "GPT-4o (o200k)",
+          "rate": 0.2222222222222222
+        },
+        {
+          "tokenizer": "GPT-2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Claude",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "LLaMA 2 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "LLaMA 3 8B",
+          "rate": 0.26143790849673204
+        },
+        {
+          "tokenizer": "LLaMA 3.1 8B",
+          "rate": 0.26143790849673204
+        },
+        {
+          "tokenizer": "CodeLlama 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "TinyLlama 1.1B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Gemma 2 2B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Gemma 3 1B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "T5 Base",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral 7B v0.1",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral 7B v0.3",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral Nemo",
+          "rate": 0.11764705882352941
+        },
+        {
+          "tokenizer": "Mixtral 8x7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Codestral 22B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Qwen 2 7B",
+          "rate": 0.26143790849673204
+        },
+        {
+          "tokenizer": "Qwen 2.5 7B",
+          "rate": 0.26143790849673204
+        },
+        {
+          "tokenizer": "Qwen 2.5 Coder",
+          "rate": 0.26143790849673204
+        },
+        {
+          "tokenizer": "Qwen 3 8B",
+          "rate": 0.26143790849673204
+        },
+        {
+          "tokenizer": "QwQ 32B",
+          "rate": 0.26143790849673204
+        },
+        {
+          "tokenizer": "DeepSeek V2 Lite",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "DeepSeek V3",
+          "rate": 0.06535947712418301
+        },
+        {
+          "tokenizer": "DeepSeek R1",
+          "rate": 0.06535947712418301
+        },
+        {
+          "tokenizer": "DeepSeek Coder V2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-3 Mini",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-4",
+          "rate": 0.26143790849673204
+        },
+        {
+          "tokenizer": "Falcon 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Falcon 40B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Falcon 2 11B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Yi 1.5 9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Yi Coder 9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StarCoder2 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StarCoder2 15B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Nemotron Mini 4B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Jamba v0.1",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StableLM 2 1.6B",
+          "rate": 0.26143790849673204
+        },
+        {
+          "tokenizer": "Pythia 6.9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Arctic",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "OLMo 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Marco-o1",
+          "rate": 0.26143790849673204
+        }
+      ]
+    },
+    "close-bracket": {
+      "char": "]",
+      "avg_merge_rate": 0.0036,
+      "min_merge_rate": 0.0,
+      "max_merge_rate": 0.0131,
+      "tokenizers_merging": 12,
+      "tokenizers_total": 43,
+      "per_tokenizer": [
+        {
+          "tokenizer": "GPT-4 (cl100k)",
+          "rate": 0.013071895424836602
+        },
+        {
+          "tokenizer": "GPT-4o (o200k)",
+          "rate": 0.013071895424836602
+        },
+        {
+          "tokenizer": "GPT-2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Claude",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "LLaMA 2 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "LLaMA 3 8B",
+          "rate": 0.013071895424836602
+        },
+        {
+          "tokenizer": "LLaMA 3.1 8B",
+          "rate": 0.013071895424836602
+        },
+        {
+          "tokenizer": "CodeLlama 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "TinyLlama 1.1B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Gemma 2 2B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Gemma 3 1B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "T5 Base",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral 7B v0.1",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral 7B v0.3",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral Nemo",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mixtral 8x7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Codestral 22B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Qwen 2 7B",
+          "rate": 0.013071895424836602
+        },
+        {
+          "tokenizer": "Qwen 2.5 7B",
+          "rate": 0.013071895424836602
+        },
+        {
+          "tokenizer": "Qwen 2.5 Coder",
+          "rate": 0.013071895424836602
+        },
+        {
+          "tokenizer": "Qwen 3 8B",
+          "rate": 0.013071895424836602
+        },
+        {
+          "tokenizer": "QwQ 32B",
+          "rate": 0.013071895424836602
+        },
+        {
+          "tokenizer": "DeepSeek V2 Lite",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "DeepSeek V3",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "DeepSeek R1",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "DeepSeek Coder V2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-3 Mini",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-4",
+          "rate": 0.013071895424836602
+        },
+        {
+          "tokenizer": "Falcon 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Falcon 40B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Falcon 2 11B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Yi 1.5 9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Yi Coder 9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StarCoder2 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StarCoder2 15B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Nemotron Mini 4B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Jamba v0.1",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StableLM 2 1.6B",
+          "rate": 0.013071895424836602
+        },
+        {
+          "tokenizer": "Pythia 6.9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Arctic",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "OLMo 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Marco-o1",
+          "rate": 0.013071895424836602
+        }
+      ]
+    },
+    "open-paren": {
+      "char": "(",
+      "avg_merge_rate": 0.2161,
+      "min_merge_rate": 0.0,
+      "max_merge_rate": 0.6536,
+      "tokenizers_merging": 15,
+      "tokenizers_total": 43,
+      "per_tokenizer": [
+        {
+          "tokenizer": "GPT-4 (cl100k)",
+          "rate": 0.6535947712418301
+        },
+        {
+          "tokenizer": "GPT-4o (o200k)",
+          "rate": 0.6535947712418301
+        },
+        {
+          "tokenizer": "GPT-2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Claude",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "LLaMA 2 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "LLaMA 3 8B",
+          "rate": 0.6535947712418301
+        },
+        {
+          "tokenizer": "LLaMA 3.1 8B",
+          "rate": 0.6535947712418301
+        },
+        {
+          "tokenizer": "CodeLlama 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "TinyLlama 1.1B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Gemma 2 2B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Gemma 3 1B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "T5 Base",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral 7B v0.1",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral 7B v0.3",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral Nemo",
+          "rate": 0.5620915032679739
+        },
+        {
+          "tokenizer": "Mixtral 8x7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Codestral 22B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Qwen 2 7B",
+          "rate": 0.6535947712418301
+        },
+        {
+          "tokenizer": "Qwen 2.5 7B",
+          "rate": 0.6535947712418301
+        },
+        {
+          "tokenizer": "Qwen 2.5 Coder",
+          "rate": 0.6535947712418301
+        },
+        {
+          "tokenizer": "Qwen 3 8B",
+          "rate": 0.6535947712418301
+        },
+        {
+          "tokenizer": "QwQ 32B",
+          "rate": 0.6535947712418301
+        },
+        {
+          "tokenizer": "DeepSeek V2 Lite",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "DeepSeek V3",
+          "rate": 0.4444444444444444
+        },
+        {
+          "tokenizer": "DeepSeek R1",
+          "rate": 0.4444444444444444
+        },
+        {
+          "tokenizer": "DeepSeek Coder V2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-3 Mini",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-4",
+          "rate": 0.6535947712418301
+        },
+        {
+          "tokenizer": "Falcon 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Falcon 40B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Falcon 2 11B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Yi 1.5 9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Yi Coder 9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StarCoder2 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StarCoder2 15B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Nemotron Mini 4B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Jamba v0.1",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StableLM 2 1.6B",
+          "rate": 0.6535947712418301
+        },
+        {
+          "tokenizer": "Pythia 6.9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Arctic",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "OLMo 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Marco-o1",
+          "rate": 0.6535947712418301
+        }
+      ]
+    },
+    "close-paren": {
+      "char": ")",
+      "avg_merge_rate": 0.0216,
+      "min_merge_rate": 0.0,
+      "max_merge_rate": 0.0784,
+      "tokenizers_merging": 12,
+      "tokenizers_total": 43,
+      "per_tokenizer": [
+        {
+          "tokenizer": "GPT-4 (cl100k)",
+          "rate": 0.0784313725490196
+        },
+        {
+          "tokenizer": "GPT-4o (o200k)",
+          "rate": 0.06535947712418301
+        },
+        {
+          "tokenizer": "GPT-2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Claude",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "LLaMA 2 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "LLaMA 3 8B",
+          "rate": 0.0784313725490196
+        },
+        {
+          "tokenizer": "LLaMA 3.1 8B",
+          "rate": 0.0784313725490196
+        },
+        {
+          "tokenizer": "CodeLlama 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "TinyLlama 1.1B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Gemma 2 2B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Gemma 3 1B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "T5 Base",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral 7B v0.1",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral 7B v0.3",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mistral Nemo",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Mixtral 8x7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Codestral 22B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Qwen 2 7B",
+          "rate": 0.0784313725490196
+        },
+        {
+          "tokenizer": "Qwen 2.5 7B",
+          "rate": 0.0784313725490196
+        },
+        {
+          "tokenizer": "Qwen 2.5 Coder",
+          "rate": 0.0784313725490196
+        },
+        {
+          "tokenizer": "Qwen 3 8B",
+          "rate": 0.0784313725490196
+        },
+        {
+          "tokenizer": "QwQ 32B",
+          "rate": 0.0784313725490196
+        },
+        {
+          "tokenizer": "DeepSeek V2 Lite",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "DeepSeek V3",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "DeepSeek R1",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "DeepSeek Coder V2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-2",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-3 Mini",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Phi-4",
+          "rate": 0.0784313725490196
+        },
+        {
+          "tokenizer": "Falcon 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Falcon 40B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Falcon 2 11B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Yi 1.5 9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Yi Coder 9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StarCoder2 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StarCoder2 15B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Nemotron Mini 4B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Jamba v0.1",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "StableLM 2 1.6B",
+          "rate": 0.0784313725490196
+        },
+        {
+          "tokenizer": "Pythia 6.9B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Arctic",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "OLMo 7B",
+          "rate": 0.0
+        },
+        {
+          "tokenizer": "Marco-o1",
+          "rate": 0.0784313725490196
+        }
+      ]
+    }
+  },
+  "transfer_cross_reference": {
+    "md_table": {
+      "delta": 30.4,
+      "transfer": true,
+      "primary_delim": "pipe"
+    },
+    "csv": {
+      "delta": 30.0,
+      "transfer": true,
+      "primary_delim": "comma"
+    },
+    "protobuf_text": {
+      "delta": 102.4,
+      "transfer": true,
+      "primary_delim": "open-brace"
+    },
+    "ini": {
+      "delta": 36.4,
+      "transfer": true,
+      "primary_delim": "open-bracket"
+    },
+    "s_expression": {
+      "delta": 38.5,
+      "transfer": true,
+      "primary_delim": "open-paren"
+    },
+    "sql": {
+      "delta": 57.2,
+      "transfer": true,
+      "primary_delim": "open-paren"
+    },
+    "toml": {
+      "delta": 3.5,
+      "transfer": null,
+      "primary_delim": "open-bracket"
+    },
+    "toon": {
+      "delta": -15.8,
+      "transfer": false,
+      "primary_delim": "tab"
+    },
+    "xml": {
+      "delta": -31.5,
+      "transfer": false,
+      "primary_delim": "less-than"
+    }
+  }
+}
