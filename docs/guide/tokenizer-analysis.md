@@ -260,8 +260,8 @@ At 10 records, this barely matters. Models handle it fine. But at 500 records, t
 
 This is why our comprehension eval shows:
 - 100% accuracy at small scale (all formats)
-- 54.6% JSON accuracy at 500 records (stress scale)
-- 91.6% GCF accuracy at 500 records
+- 54.1% JSON accuracy at 500 records (stress scale)
+- 91.2% GCF accuracy at 500 records
 
 The degradation is caused by the combination of ambiguous boundaries AND token repetition (more on this below).
 
@@ -423,7 +423,7 @@ Representative cross-tokenizer validation (500-row frequency table):
 
 | Tokenizer | JSON tokens | GCF tokens | Savings | JSON field-name overhead |
 |-----------|------------|-----------|---------|------------------------|
-| Claude (Anthropic) | 10,996 | 7,013 | **36.2%** | 54.6% |
+| Claude (Anthropic) | 10,996 | 7,013 | **36.2%** | 54.1% |
 | GPT-4 (OpenAI cl100k) | 10,494 | 6,508 | **38.0%** | 52.4% |
 | GPT-4o (OpenAI o200k) | 10,494 | 6,508 | **38.0%** | 52.4% |
 | LLaMA 3.1 (Meta) | 10,494 | 6,508 | **38.0%** | 52.4% |
@@ -442,8 +442,8 @@ Connects tokenization findings to comprehension eval data (2,500+ LLM calls acro
 
 The tokenization analysis connects directly to the [comprehension eval data](/guide/benchmarks):
 
-- JSON accuracy on stress-scale data: **54.6%** (12 models, 23 runs, 3 providers)
-- GCF accuracy on stress-scale data: **91.6%** (same runs, same models)
+- JSON accuracy on stress-scale data: **54.1%** (12 models, 23 runs, 3 providers)
+- GCF accuracy on stress-scale data: **91.2%** (same runs, same models)
 - GCF accuracy on standard workloads: **100%** on every frontier model
 
 **Why does JSON fail at scale?**
@@ -911,7 +911,7 @@ The attention analysis reveals that JSON's comprehension failures are not caused
 2. **Token repetition** (field names repeat on every row, producing identical token IDs)
 3. **Attention mechanics** (identical tokens dilute attention, grammar attention collapses at scale)
 
-A format that eliminates all three problems (clean boundaries, no repetition, explicit structure) would maintain comprehension at any scale. GCF eliminates all three. That's why it scores 91.6% where JSON scores 54.6% on the same data with the same models.
+A format that eliminates all three problems (clean boundaries, no repetition, explicit structure) would maintain comprehension at any scale. GCF eliminates all three. That's why it scores 91.2% where JSON scores 54.1% on the same data with the same models.
 
 ---
 
@@ -1011,7 +1011,7 @@ This is the causal link between GCF's design and its comprehension advantage. Th
 | Merges are irrecoverable | Can't fix with prompting, fine-tuning, or RLHF. Vocabulary is frozen. |
 | JSON attention entropy crosses GCF at 50 orders | Pythia 410M: JSON 4.50 vs GCF 3.99 (+13%). Learned JSON parsing breaks down. |
 | JSON grammar attention collapses at scale | Gemma 2B: grammar attention drops from 30% to 8.6% at 50+ orders. Model stops parsing. |
-| This explains comprehension failures | 54.6% JSON at stress scale vs 91.6% GCF. Hidden boundaries + attention dilution. |
+| This explains comprehension failures | 54.1% JSON at stress scale vs 91.2% GCF. Hidden boundaries + attention dilution. |
 | Merge barriers cause 3x better structured data PPL | Controlled experiment: two identical 410M models, same data, different tokenizer. |
 | Merge barriers cause 3-5x better code PPL | Python 4.9x, Go 3.0x, TypeScript 3.7x. Not predicted. |
 | Zero natural language cost | Wikipedia PPL 1,029 vs 1,033. Identical. |

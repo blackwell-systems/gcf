@@ -25,7 +25,7 @@ Evaluated at two scales:
 
 **Generic profile (500 orders, nested structured data):** 27+ runs across initial eval + flatten experiment, 19 models, 9 providers. Frontier models (Opus, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash, Grok Build 0.1) score 100% GCF on every run. On mid-tier and open-weight models, GCF averages equal or better than JSON across runs. TOON is consistently the weakest format. The flatten experiment (June 2026) extended coverage to 12 additional models including DeepSeek V3, LLaMA 4 Maverick, Kimi K2.7, and others via OpenRouter.
 
-**Graph profile, stress scale (500 symbols, 200 edges):** 23 runs, 12 models, 3 providers. GCF averages 91.6%, TOON 66.9%, JSON 54.6% (average of per-model averages). The margin between formats widens dramatically at scale. GCF wins 22, ties 1, loses 0.
+**Graph profile, stress scale (500 symbols, 200 edges):** 25 runs, 10 models, 3 providers. GCF averages 91.2%, TOON 68.8%, JSON 54.1% (average of per-model averages). The margin between formats widens dramatically at scale. GCF wins 24, ties 1, loses 0.
 
 ---
 

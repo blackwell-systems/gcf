@@ -261,8 +261,8 @@ Ildiz et al. (2024) proved mathematically that self-attention weights tokens pro
 
 The tokenization analysis connects to observed outcomes from 2,500+ LLM evaluations across 11 models:
 
-- JSON accuracy at 500 records: **54.6%**
-- GCF accuracy at 500 records: **91.6%**
+- JSON accuracy at 500 records: **54.1%**
+- GCF accuracy at 500 records: **91.2%**
 - GCF accuracy on standard workloads: **100%** on every frontier model
 
 Error magnitude confirms the mechanism: GCF errors are small (off by 1-2, precision errors). JSON errors are large (off by 50-140, comprehension failures). The model did not slightly misread a number; it could not find the answer.
@@ -539,7 +539,7 @@ Both models show some decay, but Model A starts higher and stays higher. Compare
 | Orders | Model A GCF repeat% | Model B GCF repeat% | Model A tokens | Model B tokens |
 |--------|---------------------|---------------------|----------------|----------------|
 | 5 | 35.9% | 44.3% | 64 | 79 |
-| 10 | 54.6% | 62.8% | 119 | 145 |
+| 10 | 54.1% | 62.8% | 119 | 145 |
 | 20 | 67.0% | 73.3% | 227 | 285 |
 | 50 | 78.0% | 81.0% | 567 | 704 |
 | 100 | 83.9% | 84.6% | 1,167 | 1,423 |
@@ -693,7 +693,7 @@ Neither model reliably detected structural corruptions in GCF payloads via PPL s
 
 ## 12. Conclusion
 
-BPE tokenizers merge delimiter characters with adjacent content, hiding structural boundaries inside single tokens. This is universal (43/43 tokenizers), deterministic (dictionary lookups), and irrecoverable for existing models. The mechanism is now fully characterized: merged boundaries produce attention entropy crossover at 50 records, grammar attention collapse from 30% to 8.6%, and comprehension failure at 54.6% accuracy on 500-record payloads.
+BPE tokenizers merge delimiter characters with adjacent content, hiding structural boundaries inside single tokens. This is universal (43/43 tokenizers), deterministic (dictionary lookups), and irrecoverable for existing models. The mechanism is now fully characterized: merged boundaries produce attention entropy crossover at 50 records, grammar attention collapse from 30% to 8.6%, and comprehension failure at 54.1% accuracy on 500-record payloads.
 
 Merge barriers fix this. Sixteen delimiter characters, forbidden from participating in BPE merges, produce a tokenizer with zero merged entries and zero adversarial surface. A controlled experiment (two identical 410M models, same data, same hyperparameters, only the tokenizer differs) proves the fix works: 3x better structured data comprehension, 3-5x better code comprehension, zero natural language cost.
 

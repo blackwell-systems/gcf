@@ -45,7 +45,7 @@ jsonschema.validate(data, existing_schema)
 
 ## How does GCF compare to TOON?
 
-GCF wins on every measured dimension. 29% fewer tokens across 16 real-world datasets (15/16 wins; TOON's one win is 77 tokens on a single dataset). 91.6% comprehension where TOON averages 66.9%. 5/5 generation validity on every frontier model while TOON's decoder rejects output from 7 of 9 models. Session deduplication that compounds to 92% savings by the 5th tool call, a feature TOON structurally cannot add.
+GCF wins on every measured dimension. 29% fewer tokens across 16 real-world datasets (15/16 wins; TOON's one win is 77 tokens on a single dataset). 91.2% comprehension where TOON averages 68.8%. 5/5 generation validity on every frontier model while TOON's decoder rejects output from 7 of 9 models. Session deduplication that compounds to 92% savings by the 5th tool call, a feature TOON structurally cannot add.
 
 TOON is a tree serializer: YAML with counted arrays. It encodes flat tabular data efficiently. It cannot encode relationships, cross-references, session state, or deltas. Adding local IDs would require a new grammar. Adding session dedup would require local IDs. TOON would have to become a different format to match what GCF already ships.
 
@@ -113,7 +113,7 @@ This isn't compression. It's a different encoding that models comprehend better.
 
 gzip reduces bytes on the wire but not tokens in the context window. The LLM doesn't see gzip bytes; it sees the decompressed text. A gzipped JSON payload that decompresses to 53,341 tokens still costs 53,341 tokens in the context window.
 
-GCF reduces the token count of the text itself. 11,090 tokens for the same data. And the model reads it with [100% accuracy](/guide/benchmarks) where JSON drops to 54.6% at scale. Compression doesn't improve comprehension. GCF does both.
+GCF reduces the token count of the text itself. 11,090 tokens for the same data. And the model reads it with [100% accuracy](/guide/benchmarks) where JSON drops to 54.1% at scale. Compression doesn't improve comprehension. GCF does both.
 
 ## Why not just use Protobuf?
 
@@ -132,6 +132,6 @@ Protobuf also requires `.proto` schema files, code generation, and version manag
 
 Same answer as protobuf: they're binary. An LLM cannot read MessagePack bytes in a context window. You'd decode to JSON first, losing whatever compression you gained.
 
-GCF is text. It goes directly into the context window. The model reads it natively with [100% accuracy on standard workloads and 91.6% on complex code graphs](/guide/benchmarks) (vs JSON 54.6%) and produces valid output from a 3-line primer. Binary formats solve the wrong layer of the problem.
+GCF is text. It goes directly into the context window. The model reads it natively with [100% accuracy on standard workloads and 91.2% on complex code graphs](/guide/benchmarks) (vs JSON 54.1%) and produces valid output from a 3-line primer. Binary formats solve the wrong layer of the problem.
 
 That said, if your pipeline uses MessagePack internally, GCF handles it: deserialize to a native object, call `encodeGeneric()`. We've verified this path lossless across 585 million round-trips.
