@@ -1,9 +1,0 @@
-{
-  "add_prefix_space": false,
-  "bos_token": "<|endoftext|>",
-  "clean_up_tokenization_spaces": false,
-  "eos_token": "<|endoftext|>",
-  "model_max_length": 128000,
-  "tokenizer_class": "GPT2Tokenizer",
-  "unk_token": "<|endoftext|>"
-}
