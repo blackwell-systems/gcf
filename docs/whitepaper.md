@@ -39,7 +39,7 @@ JSON fails at scale for two compounding reasons, not one.
 
 ### 1.1 The Overhead Problem
 
-Consider a typical MCP tool response returning 10 graph nodes and 8 edges (a blast radius query, a dependency subgraph, or a context retrieval result). In JSON, this payload consumes ~965 tokens. The same semantic content in GCF consumes ~233 tokens. The difference, 732 tokens, is pure waste: field name repetition, structural delimiters (`{`, `}`, `[`, `]`, `:`, `","`), and full qualified names repeated in every edge reference.
+Consider a typical MCP tool response returning 10 graph nodes and 8 edges (a blast radius query, a dependency subgraph, or a context retrieval result). In JSON, this payload consumes 965 tokens. The same semantic content in GCF consumes 233 tokens. The difference (732 tokens, 75.9% reduction) is pure waste: field name repetition, structural delimiters (`{`, `}`, `[`, `]`, `:`, `","`), and full qualified names repeated in every edge reference.
 
 At 500 rows, 81% of JSON's tokens are overhead. Only 19% carry actual data values. This waste compounds across a task. An agent making 5 tool calls during a code change task consumes ~4,825 tokens on JSON tool responses. In GCF, the same 5 calls consume ~1,165 tokens, and less with session statefulness enabled. The difference, ~3,660 tokens, is context window capacity that could hold source code, documentation, or additional tool results.
 
@@ -62,11 +62,11 @@ An exhaustive vocabulary scan across 43 tokenizers from 20 providers reveals tha
 
 ![ASCII adversarial surface: all 94 printable characters ranked by merge risk](/charts/ascii-adversarial-surface.png)
 
-At 500 rows, the overhead problem and the ambiguity problem compound. The model must process approximately 8,500 overhead tokens (81% of the sequence) that are also structurally ambiguous (field boundaries hidden inside merged tokens). Attention entropy crosses the comparison format at 50 rows. Grammar attention collapses from 30% to 8.6%. The model stops parsing structure entirely.
+At 500 rows, the overhead problem and the ambiguity problem compound. The model must process approximately 8,500 overhead tokens (81% of the sequence) that are also structurally ambiguous (field boundaries hidden inside merged tokens). Production model probing (Mistral 7B, Llama 3.1 8B) shows attention entropy crosses the comparison format at 50 rows and grammar attention collapses from 30% to 8.6%. The model stops tracking structure entirely.
 
 Controlled experiments prove this is causal. Models trained with merge barriers (16 delimiter characters forbidden from BPE merges) achieve 3-738x lower structured data perplexity, 1.5x lower code perplexity, and develop 50-161 concentrated structural attention heads, with zero natural language cost (19.4 vs 19.5). At 1.3B scale, every attention head in the standard model shows 4x more delimiter attention when simply given clean token boundaries, revealing that BPE permanently constrains the model's structural capacity. The full analysis, including stranded heads, scaling validation, and domain generalization across code and molecular notation, is in the companion paper, "Tokenizer-Attention Coupling" [DOI: 10.5281/zenodo.20925910](https://doi.org/10.5281/zenodo.20925910).
 
-GCF was designed to eliminate both problems: header factoring eliminates the overhead, and delimiter selection from the empirically verified low-merge character set eliminates the ambiguity. To our knowledge, GCF is the only wire format whose grammar was reverse-engineered from attention-level experimentation and BPE failure mode analysis. Every prior format (JSON, TOON, MessagePack, Protocol Buffers, CBOR) was designed from a data engineering perspective: compression ratio, schema expressiveness, serialization speed. GCF was designed from the model's perspective: which characters does the attention mechanism need as clean token boundaries to parse structure? The 43-tokenizer vocabulary analysis and the controlled training experiments answered that question empirically before the format was specified.
+GCF was designed to eliminate both problems: header factoring eliminates the overhead, and delimiter selection from the empirically verified low-merge character set eliminates the ambiguity. To our knowledge, GCF is the only wire format whose grammar was designed from the model's perspective rather than the developer's (Section 2.1).
 
 ### 1.3 Why This Matters Now
 
