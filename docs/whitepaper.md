@@ -88,9 +88,25 @@ The optimization target is not bytes on wire. It is tokens in the context window
 
 ## 2. Design Principles
 
-GCF's graph profile is designed around three observations about graph data that JSON cannot exploit. Its generic profile (Section 3.6) generalizes these principles to arbitrary structured data.
+GCF's design starts from a question no prior format asked: which characters can the attention mechanism actually use as structural landmarks?
 
-### 2.1 Referential Identity
+### 2.1 Tokenizer-Informed Delimiter Selection
+
+Every wire format must choose delimiter characters. JSON chose `"`, `:`, `,`, `{`, `}`. TOON chose tab. CSV chose comma. These choices were made based on human readability or data engineering conventions, not on how language models process them.
+
+GCF chose pipe (`|`) for field separation and `@` for identity references based on empirical analysis of 43 BPE tokenizer vocabularies from 20 providers. The selection criteria: a delimiter must be its own token on every tested tokenizer, must have near-zero merge rate with adjacent content, and must have minimal adversarial surface (few vocabulary entries where it fuses with common words).
+
+| Delimiter | Merge rate | Mergeable words | Used by |
+|-----------|-----------|-----------------|---------|
+| Pipe `\|` | 0.47% | 24 (all TypeScript unions) | GCF |
+| Quote `"` | 8.17% | 193 | JSON |
+| Tab `\t` | 32.91% | 1,238 | TOON |
+
+The companion paper ("Tokenizer-Attention Coupling") proves this choice is causally important. When delimiter characters merge with content, every attention head in the model loses structural capacity: 384/384 heads at 410M and 768/768 at 1.3B show 4x more delimiter attention when given clean boundaries. At 1.3B, standard BPE models develop 124 counterproductive delimiter heads whose removal improves comprehension by 57%. The delimiter is not a cosmetic choice. It determines whether the model's attention mechanism can parse structure.
+
+GCF's remaining design principles build on this foundation. Once delimiters are clean, three encoding strategies reduce overhead.
+
+### 2.2 Referential Identity
 
 Graph nodes are referenced multiple times: once in their declaration and once per edge they participate in. In JSON, each reference repeats the full qualified name:
 
@@ -112,7 +128,7 @@ In GCF, nodes are declared once with a local ID and referenced by that ID therea
 
 The full qualified name appears once per node. Every subsequent reference is 2-3 tokens (`@0`, `@4`) instead of 15-20 tokens.
 
-### 2.2 Topological Encoding
+### 2.3 Topological Encoding
 
 JSON encodes edges as objects with named fields. GCF encodes edges as directed connections:
 
@@ -128,7 +144,7 @@ JSON encodes edges as objects with named fields. GCF encodes edges as directed c
 
 The `<` arrow encodes direction. The source and target are local IDs. The edge type is a bare token. No field names, no delimiters, no quoting.
 
-### 2.3 Hierarchical Grouping
+### 2.4 Hierarchical Grouping
 
 Graph query results often partition nodes by distance from a query center: direct targets (distance 0), related symbols (distance 1), extended context (distance 2+). In JSON, each node carries a `"distance": N` field. In GCF, a section header replaces all per-node distance fields:
 
