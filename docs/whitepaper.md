@@ -367,8 +367,22 @@ All six implementations are tested against round-trip invariants and the shared 
 
 ### Production Deployment
 
-- **knowing** (28 MCP tools): GCF as primary output format for code intelligence, with session deduplication and delta encoding.
-- **agent-lsp** (66 MCP tools): GCF tabular output via EncodeGeneric for symbol lists, references, diagnostics, and call hierarchies.
+GCF is deployed across 12 production systems spanning infrastructure, network automation, code intelligence, API tooling, and developer tools:
+
+- **OmniRoute** (6.1K stars): AI gateway and proxy. GCF vendored into headroom compression engine, replacing custom encoder. 55-62% savings, 100% payload coverage. TOON rejected (npm dependency). [github.com/diegosouzapw/OmniRoute](https://github.com/diegosouzapw/OmniRoute)
+- **NetClaw** (556 stars): AI network automation, 113 skills, 66 MCP integrations. Replaced TOON entirely after benchmarking. 55.8% savings vs JSON, 13.6% fewer tokens than TOON. [github.com/automateyournetwork/netclaw](https://github.com/automateyournetwork/netclaw)
+- **NeuroNest**: Agent-first IDE by Network Guardian. First independent commercial adoption. GCF across 4 encoding surfaces with session dedup, delta encoding, per-provider comprehension gate, and shadow mode A/B testing. [neuronest.cc](https://neuronest.cc)
+- **ctx** (510 stars): Claude Code context optimizer. GCF for recommendation bundles, graph queries, wiki search. 51.5% savings, up to 57.8% on bundles. [github.com/stevesolun/ctx](https://github.com/stevesolun/ctx)
+- **Speakeasy**: API tooling for OpenAPI ecosystem. GCF as native output format (`oq --format gcf`). Merged after dependency audit confirming no external data transmission. [github.com/speakeasy-api/openapi](https://github.com/speakeasy-api/openapi)
+- **Open Data Products SDK** (Linux Foundation): GCF sidecars for ODPC/ODPG workflows. [opendataproducts.org/sdk](https://opendataproducts.org/sdk/)
+- **bb** (Bitbucket Cloud CLI): GCF as opt-in output format for agent consumers. Independent Go adoption. [github.com/payfacto/bb](https://github.com/payfacto/bb)
+- **knowing** (28 MCP tools): GCF as primary output format for code intelligence, with session deduplication and delta encoding. 84% token savings per tool call.
+- **agent-lsp** (66 MCP tools): GCF tabular output via EncodeGeneric for symbol lists, references, diagnostics, and call hierarchies. 34-44% savings.
+- **Gladys** (7.5K stars): Home automation. PR replacing TOON with GCF for MCP tool responses. 40% fewer tokens, 36% fewer than TOON. [github.com/GladysAssistant/Gladys](https://github.com/GladysAssistant/Gladys/pull/2563)
+- **Raycast**: JSON-to-GCF converter extension, published to Raycast Store.
+- **SkyElite**: Multi-agent travel planner. GCF for inter-agent context sharing. 3rd place, National AI Hackathon (Pakistan, 2026).
+
+Full adoption details with benchmarks: [gcformat.com/ecosystem/adopters](https://gcformat.com/ecosystem/adopters)
 
 ---
 
