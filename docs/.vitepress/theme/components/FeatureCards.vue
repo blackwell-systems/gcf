@@ -28,7 +28,7 @@ const features = [
   {
     icon: '🏆',
     title: '29% fewer tokens than TOON (16 datasets)',
-    details: 'Wins 15/16 real-world datasets. 38% fewer on semi-uniform data, 33% on nested, 32% on K8s pod data. <span class="toon">TOON</span>\'s one win is 77 tokens on a single dataset.',
+    details: 'Wins 15/16 real-world datasets. 38% fewer on semi-uniform data, 30% on nested, 32% on comprehension eval payloads. <span class="toon">TOON</span>\'s one win is 77 tokens on a single dataset.',
   },
 ]
 </script>

@@ -1,1 +1,1 @@
-{"type":"module","private":true,"dependencies":{"@blackwell-systems/gcf":"^2.2.1","@toon-format/toon":"^2.3.0","js-tiktoken":"^1.0.21"}}
+{"type":"module","private":true,"dependencies":{"@blackwell-systems/gcf":"^2.2.1","@toon-format/toon":"^2.3.0","js-tiktoken":"^1.0.21","tiktoken":"^1.0.22"}}
