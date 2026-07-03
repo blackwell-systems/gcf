@@ -1,6 +1,13 @@
 #!/usr/bin/env python3
-"""Generate session savings benchmark charts for GCF documentation."""
+"""Generate session savings benchmark charts for GCF documentation.
 
+Usage:
+    python session-savings-charts.py             # dark theme (default)
+    python session-savings-charts.py --light     # light theme
+    python session-savings-charts.py --both      # generate both variants
+"""
+
+import argparse
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -10,13 +17,30 @@ import numpy as np
 BG = '#0a0a0a'
 TEXT = '#ffffff'
 GRID = '#333333'
+LEGEND_BG = '#1a1a1a'
 CYAN = '#18befc'
 GREEN = '#00ff88'
 GRAY = '#888888'
 DPI = 150
 FIGSIZE = (10, 6)
+LIGHT = False
 
 OUT = '/Users/dayna.blackwell/code/gcf/docs/public/charts'
+
+
+def set_theme(light=False):
+    global BG, TEXT, GRID, LEGEND_BG, LIGHT
+    LIGHT = light
+    if light:
+        BG, TEXT, GRID, LEGEND_BG = 'white', '#1a1a1a', '#cccccc', '#f0f0f0'
+        plt.style.use('default')
+    else:
+        BG, TEXT, GRID, LEGEND_BG = '#0a0a0a', '#ffffff', '#333333', '#1a1a1a'
+        plt.style.use('dark_background')
+
+
+def suffix():
+    return '-light' if LIGHT else ''
 
 
 def style_ax(ax, title):
@@ -28,7 +52,7 @@ def style_ax(ax, title):
     ax.spines['right'].set_visible(False)
     ax.spines['bottom'].set_color(GRID)
     ax.spines['left'].set_color(GRID)
-    ax.grid(axis='y', color=GRID, linewidth=0.5, alpha=0.5)
+    ax.grid(axis='y', color=GRID, linewidth=0.5, alpha=0.5 if not LIGHT else 0.7)
     ax.xaxis.label.set_color(TEXT)
     ax.yaxis.label.set_color(TEXT)
 
@@ -49,13 +73,14 @@ def chart1():
     ax.set_xlabel('Call Number', fontsize=11)
     ax.set_ylabel('Tokens (thousands)', fontsize=11)
     ax.set_xticks(calls)
-    ax.legend(facecolor='#1a1a1a', edgecolor=GRID, labelcolor=TEXT, fontsize=10)
+    ax.legend(facecolor=LEGEND_BG, edgecolor=GRID, labelcolor=TEXT, fontsize=10)
     ax.set_ylim(bottom=0)
 
     fig.tight_layout()
-    fig.savefig(f'{OUT}/session-savings-curve.png', dpi=DPI, facecolor=BG)
+    name = f'session-savings-curve{suffix()}.png'
+    fig.savefig(f'{OUT}/{name}', dpi=DPI, facecolor=BG)
     plt.close(fig)
-    print('Saved session-savings-curve.png')
+    print(f'Saved {name}')
 
 
 def chart2():
@@ -80,9 +105,10 @@ def chart2():
                 f'{val}%', va='center', color=TEXT, fontsize=10, fontweight='bold')
 
     fig.tight_layout()
-    fig.savefig(f'{OUT}/session-savings-cross-tokenizer.png', dpi=DPI, facecolor=BG)
+    name = f'session-savings-cross-tokenizer{suffix()}.png'
+    fig.savefig(f'{OUT}/{name}', dpi=DPI, facecolor=BG)
     plt.close(fig)
-    print('Saved session-savings-cross-tokenizer.png')
+    print(f'Saved {name}')
 
 
 def chart3():
@@ -105,17 +131,26 @@ def chart3():
     ax.set_ylabel('Tokens', fontsize=11)
     ax.set_xticks(x)
     ax.set_xticklabels(changes)
-    ax.legend(facecolor='#1a1a1a', edgecolor=GRID, labelcolor=TEXT, fontsize=10)
+    ax.legend(facecolor=LEGEND_BG, edgecolor=GRID, labelcolor=TEXT, fontsize=10)
     ax.set_ylim(bottom=0)
 
     fig.tight_layout()
-    fig.savefig(f'{OUT}/delta-topology-savings.png', dpi=DPI, facecolor=BG)
+    name = f'delta-topology-savings{suffix()}.png'
+    fig.savefig(f'{OUT}/{name}', dpi=DPI, facecolor=BG)
     plt.close(fig)
-    print('Saved delta-topology-savings.png')
+    print(f'Saved {name}')
 
 
 if __name__ == '__main__':
-    chart1()
-    chart2()
-    chart3()
+    parser = argparse.ArgumentParser(description='Generate session savings charts')
+    parser.add_argument('--light', action='store_true')
+    parser.add_argument('--both', action='store_true')
+    args = parser.parse_args()
+
+    themes = [False, True] if args.both else [args.light]
+    for light in themes:
+        set_theme(light)
+        chart1()
+        chart2()
+        chart3()
     print('All charts generated.')
