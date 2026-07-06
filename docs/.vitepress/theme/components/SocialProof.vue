@@ -3,9 +3,11 @@
     <div class="proof-inner">
       <span class="proof-label">Adopted by</span>
       <span class="proof-items">
-        <a href="https://speakeasy.com" target="_blank" class="proof-item"><img src="/logos/speakeasy-logo.svg" alt="Speakeasy" class="proof-logo"></a>
+        <a href="https://github.com/ChromeDevTools/chrome-devtools-mcp" target="_blank" class="proof-item">Chrome DevTools MCP <span class="proof-stars">46K ★</span></a>
         <span class="proof-sep">·</span>
         <a href="https://omniroute.online" target="_blank" class="proof-item">♦️ OmniRoute <span class="proof-stars">6.1K ★</span></a>
+        <span class="proof-sep">·</span>
+        <a href="https://speakeasy.com" target="_blank" class="proof-item"><img src="/logos/speakeasy-logo.svg" alt="Speakeasy" class="proof-logo"></a>
         <span class="proof-sep">·</span>
         <a href="https://github.com/automateyournetwork/netclaw" target="_blank" class="proof-item">🦞 NetClaw <span class="proof-stars">556 ★</span></a>
         <span class="proof-sep">·</span>
@@ -14,8 +16,6 @@
         <a href="https://opendataproducts.org/sdk/" target="_blank" class="proof-item"><img src="/logos/odps-logo.png" alt="ODPS" class="proof-logo"> SDK <span class="proof-stars">(A Linux Foundation Project)</span></a>
         <span class="proof-sep">·</span>
         <a href="https://neuronest.cc/" target="_blank" class="proof-item"><span class="nn-logo">🧠</span> NeuroNest</a>
-        <span class="proof-sep">·</span>
-        <a href="https://github.com/ChromeDevTools/chrome-devtools-mcp" target="_blank" class="proof-item">Chrome DevTools MCP <span class="proof-stars">46K ★</span></a>
         <span class="proof-sep">·</span>
         <a href="/ecosystem/adopters" class="proof-item proof-more">and more</a>
       </span>
