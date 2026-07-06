@@ -1,5 +1,17 @@
 # Who Uses GCF
 
+## Chrome DevTools MCP
+
+[Chrome DevTools MCP](https://github.com/ChromeDevTools/chrome-devtools-mcp) is the #1 most-starred MCP server on GitHub (46K stars). Built by the Google Chrome DevTools team, it exposes browser state (DOM, network, console, performance) to AI coding agents.
+
+GCF was merged as an experimental data format in [PR #2235](https://github.com/ChromeDevTools/chrome-devtools-mcp/pull/2235) after 11 days and 4 review rounds. The review process required npm provenance attestations (SLSA v1), a refactor from boolean flags to a unified `experimentalDataFormat` enum, optional peer dependency loading with clear error messages, and several other improvements.
+
+- `--experimentalDataFormat=gcf` enables GCF encoding on all structured tool responses
+- `@blackwell-systems/gcf` as optional peer dependency (install separately)
+- Rollup config handles the optional import with external module resolution
+- Runtime detection with actionable error messages when the package is missing
+- Merged after thorough review by Google Chrome DevTools maintainers
+
 ## OmniRoute
 
 [OmniRoute](https://github.com/diegosouzapw/OmniRoute) is an AI gateway, registry, and proxy that sits between AI clients and model providers, built by [Diego Souza](https://github.com/diegosouzapw). MCP servers, A2A agents, REST/gRPC APIs: everything flows through it with centralized discovery, guardrails, rate limiting, auth, and observability. 6.1K stars.
