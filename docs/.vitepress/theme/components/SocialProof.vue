@@ -15,6 +15,8 @@
         <span class="proof-sep">·</span>
         <a href="https://neuronest.cc/" target="_blank" class="proof-item"><span class="nn-logo">🧠</span> NeuroNest</a>
         <span class="proof-sep">·</span>
+        <a href="https://github.com/ChromeDevTools/chrome-devtools-mcp" target="_blank" class="proof-item">Chrome DevTools MCP <span class="proof-stars">46K ★</span></a>
+        <span class="proof-sep">·</span>
         <a href="/ecosystem/adopters" class="proof-item proof-more">and more</a>
       </span>
     </div>
