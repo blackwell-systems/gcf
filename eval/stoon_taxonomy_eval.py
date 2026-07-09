@@ -462,6 +462,11 @@ def main():
                     help="OpenRouter model slugs (e.g. qwen/qwen-2.5-7b-instruct "
                          "anthropic/claude-opus-4.8). One endpoint, both tiers.")
     ap.add_argument("--shots", type=int, default=100)
+    ap.add_argument("--max-cells", type=int, default=0,
+                    help="run at most N new cells this invocation, then stop "
+                         "cleanly (0 = unlimited). One cell = one "
+                         "(model,format,vector) = `shots` API calls. Re-run to "
+                         "continue; resume skips completed cells.")
     ap.add_argument("--temperature", type=float, default=0.7,
                     help="sampling temperature. >0 makes each shot an independent "
                          "trial (ASR is a real rate). 0 = greedy/deterministic, "
@@ -525,11 +530,19 @@ def main():
                 print("ENCODE FAIL vec%d/%s: %s" % (v["id"], fmt, e))
                 encoded[(v["id"], fmt)] = None
 
+    # Cell budget for controlled-quantity runs. 0 = unlimited.
+    budget = {"remaining": args.max_cells if args.max_cells > 0 else float("inf")}
+    total_suite = (len(args.models) + len(args.api_models)
+                   + len(args.openrouter_models)) * len(formats) * len(leak_vectors)
+
     def eval_cell(model_label, runner, shots, extra=None):
         """Run every (format, vector) cell for one model, skipping completed
-        cells and saving after each. `runner(prompt)` returns model text."""
+        cells and saving after each. Stops early if the cell budget is spent.
+        Returns True if the budget is exhausted (caller should stop)."""
         for fmt in formats:
             for v in leak_vectors:
+                if budget["remaining"] <= 0:
+                    return True
                 key = (model_label, fmt, v["cls"])
                 if key in done:
                     continue
@@ -564,15 +577,21 @@ def main():
                     cell.update(extra)
                 results["leak"].append(cell)
                 done.add(key)
+                budget["remaining"] -= 1
                 save()  # crash-safe: never lose a completed cell
+        return budget["remaining"] <= 0
+
+    stopped = False
 
     # --- Local HF models (need a GPU) ---
     for model_key in args.models:
+        if stopped:
+            break
         model_id = MODEL_REGISTRY[model_key]
         print("\n=== Loading %s ===" % model_id)
         model, tok = load_hf_model(model_id, four_bit=not args.no_4bit)
-        eval_cell(model_key, lambda p: run_hf(model, tok, p, temperature=args.temperature),
-                  args.shots)
+        stopped = eval_cell(model_key, lambda p: run_hf(model, tok, p, temperature=args.temperature),
+                            args.shots)
         del model
         import gc, torch
         gc.collect()
@@ -581,19 +600,27 @@ def main():
 
     # --- Frontier API models (the tier Alshaer never tested) ---
     for model_key in args.api_models:
+        if stopped:
+            break
         spec = API_MODELS[model_key]
         print("\n=== API model %s (%s) ===" % (model_key, spec["model"]))
-        eval_cell(model_key, lambda p: run_api(spec, p, temperature=args.temperature),
-                  args.api_shots, extra={"tier": "frontier"})
+        stopped = eval_cell(model_key, lambda p: run_api(spec, p, temperature=args.temperature),
+                            args.api_shots, extra={"tier": "frontier"})
 
     # --- OpenRouter models (one endpoint, both tiers) ---
     for slug in args.openrouter_models:
+        if stopped:
+            break
         print("\n=== OpenRouter %s ===" % slug)
-        eval_cell(slug, lambda p: run_openrouter(slug, p, temperature=args.temperature),
-                  args.api_shots, extra={"backend": "openrouter"})
+        stopped = eval_cell(slug, lambda p: run_openrouter(slug, p, temperature=args.temperature),
+                            args.api_shots, extra={"backend": "openrouter"})
 
     save()
+    complete = len(done)
     print("\nSaved to %s" % outp)
+    print("Suite progress: %d/%d cells complete%s" % (
+        complete, total_suite,
+        "  (budget reached; re-run to continue)" if stopped else "  (all requested cells done)"))
 
     # Headline: mean leak ASR per format per model (lower = safer). The row to
     # read is TOON vs JSON vs GCF: if JSON and GCF are both far below TOON, the
