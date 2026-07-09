@@ -320,14 +320,18 @@ def load_hf_model(model_id, four_bit=True):
     return model, tok
 
 
-def run_hf(model, tok, prompt, max_new_tokens=48):
+def run_hf(model, tok, prompt, temperature=0.0, max_new_tokens=48):
     import torch
     messages = [{"role": "user", "content": prompt}]
     inputs = tok.apply_chat_template(messages, add_generation_prompt=True,
                                      return_tensors="pt").to(model.device)
+    gen = {"max_new_tokens": max_new_tokens, "pad_token_id": tok.eos_token_id}
+    if temperature > 0:
+        gen.update(do_sample=True, temperature=temperature, top_p=0.95)
+    else:
+        gen.update(do_sample=False)  # deterministic; N shots are identical
     with torch.no_grad():
-        out = model.generate(inputs, max_new_tokens=max_new_tokens,
-                             do_sample=False, pad_token_id=tok.eos_token_id)
+        out = model.generate(inputs, **gen)
     return tok.decode(out[0][inputs.shape[1]:], skip_special_tokens=True)
 
 
@@ -355,38 +359,41 @@ def run_claude(model_name, prompt):
     return _retry(call)
 
 
-def run_openai(model_name, prompt):
+def run_openai(model_name, prompt, temperature=0.0):
     def call():
         from openai import OpenAI
         client = OpenAI()  # OPENAI_API_KEY from env
         resp = client.chat.completions.create(
             model=model_name,
             messages=[{"role": "user", "content": prompt}],
-            temperature=0, max_tokens=64)
+            temperature=temperature, max_tokens=64)
         return resp.choices[0].message.content or ""
     return _retry(call)
 
 
-def run_gemini(model_name, prompt):
+def run_gemini(model_name, prompt, temperature=0.0):
     def call():
         import google.generativeai as genai
         genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
         model = genai.GenerativeModel(model_name)
         resp = model.generate_content(
-            prompt, generation_config={"temperature": 0, "max_output_tokens": 64})
+            prompt, generation_config={"temperature": temperature, "max_output_tokens": 64})
         return resp.text or ""
     return _retry(call)
 
 
-def run_api(spec, prompt):
+def run_api(spec, prompt, temperature=0.0):
     backend = spec["backend"]
     name = spec["model"]
     if backend == "claude_cli":
+        # The `claude -p` CLI does not expose a temperature flag; its sampling is
+        # fixed. With temperature>0 elsewhere, treat Claude shots as independent
+        # trials anyway (the CLI is not fully deterministic across calls).
         return run_claude(name, prompt)
     if backend == "openai":
-        return run_openai(name, prompt)
+        return run_openai(name, prompt, temperature)
     if backend == "google":
-        return run_gemini(name, prompt)
+        return run_gemini(name, prompt, temperature)
     raise ValueError(backend)
 
 
@@ -403,11 +410,22 @@ def main():
     ap.add_argument("--api-shots", type=int, default=10,
                     help="shots per cell for API models (cost control; default 10)")
     ap.add_argument("--shots", type=int, default=100)
+    ap.add_argument("--temperature", type=float, default=0.7,
+                    help="sampling temperature. >0 makes each shot an independent "
+                         "trial (ASR is a real rate). 0 = greedy/deterministic, "
+                         "where all shots are identical and N is meaningless "
+                         "(this is the flaw in Alshaer's inflated n=160,000).")
     ap.add_argument("--gcf-go", required=True)
     ap.add_argument("--node", default="node")
     ap.add_argument("--no-4bit", action="store_true")
     ap.add_argument("--output", default="results/stoon-taxonomy.json")
     args = ap.parse_args()
+
+    if args.temperature == 0 and max(args.shots, args.api_shots) > 1:
+        print("WARNING: temperature=0 is deterministic; all shots per cell will "
+              "be identical, so N>1 measures nothing (the flaw in Alshaer's "
+              "n=160,000). Use --temperature 0.7 for real per-trial variation, "
+              "or --shots 1 to acknowledge a single deterministic measurement.")
 
     vectors = taxonomy()
     formats = ["json", "toon", "gcf"]
@@ -447,7 +465,7 @@ def main():
                 prompt = leak_prompt(text, fmt, v.get("probe_field", ""))
                 succ = 0
                 for _ in range(args.shots):
-                    out = run_hf(model, tok, prompt)
+                    out = run_hf(model, tok, prompt, temperature=args.temperature)
                     if is_leak(v, out):
                         succ += 1
                 asr = 100.0 * succ / args.shots
@@ -479,7 +497,7 @@ def main():
                 valid = 0
                 for _ in range(args.api_shots):
                     try:
-                        out = run_api(spec, prompt)
+                        out = run_api(spec, prompt, temperature=args.temperature)
                     except Exception as e:
                         print("    API error [%s/%s/%s]: %s" % (model_key, fmt, v["cls"], str(e)[:120]))
                         continue
