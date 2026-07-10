@@ -182,3 +182,25 @@ The fuzz testing has specifically verified:
 - **Float precision** (round-trip preserves values within JSON's double-precision range)
 - **Large integers** (up to 2^53 - 1, JavaScript's MAX_SAFE_INTEGER)
 - **Unicode** (multi-byte characters in keys and values)
+
+---
+
+## Truncation tolerance and completeness validation
+
+The lossless guarantee above covers *complete* documents: a well-formed GCF payload always decodes back to the original value. A separate question is what happens to an *incomplete* document, one truncated mid-stream by a dropped connection, a cut-off model response, or a filled buffer.
+
+**GCF's generic (tabular) profile is tolerant of truncation by design.** Because the format is line-oriented and each row is self-contained, a decoder can make sense of the rows it did receive even if the stream is cut short. This is the same property that enables input-side streaming (encoding unknown-length data, decoding rows as they arrive). It is a deliberate capability, not a defect.
+
+The tradeoff is that GCF does not, by default, *reject* a truncated document the way JSON does. JSON's rejection of truncated input is a side effect of its mandatory closing delimiters: a document cut before its final `}` (or `]`, or closing `"`) is syntactically invalid, so the parser fails. That "fail-closed on truncation" behavior is grammatical luck, not an integrity mechanism, and it is not guaranteed (a cut landing exactly on a complete boundary parses cleanly). GCF trades those redundant closing tokens for compactness and streaming, so a truncated tabular stream still decodes.
+
+**This is not a leak.** A truncated GCF document does not expose or corrupt attacker-controlled values; the format's field boundaries hold regardless (see the [format-level security tests](#) in `gcf-go/security_test.go`). Truncation tolerance is purely a question of whether a partial stream fails loudly or decodes what it has.
+
+### Validating completeness when it matters
+
+For security- or integrity-sensitive inputs, completeness should be validated at the layer that owns integrity, which is stronger than any in-band marker:
+
+- **Transport**: TLS provides stream integrity; HTTP `Content-Length` / chunked framing signals a truncated body.
+- **Message**: a checksum or HMAC over the payload detects truncation *and* tampering.
+- **Streaming trailer**: the `##! summary counts=N` trailer (see [Streaming Encoding](/guide/streaming)) lets a consumer verify it received all expected rows; its absence on a stream that should have one indicates truncation.
+
+A future opt-in decoder-side strict mode (see the [roadmap](https://github.com/blackwell-systems/gcf/blob/main/ROADMAP.md)) will let consumers that want JSON-style fail-closed behavior enforce completeness at decode time, without changing the wire format or the default token count.

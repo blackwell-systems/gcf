@@ -45,9 +45,7 @@
 ## Format extensions (future, backwards-compatible)
 
 - [ ] **Value aliases**: semantic compression for repeated values. Define aliases once (e.g., `SF=San Francisco`), reference by alias in body rows. Could significantly reduce tokens on data with high value repetition (cities, departments, status enums). **Requires comprehension eval before committing**: the 100% accuracy number must hold with aliases active. If comprehension drops even 5%, not worth it.
-- [ ] **Binary encoding**: compact binary wire format for non-LLM consumers (server-to-server).
-- [ ] **Signature field**: optional per-symbol function signature.
-- [ ] **Component scores**: optional score breakdown (blast_radius, confidence, recency, distance).
+- [ ] **Opt-in strict decode / completeness validation**: a decoder-side `strict` (a.k.a. `validateComplete`) option that fails closed on a truncated or incomplete document, giving security-sensitive consumers a JSON-style truncation guarantee. Decoder-side only, no wire-format change, no impact on the default token count or streaming. Motivated by structural-injection research (Alshaer S-TOON, Class 5 "open field truncation"); GCF's tabular decoder is tolerant of truncation by design, so this is an explicit opt-out of that leniency rather than a default. Prefer enforcing via an existing completeness signal (`##! summary counts=N` trailer, expected row count) over adding a new sentinel. See [Lossless Verification](docs/guide/lossless-verification.md#truncation-tolerance-and-completeness-validation).
 
 ## Community
 
