@@ -1,7 +1,7 @@
 ---
 title: "GCF: A Token-Optimized Wire Format for Structured LLM Interactions"
 author: "Dayna Blackwell, Blackwell Systems"
-date: "2026-07-03 (v8)"
+date: "2026-07-09 (v9)"
 subtitle: "dayna@blackwell-systems.com · DOI: 10.5281/zenodo.20579817"
 titlepage: true
 titlepage-color: "0a0a0a"
@@ -30,7 +30,7 @@ We evaluated GCF across 2,500+ LLM evaluations spanning 11 models and 4 provider
 
 Session deduplication (84.3% cumulative savings over a 5-call session) and delta encoding (81.2% on re-queries) compound savings across multi-turn interactions. A streaming encoding extension enables zero-buffering encode with O(1) memory per row. The format is implemented in six languages (Go, TypeScript, Python, Rust, Swift, Kotlin), 157 conformance fixtures, and deployed in production MCP servers. Specification v3.2 Stable: gcformat.com.
 
-A companion paper, "Tokenizer-Attention Coupling: How BPE Merge Decisions Permanently Shape Transformer Internal Organization" [DOI: 10.5281/zenodo.20925910](https://doi.org/10.5281/zenodo.20925910), presents the full mechanistic analysis: controlled experiments across two architectures and two scales proving that BPE merge decisions permanently constrain which attention heads develop. Key findings: every attention head in a standard BPE model is structurally stranded (384/384 at 410M, 768/768 at 1.3B show 4x more delimiter attention when given clean boundaries), the damage is immediate (present by step 5,000) and permanent (unchanged through step 40,000), and at 1.3B scale standard BPE develops 124 counterproductive delimiter heads whose removal improves comprehension by 57%. The mechanism generalizes across structured data (3-738x), code (1.5x), and molecular notation (2.2x).
+GCF's grammar was chosen from tokenization experiments and validated on production models; the attention-level analysis below was conducted afterward and independently confirms why its choices work (Section 2.0). It spans three companion papers: "Tokenizer-Attention Coupling" [DOI: 10.5281/zenodo.20925910](https://doi.org/10.5281/zenodo.20925910), "Stranded Attention" [DOI: 10.5281/zenodo.21158886](https://doi.org/10.5281/zenodo.21158886), and "Developmental Atlas of Attention Head Specialization" [DOI: 10.5281/zenodo.21205389](https://doi.org/10.5281/zenodo.21205389). Together, through controlled experiments across two architectures and two scales, they prove that BPE merge decisions permanently constrain which attention heads develop. Every attention head in a standard BPE model is structurally stranded (384/384 at 410M, 768/768 at 1.3B show 4x more delimiter attention when given clean boundaries); the damage is immediate (present by step 5,000), permanent (unchanged through step 40,000), and architecture-independent (removing whitespace-recovery "spacing" heads degrades both GPT-NeoX multi-head attention and Llama grouped-query attention by 64-67%); and at 1.3B scale standard BPE develops 124 counterproductive delimiter heads whose removal improves comprehension by 57%. The mechanism generalizes across structured data (3-738x), code (1.5x), and molecular notation (2.2x).
 
 ![Comprehension and Generation across 11 models and 4 providers](/charts/hero.png)
 
@@ -73,7 +73,7 @@ At 500 rows, the overhead problem and this structural capacity problem compound.
 
 Controlled experiments prove the tokenizer is the root cause. Models trained with merge barriers (16 delimiter characters forbidden from BPE merges) achieve 3-738x lower structured data perplexity, 1.5x lower code perplexity, and develop 50-161 concentrated structural attention heads, with zero natural language cost (19.4 vs 19.5). At 1.3B scale, standard BPE models develop 124 counterproductive delimiter heads whose removal improves comprehension by 57%. The full analysis, including stranded heads, scaling validation, and domain generalization across code and molecular notation, is in the companion paper, "Tokenizer-Attention Coupling" [DOI: 10.5281/zenodo.20925910](https://doi.org/10.5281/zenodo.20925910).
 
-GCF was designed to eliminate both problems: header factoring eliminates the overhead, and delimiter selection from the empirically verified low-merge character set eliminates the ambiguity. To our knowledge, GCF is the only wire format whose grammar was designed from the model's perspective rather than the developer's (Section 2.1).
+GCF eliminates both problems: header factoring eliminates the overhead, and its delimiters fall in the low-merge character set that eliminates the ambiguity. GCF's grammar was refined against measurements of how tokenizers and attention mechanisms treat structure (Section 2), a perspective wire formats have not historically been designed around.
 
 ### 1.3 Why This Matters Now
 
@@ -95,13 +95,25 @@ The optimization target is not bytes on wire. It is tokens in the context window
 
 ## 2. Design Principles
 
-GCF's design starts from a question no prior format asked: which characters can the attention mechanism actually use as structural landmarks?
+GCF's design centers on a question no prior wire format asked: which characters can the attention mechanism actually use as structural landmarks? GCF answered it experimentally; a later research program explained why the answer is correct.
+
+### 2.0 From Artifact to Mechanism
+
+GCF was not derived from the mechanistic account in this paper. The order was the reverse. The format was designed and refined first, validated empirically on production models, and only afterward did a program of controlled experiments explain *why* its choices work. This section makes that chronology explicit, because it changes how the rest of the paper should be read.
+
+The grammar was chosen from tokenization experiments: measurements of which delimiter characters stay isolated as their own tokens rather than merging into adjacent content. Early versions were substantially different from the format specified in Section 3: the first release encoded only graph-structured responses and separated fields with whitespace. The pipe delimiter, the generic (tabular) profile, header-factored field declarations, and nested flattening were added and matured across successive specification versions (v1 through v3.2), refined by those tokenization experiments and by what real models could read and produce in comprehension and generation evaluations (Section 6).
+
+The attention-level validation came afterward, and it is datable. The three companion papers this paper draws on were released after the format stabilized. They set out to answer a question the tokenization experiments raised but could not themselves resolve: why, at the level of the model's internal attention mechanism, does a clean-delimiter positional encoding outperform JSON on models that were never trained on it?
+
+That research reverse-engineered the answer, and in doing so it used GCF as an instrument. The stranded-attention study's original method compared a model's attention on JSON input (where BPE merges delimiters into content) against GCF input (where the pipe is naturally isolated): GCF was the clean-delimiter reference case that made the phenomenon visible, before a format-independent method was later developed to confirm it. The format predated the theory closely enough to serve as its probe.
+
+The result is a loop, not a derivation: the grammar was chosen from tokenization experiments, the attention-level mechanism was validated afterward, and the findings fed back into the specification. Where the sections below state that a design choice is "confirmed" or "vindicated" by an experiment, that is the honest relationship: independent, after-the-fact agreement between a shipped format and a later measurement. After-the-fact confirmation is the stronger evidence, because it cannot be dismissed as a format built to flatter its own analysis.
 
 ### 2.1 Tokenizer-Informed Delimiter Selection
 
 Every wire format must choose delimiter characters. JSON chose `"`, `:`, `,`, `{`, `}`. TOON chose tab. CSV chose comma. These choices were made based on human readability or data engineering conventions, not on how language models process them.
 
-GCF chose pipe (`|`) for field separation and `@` for identity references based on empirical analysis of 43 BPE tokenizer vocabularies from 20 providers. The selection criteria: a delimiter must be its own token on every tested tokenizer, must have near-zero merge rate with adjacent content, and must have minimal adversarial surface (few vocabulary entries where it fuses with common words).
+GCF uses pipe (`|`) for field separation and `@` for identity references. These were chosen from tokenization experiments and confirmed by a systematic scan of 43 BPE tokenizer vocabularies from 20 providers against three criteria: a delimiter must be its own token on every tested tokenizer, must have near-zero merge rate with adjacent content, and must have minimal adversarial surface (few vocabulary entries where it fuses with common words). The pipe satisfies all three.
 
 | Delimiter | Merge rate | Mergeable words | Used by |
 |-----------|-----------|-----------------|---------|
@@ -784,7 +796,7 @@ GCF is a wire format. Wire formats are not optimized for human readability. HTTP
 
 The format that looks clean to humans (JSON) is the one that breaks for agents at scale: its overhead wastes tokens and its grammar hides structural boundaries. The companion paper ("Tokenizer-Attention Coupling") quantifies the hidden cost: every attention head in a standard BPE model has 4x more structural capacity than the tokenizer allows it to use, and this constraint is permanent from step 5,000 of training onward. Standard BPE models at 1.3B scale develop 124 counterproductive delimiter heads whose removal improves comprehension by 57%. The tokenizer is not a preprocessing step; it is an architectural constraint that permanently shapes what the model can do with structured input.
 
-GCF is, to our knowledge, the only wire format whose grammar was reverse-engineered from this kind of attention-level analysis. Every design choice (pipe delimiters, header factoring, positional encoding) was informed by empirical measurement of how tokenizers and attention mechanisms interact. The result: 100% accuracy on every frontier model for standard workloads and 90.7% on structurally complex data, at the lowest token cost, with grammar that never merges with field names on any tested tokenizer. This is not a tradeoff. It is a design methodology validated by 2,500+ evaluations, a 43-tokenizer vocabulary analysis, controlled training experiments across two architectures and three domains, and 12 production deployments.
+GCF's grammar was chosen from tokenization experiments and validated by attention-level analysis: the delimiter choices were made by measuring which characters tokenize cleanly, and a later program of controlled training experiments (three companion papers, Section 2.0) confirmed why those choices matter at the level of the model's attention mechanism. After-the-fact agreement between a shipped format and a later measurement is stronger evidence than design intent, because it cannot be dismissed as a format built to flatter its own analysis. Every design choice (pipe delimiters, header factoring, positional encoding) is corroborated by empirical measurement of how tokenizers and attention mechanisms interact. The result: 100% accuracy on every frontier model for standard workloads and 90.7% on structurally complex data, at the lowest token cost, with grammar that never merges with field names on any tested tokenizer. This is not a tradeoff. It is a design methodology validated by 2,500+ evaluations, a 43-tokenizer vocabulary analysis, controlled training experiments across two architectures and three domains, and 12 production deployments.
 
 ---
 

@@ -1,6 +1,6 @@
 # Tokenizer Analysis
 
-**Paper:** [Merge Barriers in BPE Tokenization: From Vocabulary Merges to Attention Collapse](https://doi.org/10.5281/zenodo.20925910) (Blackwell, 2026)
+**Papers:** [Tokenizer-Attention Coupling](https://doi.org/10.5281/zenodo.20925910), [Stranded Attention](https://doi.org/10.5281/zenodo.21158886), and the [Developmental Atlas of Attention Head Specialization](https://doi.org/10.5281/zenodo.21205389) (Blackwell, 2026)
 
 Every LLM uses a different tokenizer. A format designed for one tokenizer might perform poorly on another. This page proves GCF's token savings and structural consistency hold across all major tokenizers, and explains *why* JSON breaks down at the tokenization level.
 
@@ -984,9 +984,9 @@ The merge-barrier model develops fundamentally different internal architecture:
 
 ### What this means for GCF
 
-GCF's delimiter selection was based on the vocabulary analysis in Parts 2-9: choose characters with near-zero merge rates. The controlled experiment proves this choice has downstream consequences inside the trained transformer. When delimiters are always their own tokens (as GCF's pipe is on 43/43 tokenizers), models develop more structural attention heads, find delimiters easier to predict, and resist grammar attention collapse at scale.
+GCF's delimiters were chosen from tokenization experiments (which characters stay isolated as their own tokens rather than merging into content) and confirmed by the vocabulary scan in Parts 2-9: the pipe has a near-zero merge rate across 43/43 tokenizers. The controlled experiment came afterward and independently shows this choice has downstream consequences inside the trained transformer. When delimiters are always their own tokens, models develop more structural attention heads, find delimiters easier to predict, and resist grammar attention collapse at scale.
 
-This is the causal link between GCF's design and its comprehension advantage. The format doesn't just save tokens; it gives the model a cleaner structural signal to work with. The full analysis, including per-layer entropy profiles, adversarial robustness testing, and generation quality comparison, is in the companion paper: [Merge Barriers in BPE Tokenization](https://doi.org/10.5281/zenodo.20925910) (Blackwell, 2026).
+This is the mechanism behind GCF's comprehension advantage: the format doesn't just save tokens, it gives the model a cleaner structural signal to work with. The full analysis is in three companion papers, all conducted after the format stabilized and independently confirming why its choices work: [Tokenizer-Attention Coupling](https://doi.org/10.5281/zenodo.20925910) (per-layer entropy profiles, causal ablation, domain generalization), [Stranded Attention](https://doi.org/10.5281/zenodo.21158886) (the stranded-heads and 4x latent-capacity finding, which used GCF itself as the clean-delimiter reference instrument), and the [Developmental Atlas](https://doi.org/10.5281/zenodo.21205389) (architecture-independence and scaling). Blackwell, 2026.
 
 ---
 

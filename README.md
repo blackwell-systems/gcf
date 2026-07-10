@@ -17,8 +17,14 @@
 > **GCF: A Token-Optimized Wire Format for Structured LLM Interactions**
 > Dayna Blackwell, 2026. DOI: [10.5281/zenodo.20579817](https://doi.org/10.5281/zenodo.20579817)
 >
-> **Merge Barriers in BPE Tokenization: From Vocabulary Merges to Attention Collapse**
+> **Tokenizer-Attention Coupling: How BPE Merge Decisions Permanently Shape Transformer Internal Organization**
 > Dayna Blackwell, 2026. DOI: [10.5281/zenodo.20925910](https://doi.org/10.5281/zenodo.20925910)
+>
+> **Stranded Attention: BPE Tokenization Permanently Constrains Transformer Structural Capacity**
+> Dayna Blackwell, 2026. DOI: [10.5281/zenodo.21158886](https://doi.org/10.5281/zenodo.21158886)
+>
+> **Developmental Atlas of Attention Head Specialization: Spacing, Stranding, and the Capacity Tax of BPE Tokenization**
+> Dayna Blackwell, 2026. DOI: [10.5281/zenodo.21205389](https://doi.org/10.5281/zenodo.21205389)
 
 ---
 
