@@ -1,6 +1,6 @@
 # Using GCF with LLMs
 
-GCF works in both directions: tools produce it, LLMs read it, and LLMs can produce it too. No model has ever been trained on GCF. Reading requires no primer: 100% accuracy on standard workloads (every frontier model), 91.2% on structurally complex code graphs (vs TOON 68.8%, JSON 54.1%). Writing requires a 3-line example and produces valid output with **63% fewer tokens than JSON** and **33% fewer than TOON**.
+GCF works in both directions: tools produce it, LLMs read it, and LLMs can produce it too. No model has ever been trained on GCF. Reading requires no primer: 100% accuracy on standard workloads (every frontier model), 91.2% on structurally complex code graphs (vs TOON 68.8%, JSON 54.1%). Writing requires a 3-line example and produces valid output with **63% fewer tokens than JSON** and **33% fewer than TOON**. The design is reverse-engineered from attention-level research, not tuned to any model.
 
 ## Designed for agent comprehension, not human scanning
 
@@ -17,7 +17,7 @@ Here's what JSON at 500 symbols looks like to an LLM. Every record repeats five 
 ... 497 more records identical in structure ...
 ```
 
-The model sees `"qualified_name":` 500 times, `"kind":` 500 times, `"score":` 500 times. That's 2,500 structurally identical tokens competing for attention. The model asked "how many symbols?" answered 320. Asked "how many targets?" answered 240 (correct: 166). It's not hallucinating; it's losing count in repetitive noise.
+The model sees `"qualified_name":` 500 times, `"kind":` 500 times, `"score":` 500 times. That's 2,500 structurally identical tokens competing for attention. At this scale JSON's grammar attention collapses from 30% to 8.6%: the model asked "how many symbols?" answered 320. Asked "how many targets?" answered 240 (correct: 166). It's not hallucinating; it's losing count in repetitive noise.
 
 The same data in GCF:
 
@@ -30,7 +30,7 @@ The same data in GCF:
 
 No noise. Every token is content. On code graph data, GCF averages 91.2% across 23 runs and 12 models (vs TOON 68.8%, JSON 54.1%). On nested order data (27 runs, 11 models, 4 providers), GCF achieves 100% on every frontier model (Opus, Sonnet, Haiku, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash).
 
-The format is optimized for the actual consumer. Every character carries meaning. No decoration, no repeated field names, no structural tokens that exist only for human scanners. The result is a format that agents understand perfectly and costs a fraction of the "readable" alternative. The [tokenizer analysis](/guide/tokenizer-analysis) explains the mechanism: JSON's grammar symbols merge with field names at the vocabulary level, hiding structural boundaries from the model.
+The format is optimized for the actual consumer. Every character carries meaning. No decoration, no repeated field names, no structural tokens that exist only for human scanners. The result is a format that agents understand perfectly and costs a fraction of the "readable" alternative. The [tokenizer analysis](/guide/tokenizer-analysis) explains the mechanism: JSON's grammar symbols merge with field names at the vocabulary level, hiding structural boundaries from the model and permanently constraining its structural attention. GCF's grammar was reverse-engineered from that attention-level analysis; three companion papers show clean delimiter boundaries produce 3-738x lower perplexity on structured data.
 
 ## Readability is a last-mile rendering concern
 
