@@ -155,6 +155,24 @@ Per-vector detail (ASR% [95% CI]), the cells that drive the means:
    equals JSON's 13% on the same cell, i.e. model-level semantic leakage rather than
    a format boundary failure. GCF achieves this with no middleware.
 
+## Discussion: the middleware does not work
+
+Strip the terminology and S-TOON is a system-prompt instruction wrapped around untrusted text. It cannot be a security boundary, and on measurement it does the opposite of what it claims. The architectural analysis and the data agree, and the data is worse for the protocol than the analysis alone.
+
+**The "Virtual Faraday Cage" is not a boundary.** The middleware removes a few characters, wraps the payload in sentinel tokens (`<|S_START|>` ... `<|S_END|>`), and tells the model to treat the wrapped span as inert. But the wrapped content sits in the same context window as everything else, and self-attention ranges over every token in the sequence. A sentinel is a token the attention mechanism can attend straight past; a system instruction is a suggestion it can override, most easily under exactly the "semantic bias" the protocol concedes strong models have. Calling an instruction an enforcement mechanism does not make it one. No amount of naming ("Latent Control Tokens", "Faraday Cage") changes that this is a category error.
+
+**In practice it makes injection worse, not better.** S-TOON is the single worst arm in the entire study on both open models (+10.6 and +24.4 above the JSON control), reaching 43-90% on individual vectors. The ceremonial wrapper appears to signal to the model that the enclosed span is an authoritative, structured directive, raising compliance with the injected instruction instead of suppressing it. The sanitizer does not even cover its own taxonomy: it leaves the pipe-collision vector wide open, where S-TOON leaks 63-90%. A defense that pushes the attack surface above the unprotected baseline is not a defense.
+
+**The headline 0.0% ASR is an artifact, not a result.** Reporting 0.0% across a 220,000-shot suite on a probabilistic model is a red flag on its face. Under greedy decoding, 220,000 shots of one prompt are a single deterministic outcome counted 220,000 times; the effective sample size is a handful. Sampled properly (temperature 0.7), the same middleware leaks on both open models. The impressive number measures nothing.
+
+**The complexity claim is false.** The protocol states parsing drops from O(n^2) (attention) to O(n) (a linear scan for sentinels). The linear scan is the Python middleware; it never touches the model. Self-attention over the wrapped tokens is still quadratic. Wrapping text in a sentinel does not alter the transformer.
+
+**The sanitizer is trivially evadable.** Replacing the closing sentinel with `[BLOCKED]` assumes the attacker types the sentinel verbatim. They do not have to: characters that merge into the same token IDs as the sentinel, or that realign tokenization across the boundary, desynchronize the parser without ever emitting the literal string.
+
+One part of the original work holds, and stating it plainly is what makes the rest unambiguous rather than partisan: TOON genuinely leaks on delimiter_dissolution (90% on Qwen, JSON at 0%), so the underlying vulnerability is real and format-specific. The proposed remedy is what fails. It is untested by anyone but its author, it inflates its own evidence, it misstates the complexity it claims to reduce, and on measurement it increases the leakage it was built to stop.
+
+For the record on the actual solution space: deterministic structured *output* is solved at the engine, not the prompt, by constrained decoding (grammar or schema enforcement at the sampling layer: Outlines, Guidance, Instructor). This study concerns the *input-reading* side, whether a model leaks an injected value while parsing a record, where the property that matters is whether field boundaries stay explicit. GCF keeps them explicit and adds a deterministic parser guarantee (`gcf-go/security_test.go`). It does not bolt a prompt-based filter onto an ambiguous format and call it secure.
+
 ## Non-leak measures (reported for completeness, with the honest asymmetry)
 
 - **open_field_truncation (fail-closed):** JSON rejects a document truncated at 60%
