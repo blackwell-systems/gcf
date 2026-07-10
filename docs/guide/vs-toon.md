@@ -264,6 +264,25 @@ The gap widens over time. First call: GCF saves 34% vs TOON. Fifth call: GCF sav
 
 ---
 
+## One decision, measured six ways
+
+TOON's disadvantages are not a list of unrelated shortcomings. They are the downstream consequences of a single design decision: replacing JSON's explicit delimiters with implicit, whitespace/tab-based structure in a flat tabular layout. That one choice surfaces independently across every axis we measure.
+
+| Axis | Consequence of implicit delimiters | Measured |
+|------|-----------------------------------|----------|
+| **Tokenization** | tab merges with adjacent content, dissolving boundaries into single tokens | 32.91% merge rate, 1,238 mergeable words (worst of any common separator; GCF pipe: 0.47%) |
+| **Comprehension** | the model cannot filter a flat 500-row table by column value | 68.8% vs GCF 90.7% across 25 runs |
+| **Generation** | flat columns encode categories as integers; models write labels and the decoder rejects | TOON's own decoder rejects LLM output on 7 of 9 models |
+| **Token efficiency** | flat rows repeat structure; edges carry no local IDs | GCF wins 15 of 16 datasets, 29% fewer tokens overall |
+| **Security** | no explicit boundary between untrusted content and schema | "Delimiter Dissolution": 90% injection leak on Qwen (JSON 0%) |
+| **Multi-turn** | parsing ambiguity compounds across turns | independent cascade finding (Kutschka et al., arXiv 2605.29676) |
+
+Explicit delimiters are not a stylistic preference. They are the boundary the tokenizer needs to keep structure and content in separate tokens, the boundary the model needs to filter columns, the boundary a generator needs to emit valid output, and the boundary that separates trusted schema from untrusted input. TOON removed it once. The cost recurs everywhere.
+
+The security row is the newest of these. A controlled four-arm study (JSON, TOON, S-TOON, GCF) across five models confirms TOON's delimiter-injection vulnerability where it appears, shows Alshaer's proposed S-TOON middleware actively increases leakage, and finds GCF is the only format whose leak rate never exceeds the JSON control. See the [structural-injection study](https://github.com/blackwell-systems/gcf/blob/main/eval/results/stoon-injection-study.md).
+
+---
+
 ## TOON Is Not Lossless
 
 TOON claims "deterministic, lossless round-trips" on their landing page. We tested it.
