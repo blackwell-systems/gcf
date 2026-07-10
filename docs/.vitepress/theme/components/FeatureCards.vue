@@ -28,7 +28,7 @@ const features = [
   {
     icon: '🔬',
     title: 'Backed by mechanistic research',
-    details: 'GCF\'s grammar was reverse-engineered from attention-level research, then validated by three published papers: controlled experiments across two architectures and two scales.<br><br>Clean delimiters produce up to 738x lower structured-data perplexity, at zero cost to natural language. No other wire format ships a falsifiable theory of why it works. <a href="/guide/tokenizer-analysis">The science.</a>',
+    details: 'GCF\'s grammar was reverse-engineered from attention-level research, then validated by three published papers: controlled experiments across two architectures and two scales.<br><br>Clean delimiters produce up to 738x lower structured-data perplexity, at zero cost to natural language. No other wire format ships a falsifiable theory of why it works. <a href="/guide/bpe-and-attention">The science.</a>',
   },
 ]
 </script>

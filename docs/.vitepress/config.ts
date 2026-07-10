@@ -60,6 +60,7 @@ export default defineConfig({
         items: [
           { text: 'Benchmarks', link: '/guide/benchmarks' },
           { text: 'Tokenizer Analysis', link: '/guide/tokenizer-analysis' },
+          { text: 'BPE and Attention', link: '/guide/bpe-and-attention' },
           { text: 'GCF vs TOON', link: '/guide/vs-toon' },
           { text: 'Benchmarks (Full Data)', link: '/guide/eval-results' },
           { text: 'Lossless Verification', link: '/guide/lossless-verification' },
