@@ -39,7 +39,7 @@ The header declares the section name, record count, and field names in one line.
 
 **Why this saves tokens:** JSON repeats `"id":`, `"name":`, `"department":`, `"salary":` on every record. That's 3 x 4 = 12 field name repetitions for 3 records. GCF declares them once. The savings scale linearly: 1,000 records = 999 avoided repetitions per field.
 
-Pipe separator with no spaces maximizes density. Each row is a single line of values in field-declaration order.
+Pipe separator with no spaces maximizes density. The pipe was reverse-engineered from tokenizer analysis: it has a 0.47% BPE merge rate across 43 tokenizers, so the structural boundary stays a distinct token on every model (JSON's quote merges at 8.17%). Each row is a single line of values in field-declaration order.
 
 ## 2. Key-value pairs (object fields)
 
@@ -381,3 +381,4 @@ Both profiles use the same grammar primitives: `##` headers, `@` IDs, positional
 - **Shallow nesting.** The graph profile is flat. The generic profile supports indented nested fields for records with sub-objects.
 - **Deterministic.** Same input produces same output.
 - **LLM-parseable.** 100% comprehension on standard workloads (every frontier model). 91.2% on structurally complex code graphs (vs TOON 68.8%, JSON 54.1%). No model has been trained on GCF.
+- **Tokenizer-aware.** The grammar was reverse-engineered from attention-level research, not from human or machine convention. Delimiters were selected for near-zero BPE merge rates (pipe: 0.47% across 43 tokenizers) so structural boundaries stay explicit to the model, a design validated by three companion papers on tokenizer-attention coupling. See the [tokenizer analysis](/guide/tokenizer-analysis).
