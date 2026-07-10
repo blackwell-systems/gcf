@@ -8,7 +8,7 @@ const features = [
   {
     icon: '📉',
     title: '50-92% fewer input tokens',
-    details: '50-69% on a single call (generic to graph profile). Up to 92% with session deduplication across repeated tool calls.<br><br>At 1000 orders, JSON doesn\'t even fit in a 200K context window. GCF fits in 47K. Positional fields, inline schemas, and hierarchical grouping eliminate per-record overhead.',
+    details: '50-69% on a single call (generic to graph profile). Up to 92% with session deduplication across repeated tool calls.<br><br>At 1000 orders, JSON doesn\'t even fit in a 200K context window. GCF fits in 47K. And 29% fewer tokens than <span class="toon">TOON</span> across 16 real-world datasets (15/16 wins).',
   },
   {
     icon: '✍️',
@@ -18,7 +18,7 @@ const features = [
   {
     icon: '🧠',
     title: '100% comprehension on every frontier model',
-    details: 'The only format that never fails. Tested across Claude, GPT-5.5, and Gemini with zero format instructions. On structurally complex code graphs, GCF scores 91.2% where <span class="json">JSON</span> drops to 54.6% and <span class="toon">TOON</span> to 68.8%. 2,500+ evaluations, 4 providers.',
+    details: 'The only format that never fails. Tested across Claude, GPT-5.5, and Gemini with zero format instructions. On structurally complex code graphs, GCF scores 91.2% where <span class="json">JSON</span> drops to 54.1% and <span class="toon">TOON</span> to 68.8%. 2,500+ evaluations, 4 providers.',
   },
   {
     icon: '🔒',
@@ -26,9 +26,9 @@ const features = [
     details: '43B+ (yes, really) round-trips across JSON, YAML, TOML, CSV, and MessagePack. Zero failures. 174 conformance fixtures. Cross-language 6x6 encode/decode matrix verified. <a href="https://github.com/blackwell-systems/gcf/blob/main/SPEC.md">Read the spec</a>.',
   },
   {
-    icon: '🏆',
-    title: '29% fewer tokens than TOON (16 datasets)',
-    details: 'Wins 15/16 real-world datasets. 38% fewer on semi-uniform data, 30% on nested, 32% on comprehension eval payloads. <span class="toon">TOON</span>\'s one win is 77 tokens on a single dataset.',
+    icon: '🔬',
+    title: 'Backed by mechanistic research',
+    details: 'GCF\'s grammar was reverse-engineered from attention-level research, then validated by three published papers: controlled experiments across two architectures and two scales.<br><br>Clean delimiters produce up to 738x lower structured-data perplexity, at zero cost to natural language. No other wire format ships a falsifiable theory of why it works. <a href="/guide/tokenizer-analysis">The science.</a>',
   },
 ]
 </script>
