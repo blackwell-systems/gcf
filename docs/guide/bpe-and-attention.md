@@ -28,7 +28,7 @@ The result is a compression scheme tuned to the training corpus. Common words be
 
 ### Encoding is deterministic
 
-At inference time, tokenization is not a decision. It is a lookup. The tokenizer greedily matches the longest vocabulary entry at each position. If the string `token` exists in the vocabulary as entry #4177, the tokenizer always selects it as one token. There is no context, no probability, no learned judgment. If the entry exists, it wins, every time.
+At inference time, tokenization is not a decision. It is a lookup. The tokenizer applies its learned merge rules in a fixed priority order, merging the highest-priority pair first and repeating until no more apply. If the string `token` exists in the vocabulary as entry #4177, the tokenizer always selects it as one token. There is no context, no probability, no learned judgment. If the entry exists, it wins, every time.
 
 This determinism is the crucial property. It means that whatever the tokenizer's training left in the vocabulary is fixed forever. And it means that the shape of every input the model ever sees is decided before the model does any work at all.
 
@@ -79,7 +79,7 @@ The obvious hope is that a large, capable model simply learns to work around mer
 
 A transformer's attention mechanism lets each token position gather information from other positions. An attention head is a specialized circuit that decides, for each position, which other positions to look at. Heads specialize: some track the previous token, some match brackets, some follow syntactic dependencies (Voita et al., 2019).
 
-The hard constraint is this: **a head can only attend to something that exists as a token.** Attention is defined over positions in the token sequence. If a structural boundary is not a token in its own right (because BPE fused it into content), then there is no position for a head to point at. The boundary is not merely hard to find. It is not there. No head, however well trained, can attend to a position that does not exist.
+The hard constraint is this: **a head can only attend to something that exists as a token.** Attention is defined over positions in the token sequence. If a structural boundary is not a token in its own right (because BPE fused it into content), then there is no position for a head to point at. The boundary is not merely hard to find; it no longer exists as a distinct position. No head, however well trained, can attend to a position that does not exist.
 
 ### Stranded heads: the whole model is affected
 
@@ -162,6 +162,10 @@ The barrier set is 16 characters, chosen to cover structured data and code: `| @
 Models trained with merge barriers achieve **3 to 738 times lower perplexity on structured data** (the range spans different formats and model scales), 1.5x lower on code, and 2.2x on molecular notation, with zero natural-language cost (final overall perplexity 19.4 with barriers versus 19.5 without, a tie). A separate result confirms the mechanism is about clean delimiters in general, not these specific characters: a barrier set built from entirely different natural-language characters produced attention-head distributions correlated at r=0.812 with the structured-data barrier set. Isolating any structural delimiters produces the same developmental outcome.
 
 One clarification on metrics. The "3 to 738x" figure is **perplexity** on structured data, measured on the small controlled-training models. It is distinct from the comprehension accuracy numbers measured separately on production frontier models (GCF at 90.7% on adversarial code graphs and 100% on standard workloads; see [Tokenizer Analysis](/guide/tokenizer-analysis) and [Benchmarks](/guide/benchmarks)). The two lines of evidence agree, but they are different measurements on different models and should not be conflated.
+
+### A note on scale
+
+These controlled experiments top out at 1.3B parameters. Two things argue the effect does not simply vanish at frontier scale. Within the range tested it strengthens rather than weakens: the scaling paradox above wastes more capacity at 1.3B than at 410M, not less. And probing production models in the 7 to 8 billion parameter range (Mistral 7B, Llama 3.1 8B) shows the same grammar-attention collapse under structural load (grammar attention falling from about 30% to 8.6% at scale). Whether the effect fully persists at 100B parameters or more is not directly measured, and that is the honest limit of the current evidence.
 
 ## 5. The Applied Lesson
 
