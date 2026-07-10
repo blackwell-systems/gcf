@@ -1,8 +1,9 @@
 # Structural-Injection Resistance: JSON vs TOON vs S-TOON vs GCF
 
 **Date:** 2026-07-09
-**Harness:** `eval/stoon_taxonomy_eval.py`
-**Raw data:** `eval/results/stoon-taxonomy-v2.json` (+ per-model frontier files, merged)
+**Harness:** [`eval/stoon_taxonomy_eval.py`](../stoon_taxonomy_eval.py)
+**Raw data:** [`eval/results/stoon-taxonomy-v2.json`](stoon-taxonomy-v2.json) (120 cells across 5 models x 4 formats x 6 vectors; 3,593 per-trial model outputs stored for independent re-grading)
+**Format-level test:** [`gcf-go/security_test.go`](https://github.com/blackwell-systems/gcf-go/blob/main/security_test.go) (deterministic parser guarantee: a conformant GCF decoder recovers injected values byte-for-byte; 0% ASR across 20 named vectors + 100,000 fuzzed injections)
 **Encoders:** real libraries only (JSON `json.dumps`; TOON `@toon-format/toon`; GCF `gcf-go cmd/gcf`)
 
 ## What this is
