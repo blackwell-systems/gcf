@@ -15,6 +15,7 @@
   - [Files](#files)
 - [Generation Eval](#generation-eval-output-can-llms-write-gcf)
 - [Token Efficiency](#token-efficiency-toons-own-benchmark)
+- [Structural-Injection Resistance](#structural-injection-resistance-security-json-vs-toon-vs-s-toon-vs-gcf)
 - [Reproduce](#reproduce)
 
 ---
@@ -509,6 +510,52 @@ Note: stacking adds ~3 tokens overhead vs raw delta for topology changes because
 ### Files
 
 - `results/session-savings/session-savings-results.json`
+
+---
+
+## Structural-Injection Resistance (Security: JSON vs TOON vs S-TOON vs GCF)
+
+Controlled four-arm re-examination of Alshaer's S-TOON security claims (TechRxiv
+DOI 10.36227/techrxiv.177033002.20370897): adds the JSON control he lacked, a
+frontier tier, and runs his own middleware as a fourth arm. 5 models x 4 formats x
+6 injection vectors, 30 trials/cell @ temperature 0.7, Wilson 95% CIs, all raw
+outputs retained. Full note: [stoon-injection-study.md](stoon-injection-study.md).
+
+Mean leak Attack Success Rate by format (lower = more injection-resistant):
+
+| model | tier | JSON | TOON | S-TOON (his fix) | GCF |
+|---|---|---|---|---|---|
+| Qwen-2.5-7B | small | 0.0% | 20.6% | 10.6% | 0.0% |
+| Llama-3.1-8B | small | 12.2% | 2.8% | 36.7% | 2.2% |
+| Claude-opus-4.8 | frontier | 0.0% | 0.0% | 0.0% | 0.0% |
+| GPT-5.6 | frontier | 0.0% | 0.0% | 0.0% | 0.0% |
+| Gemini-2.5-pro | frontier | 0.0% | 0.0% | 0.0% | 0.0% |
+
+### Key findings
+
+1. Alshaer's TOON delimiter-dissolution vulnerability is real where it holds (TOON
+   90% on Qwen, JSON control at 0%, so it is format-specific, not model
+   incompetence).
+2. It is model-dependent: absent on Llama (TOON 0%, where JSON itself leaks).
+3. His S-TOON middleware backfires: the worst arm on both small models (up to 90%
+   on individual vectors), qualifying the S-TOON-as-mitigation claim cited by
+   Kutschka et al. "Notation Matters" (arXiv 2605.29676).
+4. The "Intelligence Paradox" is unsupported: all three frontier families resist
+   every format at 0%.
+5. Of the four formats, GCF is the only one whose leak rate never exceeds the JSON
+   control on any cell.
+
+A separate, deterministic format-level test (not model-dependent) proves a
+conformant GCF decoder recovers injected values byte-for-byte: `gcf-go/security_test.go`,
+0% ASR across 20 named vectors + 100,000 fuzzed injections.
+
+### Files
+
+- `results/stoon-injection-study.md` (the note, with heatmap)
+- `results/stoon-taxonomy-v2.json` (raw: 120 cells / 3,593 per-trial outputs)
+- `results/stoon-taxonomy.json` (earlier 2-model pilot)
+- `results/stoon-injection-heatmap.png`, `stoon_heatmap.py` (chart)
+- `stoon_taxonomy_eval.py` (harness)
 
 ---
 
