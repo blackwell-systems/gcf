@@ -131,7 +131,10 @@ Per-vector detail (ASR% [95% CI]), the cells that drive the means:
 
 1. **Alshaer's core vulnerability claim is confirmed where it holds.** TOON leaks
    90% on delimiter_dissolution on Qwen with JSON at 0%: a genuine, format-specific
-   injection, exactly as he describes. His mechanism is real.
+   injection, exactly as he describes. His mechanism is real. This is not incidental:
+   the missing explicit boundary between untrusted content and structure is the same
+   implicit-delimiter design that drives TOON's tokenizer, comprehension, and
+   generation disadvantages elsewhere (see gcformat.com/guide/vs-toon).
 
 2. **The vulnerability is model-dependent.** It is severe on Qwen (TOON +20.6 vs
    JSON) and absent on Llama (TOON −9.4, safer than JSON, where JSON itself leaks).
