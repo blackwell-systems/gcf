@@ -1,5 +1,13 @@
 # Changelog
 
+## v3.2.2 (2026-07-10)
+
+### Conformance: nested-null flatten losslessness
+
+- Regression fixtures for a cross-SDK flatten bug: a nested object null at an intermediate level (e.g. `{meta:{owner:null}}`) was being flattened, and its leaves encoded as absent (`~`) then unflattened to a missing key, dropping the null and violating the §1.1 lossless-null invariant. The correct behavior, already required by §7.4.6 ("a non-null object ... in every row where that field is present") together with §1.1, is to fall back to the attachment mechanism (§7.4.4); a top-level null still flattens (emits `-`, reconstructs via the all-null rule). This mirrors §7.4.5.1's existing "a present null value makes the field ineligible" rule for inline schemas.
+- New conformance fixtures: `flatten/017_null_deep_nested_object`, `flatten/018_null_mixed_present_absent`, `flatten/019_null_intermediate_nested_object`. Each fails on a pre-fix encoder (round-trip drop) and passes once the field bails to the attachment form.
+- Fixed: `flatten/016_gt_in_field_name.json` (operation `roundtrip`) was missing its `expected` value and had been failing since v3.2.1; filled in.
+
 ## v3.2.1 (2026-06-23)
 
 ### Spec clarification: field names containing `>`
