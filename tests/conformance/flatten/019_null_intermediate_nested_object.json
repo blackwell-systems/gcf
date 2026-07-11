@@ -1,0 +1,11 @@
+{
+  "name": "null_intermediate_nested_object",
+  "description": "A nested object that is null at an intermediate level (owner) must round-trip as null, not be dropped. Such a field cannot be flattened losslessly (its leaves would encode absent and unflatten to a missing key), so it falls back to the whole-object attachment form. Regression for the v3.2 flatten null-loss bug.",
+  "operation": "encode",
+  "input": [
+    {"id": 1, "meta": {"owner": {"name": "alice"}}},
+    {"id": 2, "meta": {"owner": null}},
+    {"id": 3, "meta": {"owner": {"name": "carol"}}}
+  ],
+  "expected": "GCF profile=generic\n## [3]{id,meta}\n@0 1|^\n.meta {}\n    ## owner\n      name=alice\n@1 2|^\n.meta {}\n    owner=-\n@2 3|^\n.meta {}\n    ## owner\n      name=carol\n"
+}

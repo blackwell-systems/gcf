@@ -5,5 +5,6 @@
   "input": [
     {"id": 1, "a>b": "hello", "name": "Alice"},
     {"id": 2, "a>b": "world", "name": "Bob"}
-  ]
+  ],
+  "expected": "GCF profile=generic\n## [2]{id,name}\n@0 1|Alice\n.\"a>b\" =hello\n@1 2|Bob\n.\"a>b\" =world\n"
 }

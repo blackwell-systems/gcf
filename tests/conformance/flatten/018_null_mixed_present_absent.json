@@ -1,0 +1,12 @@
+{
+  "name": "null_mixed_present_absent_nested_object",
+  "description": "Rows interleaving a present nested object, an intermediate null (a.b null), a fully-null parent (a null), and another present row. All must round-trip exactly: null stays null, absent stays absent. Combined regression for the v3.2 flatten null-loss bug.",
+  "operation": "encode",
+  "input": [
+    {"id": 1, "a": {"b": {"c": 1}}},
+    {"id": 2, "a": {"b": null}},
+    {"id": 3, "a": null},
+    {"id": 4, "a": {"b": {"c": 2}}}
+  ],
+  "expected": "GCF profile=generic\n## [4]{id,a}\n@0 1|^\n.a {}\n    ## b\n      c=1\n@1 2|^\n.a {}\n    b=-\n3|-\n@3 4|^\n.a {}\n    ## b\n      c=2\n"
+}

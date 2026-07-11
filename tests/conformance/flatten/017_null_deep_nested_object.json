@@ -1,0 +1,10 @@
+{
+  "name": "null_deep_nested_object",
+  "description": "A nested object that is null two levels deep (o.p.team) must round-trip as null, not be dropped. Deep variant of the v3.2 flatten null-loss regression.",
+  "operation": "encode",
+  "input": [
+    {"id": 1, "o": {"p": {"team": {"x": 1}}}},
+    {"id": 2, "o": {"p": {"team": null}}}
+  ],
+  "expected": "GCF profile=generic\n## [2]{id,o}\n@0 1|^\n.o {}\n    ## p\n      ## team\n        x=1\n@1 2|^\n.o {}\n    ## p\n      team=-\n"
+}
