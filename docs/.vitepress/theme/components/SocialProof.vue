@@ -5,7 +5,7 @@
       <span class="proof-items">
         <a href="https://github.com/ChromeDevTools/chrome-devtools-mcp" target="_blank" class="proof-item">Chrome DevTools MCP <span class="proof-stars">46K ★</span></a>
         <span class="proof-sep">·</span>
-        <a href="https://omniroute.online" target="_blank" class="proof-item">♦️ OmniRoute <span class="proof-stars">6.1K ★</span></a>
+        <a href="https://omniroute.online" target="_blank" class="proof-item">♦️ OmniRoute <span class="proof-stars">15.6K ★</span></a>
         <span class="proof-sep">·</span>
         <a href="https://speakeasy.com" target="_blank" class="proof-item"><img src="/logos/speakeasy-logo.svg" alt="Speakeasy" class="proof-logo"></a>
         <span class="proof-sep">·</span>

@@ -404,7 +404,7 @@ All six implementations are tested against round-trip invariants and the shared 
 
 GCF is deployed across 12 production systems spanning infrastructure, network automation, code intelligence, API tooling, and developer tools:
 
-- **OmniRoute** (6.1K stars): AI gateway and proxy. GCF vendored into headroom compression engine, replacing custom encoder. 55-62% savings, 100% payload coverage. TOON rejected (npm dependency). [github.com/diegosouzapw/OmniRoute](https://github.com/diegosouzapw/OmniRoute)
+- **OmniRoute** (15.6K stars): AI gateway and proxy. GCF vendored into headroom compression engine, replacing custom encoder. 55-62% savings, 100% payload coverage. TOON rejected (npm dependency). [github.com/diegosouzapw/OmniRoute](https://github.com/diegosouzapw/OmniRoute)
 - **NetClaw** (556 stars): AI network automation, 113 skills, 66 MCP integrations. Replaced TOON entirely after benchmarking. 55.8% savings vs JSON, 13.6% fewer tokens than TOON. [github.com/automateyournetwork/netclaw](https://github.com/automateyournetwork/netclaw)
 - **NeuroNest**: Agent-first IDE by Network Guardian. First independent commercial adoption. GCF across 4 encoding surfaces with session dedup, delta encoding, per-provider comprehension gate, and shadow mode A/B testing. [neuronest.cc](https://neuronest.cc)
 - **ctx** (510 stars): Claude Code context optimizer. GCF for recommendation bundles, graph queries, wiki search. 51.5% savings, up to 57.8% on bundles. [github.com/stevesolun/ctx](https://github.com/stevesolun/ctx)
@@ -817,7 +817,7 @@ GCF's grammar was reverse-engineered from tokenization and attention-level exper
 - **TOON benchmark fork:** `github.com/blackwell-systems/toon` (branch: gcf-comparison, their datasets, their tokenizer)
 - **Conformance test suite:** `github.com/blackwell-systems/gcf/tests/conformance` (157 v3 fixtures across both profiles, streaming, and normative errors)
 - **Interactive playground:** gcformat.com/playground (three-way JSON vs TOON vs GCF comparison using real @toon-format/toon library)
-- **Production deployment:** 12 adopters including OmniRoute (6.1K stars), NetClaw (556 stars), NeuroNest (commercial), ctx (510 stars), Speakeasy, knowing (28 MCP tools), agent-lsp (66 MCP tools). Full list: [gcformat.com/ecosystem/adopters](https://gcformat.com/ecosystem/adopters)
+- **Production deployment:** 12 adopters including OmniRoute (15.6K stars), NetClaw (556 stars), NeuroNest (commercial), ctx (510 stars), Speakeasy, knowing (28 MCP tools), agent-lsp (66 MCP tools). Full list: [gcformat.com/ecosystem/adopters](https://gcformat.com/ecosystem/adopters)
 
 ---
 

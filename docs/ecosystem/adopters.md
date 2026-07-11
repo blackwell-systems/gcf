@@ -14,7 +14,7 @@ GCF was merged as an experimental data format in [PR #2235](https://github.com/C
 
 ## OmniRoute
 
-[OmniRoute](https://github.com/diegosouzapw/OmniRoute) is an AI gateway, registry, and proxy that sits between AI clients and model providers, built by [Diego Souza](https://github.com/diegosouzapw). MCP servers, A2A agents, REST/gRPC APIs: everything flows through it with centralized discovery, guardrails, rate limiting, auth, and observability. 6.1K stars.
+[OmniRoute](https://github.com/diegosouzapw/OmniRoute) is an AI gateway, registry, and proxy that sits between AI clients and model providers, built by [Diego Souza](https://github.com/diegosouzapw). MCP servers, A2A agents, REST/gRPC APIs: everything flows through it with centralized discovery, guardrails, rate limiting, auth, and observability. 15.6K stars.
 
 GCF's generic profile encoder is vendored directly into OmniRoute's headroom compression engine, replacing their custom `omni-tabular` encoder. Zero new dependencies added. This is GCF's first infrastructure-layer integration: a gateway that every request passes through.
 
