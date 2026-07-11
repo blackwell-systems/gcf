@@ -1,11 +1,11 @@
 <script setup lang="ts">
 const languages = [
-  { name: 'Go', version: 'v1.3.1', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg', url: 'https://github.com/blackwell-systems/gcf-go', registry: 'pkg.go.dev' },
-  { name: 'Rust', version: 'v2.2.1', icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/rust.svg', url: 'https://github.com/blackwell-systems/gcf-rust', registry: 'crates.io', invert: true },
-  { name: 'TypeScript', version: 'v2.2.1', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg', url: 'https://github.com/blackwell-systems/gcf-typescript', registry: 'npm' },
-  { name: 'Python', version: 'v2.2.1', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg', url: 'https://github.com/blackwell-systems/gcf-python', registry: 'PyPI' },
-  { name: 'Swift', version: 'v2.2.1', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swift/swift-original.svg', url: 'https://github.com/blackwell-systems/gcf-swift', registry: 'SPM' },
-  { name: 'Kotlin', version: 'v2.2.1', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg', url: 'https://github.com/blackwell-systems/gcf-kotlin', registry: 'JitPack' },
+  { name: 'Go', version: 'v1.3.2', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg', url: 'https://github.com/blackwell-systems/gcf-go', registry: 'pkg.go.dev' },
+  { name: 'Rust', version: 'v2.2.2', icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/rust.svg', url: 'https://github.com/blackwell-systems/gcf-rust', registry: 'crates.io', invert: true },
+  { name: 'TypeScript', version: 'v2.2.3', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg', url: 'https://github.com/blackwell-systems/gcf-typescript', registry: 'npm' },
+  { name: 'Python', version: 'v2.2.2', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg', url: 'https://github.com/blackwell-systems/gcf-python', registry: 'PyPI' },
+  { name: 'Swift', version: 'v2.2.2', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swift/swift-original.svg', url: 'https://github.com/blackwell-systems/gcf-swift', registry: 'SPM' },
+  { name: 'Kotlin', version: 'v2.2.2', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg', url: 'https://github.com/blackwell-systems/gcf-kotlin', registry: 'JitPack' },
 ]
 </script>
 

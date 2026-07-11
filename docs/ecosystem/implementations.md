@@ -6,12 +6,12 @@ Six official implementations, all MIT licensed and zero runtime dependencies. Th
 
 | Language | Package | Install | Registry | Status |
 |----------|---------|---------|----------|--------|
-| Go | `gcf-go` | `go get github.com/blackwell-systems/gcf-go@v1.3.1` | [pkg.go.dev](https://pkg.go.dev/github.com/blackwell-systems/gcf-go) | v1.3.1 · 174/174 · 1B+ RT |
-| TypeScript | `@blackwell-systems/gcf` | `npm install @blackwell-systems/gcf@2.2.1` | [npm](https://www.npmjs.com/package/@blackwell-systems/gcf) | v2.2.1 · 174/174 · 20M RT |
-| Python | `gcf-python` | `pip install gcf-python==2.2.1` | [PyPI](https://pypi.org/project/gcf-python/) | v2.2.1 · 174/174 · 10M RT |
-| Rust | `gcf` | `cargo add gcf@2.2.1` | [crates.io](https://crates.io/crates/gcf) | v2.2.1 · 174/174 · 43B+ RT |
-| Swift | `GCF` | `.package(url: "https://github.com/blackwell-systems/gcf-swift", from: "2.2.1")` | [GitHub](https://github.com/blackwell-systems/gcf-swift) | v2.2.1 · 174/174 · 20M RT |
-| Kotlin | `gcf` | `implementation("com.github.blackwell-systems:gcf-kotlin:2.2.1")` | [JitPack](https://jitpack.io/#blackwell-systems/gcf-kotlin) | v2.2.1 · 174/174 · 10M RT |
+| Go | `gcf-go` | `go get github.com/blackwell-systems/gcf-go@v1.3.2` | [pkg.go.dev](https://pkg.go.dev/github.com/blackwell-systems/gcf-go) | v1.3.2 · 174/174 · 1B+ RT |
+| TypeScript | `@blackwell-systems/gcf` | `npm install @blackwell-systems/gcf@2.2.3` | [npm](https://www.npmjs.com/package/@blackwell-systems/gcf) | v2.2.3 · 174/174 · 20M RT |
+| Python | `gcf-python` | `pip install gcf-python==2.2.2` | [PyPI](https://pypi.org/project/gcf-python/) | v2.2.2 · 174/174 · 10M RT |
+| Rust | `gcf` | `cargo add gcf@2.2.2` | [crates.io](https://crates.io/crates/gcf) | v2.2.2 · 174/174 · 43B+ RT |
+| Swift | `GCF` | `.package(url: "https://github.com/blackwell-systems/gcf-swift", from: "2.2.2")` | [GitHub](https://github.com/blackwell-systems/gcf-swift) | v2.2.2 · 174/174 · 20M RT |
+| Kotlin | `gcf` | `implementation("com.github.blackwell-systems:gcf-kotlin:2.2.2")` | [JitPack](https://jitpack.io/#blackwell-systems/gcf-kotlin) | v2.2.2 · 174/174 · 10M RT |
 
 All six support both encoding profiles:
 
