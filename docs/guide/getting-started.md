@@ -94,7 +94,7 @@ cargo add gcf
 
 ```bash [Swift]
 # Package.swift
-.package(url: "https://github.com/blackwell-systems/gcf-swift", from: "2.2.2")
+.package(url: "https://github.com/blackwell-systems/gcf-swift", from: "2.2.3")
 ```
 
 ```bash [Kotlin]

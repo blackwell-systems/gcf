@@ -59,7 +59,7 @@ Six official implementations, all MIT licensed, zero runtime dependencies:
 - **TypeScript** ([npm](https://www.npmjs.com/package/@blackwell-systems/gcf)) v2.2.3
 - **Python** ([PyPI](https://pypi.org/project/gcf-python/)) v2.2.2
 - **Rust** ([crates.io](https://crates.io/crates/gcf)) v2.2.2
-- **Swift** ([SPM](https://github.com/blackwell-systems/gcf-swift)) v2.2.2
+- **Swift** ([SPM](https://github.com/blackwell-systems/gcf-swift)) v2.2.3
 - **Kotlin** ([JitPack](https://jitpack.io/#blackwell-systems/gcf-kotlin)) v2.2.2
 
 All pass 177/177 conformance fixtures. All support both generic and graph profiles, streaming, session dedup, delta encoding, and CLI. [Full details](/ecosystem/implementations).
