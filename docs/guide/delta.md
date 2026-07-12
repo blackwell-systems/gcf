@@ -140,6 +140,22 @@ This means:
 - If one file was edited, a few symbols shift, and the root changes slightly (outcome 2: delta)
 - If the user switched branches entirely, the root is unrecognizable (outcome 3: full retransmit)
 
+## Generic profile delta (v3.3)
+
+Delta is not graph-only. The generic profile supports the same keyed diff over any tabular set (SPEC Section 10a). One column is the identity key (`@id` in the field declaration, `key=id` in the header), and the delta carries `## added` / `## changed` / `## removed` sections:
+
+```
+GCF profile=generic delta=true base_root=sha256:aaa9f2... new_root=sha256:bbb4c7... key=id
+## added [1]{@id,total,status}
+1004|75.00|pending
+## changed [1]{@id,total,status}
+1002|29.99|shipped
+## removed [1]{@id}
+1001
+```
+
+`## changed` replaces the whole row by identity (no field-level patch); `## removed` carries identity values only. Set semantics apply: row order is not significant, so carry an explicit rank field if order matters. All six SDKs expose this through `encodeGenericFull` / `diffGenericSets` / `encodeGenericDelta` / `verifyGenericDelta`, plus a `GenericDeltaSession` producer helper that re-anchors on a tunable cadence. See the [API reference](/reference/api-go#generic-delta-v3-3) and [cheatsheet](/reference/cheatsheet#delta-encoding-keyed-diff-v3-3).
+
 ## Measured savings
 
 Benchmarked on GPT-4o tokenizer against a 100-symbol base topology:
