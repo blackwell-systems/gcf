@@ -1,0 +1,7 @@
+1/50 probes2/50 probes3/50 probes4/50 probes5/50 probes6/50 probes7/50 probes8/50 probes9/50 probes10/50 probes11/50 probes12/50 probes13/50 probes14/50 probes15/50 probes16/50 probes17/50 probes18/50 probes19/50 probes20/50 probes21/50 probes22/50 probes23/50 probes24/50 probes25/50 probes26/50 probes27/50 probes28/50 probes29/50 probes30/50 probes31/50 probes32/50 probes33/50 probes34/50 probes35/50 probes36/50 probes37/50 probes38/50 probes39/50 probes40/50 probes41/50 probes42/50 probes43/50 probes44/50 probes45/50 probes46/50 probes47/50 probes48/50 probes49/50 probes50/50 probes
+### openrouter https://openrouter.ai/api/v1 model=deepseek/deepseek-v4-flash: delta 95.5% | full-resend 0.0% | gap -95.5pp
+  delta by type: changed_stale=100% latest_of_multiple=100% removed_absent=100% present_control=100% added_lookup=100% unchanged_persistence=100% count=82% aggregate_count=82%
+  delta by depth: t1=100% t2=88% t3=100% t4=100% t5=88% t6=75% t7=100% t8=100% t9=88% t10=75% t11=100% t12=88% t13=100% t14=100% t15=100% t16=100% t17=100% t18=100% t19=100% t20=100% t21=100% t22=100% t23=100% t24=100% t25=100% t26=100% t27=100% t28=100% t29=100% t30=100% t31=100% t32=100% t33=100% t34=100% t35=100% t36=100% t37=100% t38=100% t39=100% t40=100% t41=75% t42=88% t43=100% t44=100% t45=88% t46=75% t47=100% t48=100% t49=75% t50=75%
+resolved models served: {"deepseek/deepseek-v4-flash-20260423":50}
+
+wrote results/deepseek-v4-flash-delta/deepseek_deepseek_v4_flash.json

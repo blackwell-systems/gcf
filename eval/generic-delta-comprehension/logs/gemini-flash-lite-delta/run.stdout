@@ -1,0 +1,7 @@
+1/50 probes2/50 probes3/50 probes4/50 probes5/50 probes6/50 probes7/50 probes8/50 probes9/50 probes10/50 probes11/50 probes12/50 probes13/50 probes14/50 probes15/50 probes16/50 probes17/50 probes18/50 probes19/50 probes20/50 probes21/50 probes22/50 probes23/50 probes24/50 probes25/50 probes26/50 probes27/50 probes28/50 probes29/50 probes30/50 probes31/50 probes32/50 probes33/50 probes34/50 probes35/50 probes36/50 probes37/50 probes38/50 probes39/50 probes40/50 probes41/50 probes42/50 probes43/50 probes44/50 probes45/50 probes46/50 probes47/50 probes48/50 probes49/50 probes50/50 probes
+### openrouter https://openrouter.ai/api/v1 model=google/gemini-2.5-flash-lite: delta 58.8% | full-resend 0.0% | gap -58.8pp
+  delta by type: changed_stale=50% latest_of_multiple=62% removed_absent=98% present_control=84% added_lookup=82% unchanged_persistence=84% count=4% aggregate_count=6%
+  delta by depth: t1=88% t2=75% t3=75% t4=88% t5=63% t6=75% t7=75% t8=75% t9=88% t10=75% t11=75% t12=75% t13=63% t14=25% t15=75% t16=75% t17=50% t18=63% t19=75% t20=25% t21=63% t22=75% t23=75% t24=63% t25=25% t26=75% t27=63% t28=50% t29=25% t30=63% t31=63% t32=63% t33=25% t34=50% t35=63% t36=75% t37=63% t38=50% t39=50% t40=63% t41=50% t42=0% t43=50% t44=38% t45=50% t46=38% t47=50% t48=38% t49=50% t50=63%
+resolved models served: {"google/gemini-2.5-flash-lite":50}
+
+wrote results/gemini-flash-lite-delta/google_gemini_2_5_flash_lite.json

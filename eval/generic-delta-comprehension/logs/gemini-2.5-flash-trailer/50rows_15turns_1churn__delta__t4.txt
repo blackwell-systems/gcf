@@ -1,0 +1,116 @@
+# fixture=50rows_15turns_1churn arm=delta depth=4 requested=google/gemini-2.5-flash resolved=google/gemini-2.5-flash
+# questions:
+  1. [changed_stale] What is the status of order 1050? => want=open
+  2. [removed_absent] Is order 1005 still present? Answer yes or no. => want=no
+  3. [present_control] Is order 1004 still present? Answer yes or no. => want=yes
+  4. [added_lookup] What is the total of order 1050? => want=237.05
+  5. [unchanged_persistence] What is the customer of order 1001? => want=Cust6486
+  6. [count] How many orders are there now? => want=50
+  7. [aggregate_count] How many orders have status pending? => want=11
+# parsed answers: ["open","no","yes","237.05","Cust6486","50","11"]
+
+===== PROMPT =====
+You are reading a live data feed encoded in GCF. The first message is a full table:
+"## orders [N]{@id,total,status,region,customer}" followed by rows, one per line, pipe-separated, in that column order. "@id" marks the identity column.
+Each later message is a DELTA that updates the table you already have:
+- "## added" : new rows (same columns).
+- "## changed" : each row REPLACES the existing row with the same @id.
+- "## removed" : a list of @id values to delete.
+Rows not mentioned in a delta are UNCHANGED and still present. Apply all deltas in order. Always answer about the CURRENT table after applying every delta received so far. Answer with only the requested value (no explanation). Each delta ends with a summary line starting "##! " that gives the AUTHORITATIVE current totals after applying that delta: "##! rows=<total> <status>=<count> ...". For any counting question (total orders, or orders with a given status), read the number directly from this "##! " line rather than recounting the rows.
+
+----- update -----
+GCF profile=generic
+## orders [50]{@id,total,status,region,customer}
+1000|626.45|open|eu|Cust8829
+1001|967.41|shipped|eu|Cust6486
+1002|425.37|refunded|us-west|Cust4399
+1003|138.79|pending|us-east|Cust1390
+1004|488.65|open|us-west|Cust6903
+1005|285.58|open|us-east|Cust3846
+1006|589.79|cancelled|us-west|Cust1849
+1007|657.47|pending|apac|Cust1735
+1008|720.23|pending|apac|Cust8950
+1009|239.09|cancelled|us-east|Cust2909
+1010|412.78|shipped|us-east|Cust6534
+1011|575.77|open|us-west|Cust438
+1012|621.6|refunded|us-east|Cust8904
+1013|717.59|pending|us-west|Cust6094
+1014|951.68|refunded|eu|Cust8269
+1015|833.59|refunded|us-east|Cust355
+1016|867.82|shipped|apac|Cust4590
+1017|934.96|cancelled|us-east|Cust6091
+1018|947.93|open|apac|Cust1467
+1019|387.97|open|us-west|Cust2918
+1020|656.89|pending|eu|Cust685
+1021|807.18|refunded|us-west|Cust1478
+1022|302.95|refunded|us-west|Cust1293
+1023|653.92|pending|us-west|Cust1081
+1024|141.2|open|us-west|Cust6080
+1025|650.79|open|eu|Cust4709
+1026|211.63|cancelled|us-west|Cust8924
+1027|953.05|refunded|us-east|Cust1646
+1028|28.32|refunded|us-west|Cust6486
+1029|864.54|open|us-west|Cust7827
+1030|794.42|cancelled|us-east|Cust866
+1031|148.99|pending|eu|Cust2585
+1032|883.65|shipped|apac|Cust7755
+1033|632.34|cancelled|us-east|Cust3452
+1034|307.21|shipped|us-west|Cust8378
+1035|965.28|open|us-west|Cust689
+1036|36.56|cancelled|us-west|Cust2193
+1037|148.27|refunded|us-west|Cust8031
+1038|525.35|pending|eu|Cust3103
+1039|245.01|pending|apac|Cust7149
+1040|50.53|shipped|eu|Cust5813
+1041|29.88|shipped|us-west|Cust7844
+1042|648.17|shipped|us-west|Cust5411
+1043|13.59|refunded|eu|Cust5112
+1044|641.9|open|us-east|Cust7328
+1045|141.33|cancelled|us-west|Cust5773
+1046|293.35|pending|apac|Cust649
+1047|110.04|open|eu|Cust408
+1048|527.67|shipped|apac|Cust2367
+1049|83.46|refunded|apac|Cust132
+##! rows=50 cancelled=8 open=12 pending=10 refunded=11 shipped=9
+
+----- update -----
+GCF profile=generic delta=true
+## removed [1]{@id}
+1005
+##! rows=49 cancelled=8 open=11 pending=10 refunded=11 shipped=9
+
+----- update -----
+GCF profile=generic delta=true
+## changed [1]{@id,total,status,region,customer}
+1030|523.54|shipped|eu|Cust1210
+##! rows=49 cancelled=7 open=11 pending=10 refunded=11 shipped=10
+
+----- update -----
+GCF profile=generic delta=true
+## changed [1]{@id,total,status,region,customer}
+1048|618.15|pending|us-east|Cust1472
+##! rows=49 cancelled=7 open=11 pending=11 refunded=11 shipped=9
+
+----- update -----
+GCF profile=generic delta=true
+## added [1]{@id,total,status,region,customer}
+1050|237.05|open|eu|Cust5505
+##! rows=50 cancelled=7 open=12 pending=11 refunded=11 shipped=9
+
+Answer each question about the CURRENT data after applying every update received so far. Reply with exactly one line per question, formatted "N: value" — value only, no explanation.
+1. What is the status of order 1050?
+2. Is order 1005 still present? Answer yes or no.
+3. Is order 1004 still present? Answer yes or no.
+4. What is the total of order 1050?
+5. What is the customer of order 1001?
+6. How many orders are there now?
+7. How many orders have status pending?
+
+===== MODEL CONTENT =====
+1: open
+2: no
+3: yes
+4: 237.05
+5: Cust6486
+6: 50
+7: 11

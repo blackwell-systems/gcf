@@ -109,4 +109,4 @@ Recovery/resume are self-testable with zero API spend via the stub backend:
 | Losslessness (800k round-trips) | ✅ proven |
 | Multi-turn token savings | ✅ measured (84–89%) |
 | Comprehension harness (fixtures/runner/scorer) | ✅ built + self-validated |
-| Comprehension **result** (real models) | ✅ run at depth — six of seven cleanly-measured models flat or better vs full-resend across a 50-turn session; the one drift (llama-3.3-70b) closed by a periodic re-anchor. Full per-model tables in the depth study. |
+| Comprehension **result** (real models) | ✅ run at depth — six of seven cleanly-measured models flat or better vs full-resend across a 50-turn session; the one drift (llama-3.3-70b) closed by a periodic re-anchor. Full per-model tables, gates, and provenance in the depth study: [`../generic-delta-comprehension/`](../generic-delta-comprehension/). |

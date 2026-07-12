@@ -1,0 +1,6 @@
+1/42 probes2/42 probes3/42 probes4/42 probes5/42 probes6/42 probes7/42 probes8/42 probes9/42 probes10/42 probes11/42 probes12/42 probes13/42 probes14/42 probes15/42 probes16/42 probes17/42 probes18/42 probes19/42 probes20/42 probes21/42 probes22/42 probes23/42 probes24/42 probes25/42 probes26/42 probes27/42 probes28/42 probes29/42 probes30/42 probes31/42 probes32/42 probes33/42 probes34/42 probes35/42 probes36/42 probes37/42 probes38/42 probes39/42 probes40/42 probes41/42 probes42/42 probes
+### codex model=default: delta 97.3% | full-resend 100.0% | gap 2.7pp
+  delta by type: changed_stale=100% removed_absent=100% present_control=100% unchanged_persistence=100% count=90% aggregate_count=90% added_lookup=100% latest_of_multiple=100%
+  delta by depth: t1=100% t2=100% t3=100% t4=93% t5=100% t6=87% t7=100% t8=100% t9=100% t10=100% t11=86% t12=100% t13=100% t14=100% t15=100%
+
+wrote step2-results/codex.json

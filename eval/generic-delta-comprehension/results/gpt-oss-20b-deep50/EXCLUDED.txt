@@ -1,0 +1,1 @@
+gpt-oss-20b EXCLUDED: reasoning model. Direct probe returns finish_reason=length, content=null (spends token budget on hidden reasoning, emits no answer text). Incompatible with the strict "N: value" parse harness; not a delta result. 2026-07-11

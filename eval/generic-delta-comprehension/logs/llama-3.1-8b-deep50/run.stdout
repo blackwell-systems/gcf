@@ -1,0 +1,7 @@
+1/50 probes2/50 probes3/50 probes4/50 probes5/50 probes6/50 probes7/50 probes8/50 probes9/50 probes10/50 probes11/50 probes12/50 probes13/50 probes14/50 probes15/50 probes16/50 probes17/50 probes18/50 probes19/50 probes20/50 probes21/50 probes22/50 probes23/50 probes24/50 probes25/50 probes26/50 probes27/50 probes28/50 probes29/50 probes30/50 probes31/50 probes32/50 probes33/50 probes34/50 probes35/50 probes36/50 probes37/50 probes38/50 probes39/50 probes40/50 probes41/50 probes42/50 probes43/50 probes44/50 probes45/50 probes46/50 probes47/50 probes48/50 probes49/50 probes50/50 probes
+### openrouter https://openrouter.ai/api/v1 model=meta-llama/llama-3.1-8b-instruct: delta 65.5% | full-resend 0.0% | gap -65.5pp
+  delta by type: changed_stale=72% latest_of_multiple=82% removed_absent=100% present_control=84% added_lookup=82% unchanged_persistence=100% count=0% aggregate_count=4%
+  delta by depth: t1=75% t2=75% t3=75% t4=75% t5=63% t6=75% t7=63% t8=75% t9=75% t10=75% t11=75% t12=75% t13=63% t14=50% t15=75% t16=50% t17=63% t18=75% t19=75% t20=75% t21=63% t22=63% t23=75% t24=63% t25=75% t26=63% t27=50% t28=50% t29=75% t30=75% t31=50% t32=75% t33=75% t34=38% t35=75% t36=75% t37=75% t38=75% t39=63% t40=50% t41=63% t42=50% t43=75% t44=50% t45=75% t46=63% t47=50% t48=50% t49=63% t50=38%
+resolved models served: {"meta-llama/llama-3.1-8b-instruct":50}
+
+wrote results/llama-3.1-8b-deep50/meta_llama_llama_3_1_8b_instruct.json

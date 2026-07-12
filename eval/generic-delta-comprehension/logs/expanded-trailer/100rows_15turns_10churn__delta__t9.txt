@@ -1,0 +1,592 @@
+# fixture=100rows_15turns_10churn arm=delta depth=9 exit=0
+# questions:
+  1. [changed_stale] What is the status of order 1049? => want=shipped
+  2. [latest_of_multiple] What is the current status of order 1030? => want=refunded
+  3. [removed_absent] Is order 1075 still present? Answer yes or no. => want=no
+  4. [present_control] Is order 1050 still present? Answer yes or no. => want=yes
+  5. [added_lookup] What is the total of order 1111? => want=994.85
+  6. [unchanged_persistence] What is the customer of order 1048? => want=Cust7831
+  7. [count] How many orders are there now? => want=102
+  8. [aggregate_count] How many orders have status cancelled? => want=22
+# parsed answers: ["shipped","refunded","no","yes","994.85","Cust7831","102","22"]
+
+===== PROMPT =====
+You are reading a live data feed encoded in GCF. The first message is a full table:
+"## orders [N]{@id,total,status,region,customer}" followed by rows, one per line, pipe-separated, in that column order. "@id" marks the identity column.
+Each later message is a DELTA that updates the table you already have:
+- "## added" : new rows (same columns).
+- "## changed" : each row REPLACES the existing row with the same @id.
+- "## removed" : a list of @id values to delete.
+Rows not mentioned in a delta are UNCHANGED and still present. Apply all deltas in order. Always answer about the CURRENT table after applying every delta received so far. Answer with only the requested value (no explanation). Each delta ends with a summary line starting "##! " that gives the AUTHORITATIVE current totals after applying that delta: "##! rows=<total> <status>=<count> ...". For any counting question (total orders, or orders with a given status), read the number directly from this "##! " line rather than recounting the rows.
+
+----- update -----
+GCF profile=generic
+## orders [100]{@id,total,status,region,customer}
+1000|719.51|open|us-west|Cust674
+1001|762.24|pending|us-west|Cust1456
+1002|262.99|pending|us-east|Cust752
+1003|713.07|pending|apac|Cust7917
+1004|323.3|cancelled|us-west|Cust6049
+1005|525.9|refunded|eu|Cust104
+1006|876.48|shipped|apac|Cust6924
+1007|420.16|cancelled|us-east|Cust3311
+1008|721.98|open|us-east|Cust4304
+1009|862.21|cancelled|eu|Cust7076
+1010|583.78|pending|us-east|Cust3350
+1011|530.4|refunded|us-west|Cust4175
+1012|496.26|pending|apac|Cust7698
+1013|663.94|shipped|eu|Cust6298
+1014|465.83|refunded|apac|Cust6413
+1015|676.44|refunded|apac|Cust512
+1016|66.09|pending|apac|Cust3103
+1017|539.66|shipped|us-west|Cust4967
+1018|577.25|shipped|apac|Cust1556
+1019|951.66|cancelled|apac|Cust6929
+1020|61.05|pending|us-east|Cust6216
+1021|773.15|cancelled|apac|Cust8912
+1022|979.33|pending|apac|Cust8552
+1023|812.73|shipped|eu|Cust8495
+1024|390.57|pending|us-east|Cust5679
+1025|546.79|shipped|apac|Cust441
+1026|847.37|open|us-west|Cust8005
+1027|29.02|cancelled|us-east|Cust2591
+1028|992.37|pending|us-east|Cust46
+1029|157.82|cancelled|eu|Cust7449
+1030|688.23|refunded|us-east|Cust1733
+1031|127.75|cancelled|eu|Cust5197
+1032|727.46|shipped|apac|Cust849
+1033|963.71|open|us-west|Cust4478
+1034|436.93|pending|us-west|Cust6039
+1035|11.98|pending|apac|Cust3030
+1036|449.04|shipped|apac|Cust709
+1037|102.93|open|us-east|Cust7810
+1038|770.18|refunded|us-west|Cust580
+1039|334.84|shipped|us-east|Cust1146
+1040|411.63|shipped|us-east|Cust4920
+1041|463.46|shipped|apac|Cust8049
+1042|901.7|shipped|us-west|Cust2521
+1043|203.6|cancelled|us-east|Cust1748
+1044|376.73|refunded|us-west|Cust5090
+1045|164.61|pending|apac|Cust216
+1046|982.88|shipped|us-east|Cust128
+1047|476.99|cancelled|apac|Cust4871
+1048|569.68|refunded|eu|Cust7831
+1049|861.06|cancelled|us-west|Cust5184
+1050|958.95|pending|us-east|Cust1496
+1051|552.34|shipped|eu|Cust7744
+1052|177.16|refunded|eu|Cust2852
+1053|231.3|refunded|eu|Cust4021
+1054|887.18|pending|apac|Cust4058
+1055|345.98|cancelled|us-west|Cust6029
+1056|224.81|cancelled|us-west|Cust6180
+1057|930.82|refunded|apac|Cust3599
+1058|213.96|open|us-east|Cust6133
+1059|641.56|refunded|us-west|Cust6461
+1060|257.27|refunded|us-east|Cust4208
+1061|632.96|refunded|apac|Cust647
+1062|844.36|shipped|apac|Cust7699
+1063|711.95|cancelled|us-west|Cust624
+1064|232.1|pending|eu|Cust4776
+1065|617.81|open|apac|Cust6318
+1066|607|refunded|apac|Cust8786
+1067|986.63|refunded|us-east|Cust3923
+1068|540.94|open|eu|Cust5235
+1069|845.44|cancelled|us-east|Cust5029
+1070|525.59|open|us-east|Cust3226
+1071|744.77|shipped|us-west|Cust5260
+1072|514.41|open|us-east|Cust3500
+1073|37.85|shipped|us-east|Cust2995
+1074|370.16|cancelled|us-west|Cust6551
+1075|458.85|refunded|apac|Cust5855
+1076|805.18|cancelled|apac|Cust6950
+1077|438.65|refunded|us-west|Cust3329
+1078|370.2|shipped|apac|Cust7153
+1079|402.1|pending|us-west|Cust3694
+1080|49.08|shipped|us-west|Cust6913
+1081|719.27|refunded|eu|Cust729
+1082|773.17|open|us-west|Cust4137
+1083|607.8|pending|eu|Cust1828
+1084|839.32|shipped|us-west|Cust6456
+1085|94.7|shipped|apac|Cust2584
+1086|851.93|shipped|eu|Cust92
+1087|131.99|open|us-west|Cust6168
+1088|47|shipped|eu|Cust6993
+1089|358.66|shipped|us-west|Cust579
+1090|9.94|shipped|apac|Cust2546
+1091|50.45|open|us-east|Cust5907
+1092|531.87|open|eu|Cust1315
+1093|43.2|open|us-east|Cust3777
+1094|807.86|open|eu|Cust1526
+1095|776.34|open|us-east|Cust7567
+1096|364.34|shipped|apac|Cust7644
+1097|800.61|shipped|eu|Cust6947
+1098|190.21|shipped|apac|Cust5688
+1099|840.43|cancelled|us-west|Cust6034
+##! rows=100 cancelled=18 open=17 pending=18 refunded=19 shipped=28
+
+----- update -----
+GCF profile=generic delta=true
+## changed [9]{@id,total,status,region,customer}
+1013|422.75|open|us-east|Cust5267
+1030|243|refunded|eu|Cust532
+1041|525.05|cancelled|apac|Cust418
+1045|696.01|cancelled|us-west|Cust6605
+1063|105.86|cancelled|us-west|Cust5924
+1073|440.95|pending|eu|Cust4146
+1077|420.52|open|apac|Cust1342
+1084|114.74|refunded|eu|Cust1598
+1088|547.14|pending|us-west|Cust8934
+## removed [1]{@id}
+1096
+##! rows=99 cancelled=20 open=19 pending=19 refunded=19 shipped=22
+
+----- update -----
+GCF profile=generic delta=true
+## added [2]{@id,total,status,region,customer}
+1100|482.25|pending|us-east|Cust3154
+1101|316.05|shipped|us-west|Cust7403
+## changed [7]{@id,total,status,region,customer}
+1004|176.6|shipped|us-east|Cust2727
+1006|907.08|cancelled|apac|Cust3538
+1015|576.3|cancelled|apac|Cust7636
+1026|793.8|pending|us-west|Cust8907
+1058|927.53|open|eu|Cust5073
+1072|464.77|shipped|us-east|Cust4922
+1092|124.15|refunded|us-east|Cust4568
+## removed [1]{@id}
+1044
+##! rows=100 cancelled=21 open=16 pending=21 refunded=18 shipped=24
+
+----- update -----
+GCF profile=generic delta=true
+## added [4]{@id,total,status,region,customer}
+1102|615.36|cancelled|us-east|Cust6472
+1103|726.89|open|us-west|Cust3388
+1104|651.04|open|eu|Cust4310
+1105|176.63|pending|us-east|Cust4992
+## changed [3]{@id,total,status,region,customer}
+1041|31.69|refunded|us-west|Cust3203
+1047|776.25|open|eu|Cust8878
+1097|315.64|cancelled|eu|Cust6606
+## removed [3]{@id}
+1027
+1068
+1075
+##! rows=101 cancelled=20 open=18 pending=22 refunded=18 shipped=23
+
+----- update -----
+GCF profile=generic delta=true
+## added [3]{@id,total,status,region,customer}
+1106|936.99|pending|apac|Cust2543
+1107|414.75|open|us-east|Cust3839
+1108|874.35|pending|us-east|Cust6119
+## changed [5]{@id,total,status,region,customer}
+1019|580.14|shipped|eu|Cust5051
+1054|703.83|cancelled|us-east|Cust5353
+1058|926.87|cancelled|eu|Cust6164
+1090|950.35|open|us-west|Cust7054
+1093|14.97|open|apac|Cust4048
+## removed [2]{@id}
+1077
+1095
+##! rows=102 cancelled=21 open=17 pending=23 refunded=18 shipped=23
+
+----- update -----
+GCF profile=generic delta=true
+## added [2]{@id,total,status,region,customer}
+1109|452.97|pending|apac|Cust6673
+1110|162.52|cancelled|us-west|Cust2922
+## changed [7]{@id,total,status,region,customer}
+1007|883.95|shipped|apac|Cust3284
+1021|517.83|open|apac|Cust6578
+1071|288.23|pending|us-east|Cust1259
+1073|275.5|cancelled|eu|Cust4857
+1081|78.6|refunded|us-west|Cust1427
+1082|614.07|shipped|apac|Cust5867
+1090|112.46|shipped|us-east|Cust3416
+## removed [1]{@id}
+1040
+##! rows=103 cancelled=21 open=16 pending=24 refunded=18 shipped=24
+
+----- update -----
+GCF profile=generic delta=true
+## added [2]{@id,total,status,region,customer}
+1111|994.85|open|apac|Cust6696
+1112|90.51|cancelled|eu|Cust8034
+## changed [6]{@id,total,status,region,customer}
+1000|782.74|pending|us-west|Cust2819
+1023|29.84|shipped|apac|Cust1254
+1024|18.05|pending|apac|Cust8830
+1049|304.21|shipped|us-east|Cust8156
+1057|527.11|cancelled|eu|Cust3497
+1066|642.28|pending|us-east|Cust596
+## removed [2]{@id}
+1025
+1108
+##! rows=103 cancelled=22 open=16 pending=25 refunded=16 shipped=24
+
+----- update -----
+GCF profile=generic delta=true
+## added [2]{@id,total,status,region,customer}
+1113|380.93|shipped|eu|Cust5909
+1114|333.55|shipped|apac|Cust2082
+## changed [5]{@id,total,status,region,customer}
+1020|214.66|pending|us-east|Cust4762
+1043|844.3|open|eu|Cust7310
+1055|676.67|cancelled|us-west|Cust4692
+1083|599.33|open|eu|Cust3823
+1089|996.45|cancelled|eu|Cust8264
+## removed [3]{@id}
+1006
+1065
+1112
+##! rows=102 cancelled=20 open=17 pending=24 refunded=16 shipped=25
+
+----- update -----
+GCF profile=generic delta=true
+## added [1]{@id,total,status,region,customer}
+1116|210.55|open|us-east|Cust7773
+## changed [5]{@id,total,status,region,customer}
+1005|880.74|pending|us-east|Cust439
+1047|323.7|cancelled|us-east|Cust3106
+1069|273.92|cancelled|eu|Cust8978
+1098|403.9|shipped|apac|Cust2489
+1105|417.1|cancelled|eu|Cust1399
+## removed [2]{@id}
+1039
+1041
+##! rows=101 cancelled=22 open=17 pending=24 refunded=14 shipped=24
+
+----- update -----
+GCF profile=generic delta=true
+## added [1]{@id,total,status,region,customer}
+1117|301.22|open|us-east|Cust1370
+## changed [9]{@id,total,status,region,customer}
+1003|592.39|refunded|us-east|Cust4552
+1008|629.95|open|apac|Cust3188
+1031|627.56|cancelled|apac|Cust7468
+1034|437.21|open|us-east|Cust2763
+1036|757.47|pending|apac|Cust8313
+1038|134.23|shipped|eu|Cust4030
+1074|642.66|shipped|us-east|Cust1431
+1090|508.48|cancelled|eu|Cust5432
+1098|190.45|open|us-east|Cust932
+##! rows=102 cancelled=22 open=20 pending=23 refunded=14 shipped=23
+
+Answer each question about the CURRENT data after applying every update received so far. Reply with exactly one line per question, formatted "N: value" — value only, no explanation.
+1. What is the status of order 1049?
+2. What is the current status of order 1030?
+3. Is order 1075 still present? Answer yes or no.
+4. Is order 1050 still present? Answer yes or no.
+5. What is the total of order 1111?
+6. What is the customer of order 1048?
+7. How many orders are there now?
+8. How many orders have status cancelled?
+
+===== CODEX STDOUT =====
+1: shipped
+2: refunded
+3: no
+4: yes
+5: 994.85
+6: Cust7831
+7: 102
+8: 22
+
+
+===== CODEX STDERR =====
+OpenAI Codex v0.142.5
+--------
+workdir: /private/tmp/claude-501/-Users-dayna-code-gcf-integration-work/da92b2aa-395d-41ed-b555-a98b5e231268/scratchpad/gcf-bench
+model: gpt-5.5
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: none
+reasoning summaries: none
+session id: 019f4fb9-d67f-75f2-bbe4-3a054ad080a7
+--------
+user
+You are reading a live data feed encoded in GCF. The first message is a full table:
+"## orders [N]{@id,total,status,region,customer}" followed by rows, one per line, pipe-separated, in that column order. "@id" marks the identity column.
+Each later message is a DELTA that updates the table you already have:
+- "## added" : new rows (same columns).
+- "## changed" : each row REPLACES the existing row with the same @id.
+- "## removed" : a list of @id values to delete.
+Rows not mentioned in a delta are UNCHANGED and still present. Apply all deltas in order. Always answer about the CURRENT table after applying every delta received so far. Answer with only the requested value (no explanation). Each delta ends with a summary line starting "##! " that gives the AUTHORITATIVE current totals after applying that delta: "##! rows=<total> <status>=<count> ...". For any counting question (total orders, or orders with a given status), read the number directly from this "##! " line rather than recounting the rows.
+
+----- update -----
+GCF profile=generic
+## orders [100]{@id,total,status,region,customer}
+1000|719.51|open|us-west|Cust674
+1001|762.24|pending|us-west|Cust1456
+1002|262.99|pending|us-east|Cust752
+1003|713.07|pending|apac|Cust7917
+1004|323.3|cancelled|us-west|Cust6049
+1005|525.9|refunded|eu|Cust104
+1006|876.48|shipped|apac|Cust6924
+1007|420.16|cancelled|us-east|Cust3311
+1008|721.98|open|us-east|Cust4304
+1009|862.21|cancelled|eu|Cust7076
+1010|583.78|pending|us-east|Cust3350
+1011|530.4|refunded|us-west|Cust4175
+1012|496.26|pending|apac|Cust7698
+1013|663.94|shipped|eu|Cust6298
+1014|465.83|refunded|apac|Cust6413
+1015|676.44|refunded|apac|Cust512
+1016|66.09|pending|apac|Cust3103
+1017|539.66|shipped|us-west|Cust4967
+1018|577.25|shipped|apac|Cust1556
+1019|951.66|cancelled|apac|Cust6929
+1020|61.05|pending|us-east|Cust6216
+1021|773.15|cancelled|apac|Cust8912
+1022|979.33|pending|apac|Cust8552
+1023|812.73|shipped|eu|Cust8495
+1024|390.57|pending|us-east|Cust5679
+1025|546.79|shipped|apac|Cust441
+1026|847.37|open|us-west|Cust8005
+1027|29.02|cancelled|us-east|Cust2591
+1028|992.37|pending|us-east|Cust46
+1029|157.82|cancelled|eu|Cust7449
+1030|688.23|refunded|us-east|Cust1733
+1031|127.75|cancelled|eu|Cust5197
+1032|727.46|shipped|apac|Cust849
+1033|963.71|open|us-west|Cust4478
+1034|436.93|pending|us-west|Cust6039
+1035|11.98|pending|apac|Cust3030
+1036|449.04|shipped|apac|Cust709
+1037|102.93|open|us-east|Cust7810
+1038|770.18|refunded|us-west|Cust580
+1039|334.84|shipped|us-east|Cust1146
+1040|411.63|shipped|us-east|Cust4920
+1041|463.46|shipped|apac|Cust8049
+1042|901.7|shipped|us-west|Cust2521
+1043|203.6|cancelled|us-east|Cust1748
+1044|376.73|refunded|us-west|Cust5090
+1045|164.61|pending|apac|Cust216
+1046|982.88|shipped|us-east|Cust128
+1047|476.99|cancelled|apac|Cust4871
+1048|569.68|refunded|eu|Cust7831
+1049|861.06|cancelled|us-west|Cust5184
+1050|958.95|pending|us-east|Cust1496
+1051|552.34|shipped|eu|Cust7744
+1052|177.16|refunded|eu|Cust2852
+1053|231.3|refunded|eu|Cust4021
+1054|887.18|pending|apac|Cust4058
+1055|345.98|cancelled|us-west|Cust6029
+1056|224.81|cancelled|us-west|Cust6180
+1057|930.82|refunded|apac|Cust3599
+1058|213.96|open|us-east|Cust6133
+1059|641.56|refunded|us-west|Cust6461
+1060|257.27|refunded|us-east|Cust4208
+1061|632.96|refunded|apac|Cust647
+1062|844.36|shipped|apac|Cust7699
+1063|711.95|cancelled|us-west|Cust624
+1064|232.1|pending|eu|Cust4776
+1065|617.81|open|apac|Cust6318
+1066|607|refunded|apac|Cust8786
+1067|986.63|refunded|us-east|Cust3923
+1068|540.94|open|eu|Cust5235
+1069|845.44|cancelled|us-east|Cust5029
+1070|525.59|open|us-east|Cust3226
+1071|744.77|shipped|us-west|Cust5260
+1072|514.41|open|us-east|Cust3500
+1073|37.85|shipped|us-east|Cust2995
+1074|370.16|cancelled|us-west|Cust6551
+1075|458.85|refunded|apac|Cust5855
+1076|805.18|cancelled|apac|Cust6950
+1077|438.65|refunded|us-west|Cust3329
+1078|370.2|shipped|apac|Cust7153
+1079|402.1|pending|us-west|Cust3694
+1080|49.08|shipped|us-west|Cust6913
+1081|719.27|refunded|eu|Cust729
+1082|773.17|open|us-west|Cust4137
+1083|607.8|pending|eu|Cust1828
+1084|839.32|shipped|us-west|Cust6456
+1085|94.7|shipped|apac|Cust2584
+1086|851.93|shipped|eu|Cust92
+1087|131.99|open|us-west|Cust6168
+1088|47|shipped|eu|Cust6993
+1089|358.66|shipped|us-west|Cust579
+1090|9.94|shipped|apac|Cust2546
+1091|50.45|open|us-east|Cust5907
+1092|531.87|open|eu|Cust1315
+1093|43.2|open|us-east|Cust3777
+1094|807.86|open|eu|Cust1526
+1095|776.34|open|us-east|Cust7567
+1096|364.34|shipped|apac|Cust7644
+1097|800.61|shipped|eu|Cust6947
+1098|190.21|shipped|apac|Cust5688
+1099|840.43|cancelled|us-west|Cust6034
+##! rows=100 cancelled=18 open=17 pending=18 refunded=19 shipped=28
+
+----- update -----
+GCF profile=generic delta=true
+## changed [9]{@id,total,status,region,customer}
+1013|422.75|open|us-east|Cust5267
+1030|243|refunded|eu|Cust532
+1041|525.05|cancelled|apac|Cust418
+1045|696.01|cancelled|us-west|Cust6605
+1063|105.86|cancelled|us-west|Cust5924
+1073|440.95|pending|eu|Cust4146
+1077|420.52|open|apac|Cust1342
+1084|114.74|refunded|eu|Cust1598
+1088|547.14|pending|us-west|Cust8934
+## removed [1]{@id}
+1096
+##! rows=99 cancelled=20 open=19 pending=19 refunded=19 shipped=22
+
+----- update -----
+GCF profile=generic delta=true
+## added [2]{@id,total,status,region,customer}
+1100|482.25|pending|us-east|Cust3154
+1101|316.05|shipped|us-west|Cust7403
+## changed [7]{@id,total,status,region,customer}
+1004|176.6|shipped|us-east|Cust2727
+1006|907.08|cancelled|apac|Cust3538
+1015|576.3|cancelled|apac|Cust7636
+1026|793.8|pending|us-west|Cust8907
+1058|927.53|open|eu|Cust5073
+1072|464.77|shipped|us-east|Cust4922
+1092|124.15|refunded|us-east|Cust4568
+## removed [1]{@id}
+1044
+##! rows=100 cancelled=21 open=16 pending=21 refunded=18 shipped=24
+
+----- update -----
+GCF profile=generic delta=true
+## added [4]{@id,total,status,region,customer}
+1102|615.36|cancelled|us-east|Cust6472
+1103|726.89|open|us-west|Cust3388
+1104|651.04|open|eu|Cust4310
+1105|176.63|pending|us-east|Cust4992
+## changed [3]{@id,total,status,region,customer}
+1041|31.69|refunded|us-west|Cust3203
+1047|776.25|open|eu|Cust8878
+1097|315.64|cancelled|eu|Cust6606
+## removed [3]{@id}
+1027
+1068
+1075
+##! rows=101 cancelled=20 open=18 pending=22 refunded=18 shipped=23
+
+----- update -----
+GCF profile=generic delta=true
+## added [3]{@id,total,status,region,customer}
+1106|936.99|pending|apac|Cust2543
+1107|414.75|open|us-east|Cust3839
+1108|874.35|pending|us-east|Cust6119
+## changed [5]{@id,total,status,region,customer}
+1019|580.14|shipped|eu|Cust5051
+1054|703.83|cancelled|us-east|Cust5353
+1058|926.87|cancelled|eu|Cust6164
+1090|950.35|open|us-west|Cust7054
+1093|14.97|open|apac|Cust4048
+## removed [2]{@id}
+1077
+1095
+##! rows=102 cancelled=21 open=17 pending=23 refunded=18 shipped=23
+
+----- update -----
+GCF profile=generic delta=true
+## added [2]{@id,total,status,region,customer}
+1109|452.97|pending|apac|Cust6673
+1110|162.52|cancelled|us-west|Cust2922
+## changed [7]{@id,total,status,region,customer}
+1007|883.95|shipped|apac|Cust3284
+1021|517.83|open|apac|Cust6578
+1071|288.23|pending|us-east|Cust1259
+1073|275.5|cancelled|eu|Cust4857
+1081|78.6|refunded|us-west|Cust1427
+1082|614.07|shipped|apac|Cust5867
+1090|112.46|shipped|us-east|Cust3416
+## removed [1]{@id}
+1040
+##! rows=103 cancelled=21 open=16 pending=24 refunded=18 shipped=24
+
+----- update -----
+GCF profile=generic delta=true
+## added [2]{@id,total,status,region,customer}
+1111|994.85|open|apac|Cust6696
+1112|90.51|cancelled|eu|Cust8034
+## changed [6]{@id,total,status,region,customer}
+1000|782.74|pending|us-west|Cust2819
+1023|29.84|shipped|apac|Cust1254
+1024|18.05|pending|apac|Cust8830
+1049|304.21|shipped|us-east|Cust8156
+1057|527.11|cancelled|eu|Cust3497
+1066|642.28|pending|us-east|Cust596
+## removed [2]{@id}
+1025
+1108
+##! rows=103 cancelled=22 open=16 pending=25 refunded=16 shipped=24
+
+----- update -----
+GCF profile=generic delta=true
+## added [2]{@id,total,status,region,customer}
+1113|380.93|shipped|eu|Cust5909
+1114|333.55|shipped|apac|Cust2082
+## changed [5]{@id,total,status,region,customer}
+1020|214.66|pending|us-east|Cust4762
+1043|844.3|open|eu|Cust7310
+1055|676.67|cancelled|us-west|Cust4692
+1083|599.33|open|eu|Cust3823
+1089|996.45|cancelled|eu|Cust8264
+## removed [3]{@id}
+1006
+1065
+1112
+##! rows=102 cancelled=20 open=17 pending=24 refunded=16 shipped=25
+
+----- update -----
+GCF profile=generic delta=true
+## added [1]{@id,total,status,region,customer}
+1116|210.55|open|us-east|Cust7773
+## changed [5]{@id,total,status,region,customer}
+1005|880.74|pending|us-east|Cust439
+1047|323.7|cancelled|us-east|Cust3106
+1069|273.92|cancelled|eu|Cust8978
+1098|403.9|shipped|apac|Cust2489
+1105|417.1|cancelled|eu|Cust1399
+## removed [2]{@id}
+1039
+1041
+##! rows=101 cancelled=22 open=17 pending=24 refunded=14 shipped=24
+
+----- update -----
+GCF profile=generic delta=true
+## added [1]{@id,total,status,region,customer}
+1117|301.22|open|us-east|Cust1370
+## changed [9]{@id,total,status,region,customer}
+1003|592.39|refunded|us-east|Cust4552
+1008|629.95|open|apac|Cust3188
+1031|627.56|cancelled|apac|Cust7468
+1034|437.21|open|us-east|Cust2763
+1036|757.47|pending|apac|Cust8313
+1038|134.23|shipped|eu|Cust4030
+1074|642.66|shipped|us-east|Cust1431
+1090|508.48|cancelled|eu|Cust5432
+1098|190.45|open|us-east|Cust932
+##! rows=102 cancelled=22 open=20 pending=23 refunded=14 shipped=23
+
+Answer each question about the CURRENT data after applying every update received so far. Reply with exactly one line per question, formatted "N: value" — value only, no explanation.
+1. What is the status of order 1049?
+2. What is the current status of order 1030?
+3. Is order 1075 still present? Answer yes or no.
+4. Is order 1050 still present? Answer yes or no.
+5. What is the total of order 1111?
+6. What is the customer of order 1048?
+7. How many orders are there now?
+8. How many orders have status cancelled?
+codex
+1: shipped
+2: refunded
+3: no
+4: yes
+5: 994.85
+6: Cust7831
+7: 102
+8: 22
+tokens used
+6,068
+

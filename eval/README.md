@@ -272,7 +272,9 @@ cd ../step1 && command node fuzz-fixed.mjs            # 800k lossless round-trip
 cd ../step2 && command node step2-run.mjs --self-test # scorer discriminates (no API spend)
 ```
 
-Detail: [`generic-delta/README.md`](generic-delta/README.md)
+**Depth study (the comprehension run):** the full 50-turn multi-model corpus — `DEPTH-FINDINGS.md` (per-model tables, gates, provenance), the per-model result JSONs, the per-probe transcripts, and the charts — lives in [`generic-delta-comprehension/`](generic-delta-comprehension/). That is where the depth numbers above come from.
+
+Detail: harness [`generic-delta/README.md`](generic-delta/README.md) · depth study [`generic-delta-comprehension/README.md`](generic-delta-comprehension/README.md)
 
 ---
 

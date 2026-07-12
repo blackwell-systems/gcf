@@ -1,0 +1,865 @@
+{
+ "scenario": "100rows_15turns_10churn",
+ "config": {
+  "name": "100rows_15turns_10churn",
+  "seed": 3,
+  "rows": 100,
+  "turns": 15,
+  "churn": 10,
+  "probeEvery": 1
+ },
+ "primer": "You are reading a live data feed encoded in GCF. The first message is a full table:\n\"## orders [N]{@id,total,status,region,customer}\" followed by rows, one per line, pipe-separated, in that column order. \"@id\" marks the identity column.\nEach later message is a DELTA that updates the table you already have:\n- \"## added\" : new rows (same columns).\n- \"## changed\" : each row REPLACES the existing row with the same @id.\n- \"## removed\" : a list of @id values to delete.\nRows not mentioned in a delta are UNCHANGED and still present. Apply all deltas in order. Always answer about the CURRENT table after applying every delta received so far. Answer with only the requested value (no explanation). Each delta ends with a summary line starting \"##! \" that gives the AUTHORITATIVE current totals after applying that delta: \"##! rows=<total> <status>=<count> ...\". For any counting question (total orders, or orders with a given status), read the number directly from this \"##! \" line rather than recounting the rows.",
+ "arms": {
+  "delta": [
+   {
+    "turn": 1,
+    "role": "tool",
+    "content": "GCF profile=generic\n## orders [100]{@id,total,status,region,customer}\n1000|719.51|open|us-west|Cust674\n1001|762.24|pending|us-west|Cust1456\n1002|262.99|pending|us-east|Cust752\n1003|713.07|pending|apac|Cust7917\n1004|323.3|cancelled|us-west|Cust6049\n1005|525.9|refunded|eu|Cust104\n1006|876.48|shipped|apac|Cust6924\n1007|420.16|cancelled|us-east|Cust3311\n1008|721.98|open|us-east|Cust4304\n1009|862.21|cancelled|eu|Cust7076\n1010|583.78|pending|us-east|Cust3350\n1011|530.4|refunded|us-west|Cust4175\n1012|496.26|pending|apac|Cust7698\n1013|663.94|shipped|eu|Cust6298\n1014|465.83|refunded|apac|Cust6413\n1015|676.44|refunded|apac|Cust512\n1016|66.09|pending|apac|Cust3103\n1017|539.66|shipped|us-west|Cust4967\n1018|577.25|shipped|apac|Cust1556\n1019|951.66|cancelled|apac|Cust6929\n1020|61.05|pending|us-east|Cust6216\n1021|773.15|cancelled|apac|Cust8912\n1022|979.33|pending|apac|Cust8552\n1023|812.73|shipped|eu|Cust8495\n1024|390.57|pending|us-east|Cust5679\n1025|546.79|shipped|apac|Cust441\n1026|847.37|open|us-west|Cust8005\n1027|29.02|cancelled|us-east|Cust2591\n1028|992.37|pending|us-east|Cust46\n1029|157.82|cancelled|eu|Cust7449\n1030|688.23|refunded|us-east|Cust1733\n1031|127.75|cancelled|eu|Cust5197\n1032|727.46|shipped|apac|Cust849\n1033|963.71|open|us-west|Cust4478\n1034|436.93|pending|us-west|Cust6039\n1035|11.98|pending|apac|Cust3030\n1036|449.04|shipped|apac|Cust709\n1037|102.93|open|us-east|Cust7810\n1038|770.18|refunded|us-west|Cust580\n1039|334.84|shipped|us-east|Cust1146\n1040|411.63|shipped|us-east|Cust4920\n1041|463.46|shipped|apac|Cust8049\n1042|901.7|shipped|us-west|Cust2521\n1043|203.6|cancelled|us-east|Cust1748\n1044|376.73|refunded|us-west|Cust5090\n1045|164.61|pending|apac|Cust216\n1046|982.88|shipped|us-east|Cust128\n1047|476.99|cancelled|apac|Cust4871\n1048|569.68|refunded|eu|Cust7831\n1049|861.06|cancelled|us-west|Cust5184\n1050|958.95|pending|us-east|Cust1496\n1051|552.34|shipped|eu|Cust7744\n1052|177.16|refunded|eu|Cust2852\n1053|231.3|refunded|eu|Cust4021\n1054|887.18|pending|apac|Cust4058\n1055|345.98|cancelled|us-west|Cust6029\n1056|224.81|cancelled|us-west|Cust6180\n1057|930.82|refunded|apac|Cust3599\n1058|213.96|open|us-east|Cust6133\n1059|641.56|refunded|us-west|Cust6461\n1060|257.27|refunded|us-east|Cust4208\n1061|632.96|refunded|apac|Cust647\n1062|844.36|shipped|apac|Cust7699\n1063|711.95|cancelled|us-west|Cust624\n1064|232.1|pending|eu|Cust4776\n1065|617.81|open|apac|Cust6318\n1066|607|refunded|apac|Cust8786\n1067|986.63|refunded|us-east|Cust3923\n1068|540.94|open|eu|Cust5235\n1069|845.44|cancelled|us-east|Cust5029\n1070|525.59|open|us-east|Cust3226\n1071|744.77|shipped|us-west|Cust5260\n1072|514.41|open|us-east|Cust3500\n1073|37.85|shipped|us-east|Cust2995\n1074|370.16|cancelled|us-west|Cust6551\n1075|458.85|refunded|apac|Cust5855\n1076|805.18|cancelled|apac|Cust6950\n1077|438.65|refunded|us-west|Cust3329\n1078|370.2|shipped|apac|Cust7153\n1079|402.1|pending|us-west|Cust3694\n1080|49.08|shipped|us-west|Cust6913\n1081|719.27|refunded|eu|Cust729\n1082|773.17|open|us-west|Cust4137\n1083|607.8|pending|eu|Cust1828\n1084|839.32|shipped|us-west|Cust6456\n1085|94.7|shipped|apac|Cust2584\n1086|851.93|shipped|eu|Cust92\n1087|131.99|open|us-west|Cust6168\n1088|47|shipped|eu|Cust6993\n1089|358.66|shipped|us-west|Cust579\n1090|9.94|shipped|apac|Cust2546\n1091|50.45|open|us-east|Cust5907\n1092|531.87|open|eu|Cust1315\n1093|43.2|open|us-east|Cust3777\n1094|807.86|open|eu|Cust1526\n1095|776.34|open|us-east|Cust7567\n1096|364.34|shipped|apac|Cust7644\n1097|800.61|shipped|eu|Cust6947\n1098|190.21|shipped|apac|Cust5688\n1099|840.43|cancelled|us-west|Cust6034\n##! rows=100 cancelled=18 open=17 pending=18 refunded=19 shipped=28"
+   },
+   {
+    "turn": 2,
+    "role": "tool",
+    "content": "GCF profile=generic delta=true\n## changed [9]{@id,total,status,region,customer}\n1013|422.75|open|us-east|Cust5267\n1030|243|refunded|eu|Cust532\n1041|525.05|cancelled|apac|Cust418\n1045|696.01|cancelled|us-west|Cust6605\n1063|105.86|cancelled|us-west|Cust5924\n1073|440.95|pending|eu|Cust4146\n1077|420.52|open|apac|Cust1342\n1084|114.74|refunded|eu|Cust1598\n1088|547.14|pending|us-west|Cust8934\n## removed [1]{@id}\n1096\n##! rows=99 cancelled=20 open=19 pending=19 refunded=19 shipped=22"
+   },
+   {
+    "turn": 3,
+    "role": "tool",
+    "content": "GCF profile=generic delta=true\n## added [2]{@id,total,status,region,customer}\n1100|482.25|pending|us-east|Cust3154\n1101|316.05|shipped|us-west|Cust7403\n## changed [7]{@id,total,status,region,customer}\n1004|176.6|shipped|us-east|Cust2727\n1006|907.08|cancelled|apac|Cust3538\n1015|576.3|cancelled|apac|Cust7636\n1026|793.8|pending|us-west|Cust8907\n1058|927.53|open|eu|Cust5073\n1072|464.77|shipped|us-east|Cust4922\n1092|124.15|refunded|us-east|Cust4568\n## removed [1]{@id}\n1044\n##! rows=100 cancelled=21 open=16 pending=21 refunded=18 shipped=24"
+   },
+   {
+    "turn": 4,
+    "role": "tool",
+    "content": "GCF profile=generic delta=true\n## added [4]{@id,total,status,region,customer}\n1102|615.36|cancelled|us-east|Cust6472\n1103|726.89|open|us-west|Cust3388\n1104|651.04|open|eu|Cust4310\n1105|176.63|pending|us-east|Cust4992\n## changed [3]{@id,total,status,region,customer}\n1041|31.69|refunded|us-west|Cust3203\n1047|776.25|open|eu|Cust8878\n1097|315.64|cancelled|eu|Cust6606\n## removed [3]{@id}\n1027\n1068\n1075\n##! rows=101 cancelled=20 open=18 pending=22 refunded=18 shipped=23"
+   },
+   {
+    "turn": 5,
+    "role": "tool",
+    "content": "GCF profile=generic delta=true\n## added [3]{@id,total,status,region,customer}\n1106|936.99|pending|apac|Cust2543\n1107|414.75|open|us-east|Cust3839\n1108|874.35|pending|us-east|Cust6119\n## changed [5]{@id,total,status,region,customer}\n1019|580.14|shipped|eu|Cust5051\n1054|703.83|cancelled|us-east|Cust5353\n1058|926.87|cancelled|eu|Cust6164\n1090|950.35|open|us-west|Cust7054\n1093|14.97|open|apac|Cust4048\n## removed [2]{@id}\n1077\n1095\n##! rows=102 cancelled=21 open=17 pending=23 refunded=18 shipped=23"
+   },
+   {
+    "turn": 6,
+    "role": "tool",
+    "content": "GCF profile=generic delta=true\n## added [2]{@id,total,status,region,customer}\n1109|452.97|pending|apac|Cust6673\n1110|162.52|cancelled|us-west|Cust2922\n## changed [7]{@id,total,status,region,customer}\n1007|883.95|shipped|apac|Cust3284\n1021|517.83|open|apac|Cust6578\n1071|288.23|pending|us-east|Cust1259\n1073|275.5|cancelled|eu|Cust4857\n1081|78.6|refunded|us-west|Cust1427\n1082|614.07|shipped|apac|Cust5867\n1090|112.46|shipped|us-east|Cust3416\n## removed [1]{@id}\n1040\n##! rows=103 cancelled=21 open=16 pending=24 refunded=18 shipped=24"
+   },
+   {
+    "turn": 7,
+    "role": "tool",
+    "content": "GCF profile=generic delta=true\n## added [2]{@id,total,status,region,customer}\n1111|994.85|open|apac|Cust6696\n1112|90.51|cancelled|eu|Cust8034\n## changed [6]{@id,total,status,region,customer}\n1000|782.74|pending|us-west|Cust2819\n1023|29.84|shipped|apac|Cust1254\n1024|18.05|pending|apac|Cust8830\n1049|304.21|shipped|us-east|Cust8156\n1057|527.11|cancelled|eu|Cust3497\n1066|642.28|pending|us-east|Cust596\n## removed [2]{@id}\n1025\n1108\n##! rows=103 cancelled=22 open=16 pending=25 refunded=16 shipped=24"
+   },
+   {
+    "turn": 8,
+    "role": "tool",
+    "content": "GCF profile=generic delta=true\n## added [2]{@id,total,status,region,customer}\n1113|380.93|shipped|eu|Cust5909\n1114|333.55|shipped|apac|Cust2082\n## changed [5]{@id,total,status,region,customer}\n1020|214.66|pending|us-east|Cust4762\n1043|844.3|open|eu|Cust7310\n1055|676.67|cancelled|us-west|Cust4692\n1083|599.33|open|eu|Cust3823\n1089|996.45|cancelled|eu|Cust8264\n## removed [3]{@id}\n1006\n1065\n1112\n##! rows=102 cancelled=20 open=17 pending=24 refunded=16 shipped=25"
+   },
+   {
+    "turn": 9,
+    "role": "tool",
+    "content": "GCF profile=generic delta=true\n## added [1]{@id,total,status,region,customer}\n1116|210.55|open|us-east|Cust7773\n## changed [5]{@id,total,status,region,customer}\n1005|880.74|pending|us-east|Cust439\n1047|323.7|cancelled|us-east|Cust3106\n1069|273.92|cancelled|eu|Cust8978\n1098|403.9|shipped|apac|Cust2489\n1105|417.1|cancelled|eu|Cust1399\n## removed [2]{@id}\n1039\n1041\n##! rows=101 cancelled=22 open=17 pending=24 refunded=14 shipped=24"
+   },
+   {
+    "turn": 10,
+    "role": "tool",
+    "content": "GCF profile=generic delta=true\n## added [1]{@id,total,status,region,customer}\n1117|301.22|open|us-east|Cust1370\n## changed [9]{@id,total,status,region,customer}\n1003|592.39|refunded|us-east|Cust4552\n1008|629.95|open|apac|Cust3188\n1031|627.56|cancelled|apac|Cust7468\n1034|437.21|open|us-east|Cust2763\n1036|757.47|pending|apac|Cust8313\n1038|134.23|shipped|eu|Cust4030\n1074|642.66|shipped|us-east|Cust1431\n1090|508.48|cancelled|eu|Cust5432\n1098|190.45|open|us-east|Cust932\n##! rows=102 cancelled=22 open=20 pending=23 refunded=14 shipped=23"
+   },
+   {
+    "turn": 11,
+    "role": "tool",
+    "content": "GCF profile=generic delta=true\n## changed [7]{@id,total,status,region,customer}\n1016|487.4|shipped|apac|Cust1043\n1020|67.55|refunded|us-east|Cust8605\n1030|395.32|pending|us-east|Cust2784\n1070|878.94|refunded|eu|Cust6503\n1079|72.89|pending|us-west|Cust2088\n1084|946.37|cancelled|apac|Cust4407\n1103|825.71|pending|us-east|Cust3692\n## removed [2]{@id}\n1097\n1100\n##! rows=100 cancelled=22 open=18 pending=22 refunded=14 shipped=24"
+   },
+   {
+    "turn": 12,
+    "role": "tool",
+    "content": "GCF profile=generic delta=true\n## added [6]{@id,total,status,region,customer}\n1118|408.7|refunded|us-west|Cust4722\n1119|269.58|open|apac|Cust4763\n1120|948.12|shipped|eu|Cust7407\n1121|388.69|pending|us-west|Cust1559\n1122|430.76|cancelled|apac|Cust6302\n1123|717.8|refunded|us-west|Cust8376\n## changed [4]{@id,total,status,region,customer}\n1033|545.13|cancelled|eu|Cust1143\n1076|323.4|shipped|us-east|Cust3522\n1085|198.42|open|eu|Cust8056\n1087|659.29|refunded|us-west|Cust2353\n##! rows=106 cancelled=23 open=18 pending=23 refunded=17 shipped=25"
+   },
+   {
+    "turn": 13,
+    "role": "tool",
+    "content": "GCF profile=generic delta=true\n## added [1]{@id,total,status,region,customer}\n1124|726.91|pending|us-east|Cust2051\n## changed [4]{@id,total,status,region,customer}\n1015|165.15|refunded|us-west|Cust5679\n1034|560|refunded|apac|Cust4221\n1106|808.9|pending|us-west|Cust8775\n1118|666.28|cancelled|us-east|Cust6947\n## removed [5]{@id}\n1001\n1013\n1017\n1064\n1101\n##! rows=102 cancelled=23 open=16 pending=22 refunded=18 shipped=23"
+   },
+   {
+    "turn": 14,
+    "role": "tool",
+    "content": "GCF profile=generic delta=true\n## added [4]{@id,total,status,region,customer}\n1125|420.59|shipped|us-east|Cust1487\n1126|811.34|open|us-east|Cust4358\n1127|653.48|cancelled|us-east|Cust4207\n1128|538.53|open|us-west|Cust6213\n## changed [4]{@id,total,status,region,customer}\n1000|288.1|open|apac|Cust573\n1034|504.92|shipped|us-east|Cust3699\n1042|746.97|open|us-east|Cust8190\n1056|610.26|open|eu|Cust2612\n## removed [2]{@id}\n1062\n1081\n##! rows=104 cancelled=23 open=21 pending=21 refunded=16 shipped=23"
+   },
+   {
+    "turn": 15,
+    "role": "tool",
+    "content": "GCF profile=generic delta=true\n## changed [7]{@id,total,status,region,customer}\n1030|565.02|open|us-east|Cust5264\n1042|64.45|open|eu|Cust1352\n1043|332.31|cancelled|us-west|Cust2459\n1047|86.52|open|eu|Cust4338\n1093|782.4|refunded|eu|Cust4385\n1102|540.15|refunded|us-east|Cust7101\n1105|934.49|pending|apac|Cust568\n## removed [3]{@id}\n1007\n1033\n1036\n##! rows=101 cancelled=20 open=21 pending=20 refunded=18 shipped=22"
+   },
+   {
+    "turn": 16,
+    "role": "tool",
+    "content": "GCF profile=generic delta=true\n## added [4]{@id,total,status,region,customer}\n1129|850.68|shipped|eu|Cust4665\n1130|547.3|cancelled|apac|Cust6884\n1131|912.34|open|eu|Cust2550\n1132|413.61|open|us-west|Cust3084\n## changed [4]{@id,total,status,region,customer}\n1073|213.83|cancelled|us-west|Cust7006\n1085|441.95|open|apac|Cust4250\n1094|896.15|open|eu|Cust7529\n1107|475.51|shipped|us-west|Cust5581\n## removed [2]{@id}\n1070\n1089\n##! rows=103 cancelled=20 open=22 pending=20 refunded=17 shipped=24"
+   }
+  ],
+  "full_resend": [
+   {
+    "turn": 1,
+    "role": "tool",
+    "content": "GCF profile=generic\n## orders [100]{@id,total,status,region,customer}\n1000|719.51|open|us-west|Cust674\n1001|762.24|pending|us-west|Cust1456\n1002|262.99|pending|us-east|Cust752\n1003|713.07|pending|apac|Cust7917\n1004|323.3|cancelled|us-west|Cust6049\n1005|525.9|refunded|eu|Cust104\n1006|876.48|shipped|apac|Cust6924\n1007|420.16|cancelled|us-east|Cust3311\n1008|721.98|open|us-east|Cust4304\n1009|862.21|cancelled|eu|Cust7076\n1010|583.78|pending|us-east|Cust3350\n1011|530.4|refunded|us-west|Cust4175\n1012|496.26|pending|apac|Cust7698\n1013|663.94|shipped|eu|Cust6298\n1014|465.83|refunded|apac|Cust6413\n1015|676.44|refunded|apac|Cust512\n1016|66.09|pending|apac|Cust3103\n1017|539.66|shipped|us-west|Cust4967\n1018|577.25|shipped|apac|Cust1556\n1019|951.66|cancelled|apac|Cust6929\n1020|61.05|pending|us-east|Cust6216\n1021|773.15|cancelled|apac|Cust8912\n1022|979.33|pending|apac|Cust8552\n1023|812.73|shipped|eu|Cust8495\n1024|390.57|pending|us-east|Cust5679\n1025|546.79|shipped|apac|Cust441\n1026|847.37|open|us-west|Cust8005\n1027|29.02|cancelled|us-east|Cust2591\n1028|992.37|pending|us-east|Cust46\n1029|157.82|cancelled|eu|Cust7449\n1030|688.23|refunded|us-east|Cust1733\n1031|127.75|cancelled|eu|Cust5197\n1032|727.46|shipped|apac|Cust849\n1033|963.71|open|us-west|Cust4478\n1034|436.93|pending|us-west|Cust6039\n1035|11.98|pending|apac|Cust3030\n1036|449.04|shipped|apac|Cust709\n1037|102.93|open|us-east|Cust7810\n1038|770.18|refunded|us-west|Cust580\n1039|334.84|shipped|us-east|Cust1146\n1040|411.63|shipped|us-east|Cust4920\n1041|463.46|shipped|apac|Cust8049\n1042|901.7|shipped|us-west|Cust2521\n1043|203.6|cancelled|us-east|Cust1748\n1044|376.73|refunded|us-west|Cust5090\n1045|164.61|pending|apac|Cust216\n1046|982.88|shipped|us-east|Cust128\n1047|476.99|cancelled|apac|Cust4871\n1048|569.68|refunded|eu|Cust7831\n1049|861.06|cancelled|us-west|Cust5184\n1050|958.95|pending|us-east|Cust1496\n1051|552.34|shipped|eu|Cust7744\n1052|177.16|refunded|eu|Cust2852\n1053|231.3|refunded|eu|Cust4021\n1054|887.18|pending|apac|Cust4058\n1055|345.98|cancelled|us-west|Cust6029\n1056|224.81|cancelled|us-west|Cust6180\n1057|930.82|refunded|apac|Cust3599\n1058|213.96|open|us-east|Cust6133\n1059|641.56|refunded|us-west|Cust6461\n1060|257.27|refunded|us-east|Cust4208\n1061|632.96|refunded|apac|Cust647\n1062|844.36|shipped|apac|Cust7699\n1063|711.95|cancelled|us-west|Cust624\n1064|232.1|pending|eu|Cust4776\n1065|617.81|open|apac|Cust6318\n1066|607|refunded|apac|Cust8786\n1067|986.63|refunded|us-east|Cust3923\n1068|540.94|open|eu|Cust5235\n1069|845.44|cancelled|us-east|Cust5029\n1070|525.59|open|us-east|Cust3226\n1071|744.77|shipped|us-west|Cust5260\n1072|514.41|open|us-east|Cust3500\n1073|37.85|shipped|us-east|Cust2995\n1074|370.16|cancelled|us-west|Cust6551\n1075|458.85|refunded|apac|Cust5855\n1076|805.18|cancelled|apac|Cust6950\n1077|438.65|refunded|us-west|Cust3329\n1078|370.2|shipped|apac|Cust7153\n1079|402.1|pending|us-west|Cust3694\n1080|49.08|shipped|us-west|Cust6913\n1081|719.27|refunded|eu|Cust729\n1082|773.17|open|us-west|Cust4137\n1083|607.8|pending|eu|Cust1828\n1084|839.32|shipped|us-west|Cust6456\n1085|94.7|shipped|apac|Cust2584\n1086|851.93|shipped|eu|Cust92\n1087|131.99|open|us-west|Cust6168\n1088|47|shipped|eu|Cust6993\n1089|358.66|shipped|us-west|Cust579\n1090|9.94|shipped|apac|Cust2546\n1091|50.45|open|us-east|Cust5907\n1092|531.87|open|eu|Cust1315\n1093|43.2|open|us-east|Cust3777\n1094|807.86|open|eu|Cust1526\n1095|776.34|open|us-east|Cust7567\n1096|364.34|shipped|apac|Cust7644\n1097|800.61|shipped|eu|Cust6947\n1098|190.21|shipped|apac|Cust5688\n1099|840.43|cancelled|us-west|Cust6034"
+   },
+   {
+    "turn": 2,
+    "role": "tool",
+    "content": "GCF profile=generic\n## orders [99]{@id,total,status,region,customer}\n1000|719.51|open|us-west|Cust674\n1001|762.24|pending|us-west|Cust1456\n1002|262.99|pending|us-east|Cust752\n1003|713.07|pending|apac|Cust7917\n1004|323.3|cancelled|us-west|Cust6049\n1005|525.9|refunded|eu|Cust104\n1006|876.48|shipped|apac|Cust6924\n1007|420.16|cancelled|us-east|Cust3311\n1008|721.98|open|us-east|Cust4304\n1009|862.21|cancelled|eu|Cust7076\n1010|583.78|pending|us-east|Cust3350\n1011|530.4|refunded|us-west|Cust4175\n1012|496.26|pending|apac|Cust7698\n1013|422.75|open|us-east|Cust5267\n1014|465.83|refunded|apac|Cust6413\n1015|676.44|refunded|apac|Cust512\n1016|66.09|pending|apac|Cust3103\n1017|539.66|shipped|us-west|Cust4967\n1018|577.25|shipped|apac|Cust1556\n1019|951.66|cancelled|apac|Cust6929\n1020|61.05|pending|us-east|Cust6216\n1021|773.15|cancelled|apac|Cust8912\n1022|979.33|pending|apac|Cust8552\n1023|812.73|shipped|eu|Cust8495\n1024|390.57|pending|us-east|Cust5679\n1025|546.79|shipped|apac|Cust441\n1026|847.37|open|us-west|Cust8005\n1027|29.02|cancelled|us-east|Cust2591\n1028|992.37|pending|us-east|Cust46\n1029|157.82|cancelled|eu|Cust7449\n1030|243|refunded|eu|Cust532\n1031|127.75|cancelled|eu|Cust5197\n1032|727.46|shipped|apac|Cust849\n1033|963.71|open|us-west|Cust4478\n1034|436.93|pending|us-west|Cust6039\n1035|11.98|pending|apac|Cust3030\n1036|449.04|shipped|apac|Cust709\n1037|102.93|open|us-east|Cust7810\n1038|770.18|refunded|us-west|Cust580\n1039|334.84|shipped|us-east|Cust1146\n1040|411.63|shipped|us-east|Cust4920\n1041|525.05|cancelled|apac|Cust418\n1042|901.7|shipped|us-west|Cust2521\n1043|203.6|cancelled|us-east|Cust1748\n1044|376.73|refunded|us-west|Cust5090\n1045|696.01|cancelled|us-west|Cust6605\n1046|982.88|shipped|us-east|Cust128\n1047|476.99|cancelled|apac|Cust4871\n1048|569.68|refunded|eu|Cust7831\n1049|861.06|cancelled|us-west|Cust5184\n1050|958.95|pending|us-east|Cust1496\n1051|552.34|shipped|eu|Cust7744\n1052|177.16|refunded|eu|Cust2852\n1053|231.3|refunded|eu|Cust4021\n1054|887.18|pending|apac|Cust4058\n1055|345.98|cancelled|us-west|Cust6029\n1056|224.81|cancelled|us-west|Cust6180\n1057|930.82|refunded|apac|Cust3599\n1058|213.96|open|us-east|Cust6133\n1059|641.56|refunded|us-west|Cust6461\n1060|257.27|refunded|us-east|Cust4208\n1061|632.96|refunded|apac|Cust647\n1062|844.36|shipped|apac|Cust7699\n1063|105.86|cancelled|us-west|Cust5924\n1064|232.1|pending|eu|Cust4776\n1065|617.81|open|apac|Cust6318\n1066|607|refunded|apac|Cust8786\n1067|986.63|refunded|us-east|Cust3923\n1068|540.94|open|eu|Cust5235\n1069|845.44|cancelled|us-east|Cust5029\n1070|525.59|open|us-east|Cust3226\n1071|744.77|shipped|us-west|Cust5260\n1072|514.41|open|us-east|Cust3500\n1073|440.95|pending|eu|Cust4146\n1074|370.16|cancelled|us-west|Cust6551\n1075|458.85|refunded|apac|Cust5855\n1076|805.18|cancelled|apac|Cust6950\n1077|420.52|open|apac|Cust1342\n1078|370.2|shipped|apac|Cust7153\n1079|402.1|pending|us-west|Cust3694\n1080|49.08|shipped|us-west|Cust6913\n1081|719.27|refunded|eu|Cust729\n1082|773.17|open|us-west|Cust4137\n1083|607.8|pending|eu|Cust1828\n1084|114.74|refunded|eu|Cust1598\n1085|94.7|shipped|apac|Cust2584\n1086|851.93|shipped|eu|Cust92\n1087|131.99|open|us-west|Cust6168\n1088|547.14|pending|us-west|Cust8934\n1089|358.66|shipped|us-west|Cust579\n1090|9.94|shipped|apac|Cust2546\n1091|50.45|open|us-east|Cust5907\n1092|531.87|open|eu|Cust1315\n1093|43.2|open|us-east|Cust3777\n1094|807.86|open|eu|Cust1526\n1095|776.34|open|us-east|Cust7567\n1097|800.61|shipped|eu|Cust6947\n1098|190.21|shipped|apac|Cust5688\n1099|840.43|cancelled|us-west|Cust6034"
+   },
+   {
+    "turn": 3,
+    "role": "tool",
+    "content": "GCF profile=generic\n## orders [100]{@id,total,status,region,customer}\n1000|719.51|open|us-west|Cust674\n1001|762.24|pending|us-west|Cust1456\n1002|262.99|pending|us-east|Cust752\n1003|713.07|pending|apac|Cust7917\n1004|176.6|shipped|us-east|Cust2727\n1005|525.9|refunded|eu|Cust104\n1006|907.08|cancelled|apac|Cust3538\n1007|420.16|cancelled|us-east|Cust3311\n1008|721.98|open|us-east|Cust4304\n1009|862.21|cancelled|eu|Cust7076\n1010|583.78|pending|us-east|Cust3350\n1011|530.4|refunded|us-west|Cust4175\n1012|496.26|pending|apac|Cust7698\n1013|422.75|open|us-east|Cust5267\n1014|465.83|refunded|apac|Cust6413\n1015|576.3|cancelled|apac|Cust7636\n1016|66.09|pending|apac|Cust3103\n1017|539.66|shipped|us-west|Cust4967\n1018|577.25|shipped|apac|Cust1556\n1019|951.66|cancelled|apac|Cust6929\n1020|61.05|pending|us-east|Cust6216\n1021|773.15|cancelled|apac|Cust8912\n1022|979.33|pending|apac|Cust8552\n1023|812.73|shipped|eu|Cust8495\n1024|390.57|pending|us-east|Cust5679\n1025|546.79|shipped|apac|Cust441\n1026|793.8|pending|us-west|Cust8907\n1027|29.02|cancelled|us-east|Cust2591\n1028|992.37|pending|us-east|Cust46\n1029|157.82|cancelled|eu|Cust7449\n1030|243|refunded|eu|Cust532\n1031|127.75|cancelled|eu|Cust5197\n1032|727.46|shipped|apac|Cust849\n1033|963.71|open|us-west|Cust4478\n1034|436.93|pending|us-west|Cust6039\n1035|11.98|pending|apac|Cust3030\n1036|449.04|shipped|apac|Cust709\n1037|102.93|open|us-east|Cust7810\n1038|770.18|refunded|us-west|Cust580\n1039|334.84|shipped|us-east|Cust1146\n1040|411.63|shipped|us-east|Cust4920\n1041|525.05|cancelled|apac|Cust418\n1042|901.7|shipped|us-west|Cust2521\n1043|203.6|cancelled|us-east|Cust1748\n1045|696.01|cancelled|us-west|Cust6605\n1046|982.88|shipped|us-east|Cust128\n1047|476.99|cancelled|apac|Cust4871\n1048|569.68|refunded|eu|Cust7831\n1049|861.06|cancelled|us-west|Cust5184\n1050|958.95|pending|us-east|Cust1496\n1051|552.34|shipped|eu|Cust7744\n1052|177.16|refunded|eu|Cust2852\n1053|231.3|refunded|eu|Cust4021\n1054|887.18|pending|apac|Cust4058\n1055|345.98|cancelled|us-west|Cust6029\n1056|224.81|cancelled|us-west|Cust6180\n1057|930.82|refunded|apac|Cust3599\n1058|927.53|open|eu|Cust5073\n1059|641.56|refunded|us-west|Cust6461\n1060|257.27|refunded|us-east|Cust4208\n1061|632.96|refunded|apac|Cust647\n1062|844.36|shipped|apac|Cust7699\n1063|105.86|cancelled|us-west|Cust5924\n1064|232.1|pending|eu|Cust4776\n1065|617.81|open|apac|Cust6318\n1066|607|refunded|apac|Cust8786\n1067|986.63|refunded|us-east|Cust3923\n1068|540.94|open|eu|Cust5235\n1069|845.44|cancelled|us-east|Cust5029\n1070|525.59|open|us-east|Cust3226\n1071|744.77|shipped|us-west|Cust5260\n1072|464.77|shipped|us-east|Cust4922\n1073|440.95|pending|eu|Cust4146\n1074|370.16|cancelled|us-west|Cust6551\n1075|458.85|refunded|apac|Cust5855\n1076|805.18|cancelled|apac|Cust6950\n1077|420.52|open|apac|Cust1342\n1078|370.2|shipped|apac|Cust7153\n1079|402.1|pending|us-west|Cust3694\n1080|49.08|shipped|us-west|Cust6913\n1081|719.27|refunded|eu|Cust729\n1082|773.17|open|us-west|Cust4137\n1083|607.8|pending|eu|Cust1828\n1084|114.74|refunded|eu|Cust1598\n1085|94.7|shipped|apac|Cust2584\n1086|851.93|shipped|eu|Cust92\n1087|131.99|open|us-west|Cust6168\n1088|547.14|pending|us-west|Cust8934\n1089|358.66|shipped|us-west|Cust579\n1090|9.94|shipped|apac|Cust2546\n1091|50.45|open|us-east|Cust5907\n1092|124.15|refunded|us-east|Cust4568\n1093|43.2|open|us-east|Cust3777\n1094|807.86|open|eu|Cust1526\n1095|776.34|open|us-east|Cust7567\n1097|800.61|shipped|eu|Cust6947\n1098|190.21|shipped|apac|Cust5688\n1099|840.43|cancelled|us-west|Cust6034\n1100|482.25|pending|us-east|Cust3154\n1101|316.05|shipped|us-west|Cust7403"
+   },
+   {
+    "turn": 4,
+    "role": "tool",
+    "content": "GCF profile=generic\n## orders [101]{@id,total,status,region,customer}\n1000|719.51|open|us-west|Cust674\n1001|762.24|pending|us-west|Cust1456\n1002|262.99|pending|us-east|Cust752\n1003|713.07|pending|apac|Cust7917\n1004|176.6|shipped|us-east|Cust2727\n1005|525.9|refunded|eu|Cust104\n1006|907.08|cancelled|apac|Cust3538\n1007|420.16|cancelled|us-east|Cust3311\n1008|721.98|open|us-east|Cust4304\n1009|862.21|cancelled|eu|Cust7076\n1010|583.78|pending|us-east|Cust3350\n1011|530.4|refunded|us-west|Cust4175\n1012|496.26|pending|apac|Cust7698\n1013|422.75|open|us-east|Cust5267\n1014|465.83|refunded|apac|Cust6413\n1015|576.3|cancelled|apac|Cust7636\n1016|66.09|pending|apac|Cust3103\n1017|539.66|shipped|us-west|Cust4967\n1018|577.25|shipped|apac|Cust1556\n1019|951.66|cancelled|apac|Cust6929\n1020|61.05|pending|us-east|Cust6216\n1021|773.15|cancelled|apac|Cust8912\n1022|979.33|pending|apac|Cust8552\n1023|812.73|shipped|eu|Cust8495\n1024|390.57|pending|us-east|Cust5679\n1025|546.79|shipped|apac|Cust441\n1026|793.8|pending|us-west|Cust8907\n1028|992.37|pending|us-east|Cust46\n1029|157.82|cancelled|eu|Cust7449\n1030|243|refunded|eu|Cust532\n1031|127.75|cancelled|eu|Cust5197\n1032|727.46|shipped|apac|Cust849\n1033|963.71|open|us-west|Cust4478\n1034|436.93|pending|us-west|Cust6039\n1035|11.98|pending|apac|Cust3030\n1036|449.04|shipped|apac|Cust709\n1037|102.93|open|us-east|Cust7810\n1038|770.18|refunded|us-west|Cust580\n1039|334.84|shipped|us-east|Cust1146\n1040|411.63|shipped|us-east|Cust4920\n1041|31.69|refunded|us-west|Cust3203\n1042|901.7|shipped|us-west|Cust2521\n1043|203.6|cancelled|us-east|Cust1748\n1045|696.01|cancelled|us-west|Cust6605\n1046|982.88|shipped|us-east|Cust128\n1047|776.25|open|eu|Cust8878\n1048|569.68|refunded|eu|Cust7831\n1049|861.06|cancelled|us-west|Cust5184\n1050|958.95|pending|us-east|Cust1496\n1051|552.34|shipped|eu|Cust7744\n1052|177.16|refunded|eu|Cust2852\n1053|231.3|refunded|eu|Cust4021\n1054|887.18|pending|apac|Cust4058\n1055|345.98|cancelled|us-west|Cust6029\n1056|224.81|cancelled|us-west|Cust6180\n1057|930.82|refunded|apac|Cust3599\n1058|927.53|open|eu|Cust5073\n1059|641.56|refunded|us-west|Cust6461\n1060|257.27|refunded|us-east|Cust4208\n1061|632.96|refunded|apac|Cust647\n1062|844.36|shipped|apac|Cust7699\n1063|105.86|cancelled|us-west|Cust5924\n1064|232.1|pending|eu|Cust4776\n1065|617.81|open|apac|Cust6318\n1066|607|refunded|apac|Cust8786\n1067|986.63|refunded|us-east|Cust3923\n1069|845.44|cancelled|us-east|Cust5029\n1070|525.59|open|us-east|Cust3226\n1071|744.77|shipped|us-west|Cust5260\n1072|464.77|shipped|us-east|Cust4922\n1073|440.95|pending|eu|Cust4146\n1074|370.16|cancelled|us-west|Cust6551\n1076|805.18|cancelled|apac|Cust6950\n1077|420.52|open|apac|Cust1342\n1078|370.2|shipped|apac|Cust7153\n1079|402.1|pending|us-west|Cust3694\n1080|49.08|shipped|us-west|Cust6913\n1081|719.27|refunded|eu|Cust729\n1082|773.17|open|us-west|Cust4137\n1083|607.8|pending|eu|Cust1828\n1084|114.74|refunded|eu|Cust1598\n1085|94.7|shipped|apac|Cust2584\n1086|851.93|shipped|eu|Cust92\n1087|131.99|open|us-west|Cust6168\n1088|547.14|pending|us-west|Cust8934\n1089|358.66|shipped|us-west|Cust579\n1090|9.94|shipped|apac|Cust2546\n1091|50.45|open|us-east|Cust5907\n1092|124.15|refunded|us-east|Cust4568\n1093|43.2|open|us-east|Cust3777\n1094|807.86|open|eu|Cust1526\n1095|776.34|open|us-east|Cust7567\n1097|315.64|cancelled|eu|Cust6606\n1098|190.21|shipped|apac|Cust5688\n1099|840.43|cancelled|us-west|Cust6034\n1100|482.25|pending|us-east|Cust3154\n1101|316.05|shipped|us-west|Cust7403\n1102|615.36|cancelled|us-east|Cust6472\n1103|726.89|open|us-west|Cust3388\n1104|651.04|open|eu|Cust4310\n1105|176.63|pending|us-east|Cust4992"
+   },
+   {
+    "turn": 5,
+    "role": "tool",
+    "content": "GCF profile=generic\n## orders [102]{@id,total,status,region,customer}\n1000|719.51|open|us-west|Cust674\n1001|762.24|pending|us-west|Cust1456\n1002|262.99|pending|us-east|Cust752\n1003|713.07|pending|apac|Cust7917\n1004|176.6|shipped|us-east|Cust2727\n1005|525.9|refunded|eu|Cust104\n1006|907.08|cancelled|apac|Cust3538\n1007|420.16|cancelled|us-east|Cust3311\n1008|721.98|open|us-east|Cust4304\n1009|862.21|cancelled|eu|Cust7076\n1010|583.78|pending|us-east|Cust3350\n1011|530.4|refunded|us-west|Cust4175\n1012|496.26|pending|apac|Cust7698\n1013|422.75|open|us-east|Cust5267\n1014|465.83|refunded|apac|Cust6413\n1015|576.3|cancelled|apac|Cust7636\n1016|66.09|pending|apac|Cust3103\n1017|539.66|shipped|us-west|Cust4967\n1018|577.25|shipped|apac|Cust1556\n1019|580.14|shipped|eu|Cust5051\n1020|61.05|pending|us-east|Cust6216\n1021|773.15|cancelled|apac|Cust8912\n1022|979.33|pending|apac|Cust8552\n1023|812.73|shipped|eu|Cust8495\n1024|390.57|pending|us-east|Cust5679\n1025|546.79|shipped|apac|Cust441\n1026|793.8|pending|us-west|Cust8907\n1028|992.37|pending|us-east|Cust46\n1029|157.82|cancelled|eu|Cust7449\n1030|243|refunded|eu|Cust532\n1031|127.75|cancelled|eu|Cust5197\n1032|727.46|shipped|apac|Cust849\n1033|963.71|open|us-west|Cust4478\n1034|436.93|pending|us-west|Cust6039\n1035|11.98|pending|apac|Cust3030\n1036|449.04|shipped|apac|Cust709\n1037|102.93|open|us-east|Cust7810\n1038|770.18|refunded|us-west|Cust580\n1039|334.84|shipped|us-east|Cust1146\n1040|411.63|shipped|us-east|Cust4920\n1041|31.69|refunded|us-west|Cust3203\n1042|901.7|shipped|us-west|Cust2521\n1043|203.6|cancelled|us-east|Cust1748\n1045|696.01|cancelled|us-west|Cust6605\n1046|982.88|shipped|us-east|Cust128\n1047|776.25|open|eu|Cust8878\n1048|569.68|refunded|eu|Cust7831\n1049|861.06|cancelled|us-west|Cust5184\n1050|958.95|pending|us-east|Cust1496\n1051|552.34|shipped|eu|Cust7744\n1052|177.16|refunded|eu|Cust2852\n1053|231.3|refunded|eu|Cust4021\n1054|703.83|cancelled|us-east|Cust5353\n1055|345.98|cancelled|us-west|Cust6029\n1056|224.81|cancelled|us-west|Cust6180\n1057|930.82|refunded|apac|Cust3599\n1058|926.87|cancelled|eu|Cust6164\n1059|641.56|refunded|us-west|Cust6461\n1060|257.27|refunded|us-east|Cust4208\n1061|632.96|refunded|apac|Cust647\n1062|844.36|shipped|apac|Cust7699\n1063|105.86|cancelled|us-west|Cust5924\n1064|232.1|pending|eu|Cust4776\n1065|617.81|open|apac|Cust6318\n1066|607|refunded|apac|Cust8786\n1067|986.63|refunded|us-east|Cust3923\n1069|845.44|cancelled|us-east|Cust5029\n1070|525.59|open|us-east|Cust3226\n1071|744.77|shipped|us-west|Cust5260\n1072|464.77|shipped|us-east|Cust4922\n1073|440.95|pending|eu|Cust4146\n1074|370.16|cancelled|us-west|Cust6551\n1076|805.18|cancelled|apac|Cust6950\n1078|370.2|shipped|apac|Cust7153\n1079|402.1|pending|us-west|Cust3694\n1080|49.08|shipped|us-west|Cust6913\n1081|719.27|refunded|eu|Cust729\n1082|773.17|open|us-west|Cust4137\n1083|607.8|pending|eu|Cust1828\n1084|114.74|refunded|eu|Cust1598\n1085|94.7|shipped|apac|Cust2584\n1086|851.93|shipped|eu|Cust92\n1087|131.99|open|us-west|Cust6168\n1088|547.14|pending|us-west|Cust8934\n1089|358.66|shipped|us-west|Cust579\n1090|950.35|open|us-west|Cust7054\n1091|50.45|open|us-east|Cust5907\n1092|124.15|refunded|us-east|Cust4568\n1093|14.97|open|apac|Cust4048\n1094|807.86|open|eu|Cust1526\n1097|315.64|cancelled|eu|Cust6606\n1098|190.21|shipped|apac|Cust5688\n1099|840.43|cancelled|us-west|Cust6034\n1100|482.25|pending|us-east|Cust3154\n1101|316.05|shipped|us-west|Cust7403\n1102|615.36|cancelled|us-east|Cust6472\n1103|726.89|open|us-west|Cust3388\n1104|651.04|open|eu|Cust4310\n1105|176.63|pending|us-east|Cust4992\n1106|936.99|pending|apac|Cust2543\n1107|414.75|open|us-east|Cust3839\n1108|874.35|pending|us-east|Cust6119"
+   },
+   {
+    "turn": 6,
+    "role": "tool",
+    "content": "GCF profile=generic\n## orders [103]{@id,total,status,region,customer}\n1000|719.51|open|us-west|Cust674\n1001|762.24|pending|us-west|Cust1456\n1002|262.99|pending|us-east|Cust752\n1003|713.07|pending|apac|Cust7917\n1004|176.6|shipped|us-east|Cust2727\n1005|525.9|refunded|eu|Cust104\n1006|907.08|cancelled|apac|Cust3538\n1007|883.95|shipped|apac|Cust3284\n1008|721.98|open|us-east|Cust4304\n1009|862.21|cancelled|eu|Cust7076\n1010|583.78|pending|us-east|Cust3350\n1011|530.4|refunded|us-west|Cust4175\n1012|496.26|pending|apac|Cust7698\n1013|422.75|open|us-east|Cust5267\n1014|465.83|refunded|apac|Cust6413\n1015|576.3|cancelled|apac|Cust7636\n1016|66.09|pending|apac|Cust3103\n1017|539.66|shipped|us-west|Cust4967\n1018|577.25|shipped|apac|Cust1556\n1019|580.14|shipped|eu|Cust5051\n1020|61.05|pending|us-east|Cust6216\n1021|517.83|open|apac|Cust6578\n1022|979.33|pending|apac|Cust8552\n1023|812.73|shipped|eu|Cust8495\n1024|390.57|pending|us-east|Cust5679\n1025|546.79|shipped|apac|Cust441\n1026|793.8|pending|us-west|Cust8907\n1028|992.37|pending|us-east|Cust46\n1029|157.82|cancelled|eu|Cust7449\n1030|243|refunded|eu|Cust532\n1031|127.75|cancelled|eu|Cust5197\n1032|727.46|shipped|apac|Cust849\n1033|963.71|open|us-west|Cust4478\n1034|436.93|pending|us-west|Cust6039\n1035|11.98|pending|apac|Cust3030\n1036|449.04|shipped|apac|Cust709\n1037|102.93|open|us-east|Cust7810\n1038|770.18|refunded|us-west|Cust580\n1039|334.84|shipped|us-east|Cust1146\n1041|31.69|refunded|us-west|Cust3203\n1042|901.7|shipped|us-west|Cust2521\n1043|203.6|cancelled|us-east|Cust1748\n1045|696.01|cancelled|us-west|Cust6605\n1046|982.88|shipped|us-east|Cust128\n1047|776.25|open|eu|Cust8878\n1048|569.68|refunded|eu|Cust7831\n1049|861.06|cancelled|us-west|Cust5184\n1050|958.95|pending|us-east|Cust1496\n1051|552.34|shipped|eu|Cust7744\n1052|177.16|refunded|eu|Cust2852\n1053|231.3|refunded|eu|Cust4021\n1054|703.83|cancelled|us-east|Cust5353\n1055|345.98|cancelled|us-west|Cust6029\n1056|224.81|cancelled|us-west|Cust6180\n1057|930.82|refunded|apac|Cust3599\n1058|926.87|cancelled|eu|Cust6164\n1059|641.56|refunded|us-west|Cust6461\n1060|257.27|refunded|us-east|Cust4208\n1061|632.96|refunded|apac|Cust647\n1062|844.36|shipped|apac|Cust7699\n1063|105.86|cancelled|us-west|Cust5924\n1064|232.1|pending|eu|Cust4776\n1065|617.81|open|apac|Cust6318\n1066|607|refunded|apac|Cust8786\n1067|986.63|refunded|us-east|Cust3923\n1069|845.44|cancelled|us-east|Cust5029\n1070|525.59|open|us-east|Cust3226\n1071|288.23|pending|us-east|Cust1259\n1072|464.77|shipped|us-east|Cust4922\n1073|275.5|cancelled|eu|Cust4857\n1074|370.16|cancelled|us-west|Cust6551\n1076|805.18|cancelled|apac|Cust6950\n1078|370.2|shipped|apac|Cust7153\n1079|402.1|pending|us-west|Cust3694\n1080|49.08|shipped|us-west|Cust6913\n1081|78.6|refunded|us-west|Cust1427\n1082|614.07|shipped|apac|Cust5867\n1083|607.8|pending|eu|Cust1828\n1084|114.74|refunded|eu|Cust1598\n1085|94.7|shipped|apac|Cust2584\n1086|851.93|shipped|eu|Cust92\n1087|131.99|open|us-west|Cust6168\n1088|547.14|pending|us-west|Cust8934\n1089|358.66|shipped|us-west|Cust579\n1090|112.46|shipped|us-east|Cust3416\n1091|50.45|open|us-east|Cust5907\n1092|124.15|refunded|us-east|Cust4568\n1093|14.97|open|apac|Cust4048\n1094|807.86|open|eu|Cust1526\n1097|315.64|cancelled|eu|Cust6606\n1098|190.21|shipped|apac|Cust5688\n1099|840.43|cancelled|us-west|Cust6034\n1100|482.25|pending|us-east|Cust3154\n1101|316.05|shipped|us-west|Cust7403\n1102|615.36|cancelled|us-east|Cust6472\n1103|726.89|open|us-west|Cust3388\n1104|651.04|open|eu|Cust4310\n1105|176.63|pending|us-east|Cust4992\n1106|936.99|pending|apac|Cust2543\n1107|414.75|open|us-east|Cust3839\n1108|874.35|pending|us-east|Cust6119\n1109|452.97|pending|apac|Cust6673\n1110|162.52|cancelled|us-west|Cust2922"
+   },
+   {
+    "turn": 7,
+    "role": "tool",
+    "content": "GCF profile=generic\n## orders [103]{@id,total,status,region,customer}\n1000|782.74|pending|us-west|Cust2819\n1001|762.24|pending|us-west|Cust1456\n1002|262.99|pending|us-east|Cust752\n1003|713.07|pending|apac|Cust7917\n1004|176.6|shipped|us-east|Cust2727\n1005|525.9|refunded|eu|Cust104\n1006|907.08|cancelled|apac|Cust3538\n1007|883.95|shipped|apac|Cust3284\n1008|721.98|open|us-east|Cust4304\n1009|862.21|cancelled|eu|Cust7076\n1010|583.78|pending|us-east|Cust3350\n1011|530.4|refunded|us-west|Cust4175\n1012|496.26|pending|apac|Cust7698\n1013|422.75|open|us-east|Cust5267\n1014|465.83|refunded|apac|Cust6413\n1015|576.3|cancelled|apac|Cust7636\n1016|66.09|pending|apac|Cust3103\n1017|539.66|shipped|us-west|Cust4967\n1018|577.25|shipped|apac|Cust1556\n1019|580.14|shipped|eu|Cust5051\n1020|61.05|pending|us-east|Cust6216\n1021|517.83|open|apac|Cust6578\n1022|979.33|pending|apac|Cust8552\n1023|29.84|shipped|apac|Cust1254\n1024|18.05|pending|apac|Cust8830\n1026|793.8|pending|us-west|Cust8907\n1028|992.37|pending|us-east|Cust46\n1029|157.82|cancelled|eu|Cust7449\n1030|243|refunded|eu|Cust532\n1031|127.75|cancelled|eu|Cust5197\n1032|727.46|shipped|apac|Cust849\n1033|963.71|open|us-west|Cust4478\n1034|436.93|pending|us-west|Cust6039\n1035|11.98|pending|apac|Cust3030\n1036|449.04|shipped|apac|Cust709\n1037|102.93|open|us-east|Cust7810\n1038|770.18|refunded|us-west|Cust580\n1039|334.84|shipped|us-east|Cust1146\n1041|31.69|refunded|us-west|Cust3203\n1042|901.7|shipped|us-west|Cust2521\n1043|203.6|cancelled|us-east|Cust1748\n1045|696.01|cancelled|us-west|Cust6605\n1046|982.88|shipped|us-east|Cust128\n1047|776.25|open|eu|Cust8878\n1048|569.68|refunded|eu|Cust7831\n1049|304.21|shipped|us-east|Cust8156\n1050|958.95|pending|us-east|Cust1496\n1051|552.34|shipped|eu|Cust7744\n1052|177.16|refunded|eu|Cust2852\n1053|231.3|refunded|eu|Cust4021\n1054|703.83|cancelled|us-east|Cust5353\n1055|345.98|cancelled|us-west|Cust6029\n1056|224.81|cancelled|us-west|Cust6180\n1057|527.11|cancelled|eu|Cust3497\n1058|926.87|cancelled|eu|Cust6164\n1059|641.56|refunded|us-west|Cust6461\n1060|257.27|refunded|us-east|Cust4208\n1061|632.96|refunded|apac|Cust647\n1062|844.36|shipped|apac|Cust7699\n1063|105.86|cancelled|us-west|Cust5924\n1064|232.1|pending|eu|Cust4776\n1065|617.81|open|apac|Cust6318\n1066|642.28|pending|us-east|Cust596\n1067|986.63|refunded|us-east|Cust3923\n1069|845.44|cancelled|us-east|Cust5029\n1070|525.59|open|us-east|Cust3226\n1071|288.23|pending|us-east|Cust1259\n1072|464.77|shipped|us-east|Cust4922\n1073|275.5|cancelled|eu|Cust4857\n1074|370.16|cancelled|us-west|Cust6551\n1076|805.18|cancelled|apac|Cust6950\n1078|370.2|shipped|apac|Cust7153\n1079|402.1|pending|us-west|Cust3694\n1080|49.08|shipped|us-west|Cust6913\n1081|78.6|refunded|us-west|Cust1427\n1082|614.07|shipped|apac|Cust5867\n1083|607.8|pending|eu|Cust1828\n1084|114.74|refunded|eu|Cust1598\n1085|94.7|shipped|apac|Cust2584\n1086|851.93|shipped|eu|Cust92\n1087|131.99|open|us-west|Cust6168\n1088|547.14|pending|us-west|Cust8934\n1089|358.66|shipped|us-west|Cust579\n1090|112.46|shipped|us-east|Cust3416\n1091|50.45|open|us-east|Cust5907\n1092|124.15|refunded|us-east|Cust4568\n1093|14.97|open|apac|Cust4048\n1094|807.86|open|eu|Cust1526\n1097|315.64|cancelled|eu|Cust6606\n1098|190.21|shipped|apac|Cust5688\n1099|840.43|cancelled|us-west|Cust6034\n1100|482.25|pending|us-east|Cust3154\n1101|316.05|shipped|us-west|Cust7403\n1102|615.36|cancelled|us-east|Cust6472\n1103|726.89|open|us-west|Cust3388\n1104|651.04|open|eu|Cust4310\n1105|176.63|pending|us-east|Cust4992\n1106|936.99|pending|apac|Cust2543\n1107|414.75|open|us-east|Cust3839\n1109|452.97|pending|apac|Cust6673\n1110|162.52|cancelled|us-west|Cust2922\n1111|994.85|open|apac|Cust6696\n1112|90.51|cancelled|eu|Cust8034"
+   },
+   {
+    "turn": 8,
+    "role": "tool",
+    "content": "GCF profile=generic\n## orders [102]{@id,total,status,region,customer}\n1000|782.74|pending|us-west|Cust2819\n1001|762.24|pending|us-west|Cust1456\n1002|262.99|pending|us-east|Cust752\n1003|713.07|pending|apac|Cust7917\n1004|176.6|shipped|us-east|Cust2727\n1005|525.9|refunded|eu|Cust104\n1007|883.95|shipped|apac|Cust3284\n1008|721.98|open|us-east|Cust4304\n1009|862.21|cancelled|eu|Cust7076\n1010|583.78|pending|us-east|Cust3350\n1011|530.4|refunded|us-west|Cust4175\n1012|496.26|pending|apac|Cust7698\n1013|422.75|open|us-east|Cust5267\n1014|465.83|refunded|apac|Cust6413\n1015|576.3|cancelled|apac|Cust7636\n1016|66.09|pending|apac|Cust3103\n1017|539.66|shipped|us-west|Cust4967\n1018|577.25|shipped|apac|Cust1556\n1019|580.14|shipped|eu|Cust5051\n1020|214.66|pending|us-east|Cust4762\n1021|517.83|open|apac|Cust6578\n1022|979.33|pending|apac|Cust8552\n1023|29.84|shipped|apac|Cust1254\n1024|18.05|pending|apac|Cust8830\n1026|793.8|pending|us-west|Cust8907\n1028|992.37|pending|us-east|Cust46\n1029|157.82|cancelled|eu|Cust7449\n1030|243|refunded|eu|Cust532\n1031|127.75|cancelled|eu|Cust5197\n1032|727.46|shipped|apac|Cust849\n1033|963.71|open|us-west|Cust4478\n1034|436.93|pending|us-west|Cust6039\n1035|11.98|pending|apac|Cust3030\n1036|449.04|shipped|apac|Cust709\n1037|102.93|open|us-east|Cust7810\n1038|770.18|refunded|us-west|Cust580\n1039|334.84|shipped|us-east|Cust1146\n1041|31.69|refunded|us-west|Cust3203\n1042|901.7|shipped|us-west|Cust2521\n1043|844.3|open|eu|Cust7310\n1045|696.01|cancelled|us-west|Cust6605\n1046|982.88|shipped|us-east|Cust128\n1047|776.25|open|eu|Cust8878\n1048|569.68|refunded|eu|Cust7831\n1049|304.21|shipped|us-east|Cust8156\n1050|958.95|pending|us-east|Cust1496\n1051|552.34|shipped|eu|Cust7744\n1052|177.16|refunded|eu|Cust2852\n1053|231.3|refunded|eu|Cust4021\n1054|703.83|cancelled|us-east|Cust5353\n1055|676.67|cancelled|us-west|Cust4692\n1056|224.81|cancelled|us-west|Cust6180\n1057|527.11|cancelled|eu|Cust3497\n1058|926.87|cancelled|eu|Cust6164\n1059|641.56|refunded|us-west|Cust6461\n1060|257.27|refunded|us-east|Cust4208\n1061|632.96|refunded|apac|Cust647\n1062|844.36|shipped|apac|Cust7699\n1063|105.86|cancelled|us-west|Cust5924\n1064|232.1|pending|eu|Cust4776\n1066|642.28|pending|us-east|Cust596\n1067|986.63|refunded|us-east|Cust3923\n1069|845.44|cancelled|us-east|Cust5029\n1070|525.59|open|us-east|Cust3226\n1071|288.23|pending|us-east|Cust1259\n1072|464.77|shipped|us-east|Cust4922\n1073|275.5|cancelled|eu|Cust4857\n1074|370.16|cancelled|us-west|Cust6551\n1076|805.18|cancelled|apac|Cust6950\n1078|370.2|shipped|apac|Cust7153\n1079|402.1|pending|us-west|Cust3694\n1080|49.08|shipped|us-west|Cust6913\n1081|78.6|refunded|us-west|Cust1427\n1082|614.07|shipped|apac|Cust5867\n1083|599.33|open|eu|Cust3823\n1084|114.74|refunded|eu|Cust1598\n1085|94.7|shipped|apac|Cust2584\n1086|851.93|shipped|eu|Cust92\n1087|131.99|open|us-west|Cust6168\n1088|547.14|pending|us-west|Cust8934\n1089|996.45|cancelled|eu|Cust8264\n1090|112.46|shipped|us-east|Cust3416\n1091|50.45|open|us-east|Cust5907\n1092|124.15|refunded|us-east|Cust4568\n1093|14.97|open|apac|Cust4048\n1094|807.86|open|eu|Cust1526\n1097|315.64|cancelled|eu|Cust6606\n1098|190.21|shipped|apac|Cust5688\n1099|840.43|cancelled|us-west|Cust6034\n1100|482.25|pending|us-east|Cust3154\n1101|316.05|shipped|us-west|Cust7403\n1102|615.36|cancelled|us-east|Cust6472\n1103|726.89|open|us-west|Cust3388\n1104|651.04|open|eu|Cust4310\n1105|176.63|pending|us-east|Cust4992\n1106|936.99|pending|apac|Cust2543\n1107|414.75|open|us-east|Cust3839\n1109|452.97|pending|apac|Cust6673\n1110|162.52|cancelled|us-west|Cust2922\n1111|994.85|open|apac|Cust6696\n1113|380.93|shipped|eu|Cust5909\n1114|333.55|shipped|apac|Cust2082"
+   },
+   {
+    "turn": 9,
+    "role": "tool",
+    "content": "GCF profile=generic\n## orders [101]{@id,total,status,region,customer}\n1000|782.74|pending|us-west|Cust2819\n1001|762.24|pending|us-west|Cust1456\n1002|262.99|pending|us-east|Cust752\n1003|713.07|pending|apac|Cust7917\n1004|176.6|shipped|us-east|Cust2727\n1005|880.74|pending|us-east|Cust439\n1007|883.95|shipped|apac|Cust3284\n1008|721.98|open|us-east|Cust4304\n1009|862.21|cancelled|eu|Cust7076\n1010|583.78|pending|us-east|Cust3350\n1011|530.4|refunded|us-west|Cust4175\n1012|496.26|pending|apac|Cust7698\n1013|422.75|open|us-east|Cust5267\n1014|465.83|refunded|apac|Cust6413\n1015|576.3|cancelled|apac|Cust7636\n1016|66.09|pending|apac|Cust3103\n1017|539.66|shipped|us-west|Cust4967\n1018|577.25|shipped|apac|Cust1556\n1019|580.14|shipped|eu|Cust5051\n1020|214.66|pending|us-east|Cust4762\n1021|517.83|open|apac|Cust6578\n1022|979.33|pending|apac|Cust8552\n1023|29.84|shipped|apac|Cust1254\n1024|18.05|pending|apac|Cust8830\n1026|793.8|pending|us-west|Cust8907\n1028|992.37|pending|us-east|Cust46\n1029|157.82|cancelled|eu|Cust7449\n1030|243|refunded|eu|Cust532\n1031|127.75|cancelled|eu|Cust5197\n1032|727.46|shipped|apac|Cust849\n1033|963.71|open|us-west|Cust4478\n1034|436.93|pending|us-west|Cust6039\n1035|11.98|pending|apac|Cust3030\n1036|449.04|shipped|apac|Cust709\n1037|102.93|open|us-east|Cust7810\n1038|770.18|refunded|us-west|Cust580\n1042|901.7|shipped|us-west|Cust2521\n1043|844.3|open|eu|Cust7310\n1045|696.01|cancelled|us-west|Cust6605\n1046|982.88|shipped|us-east|Cust128\n1047|323.7|cancelled|us-east|Cust3106\n1048|569.68|refunded|eu|Cust7831\n1049|304.21|shipped|us-east|Cust8156\n1050|958.95|pending|us-east|Cust1496\n1051|552.34|shipped|eu|Cust7744\n1052|177.16|refunded|eu|Cust2852\n1053|231.3|refunded|eu|Cust4021\n1054|703.83|cancelled|us-east|Cust5353\n1055|676.67|cancelled|us-west|Cust4692\n1056|224.81|cancelled|us-west|Cust6180\n1057|527.11|cancelled|eu|Cust3497\n1058|926.87|cancelled|eu|Cust6164\n1059|641.56|refunded|us-west|Cust6461\n1060|257.27|refunded|us-east|Cust4208\n1061|632.96|refunded|apac|Cust647\n1062|844.36|shipped|apac|Cust7699\n1063|105.86|cancelled|us-west|Cust5924\n1064|232.1|pending|eu|Cust4776\n1066|642.28|pending|us-east|Cust596\n1067|986.63|refunded|us-east|Cust3923\n1069|273.92|cancelled|eu|Cust8978\n1070|525.59|open|us-east|Cust3226\n1071|288.23|pending|us-east|Cust1259\n1072|464.77|shipped|us-east|Cust4922\n1073|275.5|cancelled|eu|Cust4857\n1074|370.16|cancelled|us-west|Cust6551\n1076|805.18|cancelled|apac|Cust6950\n1078|370.2|shipped|apac|Cust7153\n1079|402.1|pending|us-west|Cust3694\n1080|49.08|shipped|us-west|Cust6913\n1081|78.6|refunded|us-west|Cust1427\n1082|614.07|shipped|apac|Cust5867\n1083|599.33|open|eu|Cust3823\n1084|114.74|refunded|eu|Cust1598\n1085|94.7|shipped|apac|Cust2584\n1086|851.93|shipped|eu|Cust92\n1087|131.99|open|us-west|Cust6168\n1088|547.14|pending|us-west|Cust8934\n1089|996.45|cancelled|eu|Cust8264\n1090|112.46|shipped|us-east|Cust3416\n1091|50.45|open|us-east|Cust5907\n1092|124.15|refunded|us-east|Cust4568\n1093|14.97|open|apac|Cust4048\n1094|807.86|open|eu|Cust1526\n1097|315.64|cancelled|eu|Cust6606\n1098|403.9|shipped|apac|Cust2489\n1099|840.43|cancelled|us-west|Cust6034\n1100|482.25|pending|us-east|Cust3154\n1101|316.05|shipped|us-west|Cust7403\n1102|615.36|cancelled|us-east|Cust6472\n1103|726.89|open|us-west|Cust3388\n1104|651.04|open|eu|Cust4310\n1105|417.1|cancelled|eu|Cust1399\n1106|936.99|pending|apac|Cust2543\n1107|414.75|open|us-east|Cust3839\n1109|452.97|pending|apac|Cust6673\n1110|162.52|cancelled|us-west|Cust2922\n1111|994.85|open|apac|Cust6696\n1113|380.93|shipped|eu|Cust5909\n1114|333.55|shipped|apac|Cust2082\n1116|210.55|open|us-east|Cust7773"
+   },
+   {
+    "turn": 10,
+    "role": "tool",
+    "content": "GCF profile=generic\n## orders [102]{@id,total,status,region,customer}\n1000|782.74|pending|us-west|Cust2819\n1001|762.24|pending|us-west|Cust1456\n1002|262.99|pending|us-east|Cust752\n1003|592.39|refunded|us-east|Cust4552\n1004|176.6|shipped|us-east|Cust2727\n1005|880.74|pending|us-east|Cust439\n1007|883.95|shipped|apac|Cust3284\n1008|629.95|open|apac|Cust3188\n1009|862.21|cancelled|eu|Cust7076\n1010|583.78|pending|us-east|Cust3350\n1011|530.4|refunded|us-west|Cust4175\n1012|496.26|pending|apac|Cust7698\n1013|422.75|open|us-east|Cust5267\n1014|465.83|refunded|apac|Cust6413\n1015|576.3|cancelled|apac|Cust7636\n1016|66.09|pending|apac|Cust3103\n1017|539.66|shipped|us-west|Cust4967\n1018|577.25|shipped|apac|Cust1556\n1019|580.14|shipped|eu|Cust5051\n1020|214.66|pending|us-east|Cust4762\n1021|517.83|open|apac|Cust6578\n1022|979.33|pending|apac|Cust8552\n1023|29.84|shipped|apac|Cust1254\n1024|18.05|pending|apac|Cust8830\n1026|793.8|pending|us-west|Cust8907\n1028|992.37|pending|us-east|Cust46\n1029|157.82|cancelled|eu|Cust7449\n1030|243|refunded|eu|Cust532\n1031|627.56|cancelled|apac|Cust7468\n1032|727.46|shipped|apac|Cust849\n1033|963.71|open|us-west|Cust4478\n1034|437.21|open|us-east|Cust2763\n1035|11.98|pending|apac|Cust3030\n1036|757.47|pending|apac|Cust8313\n1037|102.93|open|us-east|Cust7810\n1038|134.23|shipped|eu|Cust4030\n1042|901.7|shipped|us-west|Cust2521\n1043|844.3|open|eu|Cust7310\n1045|696.01|cancelled|us-west|Cust6605\n1046|982.88|shipped|us-east|Cust128\n1047|323.7|cancelled|us-east|Cust3106\n1048|569.68|refunded|eu|Cust7831\n1049|304.21|shipped|us-east|Cust8156\n1050|958.95|pending|us-east|Cust1496\n1051|552.34|shipped|eu|Cust7744\n1052|177.16|refunded|eu|Cust2852\n1053|231.3|refunded|eu|Cust4021\n1054|703.83|cancelled|us-east|Cust5353\n1055|676.67|cancelled|us-west|Cust4692\n1056|224.81|cancelled|us-west|Cust6180\n1057|527.11|cancelled|eu|Cust3497\n1058|926.87|cancelled|eu|Cust6164\n1059|641.56|refunded|us-west|Cust6461\n1060|257.27|refunded|us-east|Cust4208\n1061|632.96|refunded|apac|Cust647\n1062|844.36|shipped|apac|Cust7699\n1063|105.86|cancelled|us-west|Cust5924\n1064|232.1|pending|eu|Cust4776\n1066|642.28|pending|us-east|Cust596\n1067|986.63|refunded|us-east|Cust3923\n1069|273.92|cancelled|eu|Cust8978\n1070|525.59|open|us-east|Cust3226\n1071|288.23|pending|us-east|Cust1259\n1072|464.77|shipped|us-east|Cust4922\n1073|275.5|cancelled|eu|Cust4857\n1074|642.66|shipped|us-east|Cust1431\n1076|805.18|cancelled|apac|Cust6950\n1078|370.2|shipped|apac|Cust7153\n1079|402.1|pending|us-west|Cust3694\n1080|49.08|shipped|us-west|Cust6913\n1081|78.6|refunded|us-west|Cust1427\n1082|614.07|shipped|apac|Cust5867\n1083|599.33|open|eu|Cust3823\n1084|114.74|refunded|eu|Cust1598\n1085|94.7|shipped|apac|Cust2584\n1086|851.93|shipped|eu|Cust92\n1087|131.99|open|us-west|Cust6168\n1088|547.14|pending|us-west|Cust8934\n1089|996.45|cancelled|eu|Cust8264\n1090|508.48|cancelled|eu|Cust5432\n1091|50.45|open|us-east|Cust5907\n1092|124.15|refunded|us-east|Cust4568\n1093|14.97|open|apac|Cust4048\n1094|807.86|open|eu|Cust1526\n1097|315.64|cancelled|eu|Cust6606\n1098|190.45|open|us-east|Cust932\n1099|840.43|cancelled|us-west|Cust6034\n1100|482.25|pending|us-east|Cust3154\n1101|316.05|shipped|us-west|Cust7403\n1102|615.36|cancelled|us-east|Cust6472\n1103|726.89|open|us-west|Cust3388\n1104|651.04|open|eu|Cust4310\n1105|417.1|cancelled|eu|Cust1399\n1106|936.99|pending|apac|Cust2543\n1107|414.75|open|us-east|Cust3839\n1109|452.97|pending|apac|Cust6673\n1110|162.52|cancelled|us-west|Cust2922\n1111|994.85|open|apac|Cust6696\n1113|380.93|shipped|eu|Cust5909\n1114|333.55|shipped|apac|Cust2082\n1116|210.55|open|us-east|Cust7773\n1117|301.22|open|us-east|Cust1370"
+   },
+   {
+    "turn": 11,
+    "role": "tool",
+    "content": "GCF profile=generic\n## orders [100]{@id,total,status,region,customer}\n1000|782.74|pending|us-west|Cust2819\n1001|762.24|pending|us-west|Cust1456\n1002|262.99|pending|us-east|Cust752\n1003|592.39|refunded|us-east|Cust4552\n1004|176.6|shipped|us-east|Cust2727\n1005|880.74|pending|us-east|Cust439\n1007|883.95|shipped|apac|Cust3284\n1008|629.95|open|apac|Cust3188\n1009|862.21|cancelled|eu|Cust7076\n1010|583.78|pending|us-east|Cust3350\n1011|530.4|refunded|us-west|Cust4175\n1012|496.26|pending|apac|Cust7698\n1013|422.75|open|us-east|Cust5267\n1014|465.83|refunded|apac|Cust6413\n1015|576.3|cancelled|apac|Cust7636\n1016|487.4|shipped|apac|Cust1043\n1017|539.66|shipped|us-west|Cust4967\n1018|577.25|shipped|apac|Cust1556\n1019|580.14|shipped|eu|Cust5051\n1020|67.55|refunded|us-east|Cust8605\n1021|517.83|open|apac|Cust6578\n1022|979.33|pending|apac|Cust8552\n1023|29.84|shipped|apac|Cust1254\n1024|18.05|pending|apac|Cust8830\n1026|793.8|pending|us-west|Cust8907\n1028|992.37|pending|us-east|Cust46\n1029|157.82|cancelled|eu|Cust7449\n1030|395.32|pending|us-east|Cust2784\n1031|627.56|cancelled|apac|Cust7468\n1032|727.46|shipped|apac|Cust849\n1033|963.71|open|us-west|Cust4478\n1034|437.21|open|us-east|Cust2763\n1035|11.98|pending|apac|Cust3030\n1036|757.47|pending|apac|Cust8313\n1037|102.93|open|us-east|Cust7810\n1038|134.23|shipped|eu|Cust4030\n1042|901.7|shipped|us-west|Cust2521\n1043|844.3|open|eu|Cust7310\n1045|696.01|cancelled|us-west|Cust6605\n1046|982.88|shipped|us-east|Cust128\n1047|323.7|cancelled|us-east|Cust3106\n1048|569.68|refunded|eu|Cust7831\n1049|304.21|shipped|us-east|Cust8156\n1050|958.95|pending|us-east|Cust1496\n1051|552.34|shipped|eu|Cust7744\n1052|177.16|refunded|eu|Cust2852\n1053|231.3|refunded|eu|Cust4021\n1054|703.83|cancelled|us-east|Cust5353\n1055|676.67|cancelled|us-west|Cust4692\n1056|224.81|cancelled|us-west|Cust6180\n1057|527.11|cancelled|eu|Cust3497\n1058|926.87|cancelled|eu|Cust6164\n1059|641.56|refunded|us-west|Cust6461\n1060|257.27|refunded|us-east|Cust4208\n1061|632.96|refunded|apac|Cust647\n1062|844.36|shipped|apac|Cust7699\n1063|105.86|cancelled|us-west|Cust5924\n1064|232.1|pending|eu|Cust4776\n1066|642.28|pending|us-east|Cust596\n1067|986.63|refunded|us-east|Cust3923\n1069|273.92|cancelled|eu|Cust8978\n1070|878.94|refunded|eu|Cust6503\n1071|288.23|pending|us-east|Cust1259\n1072|464.77|shipped|us-east|Cust4922\n1073|275.5|cancelled|eu|Cust4857\n1074|642.66|shipped|us-east|Cust1431\n1076|805.18|cancelled|apac|Cust6950\n1078|370.2|shipped|apac|Cust7153\n1079|72.89|pending|us-west|Cust2088\n1080|49.08|shipped|us-west|Cust6913\n1081|78.6|refunded|us-west|Cust1427\n1082|614.07|shipped|apac|Cust5867\n1083|599.33|open|eu|Cust3823\n1084|946.37|cancelled|apac|Cust4407\n1085|94.7|shipped|apac|Cust2584\n1086|851.93|shipped|eu|Cust92\n1087|131.99|open|us-west|Cust6168\n1088|547.14|pending|us-west|Cust8934\n1089|996.45|cancelled|eu|Cust8264\n1090|508.48|cancelled|eu|Cust5432\n1091|50.45|open|us-east|Cust5907\n1092|124.15|refunded|us-east|Cust4568\n1093|14.97|open|apac|Cust4048\n1094|807.86|open|eu|Cust1526\n1098|190.45|open|us-east|Cust932\n1099|840.43|cancelled|us-west|Cust6034\n1101|316.05|shipped|us-west|Cust7403\n1102|615.36|cancelled|us-east|Cust6472\n1103|825.71|pending|us-east|Cust3692\n1104|651.04|open|eu|Cust4310\n1105|417.1|cancelled|eu|Cust1399\n1106|936.99|pending|apac|Cust2543\n1107|414.75|open|us-east|Cust3839\n1109|452.97|pending|apac|Cust6673\n1110|162.52|cancelled|us-west|Cust2922\n1111|994.85|open|apac|Cust6696\n1113|380.93|shipped|eu|Cust5909\n1114|333.55|shipped|apac|Cust2082\n1116|210.55|open|us-east|Cust7773\n1117|301.22|open|us-east|Cust1370"
+   },
+   {
+    "turn": 12,
+    "role": "tool",
+    "content": "GCF profile=generic\n## orders [106]{@id,total,status,region,customer}\n1000|782.74|pending|us-west|Cust2819\n1001|762.24|pending|us-west|Cust1456\n1002|262.99|pending|us-east|Cust752\n1003|592.39|refunded|us-east|Cust4552\n1004|176.6|shipped|us-east|Cust2727\n1005|880.74|pending|us-east|Cust439\n1007|883.95|shipped|apac|Cust3284\n1008|629.95|open|apac|Cust3188\n1009|862.21|cancelled|eu|Cust7076\n1010|583.78|pending|us-east|Cust3350\n1011|530.4|refunded|us-west|Cust4175\n1012|496.26|pending|apac|Cust7698\n1013|422.75|open|us-east|Cust5267\n1014|465.83|refunded|apac|Cust6413\n1015|576.3|cancelled|apac|Cust7636\n1016|487.4|shipped|apac|Cust1043\n1017|539.66|shipped|us-west|Cust4967\n1018|577.25|shipped|apac|Cust1556\n1019|580.14|shipped|eu|Cust5051\n1020|67.55|refunded|us-east|Cust8605\n1021|517.83|open|apac|Cust6578\n1022|979.33|pending|apac|Cust8552\n1023|29.84|shipped|apac|Cust1254\n1024|18.05|pending|apac|Cust8830\n1026|793.8|pending|us-west|Cust8907\n1028|992.37|pending|us-east|Cust46\n1029|157.82|cancelled|eu|Cust7449\n1030|395.32|pending|us-east|Cust2784\n1031|627.56|cancelled|apac|Cust7468\n1032|727.46|shipped|apac|Cust849\n1033|545.13|cancelled|eu|Cust1143\n1034|437.21|open|us-east|Cust2763\n1035|11.98|pending|apac|Cust3030\n1036|757.47|pending|apac|Cust8313\n1037|102.93|open|us-east|Cust7810\n1038|134.23|shipped|eu|Cust4030\n1042|901.7|shipped|us-west|Cust2521\n1043|844.3|open|eu|Cust7310\n1045|696.01|cancelled|us-west|Cust6605\n1046|982.88|shipped|us-east|Cust128\n1047|323.7|cancelled|us-east|Cust3106\n1048|569.68|refunded|eu|Cust7831\n1049|304.21|shipped|us-east|Cust8156\n1050|958.95|pending|us-east|Cust1496\n1051|552.34|shipped|eu|Cust7744\n1052|177.16|refunded|eu|Cust2852\n1053|231.3|refunded|eu|Cust4021\n1054|703.83|cancelled|us-east|Cust5353\n1055|676.67|cancelled|us-west|Cust4692\n1056|224.81|cancelled|us-west|Cust6180\n1057|527.11|cancelled|eu|Cust3497\n1058|926.87|cancelled|eu|Cust6164\n1059|641.56|refunded|us-west|Cust6461\n1060|257.27|refunded|us-east|Cust4208\n1061|632.96|refunded|apac|Cust647\n1062|844.36|shipped|apac|Cust7699\n1063|105.86|cancelled|us-west|Cust5924\n1064|232.1|pending|eu|Cust4776\n1066|642.28|pending|us-east|Cust596\n1067|986.63|refunded|us-east|Cust3923\n1069|273.92|cancelled|eu|Cust8978\n1070|878.94|refunded|eu|Cust6503\n1071|288.23|pending|us-east|Cust1259\n1072|464.77|shipped|us-east|Cust4922\n1073|275.5|cancelled|eu|Cust4857\n1074|642.66|shipped|us-east|Cust1431\n1076|323.4|shipped|us-east|Cust3522\n1078|370.2|shipped|apac|Cust7153\n1079|72.89|pending|us-west|Cust2088\n1080|49.08|shipped|us-west|Cust6913\n1081|78.6|refunded|us-west|Cust1427\n1082|614.07|shipped|apac|Cust5867\n1083|599.33|open|eu|Cust3823\n1084|946.37|cancelled|apac|Cust4407\n1085|198.42|open|eu|Cust8056\n1086|851.93|shipped|eu|Cust92\n1087|659.29|refunded|us-west|Cust2353\n1088|547.14|pending|us-west|Cust8934\n1089|996.45|cancelled|eu|Cust8264\n1090|508.48|cancelled|eu|Cust5432\n1091|50.45|open|us-east|Cust5907\n1092|124.15|refunded|us-east|Cust4568\n1093|14.97|open|apac|Cust4048\n1094|807.86|open|eu|Cust1526\n1098|190.45|open|us-east|Cust932\n1099|840.43|cancelled|us-west|Cust6034\n1101|316.05|shipped|us-west|Cust7403\n1102|615.36|cancelled|us-east|Cust6472\n1103|825.71|pending|us-east|Cust3692\n1104|651.04|open|eu|Cust4310\n1105|417.1|cancelled|eu|Cust1399\n1106|936.99|pending|apac|Cust2543\n1107|414.75|open|us-east|Cust3839\n1109|452.97|pending|apac|Cust6673\n1110|162.52|cancelled|us-west|Cust2922\n1111|994.85|open|apac|Cust6696\n1113|380.93|shipped|eu|Cust5909\n1114|333.55|shipped|apac|Cust2082\n1116|210.55|open|us-east|Cust7773\n1117|301.22|open|us-east|Cust1370\n1118|408.7|refunded|us-west|Cust4722\n1119|269.58|open|apac|Cust4763\n1120|948.12|shipped|eu|Cust7407\n1121|388.69|pending|us-west|Cust1559\n1122|430.76|cancelled|apac|Cust6302\n1123|717.8|refunded|us-west|Cust8376"
+   },
+   {
+    "turn": 13,
+    "role": "tool",
+    "content": "GCF profile=generic\n## orders [102]{@id,total,status,region,customer}\n1000|782.74|pending|us-west|Cust2819\n1002|262.99|pending|us-east|Cust752\n1003|592.39|refunded|us-east|Cust4552\n1004|176.6|shipped|us-east|Cust2727\n1005|880.74|pending|us-east|Cust439\n1007|883.95|shipped|apac|Cust3284\n1008|629.95|open|apac|Cust3188\n1009|862.21|cancelled|eu|Cust7076\n1010|583.78|pending|us-east|Cust3350\n1011|530.4|refunded|us-west|Cust4175\n1012|496.26|pending|apac|Cust7698\n1014|465.83|refunded|apac|Cust6413\n1015|165.15|refunded|us-west|Cust5679\n1016|487.4|shipped|apac|Cust1043\n1018|577.25|shipped|apac|Cust1556\n1019|580.14|shipped|eu|Cust5051\n1020|67.55|refunded|us-east|Cust8605\n1021|517.83|open|apac|Cust6578\n1022|979.33|pending|apac|Cust8552\n1023|29.84|shipped|apac|Cust1254\n1024|18.05|pending|apac|Cust8830\n1026|793.8|pending|us-west|Cust8907\n1028|992.37|pending|us-east|Cust46\n1029|157.82|cancelled|eu|Cust7449\n1030|395.32|pending|us-east|Cust2784\n1031|627.56|cancelled|apac|Cust7468\n1032|727.46|shipped|apac|Cust849\n1033|545.13|cancelled|eu|Cust1143\n1034|560|refunded|apac|Cust4221\n1035|11.98|pending|apac|Cust3030\n1036|757.47|pending|apac|Cust8313\n1037|102.93|open|us-east|Cust7810\n1038|134.23|shipped|eu|Cust4030\n1042|901.7|shipped|us-west|Cust2521\n1043|844.3|open|eu|Cust7310\n1045|696.01|cancelled|us-west|Cust6605\n1046|982.88|shipped|us-east|Cust128\n1047|323.7|cancelled|us-east|Cust3106\n1048|569.68|refunded|eu|Cust7831\n1049|304.21|shipped|us-east|Cust8156\n1050|958.95|pending|us-east|Cust1496\n1051|552.34|shipped|eu|Cust7744\n1052|177.16|refunded|eu|Cust2852\n1053|231.3|refunded|eu|Cust4021\n1054|703.83|cancelled|us-east|Cust5353\n1055|676.67|cancelled|us-west|Cust4692\n1056|224.81|cancelled|us-west|Cust6180\n1057|527.11|cancelled|eu|Cust3497\n1058|926.87|cancelled|eu|Cust6164\n1059|641.56|refunded|us-west|Cust6461\n1060|257.27|refunded|us-east|Cust4208\n1061|632.96|refunded|apac|Cust647\n1062|844.36|shipped|apac|Cust7699\n1063|105.86|cancelled|us-west|Cust5924\n1066|642.28|pending|us-east|Cust596\n1067|986.63|refunded|us-east|Cust3923\n1069|273.92|cancelled|eu|Cust8978\n1070|878.94|refunded|eu|Cust6503\n1071|288.23|pending|us-east|Cust1259\n1072|464.77|shipped|us-east|Cust4922\n1073|275.5|cancelled|eu|Cust4857\n1074|642.66|shipped|us-east|Cust1431\n1076|323.4|shipped|us-east|Cust3522\n1078|370.2|shipped|apac|Cust7153\n1079|72.89|pending|us-west|Cust2088\n1080|49.08|shipped|us-west|Cust6913\n1081|78.6|refunded|us-west|Cust1427\n1082|614.07|shipped|apac|Cust5867\n1083|599.33|open|eu|Cust3823\n1084|946.37|cancelled|apac|Cust4407\n1085|198.42|open|eu|Cust8056\n1086|851.93|shipped|eu|Cust92\n1087|659.29|refunded|us-west|Cust2353\n1088|547.14|pending|us-west|Cust8934\n1089|996.45|cancelled|eu|Cust8264\n1090|508.48|cancelled|eu|Cust5432\n1091|50.45|open|us-east|Cust5907\n1092|124.15|refunded|us-east|Cust4568\n1093|14.97|open|apac|Cust4048\n1094|807.86|open|eu|Cust1526\n1098|190.45|open|us-east|Cust932\n1099|840.43|cancelled|us-west|Cust6034\n1102|615.36|cancelled|us-east|Cust6472\n1103|825.71|pending|us-east|Cust3692\n1104|651.04|open|eu|Cust4310\n1105|417.1|cancelled|eu|Cust1399\n1106|808.9|pending|us-west|Cust8775\n1107|414.75|open|us-east|Cust3839\n1109|452.97|pending|apac|Cust6673\n1110|162.52|cancelled|us-west|Cust2922\n1111|994.85|open|apac|Cust6696\n1113|380.93|shipped|eu|Cust5909\n1114|333.55|shipped|apac|Cust2082\n1116|210.55|open|us-east|Cust7773\n1117|301.22|open|us-east|Cust1370\n1118|666.28|cancelled|us-east|Cust6947\n1119|269.58|open|apac|Cust4763\n1120|948.12|shipped|eu|Cust7407\n1121|388.69|pending|us-west|Cust1559\n1122|430.76|cancelled|apac|Cust6302\n1123|717.8|refunded|us-west|Cust8376\n1124|726.91|pending|us-east|Cust2051"
+   },
+   {
+    "turn": 14,
+    "role": "tool",
+    "content": "GCF profile=generic\n## orders [104]{@id,total,status,region,customer}\n1000|288.1|open|apac|Cust573\n1002|262.99|pending|us-east|Cust752\n1003|592.39|refunded|us-east|Cust4552\n1004|176.6|shipped|us-east|Cust2727\n1005|880.74|pending|us-east|Cust439\n1007|883.95|shipped|apac|Cust3284\n1008|629.95|open|apac|Cust3188\n1009|862.21|cancelled|eu|Cust7076\n1010|583.78|pending|us-east|Cust3350\n1011|530.4|refunded|us-west|Cust4175\n1012|496.26|pending|apac|Cust7698\n1014|465.83|refunded|apac|Cust6413\n1015|165.15|refunded|us-west|Cust5679\n1016|487.4|shipped|apac|Cust1043\n1018|577.25|shipped|apac|Cust1556\n1019|580.14|shipped|eu|Cust5051\n1020|67.55|refunded|us-east|Cust8605\n1021|517.83|open|apac|Cust6578\n1022|979.33|pending|apac|Cust8552\n1023|29.84|shipped|apac|Cust1254\n1024|18.05|pending|apac|Cust8830\n1026|793.8|pending|us-west|Cust8907\n1028|992.37|pending|us-east|Cust46\n1029|157.82|cancelled|eu|Cust7449\n1030|395.32|pending|us-east|Cust2784\n1031|627.56|cancelled|apac|Cust7468\n1032|727.46|shipped|apac|Cust849\n1033|545.13|cancelled|eu|Cust1143\n1034|504.92|shipped|us-east|Cust3699\n1035|11.98|pending|apac|Cust3030\n1036|757.47|pending|apac|Cust8313\n1037|102.93|open|us-east|Cust7810\n1038|134.23|shipped|eu|Cust4030\n1042|746.97|open|us-east|Cust8190\n1043|844.3|open|eu|Cust7310\n1045|696.01|cancelled|us-west|Cust6605\n1046|982.88|shipped|us-east|Cust128\n1047|323.7|cancelled|us-east|Cust3106\n1048|569.68|refunded|eu|Cust7831\n1049|304.21|shipped|us-east|Cust8156\n1050|958.95|pending|us-east|Cust1496\n1051|552.34|shipped|eu|Cust7744\n1052|177.16|refunded|eu|Cust2852\n1053|231.3|refunded|eu|Cust4021\n1054|703.83|cancelled|us-east|Cust5353\n1055|676.67|cancelled|us-west|Cust4692\n1056|610.26|open|eu|Cust2612\n1057|527.11|cancelled|eu|Cust3497\n1058|926.87|cancelled|eu|Cust6164\n1059|641.56|refunded|us-west|Cust6461\n1060|257.27|refunded|us-east|Cust4208\n1061|632.96|refunded|apac|Cust647\n1063|105.86|cancelled|us-west|Cust5924\n1066|642.28|pending|us-east|Cust596\n1067|986.63|refunded|us-east|Cust3923\n1069|273.92|cancelled|eu|Cust8978\n1070|878.94|refunded|eu|Cust6503\n1071|288.23|pending|us-east|Cust1259\n1072|464.77|shipped|us-east|Cust4922\n1073|275.5|cancelled|eu|Cust4857\n1074|642.66|shipped|us-east|Cust1431\n1076|323.4|shipped|us-east|Cust3522\n1078|370.2|shipped|apac|Cust7153\n1079|72.89|pending|us-west|Cust2088\n1080|49.08|shipped|us-west|Cust6913\n1082|614.07|shipped|apac|Cust5867\n1083|599.33|open|eu|Cust3823\n1084|946.37|cancelled|apac|Cust4407\n1085|198.42|open|eu|Cust8056\n1086|851.93|shipped|eu|Cust92\n1087|659.29|refunded|us-west|Cust2353\n1088|547.14|pending|us-west|Cust8934\n1089|996.45|cancelled|eu|Cust8264\n1090|508.48|cancelled|eu|Cust5432\n1091|50.45|open|us-east|Cust5907\n1092|124.15|refunded|us-east|Cust4568\n1093|14.97|open|apac|Cust4048\n1094|807.86|open|eu|Cust1526\n1098|190.45|open|us-east|Cust932\n1099|840.43|cancelled|us-west|Cust6034\n1102|615.36|cancelled|us-east|Cust6472\n1103|825.71|pending|us-east|Cust3692\n1104|651.04|open|eu|Cust4310\n1105|417.1|cancelled|eu|Cust1399\n1106|808.9|pending|us-west|Cust8775\n1107|414.75|open|us-east|Cust3839\n1109|452.97|pending|apac|Cust6673\n1110|162.52|cancelled|us-west|Cust2922\n1111|994.85|open|apac|Cust6696\n1113|380.93|shipped|eu|Cust5909\n1114|333.55|shipped|apac|Cust2082\n1116|210.55|open|us-east|Cust7773\n1117|301.22|open|us-east|Cust1370\n1118|666.28|cancelled|us-east|Cust6947\n1119|269.58|open|apac|Cust4763\n1120|948.12|shipped|eu|Cust7407\n1121|388.69|pending|us-west|Cust1559\n1122|430.76|cancelled|apac|Cust6302\n1123|717.8|refunded|us-west|Cust8376\n1124|726.91|pending|us-east|Cust2051\n1125|420.59|shipped|us-east|Cust1487\n1126|811.34|open|us-east|Cust4358\n1127|653.48|cancelled|us-east|Cust4207\n1128|538.53|open|us-west|Cust6213"
+   },
+   {
+    "turn": 15,
+    "role": "tool",
+    "content": "GCF profile=generic\n## orders [101]{@id,total,status,region,customer}\n1000|288.1|open|apac|Cust573\n1002|262.99|pending|us-east|Cust752\n1003|592.39|refunded|us-east|Cust4552\n1004|176.6|shipped|us-east|Cust2727\n1005|880.74|pending|us-east|Cust439\n1008|629.95|open|apac|Cust3188\n1009|862.21|cancelled|eu|Cust7076\n1010|583.78|pending|us-east|Cust3350\n1011|530.4|refunded|us-west|Cust4175\n1012|496.26|pending|apac|Cust7698\n1014|465.83|refunded|apac|Cust6413\n1015|165.15|refunded|us-west|Cust5679\n1016|487.4|shipped|apac|Cust1043\n1018|577.25|shipped|apac|Cust1556\n1019|580.14|shipped|eu|Cust5051\n1020|67.55|refunded|us-east|Cust8605\n1021|517.83|open|apac|Cust6578\n1022|979.33|pending|apac|Cust8552\n1023|29.84|shipped|apac|Cust1254\n1024|18.05|pending|apac|Cust8830\n1026|793.8|pending|us-west|Cust8907\n1028|992.37|pending|us-east|Cust46\n1029|157.82|cancelled|eu|Cust7449\n1030|565.02|open|us-east|Cust5264\n1031|627.56|cancelled|apac|Cust7468\n1032|727.46|shipped|apac|Cust849\n1034|504.92|shipped|us-east|Cust3699\n1035|11.98|pending|apac|Cust3030\n1037|102.93|open|us-east|Cust7810\n1038|134.23|shipped|eu|Cust4030\n1042|64.45|open|eu|Cust1352\n1043|332.31|cancelled|us-west|Cust2459\n1045|696.01|cancelled|us-west|Cust6605\n1046|982.88|shipped|us-east|Cust128\n1047|86.52|open|eu|Cust4338\n1048|569.68|refunded|eu|Cust7831\n1049|304.21|shipped|us-east|Cust8156\n1050|958.95|pending|us-east|Cust1496\n1051|552.34|shipped|eu|Cust7744\n1052|177.16|refunded|eu|Cust2852\n1053|231.3|refunded|eu|Cust4021\n1054|703.83|cancelled|us-east|Cust5353\n1055|676.67|cancelled|us-west|Cust4692\n1056|610.26|open|eu|Cust2612\n1057|527.11|cancelled|eu|Cust3497\n1058|926.87|cancelled|eu|Cust6164\n1059|641.56|refunded|us-west|Cust6461\n1060|257.27|refunded|us-east|Cust4208\n1061|632.96|refunded|apac|Cust647\n1063|105.86|cancelled|us-west|Cust5924\n1066|642.28|pending|us-east|Cust596\n1067|986.63|refunded|us-east|Cust3923\n1069|273.92|cancelled|eu|Cust8978\n1070|878.94|refunded|eu|Cust6503\n1071|288.23|pending|us-east|Cust1259\n1072|464.77|shipped|us-east|Cust4922\n1073|275.5|cancelled|eu|Cust4857\n1074|642.66|shipped|us-east|Cust1431\n1076|323.4|shipped|us-east|Cust3522\n1078|370.2|shipped|apac|Cust7153\n1079|72.89|pending|us-west|Cust2088\n1080|49.08|shipped|us-west|Cust6913\n1082|614.07|shipped|apac|Cust5867\n1083|599.33|open|eu|Cust3823\n1084|946.37|cancelled|apac|Cust4407\n1085|198.42|open|eu|Cust8056\n1086|851.93|shipped|eu|Cust92\n1087|659.29|refunded|us-west|Cust2353\n1088|547.14|pending|us-west|Cust8934\n1089|996.45|cancelled|eu|Cust8264\n1090|508.48|cancelled|eu|Cust5432\n1091|50.45|open|us-east|Cust5907\n1092|124.15|refunded|us-east|Cust4568\n1093|782.4|refunded|eu|Cust4385\n1094|807.86|open|eu|Cust1526\n1098|190.45|open|us-east|Cust932\n1099|840.43|cancelled|us-west|Cust6034\n1102|540.15|refunded|us-east|Cust7101\n1103|825.71|pending|us-east|Cust3692\n1104|651.04|open|eu|Cust4310\n1105|934.49|pending|apac|Cust568\n1106|808.9|pending|us-west|Cust8775\n1107|414.75|open|us-east|Cust3839\n1109|452.97|pending|apac|Cust6673\n1110|162.52|cancelled|us-west|Cust2922\n1111|994.85|open|apac|Cust6696\n1113|380.93|shipped|eu|Cust5909\n1114|333.55|shipped|apac|Cust2082\n1116|210.55|open|us-east|Cust7773\n1117|301.22|open|us-east|Cust1370\n1118|666.28|cancelled|us-east|Cust6947\n1119|269.58|open|apac|Cust4763\n1120|948.12|shipped|eu|Cust7407\n1121|388.69|pending|us-west|Cust1559\n1122|430.76|cancelled|apac|Cust6302\n1123|717.8|refunded|us-west|Cust8376\n1124|726.91|pending|us-east|Cust2051\n1125|420.59|shipped|us-east|Cust1487\n1126|811.34|open|us-east|Cust4358\n1127|653.48|cancelled|us-east|Cust4207\n1128|538.53|open|us-west|Cust6213"
+   },
+   {
+    "turn": 16,
+    "role": "tool",
+    "content": "GCF profile=generic\n## orders [103]{@id,total,status,region,customer}\n1000|288.1|open|apac|Cust573\n1002|262.99|pending|us-east|Cust752\n1003|592.39|refunded|us-east|Cust4552\n1004|176.6|shipped|us-east|Cust2727\n1005|880.74|pending|us-east|Cust439\n1008|629.95|open|apac|Cust3188\n1009|862.21|cancelled|eu|Cust7076\n1010|583.78|pending|us-east|Cust3350\n1011|530.4|refunded|us-west|Cust4175\n1012|496.26|pending|apac|Cust7698\n1014|465.83|refunded|apac|Cust6413\n1015|165.15|refunded|us-west|Cust5679\n1016|487.4|shipped|apac|Cust1043\n1018|577.25|shipped|apac|Cust1556\n1019|580.14|shipped|eu|Cust5051\n1020|67.55|refunded|us-east|Cust8605\n1021|517.83|open|apac|Cust6578\n1022|979.33|pending|apac|Cust8552\n1023|29.84|shipped|apac|Cust1254\n1024|18.05|pending|apac|Cust8830\n1026|793.8|pending|us-west|Cust8907\n1028|992.37|pending|us-east|Cust46\n1029|157.82|cancelled|eu|Cust7449\n1030|565.02|open|us-east|Cust5264\n1031|627.56|cancelled|apac|Cust7468\n1032|727.46|shipped|apac|Cust849\n1034|504.92|shipped|us-east|Cust3699\n1035|11.98|pending|apac|Cust3030\n1037|102.93|open|us-east|Cust7810\n1038|134.23|shipped|eu|Cust4030\n1042|64.45|open|eu|Cust1352\n1043|332.31|cancelled|us-west|Cust2459\n1045|696.01|cancelled|us-west|Cust6605\n1046|982.88|shipped|us-east|Cust128\n1047|86.52|open|eu|Cust4338\n1048|569.68|refunded|eu|Cust7831\n1049|304.21|shipped|us-east|Cust8156\n1050|958.95|pending|us-east|Cust1496\n1051|552.34|shipped|eu|Cust7744\n1052|177.16|refunded|eu|Cust2852\n1053|231.3|refunded|eu|Cust4021\n1054|703.83|cancelled|us-east|Cust5353\n1055|676.67|cancelled|us-west|Cust4692\n1056|610.26|open|eu|Cust2612\n1057|527.11|cancelled|eu|Cust3497\n1058|926.87|cancelled|eu|Cust6164\n1059|641.56|refunded|us-west|Cust6461\n1060|257.27|refunded|us-east|Cust4208\n1061|632.96|refunded|apac|Cust647\n1063|105.86|cancelled|us-west|Cust5924\n1066|642.28|pending|us-east|Cust596\n1067|986.63|refunded|us-east|Cust3923\n1069|273.92|cancelled|eu|Cust8978\n1071|288.23|pending|us-east|Cust1259\n1072|464.77|shipped|us-east|Cust4922\n1073|213.83|cancelled|us-west|Cust7006\n1074|642.66|shipped|us-east|Cust1431\n1076|323.4|shipped|us-east|Cust3522\n1078|370.2|shipped|apac|Cust7153\n1079|72.89|pending|us-west|Cust2088\n1080|49.08|shipped|us-west|Cust6913\n1082|614.07|shipped|apac|Cust5867\n1083|599.33|open|eu|Cust3823\n1084|946.37|cancelled|apac|Cust4407\n1085|441.95|open|apac|Cust4250\n1086|851.93|shipped|eu|Cust92\n1087|659.29|refunded|us-west|Cust2353\n1088|547.14|pending|us-west|Cust8934\n1090|508.48|cancelled|eu|Cust5432\n1091|50.45|open|us-east|Cust5907\n1092|124.15|refunded|us-east|Cust4568\n1093|782.4|refunded|eu|Cust4385\n1094|896.15|open|eu|Cust7529\n1098|190.45|open|us-east|Cust932\n1099|840.43|cancelled|us-west|Cust6034\n1102|540.15|refunded|us-east|Cust7101\n1103|825.71|pending|us-east|Cust3692\n1104|651.04|open|eu|Cust4310\n1105|934.49|pending|apac|Cust568\n1106|808.9|pending|us-west|Cust8775\n1107|475.51|shipped|us-west|Cust5581\n1109|452.97|pending|apac|Cust6673\n1110|162.52|cancelled|us-west|Cust2922\n1111|994.85|open|apac|Cust6696\n1113|380.93|shipped|eu|Cust5909\n1114|333.55|shipped|apac|Cust2082\n1116|210.55|open|us-east|Cust7773\n1117|301.22|open|us-east|Cust1370\n1118|666.28|cancelled|us-east|Cust6947\n1119|269.58|open|apac|Cust4763\n1120|948.12|shipped|eu|Cust7407\n1121|388.69|pending|us-west|Cust1559\n1122|430.76|cancelled|apac|Cust6302\n1123|717.8|refunded|us-west|Cust8376\n1124|726.91|pending|us-east|Cust2051\n1125|420.59|shipped|us-east|Cust1487\n1126|811.34|open|us-east|Cust4358\n1127|653.48|cancelled|us-east|Cust4207\n1128|538.53|open|us-west|Cust6213\n1129|850.68|shipped|eu|Cust4665\n1130|547.3|cancelled|apac|Cust6884\n1131|912.34|open|eu|Cust2550\n1132|413.61|open|us-west|Cust3084"
+   }
+  ]
+ },
+ "probes": [
+  {
+   "after_turn": 2,
+   "depth": 1,
+   "questions": [
+    {
+     "type": "changed_stale",
+     "q": "What is the status of order 1070?",
+     "answer": "open"
+    },
+    {
+     "type": "latest_of_multiple",
+     "q": "What is the current status of order 1030?",
+     "answer": "refunded"
+    },
+    {
+     "type": "removed_absent",
+     "q": "Is order 1108 still present? Answer yes or no.",
+     "answer": "no"
+    },
+    {
+     "type": "present_control",
+     "q": "Is order 1020 still present? Answer yes or no.",
+     "answer": "yes"
+    },
+    {
+     "type": "unchanged_persistence",
+     "q": "What is the customer of order 1032?",
+     "answer": "Cust849"
+    },
+    {
+     "type": "count",
+     "q": "How many orders are there now?",
+     "answer": "99"
+    },
+    {
+     "type": "aggregate_count",
+     "q": "How many orders have status refunded?",
+     "answer": "19"
+    }
+   ]
+  },
+  {
+   "after_turn": 3,
+   "depth": 2,
+   "questions": [
+    {
+     "type": "changed_stale",
+     "q": "What is the status of order 1045?",
+     "answer": "cancelled"
+    },
+    {
+     "type": "latest_of_multiple",
+     "q": "What is the current status of order 1073?",
+     "answer": "pending"
+    },
+    {
+     "type": "removed_absent",
+     "q": "Is order 1112 still present? Answer yes or no.",
+     "answer": "no"
+    },
+    {
+     "type": "present_control",
+     "q": "Is order 1001 still present? Answer yes or no.",
+     "answer": "yes"
+    },
+    {
+     "type": "added_lookup",
+     "q": "What is the total of order 1100?",
+     "answer": "482.25"
+    },
+    {
+     "type": "unchanged_persistence",
+     "q": "What is the customer of order 1011?",
+     "answer": "Cust4175"
+    },
+    {
+     "type": "count",
+     "q": "How many orders are there now?",
+     "answer": "100"
+    },
+    {
+     "type": "aggregate_count",
+     "q": "How many orders have status open?",
+     "answer": "16"
+    }
+   ]
+  },
+  {
+   "after_turn": 4,
+   "depth": 3,
+   "questions": [
+    {
+     "type": "changed_stale",
+     "q": "What is the status of order 1056?",
+     "answer": "cancelled"
+    },
+    {
+     "type": "latest_of_multiple",
+     "q": "What is the current status of order 1020?",
+     "answer": "pending"
+    },
+    {
+     "type": "removed_absent",
+     "q": "Is order 1075 still present? Answer yes or no.",
+     "answer": "no"
+    },
+    {
+     "type": "present_control",
+     "q": "Is order 1022 still present? Answer yes or no.",
+     "answer": "yes"
+    },
+    {
+     "type": "added_lookup",
+     "q": "What is the total of order 1103?",
+     "answer": "726.89"
+    },
+    {
+     "type": "unchanged_persistence",
+     "q": "What is the customer of order 1061?",
+     "answer": "Cust647"
+    },
+    {
+     "type": "count",
+     "q": "How many orders are there now?",
+     "answer": "101"
+    },
+    {
+     "type": "aggregate_count",
+     "q": "How many orders have status cancelled?",
+     "answer": "20"
+    }
+   ]
+  },
+  {
+   "after_turn": 5,
+   "depth": 4,
+   "questions": [
+    {
+     "type": "changed_stale",
+     "q": "What is the status of order 1087?",
+     "answer": "open"
+    },
+    {
+     "type": "latest_of_multiple",
+     "q": "What is the current status of order 1015?",
+     "answer": "cancelled"
+    },
+    {
+     "type": "removed_absent",
+     "q": "Is order 1095 still present? Answer yes or no.",
+     "answer": "no"
+    },
+    {
+     "type": "present_control",
+     "q": "Is order 1045 still present? Answer yes or no.",
+     "answer": "yes"
+    },
+    {
+     "type": "added_lookup",
+     "q": "What is the total of order 1100?",
+     "answer": "482.25"
+    },
+    {
+     "type": "unchanged_persistence",
+     "q": "What is the customer of order 1009?",
+     "answer": "Cust7076"
+    },
+    {
+     "type": "count",
+     "q": "How many orders are there now?",
+     "answer": "102"
+    },
+    {
+     "type": "aggregate_count",
+     "q": "How many orders have status cancelled?",
+     "answer": "21"
+    }
+   ]
+  },
+  {
+   "after_turn": 6,
+   "depth": 5,
+   "questions": [
+    {
+     "type": "changed_stale",
+     "q": "What is the status of order 1054?",
+     "answer": "cancelled"
+    },
+    {
+     "type": "latest_of_multiple",
+     "q": "What is the current status of order 1020?",
+     "answer": "pending"
+    },
+    {
+     "type": "removed_absent",
+     "q": "Is order 1068 still present? Answer yes or no.",
+     "answer": "no"
+    },
+    {
+     "type": "present_control",
+     "q": "Is order 1090 still present? Answer yes or no.",
+     "answer": "yes"
+    },
+    {
+     "type": "added_lookup",
+     "q": "What is the total of order 1101?",
+     "answer": "316.05"
+    },
+    {
+     "type": "unchanged_persistence",
+     "q": "What is the customer of order 1028?",
+     "answer": "Cust46"
+    },
+    {
+     "type": "count",
+     "q": "How many orders are there now?",
+     "answer": "103"
+    },
+    {
+     "type": "aggregate_count",
+     "q": "How many orders have status open?",
+     "answer": "16"
+    }
+   ]
+  },
+  {
+   "after_turn": 7,
+   "depth": 6,
+   "questions": [
+    {
+     "type": "changed_stale",
+     "q": "What is the status of order 1033?",
+     "answer": "open"
+    },
+    {
+     "type": "latest_of_multiple",
+     "q": "What is the current status of order 1041?",
+     "answer": "refunded"
+    },
+    {
+     "type": "removed_absent",
+     "q": "Is order 1044 still present? Answer yes or no.",
+     "answer": "no"
+    },
+    {
+     "type": "present_control",
+     "q": "Is order 1035 still present? Answer yes or no.",
+     "answer": "yes"
+    },
+    {
+     "type": "added_lookup",
+     "q": "What is the total of order 1104?",
+     "answer": "651.04"
+    },
+    {
+     "type": "unchanged_persistence",
+     "q": "What is the customer of order 1011?",
+     "answer": "Cust4175"
+    },
+    {
+     "type": "count",
+     "q": "How many orders are there now?",
+     "answer": "103"
+    },
+    {
+     "type": "aggregate_count",
+     "q": "How many orders have status open?",
+     "answer": "16"
+    }
+   ]
+  },
+  {
+   "after_turn": 8,
+   "depth": 7,
+   "questions": [
+    {
+     "type": "changed_stale",
+     "q": "What is the status of order 1049?",
+     "answer": "shipped"
+    },
+    {
+     "type": "latest_of_multiple",
+     "q": "What is the current status of order 1000?",
+     "answer": "pending"
+    },
+    {
+     "type": "removed_absent",
+     "q": "Is order 1065 still present? Answer yes or no.",
+     "answer": "no"
+    },
+    {
+     "type": "present_control",
+     "q": "Is order 1070 still present? Answer yes or no.",
+     "answer": "yes"
+    },
+    {
+     "type": "added_lookup",
+     "q": "What is the total of order 1100?",
+     "answer": "482.25"
+    },
+    {
+     "type": "unchanged_persistence",
+     "q": "What is the customer of order 1011?",
+     "answer": "Cust4175"
+    },
+    {
+     "type": "count",
+     "q": "How many orders are there now?",
+     "answer": "102"
+    },
+    {
+     "type": "aggregate_count",
+     "q": "How many orders have status pending?",
+     "answer": "24"
+    }
+   ]
+  },
+  {
+   "after_turn": 9,
+   "depth": 8,
+   "questions": [
+    {
+     "type": "changed_stale",
+     "q": "What is the status of order 1030?",
+     "answer": "refunded"
+    },
+    {
+     "type": "latest_of_multiple",
+     "q": "What is the current status of order 1093?",
+     "answer": "open"
+    },
+    {
+     "type": "removed_absent",
+     "q": "Is order 1027 still present? Answer yes or no.",
+     "answer": "no"
+    },
+    {
+     "type": "present_control",
+     "q": "Is order 1049 still present? Answer yes or no.",
+     "answer": "yes"
+    },
+    {
+     "type": "added_lookup",
+     "q": "What is the total of order 1110?",
+     "answer": "162.52"
+    },
+    {
+     "type": "unchanged_persistence",
+     "q": "What is the customer of order 1037?",
+     "answer": "Cust7810"
+    },
+    {
+     "type": "count",
+     "q": "How many orders are there now?",
+     "answer": "101"
+    },
+    {
+     "type": "aggregate_count",
+     "q": "How many orders have status refunded?",
+     "answer": "14"
+    }
+   ]
+  },
+  {
+   "after_turn": 10,
+   "depth": 9,
+   "questions": [
+    {
+     "type": "changed_stale",
+     "q": "What is the status of order 1049?",
+     "answer": "shipped"
+    },
+    {
+     "type": "latest_of_multiple",
+     "q": "What is the current status of order 1030?",
+     "answer": "refunded"
+    },
+    {
+     "type": "removed_absent",
+     "q": "Is order 1075 still present? Answer yes or no.",
+     "answer": "no"
+    },
+    {
+     "type": "present_control",
+     "q": "Is order 1050 still present? Answer yes or no.",
+     "answer": "yes"
+    },
+    {
+     "type": "added_lookup",
+     "q": "What is the total of order 1111?",
+     "answer": "994.85"
+    },
+    {
+     "type": "unchanged_persistence",
+     "q": "What is the customer of order 1048?",
+     "answer": "Cust7831"
+    },
+    {
+     "type": "count",
+     "q": "How many orders are there now?",
+     "answer": "102"
+    },
+    {
+     "type": "aggregate_count",
+     "q": "How many orders have status cancelled?",
+     "answer": "22"
+    }
+   ]
+  },
+  {
+   "after_turn": 11,
+   "depth": 10,
+   "questions": [
+    {
+     "type": "changed_stale",
+     "q": "What is the status of order 1093?",
+     "answer": "open"
+    },
+    {
+     "type": "latest_of_multiple",
+     "q": "What is the current status of order 1015?",
+     "answer": "cancelled"
+    },
+    {
+     "type": "removed_absent",
+     "q": "Is order 1077 still present? Answer yes or no.",
+     "answer": "no"
+    },
+    {
+     "type": "present_control",
+     "q": "Is order 1086 still present? Answer yes or no.",
+     "answer": "yes"
+    },
+    {
+     "type": "added_lookup",
+     "q": "What is the total of order 1102?",
+     "answer": "615.36"
+    },
+    {
+     "type": "unchanged_persistence",
+     "q": "What is the customer of order 1009?",
+     "answer": "Cust7076"
+    },
+    {
+     "type": "count",
+     "q": "How many orders are there now?",
+     "answer": "100"
+    },
+    {
+     "type": "aggregate_count",
+     "q": "How many orders have status shipped?",
+     "answer": "24"
+    }
+   ]
+  },
+  {
+   "after_turn": 12,
+   "depth": 11,
+   "questions": [
+    {
+     "type": "changed_stale",
+     "q": "What is the status of order 1088?",
+     "answer": "pending"
+    },
+    {
+     "type": "latest_of_multiple",
+     "q": "What is the current status of order 1047?",
+     "answer": "cancelled"
+    },
+    {
+     "type": "removed_absent",
+     "q": "Is order 1039 still present? Answer yes or no.",
+     "answer": "no"
+    },
+    {
+     "type": "present_control",
+     "q": "Is order 1049 still present? Answer yes or no.",
+     "answer": "yes"
+    },
+    {
+     "type": "added_lookup",
+     "q": "What is the total of order 1103?",
+     "answer": "825.71"
+    },
+    {
+     "type": "unchanged_persistence",
+     "q": "What is the customer of order 1002?",
+     "answer": "Cust752"
+    },
+    {
+     "type": "count",
+     "q": "How many orders are there now?",
+     "answer": "106"
+    },
+    {
+     "type": "aggregate_count",
+     "q": "How many orders have status cancelled?",
+     "answer": "23"
+    }
+   ]
+  },
+  {
+   "after_turn": 13,
+   "depth": 12,
+   "questions": [
+    {
+     "type": "changed_stale",
+     "q": "What is the status of order 1070?",
+     "answer": "refunded"
+    },
+    {
+     "type": "latest_of_multiple",
+     "q": "What is the current status of order 1042?",
+     "answer": "shipped"
+    },
+    {
+     "type": "removed_absent",
+     "q": "Is order 1025 still present? Answer yes or no.",
+     "answer": "no"
+    },
+    {
+     "type": "present_control",
+     "q": "Is order 1036 still present? Answer yes or no.",
+     "answer": "yes"
+    },
+    {
+     "type": "added_lookup",
+     "q": "What is the total of order 1104?",
+     "answer": "651.04"
+    },
+    {
+     "type": "unchanged_persistence",
+     "q": "What is the customer of order 1078?",
+     "answer": "Cust7153"
+    },
+    {
+     "type": "count",
+     "q": "How many orders are there now?",
+     "answer": "102"
+    },
+    {
+     "type": "aggregate_count",
+     "q": "How many orders have status open?",
+     "answer": "16"
+    }
+   ]
+  },
+  {
+   "after_turn": 14,
+   "depth": 13,
+   "questions": [
+    {
+     "type": "changed_stale",
+     "q": "What is the status of order 1057?",
+     "answer": "cancelled"
+    },
+    {
+     "type": "latest_of_multiple",
+     "q": "What is the current status of order 1020?",
+     "answer": "refunded"
+    },
+    {
+     "type": "removed_absent",
+     "q": "Is order 1081 still present? Answer yes or no.",
+     "answer": "no"
+    },
+    {
+     "type": "present_control",
+     "q": "Is order 1048 still present? Answer yes or no.",
+     "answer": "yes"
+    },
+    {
+     "type": "added_lookup",
+     "q": "What is the total of order 1118?",
+     "answer": "666.28"
+    },
+    {
+     "type": "unchanged_persistence",
+     "q": "What is the customer of order 1086?",
+     "answer": "Cust92"
+    },
+    {
+     "type": "count",
+     "q": "How many orders are there now?",
+     "answer": "104"
+    },
+    {
+     "type": "aggregate_count",
+     "q": "How many orders have status shipped?",
+     "answer": "23"
+    }
+   ]
+  },
+  {
+   "after_turn": 15,
+   "depth": 14,
+   "questions": [
+    {
+     "type": "changed_stale",
+     "q": "What is the status of order 1083?",
+     "answer": "open"
+    },
+    {
+     "type": "latest_of_multiple",
+     "q": "What is the current status of order 1043?",
+     "answer": "cancelled"
+    },
+    {
+     "type": "removed_absent",
+     "q": "Is order 1039 still present? Answer yes or no.",
+     "answer": "no"
+    },
+    {
+     "type": "present_control",
+     "q": "Is order 1031 still present? Answer yes or no.",
+     "answer": "yes"
+    },
+    {
+     "type": "added_lookup",
+     "q": "What is the total of order 1126?",
+     "answer": "811.34"
+    },
+    {
+     "type": "unchanged_persistence",
+     "q": "What is the customer of order 1037?",
+     "answer": "Cust7810"
+    },
+    {
+     "type": "count",
+     "q": "How many orders are there now?",
+     "answer": "101"
+    },
+    {
+     "type": "aggregate_count",
+     "q": "How many orders have status refunded?",
+     "answer": "18"
+    }
+   ]
+  },
+  {
+   "after_turn": 16,
+   "depth": 15,
+   "questions": [
+    {
+     "type": "changed_stale",
+     "q": "What is the status of order 1066?",
+     "answer": "pending"
+    },
+    {
+     "type": "latest_of_multiple",
+     "q": "What is the current status of order 1042?",
+     "answer": "open"
+    },
+    {
+     "type": "removed_absent",
+     "q": "Is order 1013 still present? Answer yes or no.",
+     "answer": "no"
+    },
+    {
+     "type": "present_control",
+     "q": "Is order 1011 still present? Answer yes or no.",
+     "answer": "yes"
+    },
+    {
+     "type": "added_lookup",
+     "q": "What is the total of order 1120?",
+     "answer": "948.12"
+    },
+    {
+     "type": "unchanged_persistence",
+     "q": "What is the customer of order 1009?",
+     "answer": "Cust7076"
+    },
+    {
+     "type": "count",
+     "q": "How many orders are there now?",
+     "answer": "103"
+    },
+    {
+     "type": "aggregate_count",
+     "q": "How many orders have status pending?",
+     "answer": "20"
+    }
+   ]
+  }
+ ]
+}

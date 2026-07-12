@@ -1,0 +1,9 @@
+1/60 probes2/60 probes3/60 probes4/60 probes5/60 probes6/60 probes7/60 probes8/60 probes9/60 probes10/60 probes11/60 probes12/60 probes13/60 probes14/60 probes15/60 probes16/60 probes17/60 probes18/60 probes19/60 probes20/60 probes21/60 probes22/60 probes23/60 probes24/60 probes25/60 probes26/60 probes27/60 probes28/60 probes29/60 probes30/60 probes31/60 probes32/60 probes33/60 probes34/60 probes35/60 probes36/60 probes37/60 probes38/60 probes39/60 probes40/60 probes41/60 probes42/60 probes43/60 probes44/60 probes45/60 probes46/60 probes47/60 probes48/60 probes
+[run crashed at 48/60; writing PARTIAL results] fetch failed
+
+### openrouter https://openrouter.ai/api/v1 model=mistralai/mistral-small-3.2-24b-instruct: delta 70.0% | full-resend 65.3% | gap -4.7pp
+  delta by type: changed_stale=93% latest_of_multiple=90% removed_absent=93% present_control=87% added_lookup=93% unchanged_persistence=93% count=10% aggregate_count=0%
+  delta by depth: t1=88% t2=75% t3=88% t4=88% t5=0% t6=75% t7=75% t8=75% t9=75% t10=75% t11=75% t12=75% t13=75% t14=75% t15=75% t16=63% t17=75% t18=75% t19=75% t20=75% t21=75% t22=0% t23=75% t24=75% t25=75% t26=75% t27=75% t28=63% t29=63% t30=75%
+resolved models served: {"mistralai/mistral-small-3.2-24b-instruct-2506":48}
+
+wrote results/mistral-small-24b-deep30/mistralai_mistral_small_3_2_24b_instruct.json (PARTIAL — rerun to complete)

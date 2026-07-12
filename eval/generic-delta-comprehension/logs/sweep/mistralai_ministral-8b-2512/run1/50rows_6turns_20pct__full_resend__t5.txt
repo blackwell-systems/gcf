@@ -1,0 +1,352 @@
+# fixture=50rows_6turns_20pct arm=full_resend depth=5 requested=mistralai/ministral-8b-2512 resolved=mistralai/ministral-8b-2512
+# questions:
+  1. [changed_stale] What is the status of order 1031? => want=cancelled
+  2. [latest_of_multiple] What is the current status of order 1012? => want=pending
+  3. [removed_absent] Is order 1013 still present? Answer yes or no. => want=no
+  4. [present_control] Is order 1038 still present? Answer yes or no. => want=yes
+  5. [added_lookup] What is the total of order 1050? => want=642.82
+  6. [unchanged_persistence] What is the customer of order 1040? => want=Cust1068
+  7. [count] How many orders are there now? => want=48
+  8. [aggregate_count] How many orders have status cancelled? => want=6
+# parsed answers: ["N: cancelled","N: pending","N: no","N: yes","N: 642.82","N: Cust1068","N: 48","N: 5"]
+
+===== PROMPT =====
+You are reading a live data feed encoded in GCF. The first message is a full table:
+"## orders [N]{@id,total,status,region,customer}" followed by rows, one per line, pipe-separated, in that column order. "@id" marks the identity column.
+Each later message is a DELTA that updates the table you already have:
+- "## added" : new rows (same columns).
+- "## changed" : each row REPLACES the existing row with the same @id.
+- "## removed" : a list of @id values to delete.
+Rows not mentioned in a delta are UNCHANGED and still present. Apply all deltas in order. Always answer about the CURRENT table after applying every delta received so far. Answer with only the requested value (no explanation).
+
+----- update -----
+GCF profile=generic
+## orders [50]{@id,total,status,region,customer}
+1000|733.52|shipped|us-west|Cust4841
+1001|874.41|cancelled|us-west|Cust3215
+1002|780.81|open|apac|Cust1813
+1003|423.8|refunded|eu|Cust1269
+1004|671.56|shipped|apac|Cust352
+1005|914.28|open|us-east|Cust1727
+1006|7.1|refunded|us-west|Cust5711
+1007|987.42|shipped|us-west|Cust3134
+1008|52.58|pending|us-east|Cust520
+1009|959.33|refunded|us-east|Cust8838
+1010|72.45|refunded|eu|Cust1752
+1011|677.21|open|apac|Cust8204
+1012|826.3|pending|apac|Cust640
+1013|713.38|refunded|apac|Cust5774
+1014|523.9|open|apac|Cust7549
+1015|547.44|shipped|apac|Cust8355
+1016|446.51|shipped|us-east|Cust8570
+1017|313.04|pending|apac|Cust7806
+1018|918.6|pending|us-east|Cust5816
+1019|623.55|cancelled|apac|Cust1846
+1020|278.57|shipped|eu|Cust247
+1021|287.8|refunded|us-east|Cust6992
+1022|394.1|pending|us-west|Cust7593
+1023|475.18|refunded|us-west|Cust766
+1024|707.35|open|eu|Cust7037
+1025|646.83|shipped|us-west|Cust5863
+1026|107.41|open|eu|Cust8779
+1027|629.84|open|eu|Cust8510
+1028|28.74|pending|eu|Cust6459
+1029|845.77|pending|eu|Cust612
+1030|861.84|pending|us-east|Cust5242
+1031|460.46|pending|eu|Cust2730
+1032|214.93|refunded|eu|Cust4677
+1033|203.6|open|us-west|Cust7397
+1034|188.98|refunded|us-east|Cust7351
+1035|322.12|shipped|eu|Cust8201
+1036|371.91|pending|apac|Cust8043
+1037|337.19|pending|apac|Cust8304
+1038|537.86|refunded|us-east|Cust3365
+1039|308.4|open|us-west|Cust8118
+1040|260.71|shipped|apac|Cust1068
+1041|208.3|open|eu|Cust6138
+1042|587.45|cancelled|us-west|Cust7724
+1043|57.09|cancelled|eu|Cust7713
+1044|164.14|pending|us-east|Cust3580
+1045|369.48|refunded|eu|Cust6735
+1046|18.88|cancelled|us-east|Cust8037
+1047|11.68|shipped|us-east|Cust8307
+1048|104.79|cancelled|eu|Cust4500
+1049|26.52|shipped|eu|Cust8235
+
+----- update -----
+GCF profile=generic
+## orders [49]{@id,total,status,region,customer}
+1000|733.52|shipped|us-west|Cust4841
+1001|8.82|pending|us-west|Cust4486
+1002|780.81|open|apac|Cust1813
+1003|423.8|refunded|eu|Cust1269
+1004|671.56|shipped|apac|Cust352
+1005|914.28|open|us-east|Cust1727
+1006|7.1|refunded|us-west|Cust5711
+1008|664.26|open|eu|Cust7636
+1009|959.33|refunded|us-east|Cust8838
+1010|72.45|refunded|eu|Cust1752
+1011|677.21|open|apac|Cust8204
+1012|826.3|pending|apac|Cust640
+1013|713.38|refunded|apac|Cust5774
+1014|523.9|open|apac|Cust7549
+1015|547.44|shipped|apac|Cust8355
+1016|446.51|shipped|us-east|Cust8570
+1017|313.04|pending|apac|Cust7806
+1018|918.6|pending|us-east|Cust5816
+1019|623.55|cancelled|apac|Cust1846
+1020|16.96|pending|apac|Cust1960
+1021|287.8|refunded|us-east|Cust6992
+1022|394.1|pending|us-west|Cust7593
+1023|606.9|cancelled|us-east|Cust8587
+1024|707.35|open|eu|Cust7037
+1025|646.83|shipped|us-west|Cust5863
+1027|629.84|open|eu|Cust8510
+1028|28.74|pending|eu|Cust6459
+1029|845.77|pending|eu|Cust612
+1030|861.84|pending|us-east|Cust5242
+1031|460.46|pending|eu|Cust2730
+1032|214.93|refunded|eu|Cust4677
+1033|603.14|open|us-east|Cust4431
+1034|422.56|open|eu|Cust6139
+1035|322.12|shipped|eu|Cust8201
+1036|371.91|pending|apac|Cust8043
+1037|337.19|pending|apac|Cust8304
+1038|537.86|refunded|us-east|Cust3365
+1039|308.4|open|us-west|Cust8118
+1040|260.71|shipped|apac|Cust1068
+1041|208.3|open|eu|Cust6138
+1042|587.45|cancelled|us-west|Cust7724
+1043|57.09|cancelled|eu|Cust7713
+1044|164.14|pending|us-east|Cust3580
+1045|369.48|refunded|eu|Cust6735
+1046|18.88|cancelled|us-east|Cust8037
+1047|11.68|shipped|us-east|Cust8307
+1048|104.79|cancelled|eu|Cust4500
+1049|26.52|shipped|eu|Cust8235
+1050|642.82|pending|eu|Cust1109
+
+----- update -----
+GCF profile=generic
+## orders [49]{@id,total,status,region,customer}
+1000|733.52|shipped|us-west|Cust4841
+1001|8.82|pending|us-west|Cust4486
+1002|780.81|open|apac|Cust1813
+1003|134.01|refunded|us-west|Cust2897
+1004|671.56|shipped|apac|Cust352
+1005|914.28|open|us-east|Cust1727
+1006|7.1|refunded|us-west|Cust5711
+1008|664.26|open|eu|Cust7636
+1009|959.33|refunded|us-east|Cust8838
+1010|72.45|refunded|eu|Cust1752
+1011|677.21|open|apac|Cust8204
+1012|826.3|pending|apac|Cust640
+1013|713.38|refunded|apac|Cust5774
+1014|523.9|open|apac|Cust7549
+1015|547.44|shipped|apac|Cust8355
+1016|446.51|shipped|us-east|Cust8570
+1017|313.04|pending|apac|Cust7806
+1019|623.55|cancelled|apac|Cust1846
+1020|16.96|pending|apac|Cust1960
+1021|287.8|refunded|us-east|Cust6992
+1022|394.1|pending|us-west|Cust7593
+1023|606.9|cancelled|us-east|Cust8587
+1024|707.35|open|eu|Cust7037
+1025|646.83|shipped|us-west|Cust5863
+1027|629.84|open|eu|Cust8510
+1028|28.74|pending|eu|Cust6459
+1029|845.77|pending|eu|Cust612
+1030|861.84|pending|us-east|Cust5242
+1031|460.46|pending|eu|Cust2730
+1032|645.93|open|us-west|Cust2919
+1033|603.14|open|us-east|Cust4431
+1034|422.56|open|eu|Cust6139
+1035|322.12|shipped|eu|Cust8201
+1036|8.7|open|us-west|Cust8053
+1037|337.19|pending|apac|Cust8304
+1038|537.86|refunded|us-east|Cust3365
+1039|535.74|refunded|apac|Cust861
+1040|260.71|shipped|apac|Cust1068
+1041|208.3|open|eu|Cust6138
+1042|587.45|cancelled|us-west|Cust7724
+1043|57.09|cancelled|eu|Cust7713
+1044|164.14|pending|us-east|Cust3580
+1045|369.48|refunded|eu|Cust6735
+1046|18.88|cancelled|us-east|Cust8037
+1047|733.26|pending|eu|Cust2278
+1048|104.79|cancelled|eu|Cust4500
+1049|26.52|shipped|eu|Cust8235
+1050|642.82|pending|eu|Cust1109
+1052|756.68|pending|us-west|Cust2295
+
+----- update -----
+GCF profile=generic
+## orders [46]{@id,total,status,region,customer}
+1000|733.52|shipped|us-west|Cust4841
+1001|8.82|pending|us-west|Cust4486
+1002|780.81|open|apac|Cust1813
+1004|709.33|shipped|us-west|Cust2081
+1005|914.28|open|us-east|Cust1727
+1006|7.1|refunded|us-west|Cust5711
+1008|664.26|open|eu|Cust7636
+1009|959.33|refunded|us-east|Cust8838
+1010|72.45|refunded|eu|Cust1752
+1011|677.21|open|apac|Cust8204
+1012|826.3|pending|apac|Cust640
+1014|523.9|open|apac|Cust7549
+1015|547.44|shipped|apac|Cust8355
+1017|313.04|pending|apac|Cust7806
+1019|623.55|cancelled|apac|Cust1846
+1020|16.96|pending|apac|Cust1960
+1021|287.8|refunded|us-east|Cust6992
+1023|606.9|cancelled|us-east|Cust8587
+1024|707.35|open|eu|Cust7037
+1025|646.83|shipped|us-west|Cust5863
+1027|629.84|open|eu|Cust8510
+1028|622.34|shipped|eu|Cust7390
+1029|845.77|pending|eu|Cust612
+1030|861.84|pending|us-east|Cust5242
+1031|323.3|cancelled|apac|Cust4051
+1032|645.93|open|us-west|Cust2919
+1033|623.18|open|apac|Cust919
+1034|422.56|open|eu|Cust6139
+1035|322.12|shipped|eu|Cust8201
+1036|8.7|open|us-west|Cust8053
+1037|337.19|pending|apac|Cust8304
+1038|537.86|refunded|us-east|Cust3365
+1039|535.74|refunded|apac|Cust861
+1040|260.71|shipped|apac|Cust1068
+1041|208.3|open|eu|Cust6138
+1042|587.45|cancelled|us-west|Cust7724
+1043|57.09|cancelled|eu|Cust7713
+1044|164.14|pending|us-east|Cust3580
+1045|369.48|refunded|eu|Cust6735
+1046|18.88|cancelled|us-east|Cust8037
+1047|733.26|pending|eu|Cust2278
+1048|663.11|shipped|eu|Cust7916
+1049|26.52|shipped|eu|Cust8235
+1050|642.82|pending|eu|Cust1109
+1052|756.68|pending|us-west|Cust2295
+1053|124.77|pending|us-west|Cust4454
+
+----- update -----
+GCF profile=generic
+## orders [46]{@id,total,status,region,customer}
+1000|733.52|shipped|us-west|Cust4841
+1001|8.82|pending|us-west|Cust4486
+1002|780.81|open|apac|Cust1813
+1004|709.33|shipped|us-west|Cust2081
+1005|914.28|open|us-east|Cust1727
+1008|664.26|open|eu|Cust7636
+1009|959.33|refunded|us-east|Cust8838
+1010|72.45|refunded|eu|Cust1752
+1011|677.21|open|apac|Cust8204
+1012|722.17|pending|eu|Cust545
+1014|523.9|open|apac|Cust7549
+1015|547.44|shipped|apac|Cust8355
+1017|313.04|pending|apac|Cust7806
+1019|971.25|open|eu|Cust7246
+1020|16.96|pending|apac|Cust1960
+1021|194.22|pending|eu|Cust2320
+1023|606.9|cancelled|us-east|Cust8587
+1024|707.35|open|eu|Cust7037
+1025|646.83|shipped|us-west|Cust5863
+1027|629.84|open|eu|Cust8510
+1028|622.34|shipped|eu|Cust7390
+1029|845.77|pending|eu|Cust612
+1030|861.84|pending|us-east|Cust5242
+1031|323.3|cancelled|apac|Cust4051
+1032|645.93|open|us-west|Cust2919
+1033|623.18|open|apac|Cust919
+1034|422.56|open|eu|Cust6139
+1035|322.12|shipped|eu|Cust8201
+1038|537.86|refunded|us-east|Cust3365
+1039|535.74|refunded|apac|Cust861
+1040|260.71|shipped|apac|Cust1068
+1041|208.3|open|eu|Cust6138
+1042|587.45|cancelled|us-west|Cust7724
+1043|57.09|cancelled|eu|Cust7713
+1044|164.14|pending|us-east|Cust3580
+1045|369.48|refunded|eu|Cust6735
+1046|18.88|cancelled|us-east|Cust8037
+1047|733.26|pending|eu|Cust2278
+1048|663.11|shipped|eu|Cust7916
+1049|26.52|shipped|eu|Cust8235
+1050|642.82|pending|eu|Cust1109
+1052|756.68|pending|us-west|Cust2295
+1053|124.77|pending|us-west|Cust4454
+1054|385.08|shipped|us-east|Cust1668
+1055|405.14|cancelled|apac|Cust7859
+1056|513.72|refunded|us-west|Cust1762
+
+----- update -----
+GCF profile=generic
+## orders [48]{@id,total,status,region,customer}
+1000|384.22|open|eu|Cust930
+1001|8.82|pending|us-west|Cust4486
+1002|780.81|open|apac|Cust1813
+1004|709.33|shipped|us-west|Cust2081
+1005|914.28|open|us-east|Cust1727
+1008|664.26|open|eu|Cust7636
+1009|959.33|refunded|us-east|Cust8838
+1010|72.45|refunded|eu|Cust1752
+1012|722.17|pending|eu|Cust545
+1014|523.9|open|apac|Cust7549
+1015|547.44|shipped|apac|Cust8355
+1017|313.04|pending|apac|Cust7806
+1019|971.25|open|eu|Cust7246
+1020|388.57|open|eu|Cust8730
+1021|194.22|pending|eu|Cust2320
+1023|606.9|cancelled|us-east|Cust8587
+1024|707.35|open|eu|Cust7037
+1025|646.83|shipped|us-west|Cust5863
+1027|629.84|open|eu|Cust8510
+1028|622.34|shipped|eu|Cust7390
+1029|845.77|pending|eu|Cust612
+1030|437.45|open|apac|Cust6885
+1031|323.3|cancelled|apac|Cust4051
+1032|645.93|open|us-west|Cust2919
+1033|460.52|shipped|apac|Cust722
+1034|422.56|open|eu|Cust6139
+1035|322.12|shipped|eu|Cust8201
+1038|537.86|refunded|us-east|Cust3365
+1039|535.74|refunded|apac|Cust861
+1040|260.71|shipped|apac|Cust1068
+1041|581.94|open|eu|Cust4743
+1042|587.45|cancelled|us-west|Cust7724
+1043|57.09|cancelled|eu|Cust7713
+1044|164.14|pending|us-east|Cust3580
+1045|369.48|refunded|eu|Cust6735
+1046|18.88|cancelled|us-east|Cust8037
+1047|733.26|pending|eu|Cust2278
+1048|848.83|refunded|us-east|Cust1453
+1049|26.52|shipped|eu|Cust8235
+1050|642.82|pending|eu|Cust1109
+1052|756.68|pending|us-west|Cust2295
+1053|124.77|pending|us-west|Cust4454
+1054|385.08|shipped|us-east|Cust1668
+1055|405.14|cancelled|apac|Cust7859
+1056|513.72|refunded|us-west|Cust1762
+1057|662.89|refunded|us-east|Cust2465
+1058|679.21|pending|eu|Cust2568
+1059|849.34|pending|eu|Cust4784
+
+Answer each question about the CURRENT data after applying every update received so far. Reply with exactly one line per question, formatted "N: value" — value only, no explanation.
+1. What is the status of order 1031?
+2. What is the current status of order 1012?
+3. Is order 1013 still present? Answer yes or no.
+4. Is order 1038 still present? Answer yes or no.
+5. What is the total of order 1050?
+6. What is the customer of order 1040?
+7. How many orders are there now?
+8. How many orders have status cancelled?
+
+===== MODEL CONTENT =====
+1. N: cancelled
+2. N: pending
+3. N: no
+4. N: yes
+5. N: 642.82
+6. N: Cust1068
+7. N: 48
+8. N: 5

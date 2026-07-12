@@ -1,0 +1,3214 @@
+{
+ "backend": "openrouter",
+ "requestedModel": "meta-llama/llama-3.1-8b-instruct",
+ "resolvedModels": {
+  "meta-llama/llama-3.1-8b-instruct": 50
+ },
+ "summary": {
+  "acc_delta": 0,
+  "acc_full": 75.25,
+  "gap": 75.25
+ },
+ "rows": [
+  {
+   "arm": "full_resend",
+   "depth": 1,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "open",
+   "want": "open"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 1,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "pending",
+   "want": "pending"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 1,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 1,
+   "type": "present_control",
+   "ok": true,
+   "got": "yes",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 1,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "518.23",
+   "want": "518.23"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 1,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust2704",
+   "want": "Cust2704"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 1,
+   "type": "count",
+   "ok": true,
+   "got": "50",
+   "want": "50"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 1,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "12",
+   "want": "7"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 2,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "pending",
+   "want": "pending"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 2,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "cancelled",
+   "want": "cancelled"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 2,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 2,
+   "type": "present_control",
+   "ok": true,
+   "got": "yes",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 2,
+   "type": "added_lookup",
+   "ok": false,
+   "got": "859.27",
+   "want": "495.81"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 2,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust4122",
+   "want": "Cust4122"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 2,
+   "type": "count",
+   "ok": false,
+   "got": "52",
+   "want": "51"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 2,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "13",
+   "want": "8"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 3,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "open",
+   "want": "open"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 3,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "refunded",
+   "want": "refunded"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 3,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 3,
+   "type": "present_control",
+   "ok": true,
+   "got": "yes",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 3,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "495.81",
+   "want": "495.81"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 3,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust2704",
+   "want": "Cust2704"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 3,
+   "type": "count",
+   "ok": true,
+   "got": "52",
+   "want": "52"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 3,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "13",
+   "want": "8"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 4,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "shipped",
+   "want": "shipped"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 4,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "shipped",
+   "want": "shipped"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 4,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 4,
+   "type": "present_control",
+   "ok": true,
+   "got": "yes",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 4,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "573.38",
+   "want": "573.38"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 4,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust4122",
+   "want": "Cust4122"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 4,
+   "type": "count",
+   "ok": true,
+   "got": "53",
+   "want": "53"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 4,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "21",
+   "want": "16"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 5,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "open",
+   "want": "open"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 5,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "shipped",
+   "want": "shipped"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 5,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 5,
+   "type": "present_control",
+   "ok": false,
+   "got": "no",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 5,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "859.27",
+   "want": "859.27"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 5,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust4122",
+   "want": "Cust4122"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 5,
+   "type": "count",
+   "ok": false,
+   "got": "57",
+   "want": "56"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 5,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "24",
+   "want": "22"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 6,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "shipped",
+   "want": "shipped"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 6,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "open",
+   "want": "open"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 6,
+   "type": "removed_absent",
+   "ok": false,
+   "got": "yes",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 6,
+   "type": "present_control",
+   "ok": true,
+   "got": "yes",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 6,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "334.03",
+   "want": "334.03"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 6,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust4122",
+   "want": "Cust4122"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 6,
+   "type": "count",
+   "ok": false,
+   "got": "57",
+   "want": "55"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 6,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "9",
+   "want": "5"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 7,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "open",
+   "want": "open"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 7,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "shipped",
+   "want": "shipped"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 7,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 7,
+   "type": "present_control",
+   "ok": true,
+   "got": "yes",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 7,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "508.62",
+   "want": "508.62"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 7,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust2704",
+   "want": "Cust2704"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 7,
+   "type": "count",
+   "ok": false,
+   "got": "59",
+   "want": "57"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 7,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "31",
+   "want": "21"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 8,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "shipped",
+   "want": "shipped"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 8,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "pending",
+   "want": "pending"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 8,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 8,
+   "type": "present_control",
+   "ok": true,
+   "got": "yes",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 8,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "334.03",
+   "want": "334.03"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 8,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust2704",
+   "want": "Cust2704"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 8,
+   "type": "count",
+   "ok": false,
+   "got": "59",
+   "want": "55"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 8,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "34",
+   "want": "18"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 9,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "shipped",
+   "want": "shipped"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 9,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "shipped",
+   "want": "shipped"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 9,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 9,
+   "type": "present_control",
+   "ok": true,
+   "got": "yes",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 9,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "780.04",
+   "want": "780.04"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 9,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust4122",
+   "want": "Cust4122"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 9,
+   "type": "count",
+   "ok": false,
+   "got": "59",
+   "want": "54"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 9,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "34",
+   "want": "11"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 10,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "refunded",
+   "want": "refunded"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 10,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "shipped",
+   "want": "shipped"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 10,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 10,
+   "type": "present_control",
+   "ok": true,
+   "got": "yes",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 10,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "859.27",
+   "want": "859.27"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 10,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust4122",
+   "want": "Cust4122"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 10,
+   "type": "count",
+   "ok": false,
+   "got": "59",
+   "want": "54"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 10,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "14",
+   "want": "3"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 11,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "refunded",
+   "want": "refunded"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 11,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "cancelled",
+   "want": "cancelled"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 11,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 11,
+   "type": "present_control",
+   "ok": true,
+   "got": "yes",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 11,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "573.38",
+   "want": "573.38"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 11,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust2704",
+   "want": "Cust2704"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 11,
+   "type": "count",
+   "ok": false,
+   "got": "59",
+   "want": "53"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 11,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "26",
+   "want": "10"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 12,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "cancelled",
+   "want": "cancelled"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 12,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "cancelled",
+   "want": "cancelled"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 12,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 12,
+   "type": "present_control",
+   "ok": true,
+   "got": "yes",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 12,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "651.1",
+   "want": "651.1"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 12,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust4122",
+   "want": "Cust4122"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 12,
+   "type": "count",
+   "ok": true,
+   "got": "54",
+   "want": "54"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 12,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "21",
+   "want": "13"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 13,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "shipped",
+   "want": "shipped"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 13,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "refunded",
+   "want": "refunded"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 13,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 13,
+   "type": "present_control",
+   "ok": true,
+   "got": "yes",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 13,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "859.27",
+   "want": "859.27"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 13,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust2704",
+   "want": "Cust2704"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 13,
+   "type": "count",
+   "ok": true,
+   "got": "54",
+   "want": "54"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 13,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "29",
+   "want": "15"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 14,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "pending",
+   "want": "pending"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 14,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "shipped",
+   "want": "shipped"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 14,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 14,
+   "type": "present_control",
+   "ok": true,
+   "got": "yes",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 14,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "573.38",
+   "want": "573.38"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 14,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust2704",
+   "want": "Cust2704"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 14,
+   "type": "count",
+   "ok": true,
+   "got": "55",
+   "want": "55"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 14,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "19",
+   "want": "8"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 15,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "open",
+   "want": "open"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 15,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "refunded",
+   "want": "refunded"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 15,
+   "type": "removed_absent",
+   "ok": false,
+   "got": "yes",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 15,
+   "type": "present_control",
+   "ok": false,
+   "got": "no",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 15,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "368.26",
+   "want": "368.26"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 15,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust2704",
+   "want": "Cust2704"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 15,
+   "type": "count",
+   "ok": false,
+   "got": "54",
+   "want": "53"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 15,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "19",
+   "want": "8"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 16,
+   "type": "changed_stale",
+   "ok": false,
+   "got": "open",
+   "want": "cancelled"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 16,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "pending",
+   "want": "pending"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 16,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 16,
+   "type": "present_control",
+   "ok": true,
+   "got": "yes",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 16,
+   "type": "added_lookup",
+   "ok": false,
+   "got": "cancelled",
+   "want": "417.58"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 16,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust4122",
+   "want": "Cust4122"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 16,
+   "type": "count",
+   "ok": true,
+   "got": "54",
+   "want": "54"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 16,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "24",
+   "want": "9"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 17,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "shipped",
+   "want": "shipped"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 17,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "shipped",
+   "want": "shipped"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 17,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 17,
+   "type": "present_control",
+   "ok": true,
+   "got": "yes",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 17,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "990.58",
+   "want": "990.58"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 17,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust2704",
+   "want": "Cust2704"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 17,
+   "type": "count",
+   "ok": true,
+   "got": "55",
+   "want": "55"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 17,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "17",
+   "want": "9"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 18,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "pending",
+   "want": "pending"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 18,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "shipped",
+   "want": "shipped"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 18,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 18,
+   "type": "present_control",
+   "ok": false,
+   "got": "no",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 18,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "859.27",
+   "want": "859.27"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 18,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust2704",
+   "want": "Cust2704"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 18,
+   "type": "count",
+   "ok": true,
+   "got": "58",
+   "want": "58"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 18,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "19",
+   "want": "9"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 19,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "shipped",
+   "want": "shipped"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 19,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "open",
+   "want": "open"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 19,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 19,
+   "type": "present_control",
+   "ok": false,
+   "got": "no",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 19,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "968.66",
+   "want": "968.66"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 19,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust2704",
+   "want": "Cust2704"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 19,
+   "type": "count",
+   "ok": true,
+   "got": "57",
+   "want": "57"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 19,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "21",
+   "want": "16"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 20,
+   "type": "changed_stale",
+   "ok": false,
+   "got": "shipped",
+   "want": "open"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 20,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "open",
+   "want": "open"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 20,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 20,
+   "type": "present_control",
+   "ok": false,
+   "got": "no",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 20,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "813.06",
+   "want": "813.06"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 20,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust2704",
+   "want": "Cust2704"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 20,
+   "type": "count",
+   "ok": true,
+   "got": "59",
+   "want": "59"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 20,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "24",
+   "want": "17"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 21,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "refunded",
+   "want": "refunded"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 21,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "shipped",
+   "want": "shipped"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 21,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 21,
+   "type": "present_control",
+   "ok": true,
+   "got": "yes",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 21,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "334.03",
+   "want": "334.03"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 21,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust4122",
+   "want": "Cust4122"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 21,
+   "type": "count",
+   "ok": true,
+   "got": "59",
+   "want": "59"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 21,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "15",
+   "want": "8"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 22,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "shipped",
+   "want": "shipped"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 22,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "pending",
+   "want": "pending"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 22,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 22,
+   "type": "present_control",
+   "ok": false,
+   "got": "no",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 22,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "334.03",
+   "want": "334.03"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 22,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust2704",
+   "want": "Cust2704"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 22,
+   "type": "count",
+   "ok": true,
+   "got": "58",
+   "want": "58"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 22,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "24",
+   "want": "13"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 23,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "pending",
+   "want": "pending"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 23,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "refunded",
+   "want": "refunded"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 23,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 23,
+   "type": "present_control",
+   "ok": false,
+   "got": "no",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 23,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "883.68",
+   "want": "883.68"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 23,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust4122",
+   "want": "Cust4122"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 23,
+   "type": "count",
+   "ok": true,
+   "got": "58",
+   "want": "58"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 23,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "24",
+   "want": "14"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 24,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "open",
+   "want": "open"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 24,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "shipped",
+   "want": "shipped"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 24,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 24,
+   "type": "present_control",
+   "ok": true,
+   "got": "yes",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 24,
+   "type": "added_lookup",
+   "ok": false,
+   "got": "cancelled",
+   "want": "417.58"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 24,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust2704",
+   "want": "Cust2704"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 24,
+   "type": "count",
+   "ok": true,
+   "got": "58",
+   "want": "58"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 24,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "23",
+   "want": "15"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 25,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "cancelled",
+   "want": "cancelled"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 25,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "open",
+   "want": "open"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 25,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 25,
+   "type": "present_control",
+   "ok": true,
+   "got": "yes",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 25,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "651.1",
+   "want": "651.1"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 25,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust4122",
+   "want": "Cust4122"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 25,
+   "type": "count",
+   "ok": true,
+   "got": "59",
+   "want": "59"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 25,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "26",
+   "want": "8"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 26,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "shipped",
+   "want": "shipped"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 26,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "refunded",
+   "want": "refunded"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 26,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 26,
+   "type": "present_control",
+   "ok": true,
+   "got": "yes",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 26,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "437.22",
+   "want": "437.22"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 26,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust4122",
+   "want": "Cust4122"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 26,
+   "type": "count",
+   "ok": true,
+   "got": "60",
+   "want": "60"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 26,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "35",
+   "want": "16"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 27,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "cancelled",
+   "want": "cancelled"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 27,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "cancelled",
+   "want": "cancelled"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 27,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 27,
+   "type": "present_control",
+   "ok": true,
+   "got": "yes",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 27,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "208.13",
+   "want": "208.13"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 27,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust2704",
+   "want": "Cust2704"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 27,
+   "type": "count",
+   "ok": true,
+   "got": "58",
+   "want": "58"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 27,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "14",
+   "want": "9"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 28,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "shipped",
+   "want": "shipped"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 28,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "cancelled",
+   "want": "cancelled"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 28,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 28,
+   "type": "present_control",
+   "ok": false,
+   "got": "no",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 28,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "208.13",
+   "want": "208.13"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 28,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust2704",
+   "want": "Cust2704"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 28,
+   "type": "count",
+   "ok": true,
+   "got": "58",
+   "want": "58"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 28,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "24",
+   "want": "10"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 29,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "pending",
+   "want": "pending"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 29,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "shipped",
+   "want": "shipped"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 29,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 29,
+   "type": "present_control",
+   "ok": true,
+   "got": "yes",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 29,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "27.38",
+   "want": "27.38"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 29,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust2704",
+   "want": "Cust2704"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 29,
+   "type": "count",
+   "ok": false,
+   "got": "58",
+   "want": "57"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 29,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "24",
+   "want": "9"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 30,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "open",
+   "want": "open"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 30,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "open",
+   "want": "open"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 30,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 30,
+   "type": "present_control",
+   "ok": false,
+   "got": "no",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 30,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "208.13",
+   "want": "208.13"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 30,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust4122",
+   "want": "Cust4122"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 30,
+   "type": "count",
+   "ok": true,
+   "got": "58",
+   "want": "58"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 30,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "24",
+   "want": "12"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 31,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "open",
+   "want": "open"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 31,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "refunded",
+   "want": "refunded"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 31,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 31,
+   "type": "present_control",
+   "ok": false,
+   "got": "no",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 31,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "267.31",
+   "want": "267.31"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 31,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust4122",
+   "want": "Cust4122"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 31,
+   "type": "count",
+   "ok": true,
+   "got": "61",
+   "want": "61"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 31,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "34",
+   "want": "13"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 32,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "cancelled",
+   "want": "cancelled"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 32,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "shipped",
+   "want": "shipped"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 32,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 32,
+   "type": "present_control",
+   "ok": true,
+   "got": "yes",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 32,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "81.29",
+   "want": "81.29"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 32,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust4122",
+   "want": "Cust4122"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 32,
+   "type": "count",
+   "ok": false,
+   "got": "58",
+   "want": "59"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 32,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "24",
+   "want": "12"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 33,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "cancelled",
+   "want": "cancelled"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 33,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "shipped",
+   "want": "shipped"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 33,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 33,
+   "type": "present_control",
+   "ok": false,
+   "got": "no",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 33,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "739.11",
+   "want": "739.11"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 33,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust4122",
+   "want": "Cust4122"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 33,
+   "type": "count",
+   "ok": true,
+   "got": "61",
+   "want": "61"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 33,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "24",
+   "want": "11"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 34,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "shipped",
+   "want": "shipped"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 34,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "cancelled",
+   "want": "cancelled"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 34,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 34,
+   "type": "present_control",
+   "ok": false,
+   "got": "no",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 34,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "599.82",
+   "want": "599.82"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 34,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust4122",
+   "want": "Cust4122"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 34,
+   "type": "count",
+   "ok": true,
+   "got": "61",
+   "want": "61"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 34,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "24",
+   "want": "12"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 35,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "shipped",
+   "want": "shipped"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 35,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "shipped",
+   "want": "shipped"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 35,
+   "type": "removed_absent",
+   "ok": false,
+   "got": "yes",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 35,
+   "type": "present_control",
+   "ok": false,
+   "got": "no",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 35,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "358.54",
+   "want": "358.54"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 35,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust2704",
+   "want": "Cust2704"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 35,
+   "type": "count",
+   "ok": true,
+   "got": "62",
+   "want": "62"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 35,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "21",
+   "want": "11"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 36,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "pending",
+   "want": "pending"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 36,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "pending",
+   "want": "pending"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 36,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 36,
+   "type": "present_control",
+   "ok": false,
+   "got": "no",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 36,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "223.76",
+   "want": "223.76"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 36,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust2704",
+   "want": "Cust2704"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 36,
+   "type": "count",
+   "ok": true,
+   "got": "62",
+   "want": "62"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 36,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "16",
+   "want": "12"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 37,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "open",
+   "want": "open"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 37,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "shipped",
+   "want": "shipped"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 37,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 37,
+   "type": "present_control",
+   "ok": true,
+   "got": "yes",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 37,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "27.38",
+   "want": "27.38"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 37,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust2704",
+   "want": "Cust2704"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 37,
+   "type": "count",
+   "ok": true,
+   "got": "61",
+   "want": "61"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 37,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "23",
+   "want": "12"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 38,
+   "type": "changed_stale",
+   "ok": false,
+   "got": "584.13|pending|us-west|Cust2072",
+   "want": "pending"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 38,
+   "type": "latest_of_multiple",
+   "ok": false,
+   "got": "refunded|us-east|Cust6423",
+   "want": "refunded"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 38,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 38,
+   "type": "present_control",
+   "ok": false,
+   "got": "no",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 38,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "371",
+   "want": "371"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 38,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust2704",
+   "want": "Cust2704"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 38,
+   "type": "count",
+   "ok": true,
+   "got": "58",
+   "want": "58"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 38,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "25",
+   "want": "11"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 39,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "refunded",
+   "want": "refunded"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 39,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "cancelled",
+   "want": "cancelled"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 39,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 39,
+   "type": "present_control",
+   "ok": false,
+   "got": "no",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 39,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "838.16",
+   "want": "838.16"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 39,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust4122",
+   "want": "Cust4122"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 39,
+   "type": "count",
+   "ok": false,
+   "got": "58",
+   "want": "57"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 39,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "33",
+   "want": "14"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 40,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "shipped",
+   "want": "shipped"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 40,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "cancelled",
+   "want": "cancelled"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 40,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 40,
+   "type": "present_control",
+   "ok": true,
+   "got": "yes",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 40,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "763.57",
+   "want": "763.57"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 40,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust2704",
+   "want": "Cust2704"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 40,
+   "type": "count",
+   "ok": true,
+   "got": "56",
+   "want": "56"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 40,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "34",
+   "want": "14"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 41,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "refunded",
+   "want": "refunded"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 41,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "refunded",
+   "want": "refunded"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 41,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 41,
+   "type": "present_control",
+   "ok": false,
+   "got": "no",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 41,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "865.09",
+   "want": "865.09"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 41,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust4122",
+   "want": "Cust4122"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 41,
+   "type": "count",
+   "ok": true,
+   "got": "57",
+   "want": "57"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 41,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "27",
+   "want": "10"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 42,
+   "type": "changed_stale",
+   "ok": false,
+   "got": "27.38|shipped",
+   "want": "shipped"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 42,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "cancelled",
+   "want": "cancelled"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 42,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 42,
+   "type": "present_control",
+   "ok": false,
+   "got": "no",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 42,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "417.58",
+   "want": "417.58"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 42,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust4122",
+   "want": "Cust4122"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 42,
+   "type": "count",
+   "ok": true,
+   "got": "58",
+   "want": "58"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 42,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "25",
+   "want": "10"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 43,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "refunded",
+   "want": "refunded"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 43,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "open",
+   "want": "open"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 43,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 43,
+   "type": "present_control",
+   "ok": true,
+   "got": "yes",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 43,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "137.23",
+   "want": "137.23"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 43,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust4122",
+   "want": "Cust4122"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 43,
+   "type": "count",
+   "ok": true,
+   "got": "59",
+   "want": "59"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 43,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "34",
+   "want": "13"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 44,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "refunded",
+   "want": "refunded"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 44,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "refunded",
+   "want": "refunded"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 44,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 44,
+   "type": "present_control",
+   "ok": true,
+   "got": "yes",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 44,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "38.02",
+   "want": "38.02"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 44,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust2704",
+   "want": "Cust2704"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 44,
+   "type": "count",
+   "ok": true,
+   "got": "62",
+   "want": "62"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 44,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "44",
+   "want": "13"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 45,
+   "type": "changed_stale",
+   "ok": false,
+   "got": "open",
+   "want": "pending"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 45,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "cancelled",
+   "want": "cancelled"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 45,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 45,
+   "type": "present_control",
+   "ok": false,
+   "got": "no",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 45,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "599.82",
+   "want": "599.82"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 45,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust4122",
+   "want": "Cust4122"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 45,
+   "type": "count",
+   "ok": true,
+   "got": "61",
+   "want": "61"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 45,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "24",
+   "want": "14"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 46,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "refunded",
+   "want": "refunded"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 46,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "pending",
+   "want": "pending"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 46,
+   "type": "removed_absent",
+   "ok": false,
+   "got": "yes",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 46,
+   "type": "present_control",
+   "ok": true,
+   "got": "yes",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 46,
+   "type": "added_lookup",
+   "ok": false,
+   "got": "358.54",
+   "want": "631.78"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 46,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust2704",
+   "want": "Cust2704"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 46,
+   "type": "count",
+   "ok": true,
+   "got": "63",
+   "want": "63"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 46,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "21",
+   "want": "12"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 47,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "refunded",
+   "want": "refunded"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 47,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "pending",
+   "want": "pending"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 47,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 47,
+   "type": "present_control",
+   "ok": true,
+   "got": "yes",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 47,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "608.91",
+   "want": "608.91"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 47,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust2704",
+   "want": "Cust2704"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 47,
+   "type": "count",
+   "ok": false,
+   "got": "1098",
+   "want": "62"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 47,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "24",
+   "want": "11"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 48,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "open",
+   "want": "open"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 48,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "refunded",
+   "want": "refunded"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 48,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 48,
+   "type": "present_control",
+   "ok": true,
+   "got": "yes",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 48,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "990.58",
+   "want": "990.58"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 48,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust2704",
+   "want": "Cust2704"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 48,
+   "type": "count",
+   "ok": true,
+   "got": "60",
+   "want": "60"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 48,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "14",
+   "want": "15"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 49,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "cancelled",
+   "want": "cancelled"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 49,
+   "type": "latest_of_multiple",
+   "ok": false,
+   "got": "open",
+   "want": "pending"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 49,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 49,
+   "type": "present_control",
+   "ok": false,
+   "got": "no",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 49,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "269.48",
+   "want": "269.48"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 49,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust4122",
+   "want": "Cust4122"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 49,
+   "type": "count",
+   "ok": true,
+   "got": "62",
+   "want": "62"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 49,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "24",
+   "want": "11"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 50,
+   "type": "changed_stale",
+   "ok": true,
+   "got": "open",
+   "want": "open"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 50,
+   "type": "latest_of_multiple",
+   "ok": true,
+   "got": "pending",
+   "want": "pending"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 50,
+   "type": "removed_absent",
+   "ok": true,
+   "got": "no",
+   "want": "no"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 50,
+   "type": "present_control",
+   "ok": false,
+   "got": "no",
+   "want": "yes"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 50,
+   "type": "added_lookup",
+   "ok": true,
+   "got": "719.68",
+   "want": "719.68"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 50,
+   "type": "unchanged_persistence",
+   "ok": true,
+   "got": "Cust4122",
+   "want": "Cust4122"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 50,
+   "type": "count",
+   "ok": true,
+   "got": "63",
+   "want": "63"
+  },
+  {
+   "arm": "full_resend",
+   "depth": 50,
+   "type": "aggregate_count",
+   "ok": false,
+   "got": "28",
+   "want": "9"
+  }
+ ]
+}

@@ -1,0 +1,125 @@
+# fixture=50rows_50turns_5churn arm=delta_re20 depth=3 requested=amazon/nova-lite-v1 resolved=amazon/nova-lite-v1
+# questions:
+  1. [changed_stale] What is the status of order 1006? => want=open
+  2. [latest_of_multiple] What is the current status of order 1042? => want=refunded
+  3. [removed_absent] Is order 1065 still present? Answer yes or no. => want=no
+  4. [present_control] Is order 1046 still present? Answer yes or no. => want=yes
+  5. [added_lookup] What is the total of order 1051? => want=495.81
+  6. [unchanged_persistence] What is the customer of order 1003? => want=Cust2704
+  7. [count] How many orders are there now? => want=52
+  8. [aggregate_count] How many orders have status refunded? => want=8
+# parsed answers: ["open","refunded","no","yes","859.27","Cust2704","68","13"]
+
+===== PROMPT =====
+You are reading a live data feed encoded in GCF. The first message is a full table:
+"## orders [N]{@id,total,status,region,customer}" followed by rows, one per line, pipe-separated, in that column order. "@id" marks the identity column.
+Each later message is a DELTA that updates the table you already have:
+- "## added" : new rows (same columns).
+- "## changed" : each row REPLACES the existing row with the same @id.
+- "## removed" : a list of @id values to delete.
+Rows not mentioned in a delta are UNCHANGED and still present. Apply all deltas in order. Always answer about the CURRENT table after applying every delta received so far. Answer with only the requested value (no explanation).
+
+----- update -----
+GCF profile=generic
+## orders [50]{@id,total,status,region,customer}
+1000|689.09|cancelled|us-east|Cust5608
+1001|85.05|pending|eu|Cust4122
+1002|904.72|shipped|apac|Cust6665
+1003|659.9|open|us-west|Cust2704
+1004|895.65|shipped|apac|Cust6511
+1005|253.32|open|apac|Cust1874
+1006|272.35|open|us-west|Cust8924
+1007|245.23|open|apac|Cust2853
+1008|407.15|refunded|us-west|Cust3474
+1009|217.04|refunded|eu|Cust7909
+1010|511.04|refunded|eu|Cust1256
+1011|635.41|pending|us-west|Cust7009
+1012|608.81|open|apac|Cust3073
+1013|349.76|refunded|us-east|Cust1576
+1014|832.83|shipped|apac|Cust123
+1015|350.71|cancelled|us-west|Cust5946
+1016|76.7|open|eu|Cust4722
+1017|253.18|refunded|us-east|Cust6612
+1018|952.92|shipped|eu|Cust7708
+1019|845.97|pending|apac|Cust6322
+1020|539.64|open|us-west|Cust4765
+1021|154.85|shipped|apac|Cust1247
+1022|79.97|shipped|apac|Cust5788
+1023|412.12|open|us-west|Cust8612
+1024|326.13|cancelled|eu|Cust919
+1025|782.72|refunded|eu|Cust1002
+1026|361.42|pending|us-east|Cust3791
+1027|916.89|shipped|apac|Cust468
+1028|815.6|open|eu|Cust7441
+1029|209.51|pending|us-east|Cust3274
+1030|662.78|shipped|eu|Cust2158
+1031|253.06|refunded|eu|Cust4076
+1032|741.55|open|eu|Cust5900
+1033|19.31|open|us-west|Cust3014
+1034|641.74|refunded|eu|Cust7817
+1035|772.61|shipped|us-east|Cust1530
+1036|41.54|shipped|apac|Cust4068
+1037|42.12|cancelled|eu|Cust2574
+1038|893.42|cancelled|apac|Cust1647
+1039|272.12|refunded|us-west|Cust2643
+1040|765.05|open|eu|Cust4773
+1041|270.35|shipped|eu|Cust7286
+1042|563.74|cancelled|eu|Cust3836
+1043|568.38|open|us-east|Cust3344
+1044|495.57|open|eu|Cust4087
+1045|464.76|shipped|eu|Cust3215
+1046|252.11|pending|eu|Cust5950
+1047|358.49|shipped|apac|Cust607
+1048|366.21|cancelled|us-east|Cust1228
+1049|991.3|open|eu|Cust3524
+
+----- update -----
+GCF profile=generic delta=true
+## added [1]{@id,total,status,region,customer}
+1050|518.23|open|us-east|Cust8595
+## changed [2]{@id,total,status,region,customer}
+1005|679.09|pending|us-west|Cust970
+1010|982.27|shipped|us-east|Cust5518
+## removed [1]{@id}
+1048
+
+----- update -----
+GCF profile=generic delta=true
+## added [2]{@id,total,status,region,customer}
+1051|495.81|pending|us-west|Cust2866
+1052|859.27|shipped|us-west|Cust34
+## changed [2]{@id,total,status,region,customer}
+1039|725.07|pending|us-east|Cust3889
+1042|495.68|refunded|apac|Cust4540
+## removed [1]{@id}
+1000
+
+----- update -----
+GCF profile=generic delta=true
+## added [1]{@id,total,status,region,customer}
+1053|80.7|open|eu|Cust4584
+## changed [4]{@id,total,status,region,customer}
+1002|760.72|shipped|apac|Cust6253
+1008|359.88|refunded|apac|Cust7911
+1031|858.37|refunded|us-west|Cust599
+1033|417.09|open|eu|Cust8860
+
+Answer each question about the CURRENT data after applying every update received so far. Reply with exactly one line per question, formatted "N: value" — value only, no explanation.
+1. What is the status of order 1006?
+2. What is the current status of order 1042?
+3. Is order 1065 still present? Answer yes or no.
+4. Is order 1046 still present? Answer yes or no.
+5. What is the total of order 1051?
+6. What is the customer of order 1003?
+7. How many orders are there now?
+8. How many orders have status refunded?
+
+===== MODEL CONTENT =====
+1: open
+2: refunded
+3: no
+4: yes
+5: 859.27
+6: Cust2704
+7: 68
+8: 13

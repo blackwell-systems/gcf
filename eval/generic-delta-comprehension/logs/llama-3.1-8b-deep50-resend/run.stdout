@@ -1,0 +1,7 @@
+1/50 probes2/50 probes3/50 probes4/50 probes5/50 probes6/50 probes7/50 probes8/50 probes9/50 probes10/50 probes11/50 probes12/50 probes13/50 probes14/50 probes15/50 probes16/50 probes17/50 probes18/50 probes19/50 probes20/50 probes21/50 probes22/50 probes23/50 probes24/50 probes25/50 probes26/50 probes27/50 probes28/50 probes29/50 probes30/50 probes31/50 probes32/50 probes33/50 probes34/50 probes35/50 probes36/50 probes37/50 probes38/50 probes39/50 probes40/50 probes41/50 probes42/50 probes43/50 probes44/50 probes45/50 probes46/50 probes47/50 probes48/50 probes49/50 probes50/50 probes
+### openrouter https://openrouter.ai/api/v1 model=meta-llama/llama-3.1-8b-instruct: delta 0.0% | full-resend 75.3% | gap 75.3pp
+  delta by type: 
+  delta by depth: 
+resolved models served: {"meta-llama/llama-3.1-8b-instruct":50}
+
+wrote results/llama-3.1-8b-deep50-resend/meta_llama_llama_3_1_8b_instruct.json
