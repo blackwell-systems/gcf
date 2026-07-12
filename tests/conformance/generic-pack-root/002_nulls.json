@@ -1,0 +1,14 @@
+{
+  "name": "generic_pack_root_nulls",
+  "description": "Pack root with null cells (Section 10a.3). null canonicalizes to `-`, distinct from any string.",
+  "operation": "generic-pack-root",
+  "input": {
+    "key": "id",
+    "fields": ["id", "total", "status", "customer"],
+    "rows": [
+      {"id": 2001, "total": 10.0, "status": null, "customer": "Amy"},
+      {"id": 2002, "total": null, "status": "open", "customer": null}
+    ]
+  },
+  "expected": "sha256:84b2a9ac218ff633f64e5fc390e5c05bb102c7dd54a6b53b2702fc97989c83d4"
+}

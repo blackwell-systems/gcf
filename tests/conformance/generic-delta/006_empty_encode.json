@@ -1,0 +1,12 @@
+{
+  "name": "generic_delta_empty_encode",
+  "description": "An empty delta (nothing changed): no sections, base_root == new_root, header only (Section 10a.2). The compact form of 'unchanged'.",
+  "operation": "generic-delta",
+  "input": {
+    "key": "id",
+    "fields": ["id", "total", "status", "customer"],
+    "baseRoot": "sha256:457e7c31e62e070a039b5cde9ea3edff6330e5913874e1165afddbcf6798eb7c",
+    "newRoot": "sha256:457e7c31e62e070a039b5cde9ea3edff6330e5913874e1165afddbcf6798eb7c"
+  },
+  "expected": "GCF profile=generic delta=true base_root=sha256:457e7c31e62e070a039b5cde9ea3edff6330e5913874e1165afddbcf6798eb7c new_root=sha256:457e7c31e62e070a039b5cde9ea3edff6330e5913874e1165afddbcf6798eb7c key=id\n"
+}

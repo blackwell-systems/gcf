@@ -1,0 +1,14 @@
+{
+  "name": "generic_pack_root_string_keys",
+  "description": "Pack root with string identity values (Section 10a.3). Strings are always quoted in the record, so the string \"1001\" cannot collide with the number 1001.",
+  "operation": "generic-pack-root",
+  "input": {
+    "key": "sku",
+    "fields": ["sku", "name", "qty"],
+    "rows": [
+      {"sku": "1001", "name": "Widget", "qty": 5},
+      {"sku": "A-200", "name": "Gadget", "qty": 3}
+    ]
+  },
+  "expected": "sha256:7ba93e0db386567b1ef2b53913238152b77def17f984a794f24bad3a26e097c1"
+}

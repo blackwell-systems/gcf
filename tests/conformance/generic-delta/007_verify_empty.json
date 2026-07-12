@@ -1,0 +1,24 @@
+{
+  "name": "generic_delta_verify_empty",
+  "description": "Applying an empty delta leaves the base unchanged; the recomputed root equals base_root (Section 10a.5).",
+  "operation": "generic-delta-verify",
+  "input": {
+    "base": {
+      "key": "id",
+      "fields": ["id", "total", "status", "customer"],
+      "rows": [
+        {"id": 1001, "total": 59.98, "status": "shipped", "customer": "Alice"},
+        {"id": 1002, "total": 29.99, "status": "pending", "customer": "Bob"},
+        {"id": 1003, "total": 129.50, "status": "shipped", "customer": "Carol"}
+      ]
+    },
+    "delta": {
+      "key": "id",
+      "fields": ["id", "total", "status", "customer"],
+      "baseRoot": "sha256:457e7c31e62e070a039b5cde9ea3edff6330e5913874e1165afddbcf6798eb7c",
+      "newRoot": "sha256:457e7c31e62e070a039b5cde9ea3edff6330e5913874e1165afddbcf6798eb7c"
+    },
+    "expectedNewRoot": "sha256:457e7c31e62e070a039b5cde9ea3edff6330e5913874e1165afddbcf6798eb7c"
+  },
+  "expected": "sha256:457e7c31e62e070a039b5cde9ea3edff6330e5913874e1165afddbcf6798eb7c"
+}

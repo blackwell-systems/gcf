@@ -1,0 +1,16 @@
+{
+  "name": "generic_pack_root_larger",
+  "description": "Pack root for a 12-row set (Section 10a.3): exercises record sorting at slightly larger scale.",
+  "operation": "generic-pack-root",
+  "input": {
+    "key": "id",
+    "fields": ["id", "v"],
+    "rows": [
+      {"id": 3000, "v": 0}, {"id": 3001, "v": 1}, {"id": 3002, "v": 4},
+      {"id": 3003, "v": 9}, {"id": 3004, "v": 16}, {"id": 3005, "v": 25},
+      {"id": 3006, "v": 36}, {"id": 3007, "v": 49}, {"id": 3008, "v": 64},
+      {"id": 3009, "v": 81}, {"id": 3010, "v": 100}, {"id": 3011, "v": 121}
+    ]
+  },
+  "expected": "sha256:b9c47a3a17c31a520b23b5bce1004889380e1d586f23de4b73353e5351520848"
+}
