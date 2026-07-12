@@ -34,7 +34,26 @@
 
 - [ ] **Omit zero-value header fields**: `budget=0 tokens=0` wastes ~4 tokens per payload. All 6 encoders unconditionally emit them. Fix to omit when zero. No eval rerun needed (scores unchanged, only token count drops marginally).
 - [ ] **`## _counts` section**: dedicated metadata section with kind/edge-type counts. Jumped GPT-5.4 from 76.9% to 90.9% in experiment (+14pp). Adds format complexity. Needs testing on more models before committing to spec.
-- [ ] **Streaming trailer, per-group counts**: the graph `##! summary` trailer carries per-group counts (`counts=2,1,3` for targets/related/edges) alongside the `symbols=`/`edges=` totals (§8.4). Already shipped and additive; comprehension evals to date run on buffered payloads, so a focused streaming-specific study is the natural next step to confirm the per-group breakdown earns its tokens on counting tasks. Low urgency.
+- [ ] **Streaming trailer, per-group counts**: qualified by eval — graduated to **Producer-side comprehension aids** below (keep `positional` as the shipped default, add `labeled` as an opt-in encoder mode).
+
+## Producer-side comprehension aids for weak consumers
+
+One capability, not N flags: opt-in, non-normative encoder knobs that make a cheap/weak model comprehend a payload better, at roughly zero cost (or benefit) for a strong model. The asymmetry is the point — small/open models are where cost pressure and format-sensitivity both live, so an aid that is free for frontier models and a rescue for an 8B model is directly monetizable, and it is differentiated (JSON/TOON have no notion of tuning the wire for a weaker reader).
+
+Every member must clear the same evidence bar on the eval harness (`eval/graph-trailer-counts` is the template) before it ships:
+
+- Measured effect by **model tier x payload size**, blank-gated, n>=3, **non-reasoning instruct models** (reasoning models sit at ceiling and are uninformative for a format-aid question).
+- **Token cost paired to the accuracy delta** (a trade, not a p-value).
+- **>= 0 for capable models, positive for the target tier** (the asymmetry is required, not a bonus).
+- **Opt-in, non-normative, decoder-ignored** — no grammar or decoder leak; the default wire stays clean.
+
+A candidate that misses the bar is dropped and documented as a negative, not quietly kept — that negative-results discipline is what separates this from TOON-style unmeasured options. Boundary: v1 is producer-configured for a *known* consumer (the operator knows they feed an 8B model), not auto-adaptive; the producer needs an out-of-band signal of consumer tier to choose knobs.
+
+Roster (by evidence maturity):
+
+- [x] **Labeled per-group trailer counts** — QUALIFIED (`eval/graph-trailer-counts/FINDINGS.md`). Emit the graph `##! summary` counts in labeled `counts=targets:2,related:1,edges:3` form. Across 7 non-reasoning models at n=3: per-group counts add **+40pp** on weak/mid models (up to +57pp at N=500), ~0 at the frontier; **labeled >= positional everywhere** (+15pp aggregate), decisive where positional fails (llama-3.1-8b: positional -2pp, labeled +40pp; qwen-2.5-7b: no-trailer 3% -> 100%). Direction: keep `positional` as the shipped default (decoder-ignored, cheap, conformance-locked); add `labeled` as an opt-in encoder mode. Next: implement the encoder option + a §8.4 note that graph `counts` MAY use the labeled form.
+- [ ] **Re-anchor "resend-quality for weak models"** — evidence from the delta depth study (`eval/generic-delta-comprehension`, DEPTH-FINDINGS): a periodic full re-anchor gives weak/context-limited models resend-quality without resend's context bulk. Already shipped as the non-normative re-anchor cadence (§10a.8); this is the same idea framed as a weak-consumer aid.
+- [ ] **`## _counts` metadata section** (also under Spec v1.5) — UNQUALIFIED: one model (GPT-5.4 +14pp). A heavier, top-of-payload version of labeled trailer counts. Must clear the harness (tier x size, n>=3) before it graduates from "under consideration."
 
 ## Tooling
 
