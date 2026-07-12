@@ -34,22 +34,22 @@ Per-group counting accuracy by arm (comp-only, blank-gated):
 | mid | llama-3.3-70b | 3 | 43 | 42 | 71 | 67 | +28.9 ±10.2 | −4 |
 | weak | nova-lite-v1 | 3 | 39 | 40 | 64 | 83 | +24.4 ±16.8 | +19 |
 | weak | nova-micro-v1 | 3 | 33 | 27 | 71 | 100 | +44.4 ±3.8 | +29 |
-| weak | qwen-2.5-7b-instruct | 3 | 3 | 3 | 81 | 100 | +77.2 ±19.7 | +19 |
 | weak | llama-3.1-8b | 3 | 37 | 29 | 27 | 67 | −2.2 ±3.8 | +40 |
 | (excluded) | ministral-3b | 3 | 3 | 21 | 58 | 94 | (24% blank — EXCL) | |
 
-**Clean aggregate (7 non-excluded OpenRouter models):** `positional−totals` **+40.1pp**,
-`labeled−positional` **+14.7pp**, `totals−none` ~0pp. By size: small +10.6pp, medium +43.3pp,
-**large +57.1pp**. Non-reasoning instruct models only (reasoning models sit at ceiling and are
+**Clean aggregate (6 non-excluded OpenRouter models):** `positional−totals` **+33.9pp**,
+`labeled−positional` **+13.9pp**, `totals−none` −4.6pp. By size: small +10.6pp, medium +35.6pp,
+**large +55.6pp**. Non-reasoning instruct models only (reasoning models sit at ceiling and are
 uninformative for a format-aid question; they were excluded by design, not tested).
+
+(A qwen-2.5-7b run was attempted but its OpenRouter runs crashed partway under concurrent
+load — rate-limited, crash-partial — and could not be re-run cleanly, so it is not included.)
 
 ## Conclusions
 
 **1. The per-group counts earn their tokens where it matters.** On weak/mid models the per-group
-counts add ~+40pp on per-group counting, and the effect grows sharply with graph size (+11pp at
-N=15 to +57pp at N=500) — the mechanism is "read the count vs tally 250 lines." The extreme case is
-qwen-2.5-7b, which is at 3% with no trailer (it cannot count the graph unaided at all) and 81-100%
-with the per-group counts. At the frontier
+counts add ~+34pp on per-group counting, and the effect grows sharply with graph size (+11pp at
+N=15 to +56pp at N=500) — the mechanism is "read the count vs tally 250 lines." At the frontier
 (codex, haiku-4.5, sonnet-4.6) every model is at ceiling on all arms, including no-trailer at
 N=500, so the aid is +0pp. This is the *empirical* backing for keeping the trailer counts
 (the SPEC §8.4 "Option B" decision), beyond the earlier decoder-ignored / no-churn argument.

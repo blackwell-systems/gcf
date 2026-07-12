@@ -14,7 +14,7 @@
 // Resume: a run is "done" iff its result JSON exists in results/sweep/<model>/run<k>/.
 // Completed runs are skipped; re-invoke to continue. --force re-runs completed ones.
 import { spawn } from 'node:child_process';
-import { mkdirSync, existsSync, readdirSync } from 'node:fs';
+import { mkdirSync, existsSync, readdirSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 
@@ -55,7 +55,15 @@ if(!one&&!all){
 const targets=one?one.split(',').map(s=>s.trim()).filter(Boolean):MODELS;
 
 const sani=s=>s.replace(/[/:]/g,'_');
-const isDone=(S,k)=>{const dir=`results/sweep/${S}/run${k}`;return existsSync(dir)&&readdirSync(dir).some(f=>f.endsWith('.json'));};
+// A run is "done" only if its result JSON exists AND is not a crash-partial (exit-1) result.
+// A partial JSON must be re-run, not skipped, so a rate-limit crash mid-sweep is recoverable.
+const isDone=(S,k)=>{
+  const dir=`results/sweep/${S}/run${k}`;
+  if(!existsSync(dir))return false;
+  const j=readdirSync(dir).find(f=>f.endsWith('.json'));
+  if(!j)return false;
+  try{return !JSON.parse(readFileSync(`${dir}/${j}`,'utf8')).partial;}catch{return false;}
+};
 
 const tasks=[]; let skipped=0;
 for(const m of targets){const S=sani(m);for(let k=1;k<=REPEATS;k++){if(!force&&isDone(S,k)){skipped++;continue;}tasks.push({m,S,k});}}
