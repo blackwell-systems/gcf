@@ -38,7 +38,7 @@
 
 ## Producer-side comprehension aids for weak consumers
 
-One capability, not N flags: opt-in, non-normative encoder knobs that make a cheap/weak model comprehend a payload better, at roughly zero cost (or benefit) for a strong model. The asymmetry is the point — small/open models are where cost pressure and format-sensitivity both live, so an aid that is free for frontier models and a rescue for an 8B model is directly monetizable, and it is differentiated (JSON/TOON have no notion of tuning the wire for a weaker reader).
+One capability, not N flags: opt-in, non-normative encoder knobs that make a cheap/weak model comprehend a payload better, at roughly zero cost (or benefit) for a strong model. The asymmetry is the point — small/open models are where cost pressure and format-sensitivity both live, so an aid that is free for frontier models and a rescue for an 8B model is directly monetizable, and it is differentiated (JSON/TOON have no notion of tuning the wire for a weaker reader). The honest scope, stated up front so this reads as a capability and not overselling: v1 is **producer-configured for a known consumer** (the operator running the MCP server knows they feed an 8B model), **not auto-adaptive**. The producer picks the knob from an out-of-band signal of the consumer tier; "tune the wire for the model on the other end" is a real producer choice, not runtime negotiation or magic.
 
 Every member must clear the same evidence bar on the eval harness (`eval/graph-trailer-counts` is the template) before it ships:
 
@@ -47,7 +47,7 @@ Every member must clear the same evidence bar on the eval harness (`eval/graph-t
 - **>= 0 for capable models, positive for the target tier** (the asymmetry is required, not a bonus).
 - **Opt-in, non-normative, decoder-ignored** — no grammar or decoder leak; the default wire stays clean.
 
-A candidate that misses the bar is dropped and documented as a negative, not quietly kept — that negative-results discipline is what separates this from TOON-style unmeasured options. Boundary: v1 is producer-configured for a *known* consumer (the operator knows they feed an 8B model), not auto-adaptive; the producer needs an out-of-band signal of consumer tier to choose knobs.
+A candidate that misses the bar is dropped and documented as a negative, not quietly kept — that negative-results discipline is what separates this from TOON-style unmeasured options.
 
 Roster (by evidence maturity):
 
