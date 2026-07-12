@@ -124,6 +124,181 @@ enc.close();             // emits ##! summary trailer
 
 Create a new empty session tracker. Thread-safe.
 
+## Generic Delta (v3.3)
+
+Delta encoding for the generic profile (SPEC Section 10a): a keyed diff over a tabular set, plus a producer-side session helper that re-anchors on a tunable cadence. Identity is one designated column (`key=` in the header, `@<key>` in the field declaration).
+
+### `encode_generic_full(s: &GenericSet, tool: &str) -> String`
+
+Encode a delta-ready full payload: `key=` in the GCF header, an `@`-prefixed identity field in the section declaration, pipe-separated rows.
+
+```rust
+use gcf::{GenericSet, encode_generic_full};
+use serde_json::json;
+
+let set = GenericSet {
+    name: "orders".into(),
+    key: "id".into(),
+    fields: vec!["id".into(), "total".into(), "status".into()],
+    rows: vec![
+        json!({"id": 1001, "total": 59.98, "status": "shipped"}).as_object().unwrap().clone(),
+        json!({"id": 1002, "total": 29.99, "status": "pending"}).as_object().unwrap().clone(),
+    ],
+};
+
+let out = encode_generic_full(&set, "orders_query");
+// GCF profile=generic tool=orders_query pack_root=sha256:... key=id
+// ## orders [2]{@id,total,status}
+// 1001|59.98|shipped
+// 1002|29.99|pending
+```
+
+### `diff_generic_sets(base: &GenericSet, next: &GenericSet) -> Result<GenericDeltaPayload, String>`
+
+Compute the added / changed / removed diff between two sets sharing the same key and fields. This is the blessed producer path: it enforces the keyed-diff invariants (identity uniqueness, added-not-in-base, changed-must-exist, whole-row replacement, unchanged rows omitted). A schema change or a missing key returns an error, meaning the caller must send a full payload instead (Section 10a.7).
+
+```rust
+use gcf::diff_generic_sets;
+
+let payload = diff_generic_sets(&base, &next)?;
+```
+
+### `encode_generic_delta(d: &GenericDeltaPayload) -> String`
+
+Serialize a delta payload. Sections are emitted in the deterministic order `## added` / `## changed` / `## removed` (Section 10a.6).
+
+```rust
+use gcf::encode_generic_delta;
+
+let wire = encode_generic_delta(&payload);
+// GCF profile=generic delta=true base_root=sha256:... new_root=sha256:... key=id savings=..%
+// ## added [1]{@id,total,status}
+// 1004|75.00|pending
+// ## changed [1]{@id,total,status}
+// 1002|29.99|shipped
+// ## removed [1]{@id}
+// 1001
+```
+
+### `decode_generic_delta(text: &str) -> Result<GenericDeltaPayload, String>`
+
+Parse delta wire text back into a `GenericDeltaPayload`. The result can be applied with `verify_generic_delta`.
+
+```rust
+use gcf::decode_generic_delta;
+
+let payload = decode_generic_delta(wire)?;
+```
+
+### `decode_generic_full(text: &str) -> Result<(GenericSet, String), String>`
+
+Parse a delta-participating full base payload into a `GenericSet`, returning it alongside the declared `pack_root`.
+
+```rust
+use gcf::decode_generic_full;
+
+let (set, pack_root) = decode_generic_full(text)?;
+```
+
+### `verify_generic_delta(base: &GenericSet, d: &GenericDeltaPayload, expected_new_root: &str) -> Result<GenericSet, String>`
+
+Apply a delta to `base` and verify the result hashes to `expected_new_root` (Section 10a.5). Atomic: the whole payload is validated against the original base before any state changes, so a mismatch leaves the base untouched and applies nothing. Returns the new `GenericSet` on success.
+
+```rust
+use gcf::verify_generic_delta;
+
+let next = verify_generic_delta(&base, &payload, &payload.new_root)?;
+```
+
+### `generic_pack_root(s: &GenericSet) -> String`
+
+Compute the canonical pack root (`sha256:...`) for a keyed set using the gcf-pack-root-v1 algorithm, generic profile (Section 10a.3). Order-agnostic over rows; two implementations given the same logical set produce the same result (byte-for-byte interoperable with gcf-go, gcf-python, gcf-typescript).
+
+### Session helper: `GenericDeltaSession`
+
+A producer-side helper that manages the re-anchor cadence for a stream of generic-profile updates (SPEC Section 10a.8, non-normative producer policy). It is thin sugar over the primitives: each `next` emits either a compact delta or, on its chosen cadence, a full re-anchor, updating its held base. It introduces no new wire syntax; every payload is byte-identical to `encode_generic_full` / `encode_generic_delta`, and the decoder accepts them cadence-agnostically. Not safe for concurrent use.
+
+```rust
+pub fn new(base: GenericSet, tool: String, policy: ReanchorPolicy) -> Self;
+pub fn current_full(&self) -> String;
+pub fn next(&mut self, next: GenericSet) -> Result<(String, bool), String>;
+pub fn turn(&self) -> usize;
+```
+
+- `new(base, tool, policy)`: start a session anchored on `base`.
+- `current_full()`: return the initial full payload to transmit first (also a valid manual re-anchor).
+- `next(next)`: advance one turn to `next`, returning `(wire, is_full)`, where `is_full` is `true` for a full re-anchor and `false` for a delta. A schema change forces a full (Section 10a.7). The held base becomes `next` either way.
+- `turn()`: return the number of `next` calls so far (the initial full is turn 0).
+
+```rust
+use gcf::{GenericDeltaSession, ReanchorPolicy, decode_generic_full, decode_generic_delta, verify_generic_delta};
+
+let mut s = GenericDeltaSession::new(base, "orders_query".into(), ReanchorPolicy::size_guard());
+let mut held = decode_generic_full(&s.current_full())?.0; // send the initial full first
+
+for update in updates {
+    let (wire, is_full) = s.next(update)?;
+    // transmit `wire`; the consumer applies it:
+    held = if is_full {
+        decode_generic_full(&wire)?.0
+    } else {
+        let d = decode_generic_delta(&wire)?;
+        verify_generic_delta(&held, &d, &d.new_root)?
+    };
+}
+```
+
+### `ReanchorPolicy`
+
+Selects when a `GenericDeltaSession` re-anchors. Producer-side policy only (non-normative): the cadence never appears on the wire (Section 10a.8).
+
+```rust
+pub enum ReanchorPolicy {
+    FixedN(usize),
+    SizeGuard,
+}
+
+impl ReanchorPolicy {
+    pub fn fixed_n(n: usize) -> Self; // n == 0 falls back to DEFAULT_REANCHOR_N
+    pub fn size_guard() -> Self;      // size-adaptive, production-recommended
+}
+```
+
+- `ReanchorPolicy::fixed_n(n)`: re-anchor every `n` turns. `n == 0` uses `DEFAULT_REANCHOR_N`.
+- `ReanchorPolicy::size_guard()`: re-anchor once the cumulative delta since the last anchor reaches the current full payload's size (size-adaptive; more anchors under heavy churn, rarely under light churn). Recommended for varying churn.
+
+`pub const DEFAULT_REANCHOR_N: usize = 15;`
+
+### `GenericSet`
+
+```rust
+pub struct GenericSet {
+    pub name: String,             // tabular section name ("" defaults to "rows" on the wire)
+    pub key: String,              // identity field (the @key / key=)
+    pub fields: Vec<String>,      // declared column order for the wire form
+    pub rows: Vec<Map<String, Value>>, // records (order-agnostic; set semantics)
+}
+```
+
+`Map` and `Value` are `serde_json::Map<String, Value>` and `serde_json::Value`.
+
+### `GenericDeltaPayload`
+
+```rust
+pub struct GenericDeltaPayload {
+    pub tool: String,
+    pub key: String,
+    pub fields: Vec<String>,
+    pub base_root: String,
+    pub new_root: String,
+    pub added: Vec<Map<String, Value>>,
+    pub changed: Vec<Map<String, Value>>,
+    pub removed: Vec<Value>,       // identity values only
+    pub delta_tokens: u64,
+    pub full_tokens: u64,
+}
+```
+
 ## Types
 
 ### `Payload`
@@ -198,12 +373,17 @@ Thread-safe via `Mutex`.
 ### `DecodeError`
 
 ```rust
-pub struct DecodeError {
-    pub message: String,
+pub enum DecodeError {
+    EmptyInput,
+    InvalidHeader(String),
+    InvalidField(String),
+    InvalidSymbolLine(String),
+    InvalidEdgeLine(String),
+    UnknownEdgeId(String),
 }
 ```
 
-Returned by `decode()` on malformed GCF input.
+Returned by `decode()` on malformed GCF input. Implements `Display` and `std::error::Error`.
 
 ## Constants
 
