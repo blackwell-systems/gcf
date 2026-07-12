@@ -385,7 +385,9 @@ Use `[?]` instead of `[N]` when encoding incrementally.
 ##! summary counts=3,2
 ```
 
-Emitted after all data. `counts=N,M,...` lists the resolved values for each `[?]` header in order of appearance.
+Emitted after all data. In the **generic** profile, `counts=N,M,...` lists the resolved values for each `[?]` header in order of appearance.
+
+In the **graph** profile the trailer is `##! summary symbols=N edges=M counts=...`, where `counts` is per distance group plus the edge count (e.g. `counts=2,1,2` for 2 targets, 1 related, 2 edges). These graph counts are informational (decoder-ignored). An optional labeled form (v3.4, §8.4.1) tags each value: `counts=targets:2,related:1,edges:2`.
 
 ### Streaming example
 
@@ -399,7 +401,7 @@ GCF profile=graph tool=context_for_task budget=5000
 ## edges [?]
 @0<@1 calls
 @2<@0 references
-##! summary counts=2
+##! summary symbols=3 edges=2 counts=2,1,2
 ```
 
 Standard `decode()` handles streaming output with no changes.
