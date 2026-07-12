@@ -1,0 +1,2200 @@
+{
+ "backend": "openrouter",
+ "requestedModel": "meta-llama/llama-3.1-8b-instruct",
+ "resolvedModels": {
+  "meta-llama/llama-3.1-8b-instruct": 24
+ },
+ "summary": {
+  "perArm": {
+   "none": {
+    "all": 21.666666666666668,
+    "counting": 9.523809523809524,
+    "perGroup": 10,
+    "control": 50
+   },
+   "totals": {
+    "all": 45,
+    "counting": 33.333333333333336,
+    "perGroup": 10,
+    "control": 72.22222222222223
+   },
+   "positional": {
+    "all": 43.333333333333336,
+    "counting": 30.952380952380953,
+    "perGroup": 10,
+    "control": 72.22222222222223
+   },
+   "labeled": {
+    "all": 65,
+    "counting": 64.28571428571429,
+    "perGroup": 56.666666666666664,
+    "control": 66.66666666666667
+   }
+  }
+ },
+ "rows": [
+  {
+   "arm": "none",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "200",
+   "want": "250"
+  },
+  {
+   "arm": "none",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "400",
+   "want": "170"
+  },
+  {
+   "arm": "none",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "499",
+   "want": "80"
+  },
+  {
+   "arm": "none",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "group_diff",
+   "ok": false,
+   "got": "100",
+   "want": "80"
+  },
+  {
+   "arm": "none",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "group_sum",
+   "ok": false,
+   "got": "600",
+   "want": "420"
+  },
+  {
+   "arm": "none",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "total_symbols",
+   "ok": false,
+   "got": "1099",
+   "want": "500"
+  },
+  {
+   "arm": "none",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "total_edges",
+   "ok": false,
+   "got": "100",
+   "want": "400"
+  },
+  {
+   "arm": "none",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "control_qname",
+   "ok": false,
+   "got": "pkg2.Model",
+   "want": "pkg0.Client360"
+  },
+  {
+   "arm": "none",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "control_kind",
+   "ok": true,
+   "got": "type",
+   "want": "type"
+  },
+  {
+   "arm": "none",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "control_score",
+   "ok": true,
+   "got": "0.75",
+   "want": "0.75"
+  },
+  {
+   "arm": "totals",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "200",
+   "want": "250"
+  },
+  {
+   "arm": "totals",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "400",
+   "want": "170"
+  },
+  {
+   "arm": "totals",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "499",
+   "want": "80"
+  },
+  {
+   "arm": "totals",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "group_diff",
+   "ok": false,
+   "got": "100",
+   "want": "80"
+  },
+  {
+   "arm": "totals",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "group_sum",
+   "ok": false,
+   "got": "600",
+   "want": "420"
+  },
+  {
+   "arm": "totals",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "total_symbols",
+   "ok": true,
+   "got": "500",
+   "want": "500"
+  },
+  {
+   "arm": "totals",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "total_edges",
+   "ok": true,
+   "got": "400",
+   "want": "400"
+  },
+  {
+   "arm": "totals",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "control_qname",
+   "ok": false,
+   "got": "pkg29.Config382",
+   "want": "pkg0.Client360"
+  },
+  {
+   "arm": "totals",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "control_kind",
+   "ok": true,
+   "got": "type",
+   "want": "type"
+  },
+  {
+   "arm": "totals",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "control_score",
+   "ok": true,
+   "got": "0.75",
+   "want": "0.75"
+  },
+  {
+   "arm": "positional",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "200",
+   "want": "250"
+  },
+  {
+   "arm": "positional",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "400",
+   "want": "170"
+  },
+  {
+   "arm": "positional",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "499",
+   "want": "80"
+  },
+  {
+   "arm": "positional",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "group_diff",
+   "ok": false,
+   "got": "100",
+   "want": "80"
+  },
+  {
+   "arm": "positional",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "group_sum",
+   "ok": false,
+   "got": "600",
+   "want": "420"
+  },
+  {
+   "arm": "positional",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "total_symbols",
+   "ok": true,
+   "got": "500",
+   "want": "500"
+  },
+  {
+   "arm": "positional",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "total_edges",
+   "ok": true,
+   "got": "400",
+   "want": "400"
+  },
+  {
+   "arm": "positional",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "control_qname",
+   "ok": false,
+   "got": "pkg6.Model",
+   "want": "pkg0.Client360"
+  },
+  {
+   "arm": "positional",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "control_kind",
+   "ok": true,
+   "got": "type",
+   "want": "type"
+  },
+  {
+   "arm": "positional",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "control_score",
+   "ok": true,
+   "got": "0.75",
+   "want": "0.75"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "200",
+   "want": "250"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "400",
+   "want": "170"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": true,
+   "got": "80",
+   "want": "80"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "group_diff",
+   "ok": false,
+   "got": "100",
+   "want": "80"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "group_sum",
+   "ok": false,
+   "got": "600",
+   "want": "420"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "total_symbols",
+   "ok": false,
+   "got": "680",
+   "want": "500"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "total_edges",
+   "ok": true,
+   "got": "400",
+   "want": "400"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "control_qname",
+   "ok": false,
+   "got": "pkg29.Config382",
+   "want": "pkg0.Client360"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "control_kind",
+   "ok": true,
+   "got": "type",
+   "want": "type"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "control_score",
+   "ok": true,
+   "got": "0.75",
+   "want": "0.75"
+  },
+  {
+   "arm": "none",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "200",
+   "want": "250"
+  },
+  {
+   "arm": "none",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "300",
+   "want": "170"
+  },
+  {
+   "arm": "none",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "200",
+   "want": "80"
+  },
+  {
+   "arm": "none",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "group_diff",
+   "ok": false,
+   "got": "100",
+   "want": "80"
+  },
+  {
+   "arm": "none",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "group_sum",
+   "ok": false,
+   "got": "500",
+   "want": "420"
+  },
+  {
+   "arm": "none",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "total_symbols",
+   "ok": false,
+   "got": "700",
+   "want": "500"
+  },
+  {
+   "arm": "none",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "total_edges",
+   "ok": false,
+   "got": "100",
+   "want": "400"
+  },
+  {
+   "arm": "none",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "control_qname",
+   "ok": true,
+   "got": "pkg18.Router398",
+   "want": "pkg18.Router398"
+  },
+  {
+   "arm": "none",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "control_kind",
+   "ok": true,
+   "got": "fn",
+   "want": "fn"
+  },
+  {
+   "arm": "none",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "control_score",
+   "ok": false,
+   "got": "0.99",
+   "want": "0.43"
+  },
+  {
+   "arm": "totals",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "200",
+   "want": "250"
+  },
+  {
+   "arm": "totals",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "400",
+   "want": "170"
+  },
+  {
+   "arm": "totals",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "500",
+   "want": "80"
+  },
+  {
+   "arm": "totals",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "group_diff",
+   "ok": false,
+   "got": "100",
+   "want": "80"
+  },
+  {
+   "arm": "totals",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "group_sum",
+   "ok": false,
+   "got": "600",
+   "want": "420"
+  },
+  {
+   "arm": "totals",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "total_symbols",
+   "ok": true,
+   "got": "500",
+   "want": "500"
+  },
+  {
+   "arm": "totals",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "total_edges",
+   "ok": true,
+   "got": "400",
+   "want": "400"
+  },
+  {
+   "arm": "totals",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "control_qname",
+   "ok": false,
+   "got": "pkg18.Router",
+   "want": "pkg18.Router398"
+  },
+  {
+   "arm": "totals",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "control_kind",
+   "ok": true,
+   "got": "fn",
+   "want": "fn"
+  },
+  {
+   "arm": "totals",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "control_score",
+   "ok": true,
+   "got": "0.43",
+   "want": "0.43"
+  },
+  {
+   "arm": "positional",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "200",
+   "want": "250"
+  },
+  {
+   "arm": "positional",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "400",
+   "want": "170"
+  },
+  {
+   "arm": "positional",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "500",
+   "want": "80"
+  },
+  {
+   "arm": "positional",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "group_diff",
+   "ok": false,
+   "got": "100",
+   "want": "80"
+  },
+  {
+   "arm": "positional",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "group_sum",
+   "ok": false,
+   "got": "600",
+   "want": "420"
+  },
+  {
+   "arm": "positional",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "total_symbols",
+   "ok": false,
+   "got": "1000",
+   "want": "500"
+  },
+  {
+   "arm": "positional",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "total_edges",
+   "ok": true,
+   "got": "400",
+   "want": "400"
+  },
+  {
+   "arm": "positional",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "control_qname",
+   "ok": false,
+   "got": "pkg18.Router",
+   "want": "pkg18.Router398"
+  },
+  {
+   "arm": "positional",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "control_kind",
+   "ok": true,
+   "got": "fn",
+   "want": "fn"
+  },
+  {
+   "arm": "positional",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "control_score",
+   "ok": true,
+   "got": "0.43",
+   "want": "0.43"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "200",
+   "want": "250"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "400",
+   "want": "170"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": true,
+   "got": "80",
+   "want": "80"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "group_diff",
+   "ok": false,
+   "got": "90",
+   "want": "80"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "group_sum",
+   "ok": false,
+   "got": "600",
+   "want": "420"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "total_symbols",
+   "ok": false,
+   "got": "680",
+   "want": "500"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "total_edges",
+   "ok": true,
+   "got": "400",
+   "want": "400"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "control_qname",
+   "ok": true,
+   "got": "pkg18.Router398",
+   "want": "pkg18.Router398"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "control_kind",
+   "ok": true,
+   "got": "fn",
+   "want": "fn"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "control_score",
+   "ok": false,
+   "got": "0.99",
+   "want": "0.43"
+  },
+  {
+   "arm": "none",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "39",
+   "want": "50"
+  },
+  {
+   "arm": "none",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "80",
+   "want": "35"
+  },
+  {
+   "arm": "none",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "99",
+   "want": "15"
+  },
+  {
+   "arm": "none",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "group_diff",
+   "ok": false,
+   "got": "19",
+   "want": "15"
+  },
+  {
+   "arm": "none",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "group_sum",
+   "ok": false,
+   "got": "119",
+   "want": "85"
+  },
+  {
+   "arm": "none",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "total_symbols",
+   "ok": false,
+   "got": "218",
+   "want": "100"
+  },
+  {
+   "arm": "none",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "total_edges",
+   "ok": false,
+   "got": "99",
+   "want": "80"
+  },
+  {
+   "arm": "none",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "control_qname",
+   "ok": true,
+   "got": "pkg21.Config72",
+   "want": "pkg21.Config72"
+  },
+  {
+   "arm": "none",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "control_kind",
+   "ok": false,
+   "got": "method",
+   "want": "class"
+  },
+  {
+   "arm": "none",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "control_score",
+   "ok": false,
+   "got": "0.75",
+   "want": "0.61"
+  },
+  {
+   "arm": "totals",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "25",
+   "want": "50"
+  },
+  {
+   "arm": "totals",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "80",
+   "want": "35"
+  },
+  {
+   "arm": "totals",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "19",
+   "want": "15"
+  },
+  {
+   "arm": "totals",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "group_diff",
+   "ok": true,
+   "got": "15",
+   "want": "15"
+  },
+  {
+   "arm": "totals",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "group_sum",
+   "ok": false,
+   "got": "105",
+   "want": "85"
+  },
+  {
+   "arm": "totals",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "total_symbols",
+   "ok": false,
+   "got": "124",
+   "want": "100"
+  },
+  {
+   "arm": "totals",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "total_edges",
+   "ok": true,
+   "got": "80",
+   "want": "80"
+  },
+  {
+   "arm": "totals",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "control_qname",
+   "ok": true,
+   "got": "pkg21.Config72",
+   "want": "pkg21.Config72"
+  },
+  {
+   "arm": "totals",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "control_kind",
+   "ok": false,
+   "got": "var",
+   "want": "class"
+  },
+  {
+   "arm": "totals",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "control_score",
+   "ok": false,
+   "got": "0.96",
+   "want": "0.61"
+  },
+  {
+   "arm": "positional",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "40",
+   "want": "50"
+  },
+  {
+   "arm": "positional",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "80",
+   "want": "35"
+  },
+  {
+   "arm": "positional",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "19",
+   "want": "15"
+  },
+  {
+   "arm": "positional",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "group_diff",
+   "ok": false,
+   "got": "20",
+   "want": "15"
+  },
+  {
+   "arm": "positional",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "group_sum",
+   "ok": false,
+   "got": "120",
+   "want": "85"
+  },
+  {
+   "arm": "positional",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "total_symbols",
+   "ok": true,
+   "got": "100",
+   "want": "100"
+  },
+  {
+   "arm": "positional",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "total_edges",
+   "ok": true,
+   "got": "80",
+   "want": "80"
+  },
+  {
+   "arm": "positional",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "control_qname",
+   "ok": false,
+   "got": "pkg21.Auth72",
+   "want": "pkg21.Config72"
+  },
+  {
+   "arm": "positional",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "control_kind",
+   "ok": false,
+   "got": "fn",
+   "want": "class"
+  },
+  {
+   "arm": "positional",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "control_score",
+   "ok": true,
+   "got": "0.61",
+   "want": "0.61"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": true,
+   "got": "50",
+   "want": "50"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": true,
+   "got": "35",
+   "want": "35"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": true,
+   "got": "15",
+   "want": "15"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "group_diff",
+   "ok": true,
+   "got": "15",
+   "want": "15"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "group_sum",
+   "ok": true,
+   "got": "85",
+   "want": "85"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "total_symbols",
+   "ok": true,
+   "got": "100",
+   "want": "100"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "total_edges",
+   "ok": true,
+   "got": "80",
+   "want": "80"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "control_qname",
+   "ok": false,
+   "got": "pkg21.Auth42",
+   "want": "pkg21.Config72"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "control_kind",
+   "ok": false,
+   "got": "method",
+   "want": "class"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "control_score",
+   "ok": false,
+   "got": "0.59",
+   "want": "0.61"
+  },
+  {
+   "arm": "none",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "40",
+   "want": "50"
+  },
+  {
+   "arm": "none",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "80",
+   "want": "35"
+  },
+  {
+   "arm": "none",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "19",
+   "want": "15"
+  },
+  {
+   "arm": "none",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "group_diff",
+   "ok": false,
+   "got": "20",
+   "want": "15"
+  },
+  {
+   "arm": "none",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "group_sum",
+   "ok": false,
+   "got": "120",
+   "want": "85"
+  },
+  {
+   "arm": "none",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "total_symbols",
+   "ok": false,
+   "got": "139",
+   "want": "100"
+  },
+  {
+   "arm": "none",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "total_edges",
+   "ok": false,
+   "got": "99",
+   "want": "80"
+  },
+  {
+   "arm": "none",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "control_qname",
+   "ok": false,
+   "got": "pkg25.Model",
+   "want": "pkg26.Model79"
+  },
+  {
+   "arm": "none",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "control_kind",
+   "ok": true,
+   "got": "method",
+   "want": "method"
+  },
+  {
+   "arm": "none",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "control_score",
+   "ok": true,
+   "got": "0.96",
+   "want": "0.96"
+  },
+  {
+   "arm": "totals",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "40",
+   "want": "50"
+  },
+  {
+   "arm": "totals",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "80",
+   "want": "35"
+  },
+  {
+   "arm": "totals",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "19",
+   "want": "15"
+  },
+  {
+   "arm": "totals",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "group_diff",
+   "ok": false,
+   "got": "20",
+   "want": "15"
+  },
+  {
+   "arm": "totals",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "group_sum",
+   "ok": false,
+   "got": "120",
+   "want": "85"
+  },
+  {
+   "arm": "totals",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "total_symbols",
+   "ok": true,
+   "got": "100",
+   "want": "100"
+  },
+  {
+   "arm": "totals",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "total_edges",
+   "ok": true,
+   "got": "80",
+   "want": "80"
+  },
+  {
+   "arm": "totals",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "control_qname",
+   "ok": true,
+   "got": "pkg26.Model79",
+   "want": "pkg26.Model79"
+  },
+  {
+   "arm": "totals",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "control_kind",
+   "ok": true,
+   "got": "method",
+   "want": "method"
+  },
+  {
+   "arm": "totals",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "control_score",
+   "ok": true,
+   "got": "0.96",
+   "want": "0.96"
+  },
+  {
+   "arm": "positional",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "40",
+   "want": "50"
+  },
+  {
+   "arm": "positional",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "80",
+   "want": "35"
+  },
+  {
+   "arm": "positional",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "19",
+   "want": "15"
+  },
+  {
+   "arm": "positional",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "group_diff",
+   "ok": false,
+   "got": "20",
+   "want": "15"
+  },
+  {
+   "arm": "positional",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "group_sum",
+   "ok": false,
+   "got": "120",
+   "want": "85"
+  },
+  {
+   "arm": "positional",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "total_symbols",
+   "ok": false,
+   "got": "139",
+   "want": "100"
+  },
+  {
+   "arm": "positional",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "total_edges",
+   "ok": true,
+   "got": "80",
+   "want": "80"
+  },
+  {
+   "arm": "positional",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "control_qname",
+   "ok": true,
+   "got": "pkg26.Model79",
+   "want": "pkg26.Model79"
+  },
+  {
+   "arm": "positional",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "control_kind",
+   "ok": true,
+   "got": "method",
+   "want": "method"
+  },
+  {
+   "arm": "positional",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "control_score",
+   "ok": true,
+   "got": "0.96",
+   "want": "0.96"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "40",
+   "want": "50"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "80",
+   "want": "35"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "19",
+   "want": "15"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "group_diff",
+   "ok": false,
+   "got": "20",
+   "want": "15"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "group_sum",
+   "ok": false,
+   "got": "120",
+   "want": "85"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "total_symbols",
+   "ok": true,
+   "got": "100",
+   "want": "100"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "total_edges",
+   "ok": true,
+   "got": "80",
+   "want": "80"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "control_qname",
+   "ok": true,
+   "got": "pkg26.Model79",
+   "want": "pkg26.Model79"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "control_kind",
+   "ok": true,
+   "got": "method",
+   "want": "method"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "control_score",
+   "ok": true,
+   "got": "0.96",
+   "want": "0.96"
+  },
+  {
+   "arm": "none",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "7",
+   "want": "8"
+  },
+  {
+   "arm": "none",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "4",
+   "want": "5"
+  },
+  {
+   "arm": "none",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": true,
+   "got": "2",
+   "want": "2"
+  },
+  {
+   "arm": "none",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "group_diff",
+   "ok": true,
+   "got": "3",
+   "want": "3"
+  },
+  {
+   "arm": "none",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "group_sum",
+   "ok": false,
+   "got": "11",
+   "want": "13"
+  },
+  {
+   "arm": "none",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "total_symbols",
+   "ok": true,
+   "got": "15",
+   "want": "15"
+  },
+  {
+   "arm": "none",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "total_edges",
+   "ok": false,
+   "got": "10",
+   "want": "12"
+  },
+  {
+   "arm": "none",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "control_qname",
+   "ok": false,
+   "got": "",
+   "want": "pkg39.Cache10"
+  },
+  {
+   "arm": "none",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "control_kind",
+   "ok": false,
+   "got": "",
+   "want": "class"
+  },
+  {
+   "arm": "none",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "control_score",
+   "ok": false,
+   "got": "",
+   "want": "0.98"
+  },
+  {
+   "arm": "totals",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "7",
+   "want": "8"
+  },
+  {
+   "arm": "totals",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "4",
+   "want": "5"
+  },
+  {
+   "arm": "totals",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": true,
+   "got": "2",
+   "want": "2"
+  },
+  {
+   "arm": "totals",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "group_diff",
+   "ok": true,
+   "got": "3",
+   "want": "3"
+  },
+  {
+   "arm": "totals",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "group_sum",
+   "ok": false,
+   "got": "11",
+   "want": "13"
+  },
+  {
+   "arm": "totals",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "total_symbols",
+   "ok": true,
+   "got": "15",
+   "want": "15"
+  },
+  {
+   "arm": "totals",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "total_edges",
+   "ok": true,
+   "got": "12",
+   "want": "12"
+  },
+  {
+   "arm": "totals",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "control_qname",
+   "ok": true,
+   "got": "pkg39.Cache10",
+   "want": "pkg39.Cache10"
+  },
+  {
+   "arm": "totals",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "control_kind",
+   "ok": true,
+   "got": "class",
+   "want": "class"
+  },
+  {
+   "arm": "totals",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "control_score",
+   "ok": true,
+   "got": "0.98",
+   "want": "0.98"
+  },
+  {
+   "arm": "positional",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "7",
+   "want": "8"
+  },
+  {
+   "arm": "positional",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "4",
+   "want": "5"
+  },
+  {
+   "arm": "positional",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": true,
+   "got": "2",
+   "want": "2"
+  },
+  {
+   "arm": "positional",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "group_diff",
+   "ok": true,
+   "got": "3",
+   "want": "3"
+  },
+  {
+   "arm": "positional",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "group_sum",
+   "ok": false,
+   "got": "11",
+   "want": "13"
+  },
+  {
+   "arm": "positional",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "total_symbols",
+   "ok": true,
+   "got": "15",
+   "want": "15"
+  },
+  {
+   "arm": "positional",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "total_edges",
+   "ok": true,
+   "got": "12",
+   "want": "12"
+  },
+  {
+   "arm": "positional",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "control_qname",
+   "ok": true,
+   "got": "pkg39.Cache10",
+   "want": "pkg39.Cache10"
+  },
+  {
+   "arm": "positional",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "control_kind",
+   "ok": true,
+   "got": "class",
+   "want": "class"
+  },
+  {
+   "arm": "positional",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "control_score",
+   "ok": true,
+   "got": "0.98",
+   "want": "0.98"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": true,
+   "got": "8",
+   "want": "8"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": true,
+   "got": "5",
+   "want": "5"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": true,
+   "got": "2",
+   "want": "2"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "group_diff",
+   "ok": true,
+   "got": "3",
+   "want": "3"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "group_sum",
+   "ok": true,
+   "got": "13",
+   "want": "13"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "total_symbols",
+   "ok": true,
+   "got": "15",
+   "want": "15"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "total_edges",
+   "ok": true,
+   "got": "12",
+   "want": "12"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "control_qname",
+   "ok": true,
+   "got": "pkg39.Cache10",
+   "want": "pkg39.Cache10"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "control_kind",
+   "ok": true,
+   "got": "class",
+   "want": "class"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "control_score",
+   "ok": true,
+   "got": "0.98",
+   "want": "0.98"
+  },
+  {
+   "arm": "none",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "7",
+   "want": "8"
+  },
+  {
+   "arm": "none",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "6",
+   "want": "5"
+  },
+  {
+   "arm": "none",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "3",
+   "want": "2"
+  },
+  {
+   "arm": "none",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "group_diff",
+   "ok": false,
+   "got": "1",
+   "want": "3"
+  },
+  {
+   "arm": "none",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "group_sum",
+   "ok": true,
+   "got": "13",
+   "want": "13"
+  },
+  {
+   "arm": "none",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "total_symbols",
+   "ok": false,
+   "got": "16",
+   "want": "15"
+  },
+  {
+   "arm": "none",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "total_edges",
+   "ok": false,
+   "got": "11",
+   "want": "12"
+  },
+  {
+   "arm": "none",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "control_qname",
+   "ok": true,
+   "got": "pkg20.Auth11",
+   "want": "pkg20.Auth11"
+  },
+  {
+   "arm": "none",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "control_kind",
+   "ok": false,
+   "got": "const",
+   "want": "field"
+  },
+  {
+   "arm": "none",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "control_score",
+   "ok": true,
+   "got": "0.89",
+   "want": "0.89"
+  },
+  {
+   "arm": "totals",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "5",
+   "want": "8"
+  },
+  {
+   "arm": "totals",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "4",
+   "want": "5"
+  },
+  {
+   "arm": "totals",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "3",
+   "want": "2"
+  },
+  {
+   "arm": "totals",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "group_diff",
+   "ok": false,
+   "got": "1",
+   "want": "3"
+  },
+  {
+   "arm": "totals",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "group_sum",
+   "ok": false,
+   "got": "9",
+   "want": "13"
+  },
+  {
+   "arm": "totals",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "total_symbols",
+   "ok": true,
+   "got": "15",
+   "want": "15"
+  },
+  {
+   "arm": "totals",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "total_edges",
+   "ok": true,
+   "got": "12",
+   "want": "12"
+  },
+  {
+   "arm": "totals",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "control_qname",
+   "ok": true,
+   "got": "pkg20.Auth11",
+   "want": "pkg20.Auth11"
+  },
+  {
+   "arm": "totals",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "control_kind",
+   "ok": false,
+   "got": "const",
+   "want": "field"
+  },
+  {
+   "arm": "totals",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "control_score",
+   "ok": true,
+   "got": "0.89",
+   "want": "0.89"
+  },
+  {
+   "arm": "positional",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "7",
+   "want": "8"
+  },
+  {
+   "arm": "positional",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "4",
+   "want": "5"
+  },
+  {
+   "arm": "positional",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "3",
+   "want": "2"
+  },
+  {
+   "arm": "positional",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "group_diff",
+   "ok": true,
+   "got": "3",
+   "want": "3"
+  },
+  {
+   "arm": "positional",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "group_sum",
+   "ok": false,
+   "got": "11",
+   "want": "13"
+  },
+  {
+   "arm": "positional",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "total_symbols",
+   "ok": true,
+   "got": "15",
+   "want": "15"
+  },
+  {
+   "arm": "positional",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "total_edges",
+   "ok": true,
+   "got": "12",
+   "want": "12"
+  },
+  {
+   "arm": "positional",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "control_qname",
+   "ok": true,
+   "got": "pkg20.Auth11",
+   "want": "pkg20.Auth11"
+  },
+  {
+   "arm": "positional",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "control_kind",
+   "ok": false,
+   "got": "const",
+   "want": "field"
+  },
+  {
+   "arm": "positional",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "control_score",
+   "ok": true,
+   "got": "0.89",
+   "want": "0.89"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": true,
+   "got": "8",
+   "want": "8"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": true,
+   "got": "5",
+   "want": "5"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": true,
+   "got": "2",
+   "want": "2"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "group_diff",
+   "ok": true,
+   "got": "3",
+   "want": "3"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "group_sum",
+   "ok": true,
+   "got": "13",
+   "want": "13"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "total_symbols",
+   "ok": true,
+   "got": "15",
+   "want": "15"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "total_edges",
+   "ok": true,
+   "got": "12",
+   "want": "12"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "control_qname",
+   "ok": true,
+   "got": "pkg20.Auth11",
+   "want": "pkg20.Auth11"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "control_kind",
+   "ok": false,
+   "got": "const",
+   "want": "field"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "control_score",
+   "ok": true,
+   "got": "0.89",
+   "want": "0.89"
+  }
+ ],
+ "partial": false,
+ "probesDone": 24,
+ "probesTotal": 24
+}

@@ -1,0 +1,234 @@
+# scenario=medium_s1 arm=totals requested=amazon/nova-lite-v1 resolved=amazon/nova-lite-v1
+# questions:
+  1. [per_group_count] How many symbols are in the targets group? => want=50
+  2. [per_group_count] How many symbols are in the related group? => want=35
+  3. [per_group_count] How many symbols are in the extended group? => want=15
+  4. [group_diff] How many more symbols are in the targets group than the related group? => want=15
+  5. [group_sum] How many symbols are in the targets and related groups combined? => want=85
+  6. [total_symbols] How many symbols are there in total? => want=100
+  7. [total_edges] How many edges are there in total? => want=80
+  8. [control_qname] What is the qualified name of symbol @72? => want=pkg21.Config72
+  9. [control_kind] What is the KIND abbreviation of symbol @84? => want=class
+  10. [control_score] What is the score of symbol @6? => want=0.61
+# parsed answers: ["32","28","20","4","60","100","80","var pkg21.Config72","class","0.42"]
+
+===== PROMPT =====
+You are reading a code-graph context encoded in GCF (graph profile). Format:
+- A header line beginning "GCF profile=graph".
+- Distance-group sections in order of relevance: "## targets" (most relevant), then "## related", then "## extended". Each section header is followed by that group's symbol lines.
+- A symbol line is "@ID KIND QUALIFIED_NAME SCORE PROVENANCE", space-separated. KIND is an abbreviation (fn=function, type, method, iface=interface, var, const, class, field). Each symbol has a unique integer @ID.
+- An edges section "## edges [?]" is followed by edge lines "@TARGET<@SOURCE TYPE"; the "<" points to the target symbol.
+Answer each question about this graph. Reply with only the requested value, no explanation.
+- A final trailer line "##! summary symbols=N edges=M" reports the total symbol and edge counts.
+
+----- graph -----
+GCF profile=graph tool=context_for_task budget=5000
+## targets
+@0 const pkg0.Store0 0.98 rwr
+@1 method pkg24.Cache1 0.59 rwr
+@2 iface pkg19.Server2 0.58 lsp_resolved
+@3 type pkg19.Auth3 0.57 rwr
+@4 method pkg7.Auth4 0.59 structural
+@5 class pkg11.Server5 0.75 structural
+@6 class pkg7.Cache6 0.61 rwr
+@7 field pkg9.Client7 0.41 ast_inferred
+@8 iface pkg9.Server8 0.80 structural
+@9 type pkg10.Auth9 0.73 rwr
+@10 type pkg39.Cache10 0.58 ast_inferred
+@11 const pkg38.Model11 0.78 rwr
+@12 class pkg37.Auth12 0.33 rwr
+@13 method pkg35.Store13 0.95 structural
+@14 type pkg27.Model14 0.39 rwr
+@15 type pkg15.Auth15 0.58 ast_inferred
+@16 const pkg20.Store16 0.35 rwr
+@17 class pkg10.Server17 0.51 rwr
+@18 method pkg5.Cache18 0.68 ast_inferred
+@19 fn pkg5.Auth19 0.51 structural
+@20 const pkg4.Store20 0.66 lsp_resolved
+@21 class pkg10.Model21 0.96 rwr
+@22 fn pkg7.Auth22 0.98 ast_inferred
+@23 const pkg34.Auth23 0.47 rwr
+@24 class pkg31.Server24 0.37 lsp_resolved
+@25 iface pkg21.Config25 0.91 ast_inferred
+@26 field pkg34.Cache26 0.76 lsp_resolved
+@27 iface pkg12.Server27 0.48 rwr
+@28 field pkg6.Config28 0.35 lsp_resolved
+@29 class pkg15.Server29 0.40 rwr
+@30 method pkg35.Store30 0.60 structural
+@31 method pkg9.Store31 0.83 rwr
+@32 fn pkg8.Cache32 0.75 lsp_resolved
+@33 method pkg17.Client33 0.75 ast_inferred
+@34 method pkg24.Auth34 0.94 structural
+@35 var pkg25.Auth35 0.35 rwr
+@36 type pkg28.Config36 0.74 ast_inferred
+@37 var pkg37.Auth37 0.38 lsp_resolved
+@38 const pkg1.Store38 0.56 rwr
+@39 method pkg3.Model39 0.97 lsp_resolved
+@40 class pkg4.Router40 0.72 structural
+@41 iface pkg28.Server41 0.50 rwr
+@42 var pkg21.Auth42 0.41 structural
+@43 type pkg6.Cache43 0.72 lsp_resolved
+@44 fn pkg1.Router44 0.77 structural
+@45 class pkg25.Cache45 0.96 lsp_resolved
+@46 class pkg36.Auth46 0.87 structural
+@47 var pkg14.Auth47 0.36 structural
+@48 iface pkg0.Store48 0.68 structural
+@49 class pkg19.Client49 0.35 ast_inferred
+## related
+@50 const pkg8.Client50 0.84 lsp_resolved
+@51 type pkg28.Auth51 0.85 rwr
+@52 method pkg36.Client52 0.73 ast_inferred
+@53 var pkg17.Server53 0.40 rwr
+@54 const pkg1.Store54 0.71 lsp_resolved
+@55 type pkg38.Config55 0.31 ast_inferred
+@56 method pkg39.Cache56 0.63 lsp_resolved
+@57 const pkg1.Client57 0.97 lsp_resolved
+@58 const pkg35.Store58 0.70 ast_inferred
+@59 var pkg22.Client59 0.90 ast_inferred
+@60 class pkg28.Server60 0.41 rwr
+@61 iface pkg38.Store61 0.74 ast_inferred
+@62 fn pkg30.Cache62 0.83 lsp_resolved
+@63 fn pkg31.Client63 0.45 ast_inferred
+@64 const pkg1.Server64 0.34 ast_inferred
+@65 field pkg12.Router65 0.76 lsp_resolved
+@66 const pkg31.Cache66 0.62 lsp_resolved
+@67 iface pkg36.Router67 0.93 rwr
+@68 var pkg7.Cache68 0.73 structural
+@69 field pkg14.Model69 0.33 ast_inferred
+@70 type pkg0.Store70 0.62 rwr
+@71 method pkg32.Model71 0.59 lsp_resolved
+@72 var pkg21.Config72 0.96 structural
+@73 var pkg19.Auth73 0.58 lsp_resolved
+@74 var pkg1.Store74 0.54 structural
+@75 type pkg5.Config75 0.51 ast_inferred
+@76 const pkg23.Auth76 0.57 lsp_resolved
+@77 class pkg21.Server77 0.63 lsp_resolved
+@78 type pkg14.Store78 0.98 ast_inferred
+@79 var pkg20.Router79 0.57 lsp_resolved
+@80 var pkg26.Store80 0.32 ast_inferred
+@81 fn pkg25.Model81 0.93 ast_inferred
+@82 class pkg19.Auth82 0.48 rwr
+@83 fn pkg13.Client83 0.89 ast_inferred
+@84 class pkg32.Store84 0.42 lsp_resolved
+## extended
+@85 type pkg25.Router85 0.65 ast_inferred
+@86 method pkg25.Client86 0.86 lsp_resolved
+@87 field pkg21.Config87 0.90 structural
+@88 method pkg14.Client88 0.69 rwr
+@89 type pkg35.Router89 0.82 lsp_resolved
+@90 method pkg12.Cache90 0.55 structural
+@91 iface pkg13.Cache91 0.78 rwr
+@92 fn pkg39.Config92 0.37 ast_inferred
+@93 const pkg15.Store93 0.55 structural
+@94 field pkg29.Auth94 0.53 ast_inferred
+@95 type pkg21.Auth95 0.35 ast_inferred
+@96 iface pkg11.Cache96 0.46 lsp_resolved
+@97 const pkg22.Model97 0.85 ast_inferred
+@98 iface pkg23.Cache98 0.35 structural
+@99 method pkg10.Client99 0.91 ast_inferred
+## edges [?]
+@75<@89 references
+@84<@82 imports
+@41<@21 references
+@73<@4 calls
+@83<@62 references
+@0<@64 implements
+@4<@22 calls
+@72<@7 references
+@19<@38 calls
+@62<@68 references
+@92<@7 references
+@64<@61 imports
+@5<@80 calls
+@68<@89 imports
+@40<@95 references
+@12<@77 calls
+@55<@35 calls
+@9<@19 imports
+@55<@13 references
+@32<@5 imports
+@20<@34 calls
+@63<@95 references
+@23<@78 implements
+@24<@88 calls
+@7<@6 imports
+@82<@66 imports
+@36<@44 imports
+@59<@47 implements
+@69<@71 calls
+@44<@42 imports
+@85<@70 calls
+@95<@71 references
+@17<@97 calls
+@46<@15 implements
+@6<@61 calls
+@12<@34 imports
+@27<@62 calls
+@14<@27 implements
+@81<@47 imports
+@99<@75 calls
+@95<@11 calls
+@53<@56 implements
+@10<@36 implements
+@68<@34 implements
+@70<@96 implements
+@90<@75 implements
+@32<@87 references
+@49<@33 references
+@93<@91 calls
+@84<@48 imports
+@14<@42 imports
+@22<@50 references
+@54<@4 references
+@53<@68 calls
+@78<@81 references
+@92<@89 implements
+@3<@68 imports
+@96<@55 implements
+@17<@74 calls
+@52<@25 calls
+@38<@10 calls
+@40<@6 implements
+@16<@29 imports
+@85<@55 references
+@37<@38 implements
+@29<@38 implements
+@44<@49 calls
+@27<@56 calls
+@14<@23 implements
+@35<@4 references
+@4<@8 references
+@18<@13 implements
+@58<@74 calls
+@68<@34 references
+@75<@24 imports
+@33<@27 implements
+@0<@25 references
+@43<@30 implements
+@74<@30 implements
+@98<@69 calls
+##! summary symbols=100 edges=80
+
+Answer each question about the graph above. Reply with exactly one line per question, formatted "N: value" — value only, no explanation.
+1. How many symbols are in the targets group?
+2. How many symbols are in the related group?
+3. How many symbols are in the extended group?
+4. How many more symbols are in the targets group than the related group?
+5. How many symbols are in the targets and related groups combined?
+6. How many symbols are there in total?
+7. How many edges are there in total?
+8. What is the qualified name of symbol @72?
+9. What is the KIND abbreviation of symbol @84?
+10. What is the score of symbol @6?
+
+===== MODEL CONTENT =====
+1: 32
+2: 28
+3: 20
+4: 4
+5: 60
+6: 100
+7: 80
+8: var pkg21.Config72
+9: class
+10: 0.42
