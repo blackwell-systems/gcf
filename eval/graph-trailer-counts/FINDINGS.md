@@ -84,6 +84,43 @@ auto-excluded (same class as qwen-2.5-72b in the delta-eval sweep). Its raw numb
   dovetails with the `## _counts` roadmap direction (labeled per-group counts are a lightweight,
   in-trailer version of it).
 
+## Worked example: who benefits
+
+A self-hosted coding agent on a budget model is the canonical beneficiary: a cheap model, a
+counting-heavy tool loop, and an operator who knows the model tier and can turn the aid on.
+
+**Setup.** A company runs an agentic coding assistant on its own hardware, routing the tool-calling
+loop to a small open model (e.g. Llama-3.1-8B) to keep costs down. The agent calls a code-graph MCP
+server (the agent-lsp / knowing class) that returns GCF graph-profile context: symbols in distance
+groups (`## targets` / `## related` / `## extended`) plus edges. To plan its next move the agent
+constantly asks structural counting questions ("how many functions are related to `AuthMiddleware`?",
+"which group is largest?", "more callers or callees?"), which are exactly the "tally the lines" task
+this eval measures.
+
+**Without the aid.** A query returns 500 symbols (250 targets, 170 related, 80 extended). Asked "how
+many related symbols?", the 8B model must count 170 lines and gets it right ~27% of the time
+(llama-3.1-8b on large graphs). It answers "about 40", builds a plan on the miscount, wastes tool
+calls, and returns a worse result. The model is fine at *code* and bad at *counting rows*, and that
+single weakness taxes the whole loop.
+
+**With the aid.** The operator knows they feed an 8B model, so they enable the labeled-trailer-counts
+producer knob. Every payload now ends with:
+
+```
+##! summary symbols=500 edges=400 counts=targets:250,related:170,extended:80,edges:400
+```
+
+The model reads `related:170` instead of counting: llama-3.1-8b goes 27% -> 67% on this question
+type, a Nova-class model ~35% -> 100%, and the effect is largest on exactly this large-graph case
+(+56pp at N=500). Cost: a handful of label tokens per payload; the decoder ignores the trailer, so
+nothing downstream changes.
+
+**Why it stays honest.** It is producer-configured for a *known* consumer (the operator set a flag
+because they know the model tier), not auto-adaptive. The same MCP server in front of a frontier
+model leaves the knob off: that model already counts 500 lines correctly (the three ceiling controls
+above), so it gets zero benefit and pays zero label tokens. One codebase, two configs, each correct
+for its reader.
+
 ## Caveats
 
 Single-shot static payloads (the comprehension effect is about the trailer text the model reads,
