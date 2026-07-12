@@ -98,6 +98,110 @@ output = encode_delta(DeltaPayload(
 ))
 ```
 
+## Generic Delta (v3.3)
+
+Delta encoding for the generic profile (SPEC Section 10a): a keyed diff over a tabular set, plus a producer-side session helper that re-anchors on a tunable cadence. Identity is one designated column (`key=` in the header, `@<key>` in the field declaration). All functions live in `gcf.generic_delta` and are re-exported from the top-level `gcf` package.
+
+The Python surface follows Python idioms: functions that the Go reference returns as `(value, error)` instead return the value directly and raise `ValueError` on invalid input.
+
+### `encode_generic_full(s: GenericSet, tool: str = "") -> str`
+
+Emit a delta-participating full base payload: a `key=` header, the `@id` field declaration, and rows. Send this once to establish the base.
+
+```python
+from gcf import encode_generic_full, GenericSet
+
+base = GenericSet(
+    key="id",
+    fields=["id", "total", "status"],
+    rows=[
+        {"id": 1001, "total": 59.98, "status": "shipped"},
+        {"id": 1002, "total": 29.99, "status": "pending"},
+    ],
+    name="orders",
+)
+
+print(encode_generic_full(base, tool="orders_report"))
+# GCF profile=generic tool=orders_report pack_root=sha256:... key=id
+# ## orders [2]{@id,total,status}
+# 1001|59.98|shipped
+# 1002|29.99|pending
+```
+
+### `diff_generic_sets(base: GenericSet, nxt: GenericSet) -> GenericDeltaPayload`
+
+Compute the added / changed / removed diff between two sets sharing the same key and fields. Rows are order-agnostic; unchanged rows are omitted. Raises `ValueError` on a schema change or missing key (the caller must then send a full payload, Section 10a.7).
+
+```python
+from gcf import diff_generic_sets
+
+payload = diff_generic_sets(base, nxt)
+```
+
+### `encode_generic_delta(d: GenericDeltaPayload) -> str`
+
+Serialize a delta payload. Sections are ordered `## added` / `## changed` / `## removed`; `## removed` carries identity values only.
+
+```python
+from gcf import encode_generic_delta
+
+print(encode_generic_delta(payload))
+# GCF profile=generic delta=true base_root=sha256:... new_root=sha256:... key=id
+# ## changed [1]{@id,total,status}
+# 1002|29.99|shipped
+```
+
+### `decode_generic_delta(text: str) -> GenericDeltaPayload`
+
+Parse a delta payload back into a `GenericDeltaPayload`. Raises `ValueError` on malformed input.
+
+### `encode_generic_full` / `decode_generic_full(text: str) -> tuple[GenericSet, str]`
+
+`decode_generic_full` parses a full base payload into `(GenericSet, pack_root)`.
+
+### `verify_generic_delta(base: GenericSet, d: GenericDeltaPayload, expected_new_root: str) -> GenericSet`
+
+Apply a delta to `base` atomically and verify the result's pack root equals `expected_new_root`. On any failure (base-root mismatch, invalid add/change/remove, or a root mismatch) it raises `ValueError` and applies nothing; on success it returns the new `GenericSet`.
+
+```python
+from gcf import verify_generic_delta
+
+new_set = verify_generic_delta(base, payload, payload.new_root)
+```
+
+### `GenericDeltaSession(base, tool, policy)`
+
+Holds the current base and re-anchor state for a producer loop. Not safe for concurrent use. Call `current_full()` for the initial full payload to transmit, then `next(...)` for each subsequent state.
+
+```python
+from gcf import (
+    GenericDeltaSession, GenericSet, size_guard, decode_generic_delta,
+)
+
+sess = GenericDeltaSession(base, "orders_report", size_guard())
+send(sess.current_full())        # establish the base (turn 0)
+
+for snapshot in stream_of_snapshots:      # each is a GenericSet
+    wire, is_full = sess.next(snapshot)    # advance one turn
+    send(wire)                             # full re-anchor or compact delta
+```
+
+`next(nxt: GenericSet) -> tuple[str, bool]` advances the session by one turn and returns `(wire, is_full)`: the wire to transmit and whether it is a full re-anchor (`True`) or a delta (`False`). A schema change forces a full (Section 10a.7). The wire is byte-identical to calling `encode_generic_full` / `encode_generic_delta` directly. The `turn` property reports the number of `next` calls so far (the initial full is turn 0).
+
+### Re-anchor policy
+
+Construct a policy with `fixed_n(n)` or `size_guard()`:
+
+```python
+from gcf import fixed_n, size_guard, DEFAULT_REANCHOR_N
+
+fixed_n(20)          # re-anchor every 20 turns
+fixed_n(0)           # n <= 0 falls back to DEFAULT_REANCHOR_N (15)
+size_guard()         # size-adaptive; production-recommended
+```
+
+`size_guard()` re-anchors once the cumulative delta bytes since the last anchor reach the current full payload's byte size, bounding delta spend to about one full payload between anchors. This helper is non-normative producer policy: the cadence is never a wire field and never appears on the wire (Section 10a.8).
+
 ### `StreamEncoder(writer, tool, **opts)`
 
 Create a streaming encoder that writes GCF incrementally. Zero buffering, thread-safe.
@@ -165,6 +269,53 @@ class DeltaPayload:
     added_edges: list[Edge] = field(default_factory=list)
     delta_tokens: int = 0
     full_tokens: int = 0
+```
+
+### `GenericSet`
+
+The keyed record set that generic-profile delta operates on. `key` names the identity column, `fields` carries the declared column order, `rows` are order-agnostic record dicts, and `name` is the tabular section name for a full payload.
+
+```python
+@dataclass
+class GenericSet:
+    key: str
+    fields: list[str]
+    rows: list[dict[str, Any]]
+    name: str = "rows"
+```
+
+### `GenericDeltaPayload`
+
+`removed` holds identity values only (not full rows).
+
+```python
+@dataclass
+class GenericDeltaPayload:
+    key: str
+    fields: list[str]
+    base_root: str = ""
+    new_root: str = ""
+    added: list[dict[str, Any]] = field(default_factory=list)
+    changed: list[dict[str, Any]] = field(default_factory=list)
+    removed: list[Any] = field(default_factory=list)
+    tool: str = ""
+    delta_tokens: int = 0
+    full_tokens: int = 0
+```
+
+### `ReanchorPolicy` / `ReanchorMode`
+
+Construct a `ReanchorPolicy` with `fixed_n()` or `size_guard()` rather than instantiating it directly. `DEFAULT_REANCHOR_N = 15`.
+
+```python
+class ReanchorMode(Enum):
+    FIXED_N = 0     # re-anchor every N turns
+    SIZE_GUARD = 1  # re-anchor once cumulative delta reaches the full payload's size
+
+@dataclass
+class ReanchorPolicy:
+    mode: ReanchorMode = ReanchorMode.FIXED_N
+    n: int = 0  # turns between anchors; FIXED_N only
 ```
 
 ### `Components`
