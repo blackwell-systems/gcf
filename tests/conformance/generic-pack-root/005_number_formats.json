@@ -1,0 +1,15 @@
+{
+  "name": "generic_pack_root_number_formats",
+  "description": "Pack root pinning canonical number formatting (Section 2.3.1) so SDKs cannot diverge: trailing zeros dropped (129.50->129.5, 75.00->75), no scientific notation (1000000 stays 1000000, 0.001 stays 0.001), negatives and zero.",
+  "operation": "generic-pack-root",
+  "input": {
+    "key": "id",
+    "fields": ["id", "x"],
+    "rows": [
+      {"id": 1, "x": 129.50}, {"id": 2, "x": 75.00}, {"id": 3, "x": 1000000},
+      {"id": 4, "x": 0.001}, {"id": 5, "x": -0.5}, {"id": 6, "x": 3.141592653589793},
+      {"id": 7, "x": -42}, {"id": 8, "x": 0}
+    ]
+  },
+  "expected": "sha256:ebf382c9209eaf77542cd120c239b94d068f96025eeceb32c11a0adf5532af81"
+}
