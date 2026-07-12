@@ -6,7 +6,7 @@ repositories {
     maven("https://jitpack.io")
 }
 dependencies {
-    implementation("com.github.blackwell-systems:gcf-kotlin:2.2.2")
+    implementation("com.github.blackwell-systems:gcf-kotlin:2.3.0")
 }
 ```
 
@@ -110,6 +110,156 @@ enc.writeSymbol(sym)  // emitted immediately
 enc.writeEdge(edge)   // emitted immediately
 enc.close()           // emits ##! summary trailer
 ```
+
+## Generic Delta (v3.3)
+
+Delta encoding for the generic profile (SPEC Section 10a): a keyed diff over a tabular set, plus a producer-side session helper that re-anchors on a tunable cadence. Identity is one designated column (`key=` in the header, `@<key>` in the field declaration). Delta is opt-in and bilateral; the plain `encodeGeneric` path is unchanged.
+
+### `encodeGenericFull(s: GenericSet, tool: String): String`
+
+Encode a delta-ready full payload: `key=` in the header, an `@`-prefixed identity field in the declaration, pipe-separated rows.
+
+```kotlin
+import com.blackwellsystems.gcf.*
+
+val orders = GenericSet(
+    name = "orders",
+    key = "id",
+    fields = listOf("id", "total", "status"),
+    rows = listOf(
+        mapOf("id" to 1001, "total" to 59.98, "status" to "shipped"),
+        mapOf("id" to 1002, "total" to 29.99, "status" to "pending"),
+    ),
+)
+
+val full = encodeGenericFull(orders, "orders_query")
+// GCF profile=generic tool=orders_query pack_root=sha256:... key=id
+// ## orders [2]{@id,total,status}
+// 1001|59.98|shipped
+// 1002|29.99|pending
+```
+
+### `diffGenericSets(base: GenericSet, next: GenericSet): GenericDeltaPayload`
+
+Compute the added / changed / removed diff between two sets sharing the same key and fields. Enforces the keyed-diff invariants (identity uniqueness, whole-row replacement, unchanged rows omitted); added/changed/removed are sorted by identity for reproducible output. Throws `IllegalArgumentException` on a schema change or a missing key (the caller must then send a full payload).
+
+```kotlin
+val delta = diffGenericSets(base, next)
+```
+
+### `encodeGenericDelta(d: GenericDeltaPayload): String`
+
+Serialize a delta payload. Sections are emitted in the deterministic order `## added` / `## changed` / `## removed`.
+
+```kotlin
+val wire = encodeGenericDelta(delta)
+```
+
+### `decodeGenericDelta(text: String): GenericDeltaPayload`
+
+Parse a delta payload back into a `GenericDeltaPayload`. The result can be applied with `verifyGenericDelta`.
+
+```kotlin
+val payload = decodeGenericDelta(wire)
+```
+
+### `decodeGenericFull(text: String): Pair<GenericSet, String>`
+
+Parse a delta-participating full base payload into a `GenericSet` and its declared `pack_root`.
+
+```kotlin
+val (set, packRoot) = decodeGenericFull(full)
+```
+
+### `verifyGenericDelta(base: GenericSet, d: GenericDeltaPayload, expectedNewRoot: String): GenericSet`
+
+Apply a delta to `base` atomically and verify the result's pack root equals `expectedNewRoot`. The whole payload is validated before any state changes; a mismatch throws `IllegalArgumentException` and leaves the base untouched. Returns the new set.
+
+```kotlin
+val updated = verifyGenericDelta(base, delta, delta.newRoot)
+```
+
+### `genericPackRoot(s: GenericSet): String`
+
+Compute the canonical pack root (`gcf-pack-root-v1`, generic profile) for a keyed set. Two implementations given the same logical set produce the same result.
+
+```kotlin
+val root = genericPackRoot(orders) // "sha256:..."
+```
+
+### `GenericSet`
+
+A keyed record set: the unit generic-profile delta operates on. Rows are order-agnostic (set semantics).
+
+```kotlin
+data class GenericSet(
+    val key: String,               // identity column (the @id / key=)
+    val fields: List<String>,      // declared column order for the wire form
+    val rows: List<Map<String, Any?>>,
+    val name: String = "",         // tabular section name for a full payload ("" for root)
+)
+```
+
+### `GenericDeltaPayload`
+
+A diff between two `GenericSet`s.
+
+```kotlin
+data class GenericDeltaPayload(
+    val key: String,
+    val fields: List<String>,
+    val baseRoot: String,
+    val newRoot: String = "",
+    val added: List<Map<String, Any?>> = emptyList(),
+    val changed: List<Map<String, Any?>> = emptyList(),
+    val removed: List<Any?> = emptyList(), // identity values only
+    val tool: String = "",
+    val deltaTokens: Int = 0,
+    val fullTokens: Int = 0,
+)
+```
+
+### `GenericDeltaSession`
+
+A producer-side helper that manages the re-anchor cadence for a stream of generic-profile updates (SPEC Section 10a.8, non-normative producer policy). Each `next` emits either a compact delta or, on its chosen cadence, a full re-anchor, updating the held base. It introduces no new wire syntax: every payload it emits is exactly what `encodeGenericFull` or `encodeGenericDelta` produce, and the decoder accepts them cadence-agnostically. Not safe for concurrent use.
+
+```kotlin
+class GenericDeltaSession(
+    base: GenericSet,
+    tool: String,
+    policy: ReanchorPolicy,
+) {
+    var turn: Int          // number of next() calls so far (initial full is turn 0)
+        private set
+    fun currentFull(): String              // send first; also a manual re-anchor
+    fun next(next: GenericSet): Pair<String, Boolean> // (wire, isFull)
+}
+```
+
+`next` advances the session by one turn, returning the wire to transmit and whether it is a full re-anchor (`true`) or a delta (`false`). A schema change forces a full (Section 10a.7); the held base becomes `next` either way.
+
+```kotlin
+val session = GenericDeltaSession(base, "orders_query", ReanchorPolicy.SizeGuard)
+send(session.currentFull())                 // establish the base (turn 0)
+
+for (snapshot in updates) {
+    val (wire, isFull) = session.next(snapshot)
+    send(wire)                              // compact delta, or a full on the cadence
+}
+```
+
+### `ReanchorPolicy`
+
+Selects when a `GenericDeltaSession` re-anchors. Non-normative producer policy: it introduces no wire syntax and never appears on the wire (SPEC Section 10a.8).
+
+```kotlin
+sealed interface ReanchorPolicy {
+    data class FixedN(val n: Int) : ReanchorPolicy // re-anchor every n turns
+    data object SizeGuard : ReanchorPolicy         // size-adaptive, recommended
+}
+```
+
+`ReanchorPolicy.FixedN(n)` re-anchors every `n` turns; `n <= 0` falls back to the default `DEFAULT_REANCHOR_N` (15). `ReanchorPolicy.SizeGuard` is size-adaptive (more anchors under heavy churn, fewer under light churn, bounding the delta spent between anchors to about one full payload) and is the production-recommended choice.
 
 ## Types
 
