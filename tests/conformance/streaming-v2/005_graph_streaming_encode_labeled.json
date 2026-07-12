@@ -1,0 +1,18 @@
+{
+  "name": "graph_streaming_encode_labeled_counts",
+  "description": "Streaming graph encode with the opt-in labeled trailer counts form (SPEC 8.4.1): options.labeledTrailerCounts=true makes '##! summary' counts emit as label:count (counts=targets:1,related:1,edges:1). Same input as 004 (default positional counts=1,1,1). Runners skip a graph-stream-encode fixture whose options they do not support.",
+  "operation": "graph-stream-encode",
+  "options": { "labeledTrailerCounts": true },
+  "input": {
+    "tool": "context_for_task",
+    "tokenBudget": 5000,
+    "symbols": [
+      {"qualifiedName": "pkg.Auth", "kind": "function", "score": 0.95, "provenance": "lsp", "distance": 0},
+      {"qualifiedName": "pkg.Server", "kind": "function", "score": 0.60, "provenance": "lsp", "distance": 1}
+    ],
+    "edges": [
+      {"source": "pkg.Server", "target": "pkg.Auth", "edgeType": "calls"}
+    ]
+  },
+  "expected": "GCF profile=graph tool=context_for_task budget=5000\n## targets\n@0 fn pkg.Auth 0.95 lsp\n## related\n@1 fn pkg.Server 0.60 lsp\n## edges [?]\n@0<@1 calls\n##! summary symbols=2 edges=1 counts=targets:1,related:1,edges:1\n"
+}
