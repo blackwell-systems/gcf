@@ -19,6 +19,12 @@
 
 - Generic-profile delta comprehension validated across a 50-turn session on ~10 models from 6+ vendors. Delta is safe at depth on 5 of 6 cleanly-measured models (frontier, cross-vendor, and weak models all hold or benefit). The one mid-tier deep-drift edge case is closed by a producer-side periodic re-anchor (measured, reproduced across two runs; deep-turn accuracy 85% to 100%). A second measured benefit: on weak/context-limited models the re-anchor recovers pure-delta degradation to full-resend level or better while keeping payloads compact (four clean models across three vendors).
 
+### Reference implementation and conformance
+
+- **gcf-go**: complete producer + consumer implementation of §10a — `GenericPackRoot`, `DiffGenericSets`, `EncodeGenericFull` / `EncodeGenericDelta`, `DecodeGenericFull` / `DecodeGenericDelta`, `VerifyGenericDelta` (atomic apply + root verification). Self-proving unit tests (diff -> encode -> apply -> recomputed root), a decoder-robustness suite (malformed/truncated input fails closed, never panics), and two fuzz targets (decoder never panics; arbitrary UTF-8 string cells round-trip with the pack root preserved).
+- **12 shared conformance fixtures** in `tests/conformance/generic-pack-root/` (basic, nulls, string-keys, larger, number-formats) and `tests/conformance/generic-delta/` (encode, verify-apply, root-mismatch, add-existing, decode-apply, empty-encode, verify-empty). New runner operations: `generic-pack-root`, `generic-delta`, `generic-delta-verify`, `generic-delta-decode`. The pack-root fixtures pin null handling, string/typed-literal disambiguation, and canonical number formatting as a cross-implementation contract.
+- **Pending**: port §10a to gcf-python, gcf-typescript, gcf-rust, gcf-swift, gcf-kotlin against the same fixtures.
+
 ## v3.2.2 (2026-07-10)
 
 ### Conformance: nested-null flatten losslessness
