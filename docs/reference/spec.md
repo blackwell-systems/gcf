@@ -15,7 +15,7 @@ It covers:
 7. **Generic profile** (tabular encoding, inline object schemas, shared attachment schemas, expanded arrays)
 8. **Streaming encoding extension**
 9. **Session statefulness**
-10. **Delta encoding extension**
+10, 10a. **Delta encoding** (graph profile in Section 10; generic-profile keyed delta in Section 10a)
 11-13. **Comments, implementation limits, and count validation**
 14-15. **Token analysis and design constraints**
 16. **Conformance** (encoder/decoder checklists and strict error taxonomy)
@@ -23,7 +23,7 @@ It covers:
 
 ## Version
 
-Current: **GCF v3.2** (stable, 2026-06-22)
+Current: **GCF v3.3.0** (stable, 2026-07-12)
 
 ## Conventions
 
@@ -34,7 +34,7 @@ The specification uses [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119) keywor
 GCF supports two encoding profiles that share the same grammar primitives (`##` headers, positional fields). The graph profile adds `@` local IDs and edge notation:
 
 - **Graph profile** (Sections 4-6a): Superset that adds local IDs, typed edges, and distance groups for relationship-heavy data (code intelligence, knowledge graphs, ontologies, agent memory).
-- **Generic profile** (Section 7): Encodes arbitrary structured data using positional rows, inline object schemas, shared array schemas, nested object flattening (v3.2), and expanded forms.
+- **Generic profile** (Section 7): Encodes arbitrary structured data using positional rows, inline object schemas, shared array schemas, nested object flattening (v3.2), keyed delta encoding (v3.3, Section 10a), and expanded forms.
 
 Implementations MAY support one or both profiles. All six official implementations (Go, TypeScript, Python, Rust, Swift, Kotlin) support both.
 
@@ -56,4 +56,4 @@ Conformance fixtures live in [tests/conformance](https://github.com/blackwell-sy
 
 ## Stability guarantee
 
-**Stable** (v3.2 designated 2026-06-22). V3 is the only supported encoding. v3.2 adds nested object flattening (Section 7.4.6) with opt-out support. The graph profile and `GCF profile=generic` header are unchanged.
+**Stable** (v3.3.0 designated 2026-07-12). V3 is the only supported encoding and has grown additively since v3.0 (no breaking changes): v3.1 made the graph header `tool` field optional, v3.2 added nested object flattening (Section 7.4.6), and v3.3 added delta encoding for the generic profile (Section 10a). The graph profile and `GCF profile=generic` header remain backward compatible.
