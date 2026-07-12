@@ -1,0 +1,15 @@
+{
+  "name": "generic_pack_root_basic",
+  "description": "Canonical pack root for a 3-row keyed set (gcf-pack-root-v1, generic profile, Section 10a.3). Row order MUST NOT affect the result.",
+  "operation": "generic-pack-root",
+  "input": {
+    "key": "id",
+    "fields": ["id", "total", "status", "customer"],
+    "rows": [
+      {"id": 1001, "total": 59.98, "status": "shipped", "customer": "Alice"},
+      {"id": 1002, "total": 29.99, "status": "pending", "customer": "Bob"},
+      {"id": 1003, "total": 129.50, "status": "shipped", "customer": "Carol"}
+    ]
+  },
+  "expected": "sha256:457e7c31e62e070a039b5cde9ea3edff6330e5913874e1165afddbcf6798eb7c"
+}

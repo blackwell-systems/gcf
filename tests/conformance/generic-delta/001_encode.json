@@ -1,0 +1,18 @@
+{
+  "name": "generic_delta_encode_basic",
+  "description": "Encode a generic delta: 1 added, 1 changed (whole-row replace), 1 removed (Section 10a.2). Numeric identity is bare; sections are ordered added/changed/removed.",
+  "operation": "generic-delta",
+  "input": {
+    "tool": "orders_query",
+    "key": "id",
+    "fields": ["id", "total", "status", "customer"],
+    "baseRoot": "sha256:457e7c31e62e070a039b5cde9ea3edff6330e5913874e1165afddbcf6798eb7c",
+    "newRoot": "sha256:ebe554601676e61cd522a5dc13d78499fd20e730353eb3e0b18c7fdc088f0f05",
+    "added": [{"id": 1004, "total": 75.00, "status": "pending", "customer": "Dave"}],
+    "changed": [{"id": 1002, "total": 29.99, "status": "shipped", "customer": "Bob"}],
+    "removed": [1001],
+    "deltaTokens": 30,
+    "fullTokens": 160
+  },
+  "expected": "GCF profile=generic tool=orders_query delta=true base_root=sha256:457e7c31e62e070a039b5cde9ea3edff6330e5913874e1165afddbcf6798eb7c new_root=sha256:ebe554601676e61cd522a5dc13d78499fd20e730353eb3e0b18c7fdc088f0f05 key=id savings=81%\n## added [1]{@id,total,status,customer}\n1004|75|pending|Dave\n## changed [1]{@id,total,status,customer}\n1002|29.99|shipped|Bob\n## removed [1]{@id}\n1001\n"
+}

@@ -1367,7 +1367,7 @@ When `delta=true`, only these three section names are valid. `added` and `change
 `pack_root` identifies a logical keyed set. Two implementations given the same logical set MUST compute the same `pack_root`. The algorithm of Section 10.2 applies with a row record in place of the symbol and edge records:
 
 1. Validate all strings as UTF-8 Unicode scalar-value sequences.
-2. Build one canonical record per row. Fields (including the identity field) are ordered by field-name unsigned UTF-8 byte order; each value uses the canonical generic-profile cell encoding (Sections 2.3.1, 2.4, 7.4), so `null` is `-` and the string `-` is `"-"`:
+2. Build one canonical record per row. Fields (including the identity field) are ordered by field-name unsigned UTF-8 byte order. Each value is canonicalized for hashing — distinct from the wire cell encoding of Section 7.4, which carries delimiter and absent-marker concerns irrelevant to a hash: `null` is `-`; booleans are `true` / `false`; numbers use canonical formatting (Section 2.3.1); strings are ALWAYS quoted using the Section 2.2 escaping. Always-quoting strings makes the form both collision-free (a string spelling a typed literal, e.g. `"true"` or `"-"`, cannot be mistaken for the literal) and record-safe (a `<TAB>` or `<LF>` inside a string is escaped and cannot break the record):
 
    ```
    R<TAB>field1<TAB>value1<TAB>field2<TAB>value2 ... <LF>

@@ -1,0 +1,27 @@
+{
+  "name": "generic_delta_verify_root_mismatch",
+  "description": "A delta whose applied result does not hash to the claimed new_root MUST be rejected, base left unchanged (Section 10a.5).",
+  "operation": "generic-delta-verify",
+  "input": {
+    "base": {
+      "key": "id",
+      "fields": ["id", "total", "status", "customer"],
+      "rows": [
+        {"id": 1001, "total": 59.98, "status": "shipped", "customer": "Alice"},
+        {"id": 1002, "total": 29.99, "status": "pending", "customer": "Bob"},
+        {"id": 1003, "total": 129.50, "status": "shipped", "customer": "Carol"}
+      ]
+    },
+    "delta": {
+      "key": "id",
+      "fields": ["id", "total", "status", "customer"],
+      "baseRoot": "sha256:457e7c31e62e070a039b5cde9ea3edff6330e5913874e1165afddbcf6798eb7c",
+      "newRoot": "sha256:ebe554601676e61cd522a5dc13d78499fd20e730353eb3e0b18c7fdc088f0f05",
+      "added": [{"id": 1004, "total": 75.00, "status": "pending", "customer": "Dave"}],
+      "changed": [{"id": 1002, "total": 29.99, "status": "shipped", "customer": "Bob"}],
+      "removed": [1001]
+    },
+    "expectedNewRoot": "sha256:deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef"
+  },
+  "expectedError": "root_mismatch"
+}
