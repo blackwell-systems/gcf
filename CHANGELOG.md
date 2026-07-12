@@ -1,6 +1,6 @@
 # Changelog
 
-## v3.3.0 (unreleased)
+## v3.3.0 (2026-07-11)
 
 ### Spec changes: Delta Encoding for the Generic Profile (Section 10a)
 
