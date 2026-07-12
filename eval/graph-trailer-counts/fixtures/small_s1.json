@@ -1,0 +1,89 @@
+{
+ "scenario": "small_s1",
+ "config": {
+  "tier": "small",
+  "sizes": [
+   8,
+   5,
+   2
+  ],
+  "seed": 1,
+  "N": 15,
+  "edges": 12,
+  "groups": {
+   "targets": 8,
+   "related": 5,
+   "extended": 2
+  }
+ },
+ "arms": {
+  "none": {
+   "primer": "You are reading a code-graph context encoded in GCF (graph profile). Format:\n- A header line beginning \"GCF profile=graph\".\n- Distance-group sections in order of relevance: \"## targets\" (most relevant), then \"## related\", then \"## extended\". Each section header is followed by that group's symbol lines.\n- A symbol line is \"@ID KIND QUALIFIED_NAME SCORE PROVENANCE\", space-separated. KIND is an abbreviation (fn=function, type, method, iface=interface, var, const, class, field). Each symbol has a unique integer @ID.\n- An edges section \"## edges [?]\" is followed by edge lines \"@TARGET<@SOURCE TYPE\"; the \"<\" points to the target symbol.\nAnswer each question about this graph. Reply with only the requested value, no explanation.",
+   "payload": "GCF profile=graph tool=context_for_task budget=5000\n## targets\n@0 const pkg0.Store0 0.98 rwr\n@1 method pkg24.Cache1 0.59 rwr\n@2 iface pkg19.Server2 0.58 lsp_resolved\n@3 type pkg19.Auth3 0.57 rwr\n@4 method pkg7.Auth4 0.59 structural\n@5 class pkg11.Server5 0.75 structural\n@6 class pkg7.Cache6 0.61 rwr\n@7 field pkg9.Client7 0.41 ast_inferred\n## related\n@8 iface pkg9.Server8 0.80 structural\n@9 type pkg10.Auth9 0.73 rwr\n@10 type pkg39.Cache10 0.58 ast_inferred\n@11 const pkg38.Model11 0.78 rwr\n@12 class pkg37.Auth12 0.33 rwr\n## extended\n@13 method pkg35.Store13 0.95 structural\n@14 type pkg27.Model14 0.39 rwr\n## edges [?]\n@2<@5 calls\n@6<@4 implements\n@7<@8 calls\n@12<@13 imports\n@2<@4 references\n@4<@2 implements\n@8<@4 calls\n@2<@1 imports\n@10<@9 calls\n@7<@8 calls\n@11<@3 references\n@14<@13 calls"
+  },
+  "totals": {
+   "primer": "You are reading a code-graph context encoded in GCF (graph profile). Format:\n- A header line beginning \"GCF profile=graph\".\n- Distance-group sections in order of relevance: \"## targets\" (most relevant), then \"## related\", then \"## extended\". Each section header is followed by that group's symbol lines.\n- A symbol line is \"@ID KIND QUALIFIED_NAME SCORE PROVENANCE\", space-separated. KIND is an abbreviation (fn=function, type, method, iface=interface, var, const, class, field). Each symbol has a unique integer @ID.\n- An edges section \"## edges [?]\" is followed by edge lines \"@TARGET<@SOURCE TYPE\"; the \"<\" points to the target symbol.\nAnswer each question about this graph. Reply with only the requested value, no explanation.\n- A final trailer line \"##! summary symbols=N edges=M\" reports the total symbol and edge counts.",
+   "payload": "GCF profile=graph tool=context_for_task budget=5000\n## targets\n@0 const pkg0.Store0 0.98 rwr\n@1 method pkg24.Cache1 0.59 rwr\n@2 iface pkg19.Server2 0.58 lsp_resolved\n@3 type pkg19.Auth3 0.57 rwr\n@4 method pkg7.Auth4 0.59 structural\n@5 class pkg11.Server5 0.75 structural\n@6 class pkg7.Cache6 0.61 rwr\n@7 field pkg9.Client7 0.41 ast_inferred\n## related\n@8 iface pkg9.Server8 0.80 structural\n@9 type pkg10.Auth9 0.73 rwr\n@10 type pkg39.Cache10 0.58 ast_inferred\n@11 const pkg38.Model11 0.78 rwr\n@12 class pkg37.Auth12 0.33 rwr\n## extended\n@13 method pkg35.Store13 0.95 structural\n@14 type pkg27.Model14 0.39 rwr\n## edges [?]\n@2<@5 calls\n@6<@4 implements\n@7<@8 calls\n@12<@13 imports\n@2<@4 references\n@4<@2 implements\n@8<@4 calls\n@2<@1 imports\n@10<@9 calls\n@7<@8 calls\n@11<@3 references\n@14<@13 calls\n##! summary symbols=15 edges=12"
+  },
+  "positional": {
+   "primer": "You are reading a code-graph context encoded in GCF (graph profile). Format:\n- A header line beginning \"GCF profile=graph\".\n- Distance-group sections in order of relevance: \"## targets\" (most relevant), then \"## related\", then \"## extended\". Each section header is followed by that group's symbol lines.\n- A symbol line is \"@ID KIND QUALIFIED_NAME SCORE PROVENANCE\", space-separated. KIND is an abbreviation (fn=function, type, method, iface=interface, var, const, class, field). Each symbol has a unique integer @ID.\n- An edges section \"## edges [?]\" is followed by edge lines \"@TARGET<@SOURCE TYPE\"; the \"<\" points to the target symbol.\nAnswer each question about this graph. Reply with only the requested value, no explanation.\n- A final trailer line \"##! summary symbols=N edges=M counts=A,B,C,...\" reports the totals plus a comma-separated per-group count list in section order (targets, then related, then extended, then the edge count last).",
+   "payload": "GCF profile=graph tool=context_for_task budget=5000\n## targets\n@0 const pkg0.Store0 0.98 rwr\n@1 method pkg24.Cache1 0.59 rwr\n@2 iface pkg19.Server2 0.58 lsp_resolved\n@3 type pkg19.Auth3 0.57 rwr\n@4 method pkg7.Auth4 0.59 structural\n@5 class pkg11.Server5 0.75 structural\n@6 class pkg7.Cache6 0.61 rwr\n@7 field pkg9.Client7 0.41 ast_inferred\n## related\n@8 iface pkg9.Server8 0.80 structural\n@9 type pkg10.Auth9 0.73 rwr\n@10 type pkg39.Cache10 0.58 ast_inferred\n@11 const pkg38.Model11 0.78 rwr\n@12 class pkg37.Auth12 0.33 rwr\n## extended\n@13 method pkg35.Store13 0.95 structural\n@14 type pkg27.Model14 0.39 rwr\n## edges [?]\n@2<@5 calls\n@6<@4 implements\n@7<@8 calls\n@12<@13 imports\n@2<@4 references\n@4<@2 implements\n@8<@4 calls\n@2<@1 imports\n@10<@9 calls\n@7<@8 calls\n@11<@3 references\n@14<@13 calls\n##! summary symbols=15 edges=12 counts=8,5,2,12"
+  },
+  "labeled": {
+   "primer": "You are reading a code-graph context encoded in GCF (graph profile). Format:\n- A header line beginning \"GCF profile=graph\".\n- Distance-group sections in order of relevance: \"## targets\" (most relevant), then \"## related\", then \"## extended\". Each section header is followed by that group's symbol lines.\n- A symbol line is \"@ID KIND QUALIFIED_NAME SCORE PROVENANCE\", space-separated. KIND is an abbreviation (fn=function, type, method, iface=interface, var, const, class, field). Each symbol has a unique integer @ID.\n- An edges section \"## edges [?]\" is followed by edge lines \"@TARGET<@SOURCE TYPE\"; the \"<\" points to the target symbol.\nAnswer each question about this graph. Reply with only the requested value, no explanation.\n- A final trailer line \"##! summary symbols=N edges=M counts=targets:A,related:B,extended:C,edges:D\" reports the totals plus a labeled per-group count for each section.",
+   "payload": "GCF profile=graph tool=context_for_task budget=5000\n## targets\n@0 const pkg0.Store0 0.98 rwr\n@1 method pkg24.Cache1 0.59 rwr\n@2 iface pkg19.Server2 0.58 lsp_resolved\n@3 type pkg19.Auth3 0.57 rwr\n@4 method pkg7.Auth4 0.59 structural\n@5 class pkg11.Server5 0.75 structural\n@6 class pkg7.Cache6 0.61 rwr\n@7 field pkg9.Client7 0.41 ast_inferred\n## related\n@8 iface pkg9.Server8 0.80 structural\n@9 type pkg10.Auth9 0.73 rwr\n@10 type pkg39.Cache10 0.58 ast_inferred\n@11 const pkg38.Model11 0.78 rwr\n@12 class pkg37.Auth12 0.33 rwr\n## extended\n@13 method pkg35.Store13 0.95 structural\n@14 type pkg27.Model14 0.39 rwr\n## edges [?]\n@2<@5 calls\n@6<@4 implements\n@7<@8 calls\n@12<@13 imports\n@2<@4 references\n@4<@2 implements\n@8<@4 calls\n@2<@1 imports\n@10<@9 calls\n@7<@8 calls\n@11<@3 references\n@14<@13 calls\n##! summary symbols=15 edges=12 counts=targets:8,related:5,extended:2,edges:12"
+  }
+ },
+ "questions": [
+  {
+   "type": "per_group_count",
+   "q": "How many symbols are in the targets group?",
+   "answer": "8"
+  },
+  {
+   "type": "per_group_count",
+   "q": "How many symbols are in the related group?",
+   "answer": "5"
+  },
+  {
+   "type": "per_group_count",
+   "q": "How many symbols are in the extended group?",
+   "answer": "2"
+  },
+  {
+   "type": "group_diff",
+   "q": "How many more symbols are in the targets group than the related group?",
+   "answer": "3"
+  },
+  {
+   "type": "group_sum",
+   "q": "How many symbols are in the targets and related groups combined?",
+   "answer": "13"
+  },
+  {
+   "type": "total_symbols",
+   "q": "How many symbols are there in total?",
+   "answer": "15"
+  },
+  {
+   "type": "total_edges",
+   "q": "How many edges are there in total?",
+   "answer": "12"
+  },
+  {
+   "type": "control_qname",
+   "q": "What is the qualified name of symbol @10?",
+   "answer": "pkg39.Cache10"
+  },
+  {
+   "type": "control_kind",
+   "q": "What is the KIND abbreviation of symbol @12?",
+   "answer": "class"
+  },
+  {
+   "type": "control_score",
+   "q": "What is the score of symbol @0?",
+   "answer": "0.98"
+  }
+ ]
+}
