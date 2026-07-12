@@ -1088,7 +1088,7 @@ This is the sole exception to the buffered all-object tabular requirement: an al
 After the last data line, streaming encoders MUST emit a summary line:
 
 ```
-##! summary symbols=4 edges=3 counts=3
+##! summary symbols=4 edges=3 counts=2,2,3
 ```
 
 #### Summary fields
@@ -1097,9 +1097,13 @@ After the last data line, streaming encoders MUST emit a summary line:
 |-------|------|-------------|
 | `symbols` | graph profile | Total symbol count |
 | `edges` | graph profile | Total edge count |
-| `counts` | any deferred sections | Comma-separated counts in the encounter order of `[?]` section headers |
+| `counts` | streaming | Comma-separated counts. Generic profile: one entry per `[?]` deferred section, in encounter order. Graph profile: one entry per non-empty distance group in group-header order, then the edge count (see below). |
 
-User section names are not embedded in the trailer. The first value in `counts` corresponds to the first `[?]` section in document order, the second value to the second section, and so on. The number of `counts` entries MUST equal the number of deferred section headers.
+User section names are not embedded in the trailer.
+
+In the **generic profile**, the first value in `counts` corresponds to the first `[?]` section in document order, the second to the second section, and so on. The number of `counts` entries MUST equal the number of deferred `[?]` section headers.
+
+In the **graph profile**, the distance-group headers (`## targets`, `## related`, `## extended`, `## distance_N`) carry no count brackets, and `## edges [?]` is the only deferred section. The trailer nonetheless reports one `counts` entry per non-empty group in group-header order, followed by the edge count. These per-group entries are informational (they let a consumer verify each group without scanning); only the final entry, the edge count, corresponds to a `[?]` section. `symbols` equals the sum of the per-group entries.
 
 ### 8.5 Encoder mode selection
 
@@ -1132,8 +1136,10 @@ GCF profile=graph tool=context_for_task budget=5000
 @0<@1 calls
 @2<@0 references
 @0<@2 imports
-##! summary symbols=3 edges=3 counts=3
+##! summary symbols=3 edges=3 counts=2,1,3
 ```
+
+Here `counts=2,1,3` reports two `targets`, one `related`, and three `edges`; only the final entry (edges) corresponds to a `[?]` section (Section 8.4).
 
 ### 8.8 Example: generic profile (streaming)
 
@@ -1470,7 +1476,7 @@ When a section header declares `[?]`:
 - The actual count is determined by the `##! summary` trailer.
 - If the trailer is present, the actual item count MUST match the trailer's declared count.
 - If the trailer is absent, the decoder uses the actual count (see Section 8.6).
-- Deferred sections are matched to `counts` entries by document encounter order.
+- In the generic profile, deferred `[?]` sections are matched to `counts` entries by document encounter order (Section 8.4). In the graph profile, the final `counts` entry is the edges `[?]` count; the preceding entries are per-group symbol counts and are informational.
 
 ### 13.3 Inline arrays
 

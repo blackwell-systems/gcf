@@ -34,6 +34,7 @@
 
 - [ ] **Omit zero-value header fields**: `budget=0 tokens=0` wastes ~4 tokens per payload. All 6 encoders unconditionally emit them. Fix to omit when zero. No eval rerun needed (scores unchanged, only token count drops marginally).
 - [ ] **`## _counts` section**: dedicated metadata section with kind/edge-type counts. Jumped GPT-5.4 from 76.9% to 90.9% in experiment (+14pp). Adds format complexity. Needs testing on more models before committing to spec.
+- [ ] **Streaming trailer, per-group counts**: the graph `##! summary` trailer carries per-group counts (`counts=2,1,3` for targets/related/edges) alongside the `symbols=`/`edges=` totals (§8.4). Already shipped and additive; comprehension evals to date run on buffered payloads, so a focused streaming-specific study is the natural next step to confirm the per-group breakdown earns its tokens on counting tasks. Low urgency.
 
 ## Tooling
 
