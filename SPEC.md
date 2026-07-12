@@ -2,7 +2,7 @@
 
 ## Graph Compact Format: A Token-Optimized Wire Format for LLM Interactions
 
-**Version:** 3.3.0
+**Version:** 3.4.0
 
 **Date:** 2026-07-12
 
@@ -1103,7 +1103,38 @@ User section names are not embedded in the trailer.
 
 In the **generic profile**, the first value in `counts` corresponds to the first `[?]` section in document order, the second to the second section, and so on. The number of `counts` entries MUST equal the number of deferred `[?]` section headers.
 
-In the **graph profile**, the distance-group headers (`## targets`, `## related`, `## extended`, `## distance_N`) carry no count brackets, and `## edges [?]` is the only deferred section. The trailer nonetheless reports one `counts` entry per non-empty group in group-header order, followed by the edge count. These per-group entries are informational (they let a consumer verify each group without scanning); only the final entry, the edge count, corresponds to a `[?]` section. `symbols` equals the sum of the per-group entries.
+In the **graph profile**, the distance-group headers (`## targets`, `## related`, `## extended`, `## distance_N`) carry no count brackets, and `## edges [?]` is the only deferred section. The trailer nonetheless reports one `counts` entry per non-empty group in group-header order, followed by the edge count. These per-group entries are informational (they let a consumer verify each group without scanning); only the final entry, the edge count, corresponds to a `[?]` section. `symbols` equals the sum of the per-group entries. The `counts` field MAY instead use the labeled form (Section 8.4.1).
+
+#### 8.4.1 Labeled counts (graph profile, optional)
+
+In the graph profile, the trailer's `counts` field MAY be emitted in a labeled form, in which each entry is `label:count` instead of a bare count:
+
+```
+##! summary symbols=4 edges=3 counts=targets:2,related:2,edges:3
+```
+
+The labeled form carries exactly the same values as the positional form (Section 8.4), in the same order, with each value named. It is a producer-side comprehension aid: some consumers, notably smaller models, resolve a labeled per-group count more reliably than a positional one.
+
+##### Form
+
+```
+labeled-counts = labeled-entry *( "," labeled-entry )
+labeled-entry  = label ":" count
+label          = "targets" / "related" / "extended" / ( "distance_" 1*DIGIT ) / "edges"
+```
+
+There is no whitespace around `:` or `,`. `count` uses the count grammar (Section 4: `0`, or a non-zero decimal with no leading zeros). The entries are, in order, one per non-empty distance group in group-header order, followed by a final `edges:` entry. A distance group with a zero count is omitted, exactly as in the positional form; the `edges:` entry is always present and last, even when the edge count is `0` (so the minimal labeled field is `counts=edges:0`). The `edges:` value equals the `##! summary` line's own `edges=` field (not the payload header, which omits `edges` in streaming mode), and the sum of the distance-group entries equals that line's `symbols=` field.
+
+##### Form detection
+
+A `counts` value is the labeled form if and only if it contains a `:`; otherwise it is the positional form (Section 8.4). Positional entries are bare integers and never contain `:`, so the two are unambiguous. Within a single `counts` field the two forms MUST NOT be mixed: every entry is labeled, or every entry is positional.
+
+##### Obligations
+
+- Encoders MUST default to the positional form. An encoder MAY emit the labeled form when configured to do so (for example, when the consumer is known to be a weaker model). An encoder that emits the labeled form MUST emit well-formed entries as defined above.
+- Because the graph trailer's `counts` are informational (Section 8.4), a decoder MUST accept either form and MUST NOT reject a graph trailer because `counts` is labeled, is malformed, or names an unrecognized label. Graph trailer `counts` are not validated against section item totals (Section 13.2); the labeled form adds names, not validation. A decoder that surfaces the counts MAY ignore an entry it cannot parse.
+
+The labeled form applies to the graph profile only. Generic-profile `counts` remain positional and are validated per `[?]` section (Sections 8.4, 13.2); a generic-profile `counts` value containing `:` is malformed.
 
 ### 8.5 Encoder mode selection
 
@@ -1587,6 +1618,7 @@ Conforming graph-profile decoders MUST:
 - Parse the edges section header (stripping the bracket suffix)
 - Accept `?` as a valid deferred count (streaming mode)
 - Parse `##! summary` as format metadata rather than a graph section
+- Accept the graph trailer `counts` field in either positional or labeled (`group:count`) form (Section 8.4.1)
 - Parse edge lines with the `@target<@source type` format
 - Reject edges referencing undeclared symbol IDs
 - Ignore comment lines (starting with `# `)
@@ -1730,13 +1762,13 @@ This specification follows a three-stage lifecycle:
 | **Stable** | The grammar is frozen. No breaking changes. Additive extensions only. Implementations may depend on stability for production use. |
 | **Frozen** | No changes of any kind. The specification is archived. |
 
-Current status: **Stable** (v3.3.0 designated 2026-07-12).
+Current status: **Stable** (v3.4.0 designated 2026-07-12).
 
 ### 19.3 Version history
 
 This specification (v3.0) supersedes v2.0 and adds inline object schemas, positional inline attachment bodies, shared array attachment schemas, and expanded quoting protections. The graph profile is unchanged.
 
-Since v3.0 the specification has grown additively only (Stable: no breaking changes): **v3.1** made the graph header `tool` field optional; **v3.2** added nested-object flattening (`>` path columns); **v3.3** added delta encoding for the generic profile (Section 10a), with the `@`-marked identity column and the non-normative producer re-anchor guidance (Section 10a.8). Every extension is backward-compatible; a v3.0 decoder ignores what it does not recognize.
+Since v3.0 the specification has grown additively only (Stable: no breaking changes): **v3.1** made the graph header `tool` field optional; **v3.2** added nested-object flattening (`>` path columns); **v3.3** added delta encoding for the generic profile (Section 10a), with the `@`-marked identity column and the non-normative producer re-anchor guidance (Section 10a.8); **v3.4** added an optional labeled form for the graph streaming trailer's `counts` field (Section 8.4.1), a producer-side comprehension aid whose default positional form is unchanged. Every extension is backward-compatible; a v3.0 decoder ignores what it does not recognize.
 
 V3 is the only supported encoding. Decoders are not required to accept v2-style indented attachments. Encoders emit v3 grammar exclusively.
 
