@@ -1,0 +1,231 @@
+{
+  "name": "session_fixed_n",
+  "description": "FixedN(3): re-anchor every 3 turns; delta,delta,FULL,delta,delta.",
+  "operation": "generic-delta-session",
+  "input": {
+    "base": {
+      "fields": [
+        "id",
+        "total",
+        "status",
+        "customer"
+      ],
+      "key": "id",
+      "name": "orders",
+      "rows": [
+        {
+          "customer": "Alice",
+          "id": 1001,
+          "status": "shipped",
+          "total": 59.98
+        },
+        {
+          "customer": "Bob",
+          "id": 1002,
+          "status": "pending",
+          "total": 29.99
+        },
+        {
+          "customer": "Carol",
+          "id": 1003,
+          "status": "shipped",
+          "total": 129.5
+        }
+      ]
+    },
+    "tool": "orders_query",
+    "policy": {
+      "mode": "fixedN",
+      "n": 3
+    },
+    "updates": [
+      {
+        "fields": [
+          "id",
+          "total",
+          "status",
+          "customer"
+        ],
+        "key": "id",
+        "name": "orders",
+        "rows": [
+          {
+            "customer": "Alice",
+            "id": 1001,
+            "status": "shipped",
+            "total": 59.98
+          },
+          {
+            "customer": "Bob",
+            "id": 1002,
+            "status": "shipped",
+            "total": 29.99
+          },
+          {
+            "customer": "Carol",
+            "id": 1003,
+            "status": "shipped",
+            "total": 129.5
+          }
+        ]
+      },
+      {
+        "fields": [
+          "id",
+          "total",
+          "status",
+          "customer"
+        ],
+        "key": "id",
+        "name": "orders",
+        "rows": [
+          {
+            "customer": "Alice",
+            "id": 1001,
+            "status": "shipped",
+            "total": 59.98
+          },
+          {
+            "customer": "Bob",
+            "id": 1002,
+            "status": "shipped",
+            "total": 29.99
+          },
+          {
+            "customer": "Carol",
+            "id": 1003,
+            "status": "shipped",
+            "total": 129.5
+          },
+          {
+            "customer": "Dave",
+            "id": 1004,
+            "status": "pending",
+            "total": 75
+          }
+        ]
+      },
+      {
+        "fields": [
+          "id",
+          "total",
+          "status",
+          "customer"
+        ],
+        "key": "id",
+        "name": "orders",
+        "rows": [
+          {
+            "customer": "Bob",
+            "id": 1002,
+            "status": "shipped",
+            "total": 29.99
+          },
+          {
+            "customer": "Carol",
+            "id": 1003,
+            "status": "shipped",
+            "total": 129.5
+          },
+          {
+            "customer": "Dave",
+            "id": 1004,
+            "status": "pending",
+            "total": 75
+          }
+        ]
+      },
+      {
+        "fields": [
+          "id",
+          "total",
+          "status",
+          "customer"
+        ],
+        "key": "id",
+        "name": "orders",
+        "rows": [
+          {
+            "customer": "Bob",
+            "id": 1002,
+            "status": "shipped",
+            "total": 29.99
+          },
+          {
+            "customer": "Carol",
+            "id": 1003,
+            "status": "delivered",
+            "total": 140
+          },
+          {
+            "customer": "Dave",
+            "id": 1004,
+            "status": "pending",
+            "total": 75
+          }
+        ]
+      },
+      {
+        "fields": [
+          "id",
+          "total",
+          "status",
+          "customer"
+        ],
+        "key": "id",
+        "name": "orders",
+        "rows": [
+          {
+            "customer": "Bob",
+            "id": 1002,
+            "status": "shipped",
+            "total": 29.99
+          },
+          {
+            "customer": "Carol",
+            "id": 1003,
+            "status": "delivered",
+            "total": 140
+          },
+          {
+            "customer": "Dave",
+            "id": 1004,
+            "status": "pending",
+            "total": 75
+          },
+          {
+            "customer": "Eve",
+            "id": 1005,
+            "status": "pending",
+            "total": 12
+          }
+        ]
+      }
+    ]
+  },
+  "expected": {
+    "initialFull": "GCF profile=generic tool=orders_query pack_root=sha256:457e7c31e62e070a039b5cde9ea3edff6330e5913874e1165afddbcf6798eb7c key=id\n## orders [3]{@id,total,status,customer}\n1001|59.98|shipped|Alice\n1002|29.99|pending|Bob\n1003|129.5|shipped|Carol\n",
+    "emissions": [
+      {
+        "isFull": false,
+        "wire": "GCF profile=generic delta=true base_root=sha256:457e7c31e62e070a039b5cde9ea3edff6330e5913874e1165afddbcf6798eb7c new_root=sha256:04ac71285a1304781a54ea568a33d57b90c28f2a316b83b57bacc9a0332b649b key=id\n## changed [1]{@id,total,status,customer}\n1002|29.99|shipped|Bob\n"
+      },
+      {
+        "isFull": false,
+        "wire": "GCF profile=generic delta=true base_root=sha256:04ac71285a1304781a54ea568a33d57b90c28f2a316b83b57bacc9a0332b649b new_root=sha256:01569fd0983868828ecad1905c8c436b14478590c412ef47105eeae3f45151cb key=id\n## added [1]{@id,total,status,customer}\n1004|75|pending|Dave\n"
+      },
+      {
+        "isFull": true,
+        "wire": "GCF profile=generic tool=orders_query pack_root=sha256:ebe554601676e61cd522a5dc13d78499fd20e730353eb3e0b18c7fdc088f0f05 key=id\n## orders [3]{@id,total,status,customer}\n1002|29.99|shipped|Bob\n1003|129.5|shipped|Carol\n1004|75|pending|Dave\n"
+      },
+      {
+        "isFull": false,
+        "wire": "GCF profile=generic delta=true base_root=sha256:ebe554601676e61cd522a5dc13d78499fd20e730353eb3e0b18c7fdc088f0f05 new_root=sha256:74a77c6947573d9c65d6eb5c88014f6b088d3d9ee0bc4ec4f5d2e5112b5fcd14 key=id\n## changed [1]{@id,total,status,customer}\n1003|140|delivered|Carol\n"
+      },
+      {
+        "isFull": false,
+        "wire": "GCF profile=generic delta=true base_root=sha256:74a77c6947573d9c65d6eb5c88014f6b088d3d9ee0bc4ec4f5d2e5112b5fcd14 new_root=sha256:5056050e35cbff077348efec9ac9f6fdf6f2791bb6b730e8cd58e2bfd7b2f6a8 key=id\n## added [1]{@id,total,status,customer}\n1005|12|pending|Eve\n"
+      }
+    ]
+  }
+}

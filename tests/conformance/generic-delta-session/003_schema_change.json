@@ -1,0 +1,69 @@
+{
+  "name": "session_schema_change",
+  "description": "A schema change cannot be a delta; the session forces a full (10a.7).",
+  "operation": "generic-delta-session",
+  "input": {
+    "base": {
+      "fields": [
+        "id",
+        "total",
+        "status",
+        "customer"
+      ],
+      "key": "id",
+      "name": "orders",
+      "rows": [
+        {
+          "customer": "Alice",
+          "id": 1001,
+          "status": "shipped",
+          "total": 59.98
+        },
+        {
+          "customer": "Bob",
+          "id": 1002,
+          "status": "pending",
+          "total": 29.99
+        },
+        {
+          "customer": "Carol",
+          "id": 1003,
+          "status": "shipped",
+          "total": 129.5
+        }
+      ]
+    },
+    "tool": "orders_query",
+    "policy": {
+      "mode": "fixedN",
+      "n": 15
+    },
+    "updates": [
+      {
+        "fields": [
+          "id",
+          "total",
+          "status"
+        ],
+        "key": "id",
+        "name": "orders",
+        "rows": [
+          {
+            "id": 1001,
+            "status": "shipped",
+            "total": 59.98
+          }
+        ]
+      }
+    ]
+  },
+  "expected": {
+    "initialFull": "GCF profile=generic tool=orders_query pack_root=sha256:457e7c31e62e070a039b5cde9ea3edff6330e5913874e1165afddbcf6798eb7c key=id\n## orders [3]{@id,total,status,customer}\n1001|59.98|shipped|Alice\n1002|29.99|pending|Bob\n1003|129.5|shipped|Carol\n",
+    "emissions": [
+      {
+        "isFull": true,
+        "wire": "GCF profile=generic tool=orders_query pack_root=sha256:02569a49638faa85eb809f24b3f299f6fe28411cdbfec10daac65a6c94720ce4 key=id\n## orders [1]{@id,total,status}\n1001|59.98|shipped\n"
+      }
+    ]
+  }
+}

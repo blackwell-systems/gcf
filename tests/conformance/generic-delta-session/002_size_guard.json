@@ -1,0 +1,966 @@
+{
+  "name": "session_size_guard",
+  "description": "SizeGuard: re-anchor once cumulative delta reaches full-payload size.",
+  "operation": "generic-delta-session",
+  "input": {
+    "base": {
+      "fields": [
+        "id",
+        "total",
+        "status",
+        "customer"
+      ],
+      "key": "id",
+      "name": "rows",
+      "rows": [
+        {
+          "customer": "Alice",
+          "id": 2000,
+          "status": "pending",
+          "total": 10
+        },
+        {
+          "customer": "Bob",
+          "id": 2001,
+          "status": "pending",
+          "total": 11
+        },
+        {
+          "customer": "Carol",
+          "id": 2002,
+          "status": "pending",
+          "total": 12
+        },
+        {
+          "customer": "Dave",
+          "id": 2003,
+          "status": "pending",
+          "total": 13
+        },
+        {
+          "customer": "Eve",
+          "id": 2004,
+          "status": "pending",
+          "total": 14
+        },
+        {
+          "customer": "Frank",
+          "id": 2005,
+          "status": "pending",
+          "total": 15
+        },
+        {
+          "customer": "Grace",
+          "id": 2006,
+          "status": "pending",
+          "total": 16
+        },
+        {
+          "customer": "Heidi",
+          "id": 2007,
+          "status": "pending",
+          "total": 17
+        },
+        {
+          "customer": "Ivan",
+          "id": 2008,
+          "status": "pending",
+          "total": 18
+        },
+        {
+          "customer": "Judy",
+          "id": 2009,
+          "status": "pending",
+          "total": 19
+        },
+        {
+          "customer": "Mallory",
+          "id": 2010,
+          "status": "pending",
+          "total": 20
+        },
+        {
+          "customer": "Niaj",
+          "id": 2011,
+          "status": "pending",
+          "total": 21
+        },
+        {
+          "customer": "Olivia",
+          "id": 2012,
+          "status": "pending",
+          "total": 22
+        },
+        {
+          "customer": "Peggy",
+          "id": 2013,
+          "status": "pending",
+          "total": 23
+        },
+        {
+          "customer": "Rupert",
+          "id": 2014,
+          "status": "pending",
+          "total": 24
+        },
+        {
+          "customer": "Sybil",
+          "id": 2015,
+          "status": "pending",
+          "total": 25
+        },
+        {
+          "customer": "Trent",
+          "id": 2016,
+          "status": "pending",
+          "total": 26
+        },
+        {
+          "customer": "Uma",
+          "id": 2017,
+          "status": "pending",
+          "total": 27
+        },
+        {
+          "customer": "Victor",
+          "id": 2018,
+          "status": "pending",
+          "total": 28
+        },
+        {
+          "customer": "Walter",
+          "id": 2019,
+          "status": "pending",
+          "total": 29
+        }
+      ]
+    },
+    "tool": "",
+    "policy": {
+      "mode": "sizeGuard"
+    },
+    "updates": [
+      {
+        "fields": [
+          "id",
+          "total",
+          "status",
+          "customer"
+        ],
+        "key": "id",
+        "name": "rows",
+        "rows": [
+          {
+            "customer": "Alice",
+            "id": 2000,
+            "status": "shipped",
+            "total": 10
+          },
+          {
+            "customer": "Bob",
+            "id": 2001,
+            "status": "pending",
+            "total": 11
+          },
+          {
+            "customer": "Carol",
+            "id": 2002,
+            "status": "pending",
+            "total": 12
+          },
+          {
+            "customer": "Dave",
+            "id": 2003,
+            "status": "pending",
+            "total": 13
+          },
+          {
+            "customer": "Eve",
+            "id": 2004,
+            "status": "pending",
+            "total": 14
+          },
+          {
+            "customer": "Frank",
+            "id": 2005,
+            "status": "pending",
+            "total": 15
+          },
+          {
+            "customer": "Grace",
+            "id": 2006,
+            "status": "pending",
+            "total": 16
+          },
+          {
+            "customer": "Heidi",
+            "id": 2007,
+            "status": "pending",
+            "total": 17
+          },
+          {
+            "customer": "Ivan",
+            "id": 2008,
+            "status": "pending",
+            "total": 18
+          },
+          {
+            "customer": "Judy",
+            "id": 2009,
+            "status": "pending",
+            "total": 19
+          },
+          {
+            "customer": "Mallory",
+            "id": 2010,
+            "status": "pending",
+            "total": 20
+          },
+          {
+            "customer": "Niaj",
+            "id": 2011,
+            "status": "pending",
+            "total": 21
+          },
+          {
+            "customer": "Olivia",
+            "id": 2012,
+            "status": "pending",
+            "total": 22
+          },
+          {
+            "customer": "Peggy",
+            "id": 2013,
+            "status": "pending",
+            "total": 23
+          },
+          {
+            "customer": "Rupert",
+            "id": 2014,
+            "status": "pending",
+            "total": 24
+          },
+          {
+            "customer": "Sybil",
+            "id": 2015,
+            "status": "pending",
+            "total": 25
+          },
+          {
+            "customer": "Trent",
+            "id": 2016,
+            "status": "pending",
+            "total": 26
+          },
+          {
+            "customer": "Uma",
+            "id": 2017,
+            "status": "pending",
+            "total": 27
+          },
+          {
+            "customer": "Victor",
+            "id": 2018,
+            "status": "pending",
+            "total": 28
+          },
+          {
+            "customer": "Walter",
+            "id": 2019,
+            "status": "pending",
+            "total": 29
+          }
+        ]
+      },
+      {
+        "fields": [
+          "id",
+          "total",
+          "status",
+          "customer"
+        ],
+        "key": "id",
+        "name": "rows",
+        "rows": [
+          {
+            "customer": "Alice",
+            "id": 2000,
+            "status": "pending",
+            "total": 10
+          },
+          {
+            "customer": "Bob",
+            "id": 2001,
+            "status": "shipped",
+            "total": 11
+          },
+          {
+            "customer": "Carol",
+            "id": 2002,
+            "status": "pending",
+            "total": 12
+          },
+          {
+            "customer": "Dave",
+            "id": 2003,
+            "status": "pending",
+            "total": 13
+          },
+          {
+            "customer": "Eve",
+            "id": 2004,
+            "status": "pending",
+            "total": 14
+          },
+          {
+            "customer": "Frank",
+            "id": 2005,
+            "status": "pending",
+            "total": 15
+          },
+          {
+            "customer": "Grace",
+            "id": 2006,
+            "status": "pending",
+            "total": 16
+          },
+          {
+            "customer": "Heidi",
+            "id": 2007,
+            "status": "pending",
+            "total": 17
+          },
+          {
+            "customer": "Ivan",
+            "id": 2008,
+            "status": "pending",
+            "total": 18
+          },
+          {
+            "customer": "Judy",
+            "id": 2009,
+            "status": "pending",
+            "total": 19
+          },
+          {
+            "customer": "Mallory",
+            "id": 2010,
+            "status": "pending",
+            "total": 20
+          },
+          {
+            "customer": "Niaj",
+            "id": 2011,
+            "status": "pending",
+            "total": 21
+          },
+          {
+            "customer": "Olivia",
+            "id": 2012,
+            "status": "pending",
+            "total": 22
+          },
+          {
+            "customer": "Peggy",
+            "id": 2013,
+            "status": "pending",
+            "total": 23
+          },
+          {
+            "customer": "Rupert",
+            "id": 2014,
+            "status": "pending",
+            "total": 24
+          },
+          {
+            "customer": "Sybil",
+            "id": 2015,
+            "status": "pending",
+            "total": 25
+          },
+          {
+            "customer": "Trent",
+            "id": 2016,
+            "status": "pending",
+            "total": 26
+          },
+          {
+            "customer": "Uma",
+            "id": 2017,
+            "status": "pending",
+            "total": 27
+          },
+          {
+            "customer": "Victor",
+            "id": 2018,
+            "status": "pending",
+            "total": 28
+          },
+          {
+            "customer": "Walter",
+            "id": 2019,
+            "status": "pending",
+            "total": 29
+          }
+        ]
+      },
+      {
+        "fields": [
+          "id",
+          "total",
+          "status",
+          "customer"
+        ],
+        "key": "id",
+        "name": "rows",
+        "rows": [
+          {
+            "customer": "Alice",
+            "id": 2000,
+            "status": "pending",
+            "total": 10
+          },
+          {
+            "customer": "Bob",
+            "id": 2001,
+            "status": "pending",
+            "total": 11
+          },
+          {
+            "customer": "Carol",
+            "id": 2002,
+            "status": "shipped",
+            "total": 12
+          },
+          {
+            "customer": "Dave",
+            "id": 2003,
+            "status": "pending",
+            "total": 13
+          },
+          {
+            "customer": "Eve",
+            "id": 2004,
+            "status": "pending",
+            "total": 14
+          },
+          {
+            "customer": "Frank",
+            "id": 2005,
+            "status": "pending",
+            "total": 15
+          },
+          {
+            "customer": "Grace",
+            "id": 2006,
+            "status": "pending",
+            "total": 16
+          },
+          {
+            "customer": "Heidi",
+            "id": 2007,
+            "status": "pending",
+            "total": 17
+          },
+          {
+            "customer": "Ivan",
+            "id": 2008,
+            "status": "pending",
+            "total": 18
+          },
+          {
+            "customer": "Judy",
+            "id": 2009,
+            "status": "pending",
+            "total": 19
+          },
+          {
+            "customer": "Mallory",
+            "id": 2010,
+            "status": "pending",
+            "total": 20
+          },
+          {
+            "customer": "Niaj",
+            "id": 2011,
+            "status": "pending",
+            "total": 21
+          },
+          {
+            "customer": "Olivia",
+            "id": 2012,
+            "status": "pending",
+            "total": 22
+          },
+          {
+            "customer": "Peggy",
+            "id": 2013,
+            "status": "pending",
+            "total": 23
+          },
+          {
+            "customer": "Rupert",
+            "id": 2014,
+            "status": "pending",
+            "total": 24
+          },
+          {
+            "customer": "Sybil",
+            "id": 2015,
+            "status": "pending",
+            "total": 25
+          },
+          {
+            "customer": "Trent",
+            "id": 2016,
+            "status": "pending",
+            "total": 26
+          },
+          {
+            "customer": "Uma",
+            "id": 2017,
+            "status": "pending",
+            "total": 27
+          },
+          {
+            "customer": "Victor",
+            "id": 2018,
+            "status": "pending",
+            "total": 28
+          },
+          {
+            "customer": "Walter",
+            "id": 2019,
+            "status": "pending",
+            "total": 29
+          }
+        ]
+      },
+      {
+        "fields": [
+          "id",
+          "total",
+          "status",
+          "customer"
+        ],
+        "key": "id",
+        "name": "rows",
+        "rows": [
+          {
+            "customer": "Alice",
+            "id": 2000,
+            "status": "pending",
+            "total": 10
+          },
+          {
+            "customer": "Bob",
+            "id": 2001,
+            "status": "pending",
+            "total": 11
+          },
+          {
+            "customer": "Carol",
+            "id": 2002,
+            "status": "pending",
+            "total": 12
+          },
+          {
+            "customer": "Dave",
+            "id": 2003,
+            "status": "shipped",
+            "total": 13
+          },
+          {
+            "customer": "Eve",
+            "id": 2004,
+            "status": "pending",
+            "total": 14
+          },
+          {
+            "customer": "Frank",
+            "id": 2005,
+            "status": "pending",
+            "total": 15
+          },
+          {
+            "customer": "Grace",
+            "id": 2006,
+            "status": "pending",
+            "total": 16
+          },
+          {
+            "customer": "Heidi",
+            "id": 2007,
+            "status": "pending",
+            "total": 17
+          },
+          {
+            "customer": "Ivan",
+            "id": 2008,
+            "status": "pending",
+            "total": 18
+          },
+          {
+            "customer": "Judy",
+            "id": 2009,
+            "status": "pending",
+            "total": 19
+          },
+          {
+            "customer": "Mallory",
+            "id": 2010,
+            "status": "pending",
+            "total": 20
+          },
+          {
+            "customer": "Niaj",
+            "id": 2011,
+            "status": "pending",
+            "total": 21
+          },
+          {
+            "customer": "Olivia",
+            "id": 2012,
+            "status": "pending",
+            "total": 22
+          },
+          {
+            "customer": "Peggy",
+            "id": 2013,
+            "status": "pending",
+            "total": 23
+          },
+          {
+            "customer": "Rupert",
+            "id": 2014,
+            "status": "pending",
+            "total": 24
+          },
+          {
+            "customer": "Sybil",
+            "id": 2015,
+            "status": "pending",
+            "total": 25
+          },
+          {
+            "customer": "Trent",
+            "id": 2016,
+            "status": "pending",
+            "total": 26
+          },
+          {
+            "customer": "Uma",
+            "id": 2017,
+            "status": "pending",
+            "total": 27
+          },
+          {
+            "customer": "Victor",
+            "id": 2018,
+            "status": "pending",
+            "total": 28
+          },
+          {
+            "customer": "Walter",
+            "id": 2019,
+            "status": "pending",
+            "total": 29
+          }
+        ]
+      },
+      {
+        "fields": [
+          "id",
+          "total",
+          "status",
+          "customer"
+        ],
+        "key": "id",
+        "name": "rows",
+        "rows": [
+          {
+            "customer": "Alice",
+            "id": 2000,
+            "status": "pending",
+            "total": 10
+          },
+          {
+            "customer": "Bob",
+            "id": 2001,
+            "status": "pending",
+            "total": 11
+          },
+          {
+            "customer": "Carol",
+            "id": 2002,
+            "status": "pending",
+            "total": 12
+          },
+          {
+            "customer": "Dave",
+            "id": 2003,
+            "status": "pending",
+            "total": 13
+          },
+          {
+            "customer": "Eve",
+            "id": 2004,
+            "status": "shipped",
+            "total": 14
+          },
+          {
+            "customer": "Frank",
+            "id": 2005,
+            "status": "pending",
+            "total": 15
+          },
+          {
+            "customer": "Grace",
+            "id": 2006,
+            "status": "pending",
+            "total": 16
+          },
+          {
+            "customer": "Heidi",
+            "id": 2007,
+            "status": "pending",
+            "total": 17
+          },
+          {
+            "customer": "Ivan",
+            "id": 2008,
+            "status": "pending",
+            "total": 18
+          },
+          {
+            "customer": "Judy",
+            "id": 2009,
+            "status": "pending",
+            "total": 19
+          },
+          {
+            "customer": "Mallory",
+            "id": 2010,
+            "status": "pending",
+            "total": 20
+          },
+          {
+            "customer": "Niaj",
+            "id": 2011,
+            "status": "pending",
+            "total": 21
+          },
+          {
+            "customer": "Olivia",
+            "id": 2012,
+            "status": "pending",
+            "total": 22
+          },
+          {
+            "customer": "Peggy",
+            "id": 2013,
+            "status": "pending",
+            "total": 23
+          },
+          {
+            "customer": "Rupert",
+            "id": 2014,
+            "status": "pending",
+            "total": 24
+          },
+          {
+            "customer": "Sybil",
+            "id": 2015,
+            "status": "pending",
+            "total": 25
+          },
+          {
+            "customer": "Trent",
+            "id": 2016,
+            "status": "pending",
+            "total": 26
+          },
+          {
+            "customer": "Uma",
+            "id": 2017,
+            "status": "pending",
+            "total": 27
+          },
+          {
+            "customer": "Victor",
+            "id": 2018,
+            "status": "pending",
+            "total": 28
+          },
+          {
+            "customer": "Walter",
+            "id": 2019,
+            "status": "pending",
+            "total": 29
+          }
+        ]
+      },
+      {
+        "fields": [
+          "id",
+          "total",
+          "status",
+          "customer"
+        ],
+        "key": "id",
+        "name": "rows",
+        "rows": [
+          {
+            "customer": "Alice",
+            "id": 2000,
+            "status": "pending",
+            "total": 10
+          },
+          {
+            "customer": "Bob",
+            "id": 2001,
+            "status": "pending",
+            "total": 11
+          },
+          {
+            "customer": "Carol",
+            "id": 2002,
+            "status": "pending",
+            "total": 12
+          },
+          {
+            "customer": "Dave",
+            "id": 2003,
+            "status": "pending",
+            "total": 13
+          },
+          {
+            "customer": "Eve",
+            "id": 2004,
+            "status": "pending",
+            "total": 14
+          },
+          {
+            "customer": "Frank",
+            "id": 2005,
+            "status": "shipped",
+            "total": 15
+          },
+          {
+            "customer": "Grace",
+            "id": 2006,
+            "status": "pending",
+            "total": 16
+          },
+          {
+            "customer": "Heidi",
+            "id": 2007,
+            "status": "pending",
+            "total": 17
+          },
+          {
+            "customer": "Ivan",
+            "id": 2008,
+            "status": "pending",
+            "total": 18
+          },
+          {
+            "customer": "Judy",
+            "id": 2009,
+            "status": "pending",
+            "total": 19
+          },
+          {
+            "customer": "Mallory",
+            "id": 2010,
+            "status": "pending",
+            "total": 20
+          },
+          {
+            "customer": "Niaj",
+            "id": 2011,
+            "status": "pending",
+            "total": 21
+          },
+          {
+            "customer": "Olivia",
+            "id": 2012,
+            "status": "pending",
+            "total": 22
+          },
+          {
+            "customer": "Peggy",
+            "id": 2013,
+            "status": "pending",
+            "total": 23
+          },
+          {
+            "customer": "Rupert",
+            "id": 2014,
+            "status": "pending",
+            "total": 24
+          },
+          {
+            "customer": "Sybil",
+            "id": 2015,
+            "status": "pending",
+            "total": 25
+          },
+          {
+            "customer": "Trent",
+            "id": 2016,
+            "status": "pending",
+            "total": 26
+          },
+          {
+            "customer": "Uma",
+            "id": 2017,
+            "status": "pending",
+            "total": 27
+          },
+          {
+            "customer": "Victor",
+            "id": 2018,
+            "status": "pending",
+            "total": 28
+          },
+          {
+            "customer": "Walter",
+            "id": 2019,
+            "status": "pending",
+            "total": 29
+          }
+        ]
+      }
+    ]
+  },
+  "expected": {
+    "initialFull": "GCF profile=generic pack_root=sha256:3902d46cfe4e99ab12656324cffd6009a540edb938780f982b4d43b9a5358bc8 key=id\n## rows [20]{@id,total,status,customer}\n2000|10|pending|Alice\n2001|11|pending|Bob\n2002|12|pending|Carol\n2003|13|pending|Dave\n2004|14|pending|Eve\n2005|15|pending|Frank\n2006|16|pending|Grace\n2007|17|pending|Heidi\n2008|18|pending|Ivan\n2009|19|pending|Judy\n2010|20|pending|Mallory\n2011|21|pending|Niaj\n2012|22|pending|Olivia\n2013|23|pending|Peggy\n2014|24|pending|Rupert\n2015|25|pending|Sybil\n2016|26|pending|Trent\n2017|27|pending|Uma\n2018|28|pending|Victor\n2019|29|pending|Walter\n",
+    "emissions": [
+      {
+        "isFull": false,
+        "wire": "GCF profile=generic delta=true base_root=sha256:3902d46cfe4e99ab12656324cffd6009a540edb938780f982b4d43b9a5358bc8 new_root=sha256:5758707a7a155ca9fdcecb97f4b2d6ce1af9d1f219a570425ec9acdf26059b88 key=id\n## changed [1]{@id,total,status,customer}\n2000|10|shipped|Alice\n"
+      },
+      {
+        "isFull": false,
+        "wire": "GCF profile=generic delta=true base_root=sha256:5758707a7a155ca9fdcecb97f4b2d6ce1af9d1f219a570425ec9acdf26059b88 new_root=sha256:276b09364130d87d484c4d2ad0b0466437792d2649cd61d4cc4a21dc2f98aed8 key=id\n## changed [2]{@id,total,status,customer}\n2000|10|pending|Alice\n2001|11|shipped|Bob\n"
+      },
+      {
+        "isFull": true,
+        "wire": "GCF profile=generic pack_root=sha256:901a87bb2e3500cb07897de4d2341cbe9c8db2e801947cd0a35f5905d04f11d5 key=id\n## rows [20]{@id,total,status,customer}\n2000|10|pending|Alice\n2001|11|pending|Bob\n2002|12|shipped|Carol\n2003|13|pending|Dave\n2004|14|pending|Eve\n2005|15|pending|Frank\n2006|16|pending|Grace\n2007|17|pending|Heidi\n2008|18|pending|Ivan\n2009|19|pending|Judy\n2010|20|pending|Mallory\n2011|21|pending|Niaj\n2012|22|pending|Olivia\n2013|23|pending|Peggy\n2014|24|pending|Rupert\n2015|25|pending|Sybil\n2016|26|pending|Trent\n2017|27|pending|Uma\n2018|28|pending|Victor\n2019|29|pending|Walter\n"
+      },
+      {
+        "isFull": false,
+        "wire": "GCF profile=generic delta=true base_root=sha256:901a87bb2e3500cb07897de4d2341cbe9c8db2e801947cd0a35f5905d04f11d5 new_root=sha256:f54ff1f2893aa0625d1d7f4786a726d8040c9701af5ae8f01c12f88cc132acea key=id\n## changed [2]{@id,total,status,customer}\n2002|12|pending|Carol\n2003|13|shipped|Dave\n"
+      },
+      {
+        "isFull": false,
+        "wire": "GCF profile=generic delta=true base_root=sha256:f54ff1f2893aa0625d1d7f4786a726d8040c9701af5ae8f01c12f88cc132acea new_root=sha256:bec55f929d18b36242073f0a45e38b12fc413c858eebd6b3fbe78d956845d37f key=id\n## changed [2]{@id,total,status,customer}\n2003|13|pending|Dave\n2004|14|shipped|Eve\n"
+      },
+      {
+        "isFull": true,
+        "wire": "GCF profile=generic pack_root=sha256:6f14f422358203dad10d0bf61ad529ee847ab371c7626c11ecd0d74b3bc3fe94 key=id\n## rows [20]{@id,total,status,customer}\n2000|10|pending|Alice\n2001|11|pending|Bob\n2002|12|pending|Carol\n2003|13|pending|Dave\n2004|14|pending|Eve\n2005|15|shipped|Frank\n2006|16|pending|Grace\n2007|17|pending|Heidi\n2008|18|pending|Ivan\n2009|19|pending|Judy\n2010|20|pending|Mallory\n2011|21|pending|Niaj\n2012|22|pending|Olivia\n2013|23|pending|Peggy\n2014|24|pending|Rupert\n2015|25|pending|Sybil\n2016|26|pending|Trent\n2017|27|pending|Uma\n2018|28|pending|Victor\n2019|29|pending|Walter\n"
+      }
+    ]
+  }
+}
