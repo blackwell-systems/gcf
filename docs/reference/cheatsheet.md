@@ -147,7 +147,7 @@ GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=5 edges=
 GCF profile=generic
 ```
 
-Every generic payload starts with this line. Optional fields (`schema=`, etc.) may follow.
+Every generic payload starts with this line. Optional fields may follow: `tool`, `tokens`, and the delta fields `pack_root`, `key`, `delta`, `base_root`, `new_root`, `unchanged`, `count`, `savings` (see Delta encoding below).
 
 ### Root values
 
@@ -327,6 +327,44 @@ region=us-east-1
     priority=medium
     deadline=2026-Q4
 ```
+
+### Delta encoding (keyed diff, v3.3)
+
+Tabular sets can be sent as deltas across turns. One column is the identity key: prefix it with `@` in the field declaration and name it with `key=` in the header.
+
+Full payload (delta-ready):
+
+```
+GCF profile=generic pack_root=sha256:aaa9f2... key=id
+## orders [3]{@id,total,status,customer}
+1001|59.98|shipped|Alice
+1002|29.99|pending|Bob
+1003|129.50|shipped|Carol
+```
+
+Delta payload (only what changed):
+
+```
+GCF profile=generic delta=true base_root=sha256:aaa9f2... new_root=sha256:bbb4c7... key=id
+## added [1]{@id,total,status,customer}
+1004|75.00|pending|Dave
+## changed [1]{@id,total,status,customer}
+1002|29.99|shipped|Bob
+## removed [1]{@id}
+1001
+```
+
+Unchanged (current set still matches the consumer's `pack_root`):
+
+```
+GCF profile=generic unchanged=true pack_root=sha256:bbb4c7... count=3
+```
+
+- `## added`: full rows whose id is new to the set
+- `## changed`: full rows whose id exists but differs (whole-row replace, no field-level patch)
+- `## removed`: identity values only, declared `{@<key>}`
+- Set semantics: row order is not significant; carry an explicit rank field as data if order matters
+- Identity values MUST be unique; when `delta=true`, only these three section names are valid
 
 ---
 
