@@ -1,0 +1,5 @@
+tiktoken
+tokenizers
+huggingface_hub
+# Anthropic Claude tokenizer.json comes from npm: `npm i @lenml/tokenizer-claude`
+# (claude_check.py expects node_modules/@lenml/tokenizer-claude/models/tokenizer.json)

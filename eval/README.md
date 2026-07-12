@@ -246,6 +246,36 @@ Design doc: [SESSION-DEDUP-EVAL-DESIGN.md](SESSION-DEDUP-EVAL-DESIGN.md)
 
 ---
 
+## Generic-Profile Delta (§10a)
+
+**SDK: gcf-python / gcf-typescript** (Node harness), **none** (tokenizer scan)
+
+The reproducible validation harness behind **SPEC §10a** (delta encoding for the generic profile: keyed row diffs with `## added`/`## changed`/`## removed`, the `@`-marked identity column, row-based `gcf-pack-root-v1`). Lives in [`generic-delta/`](generic-delta/); shipped in GCF **v3.3.0** with byte-identical implementations across all six SDKs.
+
+| Piece | What it proves | Result |
+|-------|----------------|--------|
+| `generic-delta/tokenizer-scan/` | The `@` identity marker never fuses with the field name | `@` and `\|` isolated **43/43** tokenizers; zero new merge surface vs the existing header grammar. |
+| `generic-delta/grammar/at-field-merge-check.py` | Targeted re-check of `@id` inside a field declaration | `{@id,...}` merges **0.00%** across 42 tokenizers, cleaner than bare `@field` (4.4%) and the general `@` baseline (1.09%) — the preceding `{` forces a token boundary. |
+| `generic-delta/step1/` | Losslessness + multi-turn token savings | `apply(prev,delta)===next` **800,000/800,000** (0 failures); **84–89%** fewer tokens than JSON full-resend over a 6-call session (1%/5%/20% churn). |
+| `generic-delta/step2/` | Comprehension: does a model reconstruct current state from base+delta? | Harness self-validates (perfect merger 100%, discriminating non-merger 44.7% delta vs 100% control). Run at depth: **six of seven** cleanly-measured models flat or better vs full-resend over a 50-turn session; the one drift (llama-3.3-70b) closed by a periodic re-anchor. |
+
+**Key findings:**
+- Per-record delta comprehension is lossless and model-independent (1,777/1,777 per-record, 0 misses on the breadth panel)
+- Holds at depth: 6 of 7 cleanly-measured models flat or better across 50 turns (gpt-5.5 and deepseek-v4-flash flat at 100)
+- The one drifting model (llama-3.3-70b, ~-12pp deep) is closed by a producer-side periodic re-anchor — no wire change — which separately also rescues weak models
+- The `@id` identity marker was chosen empirically (0.00% tokenizer merge), not aesthetically
+
+```bash
+cd generic-delta && npm install
+cd tokenizer-scan && ./.venv/bin/python scan.py       # grammar non-merge (42 HF+tiktoken); + claude_check.py = 43
+cd ../step1 && command node fuzz-fixed.mjs            # 800k lossless round-trips, content-hash verified
+cd ../step2 && command node step2-run.mjs --self-test # scorer discriminates (no API spend)
+```
+
+Detail: [`generic-delta/README.md`](generic-delta/README.md)
+
+---
+
 ## Results
 
 All logs stored in `results/`:

@@ -1,0 +1,12 @@
+{
+  "name": "gcf-generic-delta-eval",
+  "private": true,
+  "type": "module",
+  "description": "Reproducible harness for the GCF generic-profile delta proposal (grammar scan, losslessness fuzz, multi-turn token benchmark, comprehension eval).",
+  "dependencies": {
+    "@anthropic-ai/tokenizer": "^0.0.4",
+    "@blackwell-systems/gcf": "2.2.2",
+    "@toon-format/toon": "^2.1.0",
+    "gpt-tokenizer": "^3.0.1"
+  }
+}
