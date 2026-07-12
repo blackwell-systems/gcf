@@ -1,0 +1,2200 @@
+{
+ "backend": "openrouter",
+ "requestedModel": "amazon/nova-micro-v1",
+ "resolvedModels": {
+  "amazon/nova-micro-v1": 24
+ },
+ "summary": {
+  "perArm": {
+   "none": {
+    "all": 13.333333333333334,
+    "counting": 7.142857142857143,
+    "perGroup": 10,
+    "control": 27.77777777777778
+   },
+   "totals": {
+    "all": 0,
+    "counting": 0,
+    "perGroup": 0,
+    "control": 0
+   },
+   "positional": {
+    "all": 3.3333333333333335,
+    "counting": 0,
+    "perGroup": 0,
+    "control": 11.11111111111111
+   },
+   "labeled": {
+    "all": 40,
+    "counting": 50,
+    "perGroup": 50,
+    "control": 16.666666666666668
+   }
+  }
+ },
+ "rows": [
+  {
+   "arm": "none",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "249",
+   "want": "250"
+  },
+  {
+   "arm": "none",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "106",
+   "want": "170"
+  },
+  {
+   "arm": "none",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "55",
+   "want": "80"
+  },
+  {
+   "arm": "none",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "group_diff",
+   "ok": false,
+   "got": "143",
+   "want": "80"
+  },
+  {
+   "arm": "none",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "group_sum",
+   "ok": false,
+   "got": "355",
+   "want": "420"
+  },
+  {
+   "arm": "none",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "total_symbols",
+   "ok": false,
+   "got": "409",
+   "want": "500"
+  },
+  {
+   "arm": "none",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "total_edges",
+   "ok": false,
+   "got": "108",
+   "want": "400"
+  },
+  {
+   "arm": "none",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "control_qname",
+   "ok": false,
+   "got": "pkg0.Client",
+   "want": "pkg0.Client360"
+  },
+  {
+   "arm": "none",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "control_kind",
+   "ok": false,
+   "got": "fn",
+   "want": "type"
+  },
+  {
+   "arm": "none",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "control_score",
+   "ok": false,
+   "got": "0.83",
+   "want": "0.75"
+  },
+  {
+   "arm": "totals",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "How many symbols are in the targets group? N: 104",
+   "want": "250"
+  },
+  {
+   "arm": "totals",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "How many symbols are in the related group? N: 52",
+   "want": "170"
+  },
+  {
+   "arm": "totals",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "How many symbols are in the extended group? N: 46",
+   "want": "80"
+  },
+  {
+   "arm": "totals",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "group_diff",
+   "ok": false,
+   "got": "How many more symbols are in the targets group than the related group? N: 52",
+   "want": "80"
+  },
+  {
+   "arm": "totals",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "group_sum",
+   "ok": false,
+   "got": "How many symbols are in the targets and related groups combined? N: 156",
+   "want": "420"
+  },
+  {
+   "arm": "totals",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "total_symbols",
+   "ok": false,
+   "got": "How many symbols are there in total? N: 500",
+   "want": "500"
+  },
+  {
+   "arm": "totals",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "total_edges",
+   "ok": false,
+   "got": "How many edges are there in total? N: 400",
+   "want": "400"
+  },
+  {
+   "arm": "totals",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "control_qname",
+   "ok": false,
+   "got": "What is the qualified name of symbol @360? N: pkg5.Model360",
+   "want": "pkg0.Client360"
+  },
+  {
+   "arm": "totals",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "control_kind",
+   "ok": false,
+   "got": "What is the KIND abbreviation of symbol @424? N: type",
+   "want": "type"
+  },
+  {
+   "arm": "totals",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "control_score",
+   "ok": false,
+   "got": "What is the score of symbol @33? N: 0.79",
+   "want": "0.75"
+  },
+  {
+   "arm": "positional",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 250",
+   "want": "250"
+  },
+  {
+   "arm": "positional",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 170",
+   "want": "170"
+  },
+  {
+   "arm": "positional",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 80",
+   "want": "80"
+  },
+  {
+   "arm": "positional",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "group_diff",
+   "ok": false,
+   "got": "N: 80",
+   "want": "80"
+  },
+  {
+   "arm": "positional",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "group_sum",
+   "ok": false,
+   "got": "N: 420",
+   "want": "420"
+  },
+  {
+   "arm": "positional",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "total_symbols",
+   "ok": false,
+   "got": "N: 500",
+   "want": "500"
+  },
+  {
+   "arm": "positional",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "total_edges",
+   "ok": false,
+   "got": "N: 400",
+   "want": "400"
+  },
+  {
+   "arm": "positional",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "control_qname",
+   "ok": true,
+   "got": "pkg0.Client360",
+   "want": "pkg0.Client360"
+  },
+  {
+   "arm": "positional",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "control_kind",
+   "ok": true,
+   "got": "type",
+   "want": "type"
+  },
+  {
+   "arm": "positional",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "control_score",
+   "ok": false,
+   "got": "0.59",
+   "want": "0.75"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": true,
+   "got": "250",
+   "want": "250"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": true,
+   "got": "170",
+   "want": "170"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": true,
+   "got": "80",
+   "want": "80"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "group_diff",
+   "ok": true,
+   "got": "80",
+   "want": "80"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "group_sum",
+   "ok": true,
+   "got": "420",
+   "want": "420"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "total_symbols",
+   "ok": true,
+   "got": "500",
+   "want": "500"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "total_edges",
+   "ok": true,
+   "got": "400",
+   "want": "400"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "control_qname",
+   "ok": false,
+   "got": "pkg0.Client",
+   "want": "pkg0.Client360"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "control_kind",
+   "ok": false,
+   "got": "fn",
+   "want": "type"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "large_s1",
+   "tier": "large",
+   "type": "control_score",
+   "ok": false,
+   "got": "0.35",
+   "want": "0.75"
+  },
+  {
+   "arm": "none",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": true,
+   "got": "250",
+   "want": "250"
+  },
+  {
+   "arm": "none",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "64",
+   "want": "170"
+  },
+  {
+   "arm": "none",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "49",
+   "want": "80"
+  },
+  {
+   "arm": "none",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "group_diff",
+   "ok": false,
+   "got": "186",
+   "want": "80"
+  },
+  {
+   "arm": "none",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "group_sum",
+   "ok": false,
+   "got": "314",
+   "want": "420"
+  },
+  {
+   "arm": "none",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "total_symbols",
+   "ok": false,
+   "got": "363",
+   "want": "500"
+  },
+  {
+   "arm": "none",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "total_edges",
+   "ok": false,
+   "got": "110",
+   "want": "400"
+  },
+  {
+   "arm": "none",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "control_qname",
+   "ok": false,
+   "got": "pkg18.Router",
+   "want": "pkg18.Router398"
+  },
+  {
+   "arm": "none",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "control_kind",
+   "ok": true,
+   "got": "fn",
+   "want": "fn"
+  },
+  {
+   "arm": "none",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "control_score",
+   "ok": false,
+   "got": "0.48",
+   "want": "0.43"
+  },
+  {
+   "arm": "totals",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 144",
+   "want": "250"
+  },
+  {
+   "arm": "totals",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 84",
+   "want": "170"
+  },
+  {
+   "arm": "totals",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 42",
+   "want": "80"
+  },
+  {
+   "arm": "totals",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "group_diff",
+   "ok": false,
+   "got": "N: 60",
+   "want": "80"
+  },
+  {
+   "arm": "totals",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "group_sum",
+   "ok": false,
+   "got": "N: 228",
+   "want": "420"
+  },
+  {
+   "arm": "totals",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "total_symbols",
+   "ok": false,
+   "got": "N: 500",
+   "want": "500"
+  },
+  {
+   "arm": "totals",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "total_edges",
+   "ok": false,
+   "got": "N: 400",
+   "want": "400"
+  },
+  {
+   "arm": "totals",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "control_qname",
+   "ok": false,
+   "got": "N: pkg18.Router",
+   "want": "pkg18.Router398"
+  },
+  {
+   "arm": "totals",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "control_kind",
+   "ok": false,
+   "got": "N: fn",
+   "want": "fn"
+  },
+  {
+   "arm": "totals",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "control_score",
+   "ok": false,
+   "got": "N: 0.42",
+   "want": "0.43"
+  },
+  {
+   "arm": "positional",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 249",
+   "want": "250"
+  },
+  {
+   "arm": "positional",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 170",
+   "want": "170"
+  },
+  {
+   "arm": "positional",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 80",
+   "want": "80"
+  },
+  {
+   "arm": "positional",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "group_diff",
+   "ok": false,
+   "got": "N: 79",
+   "want": "80"
+  },
+  {
+   "arm": "positional",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "group_sum",
+   "ok": false,
+   "got": "N: 419",
+   "want": "420"
+  },
+  {
+   "arm": "positional",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "total_symbols",
+   "ok": false,
+   "got": "N: 500",
+   "want": "500"
+  },
+  {
+   "arm": "positional",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "total_edges",
+   "ok": false,
+   "got": "N: 400",
+   "want": "400"
+  },
+  {
+   "arm": "positional",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "control_qname",
+   "ok": false,
+   "got": "N: pkg18.Router",
+   "want": "pkg18.Router398"
+  },
+  {
+   "arm": "positional",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "control_kind",
+   "ok": false,
+   "got": "N: fn",
+   "want": "fn"
+  },
+  {
+   "arm": "positional",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "control_score",
+   "ok": false,
+   "got": "N: 0.38",
+   "want": "0.43"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": true,
+   "got": "250",
+   "want": "250"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": true,
+   "got": "170",
+   "want": "170"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "per_group_count",
+   "ok": true,
+   "got": "80",
+   "want": "80"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "group_diff",
+   "ok": true,
+   "got": "80",
+   "want": "80"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "group_sum",
+   "ok": true,
+   "got": "420",
+   "want": "420"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "total_symbols",
+   "ok": true,
+   "got": "500",
+   "want": "500"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "total_edges",
+   "ok": true,
+   "got": "400",
+   "want": "400"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "control_qname",
+   "ok": false,
+   "got": "pkg11.Server",
+   "want": "pkg18.Router398"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "control_kind",
+   "ok": true,
+   "got": "fn",
+   "want": "fn"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "large_s2",
+   "tier": "large",
+   "type": "control_score",
+   "ok": false,
+   "got": "0.42",
+   "want": "0.43"
+  },
+  {
+   "arm": "none",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 39",
+   "want": "50"
+  },
+  {
+   "arm": "none",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 30",
+   "want": "35"
+  },
+  {
+   "arm": "none",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 13",
+   "want": "15"
+  },
+  {
+   "arm": "none",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "group_diff",
+   "ok": false,
+   "got": "N: 9",
+   "want": "15"
+  },
+  {
+   "arm": "none",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "group_sum",
+   "ok": false,
+   "got": "N: 69",
+   "want": "85"
+  },
+  {
+   "arm": "none",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "total_symbols",
+   "ok": false,
+   "got": "N: 82",
+   "want": "100"
+  },
+  {
+   "arm": "none",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "total_edges",
+   "ok": false,
+   "got": "N: 40",
+   "want": "80"
+  },
+  {
+   "arm": "none",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "control_qname",
+   "ok": false,
+   "got": "N: pkg21.Auth42",
+   "want": "pkg21.Config72"
+  },
+  {
+   "arm": "none",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "control_kind",
+   "ok": false,
+   "got": "N: fn",
+   "want": "class"
+  },
+  {
+   "arm": "none",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "control_score",
+   "ok": false,
+   "got": "N: 0.61",
+   "want": "0.61"
+  },
+  {
+   "arm": "totals",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 32",
+   "want": "50"
+  },
+  {
+   "arm": "totals",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 34",
+   "want": "35"
+  },
+  {
+   "arm": "totals",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 14",
+   "want": "15"
+  },
+  {
+   "arm": "totals",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "group_diff",
+   "ok": false,
+   "got": "N: 8",
+   "want": "15"
+  },
+  {
+   "arm": "totals",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "group_sum",
+   "ok": false,
+   "got": "N: 66",
+   "want": "85"
+  },
+  {
+   "arm": "totals",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "total_symbols",
+   "ok": false,
+   "got": "N: 100",
+   "want": "100"
+  },
+  {
+   "arm": "totals",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "total_edges",
+   "ok": false,
+   "got": "N: 80",
+   "want": "80"
+  },
+  {
+   "arm": "totals",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "control_qname",
+   "ok": false,
+   "got": "N: pkg21.Auth72",
+   "want": "pkg21.Config72"
+  },
+  {
+   "arm": "totals",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "control_kind",
+   "ok": false,
+   "got": "N: fn",
+   "want": "class"
+  },
+  {
+   "arm": "totals",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "control_score",
+   "ok": false,
+   "got": "N: 0.61",
+   "want": "0.61"
+  },
+  {
+   "arm": "positional",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "How many symbols are in the targets group? N: 32",
+   "want": "50"
+  },
+  {
+   "arm": "positional",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "How many symbols are in the related group? N: 30",
+   "want": "35"
+  },
+  {
+   "arm": "positional",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "How many symbols are in the extended group? N: 15",
+   "want": "15"
+  },
+  {
+   "arm": "positional",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "group_diff",
+   "ok": false,
+   "got": "How many more symbols are in the targets group than the related group? N: 2",
+   "want": "15"
+  },
+  {
+   "arm": "positional",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "group_sum",
+   "ok": false,
+   "got": "How many symbols are in the targets and related groups combined? N: 62",
+   "want": "85"
+  },
+  {
+   "arm": "positional",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "total_symbols",
+   "ok": false,
+   "got": "How many symbols are there in total? N: 100",
+   "want": "100"
+  },
+  {
+   "arm": "positional",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "total_edges",
+   "ok": false,
+   "got": "How many edges are there in total? N: 80",
+   "want": "80"
+  },
+  {
+   "arm": "positional",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "control_qname",
+   "ok": false,
+   "got": "What is the qualified name of symbol @72? N: pkg21.Config72",
+   "want": "pkg21.Config72"
+  },
+  {
+   "arm": "positional",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "control_kind",
+   "ok": false,
+   "got": "What is the KIND abbreviation of symbol @84? N: method",
+   "want": "class"
+  },
+  {
+   "arm": "positional",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "control_score",
+   "ok": false,
+   "got": "What is the score of symbol @6? N: 0.61",
+   "want": "0.61"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "How many symbols are in the targets group? N: 50",
+   "want": "50"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "How many symbols are in the related group? N: 35",
+   "want": "35"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "How many symbols are in the extended group? N: 15",
+   "want": "15"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "group_diff",
+   "ok": false,
+   "got": "How many more symbols are in the targets group than the related group? N: 15",
+   "want": "15"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "group_sum",
+   "ok": false,
+   "got": "How many symbols are in the targets and related groups combined? N: 85",
+   "want": "85"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "total_symbols",
+   "ok": false,
+   "got": "How many symbols are there in total? N: 100",
+   "want": "100"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "total_edges",
+   "ok": false,
+   "got": "How many edges are there in total? N: 80",
+   "want": "80"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "control_qname",
+   "ok": false,
+   "got": "What is the qualified name of symbol @72? N: pkg21.Auth42",
+   "want": "pkg21.Config72"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "control_kind",
+   "ok": false,
+   "got": "What is the KIND abbreviation of symbol @84? N: method",
+   "want": "class"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "medium_s1",
+   "tier": "medium",
+   "type": "control_score",
+   "ok": false,
+   "got": "What is the score of symbol @6? N: 0.61",
+   "want": "0.61"
+  },
+  {
+   "arm": "none",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "39",
+   "want": "50"
+  },
+  {
+   "arm": "none",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "33",
+   "want": "35"
+  },
+  {
+   "arm": "none",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "14",
+   "want": "15"
+  },
+  {
+   "arm": "none",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "group_diff",
+   "ok": false,
+   "got": "6",
+   "want": "15"
+  },
+  {
+   "arm": "none",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "group_sum",
+   "ok": false,
+   "got": "72",
+   "want": "85"
+  },
+  {
+   "arm": "none",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "total_symbols",
+   "ok": false,
+   "got": "86",
+   "want": "100"
+  },
+  {
+   "arm": "none",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "total_edges",
+   "ok": false,
+   "got": "44",
+   "want": "80"
+  },
+  {
+   "arm": "none",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "control_qname",
+   "ok": true,
+   "got": "pkg26.Model79",
+   "want": "pkg26.Model79"
+  },
+  {
+   "arm": "none",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "control_kind",
+   "ok": true,
+   "got": "method",
+   "want": "method"
+  },
+  {
+   "arm": "none",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "control_score",
+   "ok": false,
+   "got": "0.36",
+   "want": "0.96"
+  },
+  {
+   "arm": "totals",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 29",
+   "want": "50"
+  },
+  {
+   "arm": "totals",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 34",
+   "want": "35"
+  },
+  {
+   "arm": "totals",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 17",
+   "want": "15"
+  },
+  {
+   "arm": "totals",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "group_diff",
+   "ok": false,
+   "got": "N: 5",
+   "want": "15"
+  },
+  {
+   "arm": "totals",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "group_sum",
+   "ok": false,
+   "got": "N: 63",
+   "want": "85"
+  },
+  {
+   "arm": "totals",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "total_symbols",
+   "ok": false,
+   "got": "N: 100",
+   "want": "100"
+  },
+  {
+   "arm": "totals",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "total_edges",
+   "ok": false,
+   "got": "N: 80",
+   "want": "80"
+  },
+  {
+   "arm": "totals",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "control_qname",
+   "ok": false,
+   "got": "N: pkg26.Model79",
+   "want": "pkg26.Model79"
+  },
+  {
+   "arm": "totals",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "control_kind",
+   "ok": false,
+   "got": "N: method",
+   "want": "method"
+  },
+  {
+   "arm": "totals",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "control_score",
+   "ok": false,
+   "got": "N: 0.96",
+   "want": "0.96"
+  },
+  {
+   "arm": "positional",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 39",
+   "want": "50"
+  },
+  {
+   "arm": "positional",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 35",
+   "want": "35"
+  },
+  {
+   "arm": "positional",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 15",
+   "want": "15"
+  },
+  {
+   "arm": "positional",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "group_diff",
+   "ok": false,
+   "got": "N: 3",
+   "want": "15"
+  },
+  {
+   "arm": "positional",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "group_sum",
+   "ok": false,
+   "got": "N: 74",
+   "want": "85"
+  },
+  {
+   "arm": "positional",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "total_symbols",
+   "ok": false,
+   "got": "N: 100",
+   "want": "100"
+  },
+  {
+   "arm": "positional",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "total_edges",
+   "ok": false,
+   "got": "N: 80",
+   "want": "80"
+  },
+  {
+   "arm": "positional",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "control_qname",
+   "ok": false,
+   "got": "N: pkg26.Model79",
+   "want": "pkg26.Model79"
+  },
+  {
+   "arm": "positional",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "control_kind",
+   "ok": false,
+   "got": "N: method",
+   "want": "method"
+  },
+  {
+   "arm": "positional",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "control_score",
+   "ok": false,
+   "got": "N: 0.36",
+   "want": "0.96"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": true,
+   "got": "50",
+   "want": "50"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": true,
+   "got": "35",
+   "want": "35"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "per_group_count",
+   "ok": true,
+   "got": "15",
+   "want": "15"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "group_diff",
+   "ok": true,
+   "got": "15",
+   "want": "15"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "group_sum",
+   "ok": true,
+   "got": "85",
+   "want": "85"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "total_symbols",
+   "ok": true,
+   "got": "100",
+   "want": "100"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "total_edges",
+   "ok": true,
+   "got": "80",
+   "want": "80"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "control_qname",
+   "ok": true,
+   "got": "pkg26.Model79",
+   "want": "pkg26.Model79"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "control_kind",
+   "ok": true,
+   "got": "method",
+   "want": "method"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "medium_s2",
+   "tier": "medium",
+   "type": "control_score",
+   "ok": false,
+   "got": "0.36",
+   "want": "0.96"
+  },
+  {
+   "arm": "none",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "7",
+   "want": "8"
+  },
+  {
+   "arm": "none",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": true,
+   "got": "5",
+   "want": "5"
+  },
+  {
+   "arm": "none",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": true,
+   "got": "2",
+   "want": "2"
+  },
+  {
+   "arm": "none",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "group_diff",
+   "ok": false,
+   "got": "2",
+   "want": "3"
+  },
+  {
+   "arm": "none",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "group_sum",
+   "ok": false,
+   "got": "12",
+   "want": "13"
+  },
+  {
+   "arm": "none",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "total_symbols",
+   "ok": false,
+   "got": "14",
+   "want": "15"
+  },
+  {
+   "arm": "none",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "total_edges",
+   "ok": false,
+   "got": "8",
+   "want": "12"
+  },
+  {
+   "arm": "none",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "control_qname",
+   "ok": true,
+   "got": "pkg39.Cache10",
+   "want": "pkg39.Cache10"
+  },
+  {
+   "arm": "none",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "control_kind",
+   "ok": false,
+   "got": "type",
+   "want": "class"
+  },
+  {
+   "arm": "none",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "control_score",
+   "ok": true,
+   "got": "0.98",
+   "want": "0.98"
+  },
+  {
+   "arm": "totals",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 7",
+   "want": "8"
+  },
+  {
+   "arm": "totals",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 5",
+   "want": "5"
+  },
+  {
+   "arm": "totals",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 2",
+   "want": "2"
+  },
+  {
+   "arm": "totals",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "group_diff",
+   "ok": false,
+   "got": "N: 2",
+   "want": "3"
+  },
+  {
+   "arm": "totals",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "group_sum",
+   "ok": false,
+   "got": "N: 12",
+   "want": "13"
+  },
+  {
+   "arm": "totals",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "total_symbols",
+   "ok": false,
+   "got": "N: 15",
+   "want": "15"
+  },
+  {
+   "arm": "totals",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "total_edges",
+   "ok": false,
+   "got": "N: 12",
+   "want": "12"
+  },
+  {
+   "arm": "totals",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "control_qname",
+   "ok": false,
+   "got": "QUALIFIED_NAME: pkg39.Cache10",
+   "want": "pkg39.Cache10"
+  },
+  {
+   "arm": "totals",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "control_kind",
+   "ok": false,
+   "got": "KIND: type",
+   "want": "class"
+  },
+  {
+   "arm": "totals",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "control_score",
+   "ok": false,
+   "got": "SCORE: 0.98",
+   "want": "0.98"
+  },
+  {
+   "arm": "positional",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 7",
+   "want": "8"
+  },
+  {
+   "arm": "positional",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 5",
+   "want": "5"
+  },
+  {
+   "arm": "positional",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 2",
+   "want": "2"
+  },
+  {
+   "arm": "positional",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "group_diff",
+   "ok": false,
+   "got": "N: 2",
+   "want": "3"
+  },
+  {
+   "arm": "positional",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "group_sum",
+   "ok": false,
+   "got": "N: 12",
+   "want": "13"
+  },
+  {
+   "arm": "positional",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "total_symbols",
+   "ok": false,
+   "got": "N: 15",
+   "want": "15"
+  },
+  {
+   "arm": "positional",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "total_edges",
+   "ok": false,
+   "got": "N: 12",
+   "want": "12"
+  },
+  {
+   "arm": "positional",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "control_qname",
+   "ok": false,
+   "got": "QUALIFIED_NAME: pkg39.Cache10",
+   "want": "pkg39.Cache10"
+  },
+  {
+   "arm": "positional",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "control_kind",
+   "ok": false,
+   "got": "KIND: type",
+   "want": "class"
+  },
+  {
+   "arm": "positional",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "control_score",
+   "ok": false,
+   "got": "SCORE: 0.98",
+   "want": "0.98"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 8",
+   "want": "8"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 5",
+   "want": "5"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 2",
+   "want": "2"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "group_diff",
+   "ok": false,
+   "got": "N: 3",
+   "want": "3"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "group_sum",
+   "ok": false,
+   "got": "N: 13",
+   "want": "13"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "total_symbols",
+   "ok": false,
+   "got": "N: 15",
+   "want": "15"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "total_edges",
+   "ok": false,
+   "got": "N: 12",
+   "want": "12"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "control_qname",
+   "ok": false,
+   "got": "Qualified Name: pkg39.Cache10",
+   "want": "pkg39.Cache10"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "control_kind",
+   "ok": false,
+   "got": "KIND: type",
+   "want": "class"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "small_s1",
+   "tier": "small",
+   "type": "control_score",
+   "ok": false,
+   "got": "Score: 0.98",
+   "want": "0.98"
+  },
+  {
+   "arm": "none",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 7",
+   "want": "8"
+  },
+  {
+   "arm": "none",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 4",
+   "want": "5"
+  },
+  {
+   "arm": "none",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 2",
+   "want": "2"
+  },
+  {
+   "arm": "none",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "group_diff",
+   "ok": false,
+   "got": "N: 3",
+   "want": "3"
+  },
+  {
+   "arm": "none",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "group_sum",
+   "ok": false,
+   "got": "N: 11",
+   "want": "13"
+  },
+  {
+   "arm": "none",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "total_symbols",
+   "ok": false,
+   "got": "N: 13",
+   "want": "15"
+  },
+  {
+   "arm": "none",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "total_edges",
+   "ok": false,
+   "got": "N: 8",
+   "want": "12"
+  },
+  {
+   "arm": "none",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "control_qname",
+   "ok": false,
+   "got": "QUALIFIED_NAME: pkg20.Auth11",
+   "want": "pkg20.Auth11"
+  },
+  {
+   "arm": "none",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "control_kind",
+   "ok": false,
+   "got": "KIND: const",
+   "want": "field"
+  },
+  {
+   "arm": "none",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "control_score",
+   "ok": false,
+   "got": "SCORE: 0.89",
+   "want": "0.89"
+  },
+  {
+   "arm": "totals",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 7",
+   "want": "8"
+  },
+  {
+   "arm": "totals",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 5",
+   "want": "5"
+  },
+  {
+   "arm": "totals",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 2",
+   "want": "2"
+  },
+  {
+   "arm": "totals",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "group_diff",
+   "ok": false,
+   "got": "N: 2",
+   "want": "3"
+  },
+  {
+   "arm": "totals",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "group_sum",
+   "ok": false,
+   "got": "N: 12",
+   "want": "13"
+  },
+  {
+   "arm": "totals",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "total_symbols",
+   "ok": false,
+   "got": "N: 15",
+   "want": "15"
+  },
+  {
+   "arm": "totals",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "total_edges",
+   "ok": false,
+   "got": "N: 12",
+   "want": "12"
+  },
+  {
+   "arm": "totals",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "control_qname",
+   "ok": false,
+   "got": "Qualified name: pkg20.Auth11",
+   "want": "pkg20.Auth11"
+  },
+  {
+   "arm": "totals",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "control_kind",
+   "ok": false,
+   "got": "KIND: const",
+   "want": "field"
+  },
+  {
+   "arm": "totals",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "control_score",
+   "ok": false,
+   "got": "Score: 0.89",
+   "want": "0.89"
+  },
+  {
+   "arm": "positional",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 8",
+   "want": "8"
+  },
+  {
+   "arm": "positional",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 5",
+   "want": "5"
+  },
+  {
+   "arm": "positional",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 2",
+   "want": "2"
+  },
+  {
+   "arm": "positional",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "group_diff",
+   "ok": false,
+   "got": "N: 3",
+   "want": "3"
+  },
+  {
+   "arm": "positional",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "group_sum",
+   "ok": false,
+   "got": "N: 13",
+   "want": "13"
+  },
+  {
+   "arm": "positional",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "total_symbols",
+   "ok": false,
+   "got": "N: 15",
+   "want": "15"
+  },
+  {
+   "arm": "positional",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "total_edges",
+   "ok": false,
+   "got": "N: 12",
+   "want": "12"
+  },
+  {
+   "arm": "positional",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "control_qname",
+   "ok": false,
+   "got": "QUALIFIED_NAME: pkg20.Auth11",
+   "want": "pkg20.Auth11"
+  },
+  {
+   "arm": "positional",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "control_kind",
+   "ok": false,
+   "got": "KIND: const",
+   "want": "field"
+  },
+  {
+   "arm": "positional",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "control_score",
+   "ok": false,
+   "got": "SCORE: 0.89",
+   "want": "0.89"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 8",
+   "want": "8"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 5",
+   "want": "5"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "per_group_count",
+   "ok": false,
+   "got": "N: 2",
+   "want": "2"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "group_diff",
+   "ok": false,
+   "got": "N: 3",
+   "want": "3"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "group_sum",
+   "ok": false,
+   "got": "N: 13",
+   "want": "13"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "total_symbols",
+   "ok": false,
+   "got": "N: 15",
+   "want": "15"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "total_edges",
+   "ok": false,
+   "got": "N: 12",
+   "want": "12"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "control_qname",
+   "ok": false,
+   "got": "Qualified name: pkg20.Auth11",
+   "want": "pkg20.Auth11"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "control_kind",
+   "ok": false,
+   "got": "KIND: const",
+   "want": "field"
+  },
+  {
+   "arm": "labeled",
+   "scenario": "small_s2",
+   "tier": "small",
+   "type": "control_score",
+   "ok": false,
+   "got": "Score: 0.89",
+   "want": "0.89"
+  }
+ ],
+ "partial": false,
+ "probesDone": 24,
+ "probesTotal": 24
+}
