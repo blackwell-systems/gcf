@@ -1,5 +1,33 @@
 # Changelog
 
+## v3.4.0 (2026-07-12)
+
+### Spec change: optional labeled form for the graph streaming trailer counts (Section 8.4.1)
+
+- New Section 8.4.1 defines an opt-in labeled form of the graph streaming trailer's `counts` field: `counts=targets:2,related:1,edges:3` (labeled) as an alternative to the default positional `counts=2,1,3`. Detection is by the presence of `:`; the two forms MUST NOT be mixed; the `edges:` group is always present and last (`counts=edges:0` is the minimal trailer); zero-count groups are omitted. Graph profile only (a `:` in a generic-profile `counts` is malformed).
+- Producer-side and non-normative to the consumer: the graph trailer counts are informational (decoder-ignored, Section 13.2). The labeled form is a comprehension aid for known weak consumers; a conforming decoder MUST accept either form (Section 16.3), and neither form changes the decoded payload.
+
+### Spec clarification: graph streaming trailer counts are per-group (Sections 8.4, 8.7, 13.2)
+
+- Reconciled the spec with every reference encoder: the graph streaming trailer's `counts` is the per-distance-group symbol count followed by the edge count (e.g. `counts=2,1,3`), not a single total. (The generic profile's `counts` remains one value per `[?]` header, validated per Section 13.)
+
+### Spec correction: `.field` attachment indentation
+
+- Aligned Section 7 with the reference encoders: positional `.field` attachments are emitted flush-left (same column as the `@N` row), with the attachment body indented beneath. The prior 2-space form matched no encoder.
+
+### Conformance
+
+- New `graph-stream-encode` conformance operation with shared fixtures 004 (positional trailer) and 005 (labeled trailer, `options.labeledTrailerCounts`). Streaming encode previously had only decode fixtures, which is how an earlier Go-only header regression escaped. All six SDKs run both.
+- New `generic-delta-session` fixtures exercising the re-anchor cadence (fixed-N, size-guard, and schema-change forced full).
+
+### Comprehension validation
+
+- New `eval/graph-trailer-counts` study (non-reasoning instruct panel, blank-gated, n=3, four trailer arms across three sizes) motivating Section 8.4.1: emitting per-group trailer counts lifts weak/mid-tier counting comprehension by +33.9pp on average (up to +55.6pp at N=500). The labeled form is >= positional everywhere and decisive where positional regresses (llama-3.1-8b: positional -2pp vs labeled +40pp); frontier models are already at ceiling (+0). See `eval/graph-trailer-counts/FINDINGS.md`.
+
+### Docs
+
+- Section 15 comprehension numbers and header date refreshed; the cheatsheet's phantom `schema=` field removed and generic delta (Section 10a) added; the six `api-*` reference docs gained the v3.3 generic-delta API surface; the site and spec-reference page cascaded to v3.4.0.
+
 ## v3.3.0 (2026-07-11)
 
 ### Spec changes: Delta Encoding for the Generic Profile (Section 10a)
