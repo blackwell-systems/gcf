@@ -187,6 +187,105 @@ func (s *Session) Size() int                     // number of tracked symbols
 func (s *Session) Reset()                        // clear for new conversation
 ```
 
+## Generic Delta (v3.3)
+
+Delta encoding for the generic profile (SPEC Section 10a): a keyed diff over a tabular set, plus a producer-side session helper that re-anchors on a tunable cadence. Identity is one designated column (`key=` in the header, `@<key>` in the field declaration).
+
+### `GenericSet`
+
+```go
+type GenericSet struct {
+    Name   string           // section name (e.g. "orders"); "" for a root array
+    Key    string           // identity field name
+    Fields []string         // ordered field union
+    Rows   []map[string]any // one map per record
+}
+```
+
+### `EncodeGenericFull(s GenericSet, tool string) string`
+
+Encode a set as a delta-ready full payload.
+
+```go
+set := gcf.GenericSet{
+    Name: "orders", Key: "id",
+    Fields: []string{"id", "total", "status"},
+    Rows: []map[string]any{
+        {"id": 1001, "total": 59.98, "status": "shipped"},
+        {"id": 1002, "total": 29.99, "status": "pending"},
+    },
+}
+out := gcf.EncodeGenericFull(set, "orders_tool")
+// GCF profile=generic pack_root=sha256:... key=id
+// ## orders [2]{@id,total,status}
+// 1001|59.98|shipped
+// 1002|29.99|pending
+```
+
+### `DiffGenericSets(base, next GenericSet) (*GenericDeltaPayload, error)`
+
+Compute the added / changed / removed diff between two sets that share the same key and fields.
+
+### `EncodeGenericDelta(d *GenericDeltaPayload) string`
+
+Encode a delta payload (`## added` / `## changed` / `## removed`).
+
+### `DecodeGenericDelta(text string) (*GenericDeltaPayload, error)`
+
+Parse a delta payload back into its added / changed / removed parts.
+
+### `VerifyGenericDelta(base GenericSet, d *GenericDeltaPayload, expectedNewRoot string) (GenericSet, error)`
+
+Apply a delta to `base` atomically and verify the result's pack root equals `expectedNewRoot`. Returns the new set on success, an error on any mismatch (apply nothing).
+
+### `GenericDeltaPayload`
+
+```go
+type GenericDeltaPayload struct {
+    Tool        string
+    Key         string
+    Fields      []string
+    BaseRoot    string
+    NewRoot     string
+    Added       []map[string]any
+    Changed     []map[string]any
+    Removed     []any // identity values only
+    DeltaTokens int
+    FullTokens  int
+}
+```
+
+### Session helper: `GenericDeltaSession`
+
+A thin producer-side loop over the primitives above. It holds the current base and re-anchors (sends a full instead of a delta) on a tunable cadence. This helper is non-normative: the cadence never appears on the wire (SPEC Section 10a.8).
+
+```go
+sess := gcf.NewGenericDeltaSession(base, "orders_tool", gcf.FixedN(15))
+send(sess.CurrentFull()) // turn 0: establish the base
+
+for _, next := range states {
+    wire, full, err := sess.Next(next)
+    if err != nil {
+        log.Fatal(err)
+    }
+    send(wire) // full == true on a re-anchor, false on a delta
+}
+```
+
+- `NewGenericDeltaSession(base GenericSet, tool string, policy ReanchorPolicy) *GenericDeltaSession`
+- `CurrentFull() string` — full payload for the current base; send first, also a valid manual re-anchor
+- `Next(next GenericSet) (wire string, full bool, err error)` — advance one turn; a schema change forces a full (Section 10a.7)
+- `Turn() int` — number of `Next` calls so far (the initial full is turn 0)
+
+### `ReanchorPolicy`
+
+Selects when the session re-anchors. Construct with `FixedN` or `SizeGuard`.
+
+- `FixedN(n int) ReanchorPolicy` — re-anchor every `n` turns; `n <= 0` uses `DefaultReanchorN` (15).
+- `SizeGuard() ReanchorPolicy` — re-anchor once the cumulative delta since the last anchor reaches the current full payload's size (size-adaptive; recommended for varying churn).
+
+`const DefaultReanchorN = 15`
+
 ## Constants
 
 ### `KindAbbrev`
