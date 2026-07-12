@@ -338,7 +338,7 @@ anonymous-array-block = "##" SP count-bracket [ field-decl ] LF array-body
 array-block         = "##" SP key SP count-bracket [ field-decl ] LF array-body
 inline-array        = key count-bracket ":" [ SP scalar-list ] LF
 array-body          = tabular-body / expanded-body / empty
-tabular-body        = 1*( tabular-row *( INDENT traditional-attachment
+tabular-body        = 1*( tabular-row *( traditional-attachment
                       / inline-object-attachment ) )
 tabular-row         = [ "@" id SP ] cell *( "|" cell ) LF
 cell                = scalar / "~" / attachment-cell
@@ -421,7 +421,7 @@ empty               = ""
 
 Line terminator is `LF` (U+000A). Encoders MUST use `LF`. Decoders MUST tolerate trailing `\r` (CRLF input).
 
-`INDENT` in the grammar means that every line in the referenced production is prefixed by exactly one additional two-space indentation unit. An `inline-object-attachment` is the sole attachment form permitted at the same indentation level as its parent tabular row. Because ABNF does not maintain an indentation stack, Section 4.1 is the authoritative parsing algorithm for nesting and dedent behavior.
+`INDENT` in the grammar means that every line in the referenced production is prefixed by exactly one additional two-space indentation unit. Traditional `.field` attachments appear at their parent tabular row's indentation, as do positional inline-object attachment bodies (Section 4.1); a traditional attachment's own body is indented two levels beneath the row (Section 7.4.4). Because ABNF does not maintain an indentation stack, Section 4.1 is the authoritative parsing algorithm for nesting and dedent behavior.
 
 ### 4.1 Indentation
 
@@ -429,11 +429,11 @@ Indentation is normative and carries structure.
 
 - Indentation MUST use spaces (U+0020), never tabs.
 - One nesting level is exactly two spaces.
-- Indentation may increase by exactly one level at a time. An increase of two or more levels is an error.
+- Indentation may increase by exactly one level at a time, except for traditional attachment bodies, whose indentation is defined in Section 7.4.4. An increase of two or more levels in any other position is an error.
 - A dedent (decrease in indentation) closes all containers deeper than the new level.
 - Indented content following `@N` belongs to that item until the next item at the same or lesser indentation level, or until the containing section ends. Same-indent inline attachment bodies are consumed according to Section 7.4.5.2.
-- `.field` attachment lines are valid only one indentation level beneath an `@N` tabular row containing a matching bare `^` cell.
-- A positional inline object attachment MAY appear either at the same indentation level as its parent `@N` row or one indentation level beneath it. No other child form may appear at the parent's indentation level.
+- A `.field` attachment header is written at the same indentation as the `@N` tabular row whose matching bare `^` cell it fills (Section 7.4.4). Canonical encoders emit it at the row's indentation; a decoder MUST also accept a `.field` header one level beneath its row.
+- A positional inline object attachment MAY appear either at the same indentation level as its parent `@N` row or one indentation level beneath it.
 - An unexpected indentation increase (not preceded by a container-opening production) is an error.
 - Tab characters (U+0009) in leading whitespace are an error.
 
@@ -696,12 +696,12 @@ When tabular records contain nested objects or arrays, the complete field union 
 ```
 ## orders [2]{id,total,status,customer,tags}
 @0 1001|249.99|shipped|^|^
-  .customer {}
+.customer {}
     name=Alice Smith
     tier=premium
-  .tags [2]: express,gift
+.tags [2]: express,gift
 @1 1002|89.50|pending|^|~
-  .customer {}
+.customer {}
     name=Bob Jones
     tier=standard
 ```
@@ -722,14 +722,14 @@ Rules:
 - A row containing one or more `^` or `^{fields}` cells MUST have an `@{id}` prefix.
 - When present, the row ID MUST equal the row's zero-based index within the containing array.
 - Each attachment marker cell MUST have exactly one attachment body associated with the row.
-- A traditional attachment MUST appear one indentation level beneath its row, MUST use the same decoded field name as its marker cell, and MUST match a bare `^` marker.
+- A traditional attachment header is written at the same indentation as its row, and its body is indented two levels (four spaces) beneath the row. A decoder MUST also accept the header one level beneath the row. The attachment MUST use the same decoded field name as its marker cell and MUST match a bare `^` marker.
 - An attachment MUST correspond to a `^` or `^{fields}` cell. Attachments for scalar, null, or missing cells are errors.
 - Attachment field names MUST be unique within a row.
 - A field may be scalar in one record and nested in another. The scalar record emits its scalar directly; the nested record emits `^` and an attachment.
 - Empty objects use `.field {}` with no indented members.
 - Empty arrays use `.field [0]`.
 
-Indented content following `@N` belongs to that row until the next data line at the row's indentation or until the section ends. When same-indent inline bodies are present, the decoder consumes the exact number of eligible positional attachments before treating the next same-indent line as a tabular row.
+Indented content following `@N` belongs to that row until the next tabular row at the row's indentation (a same-indent line that is neither a `.field` attachment nor a consumed positional inline body) or until the section ends. When same-indent inline bodies are present, the decoder consumes the exact number of eligible positional attachments before treating the next same-indent line as a tabular row.
 
 #### 7.4.5 Inline object schemas and shared attachment schemas
 
@@ -764,7 +764,7 @@ Decoders MUST support traditional and inline attachments in the same row and pay
 
 ##### 7.4.5.2 Positional attachment matching and indentation
 
-An inline object attachment body MAY appear at the same indentation level as its parent row or one two-space level deeper. Encoders SHOULD use the same indentation level to minimize tokens. Traditional named attachments retain their required one-level indentation.
+An inline object attachment body MAY appear at the same indentation level as its parent row or one two-space level deeper. Encoders SHOULD use the same indentation level to minimize tokens. Traditional named attachments (`.field`) are written at their row's indentation (Sections 4.1 and 7.4.4).
 
 Within a row, decoders MUST process attachment bodies in source order:
 
@@ -780,7 +780,7 @@ Mixed example:
 ## orders [1]{id,customer,items,total,status}
 @0 ORD-001|^{id,name,email,phone}|^|109.97|shipped
 1|Alice|alice@test.com|"555-0101"
-  .items [2]{sku,name,qty,price}
+.items [2]{sku,name,qty,price}
     SKU-A|Widget|2|29.99
     SKU-B|Gadget|1|49.99
 ```
@@ -792,11 +792,11 @@ When array attachments for the same field use the same tabular field declaration
 ```
 ## orders [2]{id,items}
 @0 ORD-001|^
-  .items [2]{sku,name,qty,price}
+.items [2]{sku,name,qty,price}
     SKU-A|Widget|2|29.99
     SKU-B|Gadget|1|49.99
 @1 ORD-002|^
-  .items [1]
+.items [1]
     SKU-C|Gizmo|1|39.99
 ```
 
@@ -1724,11 +1724,13 @@ This specification follows a three-stage lifecycle:
 | **Stable** | The grammar is frozen. No breaking changes. Additive extensions only. Implementations may depend on stability for production use. |
 | **Frozen** | No changes of any kind. The specification is archived. |
 
-Current status: **Stable** (v3.2.1 designated 2026-06-23).
+Current status: **Stable** (v3.3.0 designated 2026-07-12).
 
 ### 19.3 Version history
 
 This specification (v3.0) supersedes v2.0 and adds inline object schemas, positional inline attachment bodies, shared array attachment schemas, and expanded quoting protections. The graph profile is unchanged.
+
+Since v3.0 the specification has grown additively only (Stable: no breaking changes): **v3.1** made the graph header `tool` field optional; **v3.2** added nested-object flattening (`>` path columns); **v3.3** added delta encoding for the generic profile (Section 10a), with the `@`-marked identity column and the non-normative producer re-anchor guidance (Section 10a.8). Every extension is backward-compatible; a v3.0 decoder ignores what it does not recognize.
 
 V3 is the only supported encoding. Decoders are not required to accept v2-style indented attachments. Encoders emit v3 grammar exclusively.
 
