@@ -111,6 +111,117 @@ enc.close();           // emits ##! summary trailer
 
 The `writer` is any object with a `write(s: string)` method.
 
+## Generic Delta (v3.3)
+
+Delta encoding for the generic profile (SPEC Section 10a): a keyed diff over a tabular set, plus a producer-side session helper that re-anchors on a tunable cadence. Identity is one designated column (`key=` in the header, `@<key>` in the field declaration). These functions are Node-only (they use `node:crypto` for pack roots).
+
+### `encodeGenericFull(s: GenericSet, tool: string): string`
+
+Encode a delta-ready full payload: `key=` in the header, an `@`-prefixed identity field in the declaration, and pipe-separated rows. Send this first to establish the base a later delta diffs against.
+
+```typescript
+import { encodeGenericFull, type GenericSet } from '@blackwell-systems/gcf';
+
+const orders: GenericSet = {
+  name: 'orders',
+  key: 'id',
+  fields: ['id', 'total', 'status'],
+  rows: [
+    { id: 1, total: 100, status: 'open' },
+    { id: 2, total: 250, status: 'shipped' },
+  ],
+};
+
+const full = encodeGenericFull(orders, 'get_orders');
+// GCF profile=generic tool=get_orders pack_root=sha256:... key=id
+// ## orders [2]{@id,total,status}
+// 1|100|open
+// 2|250|shipped
+```
+
+### `diffGenericSets(base: GenericSet, next: GenericSet): GenericDeltaPayload`
+
+Compute the added/changed/removed diff between two sets that share the same `key` and `fields`. Unchanged rows are omitted (silence means "keep it"); added, changed, and removed are sorted by identity for reproducible output. Throws (`delta_invalid`) on a schema change or a missing key: the caller must then send a full payload.
+
+```typescript
+import { diffGenericSets } from '@blackwell-systems/gcf';
+
+const payload = diffGenericSets(base, next);
+// payload.added / payload.changed hold whole rows;
+// payload.removed holds identity values only.
+```
+
+### `encodeGenericDelta(d: GenericDeltaPayload): string`
+
+Serialize a delta payload. Sections are emitted in the order `## added`, `## changed`, `## removed`.
+
+```typescript
+import { encodeGenericDelta } from '@blackwell-systems/gcf';
+
+const wire = encodeGenericDelta(payload);
+// GCF profile=generic tool=get_orders delta=true base_root=sha256:... new_root=sha256:... key=id
+// ## added [1]{@id,total,status}
+// 3|75|open
+// ## changed [1]{@id,total,status}
+// 1|120|open
+// ## removed [1]{@id}
+// 2
+```
+
+### `decodeGenericDelta(text: string): GenericDeltaPayload`
+
+Parse a delta payload back into a `GenericDeltaPayload`. The result can be applied with `verifyGenericDelta`.
+
+```typescript
+import { decodeGenericDelta } from '@blackwell-systems/gcf';
+
+const payload = decodeGenericDelta(wire);
+```
+
+### `verifyGenericDelta(base: GenericSet, d: GenericDeltaPayload, expectedNewRoot: string): GenericSet`
+
+Apply a delta to a base set and verify the result hashes to `expectedNewRoot`. Atomic: the whole payload is validated against the original base before any state changes, so a mismatch throws and leaves the base untouched. Returns the new `GenericSet` on success.
+
+```typescript
+import { verifyGenericDelta } from '@blackwell-systems/gcf';
+
+const next = verifyGenericDelta(base, payload, payload.newRoot);
+// throws base_mismatch / delta_invalid / root_mismatch on any inconsistency
+```
+
+### `new GenericDeltaSession(base, tool, policy)`
+
+Producer-side helper that manages the re-anchor cadence for a stream of generic-profile updates (SPEC Section 10a.8, a non-normative producer policy). It is thin sugar over the primitives above: each `next()` emits either a compact delta or, on its chosen cadence, a full re-anchor, updating its held base. It introduces no new wire syntax; every payload it emits is byte-identical to `encodeGenericFull` or `encodeGenericDelta`, and the cadence never appears on the wire.
+
+```typescript
+import {
+  GenericDeltaSession,
+  sizeGuard,
+  type GenericSet,
+} from '@blackwell-systems/gcf';
+
+const sess = new GenericDeltaSession(base, 'get_orders', sizeGuard());
+send(sess.currentFull());              // send the initial full first (turn 0)
+
+for (const snapshot of snapshots) {
+  const { wire, isFull } = sess.next(snapshot); // advance one turn
+  send(wire);                                   // delta, or a full re-anchor
+}
+```
+
+- `currentFull(): string` returns the full payload for the current base. Send it first to establish the base; it is also a valid manual re-anchor.
+- `next(nextSet: GenericSet): SessionEmission` advances the session by one turn and returns `{ wire, isFull }`. A schema change forces a full (`isFull === true`) per Section 10a.7. The held base becomes `nextSet` either way.
+- `turn(): number` returns the number of `next()` calls so far (the initial full is turn 0).
+
+### `fixedN(n)` / `sizeGuard()`
+
+Construct a `ReanchorPolicy` for a `GenericDeltaSession`:
+
+- `fixedN(n: number): ReanchorPolicy` re-anchors every `n` turns. `n <= 0` falls back to `DEFAULT_REANCHOR_N` (15).
+- `sizeGuard(): ReanchorPolicy` re-anchors once the cumulative delta bytes since the last anchor reach the current full payload's byte size (size-adaptive: it re-anchors more under heavy churn, rarely under light churn). Production-recommended for varying churn.
+
+`DEFAULT_REANCHOR_N` is exported as `15`.
+
 ## Types
 
 ### `Payload`
@@ -187,6 +298,69 @@ interface Components {
   confidence: number;
   recency: number;
   distance: number;
+}
+```
+
+### `GenericSet`
+
+A keyed record set: the unit generic-profile delta operates on. Rows are order-agnostic (set semantics); `fields` carries the declared column order for the wire form; `key` names the identity column (the `@id` / `key=`); `name` is the tabular section name for a full payload.
+
+```typescript
+interface GenericSet {
+  name?: string;
+  key: string;
+  fields: string[];
+  rows: Array<Record<string, unknown>>;
+}
+```
+
+### `GenericDeltaPayload`
+
+A diff between two `GenericSet`s. `added` and `changed` hold whole rows; `removed` holds identity values only.
+
+```typescript
+interface GenericDeltaPayload {
+  tool?: string;
+  key: string;
+  fields: string[];
+  baseRoot: string;
+  newRoot: string;
+  added: Array<Record<string, unknown>>;
+  changed: Array<Record<string, unknown>>;
+  removed: unknown[]; // identity values
+  deltaTokens?: number;
+  fullTokens?: number;
+}
+```
+
+### `ReanchorPolicy`
+
+Selects when a `GenericDeltaSession` re-anchors. Construct it with `fixedN` or `sizeGuard` rather than by hand.
+
+```typescript
+interface ReanchorPolicy {
+  mode: ReanchorMode;
+  n: number; // turns between anchors; FixedN only
+}
+```
+
+### `SessionEmission`
+
+The result of advancing a session by one turn (`GenericDeltaSession.next`).
+
+```typescript
+interface SessionEmission {
+  wire: string;
+  isFull: boolean;
+}
+```
+
+### `ReanchorMode`
+
+```typescript
+enum ReanchorMode {
+  FixedN = 0,   // re-anchor every N turns
+  SizeGuard = 1, // re-anchor when cumulative delta reaches the full payload's size
 }
 ```
 
