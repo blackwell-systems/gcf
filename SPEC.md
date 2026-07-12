@@ -4,7 +4,7 @@
 
 **Version:** 3.3.0
 
-**Date:** 2026-06-22
+**Date:** 2026-07-12
 
 **Status:** Stable (see Section 19 for status lifecycle)
 
@@ -1516,7 +1516,7 @@ On TOON's own benchmark datasets: 34% fewer tokens on mixed-structure data, 44% 
 - **Shallow nesting.** The graph profile is flat. The generic profile supports nested objects and arrays, but typical nesting depth is 1-3 levels.
 - **Deterministic.** Same input produces same output. No randomness, no ordering ambiguity (symbols ordered by score descending, edges ordered by source then target, object keys in input order).
 - **Human-readable.** The format can be read and understood by a human without tooling.
-- **LLM-parseable.** The format can be parsed by an LLM without special instructions. Validated: 100% accuracy on standard workloads (every frontier model), 90.7% on structurally complex code graphs (vs TOON 68.5%, JSON 53.6%). 1,700+ evaluations across 10+ models and 3 providers.
+- **LLM-parseable.** The format can be parsed by an LLM without special instructions. Validated: 100% accuracy on standard workloads (every frontier model), 91.2% on structurally complex code graphs (vs TOON 68.8%, JSON 54.1%). 2,500+ evaluations across 11 models and 4 providers.
 
 ## 16. Conformance
 
