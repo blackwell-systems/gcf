@@ -1,5 +1,24 @@
 # Changelog
 
+## v3.3.0 (unreleased)
+
+### Spec changes: Delta Encoding for the Generic Profile (Section 10a)
+
+- New Section 10a extends delta encoding to the generic profile: a keyed row diff with `## added` / `## changed` / `## removed` sections, keyed on a designated identity column (`@id` in the field declaration + required `key=` in the header). `## changed` replaces a whole row by identity (no field-level patch in this version).
+- Reuses the graph delta mechanism unchanged: the three-outcome echo handshake (§10.3), the `gcf-pack-root-v1` framework and unknown-algorithm fallback (§10.2), atomic delta application (§10.4), and session scope (§9.3). Generic-specific additions are the `## changed` section and a row-based canonical pack-root (§10a.3).
+- Opt-in and bilateral: a delta is emitted only after the consumer echoes a `pack_root` the server recognizes; the decoder applies `unchanged` / `delta` / `full` identically regardless of what preceded it (cadence-agnostic guarantee).
+- In the generic profile, delta and deduplication are one mechanism: an omitted row means "unchanged, keep it" (§10a.5). No separate bare-reference machinery (unlike graph session dedup, §9).
+- Generic profile header (§3.3) registers the delta fields: `pack_root`, `key`, `delta`, `unchanged`, `base_root`, `new_root`, `count`, `savings`.
+- New informative producer guidance (§10a.8): a producer MAY proactively emit a `full` payload on a schedule ("re-anchor") to bound accumulated-delta drift; cadence (default N=15 or an adaptive size-guard) is non-normative.
+
+### Grammar validation
+
+- The `@id` identity marker was selected empirically, not aesthetically. A targeted re-run of the 43-tokenizer barrier-merge method (`eval/barrier-merge-rates.py`) confirmed `@id` inside a field declaration `{@id,...}` merges 0.00% across 42 tokenizers — cleaner than bare `@field` (4.4%) and the general `@` baseline (1.09%), because the preceding `{` forces a token boundary. `key=` is required for explicit redundancy.
+
+### Comprehension validation
+
+- Generic-profile delta comprehension validated across a 50-turn session on ~10 models from 6+ vendors. Delta is safe at depth on 5 of 6 cleanly-measured models (frontier, cross-vendor, and weak models all hold or benefit). The one mid-tier deep-drift edge case is closed by a producer-side periodic re-anchor (measured, reproduced across two runs; deep-turn accuracy 85% to 100%). A second measured benefit: on weak/context-limited models the re-anchor recovers pure-delta degradation to full-resend level or better while keeping payloads compact (four clean models across three vendors).
+
 ## v3.2.2 (2026-07-10)
 
 ### Conformance: nested-null flatten losslessness

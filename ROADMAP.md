@@ -24,11 +24,11 @@
 
 ## Next
 
+- [ ] **Generic-profile delta** (spec §10a): keyed row diff (`## added` / `## changed` / `## removed`) extending graph delta (§10) to tabular data. Opt-in and bilateral (consumer echoes `pack_root`, inherits the §10.3 three-outcome handshake); whole-row replacement keyed on a designated `@id` identity column + required `key=`; row-based `gcf-pack-root-v1`. In the generic profile, delta and dedup are one mechanism — an omitted row means "unchanged, you already have it" (no separate bare-reference machinery; see Format extensions below). Spec section drafted (SPEC.md §10a). Comprehension-validated to 50-turn depth across ~10 models / 6+ vendors: safe on 5 of 6 cleanly-measured models; the one mid-tier deep-drift edge case is closed by a producer-side **periodic re-anchor** (the `full` outcome on a schedule, no wire change; default N=15 or adaptive size-guard, informative §10a.8). Also a second, measured benefit: re-anchor rescues weak/context-limited models (resend-quality without resend's context bulk). **Next:** implement across all 6 SDKs + conformance fixtures + version bump.
 - [ ] **Ruby implementation**: 7th language. Conformance fixtures exist, spec is stable. Encoder, decoder, scalar grammar, streaming, conformance runner.
 - [ ] **Whitepaper rewrite**: structured data positioning, multi-format interop, updated eval data (1,700+ evaluations, 23B+ round-trips).
 - [ ] **Blog post**: "The format LLMs understand without training" with inline data.
 - [ ] **LinkedIn content**: Dr. Seuss poem, playground demo, calculator.
-- [ ] **Value alias comprehension eval**: test if LLMs maintain 100% accuracy when repeated values are aliased.
 
 ## Spec v1.5 (under consideration)
 
@@ -44,7 +44,7 @@
 
 ## Format extensions (future, backwards-compatible)
 
-- [ ] **Value aliases**: semantic compression for repeated values. Define aliases once (e.g., `SF=San Francisco`), reference by alias in body rows. Could significantly reduce tokens on data with high value repetition (cities, departments, status enums). **Requires comprehension eval before committing**: the 100% accuracy number must hold with aliases active. If comprehension drops even 5%, not worth it.
+- [ ] **Generic cross-query session dedup**: bare-key back-references for rows already transmitted in a prior turn — the generic parallel to graph session dedup (§9). Only helps *different overlapping query results* (call 3 returns rows already sent in call 1, not as a delta of call 1's set); the common same-set-evolving case is already covered by generic-delta omission. **Requires its own comprehension eval before committing** — does a model resolve a bare-key reference to a prior-turn row as reliably as graph's `@id # previously transmitted` did (§9: 100% attribute resolution)? Gated on a real workload that needs it; not bundled into the §10a delta update.
 - [ ] **Opt-in strict decode / completeness validation**: a decoder-side `strict` (a.k.a. `validateComplete`) option that fails closed on a truncated or incomplete document, giving security-sensitive consumers a JSON-style truncation guarantee. Decoder-side only, no wire-format change, no impact on the default token count or streaming. Motivated by structural-injection research (Alshaer S-TOON, Class 5 "open field truncation"); GCF's tabular decoder is tolerant of truncation by design, so this is an explicit opt-out of that leniency rather than a default. Prefer enforcing via an existing completeness signal (`##! summary counts=N` trailer, expected row count) over adding a new sentinel. See [Lossless Verification](docs/guide/lossless-verification.md#truncation-tolerance-and-completeness-validation).
 
 ## Community

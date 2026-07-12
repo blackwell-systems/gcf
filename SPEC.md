@@ -2,7 +2,7 @@
 
 ## Graph Compact Format: A Token-Optimized Wire Format for LLM Interactions
 
-**Version:** 3.2.0
+**Version:** 3.3.0
 
 **Date:** 2026-06-22
 
@@ -291,6 +291,14 @@ GCF profile=generic
 |-------|------|-------------|
 | `tool` | string | Name of the tool that produced this response |
 | `tokens` | integer | Actual tokens used in this payload |
+| `pack_root` | string | Content-addressed identity (hex hash) for delta encoding (Section 10a) |
+| `key` | string | Names the identity field for delta (Section 10a.1); present on delta-participating payloads |
+| `delta` | boolean | `true` if this is a delta payload (Section 10a) |
+| `unchanged` | boolean | `true` if the consumer's prior `pack_root` still identifies the current result |
+| `base_root` | string | Pack root of the prior payload (delta mode only) |
+| `new_root` | string | Pack root of the current payload (delta mode only) |
+| `count` | integer | Number of rows in the keyed set (used on `unchanged` responses) |
+| `savings` | string | Token savings percentage (delta mode only, e.g. `81%`) |
 
 ## 4. Formal Grammar
 
@@ -1300,6 +1308,123 @@ Session references and delta encoding solve different problems (repeated declara
 - Delta `## added` sections MUST contain full node declarations, not bare session references. Delta reconstruction MUST be independent of conversational context.
 - Session reset MUST NOT invalidate the identity of a retained delta snapshot. A consumer may retain a graph snapshot even after its session state is cleared.
 - If a consumer retains a `pack_root` but has lost the session context for the symbols within it, the producer MUST either send a full payload or a delta with complete declarations in `## added`.
+
+## 10a. Delta Encoding (Generic Profile)
+
+The generic profile (Section 7) supports delta encoding using the same mechanism as the graph profile (Section 10). When the consumer sends a `pack_root` from a prior response and the current result differs, the server MAY return a delta payload containing only what changed. Generic delta is a **keyed diff with set semantics**: identity is a single designated column, and row order is neither preserved nor communicated across a delta.
+
+Generic delta inherits, unchanged: the three-outcome protocol (Section 10.3), the `gcf-pack-root-v1` algorithm and unknown-algorithm fallback (Section 10.2), atomic delta application (Section 10.4), and session scope (Section 9.3). It adds an identity column, a `## changed` section, and a row-based canonical record (Section 10a.3).
+
+Delta is opt-in and bilateral: a server emits a delta only after the consumer has echoed a `pack_root` the server recognizes as a known base; otherwise it returns a full payload. A server MAY return a full payload at any time, for any reason, and a consumer MUST apply an `unchanged`, `delta`, or `full` payload identically regardless of what preceded it. This cadence-agnostic guarantee is what allows a producer to re-anchor on any schedule (Section 10a.9).
+
+```
+GCF profile=generic pack_root=sha256:aaa9f2... key=id
+## orders [3]{@id,total,status,customer}
+1001|59.98|shipped|Alice
+1002|29.99|pending|Bob
+1003|129.50|shipped|Carol
+```
+
+### 10a.1 Identity column
+
+A generic payload that participates in delta MUST designate exactly one field as the identity key:
+
+1. In the tabular field declaration, prefix that field with `@` (an `id-field`).
+2. In the header, declare `key=<field>` naming the same field.
+
+```
+id-field = "@" key
+```
+
+Where `key` is defined in Section 2a. Because `@` cannot begin a bare-key (Section 2a.1), `@id` is unambiguous. The `id-field` form is valid only in a delta-participating generic tabular header.
+
+The `@`-marked field and the `key=` value MUST name the same field. Identity values MUST be unique within the set; a decoder encountering duplicate identity values MUST reject the payload. A delta-participating full payload MUST carry both `pack_root` and `key` in its header and exactly one `@`-marked field in its declaration. Payloads that do not participate in delta use the standard generic header and field declaration (Sections 3.3, 7.4) with no `@` field and no `key`.
+
+### 10a.2 Delta sections
+
+A delta payload sets `delta=true` and carries `base_root` and `new_root`:
+
+```
+GCF profile=generic delta=true base_root=sha256:aaa9f2... new_root=sha256:bbb4c7... key=id
+## added [1]{@id,total,status,customer}
+1004|75.00|pending|Dave
+## changed [1]{@id,total,status,customer}
+1002|29.99|shipped|Bob
+## removed [1]{@id}
+1001
+```
+
+| Section | Content |
+|---------|---------|
+| `## added` | Rows whose identity is not in the base. Full rows, all declared columns. |
+| `## changed` | Rows whose identity is in the base but whose contents differ. Full rows; each **replaces** the base row with the same identity (no field-level patch). |
+| `## removed` | Identity values present in the base but not in the current set. One identity value per line; declaration is `{@<key>}`. |
+
+When `delta=true`, only these three section names are valid. `added` and `changed` rows MUST use the full generic tabular row grammar (Section 7.4); `removed` lines MUST contain only the identity value. Section-label words are content after `##`, not delimiters. A server SHOULD use delta encoding only when it saves significantly over full retransmission; a threshold of 60% (delta MUST be less than 60% of full size) is RECOMMENDED, matching Section 10.1.
+
+### 10a.3 Generic canonical pack root (`gcf-pack-root-v1`, generic profile)
+
+`pack_root` identifies a logical keyed set. Two implementations given the same logical set MUST compute the same `pack_root`. The algorithm of Section 10.2 applies with a row record in place of the symbol and edge records:
+
+1. Validate all strings as UTF-8 Unicode scalar-value sequences.
+2. Build one canonical record per row. Fields (including the identity field) are ordered by field-name unsigned UTF-8 byte order; each value uses the canonical generic-profile cell encoding (Sections 2.3.1, 2.4, 7.4), so `null` is `-` and the string `-` is `"-"`:
+
+   ```
+   R<TAB>field1<TAB>value1<TAB>field2<TAB>value2 ... <LF>
+   ```
+
+3. Sort all row records by unsigned UTF-8 byte order.
+4. Concatenate the sorted records into one byte sequence.
+5. Compute SHA-256; serialize as `sha256:<64 lowercase hex characters>`.
+
+Row order in the payload does not affect the hash (set semantics). `base_root` is the consumer's held root; `new_root` is the hash of the post-delta set. A consumer receiving a root with an unrecognized algorithm prefix MUST treat it as unknown and request a full payload (Section 10.2).
+
+### 10a.4 Three-outcome protocol
+
+Inherited from Section 10.3. When a consumer sends `pack_root`:
+
+1. **Same root**: return a header-only payload with `unchanged=true`, `pack_root=<hash>`, and `count=N`.
+2. **Different root, prior known**: return a delta payload with `base_root` and `new_root`.
+3. **Different root, prior unknown** (or expired, or no echo): return a full payload (fallback).
+
+```
+GCF profile=generic unchanged=true pack_root=sha256:bbb4c7... count=3
+```
+
+### 10a.5 Delta application
+
+Inherited from Section 10.4, with keyed semantics. A consumer MUST apply a delta atomically:
+
+1. Verify that the consumer's current root equals `base_root`.
+2. Validate the entire delta payload before modifying local state.
+3. Reject contradictory operations: an `added` identity already present in the base; a `changed` or `removed` identity absent from the base.
+4. On a temporary copy of the base set: insert each `added` row; **replace** the same-identity row for each `changed` row; delete each `removed` identity. Every base row not named in the delta is retained unchanged (silence means "keep it").
+5. Compute the canonical `pack_root` of the result (Section 10a.3).
+6. Verify it equals `new_root`.
+7. Commit only after verification succeeds. If any step fails, retain the base unchanged and request a full payload. Partial application is not permitted.
+
+### 10a.6 Ordering and set semantics
+
+Delta sections may appear in any order, and rows within a section may appear in any order; the resulting logical set MUST be identical. Encoders SHOULD use deterministic ordering (`added`, `changed`, `removed`) for reproducibility. Payload row order is not significant and MUST NOT be relied upon. A producer that needs to convey order MUST carry an explicit rank or sort field as data and update it like any other column.
+
+### 10a.7 Fallback rules
+
+- **No identity, or duplicate identity values**: the producer MUST NOT emit a delta; send full.
+- **Schema change** (the field set differs from the base): send full.
+- **Size guard**: if the delta is not smaller than the size-guard threshold (Section 10a.2), send full.
+- `## changed` is whole-row replacement by identity; field-level patching is not defined in this version.
+- Default (non-delta) generic payloads are unchanged by this section and retain all existing losslessness and comprehension guarantees.
+
+### 10a.8 Producer re-anchor guidance (informative)
+
+This subsection is non-normative. Section 10a.5 guarantees the decoder applies any `unchanged`, `delta`, or `full` payload identically regardless of history, so a producer MAY proactively choose the `full` outcome on any schedule ("re-anchor") without any wire or decoder change.
+
+Re-anchoring bounds accumulated-delta drift: some models reconstruct current state from a long delta chain less reliably at extreme session depth, and re-sending the full set periodically re-grounds them. Because the drift it addresses is a narrow, per-model edge case, a conservative policy suffices:
+
+- **Default**: re-anchor every N turns with N = 15; or
+- **Adaptive (recommended for varying churn)**: re-anchor when the cumulative delta since the last anchor approaches a full payload's size (the Section 10a.7 size-guard, applied across turns). This self-tunes: more anchors under high churn, rarely under low.
+
+The optimal N is not specified and SHOULD NOT be over-tuned; it is a fallback cadence for a minority scenario, and roughly one full payload every N turns retains most of the delta savings.
 
 ## 11. Comments
 
