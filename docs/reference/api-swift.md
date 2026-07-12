@@ -1,7 +1,7 @@
 # API Reference (Swift)
 
 ```swift
-.package(url: "https://github.com/blackwell-systems/gcf-swift", from: "2.2.3")
+.package(url: "https://github.com/blackwell-systems/gcf-swift", from: "2.3.0")
 ```
 
 ## Functions
@@ -65,7 +65,7 @@ let p = try decode(gcfText)
 print(p.tool, p.symbols.count)
 ```
 
-### `encodeWithSession(_ payload: Payload, session: Session) -> String`
+### `encodeWithSession(_ payload: Payload, session: Session?) -> String`
 
 Encode with session deduplication. Thread-safe (uses NSLock internally).
 
@@ -106,6 +106,167 @@ let enc = StreamEncoder(writer: myWriter, tool: "context_for_task", options: Str
 enc.writeSymbol(sym)  // emitted immediately
 enc.writeEdge(edge)   // emitted immediately
 enc.close()           // emits ##! summary trailer
+```
+
+## Generic Delta (v3.3)
+
+Delta encoding for the generic profile (SPEC Section 10a): a keyed diff over a tabular set, plus a producer-side session helper that re-anchors on a tunable cadence. Identity is one designated column (`key=` in the header, `@<key>` in the field declaration).
+
+### `GenericSet`
+
+The keyed record set that generic-profile delta operates on. Rows are order-agnostic (set semantics); `fields` carries the declared column order; `key` names the identity column; `name` is the tabular section name for a full payload (`""` for a root array).
+
+```swift
+public struct GenericSet {
+    public var name: String
+    public var key: String
+    public var fields: [String]
+    public var rows: [[String: Any]]
+
+    public init(name: String = "", key: String, fields: [String], rows: [[String: Any]])
+}
+```
+
+### `encodeGenericFull(_ s: GenericSet, tool: String) -> String`
+
+Emit a delta-ready full base payload: `key=` in the header, an `@`-prefixed identity field in the declaration, pipe-separated rows.
+
+```swift
+import GCF
+
+let base = GenericSet(
+    name: "orders",
+    key: "id",
+    fields: ["id", "total", "status"],
+    rows: [
+        ["id": 1, "total": 100, "status": "open"],
+        ["id": 2, "total": 250, "status": "shipped"],
+    ]
+)
+
+let full = encodeGenericFull(base, tool: "orders_query")
+// GCF profile=generic tool=orders_query pack_root=sha256:... key=id
+// ## orders [2]{@id,total,status}
+// 1|100|open
+// 2|250|shipped
+```
+
+### `diffGenericSets(_ base: GenericSet, _ next: GenericSet) throws -> GenericDeltaPayload`
+
+Compute the added/changed/removed diff between two sets that share the same `key` and `fields`. Unchanged rows are omitted (silence means "keep it"). Throws `GenericDeltaError` on a schema change or a missing key: the caller must then send a full payload (Section 10a.7).
+
+```swift
+let payload = try diffGenericSets(base, next)
+```
+
+### `encodeGenericDelta(_ d: GenericDeltaPayload) -> String`
+
+Serialize a delta payload. Sections are emitted in the deterministic order `## added` / `## changed` / `## removed`.
+
+```swift
+let wire = encodeGenericDelta(payload)
+// GCF profile=generic tool=orders_query delta=true base_root=sha256:... new_root=sha256:... key=id
+// ## changed [1]{@id,total,status}
+// 2|250|delivered
+```
+
+### `decodeGenericDelta(_ text: String) throws -> GenericDeltaPayload`
+
+Parse delta wire text back into a `GenericDeltaPayload`. The result can be applied with `verifyGenericDelta`.
+
+```swift
+let payload = try decodeGenericDelta(wire)
+```
+
+### `verifyGenericDelta(_ base: GenericSet, _ d: GenericDeltaPayload, expectedNewRoot: String) throws -> GenericSet`
+
+Apply the delta to `base` atomically and verify the result's pack root equals `expectedNewRoot` (Section 10a.5). The whole payload is validated before any state changes, so a mismatch leaves the base untouched and applies nothing. Returns the new set on success.
+
+```swift
+let newSet = try verifyGenericDelta(base, payload, expectedNewRoot: payload.newRoot)
+```
+
+### `decodeGenericFull(_ text: String) throws -> (set: GenericSet, packRoot: String)`
+
+Parse a delta-participating full base payload into a `GenericSet` and return the declared `pack_root`.
+
+```swift
+let (set, packRoot) = try decodeGenericFull(full)
+```
+
+### `genericPackRoot(_ s: GenericSet) -> String`
+
+Compute the canonical pack root (`gcf-pack-root-v1`, generic profile, Section 10a.3) for a keyed set. Two implementations given the same logical set produce the same result.
+
+```swift
+let root = genericPackRoot(base) // "sha256:..."
+```
+
+### Session helper: `GenericDeltaSession`
+
+A producer-side helper that manages the re-anchor cadence for a stream of generic-profile updates (SPEC Section 10a.8, non-normative producer policy). It is thin sugar over the primitives: each `next(_:)` emits either a compact delta or, on its chosen cadence, a full re-anchor, updating its held base. It introduces no new wire syntax, and the cadence never appears on the wire. Not safe for concurrent use.
+
+```swift
+public final class GenericDeltaSession {
+    public init(base: GenericSet, tool: String, policy: ReanchorPolicy)
+    public var currentTurn: Int { get }        // next(_:) calls so far; initial full is turn 0
+    public func currentFull() -> String        // send first; also a valid manual re-anchor
+    public func next(_ next: GenericSet) throws -> (wire: String, isFull: Bool)
+}
+```
+
+`next(_:)` advances the session by one turn to `next`, returning the wire to transmit and whether it is a full re-anchor (`true`) or a delta (`false`). A schema change forces a full (Section 10a.7); the held base becomes `next` either way.
+
+```swift
+let session = GenericDeltaSession(base: base, tool: "orders_query", policy: .sizeGuard)
+send(session.currentFull())            // turn 0: establish the base
+
+for state in laterStates {
+    let (wire, isFull) = try session.next(state)
+    send(wire)                         // compact delta, or a full on the re-anchor cadence
+    _ = isFull
+}
+```
+
+### `ReanchorPolicy`
+
+Selects when a `GenericDeltaSession` re-anchors. The default N is `15` (`DEFAULT_REANCHOR_N`).
+
+```swift
+public enum ReanchorPolicy {
+    case fixedN(Int)   // re-anchor every N turns
+    case sizeGuard     // size-adaptive; re-anchor once cumulative delta reaches one full payload
+
+    public static func fixed(_ n: Int) -> ReanchorPolicy   // n <= 0 clamps to DEFAULT_REANCHOR_N
+}
+```
+
+Construct `.fixedN` via `ReanchorPolicy.fixed(_:)` so that `n <= 0` clamps to `DEFAULT_REANCHOR_N` (15). `.sizeGuard` re-anchors more under heavy churn and rarely under light churn, bounding the delta spent between anchors to about one full payload; it is production-recommended for varying churn. This helper is non-normative, and the cadence never appears on the wire (Section 10a.8).
+
+### `GenericDeltaPayload`
+
+```swift
+public struct GenericDeltaPayload {
+    public var tool: String
+    public var key: String
+    public var fields: [String]
+    public var baseRoot: String
+    public var newRoot: String
+    public var added: [[String: Any]]
+    public var changed: [[String: Any]]
+    public var removed: [Any]           // identity values only
+    public var deltaTokens: Int
+    public var fullTokens: Int
+}
+```
+
+### `GenericDeltaError`
+
+```swift
+public struct GenericDeltaError: Error, CustomStringConvertible {
+    public let message: String
+    public var description: String { get }
+}
 ```
 
 ## Types
@@ -169,9 +330,8 @@ public struct DeltaPayload: Codable, Equatable {
 ```swift
 public class Session {
     public func transmitted(_ qname: String) -> Bool
-    public func getID(_ qname: String) -> Int?
+    public func getID(_ qname: String) -> Int
     public func record(_ symbols: [Symbol])
-    public func size() -> Int
     public func reset()
 }
 ```
@@ -181,20 +341,22 @@ Thread-safe via NSLock.
 ### `DecodeError`
 
 ```swift
-public enum DecodeError: Error, CustomStringConvertible {
+public enum DecodeError: Error, Equatable, CustomStringConvertible {
     case emptyInput
     case invalidHeader(String)
-    case missingTool
     case invalidSymbolLine(String)
+    case tooFewSymbolFields(String)
+    case invalidScore(String)
     case invalidEdgeLine(String)
-    case unknownEdgeReference(String)
+    case unknownEdgeID(String)
+    case malformedDelta(String)
 }
 ```
 
 ## CLI
 
 ```bash
-# In Package.swift: .package(url: "https://github.com/blackwell-systems/gcf-swift", from: "2.2.3")
+# In Package.swift: .package(url: "https://github.com/blackwell-systems/gcf-swift", from: "2.3.0")
 swift run GCFCLI encode-generic < data.json
 swift run GCFCLI decode-generic < data.gcf
 ```
