@@ -497,7 +497,7 @@ onMounted(() => {
         <a href="/guide/benchmarks.html" class="cta-btn">See the benchmarks</a>
         <a href="/reference/spec.html" class="cta-btn">Read the spec</a>
       </div>
-      <p class="cta-sub">2,500+ LLM evaluations. Every frontier model. Six implementations. 192 conformance fixtures.</p>
+      <p class="cta-sub">2,500+ LLM evaluations. Every frontier model. Six implementations. 193 conformance fixtures.</p>
     </section>
   </div>
 </template>

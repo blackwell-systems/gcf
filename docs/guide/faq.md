@@ -55,14 +55,14 @@ TOON is a tree serializer: YAML with counted arrays. It encodes flat tabular dat
 
 Six official implementations, all MIT licensed, zero runtime dependencies:
 
-- **Go** ([pkg.go.dev](https://pkg.go.dev/github.com/blackwell-systems/gcf-go)) v1.3.2
-- **TypeScript** ([npm](https://www.npmjs.com/package/@blackwell-systems/gcf)) v2.2.3
-- **Python** ([PyPI](https://pypi.org/project/gcf-python/)) v2.2.2
-- **Rust** ([crates.io](https://crates.io/crates/gcf)) v2.2.2
-- **Swift** ([SPM](https://github.com/blackwell-systems/gcf-swift)) v2.2.3
-- **Kotlin** ([JitPack](https://jitpack.io/#blackwell-systems/gcf-kotlin)) v2.2.2
+- **Go** ([pkg.go.dev](https://pkg.go.dev/github.com/blackwell-systems/gcf-go)) v1.4.1
+- **TypeScript** ([npm](https://www.npmjs.com/package/@blackwell-systems/gcf)) v2.3.0
+- **Python** ([PyPI](https://pypi.org/project/gcf-python/)) v2.3.0
+- **Rust** ([crates.io](https://crates.io/crates/gcf)) v2.3.0
+- **Swift** ([SPM](https://github.com/blackwell-systems/gcf-swift)) v2.3.0
+- **Kotlin** ([JitPack](https://jitpack.io/#blackwell-systems/gcf-kotlin)) v2.3.0
 
-All pass 177/177 conformance fixtures. All support both generic and graph profiles, streaming, session dedup, delta encoding, and CLI. [Full details](/ecosystem/implementations).
+All pass 193 conformance fixtures. All support both generic and graph profiles, streaming, session dedup, delta encoding, and CLI. [Full details](/ecosystem/implementations).
 
 ## Does GCF work with open-weight models?
 
@@ -105,7 +105,7 @@ Yes. MIT licensed. The [spec](https://github.com/blackwell-systems/gcf), all six
 
 ## How stable is the spec?
 
-[Spec v3.2](https://github.com/blackwell-systems/gcf/blob/main/SPEC.md) is designated Stable. Six implementations at v2.2.2+ (Go v1.3.2), 177 conformance fixtures, <strong style="color: var(--vp-c-brand-1)">[43 billion+ lossless round-trips](/guide/lossless-verification)</strong> verified across 5 formats (JSON, YAML, TOML, CSV, MessagePack) and 6 language implementations, cross-language 6x6 matrix passing.
+[Spec v3.3.0](https://github.com/blackwell-systems/gcf/blob/main/SPEC.md) is designated Stable. Six implementations at v2.3.0+ (Go v1.4.1), 193 conformance fixtures, <strong style="color: var(--vp-c-brand-1)">[43 billion+ lossless round-trips](/guide/lossless-verification)</strong> verified across 5 formats (JSON, YAML, TOML, CSV, MessagePack) and 6 language implementations, cross-language 6x6 matrix passing.
 
 ## Why not just compress JSON with gzip?
 
