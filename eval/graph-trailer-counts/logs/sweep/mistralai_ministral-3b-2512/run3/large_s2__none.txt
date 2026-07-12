@@ -1,0 +1,952 @@
+# scenario=large_s2 arm=none requested=mistralai/ministral-3b-2512 resolved=mistralai/ministral-3b-2512
+# questions:
+  1. [per_group_count] How many symbols are in the targets group? => want=250
+  2. [per_group_count] How many symbols are in the related group? => want=170
+  3. [per_group_count] How many symbols are in the extended group? => want=80
+  4. [group_diff] How many more symbols are in the targets group than the related group? => want=80
+  5. [group_sum] How many symbols are in the targets and related groups combined? => want=420
+  6. [total_symbols] How many symbols are there in total? => want=500
+  7. [total_edges] How many edges are there in total? => want=400
+  8. [control_qname] What is the qualified name of symbol @398? => want=pkg18.Router398
+  9. [control_kind] What is the KIND abbreviation of symbol @155? => want=fn
+  10. [control_score] What is the score of symbol @394? => want=0.43
+# parsed answers: ["80","100","100","10","180","380","100","pkg18.Router398","fn","0.43"]
+
+===== PROMPT =====
+You are reading a code-graph context encoded in GCF (graph profile). Format:
+- A header line beginning "GCF profile=graph".
+- Distance-group sections in order of relevance: "## targets" (most relevant), then "## related", then "## extended". Each section header is followed by that group's symbol lines.
+- A symbol line is "@ID KIND QUALIFIED_NAME SCORE PROVENANCE", space-separated. KIND is an abbreviation (fn=function, type, method, iface=interface, var, const, class, field). Each symbol has a unique integer @ID.
+- An edges section "## edges [?]" is followed by edge lines "@TARGET<@SOURCE TYPE"; the "<" points to the target symbol.
+Answer each question about this graph. Reply with only the requested value, no explanation.
+
+----- graph -----
+GCF profile=graph tool=context_for_task budget=5000
+## targets
+@0 const pkg12.Config0 0.67 rwr
+@1 const pkg19.Config1 0.84 lsp_resolved
+@2 class pkg8.Router2 0.88 structural
+@3 type pkg26.Config3 0.97 lsp_resolved
+@4 field pkg2.Server4 0.43 lsp_resolved
+@5 field pkg18.Cache5 0.98 lsp_resolved
+@6 iface pkg13.Auth6 0.66 lsp_resolved
+@7 fn pkg38.Client7 0.30 rwr
+@8 fn pkg38.Store8 0.43 structural
+@9 fn pkg31.Model9 0.87 ast_inferred
+@10 field pkg2.Cache10 0.98 rwr
+@11 const pkg20.Auth11 0.89 rwr
+@12 var pkg12.Model12 0.94 ast_inferred
+@13 method pkg0.Model13 0.52 ast_inferred
+@14 class pkg34.Model14 0.60 lsp_resolved
+@15 const pkg24.Cache15 0.95 lsp_resolved
+@16 method pkg13.Store16 0.32 ast_inferred
+@17 class pkg6.Client17 0.57 ast_inferred
+@18 iface pkg33.Router18 0.98 ast_inferred
+@19 fn pkg28.Auth19 0.81 rwr
+@20 const pkg11.Config20 0.75 lsp_resolved
+@21 type pkg29.Model21 0.74 lsp_resolved
+@22 var pkg37.Auth22 0.70 structural
+@23 const pkg33.Router23 0.65 lsp_resolved
+@24 class pkg17.Server24 0.70 ast_inferred
+@25 var pkg20.Config25 0.45 rwr
+@26 var pkg20.Server26 0.41 ast_inferred
+@27 class pkg7.Model27 0.46 rwr
+@28 method pkg12.Cache28 0.93 ast_inferred
+@29 iface pkg32.Model29 0.53 ast_inferred
+@30 field pkg36.Store30 0.88 lsp_resolved
+@31 method pkg12.Server31 0.51 rwr
+@32 method pkg11.Model32 0.38 lsp_resolved
+@33 fn pkg27.Cache33 0.71 rwr
+@34 method pkg34.Auth34 0.77 structural
+@35 class pkg6.Store35 0.43 ast_inferred
+@36 method pkg35.Store36 0.82 lsp_resolved
+@37 const pkg3.Model37 0.31 ast_inferred
+@38 fn pkg36.Auth38 0.75 structural
+@39 var pkg1.Config39 0.65 rwr
+@40 type pkg26.Store40 0.42 lsp_resolved
+@41 iface pkg33.Store41 0.74 structural
+@42 iface pkg27.Auth42 0.62 lsp_resolved
+@43 const pkg0.Cache43 0.89 lsp_resolved
+@44 type pkg14.Model44 0.56 ast_inferred
+@45 var pkg27.Router45 0.34 structural
+@46 const pkg13.Router46 0.72 rwr
+@47 fn pkg38.Model47 0.40 ast_inferred
+@48 iface pkg0.Router48 0.97 lsp_resolved
+@49 type pkg1.Auth49 0.68 ast_inferred
+@50 iface pkg30.Server50 0.66 rwr
+@51 class pkg4.Store51 0.75 lsp_resolved
+@52 iface pkg12.Model52 0.54 lsp_resolved
+@53 field pkg29.Router53 0.80 ast_inferred
+@54 fn pkg29.Store54 0.86 rwr
+@55 fn pkg31.Client55 0.63 ast_inferred
+@56 method pkg21.Cache56 0.52 lsp_resolved
+@57 fn pkg18.Config57 0.76 lsp_resolved
+@58 fn pkg11.Model58 0.86 rwr
+@59 fn pkg2.Server59 0.88 ast_inferred
+@60 method pkg24.Auth60 0.69 ast_inferred
+@61 iface pkg15.Store61 0.52 rwr
+@62 class pkg18.Auth62 0.37 structural
+@63 method pkg16.Server63 0.86 lsp_resolved
+@64 class pkg15.Client64 0.51 rwr
+@65 type pkg7.Router65 0.73 ast_inferred
+@66 var pkg32.Router66 0.70 structural
+@67 type pkg37.Auth67 0.70 rwr
+@68 const pkg15.Cache68 0.91 ast_inferred
+@69 const pkg13.Config69 0.34 structural
+@70 field pkg5.Auth70 0.45 structural
+@71 var pkg22.Auth71 0.62 ast_inferred
+@72 type pkg19.Cache72 0.48 rwr
+@73 const pkg36.Cache73 0.81 ast_inferred
+@74 type pkg6.Server74 0.84 ast_inferred
+@75 class pkg39.Client75 0.77 structural
+@76 field pkg14.Server76 0.69 ast_inferred
+@77 field pkg2.Cache77 0.86 lsp_resolved
+@78 iface pkg17.Auth78 0.96 rwr
+@79 const pkg26.Model79 0.36 ast_inferred
+@80 iface pkg21.Router80 0.55 rwr
+@81 fn pkg36.Server81 0.62 lsp_resolved
+@82 iface pkg1.Cache82 0.37 rwr
+@83 const pkg21.Cache83 0.50 lsp_resolved
+@84 method pkg15.Server84 0.66 rwr
+@85 type pkg25.Store85 0.32 structural
+@86 var pkg31.Client86 0.66 structural
+@87 var pkg3.Client87 0.89 rwr
+@88 fn pkg6.Client88 0.85 rwr
+@89 class pkg17.Store89 0.89 lsp_resolved
+@90 field pkg31.Server90 0.38 lsp_resolved
+@91 fn pkg35.Cache91 0.57 structural
+@92 iface pkg4.Config92 0.76 structural
+@93 fn pkg36.Cache93 0.42 structural
+@94 class pkg24.Cache94 0.40 lsp_resolved
+@95 fn pkg23.Router95 0.49 structural
+@96 var pkg10.Auth96 0.95 ast_inferred
+@97 class pkg28.Cache97 0.60 rwr
+@98 const pkg25.Model98 0.39 structural
+@99 iface pkg19.Server99 0.83 ast_inferred
+@100 fn pkg36.Store100 0.63 rwr
+@101 method pkg27.Model101 0.43 lsp_resolved
+@102 type pkg20.Router102 0.80 lsp_resolved
+@103 const pkg8.Router103 0.94 lsp_resolved
+@104 type pkg28.Server104 0.38 structural
+@105 method pkg31.Store105 0.87 rwr
+@106 type pkg32.Router106 0.85 rwr
+@107 field pkg11.Auth107 0.75 lsp_resolved
+@108 class pkg34.Store108 0.77 rwr
+@109 iface pkg0.Cache109 0.67 rwr
+@110 var pkg19.Server110 0.59 rwr
+@111 class pkg26.Server111 0.70 rwr
+@112 type pkg27.Router112 0.32 lsp_resolved
+@113 iface pkg30.Client113 0.56 ast_inferred
+@114 const pkg26.Config114 0.88 ast_inferred
+@115 type pkg30.Store115 0.44 ast_inferred
+@116 class pkg31.Server116 0.32 structural
+@117 type pkg28.Model117 0.35 lsp_resolved
+@118 class pkg0.Cache118 0.97 lsp_resolved
+@119 type pkg29.Auth119 0.52 rwr
+@120 fn pkg14.Model120 0.64 lsp_resolved
+@121 iface pkg27.Model121 0.65 lsp_resolved
+@122 type pkg29.Router122 0.39 rwr
+@123 field pkg7.Client123 0.34 rwr
+@124 var pkg10.Store124 0.92 lsp_resolved
+@125 type pkg37.Router125 0.38 lsp_resolved
+@126 var pkg34.Router126 0.86 ast_inferred
+@127 const pkg27.Router127 0.73 lsp_resolved
+@128 field pkg29.Server128 0.83 lsp_resolved
+@129 class pkg2.Cache129 0.50 lsp_resolved
+@130 type pkg5.Cache130 0.35 structural
+@131 var pkg12.Auth131 0.76 rwr
+@132 field pkg37.Store132 0.55 structural
+@133 class pkg15.Auth133 0.47 lsp_resolved
+@134 field pkg22.Model134 0.76 ast_inferred
+@135 var pkg35.Cache135 0.32 ast_inferred
+@136 fn pkg22.Client136 0.90 rwr
+@137 const pkg23.Cache137 0.36 rwr
+@138 var pkg3.Store138 0.49 lsp_resolved
+@139 field pkg21.Client139 0.41 structural
+@140 type pkg22.Client140 0.67 rwr
+@141 field pkg9.Cache141 0.40 rwr
+@142 class pkg17.Store142 0.93 lsp_resolved
+@143 field pkg1.Model143 0.57 ast_inferred
+@144 field pkg39.Config144 0.96 rwr
+@145 const pkg17.Model145 0.50 rwr
+@146 fn pkg0.Config146 0.65 rwr
+@147 type pkg11.Model147 0.38 lsp_resolved
+@148 fn pkg22.Router148 0.58 lsp_resolved
+@149 fn pkg31.Model149 0.58 structural
+@150 class pkg33.Model150 0.96 rwr
+@151 iface pkg29.Cache151 0.67 ast_inferred
+@152 fn pkg34.Client152 0.76 structural
+@153 field pkg35.Model153 0.60 structural
+@154 fn pkg39.Config154 0.63 structural
+@155 fn pkg20.Client155 0.67 lsp_resolved
+@156 fn pkg20.Store156 0.92 rwr
+@157 var pkg33.Model157 0.85 lsp_resolved
+@158 fn pkg10.Config158 0.86 rwr
+@159 method pkg18.Cache159 0.89 ast_inferred
+@160 method pkg6.Auth160 0.73 structural
+@161 field pkg36.Store161 0.72 rwr
+@162 var pkg33.Cache162 0.55 ast_inferred
+@163 var pkg39.Router163 0.61 structural
+@164 class pkg31.Client164 0.86 rwr
+@165 const pkg12.Cache165 0.65 ast_inferred
+@166 type pkg5.Config166 0.74 rwr
+@167 class pkg12.Auth167 0.88 lsp_resolved
+@168 fn pkg4.Config168 0.41 lsp_resolved
+@169 method pkg23.Cache169 0.69 ast_inferred
+@170 method pkg19.Client170 0.56 lsp_resolved
+@171 iface pkg29.Config171 0.89 ast_inferred
+@172 fn pkg1.Router172 0.52 lsp_resolved
+@173 iface pkg30.Config173 0.90 lsp_resolved
+@174 method pkg11.Server174 0.39 rwr
+@175 fn pkg26.Router175 0.76 lsp_resolved
+@176 const pkg3.Router176 0.92 lsp_resolved
+@177 method pkg4.Model177 0.67 rwr
+@178 class pkg33.Auth178 0.33 rwr
+@179 class pkg4.Auth179 0.84 rwr
+@180 class pkg6.Cache180 0.71 lsp_resolved
+@181 fn pkg9.Client181 0.78 ast_inferred
+@182 fn pkg22.Auth182 0.36 rwr
+@183 fn pkg26.Cache183 0.79 rwr
+@184 var pkg24.Store184 0.92 ast_inferred
+@185 const pkg6.Auth185 0.64 structural
+@186 field pkg15.Auth186 0.97 structural
+@187 method pkg39.Router187 0.88 rwr
+@188 fn pkg6.Config188 0.82 structural
+@189 method pkg5.Router189 0.44 rwr
+@190 method pkg23.Auth190 0.94 rwr
+@191 type pkg25.Router191 0.81 ast_inferred
+@192 iface pkg30.Auth192 0.63 ast_inferred
+@193 class pkg0.Router193 0.35 lsp_resolved
+@194 method pkg4.Cache194 0.69 structural
+@195 field pkg22.Server195 0.31 rwr
+@196 type pkg7.Router196 0.90 ast_inferred
+@197 type pkg1.Router197 0.66 rwr
+@198 field pkg22.Cache198 0.95 rwr
+@199 class pkg14.Auth199 0.45 lsp_resolved
+@200 var pkg8.Model200 0.62 structural
+@201 method pkg22.Model201 0.33 lsp_resolved
+@202 class pkg1.Router202 0.74 lsp_resolved
+@203 method pkg39.Model203 0.79 lsp_resolved
+@204 class pkg11.Cache204 0.47 ast_inferred
+@205 const pkg20.Store205 0.87 rwr
+@206 type pkg26.Router206 0.80 rwr
+@207 iface pkg7.Server207 0.90 structural
+@208 field pkg12.Client208 0.77 structural
+@209 field pkg0.Store209 0.57 ast_inferred
+@210 fn pkg27.Config210 0.79 structural
+@211 const pkg13.Cache211 0.53 structural
+@212 field pkg0.Config212 0.38 rwr
+@213 class pkg0.Auth213 0.49 lsp_resolved
+@214 var pkg33.Auth214 0.49 lsp_resolved
+@215 const pkg35.Router215 0.75 rwr
+@216 field pkg6.Router216 0.62 lsp_resolved
+@217 field pkg23.Config217 0.55 lsp_resolved
+@218 type pkg16.Model218 0.83 lsp_resolved
+@219 class pkg27.Client219 0.93 ast_inferred
+@220 class pkg5.Cache220 0.51 rwr
+@221 iface pkg33.Model221 0.94 structural
+@222 field pkg28.Server222 0.93 rwr
+@223 var pkg6.Client223 0.93 structural
+@224 iface pkg32.Model224 0.61 lsp_resolved
+@225 type pkg9.Client225 0.53 lsp_resolved
+@226 fn pkg30.Cache226 0.87 lsp_resolved
+@227 field pkg18.Store227 0.88 ast_inferred
+@228 method pkg7.Server228 0.75 lsp_resolved
+@229 var pkg9.Model229 0.74 ast_inferred
+@230 iface pkg29.Cache230 0.70 lsp_resolved
+@231 method pkg1.Server231 0.44 lsp_resolved
+@232 class pkg10.Config232 0.47 lsp_resolved
+@233 const pkg29.Router233 0.62 lsp_resolved
+@234 const pkg11.Server234 0.96 lsp_resolved
+@235 const pkg31.Store235 0.72 ast_inferred
+@236 class pkg31.Client236 0.88 ast_inferred
+@237 field pkg2.Client237 0.74 ast_inferred
+@238 method pkg14.Config238 0.62 structural
+@239 iface pkg28.Config239 0.37 ast_inferred
+@240 class pkg27.Auth240 0.50 structural
+@241 const pkg11.Auth241 0.73 structural
+@242 type pkg28.Config242 0.82 lsp_resolved
+@243 fn pkg33.Client243 0.81 ast_inferred
+@244 fn pkg28.Cache244 0.68 rwr
+@245 type pkg38.Cache245 0.88 structural
+@246 iface pkg13.Client246 0.97 lsp_resolved
+@247 class pkg36.Auth247 0.67 rwr
+@248 method pkg9.Cache248 0.39 ast_inferred
+@249 type pkg11.Server249 0.79 ast_inferred
+## related
+@250 method pkg26.Config250 0.32 rwr
+@251 type pkg17.Model251 0.33 lsp_resolved
+@252 fn pkg16.Client252 0.54 ast_inferred
+@253 const pkg14.Client253 0.83 structural
+@254 var pkg21.Cache254 0.76 structural
+@255 method pkg29.Auth255 0.91 ast_inferred
+@256 iface pkg22.Cache256 0.56 lsp_resolved
+@257 type pkg13.Client257 0.78 structural
+@258 field pkg10.Config258 0.35 ast_inferred
+@259 type pkg36.Router259 0.86 ast_inferred
+@260 fn pkg23.Store260 0.90 lsp_resolved
+@261 fn pkg30.Model261 0.39 structural
+@262 field pkg18.Router262 0.40 ast_inferred
+@263 field pkg18.Client263 0.45 ast_inferred
+@264 class pkg19.Cache264 0.38 lsp_resolved
+@265 const pkg28.Cache265 0.45 structural
+@266 const pkg25.Store266 0.79 structural
+@267 type pkg20.Cache267 0.82 ast_inferred
+@268 field pkg22.Cache268 0.81 structural
+@269 fn pkg0.Auth269 0.96 ast_inferred
+@270 var pkg38.Router270 0.52 ast_inferred
+@271 class pkg18.Server271 0.89 structural
+@272 fn pkg33.Store272 0.38 rwr
+@273 var pkg0.Router273 0.47 rwr
+@274 class pkg26.Store274 0.46 ast_inferred
+@275 class pkg8.Store275 0.58 structural
+@276 type pkg30.Auth276 0.76 lsp_resolved
+@277 type pkg38.Store277 0.88 rwr
+@278 method pkg14.Cache278 0.58 lsp_resolved
+@279 class pkg13.Config279 0.65 ast_inferred
+@280 fn pkg11.Server280 0.52 lsp_resolved
+@281 var pkg6.Model281 0.55 structural
+@282 var pkg31.Server282 0.41 rwr
+@283 field pkg29.Client283 0.74 structural
+@284 const pkg10.Server284 0.32 rwr
+@285 fn pkg30.Cache285 0.47 structural
+@286 fn pkg25.Store286 0.79 rwr
+@287 field pkg19.Auth287 0.89 rwr
+@288 var pkg7.Config288 0.36 lsp_resolved
+@289 fn pkg16.Store289 0.47 ast_inferred
+@290 fn pkg18.Client290 0.69 structural
+@291 const pkg34.Store291 0.86 lsp_resolved
+@292 method pkg29.Config292 0.55 ast_inferred
+@293 method pkg17.Config293 0.46 rwr
+@294 var pkg12.Server294 0.65 ast_inferred
+@295 var pkg25.Auth295 0.49 ast_inferred
+@296 const pkg36.Model296 0.81 structural
+@297 const pkg37.Model297 0.46 ast_inferred
+@298 type pkg18.Config298 0.51 ast_inferred
+@299 field pkg21.Router299 0.84 rwr
+@300 fn pkg26.Model300 0.58 structural
+@301 method pkg18.Config301 0.85 lsp_resolved
+@302 method pkg14.Cache302 0.89 rwr
+@303 const pkg19.Auth303 0.91 rwr
+@304 field pkg21.Store304 0.98 ast_inferred
+@305 field pkg26.Model305 0.79 ast_inferred
+@306 fn pkg7.Client306 0.48 rwr
+@307 const pkg11.Client307 0.40 lsp_resolved
+@308 class pkg33.Cache308 0.79 structural
+@309 type pkg9.Config309 0.43 rwr
+@310 field pkg3.Store310 0.39 rwr
+@311 const pkg7.Model311 0.61 structural
+@312 type pkg23.Server312 0.41 ast_inferred
+@313 field pkg6.Model313 0.81 rwr
+@314 iface pkg19.Router314 0.92 lsp_resolved
+@315 field pkg39.Router315 0.78 structural
+@316 fn pkg38.Auth316 0.94 rwr
+@317 var pkg36.Model317 0.48 rwr
+@318 var pkg10.Cache318 0.90 structural
+@319 iface pkg20.Auth319 0.66 ast_inferred
+@320 var pkg35.Auth320 0.53 lsp_resolved
+@321 fn pkg30.Config321 0.62 lsp_resolved
+@322 iface pkg2.Auth322 0.93 lsp_resolved
+@323 iface pkg23.Model323 0.64 lsp_resolved
+@324 var pkg10.Server324 0.46 ast_inferred
+@325 var pkg25.Store325 0.63 lsp_resolved
+@326 type pkg14.Store326 0.82 rwr
+@327 const pkg14.Client327 0.62 lsp_resolved
+@328 class pkg0.Cache328 0.84 rwr
+@329 var pkg3.Store329 0.38 structural
+@330 type pkg5.Config330 0.85 lsp_resolved
+@331 field pkg15.Config331 0.40 ast_inferred
+@332 var pkg22.Server332 0.39 structural
+@333 method pkg35.Auth333 0.83 ast_inferred
+@334 method pkg30.Config334 0.77 ast_inferred
+@335 const pkg27.Server335 0.58 rwr
+@336 const pkg3.Router336 0.87 rwr
+@337 iface pkg27.Cache337 0.71 rwr
+@338 class pkg17.Client338 0.67 ast_inferred
+@339 type pkg28.Cache339 0.42 ast_inferred
+@340 fn pkg23.Cache340 0.31 rwr
+@341 class pkg5.Client341 0.32 rwr
+@342 iface pkg10.Config342 0.74 structural
+@343 class pkg27.Config343 0.93 rwr
+@344 method pkg37.Server344 0.55 structural
+@345 iface pkg36.Server345 0.81 ast_inferred
+@346 type pkg32.Router346 0.60 rwr
+@347 const pkg27.Cache347 0.67 rwr
+@348 var pkg16.Router348 0.97 rwr
+@349 iface pkg39.Model349 0.76 ast_inferred
+@350 method pkg9.Store350 0.41 ast_inferred
+@351 method pkg21.Client351 0.60 structural
+@352 class pkg37.Server352 0.70 rwr
+@353 const pkg25.Router353 0.58 rwr
+@354 type pkg0.Model354 0.34 lsp_resolved
+@355 field pkg21.Client355 0.63 rwr
+@356 field pkg39.Model356 0.50 ast_inferred
+@357 fn pkg11.Store357 0.59 lsp_resolved
+@358 field pkg23.Config358 0.91 lsp_resolved
+@359 var pkg17.Auth359 0.82 ast_inferred
+@360 type pkg25.Config360 0.51 rwr
+@361 var pkg9.Router361 0.36 ast_inferred
+@362 fn pkg18.Client362 0.31 ast_inferred
+@363 fn pkg7.Store363 0.35 rwr
+@364 var pkg27.Server364 0.56 rwr
+@365 field pkg35.Cache365 0.97 ast_inferred
+@366 class pkg36.Cache366 0.84 rwr
+@367 method pkg28.Store367 0.77 ast_inferred
+@368 fn pkg22.Config368 0.80 structural
+@369 field pkg38.Config369 0.42 lsp_resolved
+@370 iface pkg39.Cache370 0.43 rwr
+@371 method pkg27.Auth371 0.97 rwr
+@372 var pkg6.Client372 0.97 rwr
+@373 method pkg7.Model373 0.82 structural
+@374 type pkg20.Cache374 0.64 structural
+@375 iface pkg10.Model375 0.47 structural
+@376 method pkg13.Config376 0.40 structural
+@377 field pkg28.Store377 0.55 lsp_resolved
+@378 var pkg34.Router378 0.69 lsp_resolved
+@379 field pkg17.Config379 0.41 lsp_resolved
+@380 method pkg0.Store380 0.92 structural
+@381 const pkg38.Model381 0.90 ast_inferred
+@382 fn pkg34.Server382 0.97 lsp_resolved
+@383 fn pkg24.Client383 0.33 rwr
+@384 field pkg32.Store384 0.38 ast_inferred
+@385 field pkg22.Model385 0.85 rwr
+@386 class pkg10.Server386 0.53 structural
+@387 type pkg4.Router387 0.53 ast_inferred
+@388 type pkg10.Model388 0.82 structural
+@389 type pkg18.Config389 0.64 structural
+@390 var pkg0.Server390 0.31 rwr
+@391 fn pkg27.Model391 0.62 rwr
+@392 fn pkg3.Model392 0.59 rwr
+@393 var pkg5.Auth393 0.90 ast_inferred
+@394 fn pkg15.Cache394 0.43 structural
+@395 fn pkg29.Server395 0.48 structural
+@396 method pkg15.Model396 0.52 lsp_resolved
+@397 fn pkg28.Auth397 0.38 lsp_resolved
+@398 fn pkg18.Router398 0.99 structural
+@399 fn pkg11.Client399 0.42 structural
+@400 method pkg15.Store400 0.94 lsp_resolved
+@401 var pkg6.Client401 0.32 ast_inferred
+@402 method pkg9.Cache402 0.88 rwr
+@403 method pkg8.Server403 0.54 lsp_resolved
+@404 type pkg36.Config404 0.76 ast_inferred
+@405 field pkg24.Model405 0.40 lsp_resolved
+@406 iface pkg20.Cache406 0.63 rwr
+@407 var pkg10.Router407 0.40 structural
+@408 const pkg15.Client408 0.71 rwr
+@409 method pkg39.Router409 0.48 ast_inferred
+@410 iface pkg22.Store410 0.63 structural
+@411 const pkg39.Config411 0.30 structural
+@412 var pkg14.Model412 0.79 ast_inferred
+@413 var pkg20.Router413 0.47 rwr
+@414 var pkg29.Cache414 0.41 ast_inferred
+@415 var pkg8.Model415 0.52 lsp_resolved
+@416 var pkg4.Server416 0.43 rwr
+@417 type pkg26.Cache417 0.77 lsp_resolved
+@418 const pkg19.Config418 0.70 structural
+@419 var pkg10.Store419 0.51 ast_inferred
+## extended
+@420 method pkg19.Router420 0.62 rwr
+@421 const pkg31.Client421 0.61 lsp_resolved
+@422 iface pkg7.Router422 0.94 lsp_resolved
+@423 var pkg12.Auth423 0.33 lsp_resolved
+@424 type pkg29.Server424 0.32 structural
+@425 fn pkg38.Auth425 0.38 ast_inferred
+@426 fn pkg31.Server426 0.50 ast_inferred
+@427 fn pkg2.Auth427 0.73 ast_inferred
+@428 var pkg6.Server428 0.90 rwr
+@429 const pkg30.Server429 0.93 structural
+@430 type pkg35.Model430 0.35 ast_inferred
+@431 fn pkg15.Model431 0.57 lsp_resolved
+@432 class pkg36.Auth432 0.53 structural
+@433 fn pkg15.Auth433 0.47 lsp_resolved
+@434 fn pkg19.Store434 0.62 structural
+@435 const pkg6.Client435 0.58 lsp_resolved
+@436 const pkg32.Cache436 0.43 structural
+@437 var pkg30.Client437 0.54 structural
+@438 field pkg14.Server438 0.59 structural
+@439 class pkg29.Store439 0.32 lsp_resolved
+@440 const pkg6.Cache440 0.60 rwr
+@441 class pkg13.Client441 0.95 structural
+@442 class pkg23.Model442 0.98 structural
+@443 type pkg39.Auth443 0.57 ast_inferred
+@444 fn pkg20.Model444 0.62 ast_inferred
+@445 fn pkg17.Config445 0.72 lsp_resolved
+@446 class pkg7.Server446 0.52 rwr
+@447 method pkg23.Model447 0.66 lsp_resolved
+@448 fn pkg25.Model448 0.85 ast_inferred
+@449 field pkg32.Config449 0.45 lsp_resolved
+@450 const pkg6.Model450 0.66 rwr
+@451 iface pkg0.Config451 0.39 lsp_resolved
+@452 iface pkg4.Config452 0.31 lsp_resolved
+@453 class pkg28.Auth453 0.32 lsp_resolved
+@454 fn pkg7.Store454 0.49 ast_inferred
+@455 method pkg22.Model455 0.49 ast_inferred
+@456 method pkg21.Client456 0.73 structural
+@457 iface pkg4.Auth457 0.37 lsp_resolved
+@458 var pkg15.Model458 0.87 rwr
+@459 field pkg16.Auth459 0.51 rwr
+@460 field pkg28.Auth460 0.43 structural
+@461 type pkg35.Model461 0.87 rwr
+@462 class pkg32.Cache462 0.42 lsp_resolved
+@463 fn pkg34.Model463 0.35 rwr
+@464 fn pkg4.Router464 0.83 rwr
+@465 type pkg15.Config465 0.39 structural
+@466 var pkg14.Server466 0.49 rwr
+@467 var pkg26.Client467 0.51 rwr
+@468 method pkg28.Store468 0.95 ast_inferred
+@469 class pkg1.Config469 0.86 ast_inferred
+@470 class pkg28.Client470 0.50 ast_inferred
+@471 const pkg35.Client471 0.75 rwr
+@472 fn pkg39.Client472 0.43 lsp_resolved
+@473 class pkg12.Server473 0.50 structural
+@474 method pkg29.Model474 0.82 lsp_resolved
+@475 iface pkg4.Cache475 0.69 lsp_resolved
+@476 fn pkg20.Auth476 0.93 lsp_resolved
+@477 class pkg19.Router477 0.92 lsp_resolved
+@478 type pkg16.Model478 0.56 ast_inferred
+@479 method pkg7.Server479 0.33 lsp_resolved
+@480 const pkg39.Config480 0.92 structural
+@481 field pkg14.Client481 0.58 ast_inferred
+@482 field pkg36.Server482 0.85 lsp_resolved
+@483 field pkg10.Auth483 0.96 structural
+@484 const pkg30.Store484 0.38 ast_inferred
+@485 method pkg5.Auth485 0.96 lsp_resolved
+@486 const pkg9.Model486 0.92 ast_inferred
+@487 const pkg0.Client487 0.88 lsp_resolved
+@488 iface pkg37.Server488 0.62 ast_inferred
+@489 method pkg17.Cache489 0.84 lsp_resolved
+@490 const pkg31.Server490 0.30 structural
+@491 type pkg11.Client491 0.62 rwr
+@492 var pkg3.Store492 0.46 structural
+@493 field pkg26.Auth493 0.52 lsp_resolved
+@494 fn pkg16.Store494 0.57 lsp_resolved
+@495 iface pkg9.Router495 0.60 structural
+@496 const pkg36.Model496 0.91 structural
+@497 var pkg8.Store497 0.58 rwr
+@498 class pkg9.Store498 0.79 rwr
+@499 field pkg28.Auth499 0.74 ast_inferred
+## edges [?]
+@316<@182 references
+@42<@205 imports
+@275<@472 references
+@165<@124 calls
+@111<@6 references
+@81<@11 implements
+@298<@236 references
+@362<@372 references
+@340<@14 references
+@186<@155 calls
+@379<@142 references
+@1<@399 calls
+@212<@305 implements
+@458<@260 calls
+@416<@2 implements
+@136<@221 calls
+@63<@110 references
+@156<@76 references
+@223<@381 imports
+@456<@421 calls
+@56<@261 references
+@416<@410 references
+@103<@450 imports
+@236<@258 calls
+@337<@422 implements
+@239<@33 imports
+@360<@143 implements
+@380<@140 imports
+@13<@485 implements
+@225<@129 implements
+@266<@427 implements
+@383<@216 imports
+@215<@322 implements
+@247<@254 imports
+@327<@113 calls
+@395<@296 implements
+@8<@285 calls
+@169<@352 calls
+@276<@87 references
+@108<@45 implements
+@147<@362 implements
+@404<@192 implements
+@188<@107 imports
+@247<@84 imports
+@102<@383 calls
+@298<@117 references
+@14<@270 calls
+@453<@416 implements
+@463<@277 implements
+@435<@231 implements
+@65<@105 calls
+@36<@490 calls
+@255<@109 calls
+@161<@51 imports
+@355<@66 imports
+@392<@413 implements
+@221<@103 references
+@407<@8 references
+@265<@28 calls
+@361<@435 imports
+@23<@307 imports
+@82<@84 references
+@12<@305 calls
+@373<@172 calls
+@185<@211 implements
+@250<@442 calls
+@243<@409 imports
+@233<@255 implements
+@21<@248 imports
+@376<@293 references
+@304<@14 calls
+@436<@392 references
+@18<@97 references
+@426<@124 references
+@252<@248 imports
+@162<@330 calls
+@8<@275 imports
+@103<@211 implements
+@8<@468 implements
+@292<@385 implements
+@114<@221 imports
+@26<@196 imports
+@43<@311 imports
+@354<@174 implements
+@206<@259 implements
+@20<@64 calls
+@64<@389 imports
+@490<@318 calls
+@14<@205 calls
+@93<@143 imports
+@13<@78 calls
+@38<@315 calls
+@478<@401 implements
+@288<@405 imports
+@206<@455 implements
+@384<@430 implements
+@165<@359 references
+@400<@363 calls
+@204<@377 imports
+@124<@229 implements
+@240<@185 references
+@259<@388 implements
+@290<@350 implements
+@229<@135 imports
+@73<@386 calls
+@433<@356 implements
+@471<@176 imports
+@139<@43 implements
+@486<@186 calls
+@441<@446 calls
+@12<@482 implements
+@184<@464 references
+@273<@154 imports
+@324<@217 implements
+@231<@145 imports
+@11<@494 imports
+@434<@97 imports
+@289<@81 imports
+@337<@101 calls
+@480<@397 imports
+@463<@158 imports
+@442<@127 calls
+@162<@316 implements
+@207<@10 calls
+@119<@310 imports
+@102<@60 imports
+@41<@419 references
+@366<@421 references
+@346<@16 calls
+@326<@373 calls
+@292<@175 calls
+@278<@309 calls
+@418<@204 imports
+@148<@32 implements
+@157<@442 calls
+@295<@310 imports
+@101<@459 imports
+@195<@14 calls
+@81<@494 implements
+@389<@420 imports
+@286<@27 references
+@247<@290 calls
+@287<@451 implements
+@322<@8 calls
+@432<@4 references
+@186<@285 imports
+@206<@174 calls
+@166<@57 imports
+@173<@358 imports
+@405<@35 implements
+@6<@153 calls
+@276<@141 imports
+@367<@136 calls
+@164<@238 implements
+@170<@471 calls
+@82<@107 references
+@316<@146 imports
+@108<@117 implements
+@287<@250 references
+@334<@17 imports
+@265<@439 implements
+@446<@439 references
+@220<@120 references
+@344<@180 imports
+@307<@379 implements
+@29<@344 calls
+@184<@233 references
+@322<@273 calls
+@399<@276 references
+@346<@332 imports
+@53<@329 implements
+@434<@59 calls
+@26<@223 imports
+@417<@405 references
+@230<@306 imports
+@301<@332 imports
+@315<@400 calls
+@117<@301 imports
+@261<@11 calls
+@24<@434 imports
+@429<@317 imports
+@104<@310 implements
+@430<@220 implements
+@361<@462 imports
+@171<@126 calls
+@173<@438 imports
+@313<@102 calls
+@474<@183 imports
+@194<@304 implements
+@173<@59 calls
+@27<@123 references
+@196<@327 implements
+@65<@31 calls
+@25<@399 implements
+@408<@463 imports
+@475<@308 calls
+@93<@458 references
+@110<@217 imports
+@273<@350 calls
+@86<@46 calls
+@357<@156 references
+@139<@454 implements
+@80<@313 implements
+@459<@251 calls
+@391<@479 imports
+@378<@153 imports
+@470<@170 calls
+@336<@5 references
+@200<@98 imports
+@108<@72 references
+@464<@31 calls
+@93<@254 references
+@25<@172 imports
+@360<@192 imports
+@170<@176 imports
+@446<@242 references
+@80<@452 implements
+@179<@213 implements
+@131<@127 references
+@239<@245 calls
+@261<@387 imports
+@357<@230 imports
+@143<@282 imports
+@498<@271 references
+@333<@355 implements
+@247<@235 implements
+@8<@371 imports
+@120<@487 references
+@446<@205 imports
+@465<@287 implements
+@82<@338 calls
+@261<@177 calls
+@425<@213 implements
+@101<@225 implements
+@433<@124 calls
+@140<@180 calls
+@173<@56 calls
+@213<@296 calls
+@48<@295 imports
+@401<@178 calls
+@385<@76 calls
+@93<@217 implements
+@182<@207 calls
+@371<@452 imports
+@433<@67 references
+@350<@464 implements
+@414<@238 calls
+@41<@132 calls
+@210<@390 implements
+@465<@109 calls
+@83<@255 imports
+@389<@200 imports
+@83<@232 calls
+@269<@136 references
+@313<@119 calls
+@11<@409 implements
+@267<@402 calls
+@180<@93 calls
+@330<@491 calls
+@159<@272 calls
+@293<@449 implements
+@50<@137 implements
+@460<@345 calls
+@187<@72 imports
+@154<@356 imports
+@261<@246 references
+@331<@344 imports
+@239<@66 imports
+@253<@417 imports
+@268<@144 imports
+@463<@271 implements
+@367<@487 imports
+@478<@83 implements
+@61<@182 calls
+@350<@290 calls
+@414<@495 references
+@29<@400 calls
+@283<@103 implements
+@414<@29 implements
+@26<@291 implements
+@120<@471 imports
+@67<@59 implements
+@251<@143 implements
+@441<@368 references
+@179<@75 calls
+@342<@360 implements
+@60<@419 references
+@241<@446 calls
+@348<@182 implements
+@482<@209 references
+@20<@346 references
+@424<@35 imports
+@122<@169 implements
+@154<@39 calls
+@359<@65 references
+@289<@493 imports
+@472<@359 references
+@494<@130 implements
+@49<@54 references
+@50<@453 implements
+@214<@132 calls
+@131<@78 implements
+@386<@338 implements
+@450<@244 references
+@255<@220 calls
+@10<@232 references
+@391<@437 calls
+@225<@164 implements
+@106<@455 calls
+@394<@469 imports
+@499<@275 calls
+@91<@421 references
+@151<@185 implements
+@151<@302 calls
+@394<@51 implements
+@36<@494 calls
+@153<@415 references
+@58<@283 references
+@347<@422 calls
+@29<@63 imports
+@156<@314 implements
+@161<@302 implements
+@357<@386 imports
+@434<@48 imports
+@106<@290 implements
+@478<@312 references
+@48<@153 implements
+@316<@449 implements
+@424<@237 imports
+@161<@334 implements
+@194<@25 calls
+@467<@38 implements
+@87<@400 references
+@206<@431 calls
+@414<@229 imports
+@149<@229 references
+@44<@315 calls
+@89<@474 references
+@469<@494 references
+@86<@254 imports
+@27<@290 implements
+@176<@136 references
+@146<@22 imports
+@23<@314 implements
+@96<@299 imports
+@9<@171 imports
+@64<@152 implements
+@417<@215 implements
+@115<@308 imports
+@336<@140 implements
+@95<@359 implements
+@357<@329 implements
+@135<@14 references
+@292<@188 calls
+@49<@153 implements
+@114<@440 implements
+@183<@447 implements
+@121<@83 calls
+@46<@255 imports
+@253<@406 implements
+@422<@53 references
+@297<@216 imports
+@112<@284 calls
+@371<@233 references
+@180<@21 implements
+@15<@453 references
+@497<@499 implements
+@314<@439 calls
+@173<@104 implements
+@379<@398 calls
+@371<@353 references
+@85<@121 calls
+@107<@61 imports
+@406<@153 imports
+@116<@42 calls
+@57<@68 references
+@341<@377 imports
+@80<@151 references
+@443<@466 imports
+@215<@138 imports
+@414<@190 implements
+@440<@119 imports
+@190<@43 calls
+@31<@147 calls
+@465<@352 imports
+@270<@320 implements
+@399<@307 imports
+@388<@131 calls
+@218<@341 references
+@268<@427 references
+@473<@87 implements
+@342<@253 calls
+@303<@264 calls
+@99<@434 imports
+@171<@192 implements
+@470<@461 implements
+@432<@140 imports
+@337<@408 calls
+@238<@53 calls
+@273<@421 imports
+
+Answer each question about the graph above. Reply with exactly one line per question, formatted "N: value" — value only, no explanation.
+1. How many symbols are in the targets group?
+2. How many symbols are in the related group?
+3. How many symbols are in the extended group?
+4. How many more symbols are in the targets group than the related group?
+5. How many symbols are in the targets and related groups combined?
+6. How many symbols are there in total?
+7. How many edges are there in total?
+8. What is the qualified name of symbol @398?
+9. What is the KIND abbreviation of symbol @155?
+10. What is the score of symbol @394?
+
+===== MODEL CONTENT =====
+1: 80
+2: 100
+3: 100
+4: 10
+5: 180
+6: 380
+7: 100
+8: pkg18.Router398
+9: fn
+10: 0.43

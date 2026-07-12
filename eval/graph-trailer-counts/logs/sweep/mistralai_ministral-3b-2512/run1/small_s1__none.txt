@@ -1,0 +1,79 @@
+# scenario=small_s1 arm=none requested=mistralai/ministral-3b-2512 resolved=mistralai/ministral-3b-2512
+# questions:
+  1. [per_group_count] How many symbols are in the targets group? => want=8
+  2. [per_group_count] How many symbols are in the related group? => want=5
+  3. [per_group_count] How many symbols are in the extended group? => want=2
+  4. [group_diff] How many more symbols are in the targets group than the related group? => want=3
+  5. [group_sum] How many symbols are in the targets and related groups combined? => want=13
+  6. [total_symbols] How many symbols are there in total? => want=15
+  7. [total_edges] How many edges are there in total? => want=12
+  8. [control_qname] What is the qualified name of symbol @10? => want=pkg39.Cache10
+  9. [control_kind] What is the KIND abbreviation of symbol @12? => want=class
+  10. [control_score] What is the score of symbol @0? => want=0.98
+# parsed answers: ["","","","","","","","","",""]
+
+===== PROMPT =====
+You are reading a code-graph context encoded in GCF (graph profile). Format:
+- A header line beginning "GCF profile=graph".
+- Distance-group sections in order of relevance: "## targets" (most relevant), then "## related", then "## extended". Each section header is followed by that group's symbol lines.
+- A symbol line is "@ID KIND QUALIFIED_NAME SCORE PROVENANCE", space-separated. KIND is an abbreviation (fn=function, type, method, iface=interface, var, const, class, field). Each symbol has a unique integer @ID.
+- An edges section "## edges [?]" is followed by edge lines "@TARGET<@SOURCE TYPE"; the "<" points to the target symbol.
+Answer each question about this graph. Reply with only the requested value, no explanation.
+
+----- graph -----
+GCF profile=graph tool=context_for_task budget=5000
+## targets
+@0 const pkg0.Store0 0.98 rwr
+@1 method pkg24.Cache1 0.59 rwr
+@2 iface pkg19.Server2 0.58 lsp_resolved
+@3 type pkg19.Auth3 0.57 rwr
+@4 method pkg7.Auth4 0.59 structural
+@5 class pkg11.Server5 0.75 structural
+@6 class pkg7.Cache6 0.61 rwr
+@7 field pkg9.Client7 0.41 ast_inferred
+## related
+@8 iface pkg9.Server8 0.80 structural
+@9 type pkg10.Auth9 0.73 rwr
+@10 type pkg39.Cache10 0.58 ast_inferred
+@11 const pkg38.Model11 0.78 rwr
+@12 class pkg37.Auth12 0.33 rwr
+## extended
+@13 method pkg35.Store13 0.95 structural
+@14 type pkg27.Model14 0.39 rwr
+## edges [?]
+@2<@5 calls
+@6<@4 implements
+@7<@8 calls
+@12<@13 imports
+@2<@4 references
+@4<@2 implements
+@8<@4 calls
+@2<@1 imports
+@10<@9 calls
+@7<@8 calls
+@11<@3 references
+@14<@13 calls
+
+Answer each question about the graph above. Reply with exactly one line per question, formatted "N: value" — value only, no explanation.
+1. How many symbols are in the targets group?
+2. How many symbols are in the related group?
+3. How many symbols are in the extended group?
+4. How many more symbols are in the targets group than the related group?
+5. How many symbols are in the targets and related groups combined?
+6. How many symbols are there in total?
+7. How many edges are there in total?
+8. What is the qualified name of symbol @10?
+9. What is the KIND abbreviation of symbol @12?
+10. What is the score of symbol @0?
+
+===== MODEL CONTENT =====
+N: 7
+N: 4
+N: 2
+N: 3
+N: 11
+N: 15
+N: 8
+N: pkg39.Cache10
+N: class
+N: 0.98
