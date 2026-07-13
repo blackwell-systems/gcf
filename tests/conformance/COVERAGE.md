@@ -11,6 +11,8 @@
 - Uncovered (known gaps, tracked below): **0**
 - Uncovered (unexpected, fails the build): **0**
 - Required operations missing: **0**
+- Section 16.1-16.4 checklist gaps: **0**
+- Encoder-invariant violations: **0**
 
 ## Section 16.5 decoder strict-mode taxonomy
 
@@ -66,6 +68,47 @@
 | `pack-root` | 4 | yes |
 | `roundtrip` | 4 | yes |
 | `session` | 3 | yes |
+
+## Section 16.1-16.4 encoder / decoder-accept checklist
+
+| Section | Requirement | Coverage | Source |
+|---|---|---|---|
+| 16.1 | UTF-8 / LF endings / no trailing whitespace | invariant | mechanical scan below |
+| 16.1 | Scores emitted with exactly 2 decimal places | invariant | mechanical scan below |
+| 16.1 | Header begins GCF profile=graph (tool optional) | covered | `graph-encode/` (2) |
+| 16.1 | Sequential IDs from 0; stable session-scoped IDs | covered | `graph-session/` (3) |
+| 16.1 | Kind abbreviations, edges section header, edges between declared IDs | covered | `graph-encode/` (2) |
+| 16.1 | Symbol/edge ordering; deterministic output (incl. distance_N trailer) | property | SDK property / round-trip suites |
+| 16.2 | Header begins GCF profile=generic | covered | `scalar/` (26) |
+| 16.2 | Scalar grammar + encoder quoting; numbers/bool/null unquoted | covered | `numbers/` (15) |
+| 16.2 | Key grammar; quote invalid bare keys; reject duplicate keys | covered | `keys/` (11) |
+| 16.2 | Tabular: pipe separator, positional rows, field union, - / ~ | covered | `arrays/` (5) |
+| 16.2 | Inline object schemas; shared array schema reuse | covered | `inline-schema/` (15) |
+| 16.2 | Attachments (^ / ^{fields} / .field); @{id} on nested rows | covered | `attachments/` (7) |
+| 16.2 | Nested object flattening (> path columns, v3.2) | covered | `flatten/` (19) |
+| 16.2 | Root scalar (=value) and root array (## [N]) | covered | `roots/` (11) |
+| 16.2 | Two-space indentation per nesting level | covered | `containers/` (7) |
+| 16.3 | Parse header/nodes/edges; kind expansion + unknown passthrough | covered | `graph-decode/` (3) |
+| 16.3 | Accept ? deferred count; summary metadata; counts positional|labeled | covered | `streaming-v2/` (11) |
+| 16.3 | Reject edges referencing undeclared symbol IDs | covered | op `error` (36) |
+| 16.4 | Scalar grammar + full JSON string escapes; reject malformed UTF-8 | covered | `decode/` (6) |
+| 16.4 | Interpret - (null), ~ (absent), ^ / ^{fields} attachments | covered | `inline-schema/` (15) |
+| 16.4 | Keys bare+quoted; tabular headers; row-width validation | covered | `keys/` (11) |
+| 16.4 | Whitespace/indentation handling | covered | `whitespace/` (3) |
+| 16.4 | Count validation at every level | covered | op `error` (36) |
+| 16.4 | Round-trip invariant decode(encode(v)) == v | property | SDK property / round-trip suites |
+
+_`invariant` = mechanical scan below; `property` = verified by the SDK property / round-trip suites (not a single fixture)._
+
+## Encoder output invariants (16.1/16.2)
+
+Scanned over every fixture `expected` output; a violation fails the build.
+
+| Invariant | Violations |
+|---|---|
+| No line ends with a space or tab (16.1/16.2) | none |
+| Graph node scores have exactly 2 decimals (16.1) | none |
+| No CR in expected output; LF endings only (16.1) | none |
 
 ## Fixtures by directory
 

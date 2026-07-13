@@ -73,6 +73,63 @@ const REQUIRED_OPERATIONS = [
   'pack-root', 'delta', 'delta-verify', 'session',
 ];
 
+// --- Encoder output invariants (SPEC 16.1/16.2) -----------------------------
+// Scanned over every fixture's `expected` output; any violation is a hard failure.
+const GRAPH_NODE_RE = /^@\d+ \S+ \S+ (-?\d+\.\d+) /;
+function scanInvariants(fixtures) {
+  const trailingWs = [], badScore = [], crlf = [];
+  for (const f of fixtures) {
+    if (f.expected == null) continue;
+    for (const ln of f.expected.split('\n')) {
+      if (/[ \t]$/.test(ln)) trailingWs.push(`${f.rel}: ${JSON.stringify(ln)}`);
+      if (ln.includes('\r')) crlf.push(f.rel);
+      const m = GRAPH_NODE_RE.exec(ln);
+      if (m && !/^-?\d+\.\d\d$/.test(m[1])) badScore.push(`${f.rel}: ${ln}`);
+    }
+  }
+  return [
+    { key: 'no-trailing-whitespace', desc: 'No line ends with a space or tab (16.1/16.2)', bad: trailingWs },
+    { key: 'graph-score-2-decimals', desc: 'Graph node scores have exactly 2 decimals (16.1)', bad: badScore },
+    { key: 'lf-line-endings', desc: 'No CR in expected output; LF endings only (16.1)', bad: crlf },
+  ];
+}
+
+// --- SPEC 16.1-16.4 requirement -> coverage checklist -----------------------
+// Each requirement maps to a coverage source: 'invariant' (a scan above),
+// 'property' (verified out-of-band by the SDK property/round-trip suites, not by
+// a single fixture), or {dir}/{op} fixture directories/operations that exercise
+// it. A requirement whose {dir}/{op} source resolves to ZERO fixtures fails the build.
+const CHECKLIST = [
+  // 16.1 Encoder conformance (graph profile)
+  ['16.1', 'UTF-8 / LF endings / no trailing whitespace', 'invariant'],
+  ['16.1', 'Scores emitted with exactly 2 decimal places', 'invariant'],
+  ['16.1', 'Header begins GCF profile=graph (tool optional)', { dir: 'graph-encode' }],
+  ['16.1', 'Sequential IDs from 0; stable session-scoped IDs', { dir: 'graph-session' }],
+  ['16.1', 'Kind abbreviations, edges section header, edges between declared IDs', { dir: 'graph-encode' }],
+  ['16.1', 'Symbol/edge ordering; deterministic output (incl. distance_N trailer)', 'property'],
+  // 16.2 Encoder conformance (generic profile)
+  ['16.2', 'Header begins GCF profile=generic', { dir: 'scalar' }],
+  ['16.2', 'Scalar grammar + encoder quoting; numbers/bool/null unquoted', { dir: 'numbers' }],
+  ['16.2', 'Key grammar; quote invalid bare keys; reject duplicate keys', { dir: 'keys' }],
+  ['16.2', 'Tabular: pipe separator, positional rows, field union, - / ~', { dir: 'arrays' }],
+  ['16.2', 'Inline object schemas; shared array schema reuse', { dir: 'inline-schema' }],
+  ['16.2', 'Attachments (^ / ^{fields} / .field); @{id} on nested rows', { dir: 'attachments' }],
+  ['16.2', 'Nested object flattening (> path columns, v3.2)', { dir: 'flatten' }],
+  ['16.2', 'Root scalar (=value) and root array (## [N])', { dir: 'roots' }],
+  ['16.2', 'Two-space indentation per nesting level', { dir: 'containers' }],
+  // 16.3 Decoder conformance (graph profile)
+  ['16.3', 'Parse header/nodes/edges; kind expansion + unknown passthrough', { dir: 'graph-decode' }],
+  ['16.3', 'Accept ? deferred count; summary metadata; counts positional|labeled', { dir: 'streaming-v2' }],
+  ['16.3', 'Reject edges referencing undeclared symbol IDs', { op: 'error' }],
+  // 16.4 Decoder conformance (generic profile)
+  ['16.4', 'Scalar grammar + full JSON string escapes; reject malformed UTF-8', { dir: 'decode' }],
+  ['16.4', 'Interpret - (null), ~ (absent), ^ / ^{fields} attachments', { dir: 'inline-schema' }],
+  ['16.4', 'Keys bare+quoted; tabular headers; row-width validation', { dir: 'keys' }],
+  ['16.4', 'Whitespace/indentation handling', { dir: 'whitespace' }],
+  ['16.4', 'Count validation at every level', { op: 'error' }],
+  ['16.4', 'Round-trip invariant decode(encode(v)) == v', 'property'],
+];
+
 // --- Load fixtures ----------------------------------------------------------
 function walk(dir, acc = []) {
   for (const name of readdirSync(dir)) {
@@ -93,6 +150,7 @@ const fixtures = files.map((p) => {
     dir: rel.split('/')[0],
     operation: data.operation || '(none)',
     expectedError: data.expectedError || '',
+    expected: typeof data.expected === 'string' ? data.expected : null,
   };
 });
 
@@ -125,6 +183,21 @@ const staleAllowlist = Object.keys(KNOWN_GAPS).filter(
 );
 const coveredCount = taxonomyRows.filter((r) => r.covered).length;
 
+// Encoder-output invariant scan (16.1/16.2).
+const invariants = scanInvariants(fixtures);
+const invariantViolations = invariants.filter((i) => i.bad.length > 0);
+
+// 16.1-16.4 requirement checklist coverage.
+const checklistRows = CHECKLIST.map(([section, req, src]) => {
+  let status, note;
+  if (src === 'invariant') { status = 'invariant'; note = 'mechanical scan below'; }
+  else if (src === 'property') { status = 'property'; note = 'SDK property / round-trip suites'; }
+  else if (src.dir) { const n = byDir.get(src.dir) || 0; status = n > 0 ? 'covered' : 'GAP'; note = `\`${src.dir}/\` (${n})`; }
+  else if (src.op) { const n = byOperation.get(src.op) || 0; status = n > 0 ? 'covered' : 'GAP'; note = `op \`${src.op}\` (${n})`; }
+  return { section, req, status, note };
+});
+const checklistGaps = checklistRows.filter((r) => r.status === 'GAP');
+
 // --- Generate COVERAGE.md ---------------------------------------------------
 function md() {
   const L = [];
@@ -141,6 +214,8 @@ function md() {
   L.push(`- Uncovered (known gaps, tracked below): **${knownGaps.length}**`);
   L.push(`- Uncovered (unexpected, fails the build): **${hardGaps.length}**`);
   L.push(`- Required operations missing: **${missingOps.length}**`);
+  L.push(`- Section 16.1-16.4 checklist gaps: **${checklistGaps.length}**`);
+  L.push(`- Encoder-invariant violations: **${invariantViolations.length}**`);
   L.push('');
   L.push('## Section 16.5 decoder strict-mode taxonomy');
   L.push('');
@@ -173,6 +248,22 @@ function md() {
     L.push(`| \`${op}\` | ${n}${flag} | ${req} |`);
   }
   L.push('');
+  L.push('## Section 16.1-16.4 encoder / decoder-accept checklist');
+  L.push('');
+  L.push('| Section | Requirement | Coverage | Source |');
+  L.push('|---|---|---|---|');
+  for (const r of checklistRows) L.push(`| ${r.section} | ${r.req} | ${r.status} | ${r.note} |`);
+  L.push('');
+  L.push('_`invariant` = mechanical scan below; `property` = verified by the SDK property / round-trip suites (not a single fixture)._');
+  L.push('');
+  L.push('## Encoder output invariants (16.1/16.2)');
+  L.push('');
+  L.push('Scanned over every fixture `expected` output; a violation fails the build.');
+  L.push('');
+  L.push('| Invariant | Violations |');
+  L.push('|---|---|');
+  for (const i of invariants) L.push(`| ${i.desc} | ${i.bad.length === 0 ? 'none' : i.bad.length} |`);
+  L.push('');
   L.push('## Fixtures by directory');
   L.push('');
   L.push('| Directory | Fixtures |');
@@ -196,12 +287,23 @@ if (!CHECK_ONLY) {
 }
 
 console.log(`\nSection 16.5 coverage: ${coveredCount}/${TAXONOMY.length}  (known gaps: ${knownGaps.length})`);
+console.log(`Section 16.1-16.4 checklist: ${checklistRows.length - checklistGaps.length}/${checklistRows.length} covered`);
 if (knownGaps.length) {
   console.log('Known gaps:');
   for (const r of knownGaps) console.log(`  - ${r.key}`);
 }
 
 let failed = false;
+if (checklistGaps.length) {
+  failed = true;
+  console.error('\nFAIL: Section 16.1-16.4 requirements whose exercising fixtures are missing:');
+  for (const r of checklistGaps) console.error(`  - [${r.section}] ${r.req} (${r.note})`);
+}
+for (const i of invariantViolations) {
+  failed = true;
+  console.error(`\nFAIL: encoder invariant '${i.key}' violated in ${i.bad.length} place(s):`);
+  for (const b of i.bad.slice(0, 10)) console.error(`  - ${b}`);
+}
 if (hardGaps.length) {
   failed = true;
   console.error('\nFAIL: uncovered Section 16.5 conditions with no allow-list entry:');
