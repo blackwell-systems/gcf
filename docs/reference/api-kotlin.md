@@ -6,7 +6,7 @@ repositories {
     maven("https://jitpack.io")
 }
 dependencies {
-    implementation("com.github.blackwell-systems:gcf-kotlin:2.3.0")
+    implementation("com.github.blackwell-systems:gcf-kotlin:2.4.0")
 }
 ```
 

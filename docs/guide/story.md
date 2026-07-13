@@ -132,7 +132,7 @@ The competitive landscape confirmed something: the problem is real, others see i
 
 ## The ecosystem
 
-Six language implementations, all at v2.3.0 or above (Go at v1.4.1), all published to their respective registries:
+Six language implementations, all at v2.4.0 or above (Go at v1.5.0), all published to their respective registries:
 
 - **Go** on pkg.go.dev. The reference implementation. 1 billion+ round-trips with native Go fuzzing.
 - **TypeScript** on npm. Powers the playground and the browser encoder.
@@ -167,7 +167,7 @@ This is not a side project or a portfolio piece. This is the thing.
 
 ## Where it's going
 
-The spec is at v3.3.0 Stable. The foundation is solid. Six languages, 204 conformance fixtures, 43 billion round-trips, 1,700+ evaluations.
+The spec is at v3.4.1 Stable. The foundation is solid. Six languages, 204 conformance fixtures, 43 billion round-trips, 1,700+ evaluations.
 
 What comes next:
 
