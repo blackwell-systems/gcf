@@ -1,14 +1,14 @@
 # Getting Started
 
-GCF is an AI-native wire format for **structured data**. It sits at the boundary between your data and the LLM context window: 71% fewer tokens than JSON, 100% comprehension on every frontier model.
+GCF is an AI-native wire format for **structured data**, built for the agentic loop. It sits at the boundary between your data and the LLM context window: 71% fewer tokens than JSON, 100% comprehension on every frontier model.
 
-**The grammar expresses any structured data regardless of source format**, verified lossless across 43 billion+ round-trips with JSON, YAML, TOML, CSV, and MessagePack.
+**One zero-dep library encodes any structured shape, no schema.** It is lossless (verified across 43 billion+ round-trips with JSON, YAML, TOML, CSV, and MessagePack), token-compact, and read natively by every frontier model. No other single format is all four at once.
 
-Two profiles, one grammar. The **generic profile** encodes any structured data. The **graph profile** is a superset that adds local IDs, typed edges, and session deduplication for relationship-heavy data. You never read or write GCF by hand: call `encode()`, the LLM reads it natively, call `decode()` when a human needs the data back.
+Two profiles, one grammar. The **generic profile** encodes any structured data. The **graph profile** is a superset that adds local IDs, typed edges, and session deduplication for relationship-heavy data. Delta encoding, streaming, and content-addressed identity work in both profiles; local IDs, typed edges, and session dedup are graph-only. You never read or write GCF by hand: call `encode()`, the LLM reads it natively, call `decode()` when a human needs the data back.
 
 - **100% comprehension accuracy** on every frontier model tested (Claude, Gemini, GPT). The only format that never fails.
 - **91.2% under structural stress** (500-symbol code graphs), where JSON drops to 54.1% and TOON to 68.8%.
-- **71% fewer tokens than JSON.** At 1000 records, JSON exceeds 200K context limits entirely. GCF fits in 47K.
+- **71% fewer tokens than JSON.** At 1000 records, JSON's 161K tokens overwhelm the usable context on a 200K model; GCF fits in 47K.
 - **29% fewer tokens than TOON** across 16 real-world datasets (15/16 wins).
 - **43,000,000,000+ lossless round-trips** across 5 formats and 6 language implementations. Zero data corruption.
 - **Zero training.** No model has ever seen GCF in training data. Every frontier model reads it natively.
@@ -20,7 +20,7 @@ JSON works at small scale. At 8 records, every format scores near 100%. The prob
 
 At 500 records, JSON scores [54.1% comprehension accuracy](/guide/benchmarks) across 10 models on code graph data. GPT-5.5 [returns empty strings](https://github.com/blackwell-systems/gcf/tree/main/eval/results). Claude Opus spends [143 lines manually enumerating symbols](https://github.com/blackwell-systems/gcf/blob/main/eval/results/artifacts/opus-json-enumeration-failure.md) and still gets the wrong answer. The repeated field names (`"qualified_name":`, `"kind":`, `"score":` on every record) consume 53,341 tokens of structural noise that overwhelms the model's attention. At scale, JSON's grammar attention collapses from 30% to 8.6%: the model stops tracking structure entirely.
 
-At 1000 records, JSON consumes 161K tokens: it doesn't even fit in a 200K context window. The task becomes impossible regardless of model capability.
+At 1000 records, JSON consumes 161K tokens, leaving no usable room in a 200K context window once the prompt, task, and response are accounted for. The task becomes impossible regardless of model capability.
 
 **The problem goes deeper than repetition.** We [tested 45 common field names across 43 tokenizers from 20 providers](/guide/tokenizer-analysis). JSON's quote-colon patterns (`"fieldName":`) don't just waste tokens; they tokenize *inconsistently* across models. When GPT-4o sees `"value":"pending"`, the opening quote merges with the field name into one token. Claude keeps them separate. The structural boundary (where the field name starts) is at a different token position depending on which model reads it. The most common field names in computing (`"id":`, `"name":`, `"type":`, `"title":`, `"time":`) merge on 30% of all tokenizers tested. The format designed for human readability doesn't even have consistent structure at the token level. The cost is not only inconsistency: controlled training experiments show that merging delimiters into content permanently constrains the model's structural attention, leaving every attention head with roughly 4x more structural capacity than the tokenizer lets it use.
 
@@ -295,7 +295,7 @@ GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=2 edges=
 @0<@1 calls
 ```
 
-233 tokens instead of 965 for the JSON equivalent. Local IDs (`@0`, `@1`) replace full qualified names in edges. Distance groups (`## targets`, `## related`) replace per-record `"distance": N` fields.
+65 tokens instead of 163 for the JSON equivalent. Local IDs (`@0`, `@1`) replace full qualified names in edges. Distance groups (`## targets`, `## related`) replace per-record `"distance": N` fields.
 
 ## Decode
 
