@@ -8,7 +8,7 @@ const features = [
   {
     icon: '📉',
     title: '50-92% fewer input tokens',
-    details: '50-69% on a single call (generic to graph profile). Up to 92% with session deduplication across repeated tool calls.<br><br>At 1000 orders, JSON doesn\'t even fit in a 200K context window. GCF fits in 47K. And 29% fewer tokens than <span class="toon">TOON</span> across 16 real-world datasets (15/16 wins).',
+    details: '50-69% on a single call (generic to graph profile). Up to 92% with session deduplication (graph) and delta encoding (both profiles) across repeated tool calls.<br><br>At 1000 orders, JSON doesn\'t even fit in a 200K context window. GCF fits in 47K. And 29% fewer tokens than <span class="toon">TOON</span> across 16 real-world datasets (15/16 wins).',
   },
   {
     icon: '✍️',
