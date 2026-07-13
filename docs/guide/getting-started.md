@@ -183,7 +183,7 @@ println(output)
 
 **Output:**
 
-```
+```gcf
 GCF profile=generic
 ## employees [2]{id,name,department,salary}
 1|Alice|Engineering|95000
@@ -285,7 +285,7 @@ val output = encode(Payload(
 
 **Output:**
 
-```
+```gcf
 GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=2 edges=1
 ## targets
 @0 fn pkg.Auth 0.78 lsp

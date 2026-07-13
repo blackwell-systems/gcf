@@ -14,13 +14,13 @@ GCF has two encoding profiles that share the same grammar primitives (`##`, `|`,
 
 ### Header
 
-```
+```gcf
 GCF profile=graph tool=<name> budget=<int> tokens=<int> symbols=<int> edges=<int> pack_root=sha256:<hex>
 ```
 
 `profile` is required; every field after it is optional. `tool` SHOULD be present for MCP tool responses.
 
-```
+```gcf
 GCF profile=graph tool=context_for_task
 GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=10 edges=8
 GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=10 edges=8 pack_root=sha256:a1b2c3d4...
@@ -100,7 +100,7 @@ Two spaces before `#`. Used when `session=true` in header.
 
 ### Delta payload
 
-```
+```gcf
 GCF profile=graph tool=context_for_task delta=true base_root=sha256:aaa... new_root=sha256:bbb... tokens=30 savings=85%
 ## removed
 fn pkg.OldFunc
@@ -120,7 +120,7 @@ pkg.Router -> pkg.NewFunc calls
 
 ### Complete graph example
 
-```
+```gcf
 GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=5 edges=4 pack_root=sha256:a1b2c3d4...
 ## targets
 @0 fn github.com/org/repo/internal/auth.Middleware 0.78 lsp_resolved
@@ -143,7 +143,7 @@ GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=5 edges=
 
 ### Header
 
-```
+```gcf
 GCF profile=generic
 ```
 
@@ -151,17 +151,17 @@ Every generic payload starts with this line. Optional fields may follow: `tool`,
 
 ### Root values
 
-```
+```gcf
 GCF profile=generic
 =42                    # root scalar
 ```
 
-```
+```gcf
 GCF profile=generic
 =-                     # root null
 ```
 
-```
+```gcf
 GCF profile=generic
 ## [3]: a,b,c          # root primitive array
 ```
@@ -173,7 +173,7 @@ GCF profile=generic
 value1|value2|value3
 ```
 
-```
+```gcf
 GCF profile=generic
 ## employees [3]{id,name,department,salary}
 1|Alice Smith|Engineering|95000
@@ -334,7 +334,7 @@ Tabular sets can be sent as deltas across turns. One column is the identity key:
 
 Full payload (delta-ready):
 
-```
+```gcf
 GCF profile=generic pack_root=sha256:aaa9f2... key=id
 ## orders [3]{@id,total,status,customer}
 1001|59.98|shipped|Alice
@@ -344,7 +344,7 @@ GCF profile=generic pack_root=sha256:aaa9f2... key=id
 
 Delta payload (only what changed):
 
-```
+```gcf
 GCF profile=generic delta=true base_root=sha256:aaa9f2... new_root=sha256:bbb4c7... key=id
 ## added [1]{@id,total,status,customer}
 1004|75.00|pending|Dave
@@ -356,7 +356,7 @@ GCF profile=generic delta=true base_root=sha256:aaa9f2... new_root=sha256:bbb4c7
 
 Unchanged (current set still matches the consumer's `pack_root`):
 
-```
+```gcf
 GCF profile=generic unchanged=true pack_root=sha256:bbb4c7... count=3
 ```
 
@@ -391,7 +391,7 @@ In the **graph** profile the trailer is `##! summary symbols=N edges=M counts=..
 
 ### Streaming example
 
-```
+```gcf
 GCF profile=graph tool=context_for_task budget=5000
 ## targets
 @0 fn pkg.Auth 0.95 lsp

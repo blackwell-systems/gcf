@@ -95,7 +95,7 @@ This is a structural limitation of TOON. It cannot be fixed without adding a loc
 In multi-turn LLM interactions, the same data appears across multiple tool responses. GCF tracks what's been sent and replaces known records with bare references:
 
 **Call 1: full declarations**
-```
+```gcf
 GCF profile=graph tool=context_for_task symbols=15 edges=10 session=true
 ## targets
 @0 fn pkg.AuthMiddleware 0.78 lsp_resolved
@@ -104,7 +104,7 @@ GCF profile=graph tool=context_for_task symbols=15 edges=10 session=true
 ```
 
 **Call 5: 92% bare references**
-```
+```gcf
 GCF profile=graph tool=context_for_task symbols=22 edges=16 session=true
 ## targets
 @0  # previously transmitted
@@ -129,7 +129,7 @@ This isn't a feature that can be bolted on. Session dedup requires the format to
 
 When the LLM re-queries and the data changed slightly, GCF sends only the diff:
 
-```
+```gcf
 GCF profile=graph tool=context_for_task delta=true base_root=sha256:0123456789abcdef... new_root=sha256:fedcba9876543210... savings=81%
 ## removed
 fn pkg.OldHandler

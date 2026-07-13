@@ -1,10 +1,14 @@
 import { defineConfig } from 'vitepress'
+import gcfGrammar from './gcf.tmLanguage.json'
 
 export default defineConfig({
   title: 'GCF',
   description: 'Token-optimized wire format for LLM tool responses',
   appearance: 'force-dark',
   base: '/',
+  markdown: {
+    languages: [gcfGrammar as any],
+  },
   head: [
     ['link', { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     ['link', { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' }],

@@ -19,7 +19,7 @@ If the tool takes 3 seconds to traverse a call graph, the LLM waits 3 seconds se
 
 With streaming encode, the server emits rows as they arrive:
 
-```
+```gcf
 GCF profile=graph tool=context_for_task budget=5000
 ## targets
 @0 fn pkg.Auth 0.95 lsp_resolved          ← emitted at 50ms
@@ -117,7 +117,7 @@ This is not a feature addition. It is a fundamental redesign of the format's hea
 
 Streaming is not graph-only. The generic profile uses the same `[?]` deferred count and `##! summary` trailer:
 
-```
+```gcf
 GCF profile=generic
 ## orders [?]{id,customer,total,status}
 1001|Acme Corp|249.99|shipped        ← emitted at 10ms

@@ -50,7 +50,7 @@ With GCF sessions, previously-sent symbols become bare references:
 The LLM already has `@7` in its context window from the prior response. No need to resend the qualified name, kind, score, or provenance.
 
 **Call 1:** Full declarations (same as non-session)
-```
+```gcf
 GCF profile=graph tool=context_for_task budget=5000 tokens=2100 symbols=15 edges=12
 ## targets
 @0 fn pkg.AuthMiddleware 0.78 lsp_resolved
@@ -59,7 +59,7 @@ GCF profile=graph tool=context_for_task budget=5000 tokens=2100 symbols=15 edges
 ```
 
 **Call 2:** 12 of 18 symbols are bare refs
-```
+```gcf
 GCF profile=graph tool=context_for_task budget=5000 tokens=800 symbols=18 edges=14 session=true
 ## targets
 @0  # previously transmitted
@@ -69,7 +69,7 @@ GCF profile=graph tool=context_for_task budget=5000 tokens=800 symbols=18 edges=
 ```
 
 **Call 3:** 18 of 22 symbols are bare refs
-```
+```gcf
 GCF profile=graph tool=context_for_task budget=5000 tokens=400 symbols=22 edges=18 session=true
 ## targets
 @0  # previously transmitted

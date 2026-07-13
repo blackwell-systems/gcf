@@ -17,7 +17,7 @@ Server checks:
 
 ## Delta format
 
-```
+```gcf
 GCF profile=graph tool=context_for_task delta=true base_root=a1b2c3 new_root=d4e5f6 tokens=30 savings=81%
 ## removed
 fn github.com/org/repo/pkg.OldHandler
@@ -119,7 +119,7 @@ fmt.Println(gcf.EncodeDelta(delta))
 
 **Output:**
 
-```
+```gcf
 GCF profile=graph tool=context_for_task delta=true base_root=a1b2c3 new_root=d4e5f6 tokens=30 savings=85%
 ## removed
 fn pkg.OldFunc
@@ -153,7 +153,7 @@ A removal of a symbol that is not present, or an addition of one that already ex
 
 Delta is not graph-only. The generic profile supports the same keyed diff over any tabular set (SPEC Section 10a). One column is the identity key (`@id` in the field declaration, `key=id` in the header), and the delta carries `## added` / `## changed` / `## removed` sections:
 
-```
+```gcf
 GCF profile=generic delta=true base_root=sha256:aaa9f2... new_root=sha256:bbb4c7... key=id
 ## added [1]{@id,total,status}
 1004|75.00|pending

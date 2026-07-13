@@ -11,7 +11,7 @@ One zero-dep library handles both. It encodes any structured shape with no schem
 
 ## Generic profile at a glance
 
-```
+```gcf
 GCF profile=generic
 ## employees [3]{id,name,department,salary}
 1|Alice Smith|Engineering|95000
@@ -25,14 +25,14 @@ Five elements in the generic profile. Five more in the [graph profile](#graph-pr
 
 ## 1. Tabular arrays
 
-```
+```gcf
 ## {name} [{count}]{{field1},{field2},{field3}}
 value1|value2|value3
 ```
 
 The header declares the section name, record count, and field names in one line. Rows contain only values, separated by pipe (`|`). No field names repeated per record.
 
-```
+```gcf
 ## employees [3]{id,name,department,salary}
 1|Alice Smith|Engineering|95000
 2|Bob Jones|Sales|72000
@@ -45,13 +45,13 @@ Pipe separator with no spaces maximizes density. The pipe was reverse-engineered
 
 ## 2. Key-value pairs (object fields)
 
-```
+```gcf
 key=value
 ```
 
 Primitive fields use `key=value` with no quoting for numbers and booleans:
 
-```
+```gcf
 config=production
 version=2.1.0
 port=5432
@@ -63,13 +63,13 @@ max_retries=3
 
 ## 3. Section headers (nested objects)
 
-```
+```gcf
 ## key
 ```
 
 Nested objects use `## key` section headers with indented key-value pairs:
 
-```
+```gcf
 ## database
   host=db.example.com
   port=5432
@@ -86,7 +86,7 @@ Nested objects use `## key` section headers with indented key-value pairs:
 
 Sections can nest:
 
-```
+```gcf
 ## server
   host=0.0.0.0
   port=8080
@@ -99,7 +99,7 @@ Sections can nest:
 
 When records contain both primitive fields and nested objects, rows use `@{id}` prefixes with `^` cell markers. Nested objects with 3+ scalar fields use inline schema encoding (`^{fields}`) for maximum density:
 
-```
+```gcf
 ## orders [2]{id,total,status,customer}
 @0 1001|249.99|shipped|^{name,email,tier}
 Alice Smith|alice@example.com|premium
@@ -112,7 +112,7 @@ Bob Jones|bob@example.com|standard
 - Inline attachment data follows on the next line (positional, no field prefix)
 - For objects with fewer than 3 fields or nested sub-objects, traditional `.field {}` syntax is used:
 
-```
+```gcf
 ## orders [1]{id,metadata}
 @0 1001|^
 .metadata {}
@@ -124,13 +124,13 @@ Bob Jones|bob@example.com|standard
 
 ## 5. Primitive arrays (inline)
 
-```
+```gcf
 {name}[{count}]: val1,val2,val3
 ```
 
 Arrays where every element is a primitive (string, number, boolean) are encoded on a single line:
 
-```
+```gcf
 tags[3]: production,us-east-1,critical
 ports[3]: 8080,8443,9090
 scopes[2]: read,write
@@ -166,7 +166,7 @@ scopes[2]: read,write
 
 vs GCF:
 
-```
+```gcf
 GCF profile=generic
 ## employees [3]{id,name,department,salary}
 1|Alice Smith|Engineering|95000
@@ -184,7 +184,7 @@ The generic profile (above) handles any structured data. The graph profile is a 
 
 ### Graph profile at a glance
 
-```
+```gcf
 GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=4 edges=2 pack_root=sha256:a1b2c3...
 ## targets
 @0 fn pkg.AuthMiddleware 0.78 lsp_resolved
@@ -203,7 +203,7 @@ Five additional elements beyond the generic profile:
 
 The first line identifies the format and carries payload metadata:
 
-```
+```gcf
 GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=10 edges=8 pack_root=sha256:a1b2c3d4...
 ```
 
@@ -222,13 +222,13 @@ Fields are `key=value` pairs separated by spaces. Order doesn't matter.
 
 ## 7. Symbol lines (nodes)
 
-```
+```gcf
 @{id} {kind} {qualified_name} {score} {provenance}
 ```
 
 Fields are positional. No field names, no delimiters, no quoting.
 
-```
+```gcf
 @0 fn github.com/org/repo/pkg.AuthMiddleware 0.78 lsp_resolved
 @1 type github.com/org/repo/pkg.Config 0.65 ast_inferred
 @2 method github.com/org/repo/pkg.Server.Start 0.54 lsp_resolved
@@ -246,13 +246,13 @@ Fields are positional. No field names, no delimiters, no quoting.
 
 ## 8. Edge lines (relationships)
 
-```
+```gcf
 @{target}<@{source} {edge_type}
 ```
 
 The `<` arrow points toward the target. Read it as "source flows into target."
 
-```
+```gcf
 @0<@2 calls        # @2 (NewServer) calls @0 (AuthMiddleware)
 @1<@0 references   # @0 (AuthMiddleware) references @1 (Config)
 @3<@2 calls        # @2 (NewServer) calls @3 (Server.Start)
@@ -261,14 +261,14 @@ The `<` arrow points toward the target. Read it as "source flows into target."
 **Why this saves tokens:** JSON edges look like `{"source": "github.com/org/repo/pkg.NewServer", "target": "github.com/org/repo/pkg.AuthMiddleware", "edge_type": "calls"}`. That's ~100 tokens per edge. GCF edges are ~4 tokens each.
 
 Optional status field for diff payloads:
-```
+```gcf
 @0<@2 calls added     # new edge
 @1<@3 imports removed # deleted edge
 ```
 
 ## 9. Distance groups
 
-```
+```gcf
 ## targets
 ## related
 ## extended
@@ -290,7 +290,7 @@ Groups partition the payload into semantic sections. The group a symbol appears 
 
 ## 10. Comments
 
-```
+```gcf
 # This is a comment (ignored by parsers)
 ```
 
@@ -356,7 +356,7 @@ Unknown kinds are passed through verbatim (no error).
 
 vs GCF:
 
-```
+```gcf
 GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=2 edges=1
 ## targets
 @0 fn github.com/org/repo/pkg.AuthMiddleware 0.78 lsp_resolved

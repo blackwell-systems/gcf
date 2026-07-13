@@ -110,7 +110,7 @@ The opt-out produces the pre-v3.2 attachment encoding for nested objects. Same d
 
 If you want to include a primer for clarity:
 
-```
+```gcf
 GCF format: Symbols are @id kind qualified_name score provenance. 
 Edges are @target<@source type. Sections marked with ##.
 ```
@@ -133,7 +133,7 @@ LLMs can produce valid GCF given a short format example. 28 runs across 9 models
 
 The primer is 3 lines:
 
-```
+```gcf
 GCF format: header starts with "GCF profile=graph tool=", symbols are @id kind qname score provenance,
 edges are @target<@source type (< not >), sections are ## targets/related/extended/edges.
 Kind abbreviations: function=fn, type=type, method=method, interface=iface.
@@ -212,7 +212,7 @@ For the generic profile:
 
 GCF payloads include `budget` and `tokens` in the header:
 
-```
+```gcf
 GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=10 edges=8
 ```
 

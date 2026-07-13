@@ -1,0 +1,144 @@
+{
+  "name": "gcf",
+  "scopeName": "source.gcf",
+  "patterns": [
+    { "include": "#comment" },
+    { "include": "#header" },
+    { "include": "#trailer" },
+    { "include": "#section" },
+    { "include": "#edge" },
+    { "include": "#ref" },
+    { "include": "#node" },
+    { "include": "#delta-removed" },
+    { "include": "#keyvalue" },
+    { "include": "#string" },
+    { "include": "#pipe" },
+    { "include": "#number" }
+  ],
+  "repository": {
+    "comment": {
+      "match": "(#)\\s.*$",
+      "name": "comment.line.number-sign.gcf"
+    },
+    "header": {
+      "begin": "^(GCF)\\b",
+      "beginCaptures": { "1": { "name": "keyword.control.gcf" } },
+      "end": "$",
+      "patterns": [{ "include": "#headerpair" }]
+    },
+    "trailer": {
+      "begin": "^(##!)\\s+(summary)\\b",
+      "beginCaptures": {
+        "1": { "name": "punctuation.definition.heading.gcf" },
+        "2": { "name": "keyword.control.gcf" }
+      },
+      "end": "$",
+      "patterns": [{ "include": "#headerpair" }]
+    },
+    "headerpair": {
+      "match": "([A-Za-z_][A-Za-z0-9_]*)(=)(\\S+)",
+      "captures": {
+        "1": { "name": "variable.parameter.gcf" },
+        "2": { "name": "keyword.operator.assignment.gcf" },
+        "3": { "name": "string.unquoted.gcf" }
+      }
+    },
+    "section": {
+      "begin": "^(##)\\s+([^\\s\\[{]+)",
+      "beginCaptures": {
+        "1": { "name": "punctuation.definition.heading.gcf" },
+        "2": { "name": "entity.name.section.gcf" }
+      },
+      "end": "$",
+      "patterns": [
+        { "include": "#count" },
+        { "include": "#fielddecl" }
+      ]
+    },
+    "count": {
+      "match": "(\\[)(\\?|\\d+)?(\\])",
+      "captures": {
+        "1": { "name": "punctuation.definition.brackets.gcf" },
+        "2": { "name": "constant.numeric.gcf" },
+        "3": { "name": "punctuation.definition.brackets.gcf" }
+      }
+    },
+    "fielddecl": {
+      "begin": "\\{",
+      "beginCaptures": { "0": { "name": "punctuation.definition.dictionary.gcf" } },
+      "end": "\\}",
+      "endCaptures": { "0": { "name": "punctuation.definition.dictionary.gcf" } },
+      "patterns": [
+        { "match": "@", "name": "keyword.operator.gcf" },
+        { "match": "[^,}@]+", "name": "variable.other.member.gcf" },
+        { "match": ",", "name": "punctuation.separator.gcf" }
+      ]
+    },
+    "edge": {
+      "match": "^(@)(\\d+)(<)(@)(\\d+)\\s+(\\S+)(?:\\s+(added|removed))?\\s*$",
+      "captures": {
+        "1": { "name": "keyword.operator.gcf" },
+        "2": { "name": "constant.numeric.gcf" },
+        "3": { "name": "keyword.operator.gcf" },
+        "4": { "name": "keyword.operator.gcf" },
+        "5": { "name": "constant.numeric.gcf" },
+        "6": { "name": "entity.name.tag.gcf" },
+        "7": { "name": "keyword.control.gcf" }
+      }
+    },
+    "ref": {
+      "match": "^(@)(\\d+)\\s+(#.*)$",
+      "captures": {
+        "1": { "name": "keyword.operator.gcf" },
+        "2": { "name": "constant.numeric.gcf" },
+        "3": { "name": "comment.line.number-sign.gcf" }
+      }
+    },
+    "node": {
+      "match": "^(@)(\\d+)\\s+(\\S+)\\s+(\\S+)\\s+(-?\\d+\\.\\d+)\\s+(\\S+)(?:\\s+(\\d+))?\\s*$",
+      "captures": {
+        "1": { "name": "keyword.operator.gcf" },
+        "2": { "name": "constant.numeric.gcf" },
+        "3": { "name": "storage.type.gcf" },
+        "4": { "name": "entity.name.function.gcf" },
+        "5": { "name": "constant.numeric.gcf" },
+        "6": { "name": "variable.parameter.gcf" },
+        "7": { "name": "constant.numeric.gcf" }
+      }
+    },
+    "delta-removed": {
+      "match": "^(fn|type|method|iface|var|const|class|field|route|ext|file|pkg|svc|table|resource|selector)\\s+(\\S+)\\s*$",
+      "captures": {
+        "1": { "name": "storage.type.gcf" },
+        "2": { "name": "entity.name.function.gcf" }
+      }
+    },
+    "keyvalue": {
+      "match": "^(\\s*)([A-Za-z_][A-Za-z0-9_.]*)(=)(.*)$",
+      "captures": {
+        "2": { "name": "variable.other.property.gcf" },
+        "3": { "name": "keyword.operator.assignment.gcf" },
+        "4": {
+          "patterns": [
+            { "include": "#string" },
+            { "include": "#number" },
+            { "match": "\\b(true|false)\\b", "name": "constant.language.gcf" },
+            { "match": ".+", "name": "string.unquoted.gcf" }
+          ]
+        }
+      }
+    },
+    "string": {
+      "match": "\"(?:[^\"\\\\]|\\\\.)*\"",
+      "name": "string.quoted.double.gcf"
+    },
+    "pipe": {
+      "match": "\\|",
+      "name": "punctuation.separator.gcf"
+    },
+    "number": {
+      "match": "(?<![\\w.])-?\\d+(?:\\.\\d+)?(?:[eE][+-]?\\d+)?(?![\\w])",
+      "name": "constant.numeric.gcf"
+    }
+  }
+}
