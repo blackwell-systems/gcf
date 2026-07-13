@@ -7,7 +7,7 @@ GCF is a line-oriented, text-based format with two encoding profiles:
 
 Both profiles share the same grammar primitives: `##` section headers and positional fields. The graph profile adds `@` local IDs and edge notation.
 
-One zero-dep library handles both. It encodes any structured shape with no schema, losslessly (verified across 43 billion+ round-trips), at a fraction of the tokens, and the model reads the output directly with no decode step. No other single format is all four at once: JSON is schema-free but verbose, protobuf is compact but needs a schema, MessagePack is binary, and TOON is not reliably lossless.
+One zero-dep library handles both. It encodes any structured shape with no schema, losslessly (verified across 43 billion+ round-trips), at a fraction of the tokens, and the model reads the output directly with no decode step. No other single format is all four at once: JSON is schema-free but verbose, protobuf is compact but needs a schema, MessagePack is binary, and TOON is lossy, degrades on nested data, and its tab delimiter merges with content across tokenizers (see [GCF vs TOON](/guide/vs-toon)).
 
 ## Generic profile at a glance
 
