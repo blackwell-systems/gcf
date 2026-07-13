@@ -113,7 +113,7 @@ This isn't compression. It's a different encoding that models comprehend better.
 
 gzip reduces bytes on the wire but not tokens in the context window. The LLM doesn't see gzip bytes; it sees the decompressed text. A gzipped JSON payload that decompresses to 53,341 tokens still costs 53,341 tokens in the context window.
 
-GCF reduces the token count of the text itself. 11,090 tokens for the same data. And the model reads it with [100% accuracy](/guide/benchmarks) where JSON drops to 54.1% at scale. Compression doesn't improve comprehension. GCF does both.
+GCF reduces the token count of the text itself. 11,090 tokens for the same data. And the model reads it with [91.2% accuracy](/guide/benchmarks) where JSON drops to 54.1% at scale. Compression doesn't improve comprehension. GCF does both.
 
 ## Why not just use Protobuf?
 
@@ -134,4 +134,4 @@ Same answer as protobuf: they're binary. An LLM cannot read MessagePack bytes in
 
 GCF is text. It goes directly into the context window. The model reads it natively with [100% accuracy on standard workloads and 91.2% on complex code graphs](/guide/benchmarks) (vs JSON 54.1%) and produces valid output from a 3-line primer. Binary formats solve the wrong layer of the problem.
 
-That said, if your pipeline uses MessagePack internally, GCF handles it: deserialize to a native object, call `encodeGeneric()`. We've verified this path lossless across 585 million round-trips.
+That said, if your pipeline uses MessagePack internally, GCF handles it: deserialize to a native object, call `encodeGeneric()`. We've verified this path lossless across 584 million round-trips.
