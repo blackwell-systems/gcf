@@ -80,10 +80,10 @@ empty=""</code></pre>
 
         <div class="grammar-entry">
           <h4>Symbols</h4>
-          <pre class="grammar-code"><code v-if="ready" v-html="highlightGCF(`@1 func handleReq 0.95\n@2 iface AuthCfg 0.60 ast\n@3\n@4 func revoke 0.91`)"></code><code v-else>@1 func handleReq 0.95
-@2 iface AuthCfg 0.60 ast
-@3
-@4 func revoke 0.91</code></pre>
+          <pre class="grammar-code"><code v-if="ready" v-html="highlightGCF(`@0 fn handleReq 0.95\n@1 iface AuthCfg 0.60 ast\n@2\n@3 fn revoke 0.91`)"></code><code v-else>@0 fn handleReq 0.95
+@1 iface AuthCfg 0.60 ast
+@2
+@3 fn revoke 0.91</code></pre>
           <ul class="grammar-notes">
             <li><code>@N</code> local ID, <code>kind</code>, <code>qname</code>, <code>score</code>, <code>provenance</code></li>
             <li>Bare <code>@N</code> = session ref (already transmitted)</li>
@@ -134,7 +134,7 @@ empty=""</code></pre>
 
         <div class="grammar-entry">
           <h4>Delta Encoding <span class="both-badge">graph profile</span></h4>
-          <pre class="grammar-code"><code v-if="ready" v-html="highlightGCF(`GCF tool=topology delta=true tokens=30 savings=85%\n## removed\nfn pkg.OldHandler\n## added\n@0 fn pkg.NewHandler 0.85 lsp 0\n## edges_added\npkg.Router -> pkg.NewHandler calls`)"></code><code v-else>GCF tool=topology delta=true tokens=30 savings=85%
+          <pre class="grammar-code"><code v-if="ready" v-html="highlightGCF(`GCF profile=graph tool=topology delta=true tokens=30 savings=85%\n## removed\nfn pkg.OldHandler\n## added\n@0 fn pkg.NewHandler 0.85 lsp 0\n## edges_added\npkg.Router -> pkg.NewHandler calls`)"></code><code v-else>GCF profile=graph tool=topology delta=true tokens=30 savings=85%
 ## removed
 fn pkg.OldHandler
 ## added
@@ -144,7 +144,7 @@ pkg.Router -> pkg.NewHandler calls</code></pre>
           <ul class="grammar-notes">
             <li><code>delta=true</code> signals diff from prior payload</li>
             <li>Only added/removed symbols and edges</li>
-            <li>95% savings for small topology changes</li>
+            <li>85% savings for small topology changes</li>
           </ul>
         </div>
 
