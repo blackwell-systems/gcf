@@ -38,6 +38,7 @@ export default defineConfig({
         items: [
           { text: 'Getting Started', link: '/guide/getting-started' },
           { text: 'Format Overview', link: '/guide/format-overview' },
+          { text: 'Where GCF Fits', link: '/guide/use-cases' },
           { text: 'Using GCF with LLMs', link: '/guide/llm-integration' },
           { text: 'MCP Integration', link: '/guide/mcp' },
           { text: 'MCP Proxy (Zero-Code)', link: '/guide/proxy' },
