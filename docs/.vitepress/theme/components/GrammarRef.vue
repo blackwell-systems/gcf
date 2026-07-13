@@ -73,6 +73,24 @@ empty=""</code></pre>
             <li>Values go directly in the row (no attachments)</li>
           </ul>
         </div>
+
+        <div class="grammar-entry">
+          <h4>Delta Encoding <span class="both-badge">generic profile</span></h4>
+          <pre class="grammar-code"><code v-if="ready" v-html="highlightGCF(`GCF profile=generic delta=true base_root=sha256:aaa new_root=sha256:bbb key=id\n## added [1]{@id,total,status}\n1004|75.00|pending\n## changed [1]{@id,total,status}\n1002|29.99|shipped\n## removed [1]{@id}\n1001`)"></code><code v-else>GCF profile=generic delta=true base_root=sha256:aaa new_root=sha256:bbb key=id
+## added [1]{@id,total,status}
+1004|75.00|pending
+## changed [1]{@id,total,status}
+1002|29.99|shipped
+## removed [1]{@id}
+1001</code></pre>
+          <ul class="grammar-notes">
+            <li><code>key=id</code> names the identity column</li>
+            <li><code>## added</code> / <code>## changed</code> / <code>## removed</code> sections</li>
+            <li><code>## changed</code> replaces the whole row by identity</li>
+            <li><code>## removed</code> carries identity values only</li>
+            <li>Set semantics: row order is not significant</li>
+          </ul>
+        </div>
       </div>
 
       <div class="grammar-column gcf-corners">
