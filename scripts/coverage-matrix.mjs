@@ -30,7 +30,6 @@ const TAXONOMY = [
   ['Header', 'missing_header', 'First line does not begin with GCF'],
   ['Header', 'missing_profile', 'Header has no profile= field'],
   ['Header', 'unknown_profile', 'profile value is not generic or graph'],
-  ['Header', 'missing_tool', 'Graph profile header has no tool= field'],
   ['Header', 'malformed_header_field', 'Key-value pair missing ='],
   ['Header', 'duplicate_header_field', 'Same header key appears more than once'],
   ['Scalar', 'unterminated_quote', 'Quoted string missing closing "'],
@@ -64,14 +63,10 @@ const TAXONOMY = [
 // Conditions with no covering error fixture today, with the reason and resolution.
 // Deleting an entry here without adding a covering fixture will fail the build.
 const KNOWN_GAPS = {
-  missing_tool:
-    'Spec contradiction, not a fixture gap: Section 16.5 lists this as a reject, but Section 3.2 (v3.1) made the graph `tool` field optional and graph-decode/003_no_tool_field.json decodes it successfully. The Section 16.5 row is stale and should be removed or amended.',
   orphan_attachment:
-    'errors-v2/016_orphan_attachment.json is a decode-success case (an orphan `.field` decoded as an extra field per Section 7.4.6.1.4), not the strict reject. A dedicated error fixture (a `.field` with no preceding `@N` row and matching bare `^` cell) is missing.',
+    'Not enforced as a distinct reject by the reference decoder (verified): a `.field` with a parent row but no matching `^` cell decodes as an extra field (016_orphan_attachment.json, per Section 7.4.6.1.4); a `.field` with no parent row trips invalid_indent or row_width_mismatch instead. Pending decision: harden decoders to a distinct reject, or amend Section 16.5.',
   orphan_inline_attachment:
-    'No error fixture for a positional inline body that has no eligible attachment-marker cell.',
-  inline_width_mismatch:
-    'No error fixture for a positional inline body whose value count does not match its declared inline schema (014_inline_count_mismatch covers count_mismatch, a different condition).',
+    'The reference decoder ACCEPTS a positional inline body with no eligible attachment-marker cell (verified: unmatched/extra bodies decode without error), violating the Section 16.5 MUST-reject. Pending decision: harden decoders, or amend Section 16.5.',
 };
 
 // Operations that MUST have at least one fixture (every conformance capability).

@@ -1,0 +1,7 @@
+{
+  "name": "inline_width_mismatch",
+  "description": "A positional inline attachment body whose value count does not match its declared inline schema MUST be rejected (SPEC 16.5). The row declares ^{name,email,tier} (3 fields) but the positional body 'Alice|alice@test.com' supplies only 2 values. Distinct from count_mismatch (row/section arity); this is inline-schema body arity.",
+  "operation": "error",
+  "expectedError": "inline_width_mismatch",
+  "input": "GCF profile=generic\n## orders [1]{id,total,customer}\n@0 1|99.99|^{name,email,tier}\nAlice|alice@test.com\n"
+}

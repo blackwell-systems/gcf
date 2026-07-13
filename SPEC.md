@@ -1562,7 +1562,7 @@ On TOON's own benchmark datasets: 34% fewer tokens on mixed-structure data, 44% 
 Conforming graph-profile encoders MUST:
 
 - Emit UTF-8 output with LF line endings
-- Emit a header line beginning with `GCF profile=graph` containing at least the `tool` field
+- Emit a header line beginning with `GCF profile=graph` (the `tool` field is optional, Section 3.2; emit it when a producing-tool name is available)
 - Emit the `edges` field in the header with an accurate count (buffered mode), OR omit it and provide counts in `##! summary` (streaming mode)
 - Assign symbol IDs sequentially starting from 0 in non-session payloads; preserve stable session-scoped IDs when `session=true`
 - Emit scores with exactly 2 decimal places
@@ -1673,7 +1673,6 @@ A conforming decoder operates in strict mode. There is no lenient or permissive 
 | Missing header | First line does not begin with `GCF` |
 | Missing profile | Header has no `profile=` field |
 | Unknown profile | `profile` value is not `generic` or `graph` |
-| Missing tool (graph) | Graph profile header has no `tool=` field |
 | Malformed header field | Key-value pair missing `=` |
 | Duplicate header field | Same header key appears more than once |
 

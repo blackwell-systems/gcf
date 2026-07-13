@@ -15,10 +15,15 @@
 
 - Aligned Section 7 with the reference encoders: positional `.field` attachments are emitted flush-left (same column as the `@N` row), with the attachment body indented beneath. The prior 2-space form matched no encoder.
 
+### Spec correction: graph `tool` field is optional
+
+- Removed the stale Section 16.5 `Missing tool (graph)` decoder-reject row and reconciled the Section 16.1 encoder checklist: the graph header `tool` field is optional (Section 3.2, since v3.1; it is an MCP-response convention, not a requirement, and mandating it would wrongly exclude non-MCP graph producers). Decoders already accept a graph header without `tool` (`graph-decode/003_no_tool_field.json`); the Section 16.5 row contradicted that and is now removed.
+
 ### Conformance
 
 - New `graph-stream-encode` conformance operation with shared fixtures: 004/006 (positional trailer) and 005/007 (labeled trailer, `options.labeledTrailerCounts`), where 006/007 exercise three distance groups (targets/related/extended) with distinct per-group counts and multiple edges (`counts=3,2,1,4` ↔ `counts=targets:3,related:2,extended:1,edges:4`). Fixtures 008/009 add the zero-edge case (`counts=2,1,0` / `counts=targets:2,related:1,edges:0`), pinning the rule that the edge count is always the last `counts` entry even when it is 0; this exposed and now guards a divergence where all six encoders dropped the edge count for zero-edge streams (SPEC §8.4 / §8.4.1). Streaming encode previously had only decode fixtures, which is how an earlier Go-only header regression escaped. All six SDKs reproduce these bytes exactly.
 - New `generic-delta-session` fixtures exercising the re-anchor cadence (fixed-N, size-guard, and schema-change forced full).
+- New `scripts/coverage-matrix.mjs` and generated `tests/conformance/COVERAGE.md`: cross-reference every fixture against the Section 16.5 decoder strict-mode taxonomy and the conformance operation set, ratcheting in CI (a newly-uncovered condition, a missing required operation, or a stale allow-list entry fails the build). It surfaced the stale `Missing tool` row (fixed above) and three uncovered conditions; this release adds the verified `inline_width_mismatch` error fixture (036, rejected by all six decoders). Two conditions remain tracked gaps where the reference decoder does not enforce the Section 16.5 reject: `orphan_attachment` (an orphan `.field` decodes as an extra field, or trips a different error) and `orphan_inline_attachment` (an unmatched positional inline body is accepted). Both await a decode-strictness-vs-spec decision.
 
 ### Comprehension validation
 

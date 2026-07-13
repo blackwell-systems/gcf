@@ -6,9 +6,9 @@
 
 ## Summary
 
-- Fixtures: **198** across 21 directories, 14 operations
-- Section 16.5 conditions covered: **28/32**
-- Uncovered (known gaps, tracked below): **4**
+- Fixtures: **199** across 21 directories, 14 operations
+- Section 16.5 conditions covered: **29/31**
+- Uncovered (known gaps, tracked below): **2**
 - Uncovered (unexpected, fails the build): **0**
 - Required operations missing: **0**
 
@@ -19,7 +19,6 @@
 | Header | First line does not begin with GCF | `missing_header` | covered | `errors-v2/021_missing_header.json` |
 | Header | Header has no profile= field | `missing_profile` | covered | `errors-v2/001_missing_profile.json` |
 | Header | profile value is not generic or graph | `unknown_profile` | covered | `errors-v2/002_unknown_profile.json` |
-| Header | Graph profile header has no tool= field | `missing_tool` | KNOWN GAP | Spec contradiction, not a fixture gap: Section 16.5 lists this as a reject, but Section 3.2 (v3.1) made the graph `tool` field optional and graph-decode/003_no_tool_field.json decodes it successfully. The Section 16.5 row is stale and should be removed or amended. |
 | Header | Key-value pair missing = | `malformed_header_field` | covered | `errors-v2/023_malformed_header_field.json` |
 | Header | Same header key appears more than once | `duplicate_header_field` | covered | `errors-v2/018_duplicate_header_field.json` |
 | Scalar | Quoted string missing closing " | `unterminated_quote` | covered | `errors-v2/009_unterminated_quote.json` |
@@ -37,11 +36,11 @@
 | Structural | Leading whitespace contains tab characters | `tab_indentation` | covered | `errors-v2/007_tab_indentation.json` |
 | Structural | Indentation increases by more than one level | `invalid_indent` | covered | `errors-v2/008_invalid_indent_jump.json` |
 | Structural | Expanded/tabular row ID != its zero-based item index | `invalid_item_id` | covered | `errors-v2/019_invalid_item_id.json` |
-| Structural | .field without a parent @N row and matching bare ^ cell | `orphan_attachment` | KNOWN GAP | errors-v2/016_orphan_attachment.json is a decode-success case (an orphan `.field` decoded as an extra field per Section 7.4.6.1.4), not the strict reject. A dedicated error fixture (a `.field` with no preceding `@N` row and matching bare `^` cell) is missing. |
-| Structural | Positional inline body has no eligible attachment-marker cell | `orphan_inline_attachment` | KNOWN GAP | No error fixture for a positional inline body that has no eligible attachment-marker cell. |
+| Structural | .field without a parent @N row and matching bare ^ cell | `orphan_attachment` | KNOWN GAP | Not enforced as a distinct reject by the reference decoder (verified): a `.field` with a parent row but no matching `^` cell decodes as an extra field (016_orphan_attachment.json, per Section 7.4.6.1.4); a `.field` with no parent row trips invalid_indent or row_width_mismatch instead. Pending decision: harden decoders to a distinct reject, or amend Section 16.5. |
+| Structural | Positional inline body has no eligible attachment-marker cell | `orphan_inline_attachment` | KNOWN GAP | The reference decoder ACCEPTS a positional inline body with no eligible attachment-marker cell (verified: unmatched/extra bodies decode without error), violating the Section 16.5 MUST-reject. Pending decision: harden decoders, or amend Section 16.5. |
 | Structural | Attachment-marker cell has no matching body | `missing_attachment` | covered | `errors-v2/017_missing_attachment.json` |
 | Structural | More than one attachment targets the same field in one row | `duplicate_attachment` | covered | `errors-v2/027_duplicate_attachment.json` |
-| Structural | Positional inline body value count != its declared inline schema | `inline_width_mismatch` | KNOWN GAP | No error fixture for a positional inline body whose value count does not match its declared inline schema (014_inline_count_mismatch covers count_mismatch, a different condition). |
+| Structural | Positional inline body value count != its declared inline schema | `inline_width_mismatch` | covered | `errors-v2/036_inline_width_mismatch.json` |
 | Graph | Symbol line does not have exactly 5 positional fields | `invalid_node_line` | covered | `errors-v2/028_invalid_graph_node.json` |
 | Graph | @ prefix followed by non-integer | `invalid_symbol_id` | covered | `errors-v2/029_invalid_graph_symbol_id.json` |
 | Graph | Score does not match the score grammar | `invalid_score` | covered | `errors-v2/030_invalid_graph_score.json` |
@@ -57,7 +56,7 @@
 | `delta` | 2 | yes |
 | `delta-verify` | 1 | yes |
 | `encode` | 106 | yes |
-| `error` | 33 | yes |
+| `error` | 34 | yes |
 | `generic-delta` | 2 | yes |
 | `generic-delta-decode` | 1 | yes |
 | `generic-delta-session` | 3 | yes |
@@ -76,7 +75,7 @@
 | `attachments` | 7 |
 | `containers` | 7 |
 | `decode` | 6 |
-| `errors-v2` | 34 |
+| `errors-v2` | 35 |
 | `flatten` | 19 |
 | `generic-delta` | 7 |
 | `generic-delta-session` | 3 |
@@ -96,8 +95,6 @@
 
 ## Known gaps (tracked)
 
-- **missing_tool** — Spec contradiction, not a fixture gap: Section 16.5 lists this as a reject, but Section 3.2 (v3.1) made the graph `tool` field optional and graph-decode/003_no_tool_field.json decodes it successfully. The Section 16.5 row is stale and should be removed or amended.
-- **orphan_attachment** — errors-v2/016_orphan_attachment.json is a decode-success case (an orphan `.field` decoded as an extra field per Section 7.4.6.1.4), not the strict reject. A dedicated error fixture (a `.field` with no preceding `@N` row and matching bare `^` cell) is missing.
-- **orphan_inline_attachment** — No error fixture for a positional inline body that has no eligible attachment-marker cell.
-- **inline_width_mismatch** — No error fixture for a positional inline body whose value count does not match its declared inline schema (014_inline_count_mismatch covers count_mismatch, a different condition).
+- **orphan_attachment** — Not enforced as a distinct reject by the reference decoder (verified): a `.field` with a parent row but no matching `^` cell decodes as an extra field (016_orphan_attachment.json, per Section 7.4.6.1.4); a `.field` with no parent row trips invalid_indent or row_width_mismatch instead. Pending decision: harden decoders to a distinct reject, or amend Section 16.5.
+- **orphan_inline_attachment** — The reference decoder ACCEPTS a positional inline body with no eligible attachment-marker cell (verified: unmatched/extra bodies decode without error), violating the Section 16.5 MUST-reject. Pending decision: harden decoders, or amend Section 16.5.
 
