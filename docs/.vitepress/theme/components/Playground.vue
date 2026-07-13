@@ -122,12 +122,17 @@ function genericDeltaCall2(obj: any): string {
   const { key, fields, rows } = t
   const others = fields.filter((f) => f !== key)
   const ordered = [key, ...others]
-  const changed = rows[rows.length - 1]
+  // A realistic re-query: roughly one record in ten changed since the last call.
+  const nChanged = Math.max(1, Math.round(rows.length / 10))
+  const changed = rows.slice(rows.length - nChanged)
   const s = JSON.stringify(rows)
-  const header = `GCF profile=generic delta=true base_root=sha256:${hex64(s)} new_root=sha256:${hex64(s + '#')} key=${key}`
-  const decl = `## changed [1]{@${key},${others.join(',')}}`
-  const row = ordered.map((f) => deltaCell(changed[f])).join('|')
-  return [header, decl, row].join('\n') + '\n'
+  // Truncated content roots, matching the docs convention (sha256:aaa9f2...), so the
+  // delta reflects the changed data rather than being dominated by 128 hex chars.
+  const root = (seed: string) => `sha256:${hex64(seed).slice(0, 6)}...`
+  const header = `GCF profile=generic delta=true base_root=${root(s)} new_root=${root(s + '#')} key=${key}`
+  const decl = `## changed [${nChanged}]{@${key},${others.join(',')}}`
+  const body = changed.map((r) => ordered.map((f) => deltaCell(r[f])).join('|')).join('\n')
+  return [header, decl, body].join('\n') + '\n'
 }
 
 // ---------------------------------------------------------------------------
@@ -1187,8 +1192,8 @@ onMounted(async () => {
             they become bare references. TOON and JSON have no equivalent.
           </p>
           <p class="session-desc" v-else>
-            The full set was sent in the first call. On the second call, only the record that
-            changed is sent as a keyed delta (SPEC Section 10a). TOON and JSON re-send everything.
+            The full set was sent in the first call. On the second call, only the records that
+            changed are sent as a keyed delta (SPEC Section 10a). TOON and JSON re-send everything.
           </p>
         </div>
         <div class="session-pane">
