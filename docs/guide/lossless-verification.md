@@ -23,7 +23,7 @@ The 5 formats tested are proof points. The capability is universal: any format t
 
 ## Per-language verification
 
-Six language implementations, all passing the same 193 conformance fixtures:
+Six language implementations, all passing the same 204 conformance fixtures:
 
 | Language | Package | Conformance | Round-trip fuzz |
 |----------|---------|-------------|-----------------|

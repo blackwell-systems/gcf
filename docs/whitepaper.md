@@ -28,7 +28,7 @@ We evaluated GCF across 2,500+ LLM evaluations spanning 11 models and 4 provider
 
 **Lossless verification:** **43 billion+** round-trips across 5 formats (JSON, YAML, MessagePack, CSV, TOML) with **zero failures**. Validated across 17 serialization formats in the Format Mega-Gauntlet.
 
-Session deduplication (84.3% cumulative savings over a 5-call session) and delta encoding (81.2% on re-queries) compound savings across multi-turn interactions. A streaming encoding extension enables zero-buffering encode with O(1) memory per row. The format is implemented in six languages (Go, TypeScript, Python, Rust, Swift, Kotlin), 193 conformance fixtures, and deployed in production MCP servers. Specification v3.3.0 Stable: gcformat.com.
+Session deduplication (84.3% cumulative savings over a 5-call session) and delta encoding (81.2% on re-queries) compound savings across multi-turn interactions. A streaming encoding extension enables zero-buffering encode with O(1) memory per row. The format is implemented in six languages (Go, TypeScript, Python, Rust, Swift, Kotlin), 204 conformance fixtures, and deployed in production MCP servers. Specification v3.3.0 Stable: gcformat.com.
 
 GCF's grammar was reverse-engineered from tokenization and attention-level experimentation, then shipped and validated on production models; the three formal companion papers below came afterward and independently confirm the mechanism at controlled-training scale (Section 2.0). It spans three companion papers: "Tokenizer-Attention Coupling" [DOI: 10.5281/zenodo.20925910](https://doi.org/10.5281/zenodo.20925910), "Stranded Attention" [DOI: 10.5281/zenodo.21158886](https://doi.org/10.5281/zenodo.21158886), and "Developmental Atlas of Attention Head Specialization" [DOI: 10.5281/zenodo.21205389](https://doi.org/10.5281/zenodo.21205389). Together, through controlled experiments across two architectures and two scales, they prove that BPE merge decisions permanently constrain which attention heads develop. Every attention head in a standard BPE model is structurally stranded (384/384 at 410M, 768/768 at 1.3B show 4x more delimiter attention when given clean boundaries); the damage is immediate (present by step 5,000), permanent (unchanged through step 40,000), and architecture-independent (removing whitespace-recovery "spacing" heads degrades both GPT-NeoX multi-head attention and Llama grouped-query attention by 64-67%); and at 1.3B scale standard BPE develops 124 counterproductive delimiter heads whose removal improves comprehension by 57%. The mechanism generalizes across structured data (3-738x), code (1.5x), and molecular notation (2.2x).
 
@@ -382,7 +382,7 @@ TOON cannot add streaming without a breaking spec change (their grammar mandates
 
 ## 4. Implementation Status
 
-GCF is not a speculative format proposal. It is implemented in six languages, published to seven package registries, covered by 193 conformance fixtures, verified across 43 billion+ lossless round-trips, and deployed in production MCP servers.
+GCF is not a speculative format proposal. It is implemented in six languages, published to seven package registries, covered by 204 conformance fixtures, verified across 43 billion+ lossless round-trips, and deployed in production MCP servers.
 
 The implementation includes:
 

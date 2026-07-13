@@ -97,7 +97,7 @@ The lesson was learned the hard way. An early PR to neo4j-contrib/mcp-neo4j (961
 The same standard applies everywhere:
 
 - 1,700+ LLM evaluations across 10 models, 3 providers, 51 independent test runs. Deterministic answers, no LLM-as-judge methodology. If the model says 320 and the answer is 500, that is a failure. No spin.
-- 193 conformance fixtures across 10 categories, verified on all 6 implementations.
+- 204 conformance fixtures across 10 categories, verified on all 6 implementations.
 - 43 billion+ round-trips across 5 formats and 6 languages.
 - 15-dataset token efficiency benchmark forked from TOON's own repo, using their tokenizer, their methodology, plus 9 additional datasets representing real MCP tool responses.
 - Independent AI reviews: Claude, GPT, and Gemini were each given the JSON RFC, TOON spec, and GCF spec with zero priming. All three chose GCF for agent replacement.
@@ -167,7 +167,7 @@ This is not a side project or a portfolio piece. This is the thing.
 
 ## Where it's going
 
-The spec is at v3.3.0 Stable. The foundation is solid. Six languages, 193 conformance fixtures, 43 billion round-trips, 1,700+ evaluations.
+The spec is at v3.3.0 Stable. The foundation is solid. Six languages, 204 conformance fixtures, 43 billion round-trips, 1,700+ evaluations.
 
 What comes next:
 
