@@ -207,7 +207,7 @@ GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=10 edges
 
 | Field | Required | Description |
 |-------|----------|-------------|
-| `tool` | Yes | Name of the producing tool |
+| `tool` | No | Name of the producing tool (SHOULD be present when available) |
 | `budget` | No | Token budget requested by consumer |
 | `tokens` | No | Actual tokens used in this payload |
 | `symbols` | No | Number of symbols (informational) |
@@ -364,7 +364,7 @@ GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=2 edges=
 @0<@1 calls
 ```
 
-965 tokens vs 233 tokens. Same information.
+191 tokens vs 81 tokens. Same information.
 
 ### Relationship to generic profile
 
