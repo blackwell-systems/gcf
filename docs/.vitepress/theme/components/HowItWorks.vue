@@ -46,13 +46,13 @@ runMigration|func|3`,
   ]
 }`,
     gcf: `## symbols [3]
-@1 func handleReq 0.95
-@2 func validate 0.87
-@3 iface AuthCfg 0.60
+@0 fn handleReq 0.95
+@1 fn validate 0.87
+@2 iface AuthCfg 0.60
 
 ## edges [2]
-@2<@1 calls
-@3<@2 implements`,
+@1<@0 calls
+@2<@1 implements`,
   },
   {
     title: 'Session Dedup',
@@ -71,10 +71,10 @@ runMigration|func|3`,
    "name":"revoke"}
 ]`,
     gcf: `## symbols [4]
+@0
 @1
 @2
-@3
-@4 func revoke 0.91`,
+@3 fn revoke 0.91`,
   },
 ]
 
