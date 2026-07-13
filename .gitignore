@@ -8,3 +8,6 @@ eval/.payload-*
 database.db
 INTERNAL-*.md
 *.pyc
+
+# resumable YAML top-up run scaffolding (canonical log copied up to multiformat/ when done)
+eval/results/multiformat/yaml-21b-run/

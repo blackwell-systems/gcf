@@ -27,12 +27,12 @@ Six language implementations, all passing the same 204 conformance fixtures:
 
 | Language | Package | Conformance | Round-trip fuzz |
 |----------|---------|-------------|-----------------|
-| Rust | gcf | 157/157 | **43B+ multi-format** (definitive suite) |
-| Go | gcf-go | 157/157 | 1B+ (native Go fuzzing) |
-| TypeScript | @blackwell-systems/gcf | 157/157 | Conformance-based |
-| Python | gcf-python | 157/157 | Conformance-based |
-| Swift | gcf-swift | 157/157 | Conformance-based |
-| Kotlin | gcf-kotlin | 157/157 | Conformance-based |
+| Rust | gcf | 204/204 | **43B+ multi-format** (definitive suite) |
+| Go | gcf-go | 204/204 | 1B+ (native Go fuzzing) |
+| TypeScript | @blackwell-systems/gcf | 204/204 | Conformance-based |
+| Python | gcf-python | 204/204 | Conformance-based |
+| Swift | gcf-swift | 204/204 | Conformance-based |
+| Kotlin | gcf-kotlin | 204/204 | Conformance-based |
 
 ### Cross-language matrix
 
@@ -84,7 +84,7 @@ All tests use Rayon for parallel execution across all available cores. Progress 
 
 ## Conformance fixtures
 
-157 fixtures in [tests/conformance/](https://github.com/blackwell-systems/gcf/tree/main/tests/conformance) covering:
+204 fixtures in [tests/conformance/](https://github.com/blackwell-systems/gcf/tree/main/tests/conformance) covering:
 
 | Category | Count | What it tests |
 |----------|-------|---------------|
@@ -93,11 +93,15 @@ All tests use Rayon for parallel execution across all available cores. Progress 
 | containers | Various | Object/array container selection |
 | decode | Various | Decoder edge cases |
 | errors-v2 | Various | Invalid input rejection |
+| flatten | Various | Nested-object flattening (`>` path columns) |
 | graph-decode | Various | Graph profile decoding |
 | graph-delta | Various | Delta encoding/decoding |
 | graph-encode | Various | Graph profile encoding |
 | graph-pack-root | Various | Content-addressed identity |
 | graph-session | Various | Session deduplication |
+| generic-delta | Various | Generic-profile keyed delta encoding |
+| generic-delta-session | Various | Generic-profile delta across a session |
+| generic-pack-root | Various | Generic-profile content-addressed identity |
 | inline-schema | Various | Inline attachment schemas |
 | keys | Various | Bare keys, quoted keys, special characters |
 | numbers | Various | Integer, float, negative, scientific notation |
