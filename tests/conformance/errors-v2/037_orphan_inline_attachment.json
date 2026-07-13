@@ -1,0 +1,7 @@
+{
+  "name": "orphan_inline_attachment",
+  "description": "A positional inline body with no eligible attachment-marker cell MUST be rejected (SPEC 16.5). The row @0 declares one inline cell `^{name,email}`, whose single body is `Alice|a@t.com`; the following `Bob|b@t.com` is a second positional body with no `^{}` cell to bind to. Previously the decoder silently dropped it (a lossless round-trip hole: the data vanished with no error). The pipe-delimited orphan body is distinguished from a legitimate `key=value` object field or an in-count next row.",
+  "operation": "error",
+  "expectedError": "orphan_inline_attachment",
+  "input": "GCF profile=generic\n## orders [1]{id,customer}\n@0 1|^{name,email}\nAlice|a@t.com\nBob|b@t.com\n"
+}

@@ -6,9 +6,9 @@
 
 ## Summary
 
-- Fixtures: **199** across 21 directories, 14 operations
-- Section 16.5 conditions covered: **30/31**
-- Uncovered (known gaps, tracked below): **1**
+- Fixtures: **200** across 21 directories, 14 operations
+- Section 16.5 conditions covered: **31/31**
+- Uncovered (known gaps, tracked below): **0**
 - Uncovered (unexpected, fails the build): **0**
 - Required operations missing: **0**
 
@@ -37,7 +37,7 @@
 | Structural | Indentation increases by more than one level | `invalid_indent` | covered | `errors-v2/008_invalid_indent_jump.json` |
 | Structural | Expanded/tabular row ID != its zero-based item index | `invalid_item_id` | covered | `errors-v2/019_invalid_item_id.json` |
 | Structural | .field without a parent @N row and matching bare ^ cell | `orphan_attachment` | covered | `errors-v2/016_orphan_attachment.json` |
-| Structural | Positional inline body has no eligible attachment-marker cell | `orphan_inline_attachment` | KNOWN GAP | The reference decoder ACCEPTS a positional inline body with no eligible attachment-marker cell (verified: unmatched/extra bodies decode without error), violating the Section 16.5 MUST-reject. Pending decision: harden decoders, or amend Section 16.5. |
+| Structural | Positional inline body has no eligible attachment-marker cell | `orphan_inline_attachment` | covered | `errors-v2/037_orphan_inline_attachment.json` |
 | Structural | Attachment-marker cell has no matching body | `missing_attachment` | covered | `errors-v2/017_missing_attachment.json` |
 | Structural | More than one attachment targets the same field in one row | `duplicate_attachment` | covered | `errors-v2/027_duplicate_attachment.json` |
 | Structural | Positional inline body value count != its declared inline schema | `inline_width_mismatch` | covered | `errors-v2/036_inline_width_mismatch.json` |
@@ -56,7 +56,7 @@
 | `delta` | 2 | yes |
 | `delta-verify` | 1 | yes |
 | `encode` | 106 | yes |
-| `error` | 35 | yes |
+| `error` | 36 | yes |
 | `generic-delta` | 2 | yes |
 | `generic-delta-decode` | 1 | yes |
 | `generic-delta-session` | 3 | yes |
@@ -75,7 +75,7 @@
 | `attachments` | 7 |
 | `containers` | 7 |
 | `decode` | 6 |
-| `errors-v2` | 35 |
+| `errors-v2` | 36 |
 | `flatten` | 19 |
 | `generic-delta` | 7 |
 | `generic-delta-session` | 3 |
@@ -92,8 +92,4 @@
 | `scalar` | 26 |
 | `streaming-v2` | 9 |
 | `whitespace` | 3 |
-
-## Known gaps (tracked)
-
-- **orphan_inline_attachment** — The reference decoder ACCEPTS a positional inline body with no eligible attachment-marker cell (verified: unmatched/extra bodies decode without error), violating the Section 16.5 MUST-reject. Pending decision: harden decoders, or amend Section 16.5.
 

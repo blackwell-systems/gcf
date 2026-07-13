@@ -62,10 +62,7 @@ const TAXONOMY = [
 
 // Conditions with no covering error fixture today, with the reason and resolution.
 // Deleting an entry here without adding a covering fixture will fail the build.
-const KNOWN_GAPS = {
-  orphan_inline_attachment:
-    'The reference decoder ACCEPTS a positional inline body with no eligible attachment-marker cell (verified: unmatched/extra bodies decode without error), violating the Section 16.5 MUST-reject. Pending decision: harden decoders, or amend Section 16.5.',
-};
+const KNOWN_GAPS = {};
 
 // Operations that MUST have at least one fixture (every conformance capability).
 const REQUIRED_OPERATIONS = [
