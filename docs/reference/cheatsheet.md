@@ -15,7 +15,7 @@ GCF has two encoding profiles that share the same grammar primitives (`##`, `|`,
 ### Header
 
 ```
-GCF profile=graph tool=<name> budget=<int> tokens=<int> symbols=<int> edges=<int> pack_root=<hex>
+GCF profile=graph tool=<name> budget=<int> tokens=<int> symbols=<int> edges=<int> pack_root=sha256:<hex>
 ```
 
 All fields are optional. `tool` SHOULD be present for MCP tool responses.
@@ -23,9 +23,9 @@ All fields are optional. `tool` SHOULD be present for MCP tool responses.
 ```
 GCF profile=graph tool=context_for_task
 GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=10 edges=8
-GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=10 edges=8 pack_root=a1b2c3d4
+GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=10 edges=8 pack_root=sha256:a1b2c3d4...
 GCF profile=graph tool=context_for_task tokens=800 symbols=5 edges=3 session=true
-GCF profile=graph tool=context_for_task delta=true base_root=aaa111 new_root=bbb222 tokens=30 savings=81%
+GCF profile=graph tool=context_for_task delta=true base_root=sha256:aaa111... new_root=sha256:bbb222... tokens=30 savings=81%
 ```
 
 ### Symbol lines
@@ -101,7 +101,7 @@ Two spaces before `#`. Used when `session=true` in header.
 ### Delta payload
 
 ```
-GCF profile=graph tool=context_for_task delta=true base_root=aaa new_root=bbb tokens=30 savings=85%
+GCF profile=graph tool=context_for_task delta=true base_root=sha256:aaa... new_root=sha256:bbb... tokens=30 savings=85%
 ## removed
 fn pkg.OldFunc
 method pkg.Server.Deprecated
@@ -121,7 +121,7 @@ pkg.Router -> pkg.NewFunc calls
 ### Complete graph example
 
 ```
-GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=5 edges=4 pack_root=a1b2c3d4
+GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=5 edges=4 pack_root=sha256:a1b2c3d4...
 ## targets
 @0 fn github.com/org/repo/internal/auth.Middleware 0.78 lsp_resolved
 @1 type github.com/org/repo/internal/auth.Config 0.71 ast_inferred
@@ -131,10 +131,10 @@ GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=5 edges=
 ## extended
 @4 iface github.com/org/repo/internal/handler.Handler 0.32 structural
 ## edges [4]
-@0<@2 calls
 @1<@0 references
-@4<@2 implements
+@0<@2 calls
 @3<@2 calls
+@4<@2 implements
 ```
 
 ---
