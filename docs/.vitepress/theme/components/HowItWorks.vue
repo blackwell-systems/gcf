@@ -55,31 +55,9 @@ runMigration|func|3`,
 @2<@1 implements`,
   },
   {
-    title: 'Session Dedup',
-    subtitle: 'Graph profile',
-    description: 'JSON retransmits everything on every call. GCF tracks which symbols have been sent and only transmits bare references for known ones. 92% savings by the 5th call.',
-    jsonLabel: 'JSON (call 2: full retransmit)',
-    gcfLabel: 'GCF (call 2: bare refs + new)',
-    json: `[
-  {"id":1,"kind":"func",
-   "name":"handleReq"},
-  {"id":2,"kind":"func",
-   "name":"validate"},
-  {"id":3,"kind":"iface",
-   "name":"AuthCfg"},
-  {"id":4,"kind":"func",
-   "name":"revoke"}
-]`,
-    gcf: `## symbols [4]
-@0
-@1
-@2
-@3 fn revoke 0.91`,
-  },
-  {
-    title: 'Delta Encoding',
+    title: 'Incremental Updates',
     subtitle: 'Both profiles',
-    description: 'Data changed since the last call? Send only the diff. Delta now works for both profiles: a keyed diff over any tabular set (generic) or symbol and edge topology (graph). 88-95% fewer tokens on small changes, with content-addressed roots so the consumer can verify it applied cleanly.',
+    description: 'Data changed since the last call? Send only what changed. A keyed delta works for any tabular set (generic) or symbol and edge topology (graph); the graph profile can also dedup known symbols to bare references. 88-95% fewer tokens on small changes, up to 92% across a session, with content-addressed roots so the consumer can verify it applied cleanly.',
     jsonLabel: 'JSON (re-query: full re-send)',
     gcfLabel: 'GCF (delta: only what changed)',
     json: `[
