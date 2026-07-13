@@ -1,0 +1,12 @@
+{
+  "name": "roundtrip_mixed_adversarial",
+  "description": "Round-trip invariant (SPEC 16.4 / 1.1) on a mixed value that stresses the encoder: a null (encoded -), a nested object section, a top-level scalar requiring quoting for an embedded pipe and escaped quote, and a primitive array with a comma/pipe element requiring quoting. Pins decode(encode(v)) == v with exact bytes.",
+  "operation": "roundtrip",
+  "input": {
+    "name": "a|b\"c",
+    "count": null,
+    "tags": ["x", "y|z"],
+    "meta": {"active": true, "note": "line1"}
+  },
+  "expected": "GCF profile=generic\nname=\"a|b\\\"c\"\ncount=-\ntags[2]: x,\"y|z\"\n## meta\n  active=true\n  note=line1\n"
+}

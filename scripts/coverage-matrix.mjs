@@ -106,7 +106,9 @@ const CHECKLIST = [
   ['16.1', 'Header begins GCF profile=graph (tool optional)', { dir: 'graph-encode' }],
   ['16.1', 'Sequential IDs from 0; stable session-scoped IDs', { dir: 'graph-session' }],
   ['16.1', 'Kind abbreviations, edges section header, edges between declared IDs', { dir: 'graph-encode' }],
-  ['16.1', 'Symbol/edge ordering; deterministic output (incl. distance_N trailer)', 'property'],
+  ['16.1', 'Order symbols by score descending within each distance group', { dir: 'graph-encode' }],
+  ['16.1', 'Order edges by source ID then target ID', { gap: 'Not implemented: the buffered encoder emits edges in input order, not sorted (surfaced by the assertion-fixture conversion; no fixture had 2+ edges). Decision pending: sort edges in the buffered encoder (canonical, 6 SDKs) or relax SPEC 16.1 to provided-order.' }],
+  ['16.1', 'Deterministic output (distance_N trailer group order)', { dir: 'streaming-v2' }],
   // 16.2 Encoder conformance (generic profile)
   ['16.2', 'Header begins GCF profile=generic', { dir: 'scalar' }],
   ['16.2', 'Scalar grammar + encoder quoting; numbers/bool/null unquoted', { dir: 'numbers' }],
@@ -127,7 +129,7 @@ const CHECKLIST = [
   ['16.4', 'Keys bare+quoted; tabular headers; row-width validation', { dir: 'keys' }],
   ['16.4', 'Whitespace/indentation handling', { dir: 'whitespace' }],
   ['16.4', 'Count validation at every level', { op: 'error' }],
-  ['16.4', 'Round-trip invariant decode(encode(v)) == v', 'property'],
+  ['16.4', 'Round-trip invariant decode(encode(v)) == v (representative values)', { op: 'roundtrip' }],
 ];
 
 // --- Load fixtures ----------------------------------------------------------
@@ -192,11 +194,13 @@ const checklistRows = CHECKLIST.map(([section, req, src]) => {
   let status, note;
   if (src === 'invariant') { status = 'invariant'; note = 'mechanical scan below'; }
   else if (src === 'property') { status = 'property'; note = 'SDK property / round-trip suites'; }
+  else if (src.gap) { status = 'TRACKED GAP'; note = src.gap; }
   else if (src.dir) { const n = byDir.get(src.dir) || 0; status = n > 0 ? 'covered' : 'GAP'; note = `\`${src.dir}/\` (${n})`; }
   else if (src.op) { const n = byOperation.get(src.op) || 0; status = n > 0 ? 'covered' : 'GAP'; note = `op \`${src.op}\` (${n})`; }
   return { section, req, status, note };
 });
 const checklistGaps = checklistRows.filter((r) => r.status === 'GAP');
+const checklistTracked = checklistRows.filter((r) => r.status === 'TRACKED GAP');
 
 // --- Generate COVERAGE.md ---------------------------------------------------
 function md() {
@@ -214,7 +218,7 @@ function md() {
   L.push(`- Uncovered (known gaps, tracked below): **${knownGaps.length}**`);
   L.push(`- Uncovered (unexpected, fails the build): **${hardGaps.length}**`);
   L.push(`- Required operations missing: **${missingOps.length}**`);
-  L.push(`- Section 16.1-16.4 checklist gaps: **${checklistGaps.length}**`);
+  L.push(`- Section 16.1-16.4 checklist gaps: **${checklistGaps.length}** (unexpected), **${checklistTracked.length}** (tracked)`);
   L.push(`- Encoder-invariant violations: **${invariantViolations.length}**`);
   L.push('');
   L.push('## Section 16.5 decoder strict-mode taxonomy');
@@ -287,7 +291,8 @@ if (!CHECK_ONLY) {
 }
 
 console.log(`\nSection 16.5 coverage: ${coveredCount}/${TAXONOMY.length}  (known gaps: ${knownGaps.length})`);
-console.log(`Section 16.1-16.4 checklist: ${checklistRows.length - checklistGaps.length}/${checklistRows.length} covered`);
+console.log(`Section 16.1-16.4 checklist: ${checklistRows.length - checklistGaps.length - checklistTracked.length}/${checklistRows.length} covered, ${checklistTracked.length} tracked gap(s)`);
+for (const r of checklistTracked) console.log(`  tracked: [${r.section}] ${r.req}`);
 if (knownGaps.length) {
   console.log('Known gaps:');
   for (const r of knownGaps) console.log(`  - ${r.key}`);

@@ -6,12 +6,12 @@
 
 ## Summary
 
-- Fixtures: **202** across 21 directories, 14 operations
+- Fixtures: **203** across 21 directories, 14 operations
 - Section 16.5 conditions covered: **31/31**
 - Uncovered (known gaps, tracked below): **0**
 - Uncovered (unexpected, fails the build): **0**
 - Required operations missing: **0**
-- Section 16.1-16.4 checklist gaps: **0**
+- Section 16.1-16.4 checklist gaps: **0** (unexpected), **1** (tracked)
 - Encoder-invariant violations: **0**
 
 ## Section 16.5 decoder strict-mode taxonomy
@@ -66,7 +66,7 @@
 | `generic-pack-root` | 5 | yes |
 | `graph-stream-encode` | 8 | yes |
 | `pack-root` | 4 | yes |
-| `roundtrip` | 4 | yes |
+| `roundtrip` | 5 | yes |
 | `session` | 3 | yes |
 
 ## Section 16.1-16.4 encoder / decoder-accept checklist
@@ -78,7 +78,9 @@
 | 16.1 | Header begins GCF profile=graph (tool optional) | covered | `graph-encode/` (2) |
 | 16.1 | Sequential IDs from 0; stable session-scoped IDs | covered | `graph-session/` (3) |
 | 16.1 | Kind abbreviations, edges section header, edges between declared IDs | covered | `graph-encode/` (2) |
-| 16.1 | Symbol/edge ordering; deterministic output (incl. distance_N trailer) | property | SDK property / round-trip suites |
+| 16.1 | Order symbols by score descending within each distance group | covered | `graph-encode/` (2) |
+| 16.1 | Order edges by source ID then target ID | TRACKED GAP | Not implemented: the buffered encoder emits edges in input order, not sorted (surfaced by the assertion-fixture conversion; no fixture had 2+ edges). Decision pending: sort edges in the buffered encoder (canonical, 6 SDKs) or relax SPEC 16.1 to provided-order. |
+| 16.1 | Deterministic output (distance_N trailer group order) | covered | `streaming-v2/` (11) |
 | 16.2 | Header begins GCF profile=generic | covered | `scalar/` (26) |
 | 16.2 | Scalar grammar + encoder quoting; numbers/bool/null unquoted | covered | `numbers/` (15) |
 | 16.2 | Key grammar; quote invalid bare keys; reject duplicate keys | covered | `keys/` (11) |
@@ -87,7 +89,7 @@
 | 16.2 | Attachments (^ / ^{fields} / .field); @{id} on nested rows | covered | `attachments/` (7) |
 | 16.2 | Nested object flattening (> path columns, v3.2) | covered | `flatten/` (19) |
 | 16.2 | Root scalar (=value) and root array (## [N]) | covered | `roots/` (11) |
-| 16.2 | Two-space indentation per nesting level | covered | `containers/` (7) |
+| 16.2 | Two-space indentation per nesting level | covered | `containers/` (8) |
 | 16.3 | Parse header/nodes/edges; kind expansion + unknown passthrough | covered | `graph-decode/` (3) |
 | 16.3 | Accept ? deferred count; summary metadata; counts positional|labeled | covered | `streaming-v2/` (11) |
 | 16.3 | Reject edges referencing undeclared symbol IDs | covered | op `error` (36) |
@@ -96,7 +98,7 @@
 | 16.4 | Keys bare+quoted; tabular headers; row-width validation | covered | `keys/` (11) |
 | 16.4 | Whitespace/indentation handling | covered | `whitespace/` (3) |
 | 16.4 | Count validation at every level | covered | op `error` (36) |
-| 16.4 | Round-trip invariant decode(encode(v)) == v | property | SDK property / round-trip suites |
+| 16.4 | Round-trip invariant decode(encode(v)) == v (representative values) | covered | op `roundtrip` (5) |
 
 _`invariant` = mechanical scan below; `property` = verified by the SDK property / round-trip suites (not a single fixture)._
 
@@ -116,7 +118,7 @@ Scanned over every fixture `expected` output; a violation fails the build.
 |---|---|
 | `arrays` | 5 |
 | `attachments` | 7 |
-| `containers` | 7 |
+| `containers` | 8 |
 | `decode` | 6 |
 | `errors-v2` | 36 |
 | `flatten` | 19 |
