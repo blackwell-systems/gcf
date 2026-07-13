@@ -59,7 +59,7 @@ Graph-shaped data is the fastest-growing data shape in AI. Knowledge systems, on
 - Payloads contain **repeated structures** (arrays of similar objects)
 - Records have **relationships** between them (edges, references)
 - You're operating under a **token budget** (context windows are finite)
-- You make **multiple calls** in a session (graph profile session dedup compounds savings)
+- You make **multiple calls** in a session (graph session dedup and generic delta both compound savings across turns)
 - You want **cheaper output** (63% fewer output tokens than JSON)
 
 ## When NOT to use GCF

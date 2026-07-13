@@ -4,6 +4,8 @@ In multi-turn LLM tool interactions, the same symbols appear across multiple res
 
 JSON and every other format retransmit the full declaration every time. GCF's graph profile tracks what's been sent and replaces known symbols with bare references.
 
+Session deduplication is graph-specific: it relies on the graph profile's local IDs and bare references. The generic profile reaches the same across-session compression through [delta encoding](/guide/delta), which re-sends only the rows that changed. The two are parallel multi-turn mechanisms, one per profile.
+
 ## Measured savings
 
 Benchmarked across 8 production tokenizers (GPT-4o, Claude, LLaMA 3.1, Gemma 2, Mistral 7B, Qwen 2.5, DeepSeek V3, Phi-4) on 500-symbol payloads with realistic overlap patterns:

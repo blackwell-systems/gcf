@@ -45,7 +45,7 @@ jsonschema.validate(data, existing_schema)
 
 ## How does GCF compare to TOON?
 
-GCF wins on every measured dimension. 29% fewer tokens across 16 real-world datasets (15/16 wins; TOON's one win is 77 tokens on a single dataset). 91.2% comprehension where TOON averages 68.8%. 5/5 generation validity on every frontier model while TOON's decoder rejects output from 7 of 9 models. Session deduplication that compounds to 92% savings by the 5th tool call, a feature TOON structurally cannot add.
+GCF wins on every measured dimension. 29% fewer tokens across 16 real-world datasets (15/16 wins; TOON's one win is 77 tokens on a single dataset). 91.2% comprehension where TOON averages 68.8%. 5/5 generation validity on every frontier model while TOON's decoder rejects output from 7 of 9 models. Session deduplication that compounds to 92% savings by the 5th tool call, plus delta encoding on re-queries (both profiles), features TOON structurally cannot add.
 
 TOON is a tree serializer: YAML with counted arrays. It encodes flat tabular data efficiently. It cannot encode relationships, cross-references, session state, or deltas. Adding local IDs would require a new grammar. Adding session dedup would require local IDs. TOON would have to become a different format to match what GCF already ships.
 
