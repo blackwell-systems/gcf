@@ -76,6 +76,28 @@ runMigration|func|3`,
 @2
 @3 fn revoke 0.91`,
   },
+  {
+    title: 'Delta Encoding',
+    subtitle: 'Both profiles',
+    description: 'Data changed since the last call? Send only the diff. Delta now works for both profiles: a keyed diff over any tabular set (generic) or symbol and edge topology (graph). 88-95% fewer tokens on small changes, with content-addressed roots so the consumer can verify it applied cleanly.',
+    jsonLabel: 'JSON (re-query: full re-send)',
+    gcfLabel: 'GCF (delta: only what changed)',
+    json: `[
+  {"id":1002,"total":29.99,
+   "status":"shipped"},
+  {"id":1003,"total":129.50,
+   "status":"shipped"},
+  {"id":1004,"total":75.00,
+   "status":"pending"}
+]`,
+    gcf: `GCF profile=generic delta=true base_root=sha256:aaa... new_root=sha256:bbb... key=id
+## added [1]{@id,total,status}
+1004|75.00|pending
+## changed [1]{@id,total,status}
+1002|29.99|shipped
+## removed [1]{@id}
+1001`,
+  },
 ]
 
 onMounted(async () => {
