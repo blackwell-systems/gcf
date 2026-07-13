@@ -72,6 +72,65 @@ function encodeSessionCall2(obj: any): string {
 }
 
 // ---------------------------------------------------------------------------
+// Generic-profile delta simulation (2nd query): the same tabular set with one
+// record changed. Sent as a keyed diff (SPEC Section 10a) instead of the full
+// set. Hand-constructed because the SDK generic-delta path is Node-only
+// (crypto.createHash); the base_root/new_root are realistic-length placeholders
+// so the token count reflects the true header overhead.
+// ---------------------------------------------------------------------------
+function tabularSet(obj: any): { name: string; rows: any[]; key: string; fields: string[] } | null {
+  if (!obj || isPayloadShaped(obj)) return null
+  const isRow = (r: any) => r && typeof r === 'object' && !Array.isArray(r)
+  let name = ''
+  let rows: any[] | null = null
+  if (Array.isArray(obj) && obj.length >= 2 && obj.every(isRow)) {
+    rows = obj
+  } else if (typeof obj === 'object') {
+    for (const [k, v] of Object.entries(obj)) {
+      if (Array.isArray(v) && v.length >= 2 && v.every(isRow)) { name = k; rows = v; break }
+    }
+  }
+  if (!rows) return null
+  const isScalar = (x: any) => x === null || ['string', 'number', 'boolean'].includes(typeof x)
+  const fields: string[] = []
+  for (const r of rows) for (const k of Object.keys(r)) if (isScalar(r[k]) && !fields.includes(k)) fields.push(k)
+  if (fields.length < 2) return null
+  const key = fields.includes('id') ? 'id' : fields[0]
+  return { name, rows, key, fields }
+}
+
+function deltaCell(v: any): string {
+  if (v === null || v === undefined) return v === null ? '-' : '~'
+  if (typeof v === 'boolean') return v ? 'true' : 'false'
+  const s = String(v)
+  return (s.includes('|') || s.includes('\n') || s === '' || s === '-' || s === '~') ? JSON.stringify(s) : s
+}
+
+// Deterministic 64-hex string: a plausible content root for display (its length,
+// not its value, is what matters for honest token counting).
+function hex64(seed: string): string {
+  let h = 2166136261 >>> 0
+  for (let i = 0; i < seed.length; i++) { h ^= seed.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0 }
+  let out = ''
+  for (let i = 0; i < 8; i++) { h ^= h << 13; h >>>= 0; h ^= h >> 17; h >>>= 0; h ^= h << 5; h >>>= 0; out += (h >>> 0).toString(16).padStart(8, '0') }
+  return out
+}
+
+function genericDeltaCall2(obj: any): string {
+  const t = tabularSet(obj)
+  if (!t) return ''
+  const { key, fields, rows } = t
+  const others = fields.filter((f) => f !== key)
+  const ordered = [key, ...others]
+  const changed = rows[rows.length - 1]
+  const s = JSON.stringify(rows)
+  const header = `GCF profile=generic delta=true base_root=sha256:${hex64(s)} new_root=sha256:${hex64(s + '#')} key=${key}`
+  const decl = `## changed [1]{@${key},${others.join(',')}}`
+  const row = ordered.map((f) => deltaCell(changed[f])).join('|')
+  return [header, decl, row].join('\n') + '\n'
+}
+
+// ---------------------------------------------------------------------------
 // Presets: real MCP tool response shapes
 // ---------------------------------------------------------------------------
 
@@ -722,6 +781,27 @@ const toonBarPct = computed(() => barMax.value > 0 ? Math.round((toonTokens.valu
 const gcfBarPct = computed(() => barMax.value > 0 ? Math.round((gcfTokens.value / barMax.value) * 100) : 0)
 const sessionBarPct = computed(() => barMax.value > 0 ? Math.round((sessionTokens.value / barMax.value) * 100) : 0)
 
+// Unified "2nd call" selector: graph payloads dedup via session bare refs; generic
+// tabular sets send a keyed delta. Both answer "what does the next call cost?"
+const genericDeltaOutput = computed(() => {
+  if (!parsedObj.value || isPayload.value) return ''
+  try { return genericDeltaCall2(parsedObj.value) } catch { return '' }
+})
+const call2Kind = computed<'session' | 'delta' | null>(() =>
+  isPayload.value && sessionOutput.value ? 'session'
+  : genericDeltaOutput.value ? 'delta'
+  : null)
+const call2Output = computed(() =>
+  call2Kind.value === 'session' ? sessionOutput.value
+  : call2Kind.value === 'delta' ? genericDeltaOutput.value
+  : '')
+const call2Tokens = computed(() => estimateTokens(call2Output.value))
+const call2VsJson = computed(() => jsonTokens.value > 0 ? Math.round(100 * (1 - call2Tokens.value / jsonTokens.value)) : 0)
+const call2BarPct = computed(() => barMax.value > 0 ? Math.round((call2Tokens.value / barMax.value) * 100) : 0)
+// Session dedup always wins for a payload; a keyed delta is only worth sending when
+// it beats a full re-send (SPEC's own guidance), so only surface it when it saves.
+const call2Show = computed(() => !!call2Output.value && (call2Kind.value === 'session' || call2VsJson.value > 0))
+
 // ---------------------------------------------------------------------------
 // Encode tab
 // ---------------------------------------------------------------------------
@@ -1024,7 +1104,7 @@ onMounted(async () => {
           </select>
           <label class="pg-checkbox">
             <input type="checkbox" v-model="showSession" />
-            Show session dedup
+            Show 2nd-call savings
           </label>
         </template>
         <button class="pg-share" @click="shareUrl">{{ shareText || 'Share' }}</button>
@@ -1094,23 +1174,28 @@ onMounted(async () => {
         </div>
       </div>
 
-      <!-- Session dedup pane -->
-      <div v-if="showSession && gcfOutput" class="session-section">
+      <!-- Second-call pane: graph session dedup, or generic delta -->
+      <div v-if="showSession && call2Show" class="session-section">
         <div class="session-header">
-          <h3>Session Deduplication: 2nd tool call</h3>
-          <p class="session-desc">
+          <h3 v-if="call2Kind === 'session'">Session Deduplication: 2nd tool call</h3>
+          <h3 v-else>Delta Encoding: 2nd query</h3>
+          <p class="session-desc" v-if="call2Kind === 'session'">
             All {{ symbolCount }} symbols were sent in the first call. On the second call,
             they become bare references. TOON and JSON have no equivalent.
+          </p>
+          <p class="session-desc" v-else>
+            The full set was sent in the first call. On the second call, only the record that
+            changed is sent as a keyed delta (SPEC Section 10a). TOON and JSON re-send everything.
           </p>
         </div>
         <div class="session-pane">
           <div class="pane-head pane-head-gcf">
-            <span class="pane-label">GCF (2nd call)</span>
-            <span class="pane-tokens">{{ sessionTokens.toLocaleString() }} tokens</span>
+            <span class="pane-label">{{ call2Kind === 'session' ? 'GCF (2nd call)' : 'GCF (delta)' }}</span>
+            <span class="pane-tokens">{{ call2Tokens.toLocaleString() }} tokens</span>
           </div>
           <div class="pane-body-wrap">
-            <button class="pane-copy" @click="copyText(sessionOutput, 'session')">{{ copied === 'session' ? 'Copied!' : 'Copy' }}</button>
-            <pre class="pane-code">{{ sessionOutput }}</pre>
+            <button class="pane-copy" @click="copyText(call2Output, 'session')">{{ copied === 'session' ? 'Copied!' : 'Copy' }}</button>
+            <pre class="pane-code">{{ call2Output }}</pre>
           </div>
         </div>
       </div>
@@ -1146,10 +1231,10 @@ onMounted(async () => {
           <div class="bar-track"><div class="bar-fill bar-gcf" :style="{ width: gcfBarPct + '%' }"></div></div>
           <span class="bar-val">{{ gcfTokens.toLocaleString() }}</span>
         </div>
-        <div class="bar-row" v-if="showSession">
+        <div class="bar-row" v-if="showSession && call2Show">
           <span class="bar-label bar-label-long">GCF 2nd</span>
-          <div class="bar-track"><div class="bar-fill bar-session" :style="{ width: sessionBarPct + '%' }"></div></div>
-          <span class="bar-val">{{ sessionTokens.toLocaleString() }}</span>
+          <div class="bar-track"><div class="bar-fill bar-session" :style="{ width: call2BarPct + '%' }"></div></div>
+          <span class="bar-val">{{ call2Tokens.toLocaleString() }}</span>
         </div>
 
         <!-- Savings summary -->
@@ -1170,8 +1255,8 @@ onMounted(async () => {
             <div class="savings-number savings-number-error">N/A</div>
             <div class="savings-label">TOON: cannot encode {{ inputFormat.toUpperCase() }}</div>
           </div>
-          <div class="savings-card" v-if="showSession">
-            <div class="savings-number">{{ sessionVsJson }}%</div>
+          <div class="savings-card" v-if="showSession && call2Show">
+            <div class="savings-number">{{ call2VsJson }}%</div>
             <div class="savings-label">savings on 2nd call vs JSON</div>
           </div>
         </div>
