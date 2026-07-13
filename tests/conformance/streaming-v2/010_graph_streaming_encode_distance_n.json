@@ -1,0 +1,19 @@
+{
+  "name": "graph_streaming_encode_distance_n_positional",
+  "description": "Streaming graph encode spanning distance groups >= 3 (targets, distance_3 x2, distance_4). Pins that the trailer counts follow group-header emission order DETERMINISTICALLY (SPEC 8.4): counts=1,2,1,1 for targets=1, distance_3=2, distance_4=1, edges=1. Guards against non-deterministic map-order emission of distance_N groups. Pairs with 011 (identical input, labeled trailer). Runners that do not implement graph-stream-encode skip this fixture.",
+  "operation": "graph-stream-encode",
+  "input": {
+    "tool": "context_for_task",
+    "tokenBudget": 5000,
+    "symbols": [
+      {"qualifiedName": "pkg.Root", "kind": "function", "score": 0.95, "provenance": "lsp", "distance": 0},
+      {"qualifiedName": "pkg.Far3a", "kind": "function", "score": 0.50, "provenance": "ast", "distance": 3},
+      {"qualifiedName": "pkg.Far3b", "kind": "type", "score": 0.45, "provenance": "ast", "distance": 3},
+      {"qualifiedName": "pkg.Far4", "kind": "type", "score": 0.30, "provenance": "ast", "distance": 4}
+    ],
+    "edges": [
+      {"source": "pkg.Far3a", "target": "pkg.Root", "edgeType": "calls"}
+    ]
+  },
+  "expected": "GCF profile=graph tool=context_for_task budget=5000\n## targets\n@0 fn pkg.Root 0.95 lsp\n## distance_3\n@1 fn pkg.Far3a 0.50 ast\n@2 type pkg.Far3b 0.45 ast\n## distance_4\n@3 type pkg.Far4 0.30 ast\n## edges [?]\n@0<@1 calls\n##! summary symbols=4 edges=1 counts=1,2,1,1\n"
+}

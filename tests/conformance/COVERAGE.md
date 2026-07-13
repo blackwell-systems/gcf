@@ -6,7 +6,7 @@
 
 ## Summary
 
-- Fixtures: **200** across 21 directories, 14 operations
+- Fixtures: **202** across 21 directories, 14 operations
 - Section 16.5 conditions covered: **31/31**
 - Uncovered (known gaps, tracked below): **0**
 - Uncovered (unexpected, fails the build): **0**
@@ -62,7 +62,7 @@
 | `generic-delta-session` | 3 | yes |
 | `generic-delta-verify` | 4 | yes |
 | `generic-pack-root` | 5 | yes |
-| `graph-stream-encode` | 6 | yes |
+| `graph-stream-encode` | 8 | yes |
 | `pack-root` | 4 | yes |
 | `roundtrip` | 4 | yes |
 | `session` | 3 | yes |
@@ -90,6 +90,6 @@
 | `numbers` | 15 |
 | `roots` | 11 |
 | `scalar` | 26 |
-| `streaming-v2` | 9 |
+| `streaming-v2` | 11 |
 | `whitespace` | 3 |
 
