@@ -801,6 +801,9 @@ const call2BarPct = computed(() => barMax.value > 0 ? Math.round((call2Tokens.va
 // Session dedup always wins for a payload; a keyed delta is only worth sending when
 // it beats a full re-send (SPEC's own guidance), so only surface it when it saves.
 const call2Show = computed(() => !!call2Output.value && (call2Kind.value === 'session' || call2VsJson.value > 0))
+// Keep every bar label the same width so the tracks line up: widen them whenever a
+// long label is present (source-format row, TOON "cannot encode", or the 2nd-call row).
+const labelsLong = computed(() => isNonJson.value || toonError.value || (showSession.value && call2Show.value))
 
 // ---------------------------------------------------------------------------
 // Encode tab
@@ -1212,12 +1215,12 @@ onMounted(async () => {
           <span class="bar-val">{{ inputTokens.toLocaleString() }}</span>
         </div>
         <div class="bar-row">
-          <span class="bar-label" :class="{ 'bar-label-long': isNonJson }">JSON</span>
+          <span class="bar-label" :class="{ 'bar-label-long': labelsLong }">JSON</span>
           <div class="bar-track"><div class="bar-fill bar-json" :style="{ width: jsonBarPct + '%' }"></div></div>
           <span class="bar-val">{{ jsonTokens.toLocaleString() }}</span>
         </div>
         <div class="bar-row" v-if="!toonError">
-          <span class="bar-label" :class="{ 'bar-label-long': isNonJson }">TOON</span>
+          <span class="bar-label" :class="{ 'bar-label-long': labelsLong }">TOON</span>
           <div class="bar-track"><div class="bar-fill bar-toon" :style="{ width: toonBarPct + '%' }"></div></div>
           <span class="bar-val">{{ toonTokens.toLocaleString() }}</span>
         </div>
@@ -1227,7 +1230,7 @@ onMounted(async () => {
           <span class="bar-val">N/A</span>
         </div>
         <div class="bar-row">
-          <span class="bar-label" :class="{ 'bar-label-long': isNonJson }">GCF</span>
+          <span class="bar-label" :class="{ 'bar-label-long': labelsLong }">GCF</span>
           <div class="bar-track"><div class="bar-fill bar-gcf" :style="{ width: gcfBarPct + '%' }"></div></div>
           <span class="bar-val">{{ gcfTokens.toLocaleString() }}</span>
         </div>
