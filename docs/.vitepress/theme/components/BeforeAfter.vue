@@ -130,17 +130,17 @@ const examples = [
     jsonCode: ordersJson,
     jsonFade: ordersFade,
     jsonTokens: 458,
-    gcfCode: `GCF profile=generic delta=true base_root=sha256:9f2a1c new_root=sha256:c17b04 key=id
-## changed [1]{id,customer,total,status,items}
+    gcfCode: `GCF profile=generic delta=true base_root=sha256:9f2a new_root=sha256:c17b key=id
+## changed [1]{@id,customer,total,status,items}
 1002|Globex Inc|150.49|shipped|2
-## added [1]{id,customer,total,status,items}
+## added [1]{@id,customer,total,status,items}
 1011|Nakatomi|1055.00|pending|3
-## removed [1]{id}
+## removed [1]{@id}
 1007`,
     gcfTokens: 100,
     savings: 78,
     savingsNote: 'The whole array never moves again.',
-    footnote: 'Re-query where 2 rows changed: JSON re-sends everything, GCF sends the diff. cl100k.',
+    footnote: 'Turn 2 of a loop: order 1002 changed, 1011 added, 1007 removed. JSON re-sends all 10 rows; GCF sends only the diff (@id is the identity key). cl100k.',
   },
 ]
 
