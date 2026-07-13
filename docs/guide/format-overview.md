@@ -368,7 +368,9 @@ GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=2 edges=
 
 ### Relationship to generic profile
 
-The graph profile is a superset of the generic profile. The `@{id} {kind} {qname} {score} {provenance}` node line format is a tabular row with implicit field names. The generic profile generalizes this to arbitrary field sets. Both profiles share the same grammar; the graph profile adds identity (`@` IDs), relationships (edges), and session statefulness.
+The graph profile is a superset of the generic profile. The `@{id} {kind} {qname} {score} {provenance}` node line format is a tabular row with implicit field names. The generic profile generalizes this to arbitrary field sets. Both profiles share the same grammar; the graph profile adds identity (`@` IDs), relationships (edges), and bare-reference session dedup.
+
+Delta encoding, streaming, and content-addressed identity (`pack_root`) are **not** graph-only: the generic profile has them too (see [Delta](/guide/delta) and [Streaming](/guide/streaming)). What stays graph-exclusive is local IDs, typed edges, distance groups, and bare-reference session dedup.
 
 Both profiles use the same grammar primitives: `##` headers, `@` IDs, positional fields. Implementations may support one or both profiles.
 
