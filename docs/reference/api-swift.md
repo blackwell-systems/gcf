@@ -86,8 +86,8 @@ import GCF
 
 let delta = DeltaPayload(
     tool: "context_for_task",
-    baseRoot: "aaa111",
-    newRoot: "bbb222",
+    baseRoot: "sha256:aaa111...",
+    newRoot: "sha256:bbb222...",
     removed: [Symbol(qualifiedName: "pkg.Old", kind: "function")],
     added: [Symbol(qualifiedName: "pkg.New", kind: "function", score: 0.85, provenance: "rwr")],
     deltaTokens: 30,
@@ -95,6 +95,28 @@ let delta = DeltaPayload(
 )
 
 let output = encodeDelta(delta)
+```
+
+### `packRoot(symbols: [Symbol], edges: [Edge]) -> String`
+
+Content-addressed pack root (`gcf-pack-root-v1`, SPEC Section 10.2) of a graph snapshot: a deterministic SHA-256 over canonical, independently-sorted symbol and edge records. Byte-identical across all six SDKs; this is the value carried in `pack_root` / `base_root` / `new_root`.
+
+### `decodeDelta(_ wire: String) throws -> DeltaPayload`
+
+Parse a graph delta wire (`GCF profile=graph delta=true ...`) back into a `DeltaPayload`. The inverse of `encodeDelta`. Throws `DeltaError` on malformed input.
+
+### `verifyDelta(baseSymbols:baseEdges:removed:added:removedEdges:addedEdges:expectedNewRoot:) throws -> (symbols: [Symbol], edges: [Edge])`
+
+Apply a decoded delta to a base snapshot atomically, then verify the recomputed `packRoot` equals `expectedNewRoot` (SPEC Section 10.4). Returns the applied `(symbols, edges)`. Throws `DeltaError` with `delta_invalid` when a removal targets a symbol not in the base or an addition already exists, or `root_mismatch` when the recomputed root differs.
+
+```swift
+let d = try decodeDelta(deltaText)
+let (symbols, edges) = try verifyDelta(
+    baseSymbols: baseSymbols, baseEdges: baseEdges,
+    removed: d.removed, added: d.added,
+    removedEdges: d.removedEdges, addedEdges: d.addedEdges,
+    expectedNewRoot: d.newRoot
+) // throws DeltaError (root_mismatch / delta_invalid)
 ```
 
 ### `StreamEncoder(writer:tool:options:)`

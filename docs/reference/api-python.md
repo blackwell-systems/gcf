@@ -87,8 +87,8 @@ from gcf import encode_delta, DeltaPayload, Symbol, Edge
 
 output = encode_delta(DeltaPayload(
     tool="context_for_task",
-    base_root="aaa111",
-    new_root="bbb222",
+    base_root="sha256:aaa111...",
+    new_root="sha256:bbb222...",
     removed=[Symbol(qualified_name="pkg.OldFunc", kind="function")],
     added=[Symbol(qualified_name="pkg.NewFunc", kind="function", score=0.85, provenance="rwr")],
     removed_edges=[Edge(source="pkg.Router", target="pkg.OldFunc", edge_type="calls")],
@@ -96,6 +96,29 @@ output = encode_delta(DeltaPayload(
     delta_tokens=30,
     full_tokens=200,
 ))
+```
+
+### `pack_root(symbols: list[Symbol], edges: list[Edge]) -> str`
+
+Content-addressed pack root (`gcf-pack-root-v1`, SPEC Section 10.2) of a graph snapshot: a deterministic SHA-256 over canonical, independently-sorted symbol and edge records. Byte-identical across all six SDKs; this is the value carried in `pack_root` / `base_root` / `new_root`.
+
+### `decode_delta(wire: str) -> DeltaPayload`
+
+Parse a graph delta wire (`GCF profile=graph delta=true ...`) back into a `DeltaPayload`. The inverse of `encode_delta`. Raises `ValueError` on malformed input.
+
+### `verify_delta(base_symbols, base_edges, removed, added, removed_edges, added_edges, expected_new_root) -> tuple[list[Symbol], list[Edge]]`
+
+Apply a decoded delta to a base snapshot atomically, then verify the recomputed `pack_root` equals `expected_new_root` (SPEC Section 10.4). Returns the applied `(symbols, edges)`. Raises `ValueError` with `delta_invalid` when a removal targets a symbol not in the base or an addition already exists, or `root_mismatch` when the recomputed root differs.
+
+```python
+from gcf import decode_delta, verify_delta
+
+d = decode_delta(delta_text)
+symbols, edges = verify_delta(
+    base_symbols, base_edges,
+    d.removed, d.added, d.removed_edges, d.added_edges,
+    d.new_root,
+)  # raises ValueError on root_mismatch / delta_invalid
 ```
 
 ## Generic Delta (v3.3)

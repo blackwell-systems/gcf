@@ -87,8 +87,8 @@ import { encodeDelta, type DeltaPayload } from '@blackwell-systems/gcf';
 
 const output = encodeDelta({
   tool: 'context_for_task',
-  baseRoot: 'aaa111',
-  newRoot: 'bbb222',
+  baseRoot: 'sha256:aaa111...',
+  newRoot: 'sha256:bbb222...',
   removed: [...],
   added: [...],
   removedEdges: [...],
@@ -96,6 +96,27 @@ const output = encodeDelta({
   deltaTokens: 30,
   fullTokens: 200,
 });
+```
+
+### `packRoot(symbols: Symbol[], edges: Edge[]): string`
+
+Content-addressed pack root (`gcf-pack-root-v1`, SPEC Section 10.2) of a graph snapshot: a deterministic SHA-256 over canonical, independently-sorted symbol and edge records. Byte-identical across all six SDKs; this is the value carried in `pack_root` / `base_root` / `new_root`. Node-only (uses `node:crypto`).
+
+### `decodeDelta(input: string): DeltaPayload`
+
+Parse a graph delta wire (`GCF profile=graph delta=true ...`) back into a `DeltaPayload`. The inverse of `encodeDelta`. Throws on malformed input.
+
+### `verifyDelta(baseSymbols, baseEdges, removedSymbols, addedSymbols, removedEdges, addedEdges, expectedNewRoot): { symbols: Symbol[]; edges: Edge[] }`
+
+Apply a decoded delta to a base snapshot atomically, then verify the recomputed `packRoot` equals `expectedNewRoot` (SPEC Section 10.4). Returns the applied `{ symbols, edges }`. Throws `delta_invalid` when a removal targets a symbol not in the base or an addition already exists, or `root_mismatch` when the recomputed root differs.
+
+```typescript
+const d = decodeDelta(deltaText);
+const { symbols, edges } = verifyDelta(
+  baseSymbols, baseEdges,
+  d.removed, d.added, d.removedEdges, d.addedEdges,
+  d.newRoot,
+); // throws root_mismatch / delta_invalid on failure
 ```
 
 ### `new StreamEncoder(writer, tool, opts?)`

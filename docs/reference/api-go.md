@@ -308,16 +308,16 @@ for _, next := range states {
 ```
 
 - `NewGenericDeltaSession(base GenericSet, tool string, policy ReanchorPolicy) *GenericDeltaSession`
-- `CurrentFull() string` — full payload for the current base; send first, also a valid manual re-anchor
-- `Next(next GenericSet) (wire string, full bool, err error)` — advance one turn; a schema change forces a full (Section 10a.7)
-- `Turn() int` — number of `Next` calls so far (the initial full is turn 0)
+- `CurrentFull() string`: full payload for the current base; send first, also a valid manual re-anchor
+- `Next(next GenericSet) (wire string, full bool, err error)`: advance one turn; a schema change forces a full (Section 10a.7)
+- `Turn() int`: number of `Next` calls so far (the initial full is turn 0)
 
 ### `ReanchorPolicy`
 
 Selects when the session re-anchors. Construct with `FixedN` or `SizeGuard`.
 
-- `FixedN(n int) ReanchorPolicy` — re-anchor every `n` turns; `n <= 0` uses `DefaultReanchorN` (15).
-- `SizeGuard() ReanchorPolicy` — re-anchor once the cumulative delta since the last anchor reaches the current full payload's size (size-adaptive; recommended for varying churn).
+- `FixedN(n int) ReanchorPolicy`: re-anchor every `n` turns; `n <= 0` uses `DefaultReanchorN` (15).
+- `SizeGuard() ReanchorPolicy`: re-anchor once the cumulative delta since the last anchor reaches the current full payload's size (size-adaptive; recommended for varying churn).
 
 `const DefaultReanchorN = 15`
 

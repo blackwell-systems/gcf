@@ -97,8 +97,8 @@ use gcf::{DeltaPayload, Symbol, encode_delta};
 
 let delta = DeltaPayload {
     tool: "context_for_task".into(),
-    base_root: "aaa111".into(),
-    new_root: "bbb222".into(),
+    base_root: "sha256:aaa111...".into(),
+    new_root: "sha256:bbb222...".into(),
     removed: vec![Symbol { qualified_name: "pkg.Old".into(), kind: "function".into(), ..Default::default() }],
     added: vec![Symbol { qualified_name: "pkg.New".into(), kind: "function".into(), score: 0.85, provenance: "rwr".into(), ..Default::default() }],
     delta_tokens: 30,
@@ -107,6 +107,27 @@ let delta = DeltaPayload {
 };
 
 let output = encode_delta(&delta);
+```
+
+### `pack_root(symbols: &[Symbol], edges: &[Edge]) -> String`
+
+Content-addressed pack root (`gcf-pack-root-v1`, SPEC Section 10.2) of a graph snapshot: a deterministic SHA-256 over canonical, independently-sorted symbol and edge records. Byte-identical across all six SDKs; this is the value carried in `pack_root` / `base_root` / `new_root`.
+
+### `decode_delta(input: &str) -> Result<DeltaPayload, String>`
+
+Parse a graph delta wire (`GCF profile=graph delta=true ...`) back into a `DeltaPayload`. The inverse of `encode_delta`. Returns `Err` on malformed input.
+
+### `verify_delta(base_symbols, base_edges, removed_symbols, added_symbols, removed_edges, added_edges, expected_new_root: &str) -> Result<(Vec<Symbol>, Vec<Edge>), String>`
+
+Apply a decoded delta to a base snapshot atomically, then verify the recomputed `pack_root` equals `expected_new_root` (SPEC Section 10.4). Returns the applied `(symbols, edges)` on success. Returns `Err` containing `delta_invalid` when a removal targets a symbol not in the base or an addition already exists, or `root_mismatch` when the recomputed root differs.
+
+```rust
+let d = decode_delta(delta_text)?;
+let (symbols, edges) = verify_delta(
+    &base_symbols, &base_edges,
+    &d.removed, &d.added, &d.removed_edges, &d.added_edges,
+    &d.new_root,
+)?; // Err on root_mismatch / delta_invalid
 ```
 
 ### `StreamEncoder::new(w: impl Write, tool, opts) -> StreamEncoder`
