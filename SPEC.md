@@ -2,7 +2,7 @@
 
 ## Graph Compact Format: A Token-Optimized Wire Format for LLM Interactions
 
-**Version:** 3.4.0
+**Version:** 3.4.1
 
 **Date:** 2026-07-12
 
@@ -1252,7 +1252,7 @@ GCF profile=graph tool=context_for_task delta=true base_root=sha256:0123456789ab
 ## removed
 fn github.com/org/repo/pkg.OldHandler
 ## added
-@0 fn github.com/org/repo/pkg.NewHandler 0.85 rwr
+@0 fn github.com/org/repo/pkg.NewHandler 0.85 rwr 0
 ## edges_removed
 github.com/org/repo/pkg.Router -> github.com/org/repo/pkg.OldHandler calls
 ## edges_added
@@ -1264,13 +1264,15 @@ github.com/org/repo/pkg.Router -> github.com/org/repo/pkg.NewHandler calls
 | Section | Content |
 |---------|---------|
 | `## removed` | Symbols in the prior pack but not in the current. Short references (kind + qname). |
-| `## added` | Symbols in the current pack but not in the prior pack. Full node lines with IDs. |
+| `## added` | Symbols in the current pack but not in the prior pack. Delta node lines: the standard node line plus a trailing distance field (`@id kind qname score provenance distance`). |
 | `## edges_removed` | Edges in the prior pack but not in the current. `source -> target type` format. |
 | `## edges_added` | Edges in the current pack but not in the prior. `source -> target type` format. |
 
 A server SHOULD only use delta encoding when it saves significantly over full retransmission. A threshold of 60% (delta MUST be less than 60% of full size) is RECOMMENDED.
 
-When `delta=true`, only the four delta section names above are valid. `removed` lines MUST use `kind qname`; `added` lines MUST use full node syntax; edge delta lines MUST use `source -> target type`. Delta-only line forms MUST NOT appear in non-delta graph payloads.
+When `delta=true`, only the four delta section names above are valid. `removed` lines MUST use `kind qname`; `added` lines MUST use the delta node syntax `@{id} {kind} {qname} {score} {provenance} {distance}` (the standard node fields followed by a trailing decimal `distance`); edge delta lines MUST use `source -> target type`. Delta-only line forms MUST NOT appear in non-delta graph payloads.
+
+The trailing `distance` on `added` lines is REQUIRED: unlike a full payload, where a symbol's distance is conveyed by its distance-group header (Section 6a), the flat `## added` section has no group headers, so the distance must travel on the line itself. Without it a consumer could not reconstruct the new snapshot's symbols with their distances and therefore could not recompute the `pack_root` (Section 10.2) to verify `new_root` (Section 10.4). `removed` lines omit distance because a removal is matched by identity (kind + qualified name) alone.
 
 ### 10.2 Canonical pack root (`gcf-pack-root-v1`)
 
@@ -1761,13 +1763,15 @@ This specification follows a three-stage lifecycle:
 | **Stable** | The grammar is frozen. No breaking changes. Additive extensions only. Implementations may depend on stability for production use. |
 | **Frozen** | No changes of any kind. The specification is archived. |
 
-Current status: **Stable** (v3.4.0 designated 2026-07-12).
+Current status: **Stable** (v3.4.1 designated 2026-07-12).
 
 ### 19.3 Version history
 
 This specification (v3.0) supersedes v2.0 and adds inline object schemas, positional inline attachment bodies, shared array attachment schemas, and expanded quoting protections. The graph profile is unchanged.
 
-Since v3.0 the specification has grown additively only (Stable: no breaking changes): **v3.1** made the graph header `tool` field optional; **v3.2** added nested-object flattening (`>` path columns); **v3.3** added delta encoding for the generic profile (Section 10a), with the `@`-marked identity column and the non-normative producer re-anchor guidance (Section 10a.8); **v3.4** added an optional labeled form for the graph streaming trailer's `counts` field (Section 8.4.1), a producer-side comprehension aid whose default positional form is unchanged. Every extension is backward-compatible; a v3.0 decoder ignores what it does not recognize.
+Since v3.0 the specification has grown additively only (Stable: no breaking changes): **v3.1** made the graph header `tool` field optional; **v3.2** added nested-object flattening (`>` path columns); **v3.3** added delta encoding for the generic profile (Section 10a), with the `@`-marked identity column and the non-normative producer re-anchor guidance (Section 10a.8); **v3.4** added an optional labeled form for the graph streaming trailer's `counts` field (Section 8.4.1), a producer-side comprehension aid whose default positional form is unchanged. Every extension through v3.4 is backward-compatible; a v3.0 decoder ignores what it does not recognize.
+
+**v3.4.1** added a trailing `distance` field to the graph delta `## added` line (Section 10.1), so a consumer can reconstruct the new snapshot and verify `new_root` (`pack_root` includes distance; Sections 10.2, 10.4). A delta-only line-form correction.
 
 V3 is the only supported encoding. Decoders are not required to accept v2-style indented attachments. Encoders emit v3 grammar exclusively.
 

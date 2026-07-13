@@ -1,5 +1,13 @@
 # Changelog
 
+## v3.4.1 (2026-07-12)
+
+### Correctness fix: graph delta `## added` lines carry distance (Section 10.1)
+
+- The graph delta `## added` line now ends with a trailing `distance` field: `@id kind qname score provenance distance`. The prior form omitted distance, but `pack_root` (Section 10.2) hashes distance, so a consumer could not reconstruct the new snapshot and recompute `pack_root` to verify `new_root` (Section 10.4). Delta verification was therefore impossible to perform from the wire; it now works. This changes the `## added` line's arity (five fields to six); no functioning delta consumer existed under the prior form, so nothing that worked is broken. `removed` lines are unchanged (a removal matches by identity alone).
+- The `graph-delta` conformance fixtures are now real cross-SDK tests, not skipped: `001` (encode, gains the trailing `0`), `002` (decode a delta wire, apply it to a base snapshot, and verify the recomputed `pack_root` equals `new_root`), and `003` (the same delta with a wrong `new_root`, rejected with `root_mismatch`). Fixture `003` gained a `base_snapshot` so it can be applied.
+- All six SDKs implement the graph delta path end to end (encode with distance, wire decode, and verify) and pass these fixtures byte-for-byte / hash-for-hash.
+
 ## v3.4.0 (2026-07-12)
 
 ### Spec change: optional labeled form for the graph streaming trailer counts (Section 8.4.1)

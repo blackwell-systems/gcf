@@ -106,8 +106,8 @@ GCF profile=graph tool=context_for_task delta=true base_root=aaa new_root=bbb to
 fn pkg.OldFunc
 method pkg.Server.Deprecated
 ## added
-@0 fn pkg.NewFunc 0.85 rwr
-@1 type pkg.NewConfig 0.72 ast_inferred
+@0 fn pkg.NewFunc 0.85 rwr 0
+@1 type pkg.NewConfig 0.72 ast_inferred 1
 ## edges_removed
 pkg.Router -> pkg.OldFunc calls
 ## edges_added
@@ -115,7 +115,7 @@ pkg.Router -> pkg.NewFunc calls
 ```
 
 - `## removed`: kind + qname only (consumer has full declaration from prior response)
-- `## added`: full symbol lines with sequential IDs from 0
+- `## added`: full symbol lines with sequential IDs from 0, each carrying a trailing distance
 - `## edges_removed` / `## edges_added`: `source -> target type` format
 
 ### Complete graph example

@@ -1,7 +1,16 @@
 {
   "name": "delta_verification_failure",
-  "description": "Delta with wrong new_root must be rejected",
-  "input": "GCF profile=graph tool=test delta=true base_root=sha256:8e6d32973b4005c604399a14faa32799d54f427800008312a3357c349d41e572 new_root=sha256:0000000000000000000000000000000000000000000000000000000000000000\n## removed\nfn pkg.Server\n## added\n@0 fn pkg.Handler 0.85 lsp_resolved\n## edges_removed\npkg.Server -> pkg.Auth calls\n## edges_added\npkg.Handler -> pkg.Auth calls\n",
+  "description": "A delta whose declared new_root does not match the recomputed pack_root of the applied snapshot MUST be rejected (SPEC 10.4). Same delta as 002 applied to the same base_snapshot, but the header's new_root is all zeros, so verification fails with root_mismatch.",
+  "input": "GCF profile=graph tool=test delta=true base_root=sha256:8e6d32973b4005c604399a14faa32799d54f427800008312a3357c349d41e572 new_root=sha256:0000000000000000000000000000000000000000000000000000000000000000\n## removed\nfn pkg.Server\n## added\n@0 fn pkg.Handler 0.85 lsp_resolved 1\n## edges_removed\npkg.Server -> pkg.Auth calls\n## edges_added\npkg.Handler -> pkg.Auth calls\n",
+  "base_snapshot": {
+    "symbols": [
+      {"qualifiedName": "pkg.Auth", "kind": "function", "score": 0.78, "provenance": "lsp_resolved", "distance": 0},
+      {"qualifiedName": "pkg.Server", "kind": "function", "score": 0.54, "provenance": "lsp_resolved", "distance": 1}
+    ],
+    "edges": [
+      {"source": "pkg.Server", "target": "pkg.Auth", "edgeType": "calls"}
+    ]
+  },
   "expectedError": "root_mismatch",
   "operation": "delta-verify"
 }

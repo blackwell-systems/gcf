@@ -23,8 +23,8 @@ GCF profile=graph tool=context_for_task delta=true base_root=a1b2c3 new_root=d4e
 fn github.com/org/repo/pkg.OldHandler
 method github.com/org/repo/pkg.Server.Deprecated
 ## added
-@0 fn github.com/org/repo/pkg.NewHandler 0.85 rwr
-@1 fn github.com/org/repo/pkg.UpdatedAuth 0.79 lsp_resolved
+@0 fn github.com/org/repo/pkg.NewHandler 0.85 rwr 0
+@1 fn github.com/org/repo/pkg.UpdatedAuth 0.79 lsp_resolved 1
 ## edges_removed
 github.com/org/repo/pkg.Router -> github.com/org/repo/pkg.OldHandler calls
 ## edges_added
@@ -36,11 +36,11 @@ github.com/org/repo/pkg.Router -> github.com/org/repo/pkg.NewHandler calls
 | Section | Content | Format |
 |---------|---------|--------|
 | `## removed` | Symbols in prior pack but not current | Short refs: `{kind} {qname}` |
-| `## added` | Symbols in current pack but not prior | Full node lines: `@{id} {kind} {qname} {score} {prov}` |
+| `## added` | Symbols in current pack but not prior | Full node lines plus a trailing distance: `@{id} {kind} {qname} {score} {prov} {distance}` |
 | `## edges_removed` | Edges in prior but not current | `{source} -> {target} {type}` |
 | `## edges_added` | Edges in current but not prior | `{source} -> {target} {type}` |
 
-Removed symbols use short references (kind + qualified name only) because the consumer already has the full declaration from the prior response. Added symbols use full declarations because they're new.
+Removed symbols use short references (kind + qualified name only) because the consumer already has the full declaration from the prior response. Added symbols use full declarations, including the trailing distance, because they're new: the flat `## added` section has no distance-group headers, so the distance travels on the line itself, which the consumer needs to reconstruct the new snapshot and verify `new_root` (see pack_root below).
 
 ## When to use delta
 
@@ -124,7 +124,7 @@ GCF profile=graph tool=context_for_task delta=true base_root=a1b2c3 new_root=d4e
 ## removed
 fn pkg.OldFunc
 ## added
-@0 fn pkg.NewFunc 0.85 rwr
+@0 fn pkg.NewFunc 0.85 rwr 0
 ## edges_removed
 pkg.Router -> pkg.OldFunc calls
 ## edges_added

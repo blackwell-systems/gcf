@@ -133,7 +133,7 @@ GCF profile=graph tool=context_for_task delta=true base_root=aaa new_root=bbb sa
 ## removed
 fn pkg.OldHandler
 ## added
-@0 fn pkg.NewHandler 0.85 rwr
+@0 fn pkg.NewHandler 0.85 rwr 0
 ## edges_removed
 pkg.Router -> pkg.OldHandler calls
 ## edges_added

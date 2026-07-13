@@ -23,7 +23,7 @@ It covers:
 
 ## Version
 
-Current: **GCF v3.4.0** (stable, 2026-07-12)
+Current: **GCF v3.4.1** (stable, 2026-07-12)
 
 ## Conventions
 
@@ -56,4 +56,4 @@ Conformance fixtures live in [tests/conformance](https://github.com/blackwell-sy
 
 ## Stability guarantee
 
-**Stable** (v3.4.0 designated 2026-07-12). V3 is the only supported encoding and has grown additively since v3.0 (no breaking changes): v3.1 made the graph header `tool` field optional, v3.2 added nested object flattening (Section 7.4.6), v3.3 added delta encoding for the generic profile (Section 10a), and v3.4 added an optional labeled form for the graph streaming trailer's `counts` field (Section 8.4.1). The graph profile and `GCF profile=generic` header remain backward compatible.
+**Stable** (v3.4.1 designated 2026-07-12). V3 is the only supported encoding and has grown additively since v3.0 (no breaking changes): v3.1 made the graph header `tool` field optional, v3.2 added nested object flattening (Section 7.4.6), v3.3 added delta encoding for the generic profile (Section 10a), v3.4 added an optional labeled form for the graph streaming trailer's `counts` field (Section 8.4.1), and v3.4.1 added a trailing `distance` field to the graph delta `## added` line (Section 10.1) so a consumer can reconstruct the new snapshot and verify `new_root`. The graph profile and `GCF profile=generic` header remain backward compatible.
