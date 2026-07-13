@@ -58,6 +58,7 @@ export default defineConfig({
       {
         text: 'Evidence',
         items: [
+          { text: 'Testing and Verification', link: '/guide/testing' },
           { text: 'Benchmarks', link: '/guide/benchmarks' },
           { text: 'Tokenizer Analysis', link: '/guide/tokenizer-analysis' },
           { text: 'BPE and Attention', link: '/guide/bpe-and-attention' },
