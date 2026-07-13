@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "coverage:matrix": "node scripts/coverage-matrix.mjs",
+    "coverage:check": "node scripts/coverage-matrix.mjs --check"
+  },
   "dependencies": {
     "@blackwell-systems/gcf": "^2.2.0",
     "@lenml/tokenizer-claude": "^3.7.2",

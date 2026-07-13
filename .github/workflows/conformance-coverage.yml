@@ -1,0 +1,28 @@
+name: Conformance coverage
+
+on:
+  push:
+    branches: [main]
+    paths: ['tests/conformance/**', 'SPEC.md', 'scripts/coverage-matrix.mjs']
+  pull_request:
+    paths: ['tests/conformance/**', 'SPEC.md', 'scripts/coverage-matrix.mjs']
+
+jobs:
+  matrix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      # The script exits non-zero on an uncovered Section 16.5 condition (with no
+      # allow-list entry), a missing required operation, or a stale allow-list entry.
+      # It also regenerates COVERAGE.md; the git diff then enforces that the committed
+      # doc is in sync (a new fixture must be accompanied by a regenerated matrix).
+      - name: Regenerate and gate the conformance coverage matrix
+        run: |
+          node scripts/coverage-matrix.mjs
+          git diff --exit-code tests/conformance/COVERAGE.md || {
+            echo '::error::COVERAGE.md is out of date. Run: node scripts/coverage-matrix.mjs';
+            exit 1;
+          }
