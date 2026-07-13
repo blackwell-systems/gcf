@@ -70,9 +70,9 @@ OLAP/analytics cursors, graph traversals, large log or event queries, pagination
 
 If your integration surface is one output-format switch (an MCP tool-result gateway, an API
 layer feeding a model), GCF is a drop-in that cuts tokens losslessly with no runtime
-dependencies. The win here is real but modest and format-agnostic; lead with lossless
-round-trips and comprehension, not headline token counts. The [MCP proxy](/guide/proxy)
-makes this zero-code for any MCP server.
+dependencies. On a single payload the savings are more modest than across a multi-turn
+loop, but the round-trip stays lossless and every frontier model reads it reliably. The
+[MCP proxy](/guide/proxy) makes this zero-code for any MCP server.
 
 ## When NOT to use GCF
 
