@@ -93,8 +93,8 @@ Encode a delta payload (only added/removed symbols and edges).
 ```go
 output := gcf.EncodeDelta(&gcf.DeltaPayload{
     Tool:        "context_for_task",
-    BaseRoot:    "aaa111",
-    NewRoot:     "bbb222",
+    BaseRoot:    "sha256:aaa111...",
+    NewRoot:     "sha256:bbb222...",
     Removed:     removedSymbols,
     Added:       addedSymbols,
     RemovedEdges: removedEdges,
@@ -102,6 +102,41 @@ output := gcf.EncodeDelta(&gcf.DeltaPayload{
     DeltaTokens:  30,
     FullTokens:   200,
 })
+```
+
+### `PackRoot(symbols []Symbol, edges []Edge) string`
+
+Compute the content-addressed pack root (`gcf-pack-root-v1`, SPEC Section 10.2) of a graph snapshot: a deterministic SHA-256 over canonical, independently-sorted symbol and edge records. Byte-identical across all six SDKs. This is the value carried in `pack_root` / `base_root` / `new_root`.
+
+```go
+root := gcf.PackRoot(symbols, edges) // "sha256:<64 hex>"
+```
+
+### `DecodeDelta(input string) (*DeltaPayload, error)`
+
+Parse a graph delta wire (`GCF profile=graph delta=true ...`) back into a `DeltaPayload` (removed / added symbols, removed / added edges). The inverse of `EncodeDelta`. Returns an error on malformed input.
+
+```go
+d, err := gcf.DecodeDelta(deltaText)
+if err != nil {
+    log.Fatal(err)
+}
+```
+
+### `VerifyDelta(baseSymbols []Symbol, baseEdges []Edge, removedSymbols, addedSymbols []Symbol, removedEdges, addedEdges []Edge, expectedNewRoot string) ([]Symbol, []Edge, error)`
+
+Apply a decoded delta to a base snapshot atomically, then verify the recomputed `PackRoot` equals `expectedNewRoot` (SPEC Section 10.4). Returns the applied symbols and edges on success. Applies nothing and returns `delta_invalid` when a removal targets a symbol not in the base or an addition already exists, or `root_mismatch` when the recomputed root differs from `expectedNewRoot`.
+
+```go
+d, _ := gcf.DecodeDelta(deltaText)
+syms, edges, err := gcf.VerifyDelta(
+    baseSymbols, baseEdges,
+    d.Removed, d.Added, d.RemovedEdges, d.AddedEdges,
+    d.NewRoot,
+)
+if err != nil {
+    // root_mismatch or delta_invalid: request a full payload
+}
 ```
 
 ### `NewStreamEncoder(w io.Writer, tool string, opts StreamOptions) *StreamEncoder`
