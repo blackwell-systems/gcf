@@ -86,6 +86,7 @@ export default defineConfig({
       {
         text: 'Ecosystem',
         items: [
+          { text: "What's New", link: '/ecosystem/whats-new' },
           { text: 'Implementations', link: '/ecosystem/implementations' },
           { text: 'Who Uses GCF', link: '/ecosystem/adopters' },
           { text: 'Case Study: NeuroNest', link: '/ecosystem/case-study-neuronest' },
