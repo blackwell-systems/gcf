@@ -1,0 +1,16 @@
+{
+  "name": "graph_streaming_encode_zero_edges_positional",
+  "description": "Streaming graph encode with symbols but NO edges. SPEC 8.4: the graph trailer counts are the per-non-empty-group counts FOLLOWED BY the edge count, which is always the last entry even when it is 0. So a stream with 2 targets, 1 related, and 0 edges MUST emit counts=2,1,0 (not counts=2,1). This pins the 'edges always last' invariant that keeps the positional form unambiguous. Pairs with 009 (identical input, labeled trailer). Runners that do not implement graph-stream-encode skip this fixture.",
+  "operation": "graph-stream-encode",
+  "input": {
+    "tool": "context_for_task",
+    "tokenBudget": 5000,
+    "symbols": [
+      {"qualifiedName": "pkg.Auth", "kind": "function", "score": 0.95, "provenance": "lsp", "distance": 0},
+      {"qualifiedName": "pkg.Router", "kind": "function", "score": 0.90, "provenance": "lsp", "distance": 0},
+      {"qualifiedName": "pkg.Server", "kind": "function", "score": 0.60, "provenance": "lsp", "distance": 1}
+    ],
+    "edges": []
+  },
+  "expected": "GCF profile=graph tool=context_for_task budget=5000\n## targets\n@0 fn pkg.Auth 0.95 lsp\n@1 fn pkg.Router 0.90 lsp\n## related\n@2 fn pkg.Server 0.60 lsp\n##! summary symbols=3 edges=0 counts=2,1,0\n"
+}

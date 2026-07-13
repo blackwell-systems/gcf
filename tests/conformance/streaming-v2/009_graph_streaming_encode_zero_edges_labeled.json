@@ -1,0 +1,17 @@
+{
+  "name": "graph_streaming_encode_zero_edges_labeled",
+  "description": "Streaming graph encode with symbols but NO edges, labeled trailer counts (SPEC 8.4.1). The edges: entry is always present and last even when the edge count is 0, so 2 targets, 1 related, 0 edges MUST emit counts=targets:2,related:1,edges:0. Identical input to 008; confirms the labeled form keeps the mandatory edges:0 anchor. Runners skip a graph-stream-encode fixture whose options they do not support.",
+  "operation": "graph-stream-encode",
+  "options": { "labeledTrailerCounts": true },
+  "input": {
+    "tool": "context_for_task",
+    "tokenBudget": 5000,
+    "symbols": [
+      {"qualifiedName": "pkg.Auth", "kind": "function", "score": 0.95, "provenance": "lsp", "distance": 0},
+      {"qualifiedName": "pkg.Router", "kind": "function", "score": 0.90, "provenance": "lsp", "distance": 0},
+      {"qualifiedName": "pkg.Server", "kind": "function", "score": 0.60, "provenance": "lsp", "distance": 1}
+    ],
+    "edges": []
+  },
+  "expected": "GCF profile=graph tool=context_for_task budget=5000\n## targets\n@0 fn pkg.Auth 0.95 lsp\n@1 fn pkg.Router 0.90 lsp\n## related\n@2 fn pkg.Server 0.60 lsp\n##! summary symbols=3 edges=0 counts=targets:2,related:1,edges:0\n"
+}

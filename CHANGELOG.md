@@ -17,7 +17,7 @@
 
 ### Conformance
 
-- New `graph-stream-encode` conformance operation with shared fixtures: 004/006 (positional trailer) and 005/007 (labeled trailer, `options.labeledTrailerCounts`), where 006/007 exercise three distance groups (targets/related/extended) with distinct per-group counts and multiple edges (`counts=3,2,1,4` ↔ `counts=targets:3,related:2,extended:1,edges:4`). Streaming encode previously had only decode fixtures, which is how an earlier Go-only header regression escaped. All six SDKs reproduce these bytes exactly.
+- New `graph-stream-encode` conformance operation with shared fixtures: 004/006 (positional trailer) and 005/007 (labeled trailer, `options.labeledTrailerCounts`), where 006/007 exercise three distance groups (targets/related/extended) with distinct per-group counts and multiple edges (`counts=3,2,1,4` ↔ `counts=targets:3,related:2,extended:1,edges:4`). Fixtures 008/009 add the zero-edge case (`counts=2,1,0` / `counts=targets:2,related:1,edges:0`), pinning the rule that the edge count is always the last `counts` entry even when it is 0; this exposed and now guards a divergence where all six encoders dropped the edge count for zero-edge streams (SPEC §8.4 / §8.4.1). Streaming encode previously had only decode fixtures, which is how an earlier Go-only header regression escaped. All six SDKs reproduce these bytes exactly.
 - New `generic-delta-session` fixtures exercising the re-anchor cadence (fixed-N, size-guard, and schema-change forced full).
 
 ### Comprehension validation
