@@ -314,7 +314,7 @@ header-value        = 1*( %x21-7E )  ; printable non-whitespace ASCII
 graph-body          = *( graph-section ) [ metadata-summary ]
 graph-section       = group-header LF *( graph-line LF )
 graph-line          = node-line / edge-line / ref-line / delta-symbol-line
-                    / delta-edge-line / comment
+                    / delta-added-line / delta-edge-line / comment
 metadata-summary    = "##!" SP "summary" *( SP header-pair ) LF
 
 ; --- Generic roots ---
@@ -392,8 +392,10 @@ node-line           = "@" id SP kind SP qname SP score SP provenance
 edge-line           = "@" target-id "<" "@" source-id SP edge-type [ SP status ]
 ref-line            = "@" id SP SP "# previously transmitted"
 delta-symbol-line   = kind SP qname
+delta-added-line    = node-line SP distance  ; graph delta `## added`: node line plus trailing distance (Section 10.1)
 delta-edge-line     = qname SP "->" SP qname SP edge-type
 id                  = 1*DIGIT
+distance            = 1*DIGIT
 target-id           = id
 source-id           = id
 count               = "0" / ( DIGIT1-9 *DIGIT )
@@ -1354,7 +1356,7 @@ The generic profile (Section 7) supports delta encoding using the same mechanism
 
 Generic delta inherits, unchanged: the three-outcome protocol (Section 10.3), the `gcf-pack-root-v1` algorithm and unknown-algorithm fallback (Section 10.2), atomic delta application (Section 10.4), and session scope (Section 9.3). It adds an identity column, a `## changed` section, and a row-based canonical record (Section 10a.3).
 
-Delta is opt-in and bilateral: a server emits a delta only after the consumer has echoed a `pack_root` the server recognizes as a known base; otherwise it returns a full payload. A server MAY return a full payload at any time, for any reason, and a consumer MUST apply an `unchanged`, `delta`, or `full` payload identically regardless of what preceded it. This cadence-agnostic guarantee is what allows a producer to re-anchor on any schedule (Section 10a.9).
+Delta is opt-in and bilateral: a server emits a delta only after the consumer has echoed a `pack_root` the server recognizes as a known base; otherwise it returns a full payload. A server MAY return a full payload at any time, for any reason, and a consumer MUST apply an `unchanged`, `delta`, or `full` payload identically regardless of what preceded it. This cadence-agnostic guarantee is what allows a producer to re-anchor on any schedule (Section 10a.8).
 
 ```
 GCF profile=generic pack_root=sha256:aaa9f2... key=id

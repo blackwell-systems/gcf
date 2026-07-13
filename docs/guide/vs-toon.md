@@ -6,7 +6,7 @@ GCF has two profiles. TOON has one. The comparison plays out on both dimensions,
 
 **On relationship data** (graph profile): TOON has no grammar for this. No local IDs, no edge notation, no session dedup, no distance grouping. TOON must repeat full identifiers on every edge (~30-100 tokens each). GCF uses `@0<@1 calls` (~4 tokens). On 500-symbol code graphs, GCF scores 91.2% comprehension. TOON scores 68.8%. This isn't a gap that closes with optimization. TOON structurally cannot represent relationships efficiently without becoming a different format.
 
-**On TOON's own benchmark**: We forked [their benchmark](https://github.com/blackwell-systems/toon-benchmark), ran their original 6 datasets with their tokenizer and methodology, then added 9 more representing real-world MCP tool responses. GCF wins 15 of 16 overall. TOON's one win is 77 tokens on a single dataset. GCF's 13 wins save 107,679 tokens.
+**On TOON's own benchmark**: We forked [their benchmark](https://github.com/blackwell-systems/toon-benchmark), ran their original 6 datasets with their tokenizer and methodology, then added 9 more representing real-world MCP tool responses. GCF wins 15 of 16 overall. TOON's one win is 77 tokens on a single dataset. Across all 16 datasets GCF uses 218,529 fewer tokens than TOON (29% less).
 
 ## Feature comparison
 
@@ -27,7 +27,7 @@ GCF has two profiles. TOON has one. The comparison plays out on both dimensions,
 | **Streaming encode** | **Yes (true zero-buffering, O(1) memory, `[?]` + trailer)** | **Output-side only (requires full value in memory)** |
 | Key folding (dotted paths) | No | Yes |
 | LLM comprehension (generic, 500 orders) | **100%** on every frontier model | 92.3% (fails on GPT-5.5, Gemini Flash) |
-| LLM comprehension (graph, 500 symbols) | **91.2%** avg (23 runs, 12 models) | 68.8% avg |
+| LLM comprehension (graph, 500 symbols) | **91.2%** avg (24 runs, 10 models) | 68.8% avg |
 | **LLM generation (output tokens)** | **75% fewer than JSON** | **40% fewer than JSON** |
 | Human-readable | Dense, agent-optimized | YAML-like, human-friendly |
 | Zero dependencies | Yes | Yes |
@@ -42,22 +42,23 @@ GCF has two profiles. TOON has one. The comparison plays out on both dimensions,
 
 | Dataset | GCF | TOON | GCF vs TOON |
 |---------|-----|------|-------------|
-| Event logs (semi-uniform) | 95,635 | 154,032 | **-37.9%** |
-| E-commerce orders (nested) | 51,334 | 73,246 | **-29.9%** |
-| Comprehension eval payload | 41,213 | 60,603 | **-32.0%** |
-| Order history (shared schemas) | 13,295 | 16,454 | **-19.2%** |
-| Blast radius response | 6,561 | 7,831 | **-16.2%** |
-| Distributed trace | 4,318 | 4,959 | **-12.9%** |
-| File tree + diagnostics | 6,018 | 6,894 | **-12.7%** |
-| Analytics time-series | 8,404 | 9,127 | **-7.9%** |
 | Employee records (flat) | 49,061 | 49,966 | -1.8% |
-| GitHub repositories | 8,582 | 8,744 | -1.9% |
-| PR file changes | 2,623 | 2,657 | -1.3% |
-| Database query results | 17,716 | 17,969 | -1.4% |
-| Multi-tool composite | 3,131 | 3,192 | -1.9% |
-| Nested config | 617 | 618 | **-0.2%** |
+| E-commerce orders (nested) | 50,343 | 73,246 | -31.3% |
+| Analytics time-series | 8,404 | 9,127 | -7.9% |
+| GitHub repositories | 8,599 | 8,744 | -1.7% |
+| Event logs (semi-uniform) | 95,193 | 154,032 | -38.2% |
+| Nested config | 617 | 618 | -0.2% |
 | LSP symbol search | 5,442 | 5,365 | +1.4% |
-| **TOTAL** | **533,586** | **752,143** | **-29.0%** |
+| PR file changes | 2,623 | 2,657 | -1.3% |
+| Distributed trace | 4,318 | 4,959 | -12.9% |
+| Database query results | 17,716 | 17,969 | -1.4% |
+| File tree + diagnostics | 6,018 | 6,894 | -12.7% |
+| Multi-tool composite | 3,131 | 3,192 | -1.9% |
+| Order history (shared schemas) | 13,295 | 16,454 | -19.2% |
+| Blast radius response | 6,561 | 7,831 | -16.2% |
+| Kubernetes pod status | 40,097 | 60,603 | -33.8% |
+| Enterprise org hierarchy | 222,196 | 330,486 | -32.8% |
+| **TOTAL** | **533,614** | **752,143** | **-29.0%** |
 
 **GCF wins 15/16.** TOON's one win: LSP symbols (77 tokens, 1.4%, tokenizer artifact).
 
@@ -129,7 +130,7 @@ This isn't a feature that can be bolted on. Session dedup requires the format to
 When the LLM re-queries and the data changed slightly, GCF sends only the diff:
 
 ```
-GCF profile=graph tool=context_for_task delta=true base_root=aaa new_root=bbb savings=81%
+GCF profile=graph tool=context_for_task delta=true base_root=sha256:0123456789abcdef... new_root=sha256:fedcba9876543210... savings=81%
 ## removed
 fn pkg.OldHandler
 ## added
@@ -141,6 +142,8 @@ pkg.Router -> pkg.NewHandler calls
 ```
 
 81.2% savings on re-queries in production. TOON must retransmit the entire payload even if one record changed.
+
+Delta is not graph-only. The generic profile has the same mechanism (a keyed diff with `## added` / `## changed` / `## removed` sections and content-addressed roots; SPEC Section 10a), so evolving tabular result sets get the same re-query savings. TOON has neither form.
 
 ### 5. Distance grouping (semantic structure)
 
@@ -157,7 +160,7 @@ GCF encodes how far each record is from the query center:
 
 The LLM immediately knows what's most relevant without scanning the entire payload. TOON encodes all records in a flat list with no semantic grouping.
 
-## LLM generation: TOON fails, GCF doesn't
+## LLM generation validity
 
 28 generation runs across 9 models and 3 providers. Same data, same prompt structure, output validated through real decoders (including TOON's official [toon-go](https://github.com/toon-format/toon-go) library).
 
@@ -178,7 +181,7 @@ GCF expresses distance through section placement (`## targets`, `## related`). N
 
 ![The Distance Label Problem](/charts/distance-label-problem.png)
 
-When TOON is given pre-encoded integers (hand-holding the model through the mapping to compensate for their fragile format), performance improves on some models but is still inconsistent. Even in the best case, TOON output is 28% larger than GCF.
+When TOON is given pre-encoded integers (hand-holding the model through the mapping), performance improves on some models but is still inconsistent. Even in the best case, TOON output is 28% larger than GCF.
 
 GCF output is 63% smaller than JSON and 33% smaller than TOON at 100 symbols. See the [full generation data](/guide/eval-results#generation-all-runs) for all runs.
 
@@ -198,7 +201,7 @@ GCF's [comprehension eval](https://github.com/blackwell-systems/gcf-go/tree/main
 
 GCF: 100% on every frontier model. TOON fails on GPT-5.5 (count_premium_customers). JSON fails on Gemini 2.5 Flash (3 questions wrong).
 
-**Graph profile (500 symbols + 200 edges, 10 models, 23 runs):**
+**Graph profile (500 symbols + 200 edges, 10 models, 24 runs):**
 
 | Format | Avg accuracy | Tokens |
 |--------|-------------|--------|
@@ -226,7 +229,7 @@ One case out of 16 datasets:
 
 1. **LSP symbol search** (+77 tokens, 1.4%): A flat tabular array where TOON's comma delimiter tokenizes slightly better than GCF's pipe delimiter. GCF is fewer bytes but more tokens due to how the tokenizer splits on `|` vs `,`.
 
-77 tokens. GCF saves 218,480 tokens across the other 15 datasets.
+77 tokens. GCF saves 218,606 tokens across the other 15 datasets.
 
 TOON's `encodeLines()` is output-side streaming only (the full value must be in memory before encoding starts). GCF's `StreamEncoder` is true input-side streaming with zero buffering and O(1) memory per row. See the [streaming guide](/guide/streaming) for the full comparison.
 
@@ -271,7 +274,7 @@ TOON's disadvantages are not a list of unrelated shortcomings. They are the down
 | Axis | Consequence of implicit delimiters | Measured |
 |------|-----------------------------------|----------|
 | **Tokenization** | tab merges with adjacent content, dissolving boundaries into single tokens | 32.91% merge rate, 1,238 mergeable words (worst of any common separator; GCF pipe: 0.47%) |
-| **Comprehension** | the model cannot filter a flat 500-row table by column value | 68.8% vs GCF 90.7% across 25 runs |
+| **Comprehension** | the model cannot filter a flat 500-row table by column value | 68.8% vs GCF 91.2% across 24 runs |
 | **Generation** | flat columns encode categories as integers; models write labels and the decoder rejects | TOON's own decoder rejects LLM output on 7 of 9 models |
 | **Token efficiency** | flat rows repeat structure; edges carry no local IDs | GCF wins 15 of 16 datasets, 29% fewer tokens overall |
 | **Security** | no explicit boundary between untrusted content and schema | "Delimiter Dissolution": 90% injection leak on Qwen (JSON 0%) |

@@ -18,7 +18,7 @@ GCF has two encoding profiles that share the same grammar primitives (`##`, `|`,
 GCF profile=graph tool=<name> budget=<int> tokens=<int> symbols=<int> edges=<int> pack_root=sha256:<hex>
 ```
 
-All fields are optional. `tool` SHOULD be present for MCP tool responses.
+`profile` is required; every field after it is optional. `tool` SHOULD be present for MCP tool responses.
 
 ```
 GCF profile=graph tool=context_for_task
