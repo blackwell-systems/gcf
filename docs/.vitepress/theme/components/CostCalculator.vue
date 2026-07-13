@@ -43,11 +43,14 @@ const tokensPerQuery = computed(() => {
   const toonBase = Math.round(42151 * ratio)
   const jsonBase = Math.round(80653 * ratio)
 
-  const sessionMultipliers = [1.0, 0.35, 0.20, 0.12, 0.08]
+  // Generic tabular data (orders) re-uses a keyed delta on re-queries, not graph
+  // session dedup. These multipliers are the delta size as the working set stabilizes
+  // (roughly ~15% / 10% / 6% / 4% of records changed; see delta.md measured savings).
+  const deltaMultipliers = [1.0, 0.35, 0.20, 0.12, 0.08]
   const sessIdx = Math.min(sessionCalls.value - 1, 4)
-  const gcfWithSession = Math.round(gcfBase * sessionMultipliers[sessIdx])
+  const gcfWithDelta = Math.round(gcfBase * deltaMultipliers[sessIdx])
 
-  return { gcf: gcfWithSession, toon: toonBase, json: jsonBase }
+  return { gcf: gcfWithDelta, toon: toonBase, json: jsonBase }
 })
 
 const monthlyCost = computed(() => {
@@ -124,7 +127,7 @@ function formatCurrency(n: number): string {
         <div class="param">
           <div class="param-header"><label>Model</label></div>
           <select v-model.number="selectedModel" class="model-select" @change="useCustom = false">
-            <option v-for="(m, i) in models" :key="i" :value="i">{{ m.name }} ({{ m.provider }}) — ${{ m.input }}/MTok</option>
+            <option v-for="(m, i) in models" :key="i" :value="i">{{ m.name }} ({{ m.provider }}), ${{ m.input }}/MTok</option>
           </select>
         </div>
 
@@ -134,9 +137,9 @@ function formatCurrency(n: number): string {
         </div>
 
         <div class="param">
-          <div class="param-header"><label>Session Call # (GCF dedup)</label><span class="value">Call {{ sessionCalls }}{{ sessionCalls >= 5 ? '+' : '' }}</span></div>
+          <div class="param-header"><label>Re-query # (GCF delta)</label><span class="value">Query {{ sessionCalls }}{{ sessionCalls >= 5 ? '+' : '' }}</span></div>
           <input type="range" v-model.number="sessionCalls" min="1" max="5" step="1" />
-          <div class="param-range"><span>1 (first call)</span><span>5+ (warm session)</span></div>
+          <div class="param-range"><span>1 (first query)</span><span>5+ (re-queries)</span></div>
         </div>
       </div>
 
@@ -206,7 +209,7 @@ function formatCurrency(n: number): string {
     </div>
 
     <div class="note">
-      <p><strong>Data source:</strong> Token counts measured from actual 500/1000-order nested payloads using o200k_base tokenizer. GCF session dedup compounds savings across multi-turn agent sessions. TOON and JSON retransmit everything on every call.</p>
+      <p><strong>Data source:</strong> Token counts measured from actual 500/1000-order nested payloads using o200k_base tokenizer. On re-queries, GCF sends only the records that changed (a keyed delta, generic profile), so cost compounds down across a session. TOON and JSON retransmit everything on every call.</p>
     </div>
   </div>
 </template>
