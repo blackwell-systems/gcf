@@ -66,7 +66,6 @@ export default defineConfig({
           { text: 'Benchmarks (Full Data)', link: '/guide/eval-results' },
           { text: 'Lossless Verification', link: '/guide/lossless-verification' },
           { text: 'Whitepaper', link: '/whitepaper' },
-          { text: 'Independent AI Reviews', link: '/reviews/' },
         ],
       },
       {

@@ -167,19 +167,21 @@ GCF profile=generic delta=true base_root=sha256:aaa9f2... new_root=sha256:bbb4c7
 
 ## Measured savings
 
-Benchmarked on GPT-4o tokenizer against a 100-symbol base topology:
+Benchmarked against a 100-symbol base topology across the full 42-tokenizer suite (every major model family: GPT, Llama, Gemma, Mistral, Qwen, DeepSeek, Phi, Falcon, Yi, StarCoder, and more), so the savings are not an artifact of one tokenizer.
 
-![Delta topology savings](/charts/delta-topology-savings.png)
+![Delta savings across 42 tokenizers](/charts/delta-cross-tokenizer.png)
 
-| Change size | Full encode | Session | Delta | Delta savings |
-|-------------|------------|---------|-------|---------------|
-| 1 device | 2,327 | 1,100 | 110 | **95.3%** |
-| 2 devices | 2,326 | 1,112 | 139 | **94.0%** |
-| 5 devices | 2,325 | 1,148 | 267 | **88.5%** |
-| 10 devices | 2,327 | 1,213 | 501 | **78.5%** |
-| 20 devices | 2,329 | 1,340 | 920 | **60.5%** |
+Representative token counts (GPT-4o o200k, 100-symbol base), with the delta savings range across all 42 tokenizers alongside:
 
-For small topology changes (1-5 devices), delta achieves 88-95% savings vs full re-encode.
+| Change size | Full encode | Delta | Delta savings | Range across 42 tokenizers |
+|-------------|------------|-------|---------------|----------------------------|
+| 1 device | 2,327 | 112 | **95.2%** | 94.2 - 95.6% |
+| 2 devices | 2,326 | 143 | **93.9%** | 92.8 - 94.4% |
+| 5 devices | 2,325 | 277 | **88.1%** | 85.8 - 89.0% |
+| 10 devices | 2,327 | 521 | **77.6%** | 73.1 - 79.4% |
+| 20 devices | 2,329 | 960 | **58.8%** | 50.0 - 61.7% |
+
+For small topology changes (1-5 devices), delta saves 86-95% versus a full re-encode on every tokenizer tested. The spread across tokenizers is a fraction of a point for tiny changes and a few points at the largest.
 
 ## Combining with session dedup
 
@@ -187,13 +189,14 @@ Delta and session dedup are orthogonal. An MCP server uses `encode_with_session`
 
 ### Combined savings (measured)
 
-On a 10-call session with 500 symbols (GPT-4o tokenizer):
+On a 10-call session with 500 symbols, measured across all 42 tokenizers:
 
-| Encoding layer | Total tokens (10 calls) | Savings vs JSON |
-|----------------|------------------------|-----------------|
-| JSON | 308,285 | baseline |
-| GCF format alone | 104,455 | 66.1% |
-| + Session dedup | 49,211 | 84.0% |
-| + Delta | **17,379** | **94.4%** |
+| Encoding layer | Savings vs JSON (mean) | Range across 42 tokenizers |
+|----------------|------------------------|----------------------------|
+| GCF format alone | 62.0% | 56.4 - 73.6% |
+| + Session dedup | 83.2% | 80.0 - 89.8% |
+| + Delta (stacked) | **93.0%** | **91.9 - 94.9%** |
 
-Three layers compose: format savings, session dedup, and delta encoding each add independently measured improvements.
+Three layers compose: format savings, session dedup, and delta encoding each add independently measured improvements, and the stacked total holds 92-95% on every tokenizer. Representative token totals (GPT-4o): JSON 308,285 tokens over 10 calls collapse to 104,455 (format) to 49,211 (+dedup) to 19,238 (+delta).
+
+Both tables reproduce with [`eval/delta-cross-tokenizer.py`](https://github.com/blackwell-systems/gcf/blob/main/eval/delta-cross-tokenizer.py), which runs the identical scenarios as the session-savings harness across all 43 suite tokenizers (42 load in a stock checkout; the Claude tokenizer needs its npm package).

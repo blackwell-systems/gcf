@@ -1,0 +1,1669 @@
+{
+  "scenario": "graph delta topology change, 100-symbol base",
+  "tokenizer_count": 42,
+  "tokenizers": [
+    "GPT-4 (OpenAI cl100k)",
+    "GPT-4o (OpenAI o200k)",
+    "GPT-2 (OpenAI)",
+    "LLaMA 2 7B (Meta)",
+    "LLaMA 3 8B (Meta)",
+    "LLaMA 3.1 8B (Meta)",
+    "CodeLlama 7B (Meta)",
+    "TinyLlama 1.1B",
+    "Gemma 2 2B (Google)",
+    "Gemma 3 1B (Google)",
+    "T5 Base (Google)",
+    "Mistral 7B v0.1",
+    "Mistral 7B v0.3",
+    "Mistral Nemo (12B)",
+    "Mixtral 8x7B",
+    "Codestral 22B",
+    "Qwen 2 7B (Alibaba)",
+    "Qwen 2.5 7B (Alibaba)",
+    "Qwen 2.5 Coder 7B",
+    "Qwen 3 8B (Alibaba)",
+    "QwQ 32B (Alibaba)",
+    "DeepSeek V2 Lite",
+    "DeepSeek V3 (671B)",
+    "DeepSeek R1",
+    "DeepSeek Coder V2 Lite",
+    "Phi-2 (Microsoft)",
+    "Phi-3 Mini (Microsoft)",
+    "Phi-4 (Microsoft)",
+    "Falcon 7B (TII)",
+    "Falcon 40B (TII)",
+    "Falcon 2 11B (TII)",
+    "Yi 1.5 9B (01.AI)",
+    "Yi Coder 9B (01.AI)",
+    "StarCoder2 7B",
+    "StarCoder2 15B",
+    "Nemotron Mini 4B",
+    "Jamba v0.1 (AI21)",
+    "StableLM 2 1.6B",
+    "Pythia 6.9B",
+    "Arctic (Snowflake)",
+    "OLMo 7B (AllenAI)",
+    "Marco-o1 (Alibaba)"
+  ],
+  "per_change_summary": [
+    {
+      "change": "1 device",
+      "min": 94.20405982905983,
+      "mean": 95.12327128888774,
+      "max": 95.61472200469852,
+      "stdev": 0.3217639491677973,
+      "n": 42
+    },
+    {
+      "change": "2 devices",
+      "min": 92.83996794015495,
+      "mean": 93.74453637672192,
+      "max": 94.36178543461237,
+      "stdev": 0.38370310403412367,
+      "n": 42
+    },
+    {
+      "change": "5 devices",
+      "min": 85.79045587843241,
+      "mean": 87.66671473958691,
+      "max": 89.0282131661442,
+      "stdev": 0.8098853221562023,
+      "n": 42
+    },
+    {
+      "change": "10 devices",
+      "min": 73.11283008802347,
+      "mean": 76.8022017720422,
+      "max": 79.39678809244026,
+      "stdev": 1.5478054734057458,
+      "n": 42
+    },
+    {
+      "change": "20 devices",
+      "min": 50.026737967914436,
+      "mean": 56.90227325991118,
+      "max": 61.658841940532085,
+      "stdev": 2.850800234880585,
+      "n": 42
+    }
+  ],
+  "per_tokenizer": {
+    "GPT-4 (OpenAI cl100k)": [
+      {
+        "change": "1 device",
+        "full": 2269,
+        "session": 1099,
+        "delta": 109,
+        "savings": 95.19612163948877
+      },
+      {
+        "change": "2 devices",
+        "full": 2269,
+        "session": 1111,
+        "delta": 140,
+        "savings": 93.82988100484795
+      },
+      {
+        "change": "5 devices",
+        "full": 2267,
+        "session": 1145,
+        "delta": 272,
+        "savings": 88.00176444640493
+      },
+      {
+        "change": "10 devices",
+        "full": 2268,
+        "session": 1207,
+        "delta": 513,
+        "savings": 77.38095238095238
+      },
+      {
+        "change": "20 devices",
+        "full": 2271,
+        "session": 1329,
+        "delta": 947,
+        "savings": 58.30030823425803
+      }
+    ],
+    "GPT-4o (OpenAI o200k)": [
+      {
+        "change": "1 device",
+        "full": 2327,
+        "session": 1100,
+        "delta": 112,
+        "savings": 95.18693596905888
+      },
+      {
+        "change": "2 devices",
+        "full": 2326,
+        "session": 1112,
+        "delta": 143,
+        "savings": 93.85210662080826
+      },
+      {
+        "change": "5 devices",
+        "full": 2325,
+        "session": 1148,
+        "delta": 277,
+        "savings": 88.08602150537635
+      },
+      {
+        "change": "10 devices",
+        "full": 2327,
+        "session": 1213,
+        "delta": 521,
+        "savings": 77.61065749892566
+      },
+      {
+        "change": "20 devices",
+        "full": 2329,
+        "session": 1340,
+        "delta": 960,
+        "savings": 58.7805925289824
+      }
+    ],
+    "GPT-2 (OpenAI)": [
+      {
+        "change": "1 device",
+        "full": 2987,
+        "session": 1112,
+        "delta": 162,
+        "savings": 94.57649815868766
+      },
+      {
+        "change": "2 devices",
+        "full": 2985,
+        "session": 1130,
+        "delta": 204,
+        "savings": 93.16582914572864
+      },
+      {
+        "change": "5 devices",
+        "full": 2986,
+        "session": 1187,
+        "delta": 401,
+        "savings": 86.57066309444073
+      },
+      {
+        "change": "10 devices",
+        "full": 2987,
+        "session": 1282,
+        "delta": 753,
+        "savings": 74.79075995982592
+      },
+      {
+        "change": "20 devices",
+        "full": 2987,
+        "session": 1474,
+        "delta": 1393,
+        "savings": 53.36457984599934
+      }
+    ],
+    "LLaMA 2 7B (Meta)": [
+      {
+        "change": "1 device",
+        "full": 3371,
+        "session": 1400,
+        "delta": 164,
+        "savings": 95.1349747849303
+      },
+      {
+        "change": "2 devices",
+        "full": 3369,
+        "session": 1420,
+        "delta": 209,
+        "savings": 93.79637874740278
+      },
+      {
+        "change": "5 devices",
+        "full": 3368,
+        "session": 1485,
+        "delta": 418,
+        "savings": 87.58907363420427
+      },
+      {
+        "change": "10 devices",
+        "full": 3367,
+        "session": 1595,
+        "delta": 788,
+        "savings": 76.59637659637659
+      },
+      {
+        "change": "20 devices",
+        "full": 3371,
+        "session": 1816,
+        "delta": 1469,
+        "savings": 56.42242657964995
+      }
+    ],
+    "LLaMA 3 8B (Meta)": [
+      {
+        "change": "1 device",
+        "full": 2269,
+        "session": 1099,
+        "delta": 109,
+        "savings": 95.19612163948877
+      },
+      {
+        "change": "2 devices",
+        "full": 2269,
+        "session": 1111,
+        "delta": 140,
+        "savings": 93.82988100484795
+      },
+      {
+        "change": "5 devices",
+        "full": 2267,
+        "session": 1145,
+        "delta": 272,
+        "savings": 88.00176444640493
+      },
+      {
+        "change": "10 devices",
+        "full": 2268,
+        "session": 1207,
+        "delta": 513,
+        "savings": 77.38095238095238
+      },
+      {
+        "change": "20 devices",
+        "full": 2271,
+        "session": 1329,
+        "delta": 947,
+        "savings": 58.30030823425803
+      }
+    ],
+    "LLaMA 3.1 8B (Meta)": [
+      {
+        "change": "1 device",
+        "full": 2269,
+        "session": 1099,
+        "delta": 109,
+        "savings": 95.19612163948877
+      },
+      {
+        "change": "2 devices",
+        "full": 2269,
+        "session": 1111,
+        "delta": 140,
+        "savings": 93.82988100484795
+      },
+      {
+        "change": "5 devices",
+        "full": 2267,
+        "session": 1145,
+        "delta": 272,
+        "savings": 88.00176444640493
+      },
+      {
+        "change": "10 devices",
+        "full": 2268,
+        "session": 1207,
+        "delta": 513,
+        "savings": 77.38095238095238
+      },
+      {
+        "change": "20 devices",
+        "full": 2271,
+        "session": 1329,
+        "delta": 947,
+        "savings": 58.30030823425803
+      }
+    ],
+    "CodeLlama 7B (Meta)": [
+      {
+        "change": "1 device",
+        "full": 3371,
+        "session": 1400,
+        "delta": 164,
+        "savings": 95.1349747849303
+      },
+      {
+        "change": "2 devices",
+        "full": 3369,
+        "session": 1420,
+        "delta": 209,
+        "savings": 93.79637874740278
+      },
+      {
+        "change": "5 devices",
+        "full": 3368,
+        "session": 1485,
+        "delta": 418,
+        "savings": 87.58907363420427
+      },
+      {
+        "change": "10 devices",
+        "full": 3367,
+        "session": 1595,
+        "delta": 788,
+        "savings": 76.59637659637659
+      },
+      {
+        "change": "20 devices",
+        "full": 3371,
+        "session": 1816,
+        "delta": 1469,
+        "savings": 56.42242657964995
+      }
+    ],
+    "TinyLlama 1.1B": [
+      {
+        "change": "1 device",
+        "full": 3371,
+        "session": 1400,
+        "delta": 164,
+        "savings": 95.1349747849303
+      },
+      {
+        "change": "2 devices",
+        "full": 3369,
+        "session": 1420,
+        "delta": 209,
+        "savings": 93.79637874740278
+      },
+      {
+        "change": "5 devices",
+        "full": 3368,
+        "session": 1485,
+        "delta": 418,
+        "savings": 87.58907363420427
+      },
+      {
+        "change": "10 devices",
+        "full": 3367,
+        "session": 1595,
+        "delta": 788,
+        "savings": 76.59637659637659
+      },
+      {
+        "change": "20 devices",
+        "full": 3371,
+        "session": 1816,
+        "delta": 1469,
+        "savings": 56.42242657964995
+      }
+    ],
+    "Gemma 2 2B (Google)": [
+      {
+        "change": "1 device",
+        "full": 3227,
+        "session": 1299,
+        "delta": 156,
+        "savings": 95.16578865819648
+      },
+      {
+        "change": "2 devices",
+        "full": 3226,
+        "session": 1320,
+        "delta": 202,
+        "savings": 93.73837569745815
+      },
+      {
+        "change": "5 devices",
+        "full": 3227,
+        "session": 1383,
+        "delta": 399,
+        "savings": 87.63557483731019
+      },
+      {
+        "change": "10 devices",
+        "full": 3226,
+        "session": 1490,
+        "delta": 750,
+        "savings": 76.75139491630503
+      },
+      {
+        "change": "20 devices",
+        "full": 3224,
+        "session": 1700,
+        "delta": 1395,
+        "savings": 56.730769230769226
+      }
+    ],
+    "Gemma 3 1B (Google)": [
+      {
+        "change": "1 device",
+        "full": 3251,
+        "session": 1299,
+        "delta": 157,
+        "savings": 95.17071670255307
+      },
+      {
+        "change": "2 devices",
+        "full": 3250,
+        "session": 1320,
+        "delta": 203,
+        "savings": 93.75384615384615
+      },
+      {
+        "change": "5 devices",
+        "full": 3251,
+        "session": 1384,
+        "delta": 402,
+        "savings": 87.63457397723778
+      },
+      {
+        "change": "10 devices",
+        "full": 3250,
+        "session": 1492,
+        "delta": 755,
+        "savings": 76.76923076923077
+      },
+      {
+        "change": "20 devices",
+        "full": 3249,
+        "session": 1705,
+        "delta": 1405,
+        "savings": 56.75592489996922
+      }
+    ],
+    "T5 Base (Google)": [
+      {
+        "change": "1 device",
+        "full": 3744,
+        "session": 903,
+        "delta": 217,
+        "savings": 94.20405982905983
+      },
+      {
+        "change": "2 devices",
+        "full": 3743,
+        "session": 930,
+        "delta": 268,
+        "savings": 92.83996794015495
+      },
+      {
+        "change": "5 devices",
+        "full": 3751,
+        "session": 1020,
+        "delta": 533,
+        "savings": 85.79045587843241
+      },
+      {
+        "change": "10 devices",
+        "full": 3749,
+        "session": 1163,
+        "delta": 1008,
+        "savings": 73.11283008802347
+      },
+      {
+        "change": "20 devices",
+        "full": 3740,
+        "session": 1448,
+        "delta": 1869,
+        "savings": 50.026737967914436
+      }
+    ],
+    "Mistral 7B v0.1": [
+      {
+        "change": "1 device",
+        "full": 3375,
+        "session": 1399,
+        "delta": 162,
+        "savings": 95.19999999999999
+      },
+      {
+        "change": "2 devices",
+        "full": 3374,
+        "session": 1420,
+        "delta": 210,
+        "savings": 93.7759336099585
+      },
+      {
+        "change": "5 devices",
+        "full": 3372,
+        "session": 1484,
+        "delta": 421,
+        "savings": 87.51482799525505
+      },
+      {
+        "change": "10 devices",
+        "full": 3372,
+        "session": 1594,
+        "delta": 791,
+        "savings": 76.54211150652432
+      },
+      {
+        "change": "20 devices",
+        "full": 3377,
+        "session": 1815,
+        "delta": 1481,
+        "savings": 56.144506958839216
+      }
+    ],
+    "Mistral 7B v0.3": [
+      {
+        "change": "1 device",
+        "full": 3375,
+        "session": 1399,
+        "delta": 162,
+        "savings": 95.19999999999999
+      },
+      {
+        "change": "2 devices",
+        "full": 3374,
+        "session": 1420,
+        "delta": 210,
+        "savings": 93.7759336099585
+      },
+      {
+        "change": "5 devices",
+        "full": 3372,
+        "session": 1484,
+        "delta": 421,
+        "savings": 87.51482799525505
+      },
+      {
+        "change": "10 devices",
+        "full": 3372,
+        "session": 1594,
+        "delta": 791,
+        "savings": 76.54211150652432
+      },
+      {
+        "change": "20 devices",
+        "full": 3377,
+        "session": 1815,
+        "delta": 1481,
+        "savings": 56.144506958839216
+      }
+    ],
+    "Mistral Nemo (12B)": [
+      {
+        "change": "1 device",
+        "full": 2681,
+        "session": 1291,
+        "delta": 123,
+        "savings": 95.41215964192466
+      },
+      {
+        "change": "2 devices",
+        "full": 2678,
+        "session": 1305,
+        "delta": 155,
+        "savings": 94.21209858103062
+      },
+      {
+        "change": "5 devices",
+        "full": 2676,
+        "session": 1352,
+        "delta": 303,
+        "savings": 88.67713004484305
+      },
+      {
+        "change": "10 devices",
+        "full": 2676,
+        "session": 1433,
+        "delta": 562,
+        "savings": 78.99850523168908
+      },
+      {
+        "change": "20 devices",
+        "full": 2680,
+        "session": 1595,
+        "delta": 1046,
+        "savings": 60.97014925373134
+      }
+    ],
+    "Mixtral 8x7B": [
+      {
+        "change": "1 device",
+        "full": 3375,
+        "session": 1399,
+        "delta": 162,
+        "savings": 95.19999999999999
+      },
+      {
+        "change": "2 devices",
+        "full": 3374,
+        "session": 1420,
+        "delta": 210,
+        "savings": 93.7759336099585
+      },
+      {
+        "change": "5 devices",
+        "full": 3372,
+        "session": 1484,
+        "delta": 421,
+        "savings": 87.51482799525505
+      },
+      {
+        "change": "10 devices",
+        "full": 3372,
+        "session": 1594,
+        "delta": 791,
+        "savings": 76.54211150652432
+      },
+      {
+        "change": "20 devices",
+        "full": 3377,
+        "session": 1815,
+        "delta": 1481,
+        "savings": 56.144506958839216
+      }
+    ],
+    "Codestral 22B": [
+      {
+        "change": "1 device",
+        "full": 3375,
+        "session": 1399,
+        "delta": 162,
+        "savings": 95.19999999999999
+      },
+      {
+        "change": "2 devices",
+        "full": 3374,
+        "session": 1420,
+        "delta": 210,
+        "savings": 93.7759336099585
+      },
+      {
+        "change": "5 devices",
+        "full": 3372,
+        "session": 1484,
+        "delta": 421,
+        "savings": 87.51482799525505
+      },
+      {
+        "change": "10 devices",
+        "full": 3372,
+        "session": 1594,
+        "delta": 791,
+        "savings": 76.54211150652432
+      },
+      {
+        "change": "20 devices",
+        "full": 3377,
+        "session": 1815,
+        "delta": 1481,
+        "savings": 56.144506958839216
+      }
+    ],
+    "Qwen 2 7B (Alibaba)": [
+      {
+        "change": "1 device",
+        "full": 2554,
+        "session": 1287,
+        "delta": 112,
+        "savings": 95.61472200469852
+      },
+      {
+        "change": "2 devices",
+        "full": 2554,
+        "session": 1301,
+        "delta": 144,
+        "savings": 94.36178543461237
+      },
+      {
+        "change": "5 devices",
+        "full": 2552,
+        "session": 1343,
+        "delta": 280,
+        "savings": 89.0282131661442
+      },
+      {
+        "change": "10 devices",
+        "full": 2553,
+        "session": 1419,
+        "delta": 526,
+        "savings": 79.39678809244026
+      },
+      {
+        "change": "20 devices",
+        "full": 2556,
+        "session": 1567,
+        "delta": 980,
+        "savings": 61.658841940532085
+      }
+    ],
+    "Qwen 2.5 7B (Alibaba)": [
+      {
+        "change": "1 device",
+        "full": 2554,
+        "session": 1287,
+        "delta": 112,
+        "savings": 95.61472200469852
+      },
+      {
+        "change": "2 devices",
+        "full": 2554,
+        "session": 1301,
+        "delta": 144,
+        "savings": 94.36178543461237
+      },
+      {
+        "change": "5 devices",
+        "full": 2552,
+        "session": 1343,
+        "delta": 280,
+        "savings": 89.0282131661442
+      },
+      {
+        "change": "10 devices",
+        "full": 2553,
+        "session": 1419,
+        "delta": 526,
+        "savings": 79.39678809244026
+      },
+      {
+        "change": "20 devices",
+        "full": 2556,
+        "session": 1567,
+        "delta": 980,
+        "savings": 61.658841940532085
+      }
+    ],
+    "Qwen 2.5 Coder 7B": [
+      {
+        "change": "1 device",
+        "full": 2554,
+        "session": 1287,
+        "delta": 112,
+        "savings": 95.61472200469852
+      },
+      {
+        "change": "2 devices",
+        "full": 2554,
+        "session": 1301,
+        "delta": 144,
+        "savings": 94.36178543461237
+      },
+      {
+        "change": "5 devices",
+        "full": 2552,
+        "session": 1343,
+        "delta": 280,
+        "savings": 89.0282131661442
+      },
+      {
+        "change": "10 devices",
+        "full": 2553,
+        "session": 1419,
+        "delta": 526,
+        "savings": 79.39678809244026
+      },
+      {
+        "change": "20 devices",
+        "full": 2556,
+        "session": 1567,
+        "delta": 980,
+        "savings": 61.658841940532085
+      }
+    ],
+    "Qwen 3 8B (Alibaba)": [
+      {
+        "change": "1 device",
+        "full": 2554,
+        "session": 1287,
+        "delta": 112,
+        "savings": 95.61472200469852
+      },
+      {
+        "change": "2 devices",
+        "full": 2554,
+        "session": 1301,
+        "delta": 144,
+        "savings": 94.36178543461237
+      },
+      {
+        "change": "5 devices",
+        "full": 2552,
+        "session": 1343,
+        "delta": 280,
+        "savings": 89.0282131661442
+      },
+      {
+        "change": "10 devices",
+        "full": 2553,
+        "session": 1419,
+        "delta": 526,
+        "savings": 79.39678809244026
+      },
+      {
+        "change": "20 devices",
+        "full": 2556,
+        "session": 1567,
+        "delta": 980,
+        "savings": 61.658841940532085
+      }
+    ],
+    "QwQ 32B (Alibaba)": [
+      {
+        "change": "1 device",
+        "full": 2554,
+        "session": 1287,
+        "delta": 112,
+        "savings": 95.61472200469852
+      },
+      {
+        "change": "2 devices",
+        "full": 2554,
+        "session": 1301,
+        "delta": 144,
+        "savings": 94.36178543461237
+      },
+      {
+        "change": "5 devices",
+        "full": 2552,
+        "session": 1343,
+        "delta": 280,
+        "savings": 89.0282131661442
+      },
+      {
+        "change": "10 devices",
+        "full": 2553,
+        "session": 1419,
+        "delta": 526,
+        "savings": 79.39678809244026
+      },
+      {
+        "change": "20 devices",
+        "full": 2556,
+        "session": 1567,
+        "delta": 980,
+        "savings": 61.658841940532085
+      }
+    ],
+    "DeepSeek V2 Lite": [
+      {
+        "change": "1 device",
+        "full": 3229,
+        "session": 1299,
+        "delta": 156,
+        "savings": 95.16878290492411
+      },
+      {
+        "change": "2 devices",
+        "full": 3228,
+        "session": 1320,
+        "delta": 202,
+        "savings": 93.74225526641884
+      },
+      {
+        "change": "5 devices",
+        "full": 3229,
+        "session": 1383,
+        "delta": 399,
+        "savings": 87.64323319913285
+      },
+      {
+        "change": "10 devices",
+        "full": 3228,
+        "session": 1490,
+        "delta": 750,
+        "savings": 76.76579925650557
+      },
+      {
+        "change": "20 devices",
+        "full": 3228,
+        "session": 1702,
+        "delta": 1398,
+        "savings": 56.69144981412639
+      }
+    ],
+    "DeepSeek V3 (671B)": [
+      {
+        "change": "1 device",
+        "full": 2644,
+        "session": 1103,
+        "delta": 132,
+        "savings": 95.00756429652041
+      },
+      {
+        "change": "2 devices",
+        "full": 2642,
+        "session": 1118,
+        "delta": 170,
+        "savings": 93.5654806964421
+      },
+      {
+        "change": "5 devices",
+        "full": 2641,
+        "session": 1165,
+        "delta": 338,
+        "savings": 87.20181749337372
+      },
+      {
+        "change": "10 devices",
+        "full": 2641,
+        "session": 1244,
+        "delta": 634,
+        "savings": 75.99394168875426
+      },
+      {
+        "change": "20 devices",
+        "full": 2646,
+        "session": 1405,
+        "delta": 1175,
+        "savings": 55.593348450491305
+      }
+    ],
+    "DeepSeek R1": [
+      {
+        "change": "1 device",
+        "full": 2644,
+        "session": 1103,
+        "delta": 132,
+        "savings": 95.00756429652041
+      },
+      {
+        "change": "2 devices",
+        "full": 2642,
+        "session": 1118,
+        "delta": 170,
+        "savings": 93.5654806964421
+      },
+      {
+        "change": "5 devices",
+        "full": 2641,
+        "session": 1165,
+        "delta": 338,
+        "savings": 87.20181749337372
+      },
+      {
+        "change": "10 devices",
+        "full": 2641,
+        "session": 1244,
+        "delta": 634,
+        "savings": 75.99394168875426
+      },
+      {
+        "change": "20 devices",
+        "full": 2646,
+        "session": 1405,
+        "delta": 1175,
+        "savings": 55.593348450491305
+      }
+    ],
+    "DeepSeek Coder V2 Lite": [
+      {
+        "change": "1 device",
+        "full": 3229,
+        "session": 1299,
+        "delta": 156,
+        "savings": 95.16878290492411
+      },
+      {
+        "change": "2 devices",
+        "full": 3228,
+        "session": 1320,
+        "delta": 202,
+        "savings": 93.74225526641884
+      },
+      {
+        "change": "5 devices",
+        "full": 3229,
+        "session": 1383,
+        "delta": 399,
+        "savings": 87.64323319913285
+      },
+      {
+        "change": "10 devices",
+        "full": 3228,
+        "session": 1490,
+        "delta": 750,
+        "savings": 76.76579925650557
+      },
+      {
+        "change": "20 devices",
+        "full": 3228,
+        "session": 1702,
+        "delta": 1398,
+        "savings": 56.69144981412639
+      }
+    ],
+    "Phi-2 (Microsoft)": [
+      {
+        "change": "1 device",
+        "full": 2987,
+        "session": 1112,
+        "delta": 162,
+        "savings": 94.57649815868766
+      },
+      {
+        "change": "2 devices",
+        "full": 2985,
+        "session": 1130,
+        "delta": 204,
+        "savings": 93.16582914572864
+      },
+      {
+        "change": "5 devices",
+        "full": 2986,
+        "session": 1187,
+        "delta": 401,
+        "savings": 86.57066309444073
+      },
+      {
+        "change": "10 devices",
+        "full": 2987,
+        "session": 1282,
+        "delta": 753,
+        "savings": 74.79075995982592
+      },
+      {
+        "change": "20 devices",
+        "full": 2987,
+        "session": 1474,
+        "delta": 1393,
+        "savings": 53.36457984599934
+      }
+    ],
+    "Phi-3 Mini (Microsoft)": [
+      {
+        "change": "1 device",
+        "full": 3371,
+        "session": 1400,
+        "delta": 164,
+        "savings": 95.1349747849303
+      },
+      {
+        "change": "2 devices",
+        "full": 3369,
+        "session": 1420,
+        "delta": 209,
+        "savings": 93.79637874740278
+      },
+      {
+        "change": "5 devices",
+        "full": 3368,
+        "session": 1485,
+        "delta": 418,
+        "savings": 87.58907363420427
+      },
+      {
+        "change": "10 devices",
+        "full": 3367,
+        "session": 1595,
+        "delta": 788,
+        "savings": 76.59637659637659
+      },
+      {
+        "change": "20 devices",
+        "full": 3371,
+        "session": 1816,
+        "delta": 1469,
+        "savings": 56.42242657964995
+      }
+    ],
+    "Phi-4 (Microsoft)": [
+      {
+        "change": "1 device",
+        "full": 2269,
+        "session": 1099,
+        "delta": 109,
+        "savings": 95.19612163948877
+      },
+      {
+        "change": "2 devices",
+        "full": 2269,
+        "session": 1111,
+        "delta": 140,
+        "savings": 93.82988100484795
+      },
+      {
+        "change": "5 devices",
+        "full": 2267,
+        "session": 1145,
+        "delta": 272,
+        "savings": 88.00176444640493
+      },
+      {
+        "change": "10 devices",
+        "full": 2268,
+        "session": 1207,
+        "delta": 513,
+        "savings": 77.38095238095238
+      },
+      {
+        "change": "20 devices",
+        "full": 2271,
+        "session": 1329,
+        "delta": 947,
+        "savings": 58.30030823425803
+      }
+    ],
+    "Falcon 7B (TII)": [
+      {
+        "change": "1 device",
+        "full": 2992,
+        "session": 1112,
+        "delta": 159,
+        "savings": 94.68582887700535
+      },
+      {
+        "change": "2 devices",
+        "full": 2991,
+        "session": 1131,
+        "delta": 204,
+        "savings": 93.17953861584755
+      },
+      {
+        "change": "5 devices",
+        "full": 2991,
+        "session": 1187,
+        "delta": 402,
+        "savings": 86.55967903711134
+      },
+      {
+        "change": "10 devices",
+        "full": 2990,
+        "session": 1282,
+        "delta": 757,
+        "savings": 74.68227424749163
+      },
+      {
+        "change": "20 devices",
+        "full": 2992,
+        "session": 1474,
+        "delta": 1405,
+        "savings": 53.04144385026738
+      }
+    ],
+    "Falcon 40B (TII)": [
+      {
+        "change": "1 device",
+        "full": 2992,
+        "session": 1112,
+        "delta": 159,
+        "savings": 94.68582887700535
+      },
+      {
+        "change": "2 devices",
+        "full": 2991,
+        "session": 1131,
+        "delta": 204,
+        "savings": 93.17953861584755
+      },
+      {
+        "change": "5 devices",
+        "full": 2991,
+        "session": 1187,
+        "delta": 402,
+        "savings": 86.55967903711134
+      },
+      {
+        "change": "10 devices",
+        "full": 2990,
+        "session": 1282,
+        "delta": 757,
+        "savings": 74.68227424749163
+      },
+      {
+        "change": "20 devices",
+        "full": 2992,
+        "session": 1474,
+        "delta": 1405,
+        "savings": 53.04144385026738
+      }
+    ],
+    "Falcon 2 11B (TII)": [
+      {
+        "change": "1 device",
+        "full": 2992,
+        "session": 1112,
+        "delta": 159,
+        "savings": 94.68582887700535
+      },
+      {
+        "change": "2 devices",
+        "full": 2991,
+        "session": 1131,
+        "delta": 204,
+        "savings": 93.17953861584755
+      },
+      {
+        "change": "5 devices",
+        "full": 2991,
+        "session": 1187,
+        "delta": 402,
+        "savings": 86.55967903711134
+      },
+      {
+        "change": "10 devices",
+        "full": 2990,
+        "session": 1282,
+        "delta": 757,
+        "savings": 74.68227424749163
+      },
+      {
+        "change": "20 devices",
+        "full": 2992,
+        "session": 1474,
+        "delta": 1405,
+        "savings": 53.04144385026738
+      }
+    ],
+    "Yi 1.5 9B (01.AI)": [
+      {
+        "change": "1 device",
+        "full": 3315,
+        "session": 1300,
+        "delta": 162,
+        "savings": 95.11312217194569
+      },
+      {
+        "change": "2 devices",
+        "full": 3315,
+        "session": 1322,
+        "delta": 208,
+        "savings": 93.72549019607843
+      },
+      {
+        "change": "5 devices",
+        "full": 3312,
+        "session": 1386,
+        "delta": 411,
+        "savings": 87.59057971014492
+      },
+      {
+        "change": "10 devices",
+        "full": 3312,
+        "session": 1499,
+        "delta": 777,
+        "savings": 76.53985507246377
+      },
+      {
+        "change": "20 devices",
+        "full": 3315,
+        "session": 1723,
+        "delta": 1448,
+        "savings": 56.31975867269985
+      }
+    ],
+    "Yi Coder 9B (01.AI)": [
+      {
+        "change": "1 device",
+        "full": 3315,
+        "session": 1300,
+        "delta": 162,
+        "savings": 95.11312217194569
+      },
+      {
+        "change": "2 devices",
+        "full": 3315,
+        "session": 1322,
+        "delta": 208,
+        "savings": 93.72549019607843
+      },
+      {
+        "change": "5 devices",
+        "full": 3312,
+        "session": 1386,
+        "delta": 411,
+        "savings": 87.59057971014492
+      },
+      {
+        "change": "10 devices",
+        "full": 3312,
+        "session": 1499,
+        "delta": 777,
+        "savings": 76.53985507246377
+      },
+      {
+        "change": "20 devices",
+        "full": 3315,
+        "session": 1723,
+        "delta": 1448,
+        "savings": 56.31975867269985
+      }
+    ],
+    "StarCoder2 7B": [
+      {
+        "change": "1 device",
+        "full": 3176,
+        "session": 1298,
+        "delta": 156,
+        "savings": 95.088161209068
+      },
+      {
+        "change": "2 devices",
+        "full": 3176,
+        "session": 1319,
+        "delta": 202,
+        "savings": 93.63979848866498
+      },
+      {
+        "change": "5 devices",
+        "full": 3176,
+        "session": 1380,
+        "delta": 397,
+        "savings": 87.5
+      },
+      {
+        "change": "10 devices",
+        "full": 3176,
+        "session": 1485,
+        "delta": 746,
+        "savings": 76.51133501259446
+      },
+      {
+        "change": "20 devices",
+        "full": 3174,
+        "session": 1690,
+        "delta": 1386,
+        "savings": 56.33270321361059
+      }
+    ],
+    "StarCoder2 15B": [
+      {
+        "change": "1 device",
+        "full": 3176,
+        "session": 1298,
+        "delta": 156,
+        "savings": 95.088161209068
+      },
+      {
+        "change": "2 devices",
+        "full": 3176,
+        "session": 1319,
+        "delta": 202,
+        "savings": 93.63979848866498
+      },
+      {
+        "change": "5 devices",
+        "full": 3176,
+        "session": 1380,
+        "delta": 397,
+        "savings": 87.5
+      },
+      {
+        "change": "10 devices",
+        "full": 3176,
+        "session": 1485,
+        "delta": 746,
+        "savings": 76.51133501259446
+      },
+      {
+        "change": "20 devices",
+        "full": 3174,
+        "session": 1690,
+        "delta": 1386,
+        "savings": 56.33270321361059
+      }
+    ],
+    "Nemotron Mini 4B": [
+      {
+        "change": "1 device",
+        "full": 3267,
+        "session": 1300,
+        "delta": 161,
+        "savings": 95.0719314355678
+      },
+      {
+        "change": "2 devices",
+        "full": 3266,
+        "session": 1321,
+        "delta": 206,
+        "savings": 93.69259032455604
+      },
+      {
+        "change": "5 devices",
+        "full": 3267,
+        "session": 1385,
+        "delta": 405,
+        "savings": 87.60330578512396
+      },
+      {
+        "change": "10 devices",
+        "full": 3265,
+        "session": 1493,
+        "delta": 761,
+        "savings": 76.69218989280246
+      },
+      {
+        "change": "20 devices",
+        "full": 3266,
+        "session": 1710,
+        "delta": 1420,
+        "savings": 56.52173913043479
+      }
+    ],
+    "Jamba v0.1 (AI21)": [
+      {
+        "change": "1 device",
+        "full": 3283,
+        "session": 1299,
+        "delta": 159,
+        "savings": 95.15686871763631
+      },
+      {
+        "change": "2 devices",
+        "full": 3283,
+        "session": 1321,
+        "delta": 206,
+        "savings": 93.72525129454768
+      },
+      {
+        "change": "5 devices",
+        "full": 3283,
+        "session": 1385,
+        "delta": 405,
+        "savings": 87.66372220530003
+      },
+      {
+        "change": "10 devices",
+        "full": 3282,
+        "session": 1495,
+        "delta": 762,
+        "savings": 76.78244972577697
+      },
+      {
+        "change": "20 devices",
+        "full": 3284,
+        "session": 1714,
+        "delta": 1420,
+        "savings": 56.76004872107187
+      }
+    ],
+    "StableLM 2 1.6B": [
+      {
+        "change": "1 device",
+        "full": 2554,
+        "session": 1287,
+        "delta": 112,
+        "savings": 95.61472200469852
+      },
+      {
+        "change": "2 devices",
+        "full": 2554,
+        "session": 1301,
+        "delta": 144,
+        "savings": 94.36178543461237
+      },
+      {
+        "change": "5 devices",
+        "full": 2552,
+        "session": 1343,
+        "delta": 280,
+        "savings": 89.0282131661442
+      },
+      {
+        "change": "10 devices",
+        "full": 2553,
+        "session": 1419,
+        "delta": 526,
+        "savings": 79.39678809244026
+      },
+      {
+        "change": "20 devices",
+        "full": 2556,
+        "session": 1567,
+        "delta": 980,
+        "savings": 61.658841940532085
+      }
+    ],
+    "Pythia 6.9B": [
+      {
+        "change": "1 device",
+        "full": 2892,
+        "session": 1110,
+        "delta": 155,
+        "savings": 94.64038727524205
+      },
+      {
+        "change": "2 devices",
+        "full": 2891,
+        "session": 1128,
+        "delta": 198,
+        "savings": 93.15115876859218
+      },
+      {
+        "change": "5 devices",
+        "full": 2890,
+        "session": 1181,
+        "delta": 390,
+        "savings": 86.50519031141867
+      },
+      {
+        "change": "10 devices",
+        "full": 2890,
+        "session": 1272,
+        "delta": 733,
+        "savings": 74.63667820069205
+      },
+      {
+        "change": "20 devices",
+        "full": 2893,
+        "session": 1456,
+        "delta": 1358,
+        "savings": 53.05910819218804
+      }
+    ],
+    "Arctic (Snowflake)": [
+      {
+        "change": "1 device",
+        "full": 3371,
+        "session": 1400,
+        "delta": 164,
+        "savings": 95.1349747849303
+      },
+      {
+        "change": "2 devices",
+        "full": 3369,
+        "session": 1420,
+        "delta": 209,
+        "savings": 93.79637874740278
+      },
+      {
+        "change": "5 devices",
+        "full": 3368,
+        "session": 1485,
+        "delta": 418,
+        "savings": 87.58907363420427
+      },
+      {
+        "change": "10 devices",
+        "full": 3367,
+        "session": 1595,
+        "delta": 788,
+        "savings": 76.59637659637659
+      },
+      {
+        "change": "20 devices",
+        "full": 3371,
+        "session": 1816,
+        "delta": 1469,
+        "savings": 56.42242657964995
+      }
+    ],
+    "OLMo 7B (AllenAI)": [
+      {
+        "change": "1 device",
+        "full": 2892,
+        "session": 1110,
+        "delta": 155,
+        "savings": 94.64038727524205
+      },
+      {
+        "change": "2 devices",
+        "full": 2891,
+        "session": 1128,
+        "delta": 198,
+        "savings": 93.15115876859218
+      },
+      {
+        "change": "5 devices",
+        "full": 2890,
+        "session": 1181,
+        "delta": 390,
+        "savings": 86.50519031141867
+      },
+      {
+        "change": "10 devices",
+        "full": 2890,
+        "session": 1272,
+        "delta": 733,
+        "savings": 74.63667820069205
+      },
+      {
+        "change": "20 devices",
+        "full": 2893,
+        "session": 1456,
+        "delta": 1358,
+        "savings": 53.05910819218804
+      }
+    ],
+    "Marco-o1 (Alibaba)": [
+      {
+        "change": "1 device",
+        "full": 2554,
+        "session": 1287,
+        "delta": 112,
+        "savings": 95.61472200469852
+      },
+      {
+        "change": "2 devices",
+        "full": 2554,
+        "session": 1301,
+        "delta": 144,
+        "savings": 94.36178543461237
+      },
+      {
+        "change": "5 devices",
+        "full": 2552,
+        "session": 1343,
+        "delta": 280,
+        "savings": 89.0282131661442
+      },
+      {
+        "change": "10 devices",
+        "full": 2553,
+        "session": 1419,
+        "delta": 526,
+        "savings": 79.39678809244026
+      },
+      {
+        "change": "20 devices",
+        "full": 2556,
+        "session": 1567,
+        "delta": 980,
+        "savings": 61.658841940532085
+      }
+    ]
+  },
+  "stacked_10call_summary": [
+    {
+      "layer": "GCF format alone",
+      "min": 56.4294762591185,
+      "mean": 62.04946391799497,
+      "max": 73.60308285163777,
+      "n": 42
+    },
+    {
+      "layer": "+ session dedup",
+      "min": 79.978708026488,
+      "mean": 83.19653186056875,
+      "max": 89.83170460620185,
+      "n": 42
+    },
+    {
+      "layer": "+ delta (stacked)",
+      "min": 91.8566082790955,
+      "mean": 92.96346007197505,
+      "max": 94.88556605478831,
+      "n": 42
+    }
+  ]
+}
