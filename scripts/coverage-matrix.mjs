@@ -107,7 +107,7 @@ const CHECKLIST = [
   ['16.1', 'Sequential IDs from 0; stable session-scoped IDs', { dir: 'graph-session' }],
   ['16.1', 'Kind abbreviations, edges section header, edges between declared IDs', { dir: 'graph-encode' }],
   ['16.1', 'Order symbols by score descending within each distance group', { dir: 'graph-encode' }],
-  ['16.1', 'Order edges by source ID then target ID', { gap: 'Not implemented: the buffered encoder emits edges in input order, not sorted (surfaced by the assertion-fixture conversion; no fixture had 2+ edges). Decision pending: sort edges in the buffered encoder (canonical, 6 SDKs) or relax SPEC 16.1 to provided-order.' }],
+  ['16.1', 'Order edges by source ID then target ID', { dir: 'graph-encode' }],
   ['16.1', 'Deterministic output (distance_N trailer group order)', { dir: 'streaming-v2' }],
   // 16.2 Encoder conformance (generic profile)
   ['16.2', 'Header begins GCF profile=generic', { dir: 'scalar' }],

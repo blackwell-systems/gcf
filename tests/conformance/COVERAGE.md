@@ -6,12 +6,12 @@
 
 ## Summary
 
-- Fixtures: **203** across 21 directories, 14 operations
+- Fixtures: **204** across 21 directories, 14 operations
 - Section 16.5 conditions covered: **31/31**
 - Uncovered (known gaps, tracked below): **0**
 - Uncovered (unexpected, fails the build): **0**
 - Required operations missing: **0**
-- Section 16.1-16.4 checklist gaps: **0** (unexpected), **1** (tracked)
+- Section 16.1-16.4 checklist gaps: **0** (unexpected), **0** (tracked)
 - Encoder-invariant violations: **0**
 
 ## Section 16.5 decoder strict-mode taxonomy
@@ -57,7 +57,7 @@
 | `decode` | 23 | yes |
 | `delta` | 2 | yes |
 | `delta-verify` | 1 | yes |
-| `encode` | 106 | yes |
+| `encode` | 107 | yes |
 | `error` | 36 | yes |
 | `generic-delta` | 2 | yes |
 | `generic-delta-decode` | 1 | yes |
@@ -75,11 +75,11 @@
 |---|---|---|---|
 | 16.1 | UTF-8 / LF endings / no trailing whitespace | invariant | mechanical scan below |
 | 16.1 | Scores emitted with exactly 2 decimal places | invariant | mechanical scan below |
-| 16.1 | Header begins GCF profile=graph (tool optional) | covered | `graph-encode/` (2) |
+| 16.1 | Header begins GCF profile=graph (tool optional) | covered | `graph-encode/` (3) |
 | 16.1 | Sequential IDs from 0; stable session-scoped IDs | covered | `graph-session/` (3) |
-| 16.1 | Kind abbreviations, edges section header, edges between declared IDs | covered | `graph-encode/` (2) |
-| 16.1 | Order symbols by score descending within each distance group | covered | `graph-encode/` (2) |
-| 16.1 | Order edges by source ID then target ID | TRACKED GAP | Not implemented: the buffered encoder emits edges in input order, not sorted (surfaced by the assertion-fixture conversion; no fixture had 2+ edges). Decision pending: sort edges in the buffered encoder (canonical, 6 SDKs) or relax SPEC 16.1 to provided-order. |
+| 16.1 | Kind abbreviations, edges section header, edges between declared IDs | covered | `graph-encode/` (3) |
+| 16.1 | Order symbols by score descending within each distance group | covered | `graph-encode/` (3) |
+| 16.1 | Order edges by source ID then target ID | covered | `graph-encode/` (3) |
 | 16.1 | Deterministic output (distance_N trailer group order) | covered | `streaming-v2/` (11) |
 | 16.2 | Header begins GCF profile=generic | covered | `scalar/` (26) |
 | 16.2 | Scalar grammar + encoder quoting; numbers/bool/null unquoted | covered | `numbers/` (15) |
@@ -127,7 +127,7 @@ Scanned over every fixture `expected` output; a violation fails the build.
 | `generic-pack-root` | 5 |
 | `graph-decode` | 3 |
 | `graph-delta` | 3 |
-| `graph-encode` | 2 |
+| `graph-encode` | 3 |
 | `graph-pack-root` | 4 |
 | `graph-session` | 3 |
 | `inline-schema` | 15 |

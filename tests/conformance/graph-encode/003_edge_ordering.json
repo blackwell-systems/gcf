@@ -1,0 +1,20 @@
+{
+  "name": "edge_ordering",
+  "description": "Buffered graph encode MUST order edges by source ID then target ID (SPEC 16.1), regardless of the order edges are provided. Input edges are scrambled (D->A, B->C, B->A); the encoder emits them sorted by (source ID, target ID): B->A (@0<@1), B->C (@2<@1), D->A (@0<@3). Edge reordering is decode-invariant and does not affect pack_root (which sorts edge records independently).",
+  "operation": "encode",
+  "input": {
+    "tool": "test",
+    "symbols": [
+      {"qualifiedName": "pkg.A", "kind": "function", "score": 0.90, "provenance": "lsp", "distance": 0},
+      {"qualifiedName": "pkg.B", "kind": "function", "score": 0.80, "provenance": "lsp", "distance": 0},
+      {"qualifiedName": "pkg.C", "kind": "type", "score": 0.70, "provenance": "lsp", "distance": 0},
+      {"qualifiedName": "pkg.D", "kind": "type", "score": 0.60, "provenance": "lsp", "distance": 0}
+    ],
+    "edges": [
+      {"source": "pkg.D", "target": "pkg.A", "edgeType": "calls"},
+      {"source": "pkg.B", "target": "pkg.C", "edgeType": "references"},
+      {"source": "pkg.B", "target": "pkg.A", "edgeType": "calls"}
+    ]
+  },
+  "expected": "GCF profile=graph tool=test symbols=4 edges=3\n## targets\n@0 fn pkg.A 0.90 lsp\n@1 fn pkg.B 0.80 lsp\n@2 type pkg.C 0.70 lsp\n@3 type pkg.D 0.60 lsp\n## edges [3]\n@0<@1 calls\n@2<@1 references\n@0<@3 calls\n"
+}
