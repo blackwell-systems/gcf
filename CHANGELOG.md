@@ -17,7 +17,7 @@
 
 ### Conformance
 
-- New `graph-stream-encode` conformance operation with shared fixtures 004 (positional trailer) and 005 (labeled trailer, `options.labeledTrailerCounts`). Streaming encode previously had only decode fixtures, which is how an earlier Go-only header regression escaped. All six SDKs run both.
+- New `graph-stream-encode` conformance operation with shared fixtures: 004/006 (positional trailer) and 005/007 (labeled trailer, `options.labeledTrailerCounts`), where 006/007 exercise three distance groups (targets/related/extended) with distinct per-group counts and multiple edges (`counts=3,2,1,4` ↔ `counts=targets:3,related:2,extended:1,edges:4`). Streaming encode previously had only decode fixtures, which is how an earlier Go-only header regression escaped. All six SDKs reproduce these bytes exactly.
 - New `generic-delta-session` fixtures exercising the re-anchor cadence (fixed-N, size-guard, and schema-change forced full).
 
 ### Comprehension validation

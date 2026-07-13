@@ -1,0 +1,24 @@
+{
+  "name": "graph_streaming_encode_multigroup_positional",
+  "description": "Streaming graph encode over three distance groups (targets/related/extended) with distinct per-group counts and multiple edges. Default positional trailer: counts=3,2,1,4 (targets=3, related=2, extended=1, edges=4). Pairs with 007 (identical input, labeled trailer). Runners that do not implement graph-stream-encode skip this fixture.",
+  "operation": "graph-stream-encode",
+  "input": {
+    "tool": "context_for_task",
+    "tokenBudget": 5000,
+    "symbols": [
+      {"qualifiedName": "pkg.Auth", "kind": "function", "score": 0.95, "provenance": "lsp", "distance": 0},
+      {"qualifiedName": "pkg.Router", "kind": "function", "score": 0.90, "provenance": "lsp", "distance": 0},
+      {"qualifiedName": "pkg.Store", "kind": "type", "score": 0.85, "provenance": "lsp", "distance": 0},
+      {"qualifiedName": "pkg.Server", "kind": "function", "score": 0.60, "provenance": "lsp", "distance": 1},
+      {"qualifiedName": "pkg.Config", "kind": "type", "score": 0.55, "provenance": "ast", "distance": 1},
+      {"qualifiedName": "pkg.Logger", "kind": "type", "score": 0.30, "provenance": "ast", "distance": 2}
+    ],
+    "edges": [
+      {"source": "pkg.Server", "target": "pkg.Auth", "edgeType": "calls"},
+      {"source": "pkg.Server", "target": "pkg.Router", "edgeType": "calls"},
+      {"source": "pkg.Router", "target": "pkg.Store", "edgeType": "references"},
+      {"source": "pkg.Config", "target": "pkg.Logger", "edgeType": "references"}
+    ]
+  },
+  "expected": "GCF profile=graph tool=context_for_task budget=5000\n## targets\n@0 fn pkg.Auth 0.95 lsp\n@1 fn pkg.Router 0.90 lsp\n@2 type pkg.Store 0.85 lsp\n## related\n@3 fn pkg.Server 0.60 lsp\n@4 type pkg.Config 0.55 ast\n## extended\n@5 type pkg.Logger 0.30 ast\n## edges [?]\n@0<@3 calls\n@1<@3 calls\n@2<@1 references\n@5<@4 references\n##! summary symbols=6 edges=4 counts=3,2,1,4\n"
+}
