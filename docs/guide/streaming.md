@@ -36,7 +36,9 @@ GCF profile=graph tool=context_for_task budget=5000
 
 The `[?]` marker signals that the count was unknown at emit time. The `##! summary` trailer resolves the counts after the data. In the graph profile it carries the totals (`symbols=`, `edges=`) plus a per-group count list; in the generic profile it carries `counts=N` for each deferred `[?]` section in order of appearance. The LLM has both the data and the counts in its context window.
 
-## Why TOON's streaming is fake
+For a weaker consumer, the graph trailer's `counts` can optionally use a labeled form that names each group, `counts=targets:2,related:2,edges:3`, instead of relying on position (SPEC Section 8.4.1). It carries the same values in the same order; encoders default to the positional form, and a decoder accepts either. The counts are informational in both forms, so this is a comprehension aid, not a validation change.
+
+## Why TOON's streaming is output-only
 
 TOON advertises `encodeLines()` as a streaming API. It is not.
 

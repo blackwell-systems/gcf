@@ -146,6 +146,9 @@ sess.Reset()
 The Session type is thread-safe in all implementations:
 - Go: `sync.Mutex`
 - Python: `threading.Lock`
+- Rust: `Mutex<SessionInner>`
+- Swift: `NSLock`
+- Kotlin: `@Synchronized`
 - TypeScript: single-threaded (safe by default)
 
 Multiple tool handlers can encode concurrently within the same session.

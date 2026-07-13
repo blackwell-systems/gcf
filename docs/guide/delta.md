@@ -140,6 +140,15 @@ This means:
 - If one file was edited, a few symbols shift, and the root changes slightly (outcome 2: delta)
 - If the user switched branches entirely, the root is unrecognizable (outcome 3: full retransmit)
 
+## Verifying a delta
+
+A delta is self-verifying. Its header carries `base_root` (the snapshot the delta applies to) and `new_root` (the snapshot it produces). A consumer applies the delta to its copy of the base, recomputes the `pack_root` of the result, and checks it against `new_root`:
+
+- The recomputed root equals `new_root`: the delta applied cleanly, and both sides now hold the same snapshot.
+- It does not: the consumer rejects the delta with `root_mismatch` and requests a full payload.
+
+A removal of a symbol that is not present, or an addition of one that already exists, is rejected as `delta_invalid` before the root is computed. Because `pack_root` hashes each symbol's distance, the graph delta's `## added` lines carry a trailing distance field so the consumer can reconstruct the new snapshot exactly (SPEC Section 10.1, 10.4). Each SDK exposes this as `decodeDelta` plus `verifyDelta` for the graph profile, and `verifyGenericDelta` for the generic profile.
+
 ## Generic profile delta (v3.3)
 
 Delta is not graph-only. The generic profile supports the same keyed diff over any tabular set (SPEC Section 10a). One column is the identity key (`@id` in the field declaration, `key=id` in the header), and the delta carries `## added` / `## changed` / `## removed` sections:
