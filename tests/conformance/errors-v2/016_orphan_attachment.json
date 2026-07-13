@@ -1,7 +1,7 @@
 {
   "name": "orphan_attachment",
-  "description": "Attachment without matching ^ cell is decoded as an extra field on the row (spec 7.4.6.1.4: field names containing > are excluded from tabular columns)",
-  "input": "GCF profile=generic\n## rows [1]{id,name}\n@0 1|Alice\n.extra {}\n    key=val\n",
-  "expected": {"rows": [{"id": 1, "name": "Alice", "extra": {"key": "val"}}]},
-  "operation": "decode"
+  "description": "A `.field` attachment with no matching `^` marker cell in its row MUST be rejected (SPEC 16.5). Here `.extra` names no column of the {id,name} schema and no cell carries `^`, so it is an orphan. Previously the decoder silently injected it as an undeclared extra field on the row, decoding to a record no encoder would ever produce (a lossless-round-trip hole). The one legitimate bare attachment (a `>`-named field per SPEC 7.4.6.1.4) is covered by flatten/016_gt_in_field_name.json.",
+  "operation": "error",
+  "expectedError": "orphan_attachment",
+  "input": "GCF profile=generic\n## rows [1]{id,name}\n@0 1|Alice\n.extra {}\n    key=val\n"
 }

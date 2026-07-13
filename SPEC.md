@@ -1700,7 +1700,7 @@ A conforming decoder operates in strict mode. There is no lenient or permissive 
 | Tab indentation | Leading whitespace contains tab characters |
 | Invalid indent | Indentation increases by more than one level |
 | Invalid item ID | Expanded item ID or present tabular row ID does not equal its zero-based item index |
-| Orphan attachment | `.field` without a parent `@N` row and matching bare `^` cell |
+| Orphan attachment | A `.field` attachment whose name is neither a `^`-marked column of its row nor a `>`-containing field name (the sole legitimate bare attachment, Section 7.4.6.1.4). Such an attachment MUST be rejected, not absorbed as an undeclared extra field (that would decode to a record no encoder produces, breaking the round-trip invariant) |
 | Orphan inline attachment | Positional inline body has no eligible attachment-marker cell |
 | Missing attachment | Attachment-marker cell has no matching named or positional body |
 | Duplicate attachment | More than one attachment targets the same field in one row |

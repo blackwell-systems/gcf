@@ -7,8 +7,8 @@
 ## Summary
 
 - Fixtures: **199** across 21 directories, 14 operations
-- Section 16.5 conditions covered: **29/31**
-- Uncovered (known gaps, tracked below): **2**
+- Section 16.5 conditions covered: **30/31**
+- Uncovered (known gaps, tracked below): **1**
 - Uncovered (unexpected, fails the build): **0**
 - Required operations missing: **0**
 
@@ -36,7 +36,7 @@
 | Structural | Leading whitespace contains tab characters | `tab_indentation` | covered | `errors-v2/007_tab_indentation.json` |
 | Structural | Indentation increases by more than one level | `invalid_indent` | covered | `errors-v2/008_invalid_indent_jump.json` |
 | Structural | Expanded/tabular row ID != its zero-based item index | `invalid_item_id` | covered | `errors-v2/019_invalid_item_id.json` |
-| Structural | .field without a parent @N row and matching bare ^ cell | `orphan_attachment` | KNOWN GAP | Not enforced as a distinct reject by the reference decoder (verified): a `.field` with a parent row but no matching `^` cell decodes as an extra field (016_orphan_attachment.json, per Section 7.4.6.1.4); a `.field` with no parent row trips invalid_indent or row_width_mismatch instead. Pending decision: harden decoders to a distinct reject, or amend Section 16.5. |
+| Structural | .field without a parent @N row and matching bare ^ cell | `orphan_attachment` | covered | `errors-v2/016_orphan_attachment.json` |
 | Structural | Positional inline body has no eligible attachment-marker cell | `orphan_inline_attachment` | KNOWN GAP | The reference decoder ACCEPTS a positional inline body with no eligible attachment-marker cell (verified: unmatched/extra bodies decode without error), violating the Section 16.5 MUST-reject. Pending decision: harden decoders, or amend Section 16.5. |
 | Structural | Attachment-marker cell has no matching body | `missing_attachment` | covered | `errors-v2/017_missing_attachment.json` |
 | Structural | More than one attachment targets the same field in one row | `duplicate_attachment` | covered | `errors-v2/027_duplicate_attachment.json` |
@@ -52,11 +52,11 @@
 
 | Operation | Fixtures | Required |
 |---|---|---|
-| `decode` | 24 | yes |
+| `decode` | 23 | yes |
 | `delta` | 2 | yes |
 | `delta-verify` | 1 | yes |
 | `encode` | 106 | yes |
-| `error` | 34 | yes |
+| `error` | 35 | yes |
 | `generic-delta` | 2 | yes |
 | `generic-delta-decode` | 1 | yes |
 | `generic-delta-session` | 3 | yes |
@@ -95,6 +95,5 @@
 
 ## Known gaps (tracked)
 
-- **orphan_attachment** — Not enforced as a distinct reject by the reference decoder (verified): a `.field` with a parent row but no matching `^` cell decodes as an extra field (016_orphan_attachment.json, per Section 7.4.6.1.4); a `.field` with no parent row trips invalid_indent or row_width_mismatch instead. Pending decision: harden decoders to a distinct reject, or amend Section 16.5.
 - **orphan_inline_attachment** — The reference decoder ACCEPTS a positional inline body with no eligible attachment-marker cell (verified: unmatched/extra bodies decode without error), violating the Section 16.5 MUST-reject. Pending decision: harden decoders, or amend Section 16.5.
 

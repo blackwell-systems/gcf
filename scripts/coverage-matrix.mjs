@@ -63,8 +63,6 @@ const TAXONOMY = [
 // Conditions with no covering error fixture today, with the reason and resolution.
 // Deleting an entry here without adding a covering fixture will fail the build.
 const KNOWN_GAPS = {
-  orphan_attachment:
-    'Not enforced as a distinct reject by the reference decoder (verified): a `.field` with a parent row but no matching `^` cell decodes as an extra field (016_orphan_attachment.json, per Section 7.4.6.1.4); a `.field` with no parent row trips invalid_indent or row_width_mismatch instead. Pending decision: harden decoders to a distinct reject, or amend Section 16.5.',
   orphan_inline_attachment:
     'The reference decoder ACCEPTS a positional inline body with no eligible attachment-marker cell (verified: unmatched/extra bodies decode without error), violating the Section 16.5 MUST-reject. Pending decision: harden decoders, or amend Section 16.5.',
 };
