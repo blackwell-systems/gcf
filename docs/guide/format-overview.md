@@ -183,7 +183,7 @@ The generic profile (above) handles any structured data. The graph profile is a 
 ### Graph profile at a glance
 
 ```
-GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=10 edges=2 pack_root=a1b2c3
+GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=4 edges=2 pack_root=sha256:a1b2c3...
 ## targets
 @0 fn pkg.AuthMiddleware 0.78 lsp_resolved
 @1 type pkg.AuthConfig 0.71 ast_inferred
@@ -202,7 +202,7 @@ Five additional elements beyond the generic profile:
 The first line identifies the format and carries payload metadata:
 
 ```
-GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=10 edges=8 pack_root=a1b2c3d4
+GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=10 edges=8 pack_root=sha256:a1b2c3d4...
 ```
 
 | Field | Required | Description |
