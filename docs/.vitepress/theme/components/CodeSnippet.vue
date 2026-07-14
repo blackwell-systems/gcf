@@ -82,7 +82,7 @@ const highlighted = computed(() => {
 
 <template>
   <div class="snippet-wrap">
-    <h2 class="snippet-title">Two lines. Any language.</h2>
+    <h2 class="snippet-title">Two lines. Six languages.</h2>
     <div class="snippet-inner">
       <div class="snippet-tabs">
         <button
