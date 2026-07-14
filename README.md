@@ -11,7 +11,7 @@
   <img src="assets/gcf-logo.png" alt="GCF" width="360">
 </p>
 
-<h3 align="center">The AI-native wire format for structured data.</h3>
+<h3 align="center">The AI-native wire format for structured data. Built for the agentic loop.</h3>
 
 > [!IMPORTANT]
 > **GCF: A Token-Optimized Wire Format for Structured LLM Interactions**
@@ -28,7 +28,7 @@
 
 ---
 
-**100% comprehension on every frontier model. 50-92% fewer tokens than JSON. 91.2% on structurally complex code graphs (vs TOON 68.8%, JSON 54.1%). Proven lossless: `decode(encode(value)) == value` for every structured value, verified across 43,000,000,000+ round-trips in 5 formats and 17 serialization formats. Zero training required. JSON's grammar symbols are [hardcoded as merged vocabulary entries](https://gcformat.com/guide/tokenizer-analysis) in BPE tokenizers, creating irrecoverable structural boundaries. GCF's pipe delimiter has 0% merge rate with field names.**
+**100% comprehension on every frontier model. 50-92% fewer tokens than JSON. 91.2% on structurally complex code graphs (vs TOON 68.8%, JSON 54.1%). Proven lossless: `decode(encode(value)) == value` for every structured value, verified across 43,000,000,000+ round-trips in 5 formats and 6 languages, with lossless interop validated across 17 serialization formats. Zero training required. JSON's grammar symbols are [hardcoded as merged vocabulary entries](https://gcformat.com/guide/tokenizer-analysis) in BPE tokenizers, creating irrecoverable structural boundaries. GCF's pipe delimiter has 0% merge rate with field names.**
 
 Encode any structured data as GCF before sending it to an LLM. JSON, YAML, TOML, CSV, MessagePack: GCF encodes them all. The model reads it natively with zero format instructions. `decode()` converts back to any format when a human needs to see it. Your existing schemas and validators work on the decoded output unchanged.
 

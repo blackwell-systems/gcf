@@ -16,7 +16,7 @@ No model has ever been trained on GCF. Every model reads it better than the form
 | **Generation** (28 runs, 11 models) | **5/5** | 1.0/5 | 5.0/5 |
 | **43,000,000,000+ round-trips** | **0 failures** | | |
 
-Five benchmark suites, three providers (Anthropic, OpenAI, Google), zero training:
+Five benchmark suites, four providers (Anthropic, OpenAI, Google, Mistral), zero training:
 
 1. **[Generic comprehension](#generic-profile-standard-workloads)**: 500-order nested data, 27 runs, 11 models. GCF 100% on every frontier model.
 2. **[Graph comprehension](#graph-profile-under-structural-stress)**: 500-symbol code graphs, 24 runs, 10 models. GCF 91.2% where JSON drops to 54.1%.
@@ -51,7 +51,7 @@ This is what most MCP tool responses look like: arrays of objects with nested me
 | Mistral Large 3 | Mistral | 1 | 69.2% | 69.2% | 69.2% |
 | GPT-4o-mini | OpenAI | 1 | **69.2%** | 69.2% | 61.5% |
 
-**27 runs, 11 models, 3 providers.** Frontier models (Opus, Sonnet, Haiku, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash) achieve 100% GCF on every run. GCF averages equal or better than JSON on every model. TOON is consistently the weakest format.
+**27 runs, 11 models, 4 providers.** Frontier models (Opus, Sonnet, Haiku, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash) achieve 100% GCF on every run. GCF averages equal or better than JSON on every model. TOON is consistently the weakest format.
 
 ---
 
