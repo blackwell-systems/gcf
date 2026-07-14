@@ -2,7 +2,7 @@
 
 ## Chrome DevTools MCP
 
-[Chrome DevTools MCP](https://github.com/ChromeDevTools/chrome-devtools-mcp) is the #1 most-starred MCP server on GitHub (46K stars). Built by the Google Chrome DevTools team, it exposes browser state (DOM, network, console, performance) to AI coding agents.
+[Chrome DevTools MCP](https://github.com/ChromeDevTools/chrome-devtools-mcp) is the #1 most-starred MCP server on GitHub (47K stars). Built by the Google Chrome DevTools team, it exposes browser state (DOM, network, console, performance) to AI coding agents.
 
 GCF was merged as an experimental data format in [PR #2235](https://github.com/ChromeDevTools/chrome-devtools-mcp/pull/2235) after 11 days and 4 review rounds. The review process required npm provenance attestations (SLSA v1), a refactor from boolean flags to a unified `experimentalDataFormat` enum, optional peer dependency loading with clear error messages, and several other improvements.
 
@@ -14,7 +14,7 @@ GCF was merged as an experimental data format in [PR #2235](https://github.com/C
 
 ## OmniRoute
 
-[OmniRoute](https://github.com/diegosouzapw/OmniRoute) is an AI gateway, registry, and proxy that sits between AI clients and model providers, built by [Diego Souza](https://github.com/diegosouzapw). MCP servers, A2A agents, REST/gRPC APIs: everything flows through it with centralized discovery, guardrails, rate limiting, auth, and observability. 15.6K stars.
+[OmniRoute](https://github.com/diegosouzapw/OmniRoute) is an AI gateway, registry, and proxy that sits between AI clients and model providers, built by [Diego Souza](https://github.com/diegosouzapw). MCP servers, A2A agents, REST/gRPC APIs: everything flows through it with centralized discovery, guardrails, rate limiting, auth, and observability. 17K stars.
 
 GCF's generic profile encoder is vendored directly into OmniRoute's headroom compression engine, replacing their custom `omni-tabular` encoder. Zero new dependencies added. This is GCF's first infrastructure-layer integration: a gateway that every request passes through.
 
@@ -44,7 +44,7 @@ The previous encoder only handled homogeneous arrays with uniform column types. 
 
 ## NetClaw
 
-[NetClaw](https://github.com/automateyournetwork/netclaw) is an AI-powered network automation platform with 113 skills and 66 MCP integrations, built by [John Capobianco](https://github.com/automateyournetwork) (Head of AI and DevRel at Itential, Google Developer Expert). It automates network engineering workflows across Cisco, Juniper, Arista, Palo Alto, F5, AWS, and dozens of other platforms, with live BGP/OSPF control-plane participation, gNMI streaming telemetry, ITSM gating, and immutable audit trails. 556 stars.
+[NetClaw](https://github.com/automateyournetwork/netclaw) is an AI-powered network automation platform with 113 skills and 66 MCP integrations, built by [John Capobianco](https://github.com/automateyournetwork) (Head of AI and DevRel at Itential, Google Developer Expert). It automates network engineering workflows across Cisco, Juniper, Arista, Palo Alto, F5, AWS, and dozens of other platforms, with live BGP/OSPF control-plane participation, gNMI streaming telemetry, ITSM gating, and immutable audit trails. 610 stars.
 
 NetClaw previously used TOON for token optimization across its MCP servers. After benchmarking GCF against TOON on NetClaw's actual network data payloads, the project replaced TOON entirely. This was the first external project to switch from TOON to GCF.
 
@@ -59,7 +59,7 @@ The integration was surgical: all TOON serialization flowed through a single `se
 
 ## ctx
 
-[ctx](https://github.com/stevesolun/ctx) solves a problem every Claude Code user hits: there are 91K+ skills, 467 agents, and 10K+ MCP servers in the ecosystem, and loading them all wastes your context window on tools you're not using. Built by [Steve Solun](https://github.com/stevesolun), ctx watches your repo in real time, detects what stack you're working in (sees `.tsx` files, detects React; sees `sqlalchemy`, detects Postgres), then queries a 102,928-node knowledge graph with 2.9M edges to recommend only the 5-15 tools relevant to your current task. Nothing loads without your approval. It also detects stale tools you installed months ago and flags them for removal. 510 stars.
+[ctx](https://github.com/stevesolun/ctx) solves a problem every Claude Code user hits: there are 91K+ skills, 467 agents, and 10K+ MCP servers in the ecosystem, and loading them all wastes your context window on tools you're not using. Built by [Steve Solun](https://github.com/stevesolun), ctx watches your repo in real time, detects what stack you're working in (sees `.tsx` files, detects React; sees `sqlalchemy`, detects Postgres), then queries a 102,928-node knowledge graph with 2.9M edges to recommend only the 5-15 tools relevant to your current task. Nothing loads without your approval. It also detects stale tools you installed months ago and flags them for removal. 552 stars.
 
 Every ctx recommendation, graph query, and wiki search result lands directly in the LLM context window. These payloads are arrays of uniform objects (5-25 results with 6-17 fields each) where JSON repeats every field name on every record. GCF's positional encoding eliminates that repetition, cutting the token cost of every tool response roughly in half.
 

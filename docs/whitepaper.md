@@ -412,11 +412,11 @@ All six implementations are tested against round-trip invariants and the shared 
 
 GCF is deployed across 13 production systems spanning infrastructure, network automation, code intelligence, API tooling, and developer tools:
 
-- **Chrome DevTools MCP** (46K stars, Google Chrome DevTools team): the official Chrome DevTools MCP server. GCF as an output-format option for browser-automation and inspection tool responses. [github.com/ChromeDevTools/chrome-devtools-mcp](https://github.com/ChromeDevTools/chrome-devtools-mcp)
-- **OmniRoute** (15.6K stars): AI gateway and proxy. GCF vendored into headroom compression engine, replacing custom encoder. 55-62% savings, 100% payload coverage. TOON rejected (npm dependency). [github.com/diegosouzapw/OmniRoute](https://github.com/diegosouzapw/OmniRoute)
-- **NetClaw** (556 stars): AI network automation, 113 skills, 66 MCP integrations. Replaced TOON entirely after benchmarking. 55.8% savings vs JSON, 13.6% fewer tokens than TOON. [github.com/automateyournetwork/netclaw](https://github.com/automateyournetwork/netclaw)
+- **Chrome DevTools MCP** (47K stars, Google Chrome DevTools team): the official Chrome DevTools MCP server. GCF as an output-format option for browser-automation and inspection tool responses. [github.com/ChromeDevTools/chrome-devtools-mcp](https://github.com/ChromeDevTools/chrome-devtools-mcp)
+- **OmniRoute** (17K stars): AI gateway and proxy. GCF vendored into headroom compression engine, replacing custom encoder. 55-62% savings, 100% payload coverage. TOON rejected (npm dependency). [github.com/diegosouzapw/OmniRoute](https://github.com/diegosouzapw/OmniRoute)
+- **NetClaw** (610 stars): AI network automation, 113 skills, 66 MCP integrations. Replaced TOON entirely after benchmarking. 55.8% savings vs JSON, 13.6% fewer tokens than TOON. [github.com/automateyournetwork/netclaw](https://github.com/automateyournetwork/netclaw)
 - **NeuroNest**: Agent-first IDE by Network Guardian. First independent commercial adoption. GCF across 4 encoding surfaces with session dedup, delta encoding, per-provider comprehension gate, and shadow mode A/B testing. [neuronest.cc](https://neuronest.cc)
-- **ctx** (510 stars): Claude Code context optimizer. GCF for recommendation bundles, graph queries, wiki search. 51.5% savings, up to 57.8% on bundles. [github.com/stevesolun/ctx](https://github.com/stevesolun/ctx)
+- **ctx** (552 stars): Claude Code context optimizer. GCF for recommendation bundles, graph queries, wiki search. 51.5% savings, up to 57.8% on bundles. [github.com/stevesolun/ctx](https://github.com/stevesolun/ctx)
 - **Speakeasy**: API tooling for OpenAPI ecosystem. GCF as native output format (`oq --format gcf`). Merged after dependency audit confirming no external data transmission. [github.com/speakeasy-api/openapi](https://github.com/speakeasy-api/openapi)
 - **Open Data Products SDK** (Linux Foundation): GCF sidecars for ODPC/ODPG workflows. [opendataproducts.org/sdk](https://opendataproducts.org/sdk/)
 - **bb** (Bitbucket Cloud CLI): GCF as opt-in output format for agent consumers. Independent Go adoption. [github.com/payfacto/bb](https://github.com/payfacto/bb)
@@ -836,7 +836,7 @@ GCF's grammar was reverse-engineered from tokenization and attention-level exper
 - **TOON benchmark fork:** `github.com/blackwell-systems/toon` (branch: gcf-comparison, their datasets, their tokenizer)
 - **Conformance test suite:** `github.com/blackwell-systems/gcf/tests/conformance` (204 v3 fixtures across both profiles, streaming, delta, and normative errors)
 - **Interactive playground:** gcformat.com/playground (three-way JSON vs TOON vs GCF comparison using real @toon-format/toon library)
-- **Production deployment:** 13 adopters including Chrome DevTools MCP (46K stars, Google), OmniRoute (15.6K stars), NetClaw (556 stars), NeuroNest (commercial), ctx (510 stars), Speakeasy, knowing (28 MCP tools), agent-lsp (66 MCP tools). Full list: [gcformat.com/ecosystem/adopters](https://gcformat.com/ecosystem/adopters)
+- **Production deployment:** 13 adopters including Chrome DevTools MCP (47K stars, Google), OmniRoute (17K stars), NetClaw (610 stars), NeuroNest (commercial), ctx (552 stars), Speakeasy, knowing (28 MCP tools), agent-lsp (66 MCP tools). Full list: [gcformat.com/ecosystem/adopters](https://gcformat.com/ecosystem/adopters)
 
 ---
 
