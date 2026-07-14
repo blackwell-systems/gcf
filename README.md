@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://gcformat.com/playground.html"><img src="https://img.shields.io/badge/playground-live-2563eb?style=for-the-badge" alt="Playground"></a>
-  <a href="https://gcformat.com/guide/benchmarks.html"><img src="https://img.shields.io/badge/benchmarks-2%2C400%2B%20evals-22c55e?style=for-the-badge" alt="Benchmarks"></a>
+  <a href="https://gcformat.com/guide/benchmarks.html"><img src="https://img.shields.io/badge/benchmarks-2%2C500%2B%20evals-22c55e?style=for-the-badge" alt="Benchmarks"></a>
   <a href="https://github.com/blackwell-systems/gcf"><img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/blackwell-systems/gcf/main/assets/downloads-badge.json&style=for-the-badge" alt="Downloads"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-333?style=for-the-badge" alt="License"></a>
 </p>
@@ -49,7 +49,7 @@ pip install gcf-proxy
 
 ## Benchmarks
 
-2,400+ LLM evaluations across 11 models, 3 providers, and 50+ independent test runs.
+2,500+ LLM evaluations across 11 models, 4 providers, and 50+ independent test runs.
 
 | | Generic Profile (500 orders) | Graph Profile (500 symbols) |
 |---|---|---|
@@ -102,24 +102,24 @@ from gcf import encode, Payload, Symbol, Edge
 output = encode(Payload(
     tool="context_for_task", token_budget=5000, tokens_used=1847,
     symbols=[
-        Symbol(qualified_name="pkg.Auth", kind="function", score=0.78, provenance="lsp", distance=0),
-        Symbol(qualified_name="pkg.Server", kind="function", score=0.54, provenance="lsp", distance=1),
+        Symbol(qualified_name="github.com/org/repo/pkg.AuthMiddleware", kind="function", score=0.78, provenance="lsp_resolved", distance=0),
+        Symbol(qualified_name="github.com/org/repo/pkg.NewServer", kind="function", score=0.54, provenance="lsp_resolved", distance=1),
     ],
-    edges=[Edge(source="pkg.Server", target="pkg.Auth", edge_type="calls")],
+    edges=[Edge(source="github.com/org/repo/pkg.NewServer", target="github.com/org/repo/pkg.AuthMiddleware", edge_type="calls")],
 ))
 ```
 
 ```
 GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=2 edges=1
 ## targets
-@0 fn pkg.Auth 0.78 lsp
+@0 fn github.com/org/repo/pkg.AuthMiddleware 0.78 lsp_resolved
 ## related
-@1 fn pkg.Server 0.54 lsp
+@1 fn github.com/org/repo/pkg.NewServer 0.54 lsp_resolved
 ## edges [1]
 @0<@1 calls
 ```
 
-Local IDs (`@0`, `@1`) replace full names in edges. 233 tokens instead of 965 for JSON.
+Local IDs (`@0`, `@1`) replace full names in edges. 81 tokens instead of 191 for JSON.
 
 [![Playground](assets/playground.png)](https://gcformat.com/playground.html)
 
@@ -149,7 +149,7 @@ Both profiles share the same grammar (common scalar grammar, key grammar, header
 
 ## It gets cheaper over time
 
-**Session deduplication:** Symbols sent in prior responses become bare references (`@7` = 2 tokens vs 19 for full declaration). Over a 5-call session at production scale (500 symbols): 84.3% cumulative savings vs JSON (148K JSON tokens vs 23K GCF). By call 5: 91.9% savings.
+**Session deduplication:** Symbols sent in prior responses become bare references (`@7` = 2 tokens vs 19 for full declaration). At production scale (500 symbols), session dedup alone cuts 86.3% by call 5; composed with delta, 99.0% per call. A 10-call session reaches 94.4% cumulative savings vs JSON (each response costs 171 tokens vs 29,072 for JSON).
 
 **Delta encoding:** When the context changes slightly between queries, send only the diff. 81.2% additional savings on re-queries.
 
@@ -189,7 +189,6 @@ No other format has these. They compound across multi-turn agent interactions.
 - [Schema Validation](https://gcformat.com/guide/schema-validation.html)
 - [FAQ](https://gcformat.com/guide/faq.html)
 - [Tokenizer Analysis](https://gcformat.com/guide/tokenizer-analysis.html) (why JSON's grammar breaks at the BPE level)
-- [Independent AI Reviews](https://gcformat.com/reviews/)
 - [Playground](https://gcformat.com/playground.html)
 - [Specification](SPEC.md)
 
