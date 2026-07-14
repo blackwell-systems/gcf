@@ -79,7 +79,7 @@ edges[3]{source,target,type}:
 ```
 
 **GCF edges (local IDs):**
-```
+```gcf
 ## edges [3]
 @0<@3 calls
 @1<@0 calls
@@ -149,7 +149,7 @@ Delta is not graph-only. The generic profile has the same mechanism (a keyed dif
 
 GCF encodes how far each record is from the query center:
 
-```
+```gcf
 ## targets       ← direct matches (distance 0)
 @0 fn pkg.Auth 0.92 lsp
 ## related       ← one hop away (distance 1)

@@ -104,7 +104,7 @@ export default defineConfig({
       { icon: 'linkedin', link: 'https://www.linkedin.com/in/daynablackwell/' },
     ],
     footer: {
-      message: '100% comprehension. 71% fewer tokens. 2,400+ LLM evaluations.',
+      message: '100% comprehension. 71% fewer tokens. 2,500+ LLM evaluations.',
       copyright: '&copy; 2026 <a href="https://blackwell-systems.com">Blackwell Systems</a>. MIT Licensed.',
     },
   },

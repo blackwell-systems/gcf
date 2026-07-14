@@ -43,7 +43,7 @@ With JSON, each response is a full retransmission. Total: 7,300 tokens.
 
 With GCF sessions, previously-sent symbols become bare references:
 
-```
+```gcf
 @7  # previously transmitted
 ```
 

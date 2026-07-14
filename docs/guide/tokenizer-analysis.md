@@ -442,7 +442,7 @@ Connects tokenization findings to comprehension eval data (2,500+ LLM calls acro
 
 The tokenization analysis connects directly to the [comprehension eval data](/guide/benchmarks):
 
-- JSON accuracy on stress-scale data: **54.1%** (12 models, 23 runs, 3 providers)
+- JSON accuracy on stress-scale data: **54.1%** (10 models, 24 runs, 3 providers)
 - GCF accuracy on stress-scale data: **91.2%** (same runs, same models)
 - GCF accuracy on standard workloads: **100%** on every frontier model
 

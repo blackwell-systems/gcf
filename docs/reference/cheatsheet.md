@@ -30,11 +30,11 @@ GCF profile=graph tool=context_for_task delta=true base_root=sha256:aaa111... ne
 
 ### Symbol lines
 
-```
+```gcf
 @{id} {kind} {qualified_name} {score} {provenance}
 ```
 
-```
+```gcf
 @0 fn github.com/org/repo/pkg.AuthMiddleware 0.78 lsp_resolved
 @1 type github.com/org/repo/pkg.Config 0.65 ast_inferred
 @2 method github.com/org/repo/pkg.Server.Start 0.54 lsp_resolved
@@ -50,11 +50,11 @@ GCF profile=graph tool=context_for_task delta=true base_root=sha256:aaa111... ne
 
 ### Edge lines
 
-```
+```gcf
 @{target}<@{source} {edge_type} [{status}]
 ```
 
-```
+```gcf
 @0<@2 calls              # @2 calls @0
 @1<@0 references         # @0 references @1
 @3<@2 implements         # @2 implements @3
@@ -67,7 +67,7 @@ GCF profile=graph tool=context_for_task delta=true base_root=sha256:aaa111... ne
 
 ### Distance groups
 
-```
+```gcf
 ## targets       # distance 0 (direct matches)
 ## related       # distance 1 (one hop)
 ## extended      # distance 2 (broader context)
@@ -92,7 +92,7 @@ Unknown kinds pass through verbatim.
 
 ### Session bare references
 
-```
+```gcf
 @7  # previously transmitted
 ```
 
@@ -168,7 +168,7 @@ GCF profile=generic
 
 ### Tabular arrays
 
-```
+```gcf
 ## {name} [{count}]{{field1},{field2},{field3}}
 value1|value2|value3
 ```
@@ -189,7 +189,7 @@ GCF profile=generic
 
 When nested objects have the same keys in every row and all values are scalars, they are flattened into `>` path columns:
 
-```
+```gcf
 ## orders [2]{id,"customer>name","customer>email",items,total}
 @0 ORD-1|Alice|alice@co.com|^|59.98
 .items [1]{sku}
@@ -211,7 +211,7 @@ When nested objects have the same keys in every row and all values are scalars, 
 
 When nested objects have 3+ scalar fields and can't be flattened (e.g., different keys across rows), they use inline schema encoding:
 
-```
+```gcf
 ## orders [2]{id,total,status,customer}
 @0 1001|249.99|shipped|^{name,email,tier}
 Alice Smith|alice@example.com|premium
@@ -227,7 +227,7 @@ Bob Jones|bob@example.com|standard
 
 For objects with fewer than 3 fields or containing nested sub-objects:
 
-```
+```gcf
 ## items [2]{id,metadata}
 @0 1001|^
 .metadata {}
@@ -281,7 +281,7 @@ version=2.1.0
 
 When array items are mixed types (not all objects with the same fields), use expanded form:
 
-```
+```gcf
 ## items [3]
 @0 =hello              # scalar item
 @1 {}                   # object item
@@ -372,7 +372,7 @@ GCF profile=generic unchanged=true pack_root=sha256:bbb4c7... count=3
 
 ### Deferred counts
 
-```
+```gcf
 ## edges [?]                    # count unknown at emit time
 ## employees [?]{id,name,salary}  # tabular with deferred count
 ```

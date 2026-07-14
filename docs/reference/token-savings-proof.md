@@ -364,7 +364,7 @@ Session savings vs JSON: 77.1%
 |-----------|----------|-------|
 | 500-sym savings vs JSON | 60-76% (model) | 79% (measured) | Model conservative (excludes kind abbreviation) |
 | 500-sym savings vs TOON | ~32% (model: 19,300 / (19,300 + L_gcf)) | 32% (measured) | Exact match |
-| Session savings (5th call) | ~77-93% vs JSON (model) | 92.7% (measured) | Within range |
+| Session savings (5th call, 10-symbol) | ~77-93% vs JSON (model) | 92.7% (measured) | Within range |
 | Edge savings | 89.5% (model) | Not independently measured | Model prediction |
 
 The model slightly underpredicts total savings because it uses average values and excludes second-order effects (kind abbreviation contributes ~1-2% additional savings, distance grouping eliminates array-level overhead).
