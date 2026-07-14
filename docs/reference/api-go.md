@@ -150,6 +150,8 @@ enc.WriteEdge(edge)   // emitted immediately
 enc.Close()           // emits ##! summary trailer
 ```
 
+Set `LabeledTrailerCounts: true` in `StreamOptions` to emit the `##! summary` trailer's `counts=` in the labeled form (`counts=targets:2,related:1,edges:3`) instead of the default positional form (`counts=2,1,3`), a comprehension aid for weaker consumers (SPEC §8.4.1).
+
 ### `NewSession() *Session`
 
 Create a new empty session tracker. Thread-safe.

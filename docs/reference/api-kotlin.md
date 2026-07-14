@@ -132,6 +132,8 @@ enc.writeEdge(edge)   // emitted immediately
 enc.close()           // emits ##! summary trailer
 ```
 
+Pass `labeledTrailerCounts = true` to `StreamOptions` to emit the `##! summary` trailer's `counts=` in the labeled form (`counts=targets:2,related:1,edges:3`) instead of the default positional form (`counts=2,1,3`), a comprehension aid for weaker consumers (SPEC §8.4.1).
+
 ## Generic Delta (v3.3)
 
 Delta encoding for the generic profile (SPEC Section 10a): a keyed diff over a tabular set, plus a producer-side session helper that re-anchors on a tunable cadence. Identity is one designated column (`key=` in the header, `@<key>` in the field declaration). Delta is opt-in and bilateral; the plain `encodeGeneric` path is unchanged.
