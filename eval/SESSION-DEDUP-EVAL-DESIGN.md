@@ -119,6 +119,6 @@ At ~1K tokens per call: ~60K tokens per run.
 
 ## Why this matters
 
-Session dedup is GCF's most aggressive optimization. At call 5 in a real session, it saves 92.7% vs JSON. But if the LLM can't resolve bare references to earlier declarations, the savings are worthless. This eval proves whether the optimization is safe to deploy in production agent pipelines.
+Session dedup is GCF's most aggressive optimization. At call 5 on a 500-symbol session, it saves ~86% vs JSON (94% stacked with delta). But if the LLM can't resolve bare references to earlier declarations, the savings are worthless. This eval proves whether the optimization is safe to deploy in production agent pipelines.
 
 The result also informs the session depth limit: if accuracy degrades past call 3, implementations should periodically retransmit full declarations to refresh the model's working memory.

@@ -52,7 +52,7 @@ Use `encode()` when your data has entities with relationships:
 - Network topologies, dependency trees
 - Any domain where nodes have edges
 
-Graph-shaped data is the fastest-growing data shape in AI. Knowledge systems, ontologies, GraphRAG, code intelligence, agent memory. No other token-efficient format treats graphs as first-class. GCF is the only format with native graph syntax: local IDs, typed edges, distance grouping, and session deduplication that compounds to 92% savings across multi-turn sessions.
+Graph-shaped data is the fastest-growing data shape in AI. Knowledge systems, ontologies, GraphRAG, code intelligence, agent memory. No other token-efficient format treats graphs as first-class. GCF is the only format with native graph syntax: local IDs, typed edges, distance grouping, and session deduplication that compounds to 84% savings across a multi-turn session.
 
 ### When GCF is most effective
 
@@ -363,7 +363,7 @@ println(p.edges[0].source) // "pkg.Server"
 
 - [Format Overview](/guide/format-overview) to understand both encoding profiles
 - [Using GCF with LLMs](/guide/llm-integration) for comprehension and generation results
-- [Sessions](/guide/sessions) for multi-turn deduplication (92.7% savings)
+- [Sessions](/guide/sessions) for multi-turn deduplication (84% session savings)
 - [Delta Encoding](/guide/delta) for incremental updates (81.2% savings)
 - [Streaming Encoding](/guide/streaming) for zero-buffering incremental encode
 - [GCF vs TOON](/guide/vs-toon) for the full competitive comparison

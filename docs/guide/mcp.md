@@ -35,7 +35,7 @@ gcf-proxy: search_symbols      10.0KB ->  7.4KB (26% saved)
 ```
 
 Additional flags:
-- `--session`: enable session deduplication (92% savings by 5th call)
+- `--session`: enable session deduplication (84% savings across a session)
 - `--cache`: cache encoded responses for identical tool calls
 - `--delta`: send only changed symbols on re-queries
 - `--no-flatten`: disable nested object flattening (for open-weight models)
