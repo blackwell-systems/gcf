@@ -1,0 +1,460 @@
+==============================================================================
+GCF Rust YAML round-trip fuzz — 10,000,000,000 iterations, 0 failures
+==============================================================================
+Date:            2026-07-13
+Test:            cargo test --release --test fuzz_parallel yaml_10b_2
+Seeds:           11,000,000,000 .. 21,000,000,000 (FUZZ_SEED_OFFSET, 20 x 500M chunks)
+Total iters:     10,000,000,000
+Total failed:    0
+Wall time:       38,794.4 s (10.78 hours)
+Aggregate rate:  257,769 iters/s
+Property:        decode(encode(value)) == value for every generated YAML-shaped value
+Driver:          eval/yaml-21b-resumable.sh (checkpointed, 20 chunks), under caffeinate
+Backfills:       the 'YAML 21B total' second-10B log (replaces the missing 2026-06-15 entry)
+==============================================================================
+
+Per-chunk results (seed offset -> passed/failed in time):
+  seed 11000000000     500000000 passed, 0 failed in 1924.0s (259877/s)
+  seed 11500000000     500000000 passed, 0 failed in 1951.4s (256230/s)
+  seed 12000000000     500000000 passed, 0 failed in 1911.7s (261541/s)
+  seed 12500000000     500000000 passed, 0 failed in 1935.1s (258388/s)
+  seed 13000000000     500000000 passed, 0 failed in 1919.6s (260467/s)
+  seed 13500000000     500000000 passed, 0 failed in 1959.0s (255236/s)
+  seed 14000000000     500000000 passed, 0 failed in 1946.9s (256821/s)
+  seed 14500000000     500000000 passed, 0 failed in 1923.1s (260003/s)
+  seed 15000000000     500000000 passed, 0 failed in 1944.1s (257189/s)
+  seed 15500000000     500000000 passed, 0 failed in 1926.7s (259517/s)
+  seed 16000000000     500000000 passed, 0 failed in 1959.8s (255129/s)
+  seed 16500000000     500000000 passed, 0 failed in 1936.6s (258182/s)
+  seed 17000000000     500000000 passed, 0 failed in 1905.6s (262380/s)
+  seed 17500000000     500000000 passed, 0 failed in 1915.9s (260976/s)
+  seed 18000000000     500000000 passed, 0 failed in 1897.4s (263515/s)
+  seed 18500000000     500000000 passed, 0 failed in 1938.2s (257974/s)
+  seed 19000000000     500000000 passed, 0 failed in 1981.5s (252329/s)
+  seed 19500000000     500000000 passed, 0 failed in 1969.8s (253827/s)
+  seed 20000000000     500000000 passed, 0 failed in 1987.5s (251576/s)
+  seed 20500000000     500000000 passed, 0 failed in 1960.5s (255038/s)
+
+==============================================================================
+Full concatenated chunk logs follow.
+==============================================================================
+
+########## yaml-21b-run/chunk-00-seed11000000000-n500000000.log ##########
+warning: unused import: `encode_generic`
+ --> tests/fuzz_parallel.rs:1:27
+  |
+1 | use gcf::{decode_generic, encode_generic, encode_generic_with_options, GenericOptions};
+  |                           ^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `gcf` (test "fuzz_parallel") generated 1 warning (run `cargo fix --test "fuzz_parallel" -p gcf` to apply 1 suggestion)
+    Finished `release` profile [optimized] target(s) in 0.03s
+     Running tests/fuzz_parallel.rs (target/release/deps/fuzz_parallel-991fe46d35f734b0)
+
+running 1 test
+test yaml_10b_2 has been running for over 60 seconds
+  YAML: 50000000/500000000 (10.0%) 259479/s ETA 29m     YAML: 100000000/500000000 (20.0%) 259157/s ETA 26m     YAML: 150000000/500000000 (30.0%) 258258/s ETA 23m     YAML: 200000000/500000000 (40.0%) 257474/s ETA 19m     YAML: 250000000/500000000 (50.0%) 259267/s ETA 16m     YAML: 300000000/500000000 (60.0%) 260356/s ETA 13m     YAML: 350000000/500000000 (70.0%) 260887/s ETA 10m     YAML: 400000000/500000000 (80.0%) 260559/s ETA 6m     YAML: 450000000/500000000 (90.0%) 260334/s ETA 3m     YAML: 500000000/500000000 (100.0%) 259877/s ETA 0m     YAML: 500000000 passed, 0 failed in 1924.0s (259877/s)                    
+test yaml_10b_2 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 1923.99s
+
+
+########## yaml-21b-run/chunk-01-seed11500000000-n500000000.log ##########
+warning: unused import: `encode_generic`
+ --> tests/fuzz_parallel.rs:1:27
+  |
+1 | use gcf::{decode_generic, encode_generic, encode_generic_with_options, GenericOptions};
+  |                           ^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `gcf` (test "fuzz_parallel") generated 1 warning (run `cargo fix --test "fuzz_parallel" -p gcf` to apply 1 suggestion)
+    Finished `release` profile [optimized] target(s) in 0.07s
+     Running tests/fuzz_parallel.rs (target/release/deps/fuzz_parallel-991fe46d35f734b0)
+
+running 1 test
+test yaml_10b_2 has been running for over 60 seconds
+  YAML: 50000000/500000000 (10.0%) 249894/s ETA 30m     YAML: 100000000/500000000 (20.0%) 254139/s ETA 26m     YAML: 150000000/500000000 (30.0%) 252780/s ETA 23m     YAML: 200000000/500000000 (40.0%) 252732/s ETA 20m     YAML: 250000000/500000000 (50.0%) 254100/s ETA 16m     YAML: 300000000/500000000 (60.0%) 255097/s ETA 13m     YAML: 350000000/500000000 (70.0%) 255900/s ETA 10m     YAML: 400000000/500000000 (80.0%) 256218/s ETA 7m     YAML: 450000000/500000000 (90.0%) 256372/s ETA 3m     YAML: 500000000/500000000 (100.0%) 256230/s ETA 0m     YAML: 500000000 passed, 0 failed in 1951.4s (256230/s)                    
+test yaml_10b_2 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 1951.37s
+
+
+########## yaml-21b-run/chunk-02-seed12000000000-n500000000.log ##########
+warning: unused import: `encode_generic`
+ --> tests/fuzz_parallel.rs:1:27
+  |
+1 | use gcf::{decode_generic, encode_generic, encode_generic_with_options, GenericOptions};
+  |                           ^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `gcf` (test "fuzz_parallel") generated 1 warning (run `cargo fix --test "fuzz_parallel" -p gcf` to apply 1 suggestion)
+    Finished `release` profile [optimized] target(s) in 0.09s
+     Running tests/fuzz_parallel.rs (target/release/deps/fuzz_parallel-991fe46d35f734b0)
+
+running 1 test
+test yaml_10b_2 has been running for over 60 seconds
+  YAML: 50000000/500000000 (10.0%) 261016/s ETA 29m     YAML: 100000000/500000000 (20.0%) 261854/s ETA 25m     YAML: 150000000/500000000 (30.0%) 261687/s ETA 22m     YAML: 200000000/500000000 (40.0%) 261028/s ETA 19m     YAML: 250000000/500000000 (50.0%) 260891/s ETA 16m     YAML: 300000000/500000000 (60.0%) 261203/s ETA 13m     YAML: 350000000/500000000 (70.0%) 260984/s ETA 10m     YAML: 400000000/500000000 (80.0%) 261191/s ETA 6m     YAML: 450000000/500000000 (90.0%) 261292/s ETA 3m     YAML: 500000000/500000000 (100.0%) 261542/s ETA 0m     YAML: 500000000 passed, 0 failed in 1911.7s (261541/s)                    
+test yaml_10b_2 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 1911.74s
+
+
+########## yaml-21b-run/chunk-03-seed12500000000-n500000000.log ##########
+warning: unused import: `encode_generic`
+ --> tests/fuzz_parallel.rs:1:27
+  |
+1 | use gcf::{decode_generic, encode_generic, encode_generic_with_options, GenericOptions};
+  |                           ^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `gcf` (test "fuzz_parallel") generated 1 warning (run `cargo fix --test "fuzz_parallel" -p gcf` to apply 1 suggestion)
+    Finished `release` profile [optimized] target(s) in 0.08s
+     Running tests/fuzz_parallel.rs (target/release/deps/fuzz_parallel-991fe46d35f734b0)
+
+running 1 test
+test yaml_10b_2 has been running for over 60 seconds
+  YAML: 50000000/500000000 (10.0%) 255234/s ETA 29m     YAML: 100000000/500000000 (20.0%) 255321/s ETA 26m     YAML: 150000000/500000000 (30.0%) 256701/s ETA 23m     YAML: 200000000/500000000 (40.0%) 257724/s ETA 19m     YAML: 250000000/500000000 (50.0%) 258324/s ETA 16m     YAML: 300000000/500000000 (60.0%) 258973/s ETA 13m     YAML: 350000000/500000000 (70.0%) 259413/s ETA 10m     YAML: 400000000/500000000 (80.0%) 258789/s ETA 6m     YAML: 450000000/500000000 (90.0%) 258274/s ETA 3m     YAML: 500000000/500000000 (100.0%) 258389/s ETA 0m     YAML: 500000000 passed, 0 failed in 1935.1s (258388/s)                    
+test yaml_10b_2 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 1935.07s
+
+
+########## yaml-21b-run/chunk-04-seed13000000000-n500000000.log ##########
+warning: unused import: `encode_generic`
+ --> tests/fuzz_parallel.rs:1:27
+  |
+1 | use gcf::{decode_generic, encode_generic, encode_generic_with_options, GenericOptions};
+  |                           ^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `gcf` (test "fuzz_parallel") generated 1 warning (run `cargo fix --test "fuzz_parallel" -p gcf` to apply 1 suggestion)
+    Finished `release` profile [optimized] target(s) in 0.10s
+     Running tests/fuzz_parallel.rs (target/release/deps/fuzz_parallel-991fe46d35f734b0)
+
+running 1 test
+test yaml_10b_2 has been running for over 60 seconds
+  YAML: 50000000/500000000 (10.0%) 262433/s ETA 29m     YAML: 100000000/500000000 (20.0%) 263116/s ETA 25m     YAML: 150000000/500000000 (30.0%) 262445/s ETA 22m     YAML: 200000000/500000000 (40.0%) 262319/s ETA 19m     YAML: 250000000/500000000 (50.0%) 262483/s ETA 16m     YAML: 300000000/500000000 (60.0%) 261815/s ETA 13m     YAML: 350000000/500000000 (70.0%) 261449/s ETA 10m     YAML: 400000000/500000000 (80.0%) 261014/s ETA 6m     YAML: 450000000/500000000 (90.0%) 260699/s ETA 3m     YAML: 500000000/500000000 (100.0%) 260468/s ETA 0m     YAML: 500000000 passed, 0 failed in 1919.6s (260467/s)                    
+test yaml_10b_2 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 1919.63s
+
+
+########## yaml-21b-run/chunk-05-seed13500000000-n500000000.log ##########
+warning: unused import: `encode_generic`
+ --> tests/fuzz_parallel.rs:1:27
+  |
+1 | use gcf::{decode_generic, encode_generic, encode_generic_with_options, GenericOptions};
+  |                           ^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `gcf` (test "fuzz_parallel") generated 1 warning (run `cargo fix --test "fuzz_parallel" -p gcf` to apply 1 suggestion)
+    Finished `release` profile [optimized] target(s) in 0.08s
+     Running tests/fuzz_parallel.rs (target/release/deps/fuzz_parallel-991fe46d35f734b0)
+
+running 1 test
+test yaml_10b_2 has been running for over 60 seconds
+  YAML: 50000000/500000000 (10.0%) 256247/s ETA 29m     YAML: 100000000/500000000 (20.0%) 256048/s ETA 26m     YAML: 150000000/500000000 (30.0%) 255537/s ETA 23m     YAML: 200000000/500000000 (40.0%) 255299/s ETA 20m     YAML: 250000000/500000000 (50.0%) 255336/s ETA 16m     YAML: 300000000/500000000 (60.0%) 255332/s ETA 13m     YAML: 350000000/500000000 (70.0%) 255373/s ETA 10m     YAML: 400000000/500000000 (80.0%) 255282/s ETA 7m     YAML: 450000000/500000000 (90.0%) 255203/s ETA 3m     YAML: 500000000/500000000 (100.0%) 255237/s ETA 0m     YAML: 500000000 passed, 0 failed in 1959.0s (255236/s)                    
+test yaml_10b_2 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 1958.97s
+
+
+########## yaml-21b-run/chunk-06-seed14000000000-n500000000.log ##########
+warning: unused import: `encode_generic`
+ --> tests/fuzz_parallel.rs:1:27
+  |
+1 | use gcf::{decode_generic, encode_generic, encode_generic_with_options, GenericOptions};
+  |                           ^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `gcf` (test "fuzz_parallel") generated 1 warning (run `cargo fix --test "fuzz_parallel" -p gcf` to apply 1 suggestion)
+    Finished `release` profile [optimized] target(s) in 0.05s
+     Running tests/fuzz_parallel.rs (target/release/deps/fuzz_parallel-991fe46d35f734b0)
+
+running 1 test
+test yaml_10b_2 has been running for over 60 seconds
+  YAML: 50000000/500000000 (10.0%) 256957/s ETA 29m     YAML: 100000000/500000000 (20.0%) 257064/s ETA 26m     YAML: 150000000/500000000 (30.0%) 254042/s ETA 23m     YAML: 200000000/500000000 (40.0%) 255600/s ETA 20m     YAML: 250000000/500000000 (50.0%) 256326/s ETA 16m     YAML: 300000000/500000000 (60.0%) 255070/s ETA 13m     YAML: 350000000/500000000 (70.0%) 254172/s ETA 10m     YAML: 400000000/500000000 (80.0%) 255311/s ETA 7m     YAML: 450000000/500000000 (90.0%) 256309/s ETA 3m     YAML: 500000000/500000000 (100.0%) 256821/s ETA 0m     YAML: 500000000 passed, 0 failed in 1946.9s (256821/s)                    
+test yaml_10b_2 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 1946.88s
+
+
+########## yaml-21b-run/chunk-07-seed14500000000-n500000000.log ##########
+warning: unused import: `encode_generic`
+ --> tests/fuzz_parallel.rs:1:27
+  |
+1 | use gcf::{decode_generic, encode_generic, encode_generic_with_options, GenericOptions};
+  |                           ^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `gcf` (test "fuzz_parallel") generated 1 warning (run `cargo fix --test "fuzz_parallel" -p gcf` to apply 1 suggestion)
+    Finished `release` profile [optimized] target(s) in 0.08s
+     Running tests/fuzz_parallel.rs (target/release/deps/fuzz_parallel-991fe46d35f734b0)
+
+running 1 test
+test yaml_10b_2 has been running for over 60 seconds
+  YAML: 50000000/500000000 (10.0%) 258464/s ETA 29m     YAML: 100000000/500000000 (20.0%) 259070/s ETA 26m     YAML: 150000000/500000000 (30.0%) 259105/s ETA 23m     YAML: 200000000/500000000 (40.0%) 259053/s ETA 19m     YAML: 250000000/500000000 (50.0%) 258967/s ETA 16m     YAML: 300000000/500000000 (60.0%) 259159/s ETA 13m     YAML: 350000000/500000000 (70.0%) 259401/s ETA 10m     YAML: 400000000/500000000 (80.0%) 259808/s ETA 6m     YAML: 450000000/500000000 (90.0%) 260207/s ETA 3m     YAML: 500000000/500000000 (100.0%) 260003/s ETA 0m     YAML: 500000000 passed, 0 failed in 1923.1s (260003/s)                    
+test yaml_10b_2 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 1923.05s
+
+
+########## yaml-21b-run/chunk-08-seed15000000000-n500000000.log ##########
+warning: unused import: `encode_generic`
+ --> tests/fuzz_parallel.rs:1:27
+  |
+1 | use gcf::{decode_generic, encode_generic, encode_generic_with_options, GenericOptions};
+  |                           ^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `gcf` (test "fuzz_parallel") generated 1 warning (run `cargo fix --test "fuzz_parallel" -p gcf` to apply 1 suggestion)
+    Finished `release` profile [optimized] target(s) in 0.10s
+     Running tests/fuzz_parallel.rs (target/release/deps/fuzz_parallel-991fe46d35f734b0)
+
+running 1 test
+test yaml_10b_2 has been running for over 60 seconds
+  YAML: 50000000/500000000 (10.0%) 255848/s ETA 29m     YAML: 100000000/500000000 (20.0%) 256854/s ETA 26m     YAML: 150000000/500000000 (30.0%) 257233/s ETA 23m     YAML: 200000000/500000000 (40.0%) 256913/s ETA 19m     YAML: 250000000/500000000 (50.0%) 256898/s ETA 16m     YAML: 300000000/500000000 (60.0%) 256398/s ETA 13m     YAML: 350000000/500000000 (70.0%) 256863/s ETA 10m     YAML: 400000000/500000000 (80.0%) 257019/s ETA 6m     YAML: 450000000/500000000 (90.0%) 257338/s ETA 3m     YAML: 500000000/500000000 (100.0%) 257189/s ETA 0m     YAML: 500000000 passed, 0 failed in 1944.1s (257189/s)                    
+test yaml_10b_2 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 1944.10s
+
+
+########## yaml-21b-run/chunk-09-seed15500000000-n500000000.log ##########
+warning: unused import: `encode_generic`
+ --> tests/fuzz_parallel.rs:1:27
+  |
+1 | use gcf::{decode_generic, encode_generic, encode_generic_with_options, GenericOptions};
+  |                           ^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `gcf` (test "fuzz_parallel") generated 1 warning (run `cargo fix --test "fuzz_parallel" -p gcf` to apply 1 suggestion)
+    Finished `release` profile [optimized] target(s) in 0.08s
+     Running tests/fuzz_parallel.rs (target/release/deps/fuzz_parallel-991fe46d35f734b0)
+
+running 1 test
+test yaml_10b_2 has been running for over 60 seconds
+  YAML: 50000000/500000000 (10.0%) 260751/s ETA 29m     YAML: 100000000/500000000 (20.0%) 261358/s ETA 26m     YAML: 150000000/500000000 (30.0%) 262394/s ETA 22m     YAML: 200000000/500000000 (40.0%) 259071/s ETA 19m     YAML: 250000000/500000000 (50.0%) 259466/s ETA 16m     YAML: 300000000/500000000 (60.0%) 260125/s ETA 13m     YAML: 350000000/500000000 (70.0%) 260033/s ETA 10m     YAML: 400000000/500000000 (80.0%) 259930/s ETA 6m     YAML: 450000000/500000000 (90.0%) 259684/s ETA 3m     YAML: 500000000/500000000 (100.0%) 259517/s ETA 0m     YAML: 500000000 passed, 0 failed in 1926.7s (259517/s)                    
+test yaml_10b_2 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 1926.65s
+
+
+########## yaml-21b-run/chunk-10-seed16000000000-n500000000.log ##########
+warning: unused import: `encode_generic`
+ --> tests/fuzz_parallel.rs:1:27
+  |
+1 | use gcf::{decode_generic, encode_generic, encode_generic_with_options, GenericOptions};
+  |                           ^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `gcf` (test "fuzz_parallel") generated 1 warning (run `cargo fix --test "fuzz_parallel" -p gcf` to apply 1 suggestion)
+    Finished `release` profile [optimized] target(s) in 0.08s
+     Running tests/fuzz_parallel.rs (target/release/deps/fuzz_parallel-991fe46d35f734b0)
+
+running 1 test
+test yaml_10b_2 has been running for over 60 seconds
+  YAML: 50000000/500000000 (10.0%) 256176/s ETA 29m     YAML: 100000000/500000000 (20.0%) 256075/s ETA 26m     YAML: 150000000/500000000 (30.0%) 255762/s ETA 23m     YAML: 200000000/500000000 (40.0%) 252677/s ETA 20m     YAML: 250000000/500000000 (50.0%) 254688/s ETA 16m     YAML: 300000000/500000000 (60.0%) 256185/s ETA 13m     YAML: 350000000/500000000 (70.0%) 257253/s ETA 10m     YAML: 400000000/500000000 (80.0%) 256789/s ETA 6m     YAML: 450000000/500000000 (90.0%) 255434/s ETA 3m     YAML: 500000000/500000000 (100.0%) 255129/s ETA 0m     YAML: 500000000 passed, 0 failed in 1959.8s (255129/s)                    
+test yaml_10b_2 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 1959.79s
+
+
+########## yaml-21b-run/chunk-11-seed16500000000-n500000000.log ##########
+warning: unused import: `encode_generic`
+ --> tests/fuzz_parallel.rs:1:27
+  |
+1 | use gcf::{decode_generic, encode_generic, encode_generic_with_options, GenericOptions};
+  |                           ^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `gcf` (test "fuzz_parallel") generated 1 warning (run `cargo fix --test "fuzz_parallel" -p gcf` to apply 1 suggestion)
+    Finished `release` profile [optimized] target(s) in 0.09s
+     Running tests/fuzz_parallel.rs (target/release/deps/fuzz_parallel-991fe46d35f734b0)
+
+running 1 test
+test yaml_10b_2 has been running for over 60 seconds
+  YAML: 50000000/500000000 (10.0%) 252444/s ETA 30m     YAML: 100000000/500000000 (20.0%) 254735/s ETA 26m     YAML: 150000000/500000000 (30.0%) 256106/s ETA 23m     YAML: 200000000/500000000 (40.0%) 256889/s ETA 19m     YAML: 250000000/500000000 (50.0%) 257056/s ETA 16m     YAML: 300000000/500000000 (60.0%) 257439/s ETA 13m     YAML: 350000000/500000000 (70.0%) 257942/s ETA 10m     YAML: 400000000/500000000 (80.0%) 257956/s ETA 6m     YAML: 450000000/500000000 (90.0%) 258121/s ETA 3m     YAML: 500000000/500000000 (100.0%) 258182/s ETA 0m     YAML: 500000000 passed, 0 failed in 1936.6s (258182/s)                    
+test yaml_10b_2 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 1936.62s
+
+
+########## yaml-21b-run/chunk-12-seed17000000000-n500000000.log ##########
+warning: unused import: `encode_generic`
+ --> tests/fuzz_parallel.rs:1:27
+  |
+1 | use gcf::{decode_generic, encode_generic, encode_generic_with_options, GenericOptions};
+  |                           ^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `gcf` (test "fuzz_parallel") generated 1 warning (run `cargo fix --test "fuzz_parallel" -p gcf` to apply 1 suggestion)
+    Finished `release` profile [optimized] target(s) in 0.08s
+     Running tests/fuzz_parallel.rs (target/release/deps/fuzz_parallel-991fe46d35f734b0)
+
+running 1 test
+test yaml_10b_2 has been running for over 60 seconds
+  YAML: 50000000/500000000 (10.0%) 264291/s ETA 28m     YAML: 100000000/500000000 (20.0%) 264654/s ETA 25m     YAML: 150000000/500000000 (30.0%) 265287/s ETA 22m     YAML: 200000000/500000000 (40.0%) 264644/s ETA 19m     YAML: 250000000/500000000 (50.0%) 264656/s ETA 16m     YAML: 300000000/500000000 (60.0%) 264333/s ETA 13m     YAML: 350000000/500000000 (70.0%) 264148/s ETA 9m     YAML: 400000000/500000000 (80.0%) 262452/s ETA 6m     YAML: 450000000/500000000 (90.0%) 262595/s ETA 3m     YAML: 500000000/500000000 (100.0%) 262380/s ETA 0m     YAML: 500000000 passed, 0 failed in 1905.6s (262380/s)                    
+test yaml_10b_2 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 1905.63s
+
+
+########## yaml-21b-run/chunk-13-seed17500000000-n500000000.log ##########
+warning: unused import: `encode_generic`
+ --> tests/fuzz_parallel.rs:1:27
+  |
+1 | use gcf::{decode_generic, encode_generic, encode_generic_with_options, GenericOptions};
+  |                           ^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `gcf` (test "fuzz_parallel") generated 1 warning (run `cargo fix --test "fuzz_parallel" -p gcf` to apply 1 suggestion)
+    Finished `release` profile [optimized] target(s) in 0.08s
+     Running tests/fuzz_parallel.rs (target/release/deps/fuzz_parallel-991fe46d35f734b0)
+
+running 1 test
+test yaml_10b_2 has been running for over 60 seconds
+  YAML: 50000000/500000000 (10.0%) 258942/s ETA 29m     YAML: 100000000/500000000 (20.0%) 259658/s ETA 26m     YAML: 150000000/500000000 (30.0%) 258646/s ETA 23m     YAML: 200000000/500000000 (40.0%) 258216/s ETA 19m     YAML: 250000000/500000000 (50.0%) 257943/s ETA 16m     YAML: 300000000/500000000 (60.0%) 257999/s ETA 13m     YAML: 350000000/500000000 (70.0%) 258842/s ETA 10m     YAML: 400000000/500000000 (80.0%) 259766/s ETA 6m     YAML: 450000000/500000000 (90.0%) 260575/s ETA 3m     YAML: 500000000/500000000 (100.0%) 260976/s ETA 0m     YAML: 500000000 passed, 0 failed in 1915.9s (260976/s)                    
+test yaml_10b_2 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 1915.88s
+
+
+########## yaml-21b-run/chunk-14-seed18000000000-n500000000.log ##########
+warning: unused import: `encode_generic`
+ --> tests/fuzz_parallel.rs:1:27
+  |
+1 | use gcf::{decode_generic, encode_generic, encode_generic_with_options, GenericOptions};
+  |                           ^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `gcf` (test "fuzz_parallel") generated 1 warning (run `cargo fix --test "fuzz_parallel" -p gcf` to apply 1 suggestion)
+    Finished `release` profile [optimized] target(s) in 0.08s
+     Running tests/fuzz_parallel.rs (target/release/deps/fuzz_parallel-991fe46d35f734b0)
+
+running 1 test
+test yaml_10b_2 has been running for over 60 seconds
+  YAML: 50000000/500000000 (10.0%) 262456/s ETA 29m     YAML: 100000000/500000000 (20.0%) 262011/s ETA 25m     YAML: 150000000/500000000 (30.0%) 261882/s ETA 22m     YAML: 200000000/500000000 (40.0%) 262845/s ETA 19m     YAML: 250000000/500000000 (50.0%) 262975/s ETA 16m     YAML: 300000000/500000000 (60.0%) 263217/s ETA 13m     YAML: 350000000/500000000 (70.0%) 263798/s ETA 9m     YAML: 400000000/500000000 (80.0%) 262541/s ETA 6m     YAML: 450000000/500000000 (90.0%) 262825/s ETA 3m     YAML: 500000000/500000000 (100.0%) 263515/s ETA 0m     YAML: 500000000 passed, 0 failed in 1897.4s (263515/s)                    
+test yaml_10b_2 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 1897.43s
+
+
+########## yaml-21b-run/chunk-15-seed18500000000-n500000000.log ##########
+warning: unused import: `encode_generic`
+ --> tests/fuzz_parallel.rs:1:27
+  |
+1 | use gcf::{decode_generic, encode_generic, encode_generic_with_options, GenericOptions};
+  |                           ^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `gcf` (test "fuzz_parallel") generated 1 warning (run `cargo fix --test "fuzz_parallel" -p gcf` to apply 1 suggestion)
+    Finished `release` profile [optimized] target(s) in 0.08s
+     Running tests/fuzz_parallel.rs (target/release/deps/fuzz_parallel-991fe46d35f734b0)
+
+running 1 test
+test yaml_10b_2 has been running for over 60 seconds
+  YAML: 50000000/500000000 (10.0%) 260516/s ETA 29m     YAML: 100000000/500000000 (20.0%) 262205/s ETA 25m     YAML: 150000000/500000000 (30.0%) 260464/s ETA 22m     YAML: 200000000/500000000 (40.0%) 259710/s ETA 19m     YAML: 250000000/500000000 (50.0%) 259782/s ETA 16m     YAML: 300000000/500000000 (60.0%) 259302/s ETA 13m     YAML: 350000000/500000000 (70.0%) 258747/s ETA 10m     YAML: 400000000/500000000 (80.0%) 258201/s ETA 6m     YAML: 450000000/500000000 (90.0%) 258059/s ETA 3m     YAML: 500000000/500000000 (100.0%) 257974/s ETA 0m     YAML: 500000000 passed, 0 failed in 1938.2s (257974/s)                    
+test yaml_10b_2 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 1938.18s
+
+
+########## yaml-21b-run/chunk-16-seed19000000000-n500000000.log ##########
+warning: unused import: `encode_generic`
+ --> tests/fuzz_parallel.rs:1:27
+  |
+1 | use gcf::{decode_generic, encode_generic, encode_generic_with_options, GenericOptions};
+  |                           ^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `gcf` (test "fuzz_parallel") generated 1 warning (run `cargo fix --test "fuzz_parallel" -p gcf` to apply 1 suggestion)
+    Finished `release` profile [optimized] target(s) in 0.09s
+     Running tests/fuzz_parallel.rs (target/release/deps/fuzz_parallel-991fe46d35f734b0)
+
+running 1 test
+test yaml_10b_2 has been running for over 60 seconds
+  YAML: 50000000/500000000 (10.0%) 251848/s ETA 30m     YAML: 100000000/500000000 (20.0%) 252669/s ETA 26m     YAML: 150000000/500000000 (30.0%) 253233/s ETA 23m     YAML: 200000000/500000000 (40.0%) 252956/s ETA 20m     YAML: 250000000/500000000 (50.0%) 252887/s ETA 16m     YAML: 300000000/500000000 (60.0%) 252750/s ETA 13m     YAML: 350000000/500000000 (70.0%) 252628/s ETA 10m     YAML: 400000000/500000000 (80.0%) 252520/s ETA 7m     YAML: 450000000/500000000 (90.0%) 252423/s ETA 3m     YAML: 500000000/500000000 (100.0%) 252329/s ETA 0m     YAML: 500000000 passed, 0 failed in 1981.5s (252329/s)                    
+test yaml_10b_2 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 1981.54s
+
+
+########## yaml-21b-run/chunk-17-seed19500000000-n500000000.log ##########
+warning: unused import: `encode_generic`
+ --> tests/fuzz_parallel.rs:1:27
+  |
+1 | use gcf::{decode_generic, encode_generic, encode_generic_with_options, GenericOptions};
+  |                           ^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `gcf` (test "fuzz_parallel") generated 1 warning (run `cargo fix --test "fuzz_parallel" -p gcf` to apply 1 suggestion)
+    Finished `release` profile [optimized] target(s) in 0.09s
+     Running tests/fuzz_parallel.rs (target/release/deps/fuzz_parallel-991fe46d35f734b0)
+
+running 1 test
+test yaml_10b_2 has been running for over 60 seconds
+  YAML: 50000000/500000000 (10.0%) 253707/s ETA 30m     YAML: 100000000/500000000 (20.0%) 253810/s ETA 26m     YAML: 150000000/500000000 (30.0%) 253535/s ETA 23m     YAML: 200000000/500000000 (40.0%) 253577/s ETA 20m     YAML: 250000000/500000000 (50.0%) 253615/s ETA 16m     YAML: 300000000/500000000 (60.0%) 253536/s ETA 13m     YAML: 350000000/500000000 (70.0%) 253619/s ETA 10m     YAML: 400000000/500000000 (80.0%) 253771/s ETA 7m     YAML: 450000000/500000000 (90.0%) 253830/s ETA 3m     YAML: 500000000/500000000 (100.0%) 253827/s ETA 0m     YAML: 500000000 passed, 0 failed in 1969.8s (253827/s)                    
+test yaml_10b_2 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 1969.84s
+
+
+########## yaml-21b-run/chunk-18-seed20000000000-n500000000.log ##########
+warning: unused import: `encode_generic`
+ --> tests/fuzz_parallel.rs:1:27
+  |
+1 | use gcf::{decode_generic, encode_generic, encode_generic_with_options, GenericOptions};
+  |                           ^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `gcf` (test "fuzz_parallel") generated 1 warning (run `cargo fix --test "fuzz_parallel" -p gcf` to apply 1 suggestion)
+    Finished `release` profile [optimized] target(s) in 0.13s
+     Running tests/fuzz_parallel.rs (target/release/deps/fuzz_parallel-991fe46d35f734b0)
+
+running 1 test
+test yaml_10b_2 has been running for over 60 seconds
+  YAML: 50000000/500000000 (10.0%) 251392/s ETA 30m     YAML: 100000000/500000000 (20.0%) 251129/s ETA 27m     YAML: 150000000/500000000 (30.0%) 251547/s ETA 23m     YAML: 200000000/500000000 (40.0%) 251651/s ETA 20m     YAML: 250000000/500000000 (50.0%) 251808/s ETA 17m     YAML: 300000000/500000000 (60.0%) 251775/s ETA 13m     YAML: 350000000/500000000 (70.0%) 251797/s ETA 10m     YAML: 400000000/500000000 (80.0%) 251802/s ETA 7m     YAML: 450000000/500000000 (90.0%) 251701/s ETA 3m     YAML: 500000000/500000000 (100.0%) 251577/s ETA 0m     YAML: 500000000 passed, 0 failed in 1987.5s (251576/s)                    
+test yaml_10b_2 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 1987.47s
+
+
+########## yaml-21b-run/chunk-19-seed20500000000-n500000000.log ##########
+warning: unused import: `encode_generic`
+ --> tests/fuzz_parallel.rs:1:27
+  |
+1 | use gcf::{decode_generic, encode_generic, encode_generic_with_options, GenericOptions};
+  |                           ^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `gcf` (test "fuzz_parallel") generated 1 warning (run `cargo fix --test "fuzz_parallel" -p gcf` to apply 1 suggestion)
+    Finished `release` profile [optimized] target(s) in 0.08s
+     Running tests/fuzz_parallel.rs (target/release/deps/fuzz_parallel-991fe46d35f734b0)
+
+running 1 test
+test yaml_10b_2 has been running for over 60 seconds
+  YAML: 50000000/500000000 (10.0%) 254748/s ETA 29m     YAML: 100000000/500000000 (20.0%) 254684/s ETA 26m     YAML: 150000000/500000000 (30.0%) 254918/s ETA 23m     YAML: 200000000/500000000 (40.0%) 255022/s ETA 20m     YAML: 250000000/500000000 (50.0%) 255129/s ETA 16m     YAML: 300000000/500000000 (60.0%) 255126/s ETA 13m     YAML: 350000000/500000000 (70.0%) 255076/s ETA 10m     YAML: 400000000/500000000 (80.0%) 255031/s ETA 7m     YAML: 450000000/500000000 (90.0%) 255060/s ETA 3m     YAML: 500000000/500000000 (100.0%) 255038/s ETA 0m     YAML: 500000000 passed, 0 failed in 1960.5s (255038/s)                    
+test yaml_10b_2 ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 1960.49s
+

@@ -124,7 +124,7 @@ All fuzz run logs are archived in [eval/results/multiformat/](https://github.com
 
 **YAML (21B total):**
 - `rust-yaml10B-parallel-2026-06-14.log` (10B, 258K/s, parallel, 10.7 hours)
-- `rust-yaml10B-parallel-2026-06-15.log` (10B, 258K/s, parallel, 10.7 hours)
+- `rust-yaml10B-parallel-2026-07-13.log` (10B, 258K/s, parallel, 10.78 hours)
 - `rust-yaml665M-2026-06-14.log` (665M, seed offset 334M-999M)
 - `rust-msgpack334M-yaml334M-csv334M-2026-06-13.log` (334M YAML portion)
 
