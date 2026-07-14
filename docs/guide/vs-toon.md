@@ -27,7 +27,7 @@ GCF has two profiles. TOON has one. The comparison plays out on both dimensions,
 | **Streaming encode** | **Yes (true zero-buffering, O(1) memory, `[?]` + trailer)** | **Output-side only (requires full value in memory)** |
 | Key folding (dotted paths) | No | Yes |
 | LLM comprehension (generic, 500 orders) | **100%** on every frontier model | 92.3% (fails on GPT-5.5, Gemini Flash) |
-| LLM comprehension (graph, 500 symbols) | **91.2%** avg (24 runs, 10 models) | 68.8% avg |
+| LLM comprehension (graph, 500 symbols) | **91.2%** avg (25 runs, 10 models) | 68.8% avg |
 | **LLM generation (output tokens)** | **75% fewer than JSON** | **40% fewer than JSON** |
 | Human-readable | Dense, agent-optimized | YAML-like, human-friendly |
 | Zero dependencies | Yes | Yes |
@@ -201,7 +201,7 @@ GCF's [comprehension eval](https://github.com/blackwell-systems/gcf-go/tree/main
 
 GCF: 100% on every frontier model. TOON fails on GPT-5.5 (count_premium_customers). JSON fails on Gemini 2.5 Flash (3 questions wrong).
 
-**Graph profile (500 symbols + 200 edges, 10 models, 24 runs):**
+**Graph profile (500 symbols + 200 edges, 10 models, 25 runs):**
 
 | Format | Avg accuracy | Tokens |
 |--------|-------------|--------|
@@ -209,7 +209,7 @@ GCF: 100% on every frontier model. TOON fails on GPT-5.5 (count_premium_customer
 | TOON | 68.8% | 16,378 |
 | JSON | 54.1% | 53,341 |
 
-24 runs. GCF wins 23, ties 1, loses 0. The difference between formats is invisible at 100 rows and undeniable at 500.
+25 runs. GCF wins 24, ties 1, loses 0. The difference between formats is invisible at 100 rows and undeniable at 500.
 
 **Scale test (1000 orders):** JSON doesn't fit in 200K context. TOON doesn't fit on Sonnet. GCF (47K tokens) is the only format that works.
 
@@ -274,7 +274,7 @@ TOON's disadvantages are not a list of unrelated shortcomings. They are the down
 | Axis | Consequence of implicit delimiters | Measured |
 |------|-----------------------------------|----------|
 | **Tokenization** | tab merges with adjacent content, dissolving boundaries into single tokens | 32.91% merge rate, 1,238 mergeable words (worst of any common separator; GCF pipe: 0.47%) |
-| **Comprehension** | the model cannot filter a flat 500-row table by column value | 68.8% vs GCF 91.2% across 24 runs |
+| **Comprehension** | the model cannot filter a flat 500-row table by column value | 68.8% vs GCF 91.2% across 25 runs |
 | **Generation** | flat columns encode categories as integers; models write labels and the decoder rejects | TOON's own decoder rejects LLM output on 7 of 9 models |
 | **Token efficiency** | flat rows repeat structure; edges carry no local IDs | GCF wins 15 of 16 datasets, 29% fewer tokens overall |
 | **Security** | no explicit boundary between untrusted content and schema | "Delimiter Dissolution": 90% injection leak on Qwen (JSON 0%) |

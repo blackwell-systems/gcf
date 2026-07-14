@@ -19,7 +19,7 @@ No model has ever been trained on GCF. Every model reads it better than the form
 Five benchmark suites, four providers (Anthropic, OpenAI, Google, Mistral), zero training:
 
 1. **[Generic comprehension](#generic-profile-standard-workloads)**: 500-order nested data, 27 runs, 11 models. GCF 100% on every frontier model.
-2. **[Graph comprehension](#graph-profile-under-structural-stress)**: 500-symbol code graphs, 24 runs, 10 models. GCF 91.2% where JSON drops to 54.1%.
+2. **[Graph comprehension](#graph-profile-under-structural-stress)**: 500-symbol code graphs, 25 runs, 10 models. GCF 91.2% where JSON drops to 54.1%.
 3. **[Scale test](#scale-test-1000-orders)**: At 1000 records, JSON doesn't fit. GCF is the only format that works on 200K context models.
 4. **[Token efficiency](#token-efficiency-16-datasets)**: 16 real-world datasets. GCF wins 15/16 vs TOON, 29% fewer overall.
 5. **[Generation](#generation-can-llms-write-it)**: Every frontier model produces valid GCF. TOON's decoder rejects output from 7/9 models.
@@ -63,18 +63,18 @@ This is what most MCP tool responses look like: arrays of objects with nested me
 
 | Model | Runs | GCF avg | TOON avg | JSON avg |
 |-------|------|---------|----------|----------|
-| Claude Opus 4.6 | 2 | **96.2%** | 84.6% | 73.1% |
+| Claude Opus 4.6 | 2 | **96.2%** | 88.5% | 73.1% |
 | Claude Sonnet 4.6 | 2 | **100%** | 73.1% | 53.8% |
 | Claude Haiku 4.5 | 2 | **96.2%** | 69.2% | 57.7% |
 | GPT-5.5 | 5 | **84.1%** | 67.7% | 45.8% |
 | GPT-5.4 | 4 | **78.0%** | 56.0% | 44.1% |
-| GPT-5.4-mini | 2 | **71.8%** | 64.1% | 54.2% |
-| Gemini 2.5 Pro | 1 | **100%** | 76.9% | 58.3% |
+| GPT-5.4-mini | 2 | **71.8%** | 64.1% | 54.1% |
+| Gemini 2.5 Pro | 2 | **100%** | 78.5% | 65.5% |
 | Gemini 3.1 Pro | 1 | **100%** | 76.9% | 46.2% |
-| Gemini 3.5 Flash | 2 | **100%** | 53.9% | 46.2% |
+| Gemini 3.5 Flash | 1 | **100%** | 61.5% | 46.2% |
 | Gemini 2.5 Flash | 4 | **85.5%** | 52.5% | 54.3% |
 
-**24 runs, 10 models, 3 providers. GCF wins 23, ties 1, loses 0.**
+**25 runs, 10 models, 3 providers. GCF wins 24, ties 1, loses 0.**
 
 When an agent receives data in JSON at this scale, it gets the wrong answer 46% of the time. With TOON, 32% of the time. With GCF, 10%.
 

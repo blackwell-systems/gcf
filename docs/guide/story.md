@@ -46,7 +46,7 @@ JSON is a tree of nested braces, repeated keys, and structural tokens that carry
 
 GCF aligned with how LLMs naturally process information. Markdown-style section headers (`## targets [167]`) answered counting questions directly. Positional fields eliminated key repetition. Local IDs turned relationship queries from "scan every edge and match string identifiers" to "look up `@0`."
 
-The result: on 500-symbol code graphs, GCF scored 91.2% comprehension across 10 models and 24 runs. JSON scored 54.1%. TOON (the leading alternative) scored 68.8%. Four models hit 100% with GCF. None hit 100% with JSON or TOON.
+The result: on 500-symbol code graphs, GCF scored 91.2% comprehension across 10 models and 25 runs. JSON scored 54.1%. TOON (the leading alternative) scored 68.8%. Four models hit 100% with GCF. None hit 100% with JSON or TOON.
 
 GCF was not optimized for human readability. It was optimized for the reader that matters. The format that looks clean to human eyes (JSON with its aligned braces and pretty-printed keys) is the format that breaks the model's ability to count, filter, and extract. The format that looks dense and "messy" to humans is the one that scores 100% comprehension on every frontier model tested.
 

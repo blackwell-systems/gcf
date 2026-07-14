@@ -28,7 +28,7 @@ The same data in GCF:
 ... 497 more, each one line, no repeated field names ...
 ```
 
-No noise. Every token is content. On code graph data, GCF averages 91.2% across 24 runs and 10 models (vs TOON 68.8%, JSON 54.1%). On nested order data (27 runs, 11 models, 4 providers), GCF achieves 100% on every frontier model (Opus, Sonnet, Haiku, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash).
+No noise. Every token is content. On code graph data, GCF averages 91.2% across 25 runs and 10 models (vs TOON 68.8%, JSON 54.1%). On nested order data (27 runs, 11 models, 4 providers), GCF achieves 100% on every frontier model (Opus, Sonnet, Haiku, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash).
 
 The format is optimized for the actual consumer. Every character carries meaning. No decoration, no repeated field names, no structural tokens that exist only for human scanners. The result is a format that agents understand perfectly and costs a fraction of the "readable" alternative. The [tokenizer analysis](/guide/tokenizer-analysis) explains the mechanism: JSON's grammar symbols merge with field names at the vocabulary level, hiding structural boundaries from the model and permanently constraining its structural attention. GCF's grammar was reverse-engineered from that attention-level analysis; three companion papers show clean delimiter boundaries produce 3-738x lower perplexity on structured data.
 
@@ -76,7 +76,7 @@ The [comprehension eval](https://github.com/blackwell-systems/gcf-go/tree/main/e
 | TOON | 68.8% | 16,378 |
 | JSON | 54.1% | 53,341 |
 
-**24 runs, 10 models, 3 providers. GCF wins 23, ties 1, loses 0.** JSON fails on counting tasks because field-name repetition overwhelms attention. TOON fails on distance grouping (no section headers). GCF answers structurally. See the [full benchmarks](/guide/benchmarks) for per-model results.
+**25 runs, 10 models, 3 providers. GCF wins 24, ties 1, loses 0.** JSON fails on counting tasks because field-name repetition overwhelms attention. TOON fails on distance grouping (no section headers). GCF answers structurally. See the [full benchmarks](/guide/benchmarks) for per-model results.
 
 The model was never told what `@0`, `##`, or `<` mean. It figured it out from the structure. The format is regular enough (positional fields, consistent prefixes, section headers) that pattern recognition handles it.
 

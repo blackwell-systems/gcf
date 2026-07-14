@@ -109,10 +109,11 @@ Dataset 15 is the exact payload used in the comprehension eval above. The format
 | Gemini 2.5 Flash | 3 | **90.0%** | 55.6% | 60.0% | ✓ |
 | Gemini 3.5 Flash | 1 | **100%** | 61.5% | 46.2% | ✓ |
 | Gemini 2.5 Pro | 1 | **100%** | 76.9% | 58.3% | ✓ |
+| Gemini 2.5 Pro | 2 | **100%** | 80.0% | 72.7% | ✓ |
 | Gemini 3.1 Pro | 1 | **100%** | 76.9% | 46.2% | ✓ |
 | Gemini 2.5 Flash | 4 | **100%** | 46.2% | 46.2% | ✓ |
 
-**24 runs, 10 models, 3 providers. GCF wins 23, ties 1, loses 0. Four models achieve 100%: Sonnet, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash.**
+**25 runs, 10 models, 3 providers. GCF wins 24, ties 1, loses 0. Four models achieve 100%: Sonnet, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash.**
 
 ### Score variance
 
@@ -136,7 +137,7 @@ GCF occupies the top-left quadrant: fewest tokens, highest accuracy. JSON occupi
 
 ## Failure Taxonomy
 
-Every wrong answer across all 24 runs was classified by failure type. The pattern is consistent: GCF fails differently than TOON and JSON. GCF errors are small (off by 1-2) because the model understood the structure but misread a number. TOON and JSON errors are large (off by 50-140) because the model couldn't extract the answer at all and guessed.
+Every wrong answer across all the graph runs was classified by failure type. The pattern is consistent: GCF fails differently than TOON and JSON. GCF errors are small (off by 1-2) because the model understood the structure but misread a number. TOON and JSON errors are large (off by 50-140) because the model couldn't extract the answer at all and guessed.
 
 ![Error Magnitude](/charts/error-magnitude.png)
 
@@ -144,7 +145,7 @@ GCF median error: **4**. TOON median error: **53**. JSON median error: **56**. G
 
 ### GCF failures: precision errors
 
-GCF fails on precision (off by 1-7). The structure is understood; the count is slightly misread. 36 total failures across 24 runs.
+GCF fails on precision (off by 1-7). The structure is understood; the count is slightly misread. 36 total failures across the graph runs.
 
 | Type | Count | Models | Cause |
 |------|-------|--------|-------|
@@ -156,7 +157,7 @@ GCF fails on precision (off by 1-7). The structure is understood; the count is s
 
 ### TOON failures: comprehension errors
 
-TOON fails on comprehension (wrong by 50-140). The model cannot filter a flat list by column value at scale. 94 total failures across 24 runs.
+TOON fails on comprehension (wrong by 50-140). The model cannot filter a flat list by column value at scale. 94 total failures across the graph runs.
 
 | Type | Count | Models | Cause |
 |------|-------|--------|-------|
@@ -169,7 +170,7 @@ TOON fails on comprehension (wrong by 50-140). The model cannot filter a flat li
 
 ### JSON failures: structural overwhelm
 
-JSON fails on structure (empty responses, massive undercounts, chain-of-thought enumeration). The format itself prevents comprehension at scale. 131 total failures across 24 runs.
+JSON fails on structure (empty responses, massive undercounts, chain-of-thought enumeration). The format itself prevents comprehension at scale. 131 total failures across the graph runs.
 
 | Type | Count | Models | Cause |
 |------|-------|--------|-------|

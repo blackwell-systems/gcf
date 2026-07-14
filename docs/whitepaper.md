@@ -22,7 +22,7 @@ We evaluated GCF across 2,500+ LLM evaluations spanning 11 models and 4 provider
 
 **Comprehension (generic profile):** 27 runs across 11 models, 500-order nested data. GCF achieves **100%** on every frontier model (Opus, Sonnet, Haiku, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash). TOON is the weakest format.
 
-**Comprehension (graph profile):** 24 runs across 10 models, 500 symbols with 200 edges. GCF averages **91.2%** accuracy where TOON averages 68.8% and JSON averages 54.1%. GCF wins **23 of 24 runs** (1 tie, 0 losses).
+**Comprehension (graph profile):** 25 runs across 10 models, 500 symbols with 200 edges. GCF averages **91.2%** accuracy where TOON averages 68.8% and JSON averages 54.1%. GCF wins **24 of 25 runs** (1 tie, 0 losses).
 
 **Generation:** 28 runs across 9 models. GCF achieves **5/5 validity on every frontier model**. TOON's official decoder rejects LLM-generated output on **7 of 9 models** due to a structural design flaw in flat tabular encoding. GCF output is **63% smaller** than JSON and **33% smaller** than TOON.
 
@@ -559,22 +559,22 @@ Frontier models (Opus, Sonnet, Haiku, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, G
 
 ### 6.1b Graph Profile: Under Structural Stress
 
-24 runs across 10 models. 500 symbols, 200 edges, 13 structured extraction questions with deterministic ground truth (no LLM judge). Each run generates a fresh random payload. Zero format instructions in the prompt.
+25 runs across 10 models. 500 symbols, 200 edges, 13 structured extraction questions with deterministic ground truth (no LLM judge). Each run generates a fresh random payload. Zero format instructions in the prompt.
 
 | Model | Runs | GCF avg | TOON avg | JSON avg |
 |-------|------|---------|----------|----------|
-| Claude Opus 4.6 | 2 | **96.2%** | 84.6% | 73.1% |
+| Claude Opus 4.6 | 2 | **96.2%** | 88.5% | 73.1% |
 | Claude Sonnet 4.6 | 2 | **100%** | 73.1% | 53.8% |
 | Claude Haiku 4.5 | 2 | **96.2%** | 69.2% | 57.7% |
 | GPT-5.5 | 5 | **84.1%** | 67.7% | 45.8% |
 | GPT-5.4 | 4 | **78.0%** | 56.0% | 44.1% |
-| GPT-5.4-mini | 2 | **71.8%** | 64.1% | 54.2% |
-| Gemini 2.5 Pro | 1 | **100%** | 76.9% | 58.3% |
+| GPT-5.4-mini | 2 | **71.8%** | 64.1% | 54.1% |
+| Gemini 2.5 Pro | 2 | **100%** | 78.5% | 65.5% |
 | Gemini 3.1 Pro | 1 | **100%** | 76.9% | 46.2% |
-| Gemini 3.5 Flash | 2 | **100%** | 53.9% | 46.2% |
+| Gemini 3.5 Flash | 1 | **100%** | 61.5% | 46.2% |
 | Gemini 2.5 Flash | 4 | **85.5%** | 52.5% | 54.3% |
 
-**GCF averages 91.2%, wins 23, ties 1, loses 0.** Four models achieve 100%.
+**GCF averages 91.2%, wins 24, ties 1, loses 0.** Four models achieve 100%.
 
 ![Comprehension Accuracy by Model](/charts/accuracy-by-model.png)
 
@@ -584,11 +584,11 @@ Frontier models (Opus, Sonnet, Haiku, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, G
 
 GCF, TOON, and JSON produce qualitatively different failure modes that map directly to their delimiter merge characteristics. The vocabulary merges documented in Section 1.2 are the measurable entry point, but the underlying damage is in the model's weights: billions of training examples with merged boundaries permanently shape every attention head's structural capacity (see Section 1.2). Controlled experiments confirm this is causal: models trained with merge barriers develop 50-161 delimiter-specialized attention heads and achieve 3-738x lower structured data perplexity. Every head in a standard BPE model is structurally stranded by delimiter merging, not just heads near specific merged tokens. See "Tokenizer-Attention Coupling" [DOI: 10.5281/zenodo.20925910](https://doi.org/10.5281/zenodo.20925910) for the full analysis.
 
-**GCF fails on precision** (median error: 4). Off-by-1-2 header misreads (8 occurrences), deterministic column scan miscounts on GPT-5.4 (11), field confusion (2), miscellaneous (5), and context overwhelm empty responses on GPT-5.5 (10). The format structure is understood; the count is slightly misread. 36 total failures across 24 runs. GCF's pipe delimiter has a 0.47% merge rate across 43 tokenizers, meaning the model always sees clean structural boundaries.
+**GCF fails on precision** (median error: 4). Off-by-1-2 header misreads (8 occurrences), deterministic column scan miscounts on GPT-5.4 (11), field confusion (2), miscellaneous (5), and context overwhelm empty responses on GPT-5.5 (10). The format structure is understood; the count is slightly misread. 36 total failures across the graph runs. GCF's pipe delimiter has a 0.47% merge rate across 43 tokenizers, meaning the model always sees clean structural boundaries.
 
-**TOON fails on comprehension** (median error: 53). Distance grouping failures across all models (45 occurrences), column scan miscounts (10), attention decay on the last row (7), calls edge miscounts (10), symbol count wrong (2), and context overwhelm (20). The model cannot filter a flat 500-row table by column value. 94 total failures across 24 runs. TOON's tab delimiter has a 32.91% merge rate and 1,238 mergeable words in tokenizer vocabularies, the worst of any common separator character.
+**TOON fails on comprehension** (median error: 53). Distance grouping failures across all models (45 occurrences), column scan miscounts (10), attention decay on the last row (7), calls edge miscounts (10), symbol count wrong (2), and context overwhelm (20). The model cannot filter a flat 500-row table by column value. 94 total failures across the graph runs. TOON's tab delimiter has a 32.91% merge rate and 1,238 mergeable words in tokenizer vocabularies, the worst of any common separator character.
 
-**JSON fails on structural overwhelm** (median error: 56). Empty string responses where the model produces nothing (33), massive undercounts (14), distance filter failures (44), column scan miscounts (37), and attention decay (3). At 53,000 tokens of repeated field names, the format itself prevents comprehension. JSON's grammar attention collapses from 30% to 8.6% at scale as the model stops attending to structural tokens. 131 total failures across 24 runs.
+**JSON fails on structural overwhelm** (median error: 56). Empty string responses where the model produces nothing (33), massive undercounts (14), distance filter failures (44), column scan miscounts (37), and attention decay (3). At 53,000 tokens of repeated field names, the format itself prevents comprehension. JSON's grammar attention collapses from 30% to 8.6% at scale as the model stops attending to structural tokens. 131 total failures across the graph runs.
 
 On two separate runs, Claude Opus responded to a JSON counting question by manually enumerating symbols one by one (143 lines on run 1, 119 on run 2), burning output tokens on a chain-of-thought enumeration and still getting the wrong answer. GCF answers the same question from a 3-character header: `[167]`.
 
