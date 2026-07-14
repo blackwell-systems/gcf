@@ -187,9 +187,13 @@ For small topology changes (1-5 devices), delta saves 86-95% versus a full re-en
 
 Delta saves tokens by never re-sending unchanged data. The obvious question: after dozens of deltas, does the model still track the current state, or does it drift? Measured, it holds.
 
-![Generic delta comprehension through 50 turns](/charts/generic-delta-depth-curve.png)
+A 50-turn stress test (a 50-row table, 5% churn per turn, six per-record state-tracking question types) found per-record retrieval essentially perfect: **1,777 of 1,777 correct, zero misses** — every retrieval sub-type at 100% across weak-to-frontier models.
 
-A 50-turn stress test (a 50-row table, 5% churn per turn, six per-record state-tracking question types) found per-record retrieval essentially perfect: **1,777 of 1,777 correct, zero misses**. Across the session it holds flat to **50 turns** on frontier models (gpt-5.5 and deepseek-v4-flash at 100%, gemini-2.5-flash at 99%), and six of seven cleanly-measured models are flat or better than a full re-send at a fraction of the tokens.
+![Per-record retrieval never missed: 1,777 of 1,777 correct across three models](/charts/generic-delta-retrieval-wall.png)
+
+Across the session it holds flat to **50 turns** on frontier models (gpt-5.5 and deepseek-v4-flash at 100%, gemini-2.5-flash at 99%), and six of seven cleanly-measured models are flat or better than a full re-send at a fraction of the tokens.
+
+![Generic delta comprehension through 50 turns](/charts/generic-delta-depth-curve.png)
 
 **The one caveat, and its fix.** A single model (llama-3.3-70b) drifts at the deep end (turns 41-50): a weaker model cannot always reconstruct current state from a long delta chain. The fix is a producer-side **periodic re-anchor** — re-send the full table every N turns (the "full" outcome of the [three-outcome protocol](#the-protocol), on a schedule; N=15 by default). It costs nothing on the wire, closes the drift back to 100%, and also rescues small and local models. The `GenericDeltaSession` helper applies it automatically.
 
