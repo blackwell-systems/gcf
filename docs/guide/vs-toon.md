@@ -121,7 +121,7 @@ GCF profile=graph tool=context_for_task symbols=22 edges=16 session=true
 | 3 | 20% | 80% | 86% |
 | 5 | 8% | 92% | **86%** |
 
-TOON retransmits every record every time. It has no session concept. By the 5th tool call on a 500-symbol payload, GCF is using **86% fewer tokens** than JSON (and up to 99% per call once delta is stacked) while TOON is still at ~69%.
+TOON retransmits every record every call; it has no session concept. By the 5th tool call, each GCF response has shrunk to mostly bare references (**86% fewer tokens** than JSON, up to 99% per call with delta), while every TOON response is still the full table.
 
 This isn't a feature that can be bolted on. Session dedup requires the format to support bare references (`@N  # previously transmitted`), which requires local IDs (`@N`), which TOON doesn't have.
 
@@ -263,7 +263,7 @@ GCF does everything TOON does, plus five things TOON structurally cannot add wit
 
 On 16 real-world datasets, GCF wins 15. Overall: 29% fewer tokens.
 
-The gap widens over time. First call: GCF saves 34% vs TOON. Fifth call: GCF saves 86% vs JSON with session dedup, up to 99% per call stacked with delta, while TOON is stuck at ~69%. No format change can close that gap without adding session state, which requires local IDs, which requires a fundamental redesign.
+The gap widens over time. First call: GCF saves 34% vs TOON. From there it compounds: TOON re-sends the entire payload on every call, while GCF's session responses shrink toward bare references, so the advantage grows every turn. No format change can close that gap without adding session state, which requires local IDs, which requires a fundamental redesign.
 
 ---
 
