@@ -28,9 +28,13 @@
 
 ---
 
-**100% comprehension on every frontier model. 50-92% fewer tokens than JSON. 91.2% on structurally complex code graphs (vs TOON 68.8%, JSON 54.1%). Proven lossless: `decode(encode(value)) == value` for every structured value, verified across 43,000,000,000+ round-trips in 5 formats and 6 languages, with lossless interop validated across 17 serialization formats. Zero training required. JSON's grammar symbols are [hardcoded as merged vocabulary entries](https://gcformat.com/guide/tokenizer-analysis) in BPE tokenizers, creating irrecoverable structural boundaries. GCF's pipe delimiter has 0% merge rate with field names.**
+**GCF is built for the agentic loop, where the same structured context crosses the model boundary turn after turn.** A single payload is already 50-92% smaller than JSON. But GCF also deduplicates repeated structure across turns and sends only deltas when context changes, so by the 5th overlapping call each response costs 99% fewer tokens than the JSON equivalent, and a full 10-call session runs 94.4% cheaper than re-sending JSON every turn. Session dedup and delta both need local IDs and a multi-turn design: **neither JSON nor TOON can do this at all.**
 
-Encode any structured data as GCF before sending it to an LLM. JSON, YAML, TOML, CSV, MessagePack: GCF encodes them all. The model reads it natively with zero format instructions. `decode()` converts back to any format when a human needs to see it. Your existing schemas and validators work on the decoded output unchanged.
+- **100% comprehension on every frontier model**, zero training required. 91.2% on structurally complex code graphs, where TOON drops to 68.8% and JSON to 54.1%.
+- **Proven lossless.** `decode(encode(value)) == value` for every structured value, verified across 43,000,000,000+ round-trips in 5 formats and 6 languages, with interop validated across 17 serialization formats. Zero runtime dependencies, in all six SDKs.
+- **One codec for every format.** Encode JSON, YAML, TOML, CSV, or MessagePack to GCF; the model reads it natively with zero format instructions; `decode()` converts back to any of them. Your existing schemas and validators work on the decoded output unchanged.
+
+No other single format is all four at once: **schema-free** (no `.proto`), **lossless**, **token-compact** (50-92% vs JSON), and **model-readable** with zero training. JSON is verbose, Protobuf needs a schema, MessagePack is binary, and TOON isn't reliably lossless. GCF is designed at the tokenizer level: its pipe delimiter has a [0% merge rate with field names](https://gcformat.com/guide/tokenizer-analysis), while JSON's grammar symbols are hardcoded as merged vocabulary entries in BPE tokenizers, creating structural boundaries the model cannot recover.
 
 ```bash
 pip install gcf-python                    # Python
