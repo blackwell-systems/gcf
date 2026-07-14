@@ -22,7 +22,7 @@ We evaluated GCF across 2,500+ LLM evaluations spanning 11 models and 4 provider
 
 **Comprehension (graph profile):** 25 runs across 10 models, 500 symbols with 200 edges. GCF averages **91.2%** accuracy where TOON averages 68.8% and JSON averages 54.1%. GCF wins **24 of 25 runs** (1 tie, 0 losses).
 
-**Generation:** 28 runs across 9 models. GCF achieves **5/5 validity on every frontier model**. TOON's official decoder rejects LLM-generated output on **7 of 9 models** due to a structural design flaw in flat tabular encoding. GCF output is **63% smaller** than JSON and **33% smaller** than TOON.
+**Generation:** 28 runs across 11 models. GCF achieves **5/5 validity on every frontier model**. TOON's official decoder rejects LLM-generated output on **7 of 9 models** due to a structural design flaw in flat tabular encoding. GCF output is **63% smaller** than JSON and **33% smaller** than TOON.
 
 **Token efficiency:** GCF achieves **50-92% fewer tokens** than JSON depending on data complexity and session reuse. **50-69%** on a single call (generic through graph profile). Up to **92%** with session deduplication across repeated tool calls. On TOON's own benchmark (their datasets, their tokenizer, their methodology), expanded from 6 to 16 datasets, GCF wins **15 of 16** (29% fewer tokens overall).
 
@@ -723,7 +723,7 @@ JSON with shortened field names (`"qn"` instead of `"qualified_name"`) achieves 
 
 **LLM comprehension.** 2,500+ evaluations across 11 models and 4 providers validate this design. On standard workloads (500 orders, nested data), GCF achieves 100% on every frontier model. On structurally complex code graphs (500 symbols, 200 edges), GCF averages 91.2% where JSON drops to 54.1% and TOON to 68.8%. The concern that LLMs might struggle with GCF's dense positional format was unfounded; the format improves comprehension by eliminating both structural overhead and structural ambiguity. GCF's pipe delimiter maintains 99.5% grammar isolation across 43 tokenizers (0.47% merge rate), ensuring the model always sees clean structural boundaries regardless of which tokenizer it uses.
 
-**LLM generation.** 28 generation runs across 9 models and 3 providers. GCF achieves 5/5 validity on every frontier model (Opus, Sonnet, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro) with a 3-line primer and zero prior training. TOON's official decoder rejects LLM-generated output on 7 of 9 models. The failure is structural: TOON's flat columns encode semantic categories as integers, and models write labels ("target") instead of the expected integer (0). GCF expresses categories through section placement (`## targets`), aligning with how models naturally express grouped data. GCF output is 63% smaller than JSON and 33% smaller than TOON.
+**LLM generation.** 28 generation runs across 11 models and 3 providers. GCF achieves 5/5 validity on every frontier model (Opus, Sonnet, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro) with a 3-line primer and zero prior training. TOON's official decoder rejects LLM-generated output on 7 of 9 models. The failure is structural: TOON's flat columns encode semantic categories as integers, and models write labels ("target") instead of the expected integer (0). GCF expresses categories through section placement (`## targets`), aligning with how models naturally express grouped data. GCF output is 63% smaller than JSON and 33% smaller than TOON.
 
 **Two profiles.** The graph profile is optimized for typed nodes and edges. The generic profile (`encodeGeneric`) handles arbitrary structured data (arrays of objects, nested records, mixed types). On TOON's own benchmark (expanded to 16 datasets), GCF wins 15 of 16 with 29% fewer tokens overall.
 
@@ -743,7 +743,7 @@ The token savings are too large to ignore. A 50-92% reduction in tool response t
 
 ### 9.1 LLM Generation: GCF as a Bidirectional Format
 
-GCF is bidirectional: LLMs can produce it, not just consume it. 28 generation runs across 9 models, validated through real decoders (including TOON's official `toon-go` library).
+GCF is bidirectional: LLMs can produce it, not just consume it. 28 generation runs across 11 models, validated through real decoders (including TOON's official `toon-go` library).
 
 | Model | GCF | TOON (natural) | JSON |
 |-------|-----|----------------|------|
@@ -755,7 +755,9 @@ GCF is bidirectional: LLMs can produce it, not just consume it. 28 generation ru
 | GPT-5.4-mini | **5/5** | 0/5 | 5/5 |
 | Gemini 2.5 Pro | **5/5** | 1/5 | 5/5 |
 | Gemini 3.1 Pro | **5/5** | 0/5 | 5/5 |
+| Gemini 3.1 Flash Lite | **4-5/5** | 0/5 | 4-5/5 |
 | Gemini 3.5 Flash | 3/5 | 1/5 | 3/5 |
+| Gemini 2.5 Flash | 2-4/5 | 0-4/5 | 0-3/5 |
 
 **GCF 5/5 on every frontier model. TOON fails on 7 of 9 models.**
 

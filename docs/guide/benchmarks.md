@@ -154,9 +154,11 @@ The model is given a natural-language description and a 3-line format primer. It
 | GPT-5.4-mini | **5/5** | 0/5 | 5/5 |
 | Gemini 2.5 Pro | **5/5** | 1/5 | 5/5 |
 | Gemini 3.1 Pro | **5/5** | 0/5 | 5/5 |
+| Gemini 3.1 Flash Lite | **4-5/5** | 0/5 | 4-5/5 |
 | Gemini 3.5 Flash | 3/5 | 1/5 | 3/5 |
+| Gemini 2.5 Flash | 2-4/5 | 0-4/5 | 0-3/5 |
 
-**GCF is the only format every frontier model can produce.** TOON's official decoder rejects output on 7 of 9 models. The format's flat tabular design encodes semantic categories as integers, forcing a mapping no model performs unprompted.
+**11 models, 3 providers.** GCF wins or ties every model; on the two mid-tier Flash models where GCF drops below 5/5, JSON and TOON drop further (GCF 3.0 vs JSON 1.7 vs TOON 1.3 on Gemini 2.5 Flash). **GCF is the only format every frontier model can produce.** TOON's official decoder rejects output on 7 of 9 models. The format's flat tabular design encodes semantic categories as integers, forcing a mapping no model performs unprompted.
 
 GCF output is 63% smaller than JSON and 33% smaller than TOON at 100 symbols. Every output token costs money.
 
