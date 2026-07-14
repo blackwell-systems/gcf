@@ -1,7 +1,7 @@
 ---
 title: "GCF: A Token-Optimized Wire Format for Structured LLM Interactions"
 author: "Dayna Blackwell, Blackwell Systems"
-date: "2026-07-09 (v9)"
+date: "2026-07-14 (v10)"
 subtitle: "dayna@blackwell-systems.com · DOI: 10.5281/zenodo.20579817"
 titlepage: true
 titlepage-color: "0a0a0a"
@@ -12,7 +12,9 @@ titlepage-rule-height: 2
 
 ## Abstract
 
-AI agents consume and produce structured data under fixed token budgets. The dominant encoding is JSON, which fails at scale for two compounding reasons. First, overhead: a tokenization breakdown of 500-row JSON payloads across 8 tokenizers shows **52.4% of tokens are repeated field names** and **28.6% are structural characters**, leaving **only 19% for actual data values** (Section 1.1). Second, ambiguity: JSON's grammar characters merge with adjacent content in BPE tokenizer vocabularies, hiding structural boundaries inside single tokens. A cross-tokenizer analysis of 43 tokenizers from 20 providers shows this is universal: JSON's combined adversarial surface spans **1,939 mergeable words**. Controlled experiments across two architectures, two scales, and three domains prove that preventing delimiter merges produces **3-738x better structured data comprehension**, **1.5x better code comprehension**, and **zero natural language cost**. Every attention head in a standard BPE model is structurally constrained by delimiter merging; the model has **4x more structural attention capacity than the tokenizer allows it to use**. JSON's structural choices create both the overhead that wastes tokens and the ambiguity that wastes attention.
+AI agents run in a loop: the same structured context crosses the model boundary turn after turn, tool call after tool call, under a fixed token budget. GCF is a wire format built for that loop. It is a universal codec for structured data with four properties no other single format holds at once: it is **schema-free** (no `.proto` or registry), **lossless** (`decode(encode(x)) == x`, verified across 43 billion+ round-trips), **token-compact** (50-92% fewer tokens than JSON), and **model-readable** with zero training. JSON is verbose, Protocol Buffers need a schema, MessagePack is binary, and TOON is not reliably lossless; GCF is the only encoding that is all four. Because it assigns local identity to what it encodes, it also compounds across a session in a way stateless formats cannot: per-call compaction, then session deduplication and delta encoding, reach **97%+ fewer tokens than JSON by the fifth overlapping call.** This multi-turn compounding, not any single-payload number, is the headline.
+
+AI agents consume and produce structured data under fixed token budgets, and the dominant encoding for it is JSON, which fails at scale for two compounding reasons. First, overhead: a tokenization breakdown of 500-row JSON payloads across 8 tokenizers shows **52.4% of tokens are repeated field names** and **28.6% are structural characters**, leaving **only 19% for actual data values** (Section 1.1). Second, ambiguity: JSON's grammar characters merge with adjacent content in BPE tokenizer vocabularies, hiding structural boundaries inside single tokens. A cross-tokenizer analysis of 43 tokenizers from 20 providers shows this is universal: JSON's combined adversarial surface spans **1,939 mergeable words**. Controlled experiments across two architectures, two scales, and three domains prove that preventing delimiter merges produces **3-738x better structured data comprehension**, **1.5x better code comprehension**, and **zero natural language cost**. Every attention head in a standard BPE model is structurally constrained by delimiter merging; the model has **4x more structural attention capacity than the tokenizer allows it to use**. JSON's structural choices create both the overhead that wastes tokens and the ambiguity that wastes attention.
 
 We present GCF, a bidirectional text-based wire format designed to eliminate both problems. GCF supports two encoding profiles: a **graph profile** exploiting referential identity (local IDs), topological encoding (edge arrows), and hierarchical grouping (section headers); and a **generic profile** encoding arbitrary structured data with positional rows, pipe separators, and inline primitive arrays. GCF's grammar characters were selected from the set empirically verified to have near-zero merge rates across all 43 tested tokenizers: pipe (**0.47%** merge rate, **24** mergeable words) vs JSON's quote (8.17%, 193 words) vs TOON's tab (32.91%, 1,238 words).
 
@@ -20,7 +22,7 @@ We evaluated GCF across 2,500+ LLM evaluations spanning 11 models and 4 provider
 
 **Comprehension (generic profile):** 27 runs across 11 models, 500-order nested data. GCF achieves **100%** on every frontier model (Opus, Sonnet, Haiku, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, Gemini 3.5 Flash). TOON is the weakest format.
 
-**Comprehension (graph profile):** 25 runs across 10 models, 500 symbols with 200 edges. GCF averages **90.7%** accuracy where TOON averages 68.8% and JSON averages 54.1%. GCF wins **24 of 25 runs** (1 tie, 0 losses).
+**Comprehension (graph profile):** 24 runs across 10 models, 500 symbols with 200 edges. GCF averages **91.2%** accuracy where TOON averages 68.8% and JSON averages 54.1%. GCF wins **23 of 24 runs** (1 tie, 0 losses).
 
 **Generation:** 28 runs across 9 models. GCF achieves **5/5 validity on every frontier model**. TOON's official decoder rejects LLM-generated output on **7 of 9 models** due to a structural design flaw in flat tabular encoding. GCF output is **63% smaller** than JSON and **33% smaller** than TOON.
 
@@ -28,7 +30,7 @@ We evaluated GCF across 2,500+ LLM evaluations spanning 11 models and 4 provider
 
 **Lossless verification:** **43 billion+** round-trips across 5 formats (JSON, YAML, MessagePack, CSV, TOML) with **zero failures**. Validated across 17 serialization formats in the Format Mega-Gauntlet.
 
-Session deduplication (84.3% cumulative savings over a 5-call session) and delta encoding (81.2% on re-queries) compound savings across multi-turn interactions. A streaming encoding extension enables zero-buffering encode with O(1) memory per row. The format is implemented in six languages (Go, TypeScript, Python, Rust, Swift, Kotlin), 204 conformance fixtures, and deployed in production MCP servers. Specification v3.4.1 Stable: gcformat.com.
+Both profiles carry the multi-turn machinery. Session deduplication (bare-reference retransmission, graph profile) and delta encoding (keyed row diff, **both profiles** as of spec v3.3) compound savings across a session: at production scale, a 10-call session reaches **94.4% cumulative** savings vs JSON, each response costing 171 tokens where JSON costs 29,072. Delta comprehension holds to **50 turns** across ~10 models, with a producer-side periodic re-anchor (spec v3.3, non-normative) closing the one mid-tier deep-drift edge case and rescuing weak/context-limited consumers. A streaming encoding extension enables zero-buffering encode with O(1) memory per row, with an optional labeled trailer form (spec v3.4) that adds up to +34pp of counting accuracy on smaller models. The format is implemented in six languages (Go, TypeScript, Python, Rust, Swift, Kotlin), 204 conformance fixtures, and deployed in production MCP servers. Specification v3.4.1 Stable: gcformat.com.
 
 GCF's grammar was reverse-engineered from tokenization and attention-level experimentation, then shipped and validated on production models; the three formal companion papers below came afterward and independently confirm the mechanism at controlled-training scale (Section 2.0). It spans three companion papers: "Tokenizer-Attention Coupling" [DOI: 10.5281/zenodo.20925910](https://doi.org/10.5281/zenodo.20925910), "Stranded Attention" [DOI: 10.5281/zenodo.21158886](https://doi.org/10.5281/zenodo.21158886), and "Developmental Atlas of Attention Head Specialization" [DOI: 10.5281/zenodo.21205389](https://doi.org/10.5281/zenodo.21205389). Together, through controlled experiments across two architectures and two scales, they prove that BPE merge decisions permanently constrain which attention heads develop. Every attention head in a standard BPE model is structurally stranded (384/384 at 410M, 768/768 at 1.3B show 4x more delimiter attention when given clean boundaries); the damage is immediate (present by step 5,000), permanent (unchanged through step 40,000), and architecture-independent (removing whitespace-recovery "spacing" heads degrades both GPT-NeoX multi-head attention and Llama grouped-query attention by 64-67%); and at 1.3B scale standard BPE develops 124 counterproductive delimiter heads whose removal improves comprehension by 57%. The mechanism generalizes across structured data (3-738x), code (1.5x), and molecular notation (2.2x).
 
@@ -372,11 +374,19 @@ GCF profile=graph tool=context_for_task budget=5000
 ##! summary symbols=3 edges=2 sections=targets:2,related:1,edges:2
 ```
 
-The `[?]` deferred count marker signals that the count will be provided in the trailer. The `##! summary` line provides all counts after the data is complete. The LLM has both the data and the counts in its context window (recency bias in transformer attention means the trailer is at least as strong a signal as header counts).
+The `[?]` deferred count marker signals that the count will be provided in the trailer. The `##! summary` line provides all counts after the data is complete. The LLM has both the data and the counts in its context window (recency bias in transformer attention means the trailer is at least as strong a signal as header counts). The trailer's `counts` field defaults to a positional form (`counts=2,2,3`); spec v3.4 adds an optional labeled form (`counts=targets:2,related:2,edges:3`, Section 8.4.1) that carries identical values. The labeled form is a producer-side comprehension aid: it is decoder-ignored and roughly free for a frontier model, but smaller models resolve a labeled per-group count more reliably (measured up to +34pp on weak models). The positional form remains the default.
 
 Streaming mode enables zero-buffering encode: rows emit the instant they are produced, with O(1) memory per row. This is critical for MCP servers that walk large graphs or paginate results; the LLM starts receiving context immediately instead of waiting for the full traversal.
 
 TOON cannot add streaming without a breaking spec change (their grammar mandates upfront `[N]` with no deferred count or trailer mechanism).
+
+### 3.9 Delta Encoding (both profiles)
+
+When a query overlaps a prior one, the server transmits only what changed. Delta is defined for **both profiles**, and it is content-addressed: a payload carries a `pack_root` (a hex hash computed by the canonical `gcf-pack-root-v1` algorithm) that identifies the logical snapshot. On a re-query the consumer echoes its prior `pack_root`; the server compares, and the three-outcome protocol resolves to `unchanged` (nothing sent), a delta (only the diff), or a full payload.
+
+The **graph profile** (Section 10) diffs by symbol identity, emitting `## removed` / `## added` / `## edges_removed` / `## edges_added` sections; each `## added` line carries a trailing `distance` (spec v3.4.1) so the consumer can reconstruct the snapshot and verify the new `pack_root`.
+
+The **generic profile** (Section 10a, spec v3.3) diffs by a designated `@`-marked identity column, emitting keyed `## added` / `## changed` / `## removed` row sets over a row-based `gcf-pack-root-v1`. In the generic profile, **delta and dedup are one mechanism**: a row that is omitted from the delta means "unchanged, you already have it," so there is no separate bare-reference machinery. Because a delta re-sends only changed rows, deep sessions can drift on weaker consumers as the base recedes; a producer-side **periodic re-anchor** (Section 10a.8, non-normative) resends a full payload on a cadence (default every 15 turns, or an adaptive size guard), which both closes that drift and gives context-limited models resend-quality context without resend's bulk. The cadence never appears on the wire.
 
 ---
 
@@ -386,24 +396,25 @@ GCF is not a speculative format proposal. It is implemented in six languages, pu
 
 The implementation includes:
 
-- **Go library** (`github.com/blackwell-systems/gcf-go`, v0.6.1): Encode, Decode, EncodeGeneric, DecodeGeneric, EncodeWithSession, EncodeDelta, StreamEncoder, GenericStreamEncoder. Zero dependencies.
-- **TypeScript library** (`@blackwell-systems/gcf` on npm, v0.6.1): encode, decode, encodeGeneric, decodeGeneric, encodeWithSession, encodeDelta, StreamEncoder, GenericStreamEncoder. Zero dependencies, ESM.
-- **Python library** (`gcf-python` on PyPI, v0.5.1): encode, decode, encode_generic, decode_generic, encode_with_session, encode_delta, StreamEncoder, GenericStreamEncoder. Zero dependencies, Python 3.9+.
-- **Rust library** (`gcf` on crates.io, v0.5.1): encode, decode, encode_generic, decode_generic, encode_with_session, encode_delta, StreamEncoder, GenericStreamEncoder. Minimal dependencies (serde_json).
-- **Swift library** (`gcf-swift` via SPM, v0.5.1): encode, decode, encodeGeneric, decodeGeneric, encodeWithSession, encodeDelta, StreamEncoder, GenericStreamEncoder. Zero dependencies.
-- **Kotlin library** (`gcf-kotlin` via JitPack, v0.5.1): encode, decode, encodeGeneric, decodeGeneric, encodeWithSession, encodeDelta, StreamEncoder, GenericStreamEncoder. Zero dependencies.
+- **Go library** (`github.com/blackwell-systems/gcf-go`, v1.5.0): Encode, Decode, EncodeGeneric, DecodeGeneric, EncodeWithSession, EncodeDelta, EncodeGenericDelta, StreamEncoder, GenericStreamEncoder. Zero dependencies.
+- **TypeScript library** (`@blackwell-systems/gcf` on npm, v2.4.0): encode, decode, encodeGeneric, decodeGeneric, encodeWithSession, encodeDelta, encodeGenericDelta, StreamEncoder, GenericStreamEncoder. Zero dependencies, ESM.
+- **Python library** (`gcf-python` on PyPI, v2.4.0): encode, decode, encode_generic, decode_generic, encode_with_session, encode_delta, encode_generic_delta, StreamEncoder, GenericStreamEncoder. Zero dependencies, Python 3.9+.
+- **Rust library** (`gcf` on crates.io, v2.4.0): encode, decode, encode_generic, decode_generic, encode_with_session, encode_delta, encode_generic_delta, StreamEncoder, GenericStreamEncoder. Zero dependencies.
+- **Swift library** (`gcf-swift` via SPM, v2.4.0): encode, decode, encodeGeneric, decodeGeneric, encodeWithSession, encodeDelta, encodeGenericDelta, StreamEncoder, GenericStreamEncoder. Zero dependencies.
+- **Kotlin library** (`gcf-kotlin` via JitPack, v2.4.0): encode, decode, encodeGeneric, decodeGeneric, encodeWithSession, encodeDelta, encodeGenericDelta, StreamEncoder, GenericStreamEncoder. Zero dependencies.
 - **MCP proxy** (`github.com/blackwell-systems/gcf-proxy`): drop-in wrapper for any MCP server, re-encodes JSON responses as GCF with streaming progress notifications. Zero code changes to upstream.
-- **Conformance test suite** (157 v3 fixtures across both profiles): language-agnostic JSON fixtures validating encode, decode, session, delta, generic, streaming, and normative error cases.
+- **Conformance test suite** (204 v3 fixtures across both profiles): language-agnostic JSON fixtures validating encode, decode, session, delta (graph and generic), generic, streaming, and normative error cases.
 - **Specification** ([SPEC.md](https://github.com/blackwell-systems/gcf/blob/main/SPEC.md), v3.4.1 Stable): RFC 2119 keywords, conformance checklists, decoder error taxonomy, streaming extension, security considerations. Published at gcformat.com.
 
 ### Correctness Validation
 
-All six implementations are tested against round-trip invariants and the shared conformance suite. A graph response encoded as GCF and decoded back must preserve node identity, kind, score, provenance, group membership, edge direction, edge type, and optional status metadata. The generic profile is validated against 18 additional fixtures covering flat arrays, nested objects, value formatting, primitive array inlining, and edge cases.
+All six implementations are tested against round-trip invariants and the shared conformance suite. A graph response encoded as GCF and decoded back must preserve node identity, kind, score, provenance, group membership, edge direction, edge type, and optional status metadata. The generic profile is validated against dedicated fixtures covering flat arrays, nested objects, value formatting, primitive array inlining, keyed delta, and edge cases.
 
 ### Production Deployment
 
-GCF is deployed across 12 production systems spanning infrastructure, network automation, code intelligence, API tooling, and developer tools:
+GCF is deployed across 13 production systems spanning infrastructure, network automation, code intelligence, API tooling, and developer tools:
 
+- **Chrome DevTools MCP** (46K stars, Google Chrome DevTools team): the official Chrome DevTools MCP server. GCF as an output-format option for browser-automation and inspection tool responses. [github.com/ChromeDevTools/chrome-devtools-mcp](https://github.com/ChromeDevTools/chrome-devtools-mcp)
 - **OmniRoute** (15.6K stars): AI gateway and proxy. GCF vendored into headroom compression engine, replacing custom encoder. 55-62% savings, 100% payload coverage. TOON rejected (npm dependency). [github.com/diegosouzapw/OmniRoute](https://github.com/diegosouzapw/OmniRoute)
 - **NetClaw** (556 stars): AI network automation, 113 skills, 66 MCP integrations. Replaced TOON entirely after benchmarking. 55.8% savings vs JSON, 13.6% fewer tokens than TOON. [github.com/automateyournetwork/netclaw](https://github.com/automateyournetwork/netclaw)
 - **NeuroNest**: Agent-first IDE by Network Guardian. First independent commercial adoption. GCF across 4 encoding surfaces with session dedup, delta encoding, per-provider comprehension gate, and shadow mode A/B testing. [neuronest.cc](https://neuronest.cc)
@@ -470,7 +481,7 @@ In agentic workflows, the same tool is called repeatedly across a conversation. 
 
 By the fifth tool call in a session, GCF transmits 88% fewer tokens than the first call because most symbols have already been declared. JSON has no equivalent mechanism: every response repeats every field name, every qualified name, every structural delimiter from scratch. Session dedup compounds with per-call savings: the 76% per-call saving becomes 97% by the fifth call relative to JSON.
 
-This requires local IDs (`@0`, `@1`, ...) and a session header (`session=true`). Formats without local ID systems cannot implement session dedup without a fundamental redesign.
+This requires local IDs (`@0`, `@1`, ...) and a session header (`session=true`), so bare-reference session deduplication is a **graph-profile** mechanism. The generic profile reaches the same multi-turn savings through delta encoding (Section 5.4): an omitted row is an implicit "unchanged, you already have it," so there dedup and delta are one mechanism. Formats without a local-ID or content-addressed identity system cannot implement either without a fundamental redesign.
 
 ### 5.4 Delta Encoding (re-queries)
 
@@ -487,6 +498,8 @@ GCF profile=graph tool=context_for_task tokens=120 delta=true
 
 Instead of retransmitting the full 233-token payload, the delta sends only new or changed nodes. Measured savings on re-queries: **81.2%** beyond the already-compressed GCF encoding. Combined with session dedup, a fifth re-query of overlapping data can transmit under 10 tokens where JSON would transmit 965.
 
+Delta is defined for **both profiles** (spec v3.3). The graph profile diffs by symbol identity (`## added` / `## removed` / edge deltas); the generic profile diffs by a designated `@`-marked identity column (`## added` / `## changed` / `## removed` keyed row sets). Both are content-addressed: the payload carries a `pack_root` hash, the consumer echoes its prior root, and a three-outcome protocol resolves to unchanged, delta, or full. Because a delta re-sends only changed rows, the base recedes as a session deepens; comprehension was measured to hold to **50 turns** across ~10 models, and the one mid-tier deep-drift case is closed by a producer-side **periodic re-anchor** (Section 3.9), which resends a full payload on a cadence that never appears on the wire and doubles as resend-quality context for weak consumers.
+
 ![Delta topology savings](/charts/delta-topology-savings.png)
 
 ### 5.5 Total Compounding
@@ -499,7 +512,7 @@ The three layers compound multiplicatively:
 | Session deduplication | +34-88% of remainder | Local ID references to previously-transmitted nodes |
 | Delta encoding | +81% of remainder | Transmit only changes |
 
-At the fifth tool call with overlapping data: JSON transmits ~965 tokens. GCF transmits ~10-28 tokens. The cumulative saving exceeds 97%. No competing format offers all three layers because session dedup and delta encoding require local IDs, which require a format designed for multi-turn interactions rather than single-shot serialization.
+At the fifth tool call with overlapping data: JSON transmits ~965 tokens. GCF transmits ~10-28 tokens. The cumulative saving exceeds 97%. The generic profile stacks per-call compaction with delta (dedup and delta being one mechanism there); the graph profile stacks all three layers. No competing format offers any of this: session dedup requires local IDs and delta requires content-addressed identity, both properties of a format designed for multi-turn interactions rather than single-shot serialization.
 
 ---
 
@@ -546,22 +559,22 @@ Frontier models (Opus, Sonnet, Haiku, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, G
 
 ### 6.1b Graph Profile: Under Structural Stress
 
-25 runs across 10 models. 500 symbols, 200 edges, 13 structured extraction questions with deterministic ground truth (no LLM judge). Each run generates a fresh random payload. Zero format instructions in the prompt.
+24 runs across 10 models. 500 symbols, 200 edges, 13 structured extraction questions with deterministic ground truth (no LLM judge). Each run generates a fresh random payload. Zero format instructions in the prompt.
 
 | Model | Runs | GCF avg | TOON avg | JSON avg |
 |-------|------|---------|----------|----------|
-| Claude Opus 4.6 | 2 | **96.2%** | 88.5% | 73.1% |
+| Claude Opus 4.6 | 2 | **96.2%** | 84.6% | 73.1% |
 | Claude Sonnet 4.6 | 2 | **100%** | 73.1% | 53.8% |
-| Claude Haiku 4.5 | 2 | **96.2%** | 69.2% | 57.6% |
+| Claude Haiku 4.5 | 2 | **96.2%** | 69.2% | 57.7% |
 | GPT-5.5 | 5 | **84.1%** | 67.7% | 45.8% |
 | GPT-5.4 | 4 | **78.0%** | 56.0% | 44.1% |
-| GPT-5.4-mini | 2 | **71.8%** | 64.1% | 54.1% |
-| Gemini 2.5 Pro | 2 | **100%** | 78.5% | 65.5% |
+| GPT-5.4-mini | 2 | **71.8%** | 64.1% | 54.2% |
+| Gemini 2.5 Pro | 1 | **100%** | 76.9% | 58.3% |
 | Gemini 3.1 Pro | 1 | **100%** | 76.9% | 46.2% |
-| Gemini 3.5 Flash | 1 | **100%** | 61.5% | 46.2% |
+| Gemini 3.5 Flash | 2 | **100%** | 53.9% | 46.2% |
 | Gemini 2.5 Flash | 4 | **85.5%** | 52.5% | 54.3% |
 
-**GCF wins 24 of 25 runs (1 tie, 0 losses).** Five models achieve 100%.
+**GCF averages 91.2%, wins 23, ties 1, loses 0.** Four models achieve 100%.
 
 ![Comprehension Accuracy by Model](/charts/accuracy-by-model.png)
 
@@ -571,11 +584,11 @@ Frontier models (Opus, Sonnet, Haiku, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro, G
 
 GCF, TOON, and JSON produce qualitatively different failure modes that map directly to their delimiter merge characteristics. The vocabulary merges documented in Section 1.2 are the measurable entry point, but the underlying damage is in the model's weights: billions of training examples with merged boundaries permanently shape every attention head's structural capacity (see Section 1.2). Controlled experiments confirm this is causal: models trained with merge barriers develop 50-161 delimiter-specialized attention heads and achieve 3-738x lower structured data perplexity. Every head in a standard BPE model is structurally stranded by delimiter merging, not just heads near specific merged tokens. See "Tokenizer-Attention Coupling" [DOI: 10.5281/zenodo.20925910](https://doi.org/10.5281/zenodo.20925910) for the full analysis.
 
-**GCF fails on precision** (median error: 4). Off-by-1-2 header misreads (8 occurrences), deterministic column scan miscounts on GPT-5.4 (11), field confusion (2), miscellaneous (5), and context overwhelm empty responses on GPT-5.5 (10). The format structure is understood; the count is slightly misread. 36 total failures across 25 runs. GCF's pipe delimiter has a 0.47% merge rate across 43 tokenizers, meaning the model always sees clean structural boundaries.
+**GCF fails on precision** (median error: 4). Off-by-1-2 header misreads (8 occurrences), deterministic column scan miscounts on GPT-5.4 (11), field confusion (2), miscellaneous (5), and context overwhelm empty responses on GPT-5.5 (10). The format structure is understood; the count is slightly misread. 36 total failures across 24 runs. GCF's pipe delimiter has a 0.47% merge rate across 43 tokenizers, meaning the model always sees clean structural boundaries.
 
-**TOON fails on comprehension** (median error: 53). Distance grouping failures across all models (45 occurrences), column scan miscounts (10), attention decay on the last row (7), calls edge miscounts (10), symbol count wrong (2), and context overwhelm (20). The model cannot filter a flat 500-row table by column value. 94 total failures across 25 runs. TOON's tab delimiter has a 32.91% merge rate and 1,238 mergeable words in tokenizer vocabularies, the worst of any common separator character.
+**TOON fails on comprehension** (median error: 53). Distance grouping failures across all models (45 occurrences), column scan miscounts (10), attention decay on the last row (7), calls edge miscounts (10), symbol count wrong (2), and context overwhelm (20). The model cannot filter a flat 500-row table by column value. 94 total failures across 24 runs. TOON's tab delimiter has a 32.91% merge rate and 1,238 mergeable words in tokenizer vocabularies, the worst of any common separator character.
 
-**JSON fails on structural overwhelm** (median error: 56). Empty string responses where the model produces nothing (33), massive undercounts (14), distance filter failures (44), column scan miscounts (37), and attention decay (3). At 53,000 tokens of repeated field names, the format itself prevents comprehension. JSON's grammar attention collapses from 30% to 8.6% at scale as the model stops attending to structural tokens. 131 total failures across 25 runs.
+**JSON fails on structural overwhelm** (median error: 56). Empty string responses where the model produces nothing (33), massive undercounts (14), distance filter failures (44), column scan miscounts (37), and attention decay (3). At 53,000 tokens of repeated field names, the format itself prevents comprehension. JSON's grammar attention collapses from 30% to 8.6% at scale as the model stops attending to structural tokens. 131 total failures across 24 runs.
 
 On two separate runs, Claude Opus responded to a JSON counting question by manually enumerating symbols one by one (143 lines on run 1, 119 on run 2), burning output tokens on a chain-of-thought enumeration and still getting the wrong answer. GCF answers the same question from a 3-character header: `[167]`.
 
@@ -608,9 +621,9 @@ On two separate runs, Claude Opus responded to a JSON counting question by manua
 | 4 | 2 | 7 | 62 | 89.4% |
 | 5 | 1 | 8 | 41 | 92.7% |
 
-By the fifth tool call in a session, GCF achieves 92.7% token savings versus JSON because 8 of 9 referenced symbols are bare ID references (`@0`, `@3`) consuming 1 token each instead of 15-20 tokens for the full qualified name.
+This is a 10-symbol illustration: by the fifth call GCF transmits 92.7% fewer tokens than JSON because 8 of 9 referenced symbols are bare ID references (`@0`, `@3`) consuming 1 token each instead of 15-20 tokens for the full qualified name. The representative figures are the production-scale curve below.
 
-At production scale (500 symbols, 200 edges per call), session deduplication achieves 84.3% cumulative savings over 5 calls (148,360 JSON tokens vs 23,270 GCF tokens). Per bare reference: 2 tokens vs 19 tokens for a full declaration (89% savings per deduplicated symbol). JSON has no deduplication mechanism; every call retransmits the full payload.
+At production scale (500 symbols, 200 edges per call), session deduplication cuts roughly 86% per call, and stacked with delta reaches 99.0% per call by call 5 and **94.4% cumulative** over a 10-call session (curve below). Per bare reference: 2 tokens vs 19 tokens for a full declaration (89% savings per deduplicated symbol). JSON has no deduplication mechanism; every call retransmits the full payload.
 
 **Production-scale savings curve (500 symbols, 200 edges):**
 
@@ -622,7 +635,7 @@ At production scale (500 symbols, 200 edges per call), session deduplication ach
 | 5 | 30,474 | 4,170 | 305 | 86.3% | 99.0% |
 | 10 | 29,072 | 3,925 | 171 | 86.5% | 99.4% |
 
-By call 10, each GCF response costs 171 tokens where JSON costs 29,072 (99.4% per-call savings).
+By call 10, each GCF response costs 171 tokens where JSON costs 29,072 (99.4% per-call savings), and the session reaches **94.4% cumulative** savings vs JSON.
 
 ![Session savings curve](/charts/session-savings-curve.png)
 
@@ -631,6 +644,12 @@ The savings are structural and tokenizer-independent: validated across 8 product
 ![Cross-tokenizer session savings](/charts/session-savings-cross-tokenizer.png)
 
 **Comprehension validation:** Session dedup was validated on Gemini 2.5 Pro and Gemini 2.5 Flash. Attribute resolution (kind, provenance, score) through bare refs: 100% on both models. Zero degradation through 15 consecutive calls (31 messages). The LLM reads bare refs (`@7`) from prior responses in its context window with perfect accuracy. Session dedup matches full retransmission accuracy on every test.
+
+### 6.3 Delta Comprehension at Depth
+
+Delta's savings only matter if a model can still answer questions about state it received as a diff many turns ago. We measured generic-profile delta against full re-send in extended sessions across ~10 models spanning 6+ vendors, out to **50 turns**. On 5 of 6 cleanly-measured models, delta ties or beats a full re-send at every depth: the model answers as accurately from an accumulated sequence of diffs as it does from a full payload resent every turn, at a fraction of the tokens.
+
+The one exception is a documented, closed edge case: a mid-tier ~70B model drifts about 11.7pp below full re-send at turns 41-50, as the base recedes far into the context. The producer-side periodic re-anchor (Section 3.9, spec v3.3, non-normative) resends a full payload on a cadence (default N=15 or an adaptive size guard) and closes the gap without any wire change. The same re-anchor independently rescues weak and context-limited consumers: it delivers resend-quality context without resend's bulk, which is exactly where cost pressure and format-sensitivity both concentrate. This is why delta is framed as safe-by-default with a producer knob, not as a flat "never worse" claim.
 
 ---
 
@@ -704,7 +723,7 @@ JSON with shortened field names (`"qn"` instead of `"qualified_name"`) achieves 
 
 ## 8. Limitations and Validation
 
-**LLM comprehension.** 2,500+ evaluations across 11 models and 4 providers validate this design. On standard workloads (500 orders, nested data), GCF achieves 100% on every frontier model. On structurally complex code graphs (500 symbols, 200 edges), GCF averages 90.7% where JSON drops to 54.1% and TOON to 68.8%. The concern that LLMs might struggle with GCF's dense positional format was unfounded; the format improves comprehension by eliminating both structural overhead and structural ambiguity. GCF's pipe delimiter maintains 99.5% grammar isolation across 43 tokenizers (0.47% merge rate), ensuring the model always sees clean structural boundaries regardless of which tokenizer it uses.
+**LLM comprehension.** 2,500+ evaluations across 11 models and 4 providers validate this design. On standard workloads (500 orders, nested data), GCF achieves 100% on every frontier model. On structurally complex code graphs (500 symbols, 200 edges), GCF averages 91.2% where JSON drops to 54.1% and TOON to 68.8%. The concern that LLMs might struggle with GCF's dense positional format was unfounded; the format improves comprehension by eliminating both structural overhead and structural ambiguity. GCF's pipe delimiter maintains 99.5% grammar isolation across 43 tokenizers (0.47% merge rate), ensuring the model always sees clean structural boundaries regardless of which tokenizer it uses.
 
 **LLM generation.** 28 generation runs across 9 models and 3 providers. GCF achieves 5/5 validity on every frontier model (Opus, Sonnet, GPT-5.5, Gemini 2.5 Pro, Gemini 3.1 Pro) with a 3-line primer and zero prior training. TOON's official decoder rejects LLM-generated output on 7 of 9 models. The failure is structural: TOON's flat columns encode semantic categories as integers, and models write labels ("target") instead of the expected integer (0). GCF expresses categories through section placement (`## targets`), aligning with how models naturally express grouped data. GCF output is 63% smaller than JSON and 33% smaller than TOON.
 
@@ -738,7 +757,7 @@ GCF is bidirectional: LLMs can produce it, not just consume it. 28 generation ru
 | GPT-5.4-mini | **5/5** | 0/5 | 5/5 |
 | Gemini 2.5 Pro | **5/5** | 1/5 | 5/5 |
 | Gemini 3.1 Pro | **5/5** | 0/5 | 5/5 |
-| Gemini 3.1 Flash Lite | **4-5/5** | 0/5 | 4-5/5 |
+| Gemini 3.5 Flash | 3/5 | 1/5 | 3/5 |
 
 **GCF 5/5 on every frontier model. TOON fails on 7 of 9 models.**
 
@@ -778,7 +797,7 @@ Combined with MCP's Streamable HTTP transport (Server-Sent Events), this creates
 
 ### 9.3 Delta Encoding
 
-GCF's token savings compound with delta encoding: when the agent passes a `pack_root` from a prior call and the pack changed, the server sends only added/removed symbols instead of the full payload. Measured: 81.2% additional token savings at 96.6% symbol overlap on re-query scenarios. Combined with GCF's baseline savings and session deduplication, the three-level stack achieves over 97% cumulative token reduction on warm sessions versus stateless JSON.
+GCF's token savings compound with delta encoding, in **both profiles** (spec v3.3). When the agent passes a `pack_root` from a prior call and the pack changed, the server sends only the diff instead of the full payload: added/removed symbols and edge changes in the graph profile, keyed added/changed/removed rows in the generic profile. Measured: 81.2% additional token savings at 96.6% overlap on re-query scenarios. Combined with GCF's baseline savings and (graph-profile) session deduplication, the stack achieves over 97% cumulative token reduction on warm sessions versus stateless JSON. Because a delta re-sends only what changed, deep sessions rely on the producer-side periodic re-anchor (Section 3.9) to keep weaker consumers aligned as the base recedes; delta comprehension was measured to hold to 50 turns (Section 6.3).
 
 ---
 
@@ -788,7 +807,7 @@ JSON fails at scale for two compounding reasons. The visible reason is overhead:
 
 GCF eliminates both problems. Header factoring eliminates the overhead (field names declared once, 97.7% signal at 500 rows vs JSON's 19%). Delimiter selection from the empirically verified low-merge character set eliminates the ambiguity (pipe: 0.47% merge rate, 24 mergeable words vs JSON's 1,939). Controlled experiments prove this is causal: models trained with merge barriers achieve 3-738x better structured data comprehension and 1.5x better code comprehension, with zero cost to natural language. The models develop 50-161 attention heads dedicated to parsing structure, while standard BPE models develop counterproductive heads that actively damage comprehension at scale.
 
-GCF is bidirectional. 2,500+ LLM evaluations across 11 models and 4 providers prove it. Comprehension: 100% on every frontier model on standard workloads; 90.7% on structurally complex code graphs where JSON drops to 54.1% and TOON to 68.8%. Generation: 5/5 validity on every frontier model where TOON fails on 7 of 9 models. Output: 63% fewer tokens than JSON, 33% fewer than TOON. Session deduplication (84.3% cumulative savings over a 5-call session), delta encoding (81.2% on re-queries), and streaming encode (zero-buffering with trailer summary) compound savings across multi-turn interactions. No competing format offers these features.
+GCF is bidirectional. 2,500+ LLM evaluations across 11 models and 4 providers prove it. Comprehension: 100% on every frontier model on standard workloads; 91.2% on structurally complex code graphs where JSON drops to 54.1% and TOON to 68.8%. Generation: 5/5 validity on every frontier model where TOON fails on 7 of 9 models. Output: 63% fewer tokens than JSON, 33% fewer than TOON. But the headline is not any single payload: it is the agentic loop. Session deduplication (graph profile) and delta encoding (both profiles, spec v3.3) compound across a session, reaching **94.4% cumulative** savings over a 10-call session at production scale, with comprehension measured safe to 50 turns behind a producer-side re-anchor. Streaming encode adds zero-buffering delivery with a trailer summary. No competing format offers any of this, because session dedup needs local identity and delta needs content-addressed identity, and neither JSON nor TOON has either.
 
 The format is text-based, LLM-optimized, and implementable in any language. Implementations exist in six languages (Go, TypeScript, Python, Rust, Swift, Kotlin) with zero or minimal runtime dependencies. A drop-in MCP proxy enables adoption with zero code changes and adds streaming progress notifications for immediate partial context delivery.
 
@@ -796,28 +815,28 @@ GCF is a wire format. Wire formats are not optimized for human readability. HTTP
 
 The format that looks clean to humans (JSON) is the one that breaks for agents at scale: its overhead wastes tokens and its grammar hides structural boundaries. The companion paper ("Tokenizer-Attention Coupling") quantifies the hidden cost: every attention head in a standard BPE model has 4x more structural capacity than the tokenizer allows it to use, and this constraint is permanent from step 5,000 of training onward. Standard BPE models at 1.3B scale develop 124 counterproductive delimiter heads whose removal improves comprehension by 57%. The tokenizer is not a preprocessing step; it is an architectural constraint that permanently shapes what the model can do with structured input.
 
-GCF's grammar was reverse-engineered from tokenization and attention-level experimentation, and validated afterward by controlled training experiments: the delimiter choices were made by measuring which characters tokenize cleanly and analyzing how attention treats structural boundaries, and a later program of controlled training experiments (three companion papers, Section 2.0) confirmed the mechanism at scale. After-the-fact agreement between a shipped format and a later measurement is stronger evidence than design intent, because it cannot be dismissed as a format built to flatter its own analysis. Every design choice (pipe delimiters, header factoring, positional encoding) is corroborated by empirical measurement of how tokenizers and attention mechanisms interact. The result: 100% accuracy on every frontier model for standard workloads and 90.7% on structurally complex data, at the lowest token cost, with grammar that never merges with field names on any tested tokenizer. This is not a tradeoff. It is a design methodology validated by 2,500+ evaluations, a 43-tokenizer vocabulary analysis, controlled training experiments across two architectures and three domains, and 12 production deployments.
+GCF's grammar was reverse-engineered from tokenization and attention-level experimentation, and validated afterward by controlled training experiments: the delimiter choices were made by measuring which characters tokenize cleanly and analyzing how attention treats structural boundaries, and a later program of controlled training experiments (three companion papers, Section 2.0) confirmed the mechanism at scale. After-the-fact agreement between a shipped format and a later measurement is stronger evidence than design intent, because it cannot be dismissed as a format built to flatter its own analysis. Every design choice (pipe delimiters, header factoring, positional encoding) is corroborated by empirical measurement of how tokenizers and attention mechanisms interact. The result: 100% accuracy on every frontier model for standard workloads and 91.2% on structurally complex data, at the lowest token cost, with grammar that never merges with field names on any tested tokenizer. This is not a tradeoff. It is a design methodology validated by 2,500+ evaluations, a 43-tokenizer vocabulary analysis, controlled training experiments across two architectures and three domains, and 13 production deployments.
 
 ---
 
 ## Reference Implementation
 
 - **Specification:** [SPEC.md](https://github.com/blackwell-systems/gcf/blob/main/SPEC.md) (v3.4.1 Stable, RFC 2119 keywords, conformance checklists, streaming extension, error taxonomy). Published at gcformat.com.
-- **Go library:** `github.com/blackwell-systems/gcf-go` (v0.6.1)
-- **TypeScript library:** `@blackwell-systems/gcf` on npm (v0.6.1)
-- **Python library:** `gcf-python` on PyPI (v0.5.1)
-- **Rust library:** `gcf` on crates.io (v0.5.1)
-- **Swift library:** `gcf-swift` via SPM (v0.5.1)
-- **Kotlin library:** `gcf-kotlin` via JitPack (v0.5.1)
+- **Go library:** `github.com/blackwell-systems/gcf-go` (v1.5.0)
+- **TypeScript library:** `@blackwell-systems/gcf` on npm (v2.4.0)
+- **Python library:** `gcf-python` on PyPI (v2.4.0)
+- **Rust library:** `gcf` on crates.io (v2.4.0)
+- **Swift library:** `gcf-swift` via SPM (v2.4.0)
+- **Kotlin library:** `gcf-kotlin` via JitPack (v2.4.0)
 - **MCP proxy:** `github.com/blackwell-systems/gcf-proxy`: streaming progress notifications, drop-in wrapper, zero code changes
 - **Comprehension eval:** `github.com/blackwell-systems/gcf-go/eval` (generic profile: 500 orders, 27 runs, 11 models; graph profile: 500 symbols, 24 runs, 10 models; 13 questions, 3 formats)
 - **Tokenizer analysis:** `github.com/blackwell-systems/gcf/eval` (13 scripts, 43 tokenizers, 20 providers). See "Tokenizer-Attention Coupling" [DOI: 10.5281/zenodo.20925910](https://doi.org/10.5281/zenodo.20925910).
 - **Generation eval:** `github.com/blackwell-systems/gcf-go/eval` (5-100 symbols, GCF vs TOON vs JSON, 9 models, validated through real decoders)
 - **Eval results:** `github.com/blackwell-systems/gcf/eval/results` (all raw logs, failure taxonomy, artifacts)
 - **TOON benchmark fork:** `github.com/blackwell-systems/toon` (branch: gcf-comparison, their datasets, their tokenizer)
-- **Conformance test suite:** `github.com/blackwell-systems/gcf/tests/conformance` (157 v3 fixtures across both profiles, streaming, and normative errors)
+- **Conformance test suite:** `github.com/blackwell-systems/gcf/tests/conformance` (204 v3 fixtures across both profiles, streaming, delta, and normative errors)
 - **Interactive playground:** gcformat.com/playground (three-way JSON vs TOON vs GCF comparison using real @toon-format/toon library)
-- **Production deployment:** 12 adopters including OmniRoute (15.6K stars), NetClaw (556 stars), NeuroNest (commercial), ctx (510 stars), Speakeasy, knowing (28 MCP tools), agent-lsp (66 MCP tools). Full list: [gcformat.com/ecosystem/adopters](https://gcformat.com/ecosystem/adopters)
+- **Production deployment:** 13 adopters including Chrome DevTools MCP (46K stars, Google), OmniRoute (15.6K stars), NetClaw (556 stars), NeuroNest (commercial), ctx (510 stars), Speakeasy, knowing (28 MCP tools), agent-lsp (66 MCP tools). Full list: [gcformat.com/ecosystem/adopters](https://gcformat.com/ecosystem/adopters)
 
 ---
 
