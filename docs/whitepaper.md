@@ -829,7 +829,7 @@ GCF's grammar was reverse-engineered from tokenization and attention-level exper
 - **Swift library:** `gcf-swift` via SPM (v2.4.0)
 - **Kotlin library:** `gcf-kotlin` via JitPack (v2.4.0)
 - **MCP proxy:** `github.com/blackwell-systems/gcf-proxy`: streaming progress notifications, drop-in wrapper, zero code changes
-- **Comprehension eval:** `github.com/blackwell-systems/gcf-go/eval` (generic profile: 500 orders, 27 runs, 11 models; graph profile: 500 symbols, 24 runs, 10 models; 13 questions, 3 formats)
+- **Comprehension eval:** `github.com/blackwell-systems/gcf-go/eval` (generic profile: 500 orders, 27 runs, 11 models; graph profile: 500 symbols, 25 runs, 10 models; 13 questions, 3 formats)
 - **Tokenizer analysis:** `github.com/blackwell-systems/gcf/eval` (13 scripts, 43 tokenizers, 20 providers). See "Tokenizer-Attention Coupling" [DOI: 10.5281/zenodo.20925910](https://doi.org/10.5281/zenodo.20925910).
 - **Generation eval:** `github.com/blackwell-systems/gcf-go/eval` (5-100 symbols, GCF vs TOON vs JSON, 9 models, validated through real decoders)
 - **Eval results:** `github.com/blackwell-systems/gcf/eval/results` (all raw logs, failure taxonomy, artifacts)
