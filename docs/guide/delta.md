@@ -193,6 +193,10 @@ A 50-turn stress test (a 50-row table, 5% churn per turn, six per-record state-t
 
 **The one caveat, and its fix.** A single model (llama-3.3-70b) drifts at the deep end (turns 41-50): a weaker model cannot always reconstruct current state from a long delta chain. The fix is a producer-side **periodic re-anchor** — re-send the full table every N turns (the "full" outcome of the [three-outcome protocol](#the-protocol), on a schedule; N=15 by default). It costs nothing on the wire, closes the drift back to 100%, and also rescues small and local models. The `GenericDeltaSession` helper applies it automatically.
 
+![Re-anchor holds the deep-turn drift flat](/charts/generic-delta-reanchor.png)
+
+On llama-3.3-70b (the one drifting model), pure delta holds flat through turn 30, then sags to 86% by turn 50 (gray). A re-anchor every 15 turns holds it at ~100% deep (green), matching or beating full re-send (orange) while ~93% of turns stay compact deltas. N=10/15/20 all reach ~100%.
+
 Delta is safe at depth by default, with a zero-cost lever for the models that need it. Full methodology and per-model results: [DEPTH-FINDINGS.md](https://github.com/blackwell-systems/gcf/blob/main/eval/generic-delta-comprehension/DEPTH-FINDINGS.md).
 
 ## Combining with session dedup
