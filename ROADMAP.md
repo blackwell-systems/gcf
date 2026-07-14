@@ -7,14 +7,14 @@
 - [x] **Graph profile** (`encode`): symbols, edges, distance groups, local IDs.
 - [x] **`decodeGeneric`**: full round-trip for generic profile across all 6 languages.
 - [x] **Streaming encode**: `StreamEncoder` (graph) and `GenericStreamEncoder` (generic). Zero-buffering, O(1) memory, `[?]` deferred counts + `##! summary` trailer.
-- [x] **Session deduplication**: 92.7% savings by 5th call. Bare references for previously-transmitted symbols.
+- [x] **Session deduplication**: 86% by 5th call from dedup alone, 99% stacked with delta. Bare references for previously-transmitted symbols.
 - [x] **Delta encoding**: 81.2% savings on re-queries.
 - [x] **MCP proxy**: `gcf-proxy` wraps any MCP server, re-encodes JSON as GCF mid-flight. npm, PyPI, Go.
 - [x] **CLI tool**: `gcf encode`, `gcf decode`, `gcf stats` in Go, Python, TypeScript.
 - [x] **Conformance test suite**: 14 language-agnostic JSON fixtures.
 - [x] **Interactive playground**: three-way live comparison (JSON/TOON/GCF) with real TOON library.
-- [x] **Comprehension eval**: 23 runs, 10 models, 3 providers. 90.7% average. Four models at 100%.
-- [x] **Generation eval**: 28 runs, 9 models, 3 providers. 5/5 on every frontier model.
+- [x] **Comprehension eval**: 24 runs, 10 models, 3 providers. 91.2% average (graph); generic profile 100% on every frontier model. Four models at 100%.
+- [x] **Generation eval**: 28 runs, 11 models, 3 providers. 5/5 on every frontier model.
 - [x] **Failure taxonomy**: precision vs comprehension vs structural overwhelm, classified by model tier.
 - [x] **Token efficiency on TOON's benchmark**: wins all 6 datasets.
 - [x] **Primitive array inlining**: `tags[3]: read,write,admin` (spec v1.3).
@@ -26,7 +26,7 @@
 
 - [ ] **Generic-profile delta** (spec §10a): keyed row diff (`## added` / `## changed` / `## removed`) extending graph delta (§10) to tabular data. Opt-in and bilateral (consumer echoes `pack_root`, inherits the §10.3 three-outcome handshake); whole-row replacement keyed on a designated `@id` identity column + required `key=`; row-based `gcf-pack-root-v1`. In the generic profile, delta and dedup are one mechanism — an omitted row means "unchanged, you already have it" (no separate bare-reference machinery; see Format extensions below). Spec section drafted (SPEC.md §10a). Comprehension-validated to 50-turn depth across ~10 models / 6+ vendors: safe on 5 of 6 cleanly-measured models; the one mid-tier deep-drift edge case is closed by a producer-side **periodic re-anchor** (the `full` outcome on a schedule, no wire change; default N=15 or adaptive size-guard, informative §10a.8). Also a second, measured benefit: re-anchor rescues weak/context-limited models (resend-quality without resend's context bulk). **Next:** implement across all 6 SDKs + conformance fixtures + version bump.
 - [ ] **Ruby implementation**: 7th language. Conformance fixtures exist, spec is stable. Encoder, decoder, scalar grammar, streaming, conformance runner.
-- [ ] **Whitepaper rewrite**: structured data positioning, multi-format interop, updated eval data (1,700+ evaluations, 23B+ round-trips).
+- [ ] **Whitepaper rewrite**: structured data positioning, multi-format interop, updated eval data (2,500+ evaluations, 43 billion+ round-trips).
 - [ ] **Blog post**: "The format LLMs understand without training" with inline data.
 - [ ] **LinkedIn content**: Dr. Seuss poem, playground demo, calculator.
 
