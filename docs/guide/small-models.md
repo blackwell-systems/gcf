@@ -1,14 +1,16 @@
 # GCF on Small Models
 
-On frontier models, format choice barely matters: GCF, TOON, and JSON all read cleanly. GCF's advantage is almost entirely concentrated on the **small, cheap, and local models** that cost-conscious deployments actually route to. That is the opposite of where most format comparisons look, and it is where the decision is real.
+GCF has three advantages over JSON and TOON: it is **lossless**, it is **compact**, and models **read it more accurately**. The first two hold on every model. GCF round-trips where TOON silently corrupts, and it is smaller than JSON, no matter who is reading. Those are not small-model facts; they are true on Opus and on a 1B local model alike.
 
-If you only ever call Opus, Sonnet, GPT-5.5, or Gemini Pro, pick whatever you like. If any part of your traffic goes to a Flash, a mini, a 70B, or a local model (for cost, latency, or privacy), the format you send is the difference between the model reading the data correctly and the model getting it wrong.
+The **comprehension** advantage is the one whose size depends on the model, and this page is about that axis specifically. On frontier models, GCF, TOON, and JSON all read equally cleanly, so on reading accuracy alone a frontier-only pipeline could use any of them. That equivalence disappears as the model shrinks: TOON and JSON degrade first and fastest, and GCF holds. If any part of your traffic goes to a Flash, a mini, a 70B, or a local model (for cost, latency, or privacy), the format you send is the difference between the model reading the data correctly and the model getting it wrong.
+
+(Losslessness and compactness are covered in [vs-TOON](/guide/vs-toon) and [tokenizer analysis](/guide/tokenizer-analysis); they are not re-argued here.)
 
 This page pulls together the small-model evidence that lives across the [benchmarks](/guide/benchmarks), [vs-TOON](/guide/vs-toon), [delta](/guide/delta), and [tokenizer analysis](/guide/tokenizer-analysis) pages. All numbers are from the reproducible eval suites (commands at the bottom).
 
 ## The pattern in one line
 
-Every format is fine on frontier models. As the model gets smaller, TOON and JSON degrade first and fastest; GCF holds. The gap you care about only appears at the small end.
+Every format reads cleanly on frontier models. As the model gets smaller, TOON and JSON degrade first and fastest; GCF holds. The comprehension gap appears only at the small end (losslessness and compactness are constant everywhere).
 
 ![On smaller models, TOON and JSON approach chance while GCF holds](/charts/small-model-accuracy.png)
 
@@ -81,7 +83,7 @@ This is grounded in original tokenizer and attention research (under review), wh
 
 ## Bottom line
 
-If your traffic is 100% frontier, GCF's correctness margin is a safety net you may not need. The moment any of it routes to a cheaper or local model (the standard cost optimization for agent workloads), the format is doing real work, and the small-model numbers are the ones that decide the outcome:
+If your traffic is 100% frontier, GCF is still lossless and still smaller on the wire on every call; only its comprehension margin is a safety net you may not need there. The moment any traffic routes to a cheaper or local model (the standard cost optimization for agent workloads), comprehension joins the other two, and the small-model numbers are the ones that decide the outcome:
 
 - Comprehension holds where TOON and JSON fall to coin-flip.
 - Generation stays valid where TOON's decoder rejects the output.
