@@ -12,11 +12,11 @@ This page pulls together the small-model evidence that lives across the [benchma
 
 Every format reads cleanly on frontier models. As the model gets smaller, TOON and JSON degrade first and fastest; GCF holds. The comprehension gap appears only at the small end (losslessness and compactness are constant everywhere).
 
-![On smaller models, TOON and JSON approach chance while GCF holds](/charts/small-model-accuracy.png)
+![On smaller models, TOON and JSON approach chance while GCF holds](https://raw.githubusercontent.com/blackwell-systems/gcf/main/docs/public/charts/small-model-accuracy.png)
 
 The same effect seen as a gradient: GCF's advantage over the alternatives grows as the model gets weaker.
 
-![GCF advantage grows on weaker models](/charts/advantage-by-tier.png)
+![GCF advantage grows on weaker models](https://raw.githubusercontent.com/blackwell-systems/gcf/main/docs/public/charts/advantage-by-tier.png)
 
 ## 1. Reading the data (comprehension)
 
@@ -30,7 +30,7 @@ The same effect seen as a gradient: GCF's advantage over the alternatives grows 
 
 On Gemini 2.5 Flash, switching from JSON to GCF is a 21-point accuracy swing, and GCF beats TOON by ~10 points. On a frontier model that same switch is worth nothing.
 
-![Generic comprehension accuracy by model](/charts/generic-accuracy-by-model.png)
+![Generic comprehension accuracy by model](https://raw.githubusercontent.com/blackwell-systems/gcf/main/docs/public/charts/generic-accuracy-by-model.png)
 
 **Graph profile (symbols and edges, under structural stress).** 500-symbol code graphs, 25 runs, 10 models. Here GCF leads on every model, and the lead widens as the model shrinks:
 
@@ -42,7 +42,7 @@ On Gemini 2.5 Flash, switching from JSON to GCF is a 21-point accuracy swing, an
 
 Canonical averages (mean of per-model): GCF 91.2%, TOON 68.8%, JSON 54.1%. On the small models the TOON and JSON numbers fall into the 40s and 50s (coin-flip territory on structured retrieval) while GCF stays in the 70s to 100.
 
-![Graph comprehension accuracy by model](/charts/accuracy-by-model.png)
+![Graph comprehension accuracy by model](https://raw.githubusercontent.com/blackwell-systems/gcf/main/docs/public/charts/accuracy-by-model.png)
 
 ## 2. Writing the data (generation)
 
@@ -57,7 +57,7 @@ Comprehension is only half the loop. If your agent is expected to *produce* the 
 
 **TOON's official decoder rejects LLM-generated output on 7 of 9 models.** Its flat tabular design encodes semantic categories as integers, which forces a mapping that smaller models do not perform unprompted. GCF is the only compact format every frontier model produces at 5/5, and it remains the most producible format as the model shrinks. On the mid-tier Flash models where GCF itself dips below 5/5, JSON and TOON drop further (GCF 3.0 vs JSON 1.7 vs TOON 1.3 on Gemini 2.5 Flash).
 
-![Generation validity by model](/charts/generation-validity.png)
+![Generation validity by model](https://raw.githubusercontent.com/blackwell-systems/gcf/main/docs/public/charts/generation-validity.png)
 
 ## 3. Long sessions (delta depth)
 
@@ -65,7 +65,7 @@ Multi-turn delta encoding re-sends only changed rows, so the base recedes as a s
 
 The fix is built in and non-normative: a producer-side **periodic re-anchor** re-sends a full payload every N turns (default 15). It costs nothing on the wire, closes the drift back to 100%, and, as the delta guide puts it, "also rescues small and local models." Context-limited consumers get resend-quality context without resend's bulk.
 
-![Delta comprehension holds to 50 turns across models](/charts/generic-delta-depth-by-model.png)
+![Delta comprehension holds to 50 turns across models](https://raw.githubusercontent.com/blackwell-systems/gcf/main/docs/public/charts/generic-delta-depth-by-model.png)
 
 ## 4. A free aid for weak models (labeled counts)
 
@@ -77,7 +77,7 @@ Frontier models have enough capacity to overcome noisy tokenization; small model
 
 TOON's tab delimiter merges with adjacent content far more than the alternatives: across 43 tokenizers and 29,025 checks, GCF's pipe merges 0.47% of the time, JSON's quote 8.17%, and TOON's tab **32.91%**, the worst of any common separator. GPT-4's vocabulary alone has 1,173 tab-plus-letter entries versus 22 for pipe. Those merges are boundary noise a large model can look past and a small model cannot.
 
-![Failure types by model tier](/charts/failure-types.png)
+![Failure types by model tier](https://raw.githubusercontent.com/blackwell-systems/gcf/main/docs/public/charts/failure-types.png)
 
 This is grounded in original tokenizer and attention research (under review), which shows through controlled training that BPE merge decisions permanently constrain which attention heads develop. See the [tokenizer analysis](/guide/tokenizer-analysis) and the companion papers linked from the [whitepaper](https://github.com/blackwell-systems/gcf/blob/main/gcf-whitepaper.pdf). The short version: the delimiter you pick shapes what small models can parse, and TOON picked the delimiter with the largest adversarial surface.
 
