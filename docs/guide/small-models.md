@@ -32,6 +32,21 @@ On Gemini 2.5 Flash, switching from JSON to GCF is a 21-point accuracy swing, an
 
 ![Generic comprehension accuracy by model](https://raw.githubusercontent.com/blackwell-systems/gcf/main/docs/public/charts/generic-accuracy-by-model.png)
 
+This is not two cherry-picked models. The same generic task was run across 19 models from 9 providers. Every frontier model ties at 100%; on the non-frontier tail, GCF beats or ties JSON on 10 of 11 open and budget models. The open-weight tail (Llama, Mistral, DeepSeek, Nova) is exactly the local-and-cheap deployment target:
+
+| Model | GCF | JSON |
+|-------|-----|------|
+| LLaMA 3.3 70B | **84.6%** | 61.5% |
+| LLaMA 4 Maverick | **76.9%** | 61.5% |
+| DeepSeek V3 | **73.1%** | 71.2% |
+| GPT-4o mini | **69.2%** | 61.5% |
+| LLaMA 3.1 8B | **65.4%** | 58.3% |
+| Amazon Nova Micro | **53.8%** | 41.7% |
+
+![Generic comprehension across open and budget models](https://raw.githubusercontent.com/blackwell-systems/gcf/main/docs/public/charts/generic-small-open-comprehension.png)
+
+The one model where JSON edges GCF is Kimi K2.7 Code (68.3% vs 65.4%), which suits the flatten variant better. TOON was tested on a subset and was consistently the weakest of the three. Below this tail, capacity runs out for every format (IBM Granite 4.0 Micro and Qwen 3.6 35B score 31% and 25% on GCF, too low to separate formats): GCF is a comprehension aid, not a substitute for model capability.
+
 **Graph profile (symbols and edges, under structural stress).** 500-symbol code graphs, 25 runs, 10 models. Here GCF leads on every model, and the lead widens as the model shrinks:
 
 | Model | GCF | TOON | JSON |
@@ -67,9 +82,17 @@ The fix is built in and non-normative: a producer-side **periodic re-anchor** re
 
 ![Delta comprehension holds to 50 turns across models](https://raw.githubusercontent.com/blackwell-systems/gcf/main/docs/public/charts/generic-delta-depth-by-model.png)
 
+Re-anchor is not a fix for one 70B outlier: it is exactly the weak-model rescue this page is about. On the weakest open models tested (Meta llama-3.1-8b, Google gemma-3-4b, Amazon nova-lite, Google gemini-flash-lite), pure delta over a 50-turn session lifts back to full-resend accuracy or better once re-anchor is on, while keeping roughly 93% of turns compact. gemma-3-4b is the clearest case: 58% pure delta up to 76%, matching full resend.
+
+![Re-anchor rescues weak models](https://raw.githubusercontent.com/blackwell-systems/gcf/main/docs/public/charts/generic-delta-reanchor-weak.png)
+
 ## 4. A free aid for weak models (labeled counts)
 
 Streaming trailers can carry counts in a positional form (`counts=2,2,3`) or an optional labeled form (`counts=targets:2,related:2,edges:3`, spec v3.4). The labeled form is decoder-ignored and roughly free for a frontier model, but smaller models resolve a labeled per-group count far more reliably: measured **up to +34 points on weak models**. The positional form stays the default; the labeled form exists specifically as a small-model comprehension aid.
+
+Across six budget and open models (Amazon nova-micro/nova-lite, Meta llama-3.1-8b/llama-3.3-70b, Mistral 24B, Gemini Flash Lite), labeled counts match or beat every other trailer form, and the aid does the most work exactly where the model is weakest. Frontier models are already at ceiling and gain nothing:
+
+![Per-group counting accuracy by trailer form](https://raw.githubusercontent.com/blackwell-systems/gcf/main/docs/public/charts/trailer-counts-by-arm.png)
 
 ## Why the gap lives at the small end
 
