@@ -74,25 +74,33 @@ Comprehension is only half the loop. If your agent is expected to *produce* the 
 
 ![Generation validity by model](https://raw.githubusercontent.com/blackwell-systems/gcf/main/docs/public/charts/generation-validity.png)
 
-## 3. Long sessions (delta depth)
+## 3. Knobs that help small models (all optional, all measured)
+
+Sections 1 and 2 are about the format as it ships. On top of that, GCF exposes a handful of optional, producer-side knobs whose entire purpose is to help small, weak, and local models. They share three properties: none changes the wire for a decoder (a plain reader ignores them), none costs a frontier model anything (it is already at ceiling), and each was measured in its own study before shipping. If you route to cheap models, these are the dials you turn.
+
+### Re-anchor: rescue long sessions
 
 Multi-turn delta encoding re-sends only changed rows, so the base recedes as a session deepens and a weaker model has more to reconstruct. A 50-turn stress test (50-row table, 5% churn per turn) held per-record retrieval essentially perfect across weak-to-frontier models (1,777 of 1,777 correct). The one drift case is a small model at the deep end: llama-3.3-70b starts losing state around turns 41 to 50.
 
-The fix is built in and non-normative: a producer-side **periodic re-anchor** re-sends a full payload every N turns (default 15). It costs nothing on the wire, closes the drift back to 100%, and, as the delta guide puts it, "also rescues small and local models." Context-limited consumers get resend-quality context without resend's bulk.
-
 ![Delta comprehension holds to 50 turns across models](https://raw.githubusercontent.com/blackwell-systems/gcf/main/docs/public/charts/generic-delta-depth-by-model.png)
 
-Re-anchor is not a fix for one 70B outlier: it is exactly the weak-model rescue this page is about. On the weakest open models tested (Meta llama-3.1-8b, Google gemma-3-4b, Amazon nova-lite, Google gemini-flash-lite), pure delta over a 50-turn session lifts back to full-resend accuracy or better once re-anchor is on, while keeping roughly 93% of turns compact. gemma-3-4b is the clearest case: 58% pure delta up to 76%, matching full resend.
+The knob is a producer-side **periodic re-anchor**: re-send a full payload every N turns (default 15). It costs nothing on the wire and does two things. It closes that one drift case back to 100%, and, more generally, it rescues weak models. On the weakest open models tested (Meta llama-3.1-8b, Google gemma-3-4b, Amazon nova-lite, Google gemini-flash-lite), pure delta over a 50-turn session lifts back to full-resend accuracy or better once re-anchor is on, while keeping roughly 93% of turns compact. gemma-3-4b is the clearest case: 58% pure delta up to 76%, matching full resend.
 
 ![Re-anchor rescues weak models](https://raw.githubusercontent.com/blackwell-systems/gcf/main/docs/public/charts/generic-delta-reanchor-weak.png)
 
-## 4. A free aid for weak models (labeled counts)
+### Labeled counts: rescue counting
 
-Streaming trailers can carry counts in a positional form (`counts=2,2,3`) or an optional labeled form (`counts=targets:2,related:2,edges:3`, spec v3.4). The labeled form is decoder-ignored and roughly free for a frontier model, but smaller models resolve a labeled per-group count far more reliably: measured **up to +34 points on weak models**. The positional form stays the default; the labeled form exists specifically as a small-model comprehension aid.
-
-Across six budget and open models (Amazon nova-micro/nova-lite, Meta llama-3.1-8b/llama-3.3-70b, Mistral 24B, Gemini Flash Lite), labeled counts match or beat every other trailer form, and the aid does the most work exactly where the model is weakest. Frontier models are already at ceiling and gain nothing:
+Streaming trailers carry per-group counts in a positional form (`counts=2,2,3`) or an optional labeled form (`counts=targets:2,related:2,edges:3`, spec v3.4). The labeled form is decoder-ignored and roughly free for a frontier model, but smaller models resolve a labeled per-group count far more reliably. A dedicated four-arm study (none / totals / positional / labeled, three graph sizes, per-group counting with programmatic ground truth) measured it: labeled and positional counts add **about +34 points on weak and mid models on average, growing from +11pp at 15 symbols to +56pp at 500** as tallying by hand gets harder, and the labeled form adds a further ~+14pp over positional on average, rising to +29 to +40pp on the weakest models (nova-micro, llama-3.1-8b). Across six budget and open models (Amazon nova-micro/nova-lite, Meta llama-3.1-8b/llama-3.3-70b, Mistral 24B, Gemini Flash Lite), labeled counts match or beat every other trailer form; frontier models are already at ceiling and gain nothing. Positional stays the default; labeled is the knob you turn on for weak consumers.
 
 ![Per-group counting accuracy by trailer form](https://raw.githubusercontent.com/blackwell-systems/gcf/main/docs/public/charts/trailer-counts-by-arm.png)
+
+### Flatten: turn it off for open models
+
+GCF flattens nested objects to path columns (`user>login`) by default, because it saves tokens and every frontier model reads the flat form at 100%. But the flatten experiment (19 models) found that open-weight models regress **8 to 23%** on the flattened form versus the nested form, while proprietary frontier models show zero regression. Flatten is therefore shipped as opt-**out**: leave it on for frontier traffic, turn it off when you route nested data to open-weight or local models. (The `>` path separator was chosen the same way: it beats `;` deterministically on Gemini 2.5 Flash, 100% vs 92.3%.)
+
+![Flatten regression on open-weight models](https://raw.githubusercontent.com/blackwell-systems/gcf/main/docs/public/charts/flatten-regression-by-model.png)
+
+The one exception is Qwen 3.6 35B, where the flatter layout helps slightly (like Kimi in section 1); everywhere else on the open-weight tail, nested reads clearly better.
 
 ## Why the gap lives at the small end
 
@@ -110,8 +118,7 @@ If your traffic is 100% frontier, GCF is still lossless and still smaller on the
 
 - Comprehension holds where TOON and JSON fall to coin-flip.
 - Generation stays valid where TOON's decoder rejects the output.
-- Long sessions self-correct with re-anchor.
-- Labeled counts add up to 34 points for free.
+- And three optional producer-side knobs, each measured, each free on the frontier and aimed squarely at cheap models: re-anchor rescues long sessions, labeled counts add up to +34 points on counting, and turning flatten off recovers 8 to 23% on open-weight models.
 
 ## Reproduce
 
