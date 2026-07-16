@@ -10,7 +10,7 @@ pip install gcf-python
 
 Encode any Python value into GCF tabular format. Unlike `encode` (which handles the graph `Payload` type), `encode_generic` works on arbitrary dicts, lists, and primitives.
 
-Pass `GenericOptions(no_flatten=True)` to use expanded encoding for nested objects (open-weight models currently comprehend this form better; GCF still outperforms JSON either way).
+Pass `GenericOptions(no_flatten=True)` to use the expanded (non-flattened) encoding for nested objects. Flattening is on by default because it saves tokens and every frontier model reads it at 100%, but open-weight models read the expanded form 8 to 23% better (measured across 19 models; see [Knobs that help small models](/guide/small-models)). GCF still outperforms JSON either way.
 
 ```python
 from gcf import encode_generic

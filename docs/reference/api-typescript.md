@@ -10,7 +10,7 @@ npm install @blackwell-systems/gcf
 
 Encode any JS value into GCF tabular format. Unlike `encode` (which handles the graph `Payload` type), `encodeGeneric` works on arbitrary objects, arrays, and primitives.
 
-Pass `{ noFlatten: true }` to use expanded encoding for nested objects (open-weight models currently comprehend this form better; GCF still outperforms JSON either way).
+Pass `{ noFlatten: true }` to use the expanded (non-flattened) encoding for nested objects. Flattening is on by default because it saves tokens and every frontier model reads it at 100%, but open-weight models read the expanded form 8 to 23% better (measured across 19 models; see [Knobs that help small models](/guide/small-models)). GCF still outperforms JSON either way.
 
 ```typescript
 import { encodeGeneric } from '@blackwell-systems/gcf';
