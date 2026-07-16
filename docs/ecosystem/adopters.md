@@ -4,7 +4,7 @@
 
 [Chrome DevTools MCP](https://github.com/ChromeDevTools/chrome-devtools-mcp) is the #1 most-starred MCP server on GitHub (47K stars). Built by the Google Chrome DevTools team, it exposes browser state (DOM, network, console, performance) to AI coding agents.
 
-GCF was merged as an experimental data format in [PR #2235](https://github.com/ChromeDevTools/chrome-devtools-mcp/pull/2235) after 11 days and 4 review rounds. The review process required npm provenance attestations (SLSA v1), a refactor from boolean flags to a unified `experimentalDataFormat` enum, optional peer dependency loading with clear error messages, and several other improvements.
+GCF ships as an experimental data format, merged after 11 days and 4 review rounds. The review process required npm provenance attestations (SLSA v1), a refactor from boolean flags to a unified `experimentalDataFormat` enum, optional peer dependency loading with clear error messages, and several other improvements.
 
 - `--experimentalDataFormat=gcf` enables GCF encoding on all structured tool responses
 - `@blackwell-systems/gcf` as optional peer dependency (install separately)
@@ -26,6 +26,17 @@ The previous encoder only handled homogeneous arrays with uniform column types. 
 - 100% payload coverage, all round-trips lossless
 - 44 tests passing, full backward compatibility with existing encoded content
 - OmniRoute rejected TOON because it required an npm dependency. GCF's zero-dep TypeScript source was vendored directly.
+
+## Speakeasy
+
+[Speakeasy](https://github.com/speakeasy-api/openapi) builds API tooling for the OpenAPI ecosystem (customers include Google, Verizon, Mistral AI, DocuSign, and Vercel). Their `oq` CLI queries and transforms OpenAPI specifications from the command line.
+
+GCF is a native output format (`--format gcf`). The Speakeasy team conducted a dependency audit of `gcf-go`, confirming no data is sent to third parties; all encoding happens in-memory.
+
+- `oq --format gcf` outputs OpenAPI query results in GCF
+- Merged after thorough code review and dependency audit by Speakeasy maintainers
+- Uses `github.com/blackwell-systems/gcf-go`
+- Independent third-party adoption with full security review
 
 ## NeuroNest
 
@@ -120,17 +131,6 @@ The team used GCF for cross-agent context passing in their multi-agent architect
 - Multi-agent system with LangGraph orchestration
 - GCF used for inter-agent context sharing
 - 3rd place, National AI Hackathon (Pakistan, 2026)
-
-## Speakeasy
-
-[Speakeasy](https://github.com/speakeasy-api/openapi) builds API tooling for the OpenAPI ecosystem. Their `oq` CLI queries and transforms OpenAPI specifications from the command line.
-
-GCF was added as a native output format (`--format gcf`) in [PR #216](https://github.com/speakeasy-api/openapi/pull/216). The Speakeasy team conducted a dependency audit of `gcf-go`, confirming no data is sent to third parties; all encoding happens in-memory.
-
-- `oq --format gcf` outputs OpenAPI query results in GCF
-- Merged after thorough code review and dependency audit by Speakeasy maintainers
-- Uses `github.com/blackwell-systems/gcf-go` v1.2.2
-- Independent third-party adoption with full security review
 
 ## Raycast
 
