@@ -142,6 +142,15 @@ The [JSON to GCF Converter](https://raycast.com/blackwell-systems/json-to-gcf-co
 - Uses `@blackwell-systems/gcf` npm package
 - Approved by Raycast maintainers (Greptile 5/5 confidence score)
 
+## Also in the wild
+
+Smaller projects and community tools that ship GCF as a direct dependency:
+
+- **[Jx Studio](https://github.com/jxsuite/jx)** — a local-first visual website builder that stores everything as plain JSON and Markdown. Ships `@blackwell-systems/gcf` as a dependency for token-efficient structured data.
+- **[wicek](https://github.com/xxczaki/wicek)** — a task-focused AI assistant running as a Discord bot, powered by Claude Code. Uses GCF for compact agent context.
+- **[NUR (Nix User Repository)](https://github.com/nix-community/nur-combined)** — agent-lsp packaged with GCF token-optimized output, installable across NixOS.
+- **[Codex plugin marketplaces](https://github.com/hashgraph-online/awesome-codex-plugins)** — the GCF Proxy plugin (wrap any MCP server, 71% token reduction) is listed across multiple Codex plugin registries.
+
 ## Your project here
 
 If you're using GCF in production, [open an issue](https://github.com/blackwell-systems/gcf/issues) to be listed here.
