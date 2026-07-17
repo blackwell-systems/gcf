@@ -83,6 +83,18 @@ GCF encoding is opt-in per tool call via `output_format: "gcf"` in the tool argu
 - `wiki_search`: **42.4% fewer tokens** at 15 results
 - Available as optional extra: `pip install "claude-ctx[gcf]"`
 
+## Lynkr
+
+[Lynkr](https://github.com/Fast-Editor/Lynkr) is an HTTP proxy for the Claude Code CLI that streamlines code interactions with routing, context compression, and memory, maintained by [Vishal Veera Reddy](https://github.com/veerareddyvishal144). 531 stars.
+
+Lynkr already compressed structured context with TOON. GCF was added as an opt-in, drop-in alternative through the same context adapter, so a deployment can switch compression formats without changing anything else in the proxy. Merged by the maintainer.
+
+- Opt-in GCF path alongside the existing TOON encoder (`src/context/gcf.js`)
+- Lossless round-trip verification (order-insensitive deep-equality) on by default, with a never-grow guard: if GCF would not shrink the payload it falls back to the original
+- Byte-length fast path skips encoding on payloads below a size threshold (default 4 KB) that are too small to benefit
+- 6 tests (`test/gcf-compression.test.js`), full backward compatibility with the existing TOON path
+- Uses `@blackwell-systems/gcf` v2.4.0
+
 ## Open Data Products SDK (Linux Foundation)
 
 [Open Data Products SDK](https://opendataproducts.org/sdk/) is a Python toolkit and MCP server for working with data product standards under the Linux Foundation. It validates, generates, and publishes Open Data Product specifications.
