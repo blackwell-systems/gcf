@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-  <img src="assets/gcf-logo.png" alt="GCF" width="360">
+  <img src="assets/gcf-hero-wire-v4.png" alt="GCF" width="760">
 </p>
 
 <h3 align="center">The AI-native wire format for structured data. Built for the agentic loop.</h3>
