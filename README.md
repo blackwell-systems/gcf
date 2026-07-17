@@ -72,10 +72,6 @@ pip install gcf-proxy
 
 Full results: [gcformat.com/guide/benchmarks](https://gcformat.com/guide/benchmarks.html)
 
-<p align="center">
-  <img src="assets/divider.png" alt="" width="100%">
-</p>
-
 ### Encode any structured data (generic profile)
 
 ```python
