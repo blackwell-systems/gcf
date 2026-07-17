@@ -24,7 +24,9 @@
 > **Developmental Atlas of Attention Head Specialization: Spacing, Stranding, and the Capacity Tax of BPE Tokenization**
 > Dayna Blackwell, 2026. DOI: [10.5281/zenodo.21205389](https://doi.org/10.5281/zenodo.21205389)
 
----
+<p align="center">
+  <img src="assets/divider.png" alt="" width="100%">
+</p>
 
 **GCF is built for the agentic loop, where the same structured context crosses the model boundary turn after turn.** A single payload is already 50-92% smaller than JSON. But GCF also deduplicates repeated structure across turns and sends only deltas when context changes, so by the 5th overlapping call each response costs 99% fewer tokens than the JSON equivalent, and a full 10-call session runs 94.4% cheaper than re-sending JSON every turn. Session dedup and delta both need local IDs and a multi-turn design: **neither JSON nor TOON can do this at all.**
 
@@ -47,7 +49,9 @@ Or wrap any existing MCP server with zero code changes:
 pip install gcf-proxy
 ```
 
----
+<p align="center">
+  <img src="assets/divider.png" alt="" width="100%">
+</p>
 
 ## Benchmarks
 
@@ -68,7 +72,9 @@ pip install gcf-proxy
 
 Full results: [gcformat.com/guide/benchmarks](https://gcformat.com/guide/benchmarks.html)
 
----
+<p align="center">
+  <img src="assets/divider.png" alt="" width="100%">
+</p>
 
 ### Encode any structured data (generic profile)
 
@@ -127,7 +133,9 @@ Local IDs (`@0`, `@1`) replace full names in edges. 81 tokens instead of 191 for
 
 **[Try it live in the playground](https://gcformat.com/playground.html)** with real-time multi-format comparison. Paste JSON, YAML, or TOML. Encode from and decode to JSON, YAML, TOML, CSV, and MessagePack.
 
----
+<p align="center">
+  <img src="assets/divider.png" alt="" width="100%">
+</p>
 
 ## How it works
 
