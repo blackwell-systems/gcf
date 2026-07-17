@@ -85,9 +85,9 @@ GCF encoding is opt-in per tool call via `output_format: "gcf"` in the tool argu
 
 ## Lynkr
 
-[Lynkr](https://github.com/Fast-Editor/Lynkr) is an HTTP proxy for the Claude Code CLI that streamlines code interactions with routing, context compression, and memory, maintained by [Vishal Veera Reddy](https://github.com/veerareddyvishal144). 531 stars.
+[Lynkr](https://github.com/Fast-Editor/Lynkr) is an LLM gateway (a local proxy on `localhost:8081`) that sits between AI coding clients (Claude Code, Cursor, Codex, Cline, Continue.dev) and model backends spanning local (Ollama, llama.cpp, LM Studio), cloud (Bedrock, OpenRouter, OpenAI), and enterprise (Databricks, Azure, Vertex AI), maintained by [Vishal Veera Reddy](https://github.com/veerareddyvishal144). It strips unused tool schemas, compresses tool results, caches semantically, routes by complexity tier, and converts between Anthropic and OpenAI formats. 531 stars.
 
-Lynkr already compressed structured context with TOON. GCF was added as an opt-in, drop-in alternative through the same context adapter, so a deployment can switch compression formats without changing anything else in the proxy. Merged by the maintainer.
+Every tool result flowing through the gateway is a compression target. Lynkr already compressed them with TOON; GCF was added as an opt-in, drop-in alternative through the same context adapter, so a deployment can switch formats without changing anything else in the proxy. Like OmniRoute, this is an infrastructure-layer integration, a gateway that every request passes through. Merged by the maintainer.
 
 - Opt-in GCF path alongside the existing TOON encoder (`src/context/gcf.js`)
 - Lossless round-trip verification (order-insensitive deep-equality) on by default, with a never-grow guard: if GCF would not shrink the payload it falls back to the original
