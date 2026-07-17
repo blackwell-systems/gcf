@@ -191,12 +191,13 @@ No other format has these. They compound across multi-turn agent interactions.
 - [Schema Validation](https://gcformat.com/guide/schema-validation.html)
 - [FAQ](https://gcformat.com/guide/faq.html)
 - [Tokenizer Analysis](https://gcformat.com/guide/tokenizer-analysis.html) (why JSON's grammar breaks at the BPE level)
+- [GCF on Small Models](https://gcformat.com/guide/small-models.html) (where the comprehension gap actually lives: cheap, local, and open-weight models)
 - [Playground](https://gcformat.com/playground.html)
 - [Specification](SPEC.md)
 
 ## Adopted by
 
-[Chrome DevTools MCP](https://github.com/ChromeDevTools/chrome-devtools-mcp) (47K stars, Google Chrome DevTools team) · [Speakeasy](https://speakeasy.com) (API tooling, customers include Google, Verizon, Mistral AI, DocuSign, Vercel) · [OmniRoute](https://omniroute.online) (17K stars) · [NetClaw](https://github.com/automateyournetwork/netclaw) (610 stars) · [ctx](https://github.com/stevesolun/ctx) (552 stars) · [NeuroNest](https://neuronest.cc) · [Open Data Products SDK](https://opendataproducts.org/sdk/) (Linux Foundation) · [Raycast](https://raycast.com/blackwell-systems/json-to-gcf-converter) · [and more](https://gcformat.com/ecosystem/adopters.html)
+[Chrome DevTools MCP](https://github.com/ChromeDevTools/chrome-devtools-mcp) (47K stars, Google Chrome DevTools team) · [Speakeasy](https://speakeasy.com) (API tooling, customers include Google, Verizon, Mistral AI, DocuSign, Vercel) · [OmniRoute](https://omniroute.online) (17K stars) · [NetClaw](https://github.com/automateyournetwork/netclaw) (610 stars) · [ctx](https://github.com/stevesolun/ctx) (552 stars) · [Lynkr](https://github.com/Fast-Editor/Lynkr) (531 stars, LLM gateway) · [NeuroNest](https://neuronest.cc) · [Open Data Products SDK](https://opendataproducts.org/sdk/) (Linux Foundation) · [Raycast](https://raycast.com/blackwell-systems/json-to-gcf-converter) · [and more](https://gcformat.com/ecosystem/adopters.html)
 
 ## Use cases
 
