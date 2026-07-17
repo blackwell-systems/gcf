@@ -133,10 +133,6 @@ Local IDs (`@0`, `@1`) replace full names in edges. 81 tokens instead of 191 for
 
 **[Try it live in the playground](https://gcformat.com/playground.html)** with real-time multi-format comparison. Paste JSON, YAML, or TOML. Encode from and decode to JSON, YAML, TOML, CSV, and MessagePack.
 
-<p align="center">
-  <img src="assets/divider.png" alt="" width="100%">
-</p>
-
 ## How it works
 
 ### Generic profile
