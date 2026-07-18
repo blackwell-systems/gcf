@@ -283,6 +283,16 @@ code.terminal { color: #4ade80; background: #0a1a0a; border: 1px solid #1a3a1a; 
   overflow-x: clip;
 }
 
+/* Subtle crosshatch texture on the home content sections below the hero.
+   Scoped to .VPHome .vp-doc, so the hero (.VPHomeHero, a sibling above) is
+   never touched. Two diagonal line sets = crosshatch; kept faint to match the
+   existing dot-grid subtlety (nav/footer use ~0.015 white). Dark mode only. */
+.dark .VPHome .vp-doc {
+  background-image:
+    repeating-linear-gradient(45deg,  rgba(255, 255, 255, 0.02) 0, rgba(255, 255, 255, 0.02) 1px, transparent 1px, transparent 9px),
+    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0, rgba(255, 255, 255, 0.02) 1px, transparent 1px, transparent 9px);
+}
+
 /* ── Mobile pass ── */
 @media (max-width: 768px) {
   :root {
