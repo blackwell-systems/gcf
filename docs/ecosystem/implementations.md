@@ -6,7 +6,7 @@ Six official implementations, all MIT licensed and zero runtime dependencies. Th
 
 | Language | Package | Install | Registry | Status |
 |----------|---------|---------|----------|--------|
-| Go | `gcf-go` | `go get github.com/blackwell-systems/gcf-go@v1.5.0` | [pkg.go.dev](https://pkg.go.dev/github.com/blackwell-systems/gcf-go) | v1.5.0 · 204 · 1B+ RT |
+| Go | `gcf-go` | `go get github.com/blackwell-systems/gcf-go@v1.5.1` | [pkg.go.dev](https://pkg.go.dev/github.com/blackwell-systems/gcf-go) | v1.5.1 · 204 · 1B+ RT |
 | TypeScript | `@blackwell-systems/gcf` | `npm install @blackwell-systems/gcf@2.4.0` | [npm](https://www.npmjs.com/package/@blackwell-systems/gcf) | v2.4.0 · 204 · 20M RT |
 | Python | `gcf-python` | `pip install gcf-python==2.4.0` | [PyPI](https://pypi.org/project/gcf-python/) | v2.4.0 · 204 · 10M RT |
 | Rust | `gcf` | `cargo add gcf@2.4.0` | [crates.io](https://crates.io/crates/gcf) | v2.4.0 · 204 · 43B+ RT |

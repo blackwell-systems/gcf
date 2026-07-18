@@ -7,7 +7,7 @@ release see the [GitHub releases](https://github.com/blackwell-systems/gcf/relea
 The spec has grown **additively since v3.0** with no breaking changes: a v3.0 decoder
 ignores anything it does not recognize.
 
-**Current ecosystem:** Spec **v3.4.1** · SDKs **v2.4.0** (Go **v1.5.0**) · gcf-proxy
+**Current ecosystem:** Spec **v3.4.1** · SDKs **v2.4.0** (Go **v1.5.1**) · gcf-proxy
 **v0.11.3** · tree-sitter-gcf **v1.3.3** · 204 conformance fixtures.
 
 ## v3.4.1 — Graph delta verification

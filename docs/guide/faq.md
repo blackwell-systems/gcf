@@ -55,7 +55,7 @@ TOON is a tree serializer: YAML with counted arrays. It encodes flat tabular dat
 
 Six official implementations, all MIT licensed, zero runtime dependencies:
 
-- **Go** ([pkg.go.dev](https://pkg.go.dev/github.com/blackwell-systems/gcf-go)) v1.5.0
+- **Go** ([pkg.go.dev](https://pkg.go.dev/github.com/blackwell-systems/gcf-go)) v1.5.1
 - **TypeScript** ([npm](https://www.npmjs.com/package/@blackwell-systems/gcf)) v2.4.0
 - **Python** ([PyPI](https://pypi.org/project/gcf-python/)) v2.4.0
 - **Rust** ([crates.io](https://crates.io/crates/gcf)) v2.4.0
@@ -105,7 +105,7 @@ Yes. MIT licensed. The [spec](https://github.com/blackwell-systems/gcf), all six
 
 ## How stable is the spec?
 
-[Spec v3.4.1](https://github.com/blackwell-systems/gcf/blob/main/SPEC.md) is designated Stable. Six implementations at v2.4.0+ (Go v1.5.0), 204 conformance fixtures, <strong style="color: var(--vp-c-brand-1)">[43 billion+ lossless round-trips](/guide/lossless-verification)</strong> verified across 5 formats (JSON, YAML, TOML, CSV, MessagePack) and 6 language implementations, cross-language 6x6 matrix passing.
+[Spec v3.4.1](https://github.com/blackwell-systems/gcf/blob/main/SPEC.md) is designated Stable. Six implementations at v2.4.0+ (Go v1.5.1), 204 conformance fixtures, <strong style="color: var(--vp-c-brand-1)">[43 billion+ lossless round-trips](/guide/lossless-verification)</strong> verified across 5 formats (JSON, YAML, TOML, CSV, MessagePack) and 6 language implementations, cross-language 6x6 matrix passing.
 
 ## Why not just compress JSON with gzip?
 

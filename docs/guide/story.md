@@ -132,7 +132,7 @@ The competitive landscape confirmed something: the problem is real, others see i
 
 ## The ecosystem
 
-Six language implementations, all at v2.4.0 or above (Go at v1.5.0), all published to their respective registries:
+Six language implementations, all at v2.4.0 or above (Go at v1.5.1), all published to their respective registries:
 
 - **Go** on pkg.go.dev. The reference implementation. 1 billion+ round-trips with native Go fuzzing.
 - **TypeScript** on npm. Powers the playground and the browser encoder.

@@ -394,7 +394,7 @@ GCF is not a speculative format proposal. It is implemented in six languages, pu
 
 The implementation includes:
 
-- **Go library** (`github.com/blackwell-systems/gcf-go`, v1.5.0): Encode, Decode, EncodeGeneric, DecodeGeneric, EncodeWithSession, EncodeDelta, EncodeGenericDelta, StreamEncoder, GenericStreamEncoder. Zero dependencies.
+- **Go library** (`github.com/blackwell-systems/gcf-go`, v1.5.1): Encode, Decode, EncodeGeneric, DecodeGeneric, EncodeWithSession, EncodeDelta, EncodeGenericDelta, StreamEncoder, GenericStreamEncoder. Zero dependencies.
 - **TypeScript library** (`@blackwell-systems/gcf` on npm, v2.4.0): encode, decode, encodeGeneric, decodeGeneric, encodeWithSession, encodeDelta, encodeGenericDelta, StreamEncoder, GenericStreamEncoder. Zero dependencies, ESM.
 - **Python library** (`gcf-python` on PyPI, v2.4.0): encode, decode, encode_generic, decode_generic, encode_with_session, encode_delta, encode_generic_delta, StreamEncoder, GenericStreamEncoder. Zero dependencies, Python 3.9+.
 - **Rust library** (`gcf` on crates.io, v2.4.0): encode, decode, encode_generic, decode_generic, encode_with_session, encode_delta, encode_generic_delta, StreamEncoder, GenericStreamEncoder. Zero dependencies.
@@ -822,7 +822,7 @@ GCF's grammar was reverse-engineered from tokenization and attention-level exper
 ## Reference Implementation
 
 - **Specification:** [SPEC.md](https://github.com/blackwell-systems/gcf/blob/main/SPEC.md) (v3.4.1 Stable, RFC 2119 keywords, conformance checklists, streaming extension, error taxonomy). Published at gcformat.com.
-- **Go library:** `github.com/blackwell-systems/gcf-go` (v1.5.0)
+- **Go library:** `github.com/blackwell-systems/gcf-go` (v1.5.1)
 - **TypeScript library:** `@blackwell-systems/gcf` on npm (v2.4.0)
 - **Python library:** `gcf-python` on PyPI (v2.4.0)
 - **Rust library:** `gcf` on crates.io (v2.4.0)

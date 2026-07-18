@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const languages = [
-  { name: 'Go', version: 'v1.5.0', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg', url: 'https://github.com/blackwell-systems/gcf-go', registry: 'pkg.go.dev' },
+  { name: 'Go', version: 'v1.5.1', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg', url: 'https://github.com/blackwell-systems/gcf-go', registry: 'pkg.go.dev' },
   { name: 'Rust', version: 'v2.4.0', icon: 'https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/rust.svg', url: 'https://github.com/blackwell-systems/gcf-rust', registry: 'crates.io', invert: true },
   { name: 'TypeScript', version: 'v2.4.0', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg', url: 'https://github.com/blackwell-systems/gcf-typescript', registry: 'npm' },
   { name: 'Python', version: 'v2.4.0', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg', url: 'https://github.com/blackwell-systems/gcf-python', registry: 'PyPI' },
