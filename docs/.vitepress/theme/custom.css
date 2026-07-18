@@ -283,18 +283,18 @@ code.terminal { color: #4ade80; background: #0a1a0a; border: 1px solid #1a3a1a; 
   overflow-x: clip;
 }
 
-/* Subtle vertical-line texture on the page background behind the home content,
-   below the hero. Applied to the .VPHome backdrop, not the content blocks, so it
-   reads as background and shows around/behind the sections. The hero
-   (.VPHomeHero) is masked with a solid background so it stays clean. Dark mode
-   only; 16px spacing matches the site's existing dot-grid. */
-.dark .VPHome {
+/* Subtle grid texture on the dark-background home sections only: the FeatureCards
+   and HowItWorks bands (the two with a solid #010102 background). Painted on the
+   band background, so it shows around the content cards, not through them, and it
+   never touches the transparent sections, the button band, or the hero. Vertical
+   and horizontal lines at equal opacity; 16px spacing matches the site's existing
+   dot-grid. Dark mode only. */
+.dark .feature-band,
+.dark .hiw-band {
+  background-color: #010102 !important;
   background-image:
-    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.022) 0, rgba(255, 255, 255, 0.022) 1px, transparent 1px, transparent 16px);
-}
-
-.dark .VPHomeHero {
-  background: var(--vp-c-bg, #000);
+    repeating-linear-gradient(0deg,  rgba(255, 255, 255, 0.025) 0, rgba(255, 255, 255, 0.025) 1px, transparent 1px, transparent 16px),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.025) 0, rgba(255, 255, 255, 0.025) 1px, transparent 1px, transparent 16px) !important;
 }
 
 /* ── Mobile pass ── */
