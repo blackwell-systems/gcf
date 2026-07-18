@@ -171,6 +171,16 @@ TOON's tabular header requires the row count up front, so it must buffer the ful
 
 No other format has these. They compound across multi-turn agent interactions.
 
+## Research
+
+GCF was not tuned by trial and error. Its grammar was reverse-engineered from attention-level research into how BPE tokenization shapes what a transformer can represent, then validated after the fact by controlled from-scratch training.
+
+The mechanism: a tokenizer's merge decisions permanently constrain a model's internal organization. Grammar symbols that BPE folds into the surrounding text (JSON's quotes and braces, TOON's tab) create structural boundaries the model cannot cleanly recover; a delimiter with a 0% merge rate against field names (GCF's pipe) does not. The design follows from that measurement, not from a token count.
+
+Four papers by Dayna Blackwell (2026, currently under review) establish it: the [GCF format paper](https://doi.org/10.5281/zenodo.20579817), [Tokenizer-Attention Coupling](https://doi.org/10.5281/zenodo.20925910), [Stranded Attention](https://doi.org/10.5281/zenodo.21158886), and a [Developmental Atlas of Attention Head Specialization](https://doi.org/10.5281/zenodo.21205389). The effects are measured intrinsically and causally, from attention structure and controlled training at 1.3B scale, not scored by an LLM judge, so they are not explained away as "the benchmark just measures training exposure": GCF wins on models that have never seen it.
+
+Read the full argument in the [Tokenizer Analysis](https://gcformat.com/guide/tokenizer-analysis.html) and the [whitepaper](https://gcformat.com/whitepaper.html).
+
 ## Implementations
 
 | Language | Package | Repository |
@@ -211,7 +221,19 @@ No other format has these. They compound across multi-turn agent interactions.
 
 ## Adopted by
 
-[Chrome DevTools MCP](https://github.com/ChromeDevTools/chrome-devtools-mcp) (47K stars, Google Chrome DevTools team) · [Speakeasy](https://speakeasy.com) (API tooling, customers include Google, Verizon, Mistral AI, DocuSign, Vercel) · [OmniRoute](https://omniroute.online) (17K stars) · [NetClaw](https://github.com/automateyournetwork/netclaw) (610 stars) · [ctx](https://github.com/stevesolun/ctx) (552 stars) · [Lynkr](https://github.com/Fast-Editor/Lynkr) (531 stars, LLM gateway) · [NeuroNest](https://neuronest.cc) · [Open Data Products SDK](https://opendataproducts.org/sdk/) (Linux Foundation) · [Raycast](https://raycast.com/blackwell-systems/json-to-gcf-converter) · [and more](https://gcformat.com/ecosystem/adopters.html)
+| Project | |
+|---------|--|
+| **[Chrome DevTools MCP](https://github.com/ChromeDevTools/chrome-devtools-mcp)** | 47K★ · Google Chrome DevTools team |
+| **[Speakeasy](https://speakeasy.com)** | API tooling · customers include Google, Verizon, Mistral AI, DocuSign, Vercel |
+| **[OmniRoute](https://omniroute.online)** | 17K★ |
+| **[NetClaw](https://github.com/automateyournetwork/netclaw)** | 610★ |
+| **[ctx](https://github.com/stevesolun/ctx)** | 552★ |
+| **[Lynkr](https://github.com/Fast-Editor/Lynkr)** | 531★ · LLM gateway |
+| **[Open Data Products SDK](https://opendataproducts.org/sdk/)** | Linux Foundation project |
+| **[NeuroNest](https://neuronest.cc)** | |
+| **[Raycast](https://raycast.com/blackwell-systems/json-to-gcf-converter)** | JSON-to-GCF converter |
+
+[See all adopters →](https://gcformat.com/ecosystem/adopters.html)
 
 ## Use cases
 
