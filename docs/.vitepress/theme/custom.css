@@ -289,8 +289,8 @@ code.terminal { color: #4ade80; background: #0a1a0a; border: 1px solid #1a3a1a; 
    masked. Dark mode only. */
 .dark .VPHome {
   background-image:
-    linear-gradient(to right,  rgba(255, 255, 255, 0.06) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+    linear-gradient(to right,  rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   background-size: 24px 24px;
 }
 .dark .VPHomeHero,
@@ -299,10 +299,12 @@ code.terminal { color: #4ade80; background: #0a1a0a; border: 1px solid #1a3a1a; 
 }
 
 /* Content blocks that sit over the grid get an opaque base so it never bleeds
-   through them; the original tint is kept via a gradient overlay. */
+   through them; the original tint is kept via a gradient overlay so the box
+   looks identical, just no longer transparent. */
 .dark .lang-card,
 .dark .plugin-card,
-.dark .gcf-card {
+.dark .gcf-card,
+.dark .grammar-column {
   background-image: linear-gradient(rgba(24, 190, 252, 0.03), rgba(24, 190, 252, 0.03)) !important;
   background-color: #000 !important;
 }
@@ -310,9 +312,33 @@ code.terminal { color: #4ade80; background: #0a1a0a; border: 1px solid #1a3a1a; 
   background-image: linear-gradient(rgba(178, 128, 128, 0.03), rgba(178, 128, 128, 0.03)) !important;
   background-color: #000 !important;
 }
+.dark .proxy-callout {
+  background-image: linear-gradient(rgba(17, 51, 72, 0.49), rgba(17, 51, 72, 0.49)) !important;
+  background-color: #000 !important;
+}
+.dark .lang-deps {
+  background-image: linear-gradient(rgba(34, 197, 94, 0.1), rgba(34, 197, 94, 0.1)) !important;
+  background-color: #000 !important;
+}
+.dark .ba-savings-bar {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.06)) !important;
+  background-color: #000 !important;
+}
 .dark .snippet-inner,
 .dark .poem .code-block {
   background-color: #000 !important;
+}
+
+/* Final section: an opaque black base (no grid) with a comfortable margin into
+   the footer, so the close reads as deliberate spacing rather than an empty
+   grid gap. */
+.dark .VPHome > .vp-doc {
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
+}
+.dark .grammar-section {
+  background-color: #000 !important;
+  padding-bottom: 4rem !important;
 }
 
 /* ── Mobile pass ── */
