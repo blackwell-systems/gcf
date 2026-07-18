@@ -149,6 +149,16 @@ Lossless structured data encoding. Arrays, nested objects, mixed types, primitiv
 
 Both profiles share the same grammar (common scalar grammar, key grammar, header format). The savings are structural and grow with payload size.
 
+### Streaming
+
+Emit a payload incrementally, without buffering it, for database cursors, pagination, and graph traversals too large to hold in memory.
+
+1. **Deferred counts.** A header emits `[?]` when the size isn't known yet (`## edges [?]`) and rows stream out as they are produced.
+2. **Summary trailer.** A closing `##! summary symbols=8 edges=6 counts=2,1,3` backfills the real counts once the stream ends, so the model still gets exact totals.
+3. **O(1) memory.** The encoder holds one row at a time; a 10,000-row cursor streams in constant memory instead of materializing the whole response.
+
+TOON's tabular header requires the row count up front, so it must buffer the full array before the first byte; GCF defers the count and fills it in at the end.
+
 ## It gets cheaper over time
 
 **Session deduplication:** Symbols sent in prior responses become bare references (`@7` = 2 tokens vs 19 for full declaration). At production scale (500 symbols), session dedup alone cuts 86.3% by call 5; composed with delta, 99.0% per call. A 10-call session reaches 94.4% cumulative savings vs JSON (each response costs 171 tokens vs 29,072 for JSON).
