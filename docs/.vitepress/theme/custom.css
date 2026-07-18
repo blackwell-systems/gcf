@@ -316,10 +316,6 @@ code.terminal { color: #4ade80; background: #0a1a0a; border: 1px solid #1a3a1a; 
   background-image: linear-gradient(rgba(17, 51, 72, 0.49), rgba(17, 51, 72, 0.49)) !important;
   background-color: #000 !important;
 }
-.dark .lang-deps {
-  background-image: linear-gradient(rgba(34, 197, 94, 0.1), rgba(34, 197, 94, 0.1)) !important;
-  background-color: #000 !important;
-}
 .dark .ba-savings-bar {
   background-image: linear-gradient(rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.06)) !important;
   background-color: #000 !important;
