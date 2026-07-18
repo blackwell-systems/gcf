@@ -340,6 +340,19 @@ code.terminal { color: #4ade80; background: #0a1a0a; border: 1px solid #1a3a1a; 
 .dark .grammar-section {
   padding-bottom: 4rem !important;
 }
+/* Collapse the default gap between .VPHome (which carries the grid) and the
+   footer so no patternless black band sits between the grid and the footer;
+   the grammar section's own grid margin above is the lead-in. */
+.dark .VPHome {
+  margin-bottom: 0 !important;
+}
+.dark .VPContent.is-home {
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
+}
+.dark .VPContent.is-home .VPFooter {
+  margin-top: 0 !important;
+}
 
 /* ── Mobile pass ── */
 @media (max-width: 768px) {
