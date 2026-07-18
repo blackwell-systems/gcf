@@ -11,10 +11,6 @@
 
 <h3 align="center">The AI-native wire format for structured data. Built for the agentic loop.</h3>
 
-<p align="center">
-  <img src="assets/divider-pulse.png" alt="" width="100%">
-</p>
-
 > [!IMPORTANT]
 > **GCF: A Token-Optimized Wire Format for Structured LLM Interactions**
 > Dayna Blackwell, 2026. DOI: [10.5281/zenodo.20579817](https://doi.org/10.5281/zenodo.20579817)
