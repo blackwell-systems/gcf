@@ -283,6 +283,38 @@ code.terminal { color: #4ade80; background: #0a1a0a; border: 1px solid #1a3a1a; 
   overflow-x: clip;
 }
 
+/* Even Cartesian graph-paper grid on the pure-black (#000) page background.
+   Canonical two-gradient + background-size tile guarantees uniform square cells.
+   The opaque #010102 panels cover it so they stay clean; hero + button band
+   masked. Dark mode only. */
+.dark .VPHome {
+  background-image:
+    linear-gradient(to right,  rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+.dark .VPHomeHero,
+.dark .button-band {
+  background: var(--vp-c-bg, #000) !important;
+}
+
+/* Content blocks that sit over the grid get an opaque base so it never bleeds
+   through them; the original tint is kept via a gradient overlay. */
+.dark .lang-card,
+.dark .plugin-card,
+.dark .gcf-card {
+  background-image: linear-gradient(rgba(24, 190, 252, 0.03), rgba(24, 190, 252, 0.03)) !important;
+  background-color: #000 !important;
+}
+.dark .json-card {
+  background-image: linear-gradient(rgba(178, 128, 128, 0.03), rgba(178, 128, 128, 0.03)) !important;
+  background-color: #000 !important;
+}
+.dark .snippet-inner,
+.dark .poem .code-block {
+  background-color: #000 !important;
+}
+
 /* ── Mobile pass ── */
 @media (max-width: 768px) {
   :root {
