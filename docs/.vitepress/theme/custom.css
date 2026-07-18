@@ -329,15 +329,15 @@ code.terminal { color: #4ade80; background: #0a1a0a; border: 1px solid #1a3a1a; 
   background-color: #000 !important;
 }
 
-/* Final section: an opaque black base (no grid) with a comfortable margin into
-   the footer, so the close reads as deliberate spacing rather than an empty
-   grid gap. */
+/* Final section stays transparent so the grid shows through its background
+   (behind the header text and in the bottom margin); only the two columns are
+   opaque. A comfortable grid-filled margin carries the pattern right down to
+   the footer. */
 .dark .VPHome > .vp-doc {
   padding-bottom: 0 !important;
   margin-bottom: 0 !important;
 }
 .dark .grammar-section {
-  background-color: #000 !important;
   padding-bottom: 4rem !important;
 }
 
