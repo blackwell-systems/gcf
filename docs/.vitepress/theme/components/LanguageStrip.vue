@@ -22,9 +22,7 @@ const languages = [
         </a>
       </div>
       <div class="lang-deps">
-        <span class="lang-deps-rule"></span>
         <span class="lang-deps-text">Zero runtime dependencies · No transitive deps · No supply chain risk · <span class="lang-deps-em">Permanent commitment</span> · MIT licensed</span>
-        <span class="lang-deps-rule"></span>
       </div>
     </div>
   </div>
@@ -207,13 +205,8 @@ const languages = [
   margin-top: 24px;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 16px;
-}
-
-.lang-deps-rule {
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(24, 190, 252, 0.15), transparent);
 }
 
 .lang-deps-text {
