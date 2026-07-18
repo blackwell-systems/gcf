@@ -17,6 +17,16 @@
   --vp-c-bg: #000 !important;
   --vp-c-bg-alt: #0a0a0a !important;
   --vp-c-bg-soft: #111 !important;
+
+  /* Graph-paper grid: change these two to experiment.
+     --gcf-grid-line is the line color + opacity (last number, 0-1).
+     --gcf-grid-size is the cell size. Examples to try:
+       rgba(255,255,255,0.024)  neutral white (current)
+       rgba(24,190,252,0.05)    GCF brand blue
+       rgba(24,190,252,0.08)    stronger blue
+       rgba(229,160,13,0.04)    amber */
+  --gcf-grid-line: rgba(255, 255, 255, 0.024);
+  --gcf-grid-size: 24px;
 }
 
 .VPContent.is-home {
@@ -289,9 +299,9 @@ code.terminal { color: #4ade80; background: #0a1a0a; border: 1px solid #1a3a1a; 
    masked. Dark mode only. */
 .dark .VPHome {
   background-image:
-    linear-gradient(to right,  rgba(255, 255, 255, 0.024) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.024) 1px, transparent 1px);
-  background-size: 24px 24px;
+    linear-gradient(to right,  var(--gcf-grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--gcf-grid-line) 1px, transparent 1px);
+  background-size: var(--gcf-grid-size) var(--gcf-grid-size);
 }
 .dark .VPHomeHero,
 .dark .button-band {
