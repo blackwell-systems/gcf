@@ -25,7 +25,7 @@
        rgba(24,190,252,0.05)    GCF brand blue
        rgba(24,190,252,0.08)    stronger blue
        rgba(229,160,13,0.04)    amber */
-  --gcf-grid-line: rgba(255, 255, 255, 0.024);
+  --gcf-grid-line: rgb(27 196 254 / 5%);
   --gcf-grid-size: 24px;
 }
 
