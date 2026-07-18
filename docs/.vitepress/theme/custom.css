@@ -289,8 +289,8 @@ code.terminal { color: #4ade80; background: #0a1a0a; border: 1px solid #1a3a1a; 
    masked. Dark mode only. */
 .dark .VPHome {
   background-image:
-    linear-gradient(to right,  rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    linear-gradient(to right,  rgba(255, 255, 255, 0.024) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.024) 1px, transparent 1px);
   background-size: 24px 24px;
 }
 .dark .VPHomeHero,
