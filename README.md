@@ -12,7 +12,7 @@
 <h3 align="center">The AI-native wire format for structured data. Built for the agentic loop.</h3>
 
 <p align="center">
-  <img src="assets/divider-wave.png" alt="" width="100%">
+  <img src="assets/divider-wave-2.png" alt="" width="100%">
 </p>
 
 > [!IMPORTANT]
