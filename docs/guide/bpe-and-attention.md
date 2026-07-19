@@ -94,15 +94,15 @@ Forced-clean:   [{] ["] [name] ["] [:] ["] [Alice] ["] [}]  (9 tokens)
 
 Every token ID in the clean sequence already exists in the model's own vocabulary. The embedding for a lone `"` is one the model has seen millions of times; it simply never sees it in isolation when reading JSON, because BPE always merges it.
 
-The result: **all 384 attention heads** in the 410M-parameter model, and **all 768 heads** at 1.3B, showed a dramatic jump in delimiter attention. Mean delimiter attention rose from 14% under normal tokenization to 54% under clean tokenization, nearly four times as much. Every head woke up. The smallest per-head increase was still +35 percentage points; the largest, +43. The circuitry for structural processing exists in the weights. The tokenizer prevents it from working.
+The result: **all 384 attention heads** in the 410M-parameter model, and **all 768 heads** at 1.3B, showed a dramatic jump in delimiter attention. Mean delimiter attention rose from 14% under normal tokenization to 55% under clean tokenization, nearly four times as much. Every head woke up. The smallest per-head increase was still +35 percentage points; the largest, +43. The circuitry for structural processing exists in the weights. The tokenizer prevents it from working.
 
 This is why the phenomenon is named **stranding**. A stranded head is active but unproductive: it has latent capacity for structural specialization, but corrupted token boundaries prevent that capacity from being realized. The whole model is partially stranded, not a handful of heads.
 
 ### The frustration gap is immediate and permanent
 
-If stranding were a temporary state that training eventually resolves, it would matter less. The training-dynamics experiment ruled this out. Running the same forced-clean analysis at eight checkpoints, from training step 5,000 through step 40,000, the gap between what the model can do (54% delimiter attention with clean input) and what the tokenizer allows (14% with normal input) did not move. It was already about 40 percentage points at step 5,000, the earliest checkpoint measured (roughly 330 million tokens of training), and it was still about 40 percentage points at step 40,000 (roughly 2.6 billion tokens). Across 35,000 additional training steps, it did not narrow by a single percentage point.
+If stranding were a temporary state that training eventually resolves, it would matter less. The training-dynamics experiment ruled this out. Running the same forced-clean analysis at eight checkpoints, from training step 5,000 through step 40,000, the gap between what the model can do (55% delimiter attention with clean input) and what the tokenizer allows (14% with normal input) did not move. It was already about 41 percentage points at step 5,000, the earliest checkpoint measured (roughly 330 million tokens of training), and it was still about 41 percentage points at step 40,000 (roughly 2.6 billion tokens). Across 35,000 additional training steps, it did not narrow by a single percentage point.
 
-This 40-point gap is called the **frustration gap**: capacity that the model builds, that the gradient pushes it to use, and that the tokenizer permanently blocks. The gradient wants specialization; the tokenizer frustrates it. Training on more data does not help, because the boundaries the heads need are simply not present in the token stream, no matter how long training runs.
+This 41-point gap is called the **frustration gap**: capacity that the model builds, that the gradient pushes it to use, and that the tokenizer permanently blocks. The gradient wants specialization; the tokenizer frustrates it. Training on more data does not help, because the boundaries the heads need are simply not present in the token stream, no matter how long training runs.
 
 The gap is also stable, not a way station on the road to something else. A natural hypothesis is that stranded heads eventually give up and collapse into "attention sinks" (a known failure mode where a head dumps its attention onto position zero and stops contributing; Xiao et al., 2024; Sandoval-Segura et al., 2025). Measuring position-zero attention across training showed no such drift: stranded heads route a small, stable amount of extra attention to position zero as a fallback (+2.6 points) but never fully collapse. They occupy a stable, wasteful middle ground.
 
@@ -136,7 +136,7 @@ The corpus was deliberately not JSON-heavy: JSON was 14% of the training data, w
 
 ### Same weights, clean boundaries: 384 heads wake up
 
-The forced-clean result from Section 3 is itself the causal proof at the level of a single model. Nothing about the model changed; only the presence of clean delimiter tokens at inference time. Yet all 384 heads (and all 768 at 1.3B) shifted from 14% to 54% delimiter attention. The capacity is in the weights. The tokenizer decides whether it can be used.
+The forced-clean result from Section 3 is itself the causal proof at the level of a single model. Nothing about the model changed; only the presence of clean delimiter tokens at inference time. Yet all 384 heads (and all 768 at 1.3B) shifted from 14% to 55% delimiter attention. The capacity is in the weights. The tokenizer decides whether it can be used.
 
 ### Architecture independence
 
