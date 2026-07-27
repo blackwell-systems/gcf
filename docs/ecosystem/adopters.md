@@ -95,6 +95,20 @@ Every tool result flowing through the gateway is a compression target. Lynkr alr
 - 6 tests (`test/gcf-compression.test.js`), full backward compatibility with the existing TOON path
 - Uses `@blackwell-systems/gcf` v2.4.0
 
+## CodeGraphContext
+
+[CodeGraphContext](https://github.com/CodeGraphContext/CodeGraphContext) is an MCP server and CLI that indexes local code into a graph database (nodes for symbols, edges for calls/imports/inheritance) to feed structured context to AI assistants, maintained by [Shashank](https://github.com/Shashankss1205). 4K stars.
+
+Code graph data is a strong fit for GCF: tool responses are arrays of uniform records (symbols, references, call hierarchies) with the same fields repeated across every row. GCF's positional encoding declares the keys once in a header and pipe-delimits the values per row, eliminating the repetition JSON pays on every record.
+
+GCF encoding is opt-in via the `CGC_OUTPUT_FORMAT=gcf` environment variable, with a silent JSON fallback if `gcf-python` is not installed. The maintainer wrote a self-contained `gcf_encoder.py` that lazily loads and caches the encoder, checks once, and never throws.
+
+- **~62% token savings** on typical code graph data
+- Opt-in via `CGC_OUTPUT_FORMAT=gcf`; JSON remains the default
+- `pip install gcf-python`, silent fallback when absent
+- Uses `gcf-python`'s `encode_generic` (generic profile)
+- Independent third-party adoption
+
 ## Open Data Products SDK (Linux Foundation)
 
 [Open Data Products SDK](https://opendataproducts.org/sdk/) is a Python toolkit and MCP server for working with data product standards under the Linux Foundation. It validates, generates, and publishes Open Data Product specifications.
