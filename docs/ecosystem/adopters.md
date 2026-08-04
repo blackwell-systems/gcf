@@ -101,13 +101,27 @@ Every tool result flowing through the gateway is a compression target. Lynkr alr
 
 Code graph data is a strong fit for GCF: tool responses are arrays of uniform records (symbols, references, call hierarchies) with the same fields repeated across every row. GCF's positional encoding declares the keys once in a header and pipe-delimits the values per row, eliminating the repetition JSON pays on every record.
 
-GCF encoding is opt-in via the `CGC_OUTPUT_FORMAT=gcf` environment variable, with a silent JSON fallback if `gcf-python` is not installed. The maintainer wrote a self-contained `gcf_encoder.py` that lazily loads and caches the encoder, checks once, and never throws.
+GCF encoding is opt-in via the `CGC_OUTPUT_FORMAT=gcf` environment variable, with a silent JSON fallback if `gcf-python` is not installed. The integration ships as a self-contained `gcf_encoder.py` that lazily loads and caches the encoder, checks once, and never throws.
 
 - **~62% token savings** on typical code graph data
 - Opt-in via `CGC_OUTPUT_FORMAT=gcf`; JSON remains the default
 - `pip install gcf-python`, silent fallback when absent
 - Uses `gcf-python`'s `encode_generic` (generic profile)
-- Independent third-party adoption
+- Contributed by Blackwell Systems, reviewed and merged by the maintainer
+
+## Cisco Support MCP Server
+
+[mcp-cisco-support](https://github.com/sieteunoseis/mcp-cisco-support) is a production-grade TypeScript MCP server for the Cisco Support APIs, maintained by [sieteunoseis](https://github.com/sieteunoseis) and listed on Cisco Code Exchange. It exposes 46 tools across 8 Cisco Support APIs (Bug Search, Case Management, EoX, PSIRT, Product, Software, Serial, and RMA), with OAuth 2.1 authentication and dual stdio/HTTP transport. 30 stars.
+
+Cisco Support responses are a strong fit for GCF's generic profile: bug lists, end-of-life lifecycle entries, PSIRT security advisories, and product and software listings are arrays of uniform records with the same fields repeated across every row. GCF declares the keys once in a header and encodes values positionally, eliminating the per-record key repetition JSON pays on every entry.
+
+The integration replaced TOON entirely. All response formatting flows through a single formatter (`src/utils/toon-formatter.ts`), so swapping the encoder to `encodeGeneric` and the dependency from `@toon-format/toon` to `@blackwell-systems/gcf` was the whole change, and every tool benefits automatically.
+
+- **28.5% fewer tokens than JSON** on Cisco Support API data (maintainer's benchmark)
+- GCF is on by default; set `DISABLE_TOON_FORMAT=true` to fall back to JSON
+- `@toon-format/toon` removed as a dependency; `@blackwell-systems/gcf` is the sole encoder
+- Reviewed and merged by the maintainer
+- Uses `@blackwell-systems/gcf`'s `encodeGeneric` (generic profile)
 
 ## Open Data Products SDK (Linux Foundation)
 
