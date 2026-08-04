@@ -184,12 +184,17 @@ The [JSON to GCF Converter](https://raycast.com/blackwell-systems/json-to-gcf-co
 
 ## Also in the wild
 
-Smaller projects and community tools that ship GCF as a direct dependency:
+Smaller projects and community tools where GCF shows up — packaged downstream, listed in registries, or carried into dependency trees by upstream tooling.
 
-- **[Jx Studio](https://github.com/jxsuite/jx)** — a local-first visual website builder that stores everything as plain JSON and Markdown. Ships `@blackwell-systems/gcf` as a dependency for token-efficient structured data.
-- **[wicek](https://github.com/xxczaki/wicek)** — a task-focused AI assistant running as a Discord bot, powered by Claude Code. Uses GCF for compact agent context.
-- **[NUR (Nix User Repository)](https://github.com/nix-community/nur-combined)** — agent-lsp packaged with GCF token-optimized output, installable across NixOS.
+**Packaged & listed:**
+
+- **[NUR (Nix User Repository)](https://github.com/nix-community/nur-combined)** — agent-lsp (GCF token-optimized output) packaged and installable across NixOS.
 - **[Codex plugin marketplaces](https://github.com/hashgraph-online/awesome-codex-plugins)** — the GCF Proxy plugin (wrap any MCP server, 71% token reduction) is listed across multiple Codex plugin registries.
+
+**Transitive reach** (GCF resolves into these projects' dependency trees via upstream tooling — present in the lockfile, not a declared direct dependency):
+
+- **[Jx Studio](https://github.com/jxsuite/jx)** — a local-first visual website builder. `@blackwell-systems/gcf` resolves into its lockfile via upstream tooling.
+- **[wicek](https://github.com/xxczaki/wicek)** — a Claude Code–powered Discord assistant; GCF resolves into its lockfile through its Claude Code / MCP dependencies.
 
 ## Your project here
 
