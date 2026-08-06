@@ -2,9 +2,9 @@
 
 ## Graph Compact Format: A Token-Optimized Wire Format for LLM Interactions
 
-**Version:** 3.4.1
+**Version:** 3.5.0
 
-**Date:** 2026-07-12
+**Date:** 2026-08-06
 
 **Status:** Stable (see Section 19 for status lifecycle)
 
@@ -318,14 +318,16 @@ graph-line          = node-line / edge-line / ref-line / delta-symbol-line
 metadata-summary    = "##!" SP "summary" *( SP header-pair ) LF
 
 ; --- Generic roots ---
-generic-body        = ( root-scalar / root-array / root-object )
+generic-body        = ( root-scalar / root-array / root-object / root-keyed-map )
                       [ metadata-summary ]
+root-keyed-map      = anonymous-keyed-block
 root-scalar         = "=" scalar LF
 root-array          = anonymous-array
 root-object         = *( object-member )
 
 ; --- Generic objects ---
-object-member       = kv-line / object-section / named-array / comment-line
+object-member       = kv-line / object-section / named-array / keyed-block
+                    / comment-line
 kv-line             = key "=" scalar LF
 object-section      = "##" SP key LF indented-object-body
 indented-object-body = *( INDENT object-member )
@@ -336,6 +338,8 @@ anonymous-array     = anonymous-inline-array / anonymous-array-block
 anonymous-inline-array = "##" SP count-bracket ":" [ SP scalar-list ] LF
 anonymous-array-block = "##" SP count-bracket [ field-decl ] LF array-body
 array-block         = "##" SP key SP count-bracket [ field-decl ] LF array-body
+anonymous-keyed-block = "##" SP keyed-bracket field-decl LF tabular-body
+keyed-block         = "##" SP key SP keyed-bracket field-decl LF tabular-body
 inline-array        = key count-bracket ":" [ SP scalar-list ] LF
 array-body          = tabular-body / expanded-body / empty
 tabular-body        = 1*( tabular-row *( traditional-attachment
@@ -344,7 +348,8 @@ tabular-row         = [ "@" id SP ] cell *( "|" cell ) LF
 cell                = scalar / "~" / attachment-cell
 attachment-cell     = "^" / "^" field-decl
 expanded-body       = 1*( expanded-item )
-expanded-item       = primitive-item / object-item / array-item
+expanded-item       = primitive-item / object-item / array-item / keyed-map-item
+keyed-map-item      = "@" id SP keyed-bracket field-decl LF INDENT tabular-body
 primitive-item      = "@" id SP "=" scalar LF
 object-item         = "@" id SP "{}" LF *( INDENT object-member )
 array-item          = "@" id SP count-bracket [ field-decl ]
@@ -353,6 +358,8 @@ array-item          = "@" id SP count-bracket [ field-decl ]
 
 ; --- Tabular attachments ---
 traditional-attachment = object-attachment / array-attachment
+                    / keyed-map-attachment
+keyed-map-attachment = "." key SP keyed-bracket field-decl LF tabular-body
 object-attachment   = "." key SP "{}" LF *( INDENT object-member )
 array-attachment    = "." key SP count-bracket [ field-decl ]
                       [ ":" [ SP scalar-list ] ] LF
@@ -362,6 +369,7 @@ inline-object-attachment = scalar *( "|" scalar ) LF
 ; --- Shared array syntax ---
 count-bracket       = "[" count-or-deferred "]"
 count-or-deferred   = count / "?"
+keyed-bracket       = "[" count-or-deferred ":" "]"
 field-decl          = "{" field-name *( "," field-name ) "}"
 scalar-list         = scalar *( "," scalar )
 
@@ -533,7 +541,7 @@ After the header line `GCF profile=generic`, the body encodes exactly one JSON v
 
 | Root type | Encoding |
 |-----------|----------|
-| Object | Key-value lines and `##` section blocks |
+| Object | Key-value lines and `##` section blocks; keyed table `## [N:]{...}` when values are objects (Section 7.2a) |
 | Array | Anonymous array header (Section 7.3-7.6) |
 | Scalar (string, number, boolean, null) | `=` followed by the scalar value |
 
@@ -598,6 +606,69 @@ version=2.1.0
 ```
 
 Key ordering: encoders MUST emit keys in the order they appear in the input. When the input representation does not provide encounter order, encoders MUST order keys lexicographically by Unicode code point.
+
+### 7.2a Keyed map encoding (tabular)
+
+A JSON object whose values are all objects forming a losslessly-tabular set is encoded as a **keyed table**: the shared value fields are declared once in a header, and each member is one positional row prefixed by its key. This is the object-valued analogue of Section 7.4 tabular array encoding.
+
+#### 7.2a.1 Selection
+
+A buffered encoder MUST encode a JSON object as a keyed table when all of the following hold; otherwise it uses Section 7.2 section encoding:
+
+1. the object has at least one member;
+2. every member value is a JSON object;
+3. the member-value objects form a losslessly-tabular set under the Section 7.3 rule-3 conditions (non-empty ordered field union computed over all members per Section 7.4.3; every field preserved; each leaf a scalar or a Section 7.4.4/7.4.5 attachment; absent distinguishable from null);
+4. the object is **not** a single-member object whose one member value is itself eligible as a keyed table under this rule.
+
+An object with any non-object member value uses Section 7.2. An object whose values are all empty objects has an empty field union and is not eligible (Section 7.2). A map of scalar values is already optimal as `key=value` lines and is unaffected.
+
+Condition 4 is the single-member-wrapper rule and is evaluated recursively (it terminates: each recursion inspects a strictly smaller value). It prevents a single-key wrapper of a map, such as `{"users": {"u1": {...}, "u2": {...}}}`, from being keyed at the wrapper level, which would emit a one-row header keyed by `users` and flatten the inner map's data-keys (`u1`, `u2`) into columns. Instead the wrapper uses ordinary object encoding (Section 7.2) and its inner map is encoded as a keyed table at its own level: a named keyed block (`## users [N:]{...}`) or, in a tabular row, a keyed-map attachment (Section 7.4.4). An object with two or more members is unaffected, so a record whose fields include a uniform nested object still flattens per Section 7.4.6 (the nested object shares a schema across members); only the single-member wrapper of a keyed-eligible value defers. When a keyed table is encoded as a named block and its name is the empty string, the encoder MUST quote the name (`## "" [N:]{...}`) so it is a named block distinct from an anonymous root keyed table.
+
+#### 7.2a.2 Header
+
+```
+## [{count}:]{key,field1,field2,...}
+```
+
+Named or nested form: `## {name} [{count}:]{key,field1,...}`.
+
+- `[{count}:]` — the `:` after the exact member `count` marks a keyed map. The decoder reconstructs a JSON object (not an array). `[{count}]` without the colon remains an array (Section 7.4).
+- The first declared field is the **key column**, with default label `key`. If `key` is present in the value field union, the encoder MUST prepend `_` to the label until it is unique within the header (`_key`, `__key`, ...). The label is a display name only; a decoder MUST NOT emit the key-column label as a member of any value object.
+- The remaining fields are the value objects' fields in Section 7.4.3 union order.
+
+A `[{count}:]` header MUST declare at least two fields (the key column plus at least one value field). A decoder MUST reject a keyed-map header with fewer than two fields.
+
+#### 7.2a.3 Rows
+
+One row per member, in input order (Section 7.11): `{keyvalue}|{v1}|{v2}|...`
+
+- **Cell 0** is the member key, an ordinary scalar cell governed by Sections 2.4 and 2.1. Because JSON keys are strings, the Section 2.4 quoting obligation already forces quoting of any key that would otherwise decode as a non-string (numeric-like, `-`, `true`, `~`, `^`, empty, leading `#`/`@`/`.`, or containing `|`), so cell 0 round-trips as a string with no keyed-map-specific rule. Duplicate member keys are an error.
+- **Cells 1..M** use the full Section 7.4 tabular row grammar: scalars directly; `-` for null and `~` for absent (Section 7.4.2); nested values via `^`/`^{fields}` attachments (Sections 7.4.4, 7.4.5) or `>` flattened path columns (Section 7.4.6). For token efficiency the encoder MUST select the smallest valid form per field and MAY reuse shared schemas (Section 7.4.5.3). A row carrying one or more attachment cells takes the `@{id}` prefix required by Section 7.4.4, where the id is the member's zero-based emission index; the key remains cell 0.
+
+Example:
+
+```
+## [3:]{key,cpu,mem,status}
+web-01|23|61|ok
+db-01|41|83|ok
+cache-1|67|52|warn
+```
+
+decodes to
+
+```json
+{
+  "web-01": {"cpu": 23, "mem": 61, "status": "ok"},
+  "db-01": {"cpu": 41, "mem": 83, "status": "ok"},
+  "cache-1": {"cpu": 67, "mem": 52, "status": "warn"}
+}
+```
+
+#### 7.2a.4 Decoder
+
+For a `[{count}:]` block, a decoder reconstructs a JSON object with `count` members. For each row, cell 0 (Section 2.1) is the member key; cells 1..M map to declared fields 1..M using the Section 7.4 body grammar as the member's value object. The key-column label is discarded. A decoder MUST reject: a row whose cell count does not match the declared field count; duplicate member keys; a `[{count}:]` header with fewer than two declared fields; a zero count (`[0:]`) — a keyed map has at least one member, and an empty object is encoded per Section 7.7, never as `[0:]`; and a member-count mismatch (Section 13).
+
+Round-trip: `decode(encode(x)) == x` for eligible objects. Member order follows Section 7.11.
 
 ### 7.3 Array encoding: selection rules
 
@@ -715,6 +786,7 @@ Attachment forms:
 | `.field {}` | Object attachment; object members, if any, are indented beneath it |
 | `.field [N]: values` | Inline primitive-array attachment |
 | `.field [N]{fields}` | Tabular array attachment; rows are indented beneath it |
+| `.field [N:]{key,fields}` | Keyed-map attachment; `keyvalue\|values` rows are indented beneath it (Section 7.2a) |
 | `.field [N]` | Expanded array attachment; items are indented beneath it |
 
 Array attachments use the same header-to-body rules as ordinary arrays in Section 7.3.
@@ -962,6 +1034,7 @@ Type markers:
 | `@N {}` | Object; object members, if any, are indented beneath it |
 | `@N [M]: values` | Nested primitive array |
 | `@N [M]{fields}` | Nested tabular array; rows are indented beneath it |
+| `@N [M:]{key,fields}` | Keyed map; `keyvalue\|values` rows are indented beneath it (Section 7.2a) |
 | `@N [M]` | Nested expanded array; items are indented beneath it |
 
 Rules:
@@ -993,6 +1066,7 @@ IDs within expanded arrays are scoped to their containing array. Nested arrays s
 | Input type | Encoding |
 |-----------|----------|
 | Object (root or nested) | `key=value` for scalars, `## key` for nested objects, array forms for nested arrays |
+| Map of objects (losslessly tabular) | Keyed tabular: `## [N:]{key,field1,...}` + `keyvalue\|values` rows (Section 7.2a) |
 | Array of uniform objects | Tabular: header with field declaration + positional pipe-separated rows |
 | Array of primitives | Inline: `name[count]: val1,val2,val3` |
 | Array of mixed items | Expanded: `## name [count]` + `@{id}` per item with type markers |
@@ -1020,6 +1094,8 @@ IDs within expanded arrays are scoped to their containing array. Nested arrays s
 
 In buffered mode, an array is eligible for tabular encoding when every element is a JSON object and the complete field union is non-empty. The encoder MUST inspect all elements, compute the complete field union, and preserve every field. Arrays containing any primitive or array element, and arrays consisting only of empty objects, use expanded form. Streaming mode has the schema-availability exception defined in Section 8.3.
 
+An object is eligible for keyed-tabular encoding (Section 7.2a) under the analogous conditions applied to its member values: every member value is a JSON object and the field union over all member values is non-empty and losslessly tabular. An object with any non-object member value, or whose members are all empty objects, is not eligible and uses Section 7.2 section encoding.
+
 ### 7.11 Canonical encoding rules
 
 #### Object key ordering
@@ -1032,7 +1108,7 @@ The field declaration in tabular headers MUST follow the field union computation
 
 #### Container selection
 
-Canonical buffered encoders MUST select container encoding using Section 7.3 rules. The selection is deterministic: same input produces the same encoding form.
+Canonical buffered encoders MUST select array container encoding using Section 7.3 rules, and MUST encode an eligible object whose values are all objects as a keyed table using Section 7.2a. The selection is deterministic: same input produces the same encoding form, and for each keyed-map value field the encoder MUST select the smallest valid Section 7.4 form.
 
 #### Attachment optimization selection
 
@@ -1065,6 +1141,12 @@ Section headers that would normally contain `[N]` MUST use `[?]` when the count 
 ```
 ## edges [?]
 ## employees [?]{id,name,department,salary}
+```
+
+A keyed map (Section 7.2a) uses `[?:]` when its member count is not yet known. Per Section 8.3 the complete **value-field** list MUST be known before the first row; the member keys stream as cell 0:
+
+```
+## servers [?:]{key,cpu,mem,status}
 ```
 
 ### 8.3 Streaming tabular encoding
@@ -1455,6 +1537,7 @@ Delta sections may appear in any order, and rows within a section may appear in 
 - **Size guard**: if the delta is not smaller than the size-guard threshold (Section 10a.2), send full.
 - `## changed` is whole-row replacement by identity; field-level patching is not defined in this version.
 - Default (non-delta) generic payloads are unchanged by this section and retain all existing losslessness and comprehension guarantees.
+- **Keyed maps (Section 7.2a) participate in delta unchanged by this section.** A keyed map is a keyed set whose identity is the map key: the buffered full payload renders as `## [N:]{@key,...}` with `key=<keyname>` in the header (the `@` and `:` both designate the key column), while delta payloads use the identity-column forms above (`## added`/`## changed [N]{@key,...}`, `## removed [N]{@key}`). `pack_root` is computed per Section 10a.3 with the map key as the identity field.
 
 ### 10a.8 Producer re-anchor guidance (informative)
 
@@ -1501,7 +1584,7 @@ When a section header declares `[N]`:
 - A mismatch (fewer or more items than declared) is an error.
 - Decoders MUST reject count mismatches.
 - Encoders MUST emit accurate counts.
-- In tabular sections, data items are rows; attachments do not increment the count.
+- In tabular sections, data items are rows; attachments do not increment the count. In keyed maps (`[N:]`, Section 7.2a) data items are member rows.
 - In expanded sections, data items are `@N` items; their indented descendants do not increment the parent count.
 - Comment lines never increment a declared count.
 
@@ -1606,6 +1689,7 @@ Conforming generic-profile encoders MUST:
 - Use expanded per-item form (Section 7.6) for arrays containing mixed element types
 - Emit root scalars as `=value`
 - Emit root arrays with an anonymous `## [N]` header
+- Encode a JSON object whose values are all objects forming a losslessly-tabular set as a keyed table `## [N:]{key,...}` (Section 7.2a), selecting the key-column label deterministically and the smallest valid Section 7.4 form per value field
 - Use exactly two-space indentation per nesting level, except that inline object attachment bodies SHOULD appear at their parent row's indentation
 - Produce deterministic output
 - NOT emit trailing whitespace on any line
@@ -1662,6 +1746,7 @@ Conforming generic-profile decoders MUST:
 - Parse expanded per-item scalar, object, and array markers (`=`, `{}`, `[N]`)
 - Parse a leading `=` line as a root scalar
 - Parse an anonymous `## [N]` header as a root array
+- Parse a `## [N:]{key,...}` header as a keyed map (Section 7.2a): reconstruct an object whose members are keyed by each row's cell 0, with cells 1..M as the value object; reject a keyed header with fewer than two fields, a row-width mismatch, or duplicate member keys
 - Parse `##! summary` as format metadata rather than a user section
 - Validate counts at every nesting level (Section 13)
 - Satisfy the round-trip invariant (Section 1.1)
@@ -1700,7 +1785,7 @@ A conforming decoder operates in strict mode. There is no lenient or permissive 
 | Duplicate field name | Same field name appears twice in a tabular field declaration |
 | Row width mismatch | Pipe-separated values in a row do not match field count |
 | Count mismatch | Number of data items does not match declared `[count]` |
-| Invalid count | `[count]` is not `0`, a non-zero decimal integer without leading zeros, or `?` |
+| Invalid count | `[count]` is not `0`, a non-zero decimal integer without leading zeros, or `?`, optionally followed by a `:` for a keyed map (Section 7.2a) |
 | Tab indentation | Leading whitespace contains tab characters |
 | Invalid indent | Indentation increases by more than one level |
 | Invalid item ID | Expanded item ID or present tabular row ID does not equal its zero-based item index |
@@ -1765,7 +1850,7 @@ This specification follows a three-stage lifecycle:
 | **Stable** | The grammar is frozen. No breaking changes. Additive extensions only. Implementations may depend on stability for production use. |
 | **Frozen** | No changes of any kind. The specification is archived. |
 
-Current status: **Stable** (v3.4.1 designated 2026-07-12).
+Current status: **Stable** (v3.5.0 designated 2026-08-06).
 
 ### 19.3 Version history
 
@@ -1774,6 +1859,8 @@ This specification (v3.0) supersedes v2.0 and adds inline object schemas, positi
 Since v3.0 the specification has grown additively only (Stable: no breaking changes): **v3.1** made the graph header `tool` field optional; **v3.2** added nested-object flattening (`>` path columns); **v3.3** added delta encoding for the generic profile (Section 10a), with the `@`-marked identity column and the non-normative producer re-anchor guidance (Section 10a.8); **v3.4** added an optional labeled form for the graph streaming trailer's `counts` field (Section 8.4.1), a producer-side comprehension aid whose default positional form is unchanged. Every extension through v3.4 is backward-compatible; a v3.0 decoder ignores what it does not recognize.
 
 **v3.4.1** added a trailing `distance` field to the graph delta `## added` line (Section 10.1), so a consumer can reconstruct the new snapshot and verify `new_root` (`pack_root` includes distance; Sections 10.2, 10.4). A delta-only line-form correction.
+
+**v3.5.0** added keyed-tabular map encoding (Section 7.2a): a JSON object whose values are all objects forming a losslessly-tabular set is encoded with the shared value fields declared once and one `key|values` row per member, marked by `[N:]`, first-class in nested (Sections 7.4.4, 7.6) and streaming (`[?:]`, Section 8) positions and reusing generic delta (Section 10a) unchanged with the map key as the delta identity. This changes the canonical output for such maps from per-key section blocks to a keyed table. Existing payloads are unaffected (the `[N:]` marker was previously an invalid count; all other constructs decode identically); a pre-v3.5 decoder rejects `[N:]`, so decoders MUST be updated to read v3.5 map output. Additive under the Stable lifecycle.
 
 V3 is the only supported encoding. Decoders are not required to accept v2-style indented attachments. Encoders emit v3 grammar exclusively.
 
