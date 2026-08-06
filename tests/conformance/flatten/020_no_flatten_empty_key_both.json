@@ -1,0 +1,13 @@
+{
+  "name": "no_flatten_empty_key_both",
+  "description": "Nested object with two empty keys MUST NOT flatten (would produce a bare '>' path column); must use attachment",
+  "operation": "encode",
+  "input": [
+    {
+      "": {
+        "": 0
+      }
+    }
+  ],
+  "expected": "GCF profile=generic\n## [1]{\"\"}\n@0 ^\n.\"\" {}\n    \"\"=0\n"
+}

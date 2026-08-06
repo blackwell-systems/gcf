@@ -1,0 +1,14 @@
+{
+  "name": "no_flatten_empty_key_trailing",
+  "description": "Nested object with a trailing empty key MUST NOT flatten (path 'm>' has an empty segment); must use attachment",
+  "operation": "encode",
+  "input": [
+    {
+      "id": 1,
+      "m": {
+        "": 0
+      }
+    }
+  ],
+  "expected": "GCF profile=generic\n## [1]{id,m}\n@0 1|^\n.m {}\n    \"\"=0\n"
+}

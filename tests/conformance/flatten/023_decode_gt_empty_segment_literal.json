@@ -1,0 +1,11 @@
+{
+  "name": "decode_gt_empty_segment_literal",
+  "description": "A '>'-containing field whose split yields an empty segment is NOT a path column; decode the field name literally",
+  "operation": "decode",
+  "input": "GCF profile=generic\n## [1]{\">\"}\n0\n",
+  "expected": [
+    {
+      ">": 0
+    }
+  ]
+}

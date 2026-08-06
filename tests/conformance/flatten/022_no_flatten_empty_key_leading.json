@@ -1,0 +1,13 @@
+{
+  "name": "no_flatten_empty_key_leading",
+  "description": "Nested object with a leading empty key MUST NOT flatten (path '>b' has an empty segment); must use attachment",
+  "operation": "encode",
+  "input": [
+    {
+      "": {
+        "b": 0
+      }
+    }
+  ],
+  "expected": "GCF profile=generic\n## [1]{\"\"}\n@0 ^\n.\"\" {}\n    b=0\n"
+}
