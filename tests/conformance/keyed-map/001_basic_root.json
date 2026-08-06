@@ -1,0 +1,23 @@
+{
+  "name": "001_basic_root",
+  "description": "Root map of uniform objects encodes as a keyed table [N:]",
+  "operation": "encode",
+  "input": {
+    "web-01": {
+      "cpu": 23,
+      "mem": 61,
+      "status": "ok"
+    },
+    "db-01": {
+      "cpu": 41,
+      "mem": 83,
+      "status": "ok"
+    },
+    "cache-1": {
+      "cpu": 67,
+      "mem": 52,
+      "status": "warn"
+    }
+  },
+  "expected": "GCF profile=generic\n## [3:]{key,cpu,mem,status}\nweb-01|23|61|ok\ndb-01|41|83|ok\ncache-1|67|52|warn\n"
+}

@@ -1,0 +1,21 @@
+{
+  "name": "009_nested_array_attachment",
+  "description": "A value field that is an array uses a per-row attachment with the @id prefix",
+  "operation": "encode",
+  "input": {
+    "u1": {
+      "id": 1,
+      "tags": [
+        "a",
+        "b"
+      ]
+    },
+    "u2": {
+      "id": 2,
+      "tags": [
+        "c"
+      ]
+    }
+  },
+  "expected": "GCF profile=generic\n## [2:]{key,id,tags}\n@0 u1|1|^\n.tags [2]: a,b\n@1 u2|2|^\n.tags [1]: c\n"
+}

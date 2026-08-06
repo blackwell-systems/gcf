@@ -1,0 +1,10 @@
+{
+  "name": "007_all_empty_fallback",
+  "description": "A map whose values are all empty objects is not keyed (empty field union); uses Section 7.2 sections",
+  "operation": "encode",
+  "input": {
+    "a": {},
+    "b": {}
+  },
+  "expected": "GCF profile=generic\n## a\n## b\n"
+}

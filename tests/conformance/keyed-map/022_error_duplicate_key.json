@@ -1,0 +1,7 @@
+{
+  "name": "022_error_duplicate_key",
+  "description": "Duplicate member key is rejected",
+  "operation": "error",
+  "input": "GCF profile=generic\n## [2:]{key,x}\na|1\na|2\n",
+  "expectedError": "duplicate member key"
+}

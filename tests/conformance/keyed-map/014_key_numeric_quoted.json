@@ -1,0 +1,14 @@
+{
+  "name": "014_key_numeric_quoted",
+  "description": "A numeric-like member key is quoted in cell 0 (Section 2.4)",
+  "operation": "encode",
+  "input": {
+    "123": {
+      "a": 1
+    },
+    "456": {
+      "a": 2
+    }
+  },
+  "expected": "GCF profile=generic\n## [2:]{key,a}\n\"123\"|1\n\"456\"|2\n"
+}

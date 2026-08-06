@@ -1,0 +1,16 @@
+{
+  "name": "004_semi_uniform",
+  "description": "Semi-uniform value objects: field union with ~ for absent",
+  "operation": "encode",
+  "input": {
+    "a": {
+      "x": 1,
+      "y": 2
+    },
+    "b": {
+      "x": 3,
+      "z": 4
+    }
+  },
+  "expected": "GCF profile=generic\n## [2:]{key,x,y,z}\na|1|2|~\nb|3|~|4\n"
+}

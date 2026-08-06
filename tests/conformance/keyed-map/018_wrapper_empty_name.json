@@ -1,0 +1,16 @@
+{
+  "name": "018_wrapper_empty_name",
+  "description": "A single-member wrapper with an empty-string key defers to a quoted empty-name keyed block (## \"\"), distinct from an anonymous root",
+  "operation": "encode",
+  "input": {
+    "": {
+      "u1": {
+        "a": 1
+      },
+      "u2": {
+        "a": 2
+      }
+    }
+  },
+  "expected": "GCF profile=generic\n## \"\" [2:]{key,a}\nu1|1\nu2|2\n"
+}

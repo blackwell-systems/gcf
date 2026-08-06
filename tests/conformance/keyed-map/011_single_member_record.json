@@ -1,0 +1,12 @@
+{
+  "name": "011_single_member_record",
+  "description": "A single-member map whose value is a flat record keys as [1:] (mirrors a one-row array)",
+  "operation": "encode",
+  "input": {
+    "only": {
+      "a": 1,
+      "b": 2
+    }
+  },
+  "expected": "GCF profile=generic\n## [1:]{key,a,b}\nonly|1|2\n"
+}

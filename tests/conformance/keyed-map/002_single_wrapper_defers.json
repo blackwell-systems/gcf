@@ -1,0 +1,18 @@
+{
+  "name": "002_single_wrapper_defers",
+  "description": "Single-member wrapper of a map defers (7.2a.1 clause 4): inner map becomes a named keyed table, not a one-row flattened header",
+  "operation": "encode",
+  "input": {
+    "users": {
+      "u1": {
+        "a": 1,
+        "b": 2
+      },
+      "u2": {
+        "a": 3,
+        "b": 4
+      }
+    }
+  },
+  "expected": "GCF profile=generic\n## users [2:]{key,a,b}\nu1|1|2\nu2|3|4\n"
+}

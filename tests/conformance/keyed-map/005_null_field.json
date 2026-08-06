@@ -1,0 +1,16 @@
+{
+  "name": "005_null_field",
+  "description": "Value object with a null field uses - (distinct from ~ absent)",
+  "operation": "encode",
+  "input": {
+    "a": {
+      "x": 1,
+      "y": null
+    },
+    "b": {
+      "x": 2,
+      "y": 5
+    }
+  },
+  "expected": "GCF profile=generic\n## [2:]{key,x,y}\na|1|-\nb|2|5\n"
+}

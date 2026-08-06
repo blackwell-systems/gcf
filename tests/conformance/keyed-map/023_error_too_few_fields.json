@@ -1,0 +1,7 @@
+{
+  "name": "023_error_too_few_fields",
+  "description": "A keyed header with fewer than two fields is rejected",
+  "operation": "error",
+  "input": "GCF profile=generic\n## [1:]{key}\na\n",
+  "expectedError": "at least two fields"
+}

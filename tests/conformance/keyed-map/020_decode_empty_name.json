@@ -1,0 +1,16 @@
+{
+  "name": "020_decode_empty_name",
+  "description": "Decode a quoted empty-name keyed block into a single-key wrapper object",
+  "operation": "decode",
+  "input": "GCF profile=generic\n## \"\" [2:]{key,a}\nu1|1\nu2|2\n",
+  "expected": {
+    "": {
+      "u1": {
+        "a": 1
+      },
+      "u2": {
+        "a": 2
+      }
+    }
+  }
+}

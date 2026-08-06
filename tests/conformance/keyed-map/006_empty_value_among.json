@@ -1,0 +1,13 @@
+{
+  "name": "006_empty_value_among",
+  "description": "An empty value object among non-empty ones is all ~",
+  "operation": "encode",
+  "input": {
+    "a": {
+      "x": 1,
+      "y": 2
+    },
+    "b": {}
+  },
+  "expected": "GCF profile=generic\n## [2:]{key,x,y}\na|1|2\nb|~|~\n"
+}

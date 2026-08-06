@@ -1,0 +1,16 @@
+{
+  "name": "019_decode_basic",
+  "description": "Decode a root keyed table into an object",
+  "operation": "decode",
+  "input": "GCF profile=generic\n## [2:]{key,cpu,mem}\nweb-01|23|61\ndb-01|41|83\n",
+  "expected": {
+    "web-01": {
+      "cpu": 23,
+      "mem": 61
+    },
+    "db-01": {
+      "cpu": 41,
+      "mem": 83
+    }
+  }
+}

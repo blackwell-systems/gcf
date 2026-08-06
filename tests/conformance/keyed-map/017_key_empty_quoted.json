@@ -1,0 +1,14 @@
+{
+  "name": "017_key_empty_quoted",
+  "description": "An empty-string member key is quoted in cell 0",
+  "operation": "encode",
+  "input": {
+    "": {
+      "x": 1
+    },
+    "n": {
+      "x": 2
+    }
+  },
+  "expected": "GCF profile=generic\n## [2:]{key,x}\n\"\"|1\nn|2\n"
+}

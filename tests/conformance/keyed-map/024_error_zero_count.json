@@ -1,0 +1,7 @@
+{
+  "name": "024_error_zero_count",
+  "description": "A zero-count keyed header [0:] is rejected (Section 7.2a.4)",
+  "operation": "error",
+  "input": "GCF profile=generic\n## [0:]{key,x}\n",
+  "expectedError": "zero count"
+}

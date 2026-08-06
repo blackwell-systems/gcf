@@ -1,0 +1,16 @@
+{
+  "name": "013_key_label_collision",
+  "description": "When a value field is named key, the key column label is prefixed to _key",
+  "operation": "encode",
+  "input": {
+    "r1": {
+      "key": "K1",
+      "val": 9
+    },
+    "r2": {
+      "key": "K2",
+      "val": 8
+    }
+  },
+  "expected": "GCF profile=generic\n## [2:]{_key,key,val}\nr1|K1|9\nr2|K2|8\n"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "025_error_row_width_mismatch",
+  "description": "A row whose cell count differs from the declared field count is rejected",
+  "operation": "error",
+  "input": "GCF profile=generic\n## [2:]{key,x}\na|1|extra\nb|2\n",
+  "expectedError": "row_width_mismatch"
+}

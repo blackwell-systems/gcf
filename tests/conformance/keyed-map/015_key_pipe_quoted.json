@@ -1,0 +1,14 @@
+{
+  "name": "015_key_pipe_quoted",
+  "description": "A member key containing | is quoted in cell 0",
+  "operation": "encode",
+  "input": {
+    "a|b": {
+      "x": 1
+    },
+    "c": {
+      "x": 2
+    }
+  },
+  "expected": "GCF profile=generic\n## [2:]{key,x}\n\"a|b\"|1\nc|2\n"
+}

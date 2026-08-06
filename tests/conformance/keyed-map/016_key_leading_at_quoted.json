@@ -1,0 +1,14 @@
+{
+  "name": "016_key_leading_at_quoted",
+  "description": "A member key with a leading @ is quoted in cell 0",
+  "operation": "encode",
+  "input": {
+    "@n1": {
+      "x": 1
+    },
+    "n2": {
+      "x": 2
+    }
+  },
+  "expected": "GCF profile=generic\n## [2:]{key,x}\n\"@n1\"|1\nn2|2\n"
+}

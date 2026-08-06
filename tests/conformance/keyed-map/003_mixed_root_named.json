@@ -1,0 +1,19 @@
+{
+  "name": "003_mixed_root_named",
+  "description": "Root with a scalar member is not keyed; its map-valued member is a named keyed table",
+  "operation": "encode",
+  "input": {
+    "title": "prod",
+    "servers": {
+      "web-01": {
+        "cpu": 23,
+        "mem": 61
+      },
+      "db-01": {
+        "cpu": 41,
+        "mem": 83
+      }
+    }
+  },
+  "expected": "GCF profile=generic\ntitle=prod\n## servers [2:]{key,cpu,mem}\nweb-01|23|61\ndb-01|41|83\n"
+}

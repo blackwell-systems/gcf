@@ -1,0 +1,22 @@
+{
+  "name": "008_nested_flatten",
+  "description": "A value field that is a uniform nested object flattens into path columns (7.4.6)",
+  "operation": "encode",
+  "input": {
+    "u1": {
+      "id": 1,
+      "loc": {
+        "city": "SEA",
+        "zip": "98101"
+      }
+    },
+    "u2": {
+      "id": 2,
+      "loc": {
+        "city": "NYC",
+        "zip": "10001"
+      }
+    }
+  },
+  "expected": "GCF profile=generic\n## [2:]{key,id,\"loc>city\",\"loc>zip\"}\nu1|1|SEA|\"98101\"\nu2|2|NYC|\"10001\"\n"
+}
