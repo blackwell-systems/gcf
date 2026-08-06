@@ -191,6 +191,11 @@ Smaller projects and community tools where GCF shows up — packaged downstream,
 - **[NUR (Nix User Repository)](https://github.com/nix-community/nur-combined)** — agent-lsp (GCF token-optimized output) packaged and installable across NixOS.
 - **[Codex plugin marketplaces](https://github.com/hashgraph-online/awesome-codex-plugins)** — the GCF Proxy plugin (wrap any MCP server, 71% token reduction) is listed across multiple Codex plugin registries.
 
+**Declared direct dependencies:** projects that name `gcf-python` as a direct, opt-in dependency. Both are token-compression tools for LLMs that reach for GCF as a component — GCF being picked up inside the niche it competes in.
+
+- **[Axon Bridge](https://github.com/chaitanya-sharmaa/axon)** — a drop-in OpenAI proxy with autonomous token compression and multi-provider routing (via LiteLLM). Pulls in `gcf-python` as part of its compression toolkit.
+- **[neterse](https://github.com/pcDamasceno/neterse)** — minimum-token renderings of network CLI output for LLM agents. Supports GCF as one of its output encoders (alongside TextFSM and TOON), selected per call by smallest faithful size. Extends the network-automation cluster ([NetClaw](#netclaw)).
+
 **Transitive reach** (GCF resolves into these projects' dependency trees via upstream tooling — present in the lockfile, not a declared direct dependency):
 
 - **[Jx Studio](https://github.com/jxsuite/jx)** — a local-first visual website builder. `@blackwell-systems/gcf` resolves into its lockfile via upstream tooling.
@@ -198,4 +203,4 @@ Smaller projects and community tools where GCF shows up — packaged downstream,
 
 ## Your project here
 
-If you're using GCF in production, [open an issue](https://github.com/blackwell-systems/gcf/issues) to be listed here.
+Using GCF in anything, from a weekend tool to a production service? Add yourself to the [Who's using GCF?](https://github.com/blackwell-systems/gcf/issues/14) thread and we'll pull it in here. If you vendor the source or run it privately, that thread (or an email to dayna@blackwell-systems.com) is the only way we'd know.
