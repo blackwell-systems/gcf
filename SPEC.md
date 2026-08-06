@@ -823,9 +823,9 @@ This is an alternative to the inline object schema mechanism (Section 7.4.5.1). 
 
 2. All final leaf values within the nested object MUST be scalars. Intermediate nested objects that themselves meet the flattening criteria (same keys in every row, all scalar leaves) are flattened recursively (see rule 5). If any final leaf is an object or array, the encoder MUST NOT flatten that field.
 
-3. The encoder MUST NOT flatten a nested object whose keys contain the `>` character. Such fields MUST use the attachment mechanism.
+3. The encoder MUST NOT flatten a nested object if the field name, or any key along a flattened path, contains the `>` character or is the empty string. An empty key would produce an empty path segment (a leading, trailing, or bare `>`) that a decoder treats as a literal field name, not a path column (Section 7.4.6.2). Such fields MUST use the attachment mechanism (Section 7.4.4) or an inline schema (Section 7.4.5.1) instead.
 
-4. If a top-level field name contains the `>` character, the encoder MUST NOT include it as a tabular column. Such fields MUST be emitted as per-row attachments. This ensures that any column name containing `>` in a tabular header is always a flattened path column, never a literal field name.
+4. If a top-level field name contains the `>` character, the encoder MUST NOT include it as a tabular column. Such fields MUST be emitted as per-row attachments. This ensures that any column name containing `>` in a tabular header, with all `>`-separated segments non-empty, is always a flattened path column, never a literal field name.
 
 5. Each leaf key becomes a quoted column name in the header, formed by joining the path from the parent field to the leaf with `>`. For a field `customer` containing keys `id`, `name`, `email`: the header columns are `"customer>id"`, `"customer>name"`, `"customer>email"`.
 
@@ -843,7 +843,7 @@ This is an alternative to the inline object schema mechanism (Section 7.4.5.1). 
 
 ##### 7.4.6.2 Decoder rules
 
-1. When a decoder encounters a quoted field name containing `>` in a tabular header, it MUST interpret `>` as a path separator and reconstruct the nested object structure. `"customer>name"` with cell value `Alice` decodes to `{"customer": {"name": "Alice"}}`.
+1. When a decoder encounters a quoted field name containing `>` in a tabular header whose `>`-separated segments are all non-empty, it MUST interpret `>` as a path separator and reconstruct the nested object structure. `"customer>name"` with cell value `Alice` decodes to `{"customer": {"name": "Alice"}}`. A `>`-containing field name whose split on `>` yields any empty segment (a leading, trailing, or consecutive `>`, including the bare `>`) is NOT a path column; the decoder MUST treat the field name literally. A conformant encoder never emits such a column (Section 7.4.6.1).
 
 2. Multiple `>` characters chain: `"billing>address>city"` with value `Seattle` decodes to `{"billing": {"address": {"city": "Seattle"}}}`.
 
