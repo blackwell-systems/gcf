@@ -1,0 +1,18 @@
+{
+  "name": "026_value_bare_safe_chars",
+  "description": "Cell values with spaces, a mid-string @, and booleans are bare (Section 2.4 does not quote them); locks cell quoting distinct from section-name quoting",
+  "operation": "encode",
+  "input": {
+    "a": {
+      "note": "User 0",
+      "email": "u@co.io",
+      "active": true
+    },
+    "b": {
+      "note": "hi there",
+      "email": "x@y.z",
+      "active": false
+    }
+  },
+  "expected": "GCF profile=generic\n## [2:]{key,note,email,active}\na|User 0|u@co.io|true\nb|hi there|x@y.z|false\n"
+}
