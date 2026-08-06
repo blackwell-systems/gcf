@@ -1,0 +1,14 @@
+{
+  "name": "generic_streaming_quoted_field_pipe",
+  "description": "A streaming tabular header with a field name containing a pipe is quoted (Section 8.3); the decoder reads the quoted name literally rather than as a row delimiter",
+  "operation": "decode",
+  "input": "GCF profile=generic\n## rows [?]{id,\"x|y\"}\n1|99\n##! summary counts=1\n",
+  "expected": {
+    "rows": [
+      {
+        "id": 1,
+        "x|y": 99
+      }
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "streaming_quoted_field",
+  "description": "A streaming keyed map [?:] with a value field name containing a comma is quoted; decoder reads it as one field (Sections 7.2a, 8.3)",
+  "operation": "decode",
+  "input": "GCF profile=generic\n## m [?:]{key,\"a,b\"}\nk1|99\nk2|-\n##! summary counts=2\n",
+  "expected": {
+    "m": {
+      "k1": {
+        "a,b": 99
+      },
+      "k2": {
+        "a,b": null
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "name": "generic_streaming_quoted_field_comma",
+  "description": "A streaming tabular header with a field name containing a comma is quoted (Section 8.3); the decoder reads it as one field, not two columns",
+  "operation": "decode",
+  "input": "GCF profile=generic\n## rows [?]{id,\"a,b\"}\n1|99\n2|100\n##! summary counts=2\n",
+  "expected": {
+    "rows": [
+      {
+        "id": 1,
+        "a,b": 99
+      },
+      {
+        "id": 2,
+        "a,b": 100
+      }
+    ]
+  }
+}
