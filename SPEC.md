@@ -1167,6 +1167,10 @@ A streaming encoder MUST NOT mix tabular rows and expanded items beneath the sam
 
 This is the sole exception to the buffered all-object tabular requirement: an all-object streaming array MAY use expanded form when its complete field union is unavailable before the first item is emitted.
 
+The streaming header MUST format the section name and every declared field name with the same quoting rules as a buffered tabular header (Section 2.4): a name is quoted when it would otherwise decode as a non-string or collide with structural syntax, and bare otherwise. A streaming encoder MUST NOT emit a raw, unquoted field name; a name containing a delimiter (`,` or `|`), a quote, or other structural characters would split the field declaration or produce an invalid header. This is the same obligation the buffered tabular header satisfies (Sections 7.4.3, 7.11).
+
+Because a streaming tabular row carries only flat columns (a streaming section has no per-row attachment mechanism), a streaming value field name MUST NOT contain the `>` character. A `>`-containing column is a flattened path (Section 7.4.6.2), which a stream cannot represent; the buffered path routes such a field to an attachment (Section 7.4.6.1), but a streaming section has no such fallback. A streaming encoder given a value field name containing `>` MUST reject it with an error.
+
 ### 8.4 Trailer summary
 
 After the last data line, streaming encoders MUST emit a summary line:
