@@ -1,0 +1,76 @@
+{
+  "tokenizer": "gpt-4o",
+  "rows": [
+    {
+      "shape": "server_metrics",
+      "n": 4,
+      "json": 88,
+      "section": 114,
+      "keyed": 72
+    },
+    {
+      "shape": "server_metrics",
+      "n": 25,
+      "json": 555,
+      "section": 686,
+      "keyed": 350
+    },
+    {
+      "shape": "server_metrics",
+      "n": 100,
+      "json": 2220,
+      "section": 2726,
+      "keyed": 1340
+    },
+    {
+      "shape": "user_profile",
+      "n": 4,
+      "json": 128,
+      "section": 152,
+      "keyed": 108
+    },
+    {
+      "shape": "user_profile",
+      "n": 25,
+      "json": 791,
+      "section": 916,
+      "keyed": 561
+    },
+    {
+      "shape": "user_profile",
+      "n": 100,
+      "json": 3161,
+      "section": 3646,
+      "keyed": 2181
+    },
+    {
+      "shape": "nested_record",
+      "n": 4,
+      "json": 107,
+      "section": 136,
+      "keyed": 83
+    },
+    {
+      "shape": "nested_record",
+      "n": 25,
+      "json": 665,
+      "section": 816,
+      "keyed": 389
+    },
+    {
+      "shape": "nested_record",
+      "n": 100,
+      "json": 2660,
+      "section": 3246,
+      "keyed": 1484
+    }
+  ],
+  "total": {
+    "json": 10375,
+    "section": 12438,
+    "keyed": 6568
+  },
+  "keyed_vs_json_pct": 36.7,
+  "keyed_vs_section_pct": 47.2,
+  "section_vs_json_pct": -19.9
+}
