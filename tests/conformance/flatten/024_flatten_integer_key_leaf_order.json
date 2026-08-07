@@ -1,0 +1,26 @@
+{
+  "name": "flatten_integer_key_leaf_order",
+  "description": "Flattened path columns preserve the nested object's first-observed key order even when a leaf key is integer-like (\"5\"); it must not be reordered ahead of earlier leaves (SPEC 7.4.3)",
+  "operation": "encode",
+  "input": {
+    "orders": [
+      {
+        "id": 1,
+        "data": {
+          "z": 1,
+          "5": 2,
+          "a": 3
+        }
+      },
+      {
+        "id": 2,
+        "data": {
+          "z": 4,
+          "5": 5,
+          "a": 6
+        }
+      }
+    ]
+  },
+  "expected": "GCF profile=generic\n## orders [2]{id,\"data>z\",\"data>5\",\"data>a\"}\n1|1|2|3\n2|4|5|6\n"
+}

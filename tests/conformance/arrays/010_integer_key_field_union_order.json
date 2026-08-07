@@ -1,0 +1,17 @@
+{
+  "name": "integer_key_field_union_order",
+  "description": "An object array whose field union includes integer-like keys (\"5\", \"3\") preserves first-observed insertion order; integer-like keys must not be reordered ahead of earlier fields (SPEC 7.4.3)",
+  "operation": "encode",
+  "input": [
+    {
+      "id": 1,
+      "5": "a",
+      "name": "x"
+    },
+    {
+      "id": 2,
+      "3": "b"
+    }
+  ],
+  "expected": "GCF profile=generic\n## [2]{id,\"5\",name,\"3\"}\n1|a|x|~\n2|~|~|b\n"
+}
