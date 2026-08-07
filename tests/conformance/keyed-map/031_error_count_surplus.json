@@ -1,0 +1,7 @@
+{
+  "name": "keyed_count_surplus",
+  "description": "A root keyed map with more entry rows than the declared count must be rejected. SPEC Section 7.2a and Section 13: a member-count mismatch (fewer or more entries than declared) is an error; decoders MUST reject it.",
+  "input": "GCF profile=generic\n## [2:]{key,a,b}\nk1|1|2\nk2|3|4\nk3|5|6\n",
+  "expectedError": "count_mismatch",
+  "operation": "error"
+}

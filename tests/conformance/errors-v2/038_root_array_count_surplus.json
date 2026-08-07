@@ -1,0 +1,7 @@
+{
+  "name": "root_array_count_surplus",
+  "description": "A root array with more rows than the declared count must be rejected. SPEC Section 13: a mismatch (fewer or more items than declared) is an error; decoders MUST reject count mismatches. A root array spans the whole document, so trailing rows past the count are surplus, not sibling content.",
+  "input": "GCF profile=generic\n## [2]{id,name}\n1|Alice\n2|Bob\n3|Carol\n",
+  "expectedError": "count_mismatch",
+  "operation": "error"
+}

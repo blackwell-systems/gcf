@@ -45,6 +45,8 @@ The fixture suite proves cross-language agreement for the inputs it enumerates; 
 
 The harness is [`scripts/differential-fuzz.py`](https://github.com/blackwell-systems/gcf/blob/main/scripts/differential-fuzz.py); it resolves each SDK CLI from the sibling checkout (or an env override) and compares re-encoded canonical wire, so int-vs-float and native key-order differences that are not GCF divergences do not produce false positives. Because it builds all six SDKs, it runs on a nightly schedule and on demand ([`.github/workflows/differential-fuzz.yml`](https://github.com/blackwell-systems/gcf/blob/main/.github/workflows/differential-fuzz.yml)) rather than on every commit, and it is run locally before a release.
 
+Beyond round-tripping valid wire, the same run adds a **mutation-decoder layer**: each agreed-on valid wire is perturbed into a count-contradicting variant (a surplus or a dropped data row, header and its declared `[N]` unchanged), and every SDK MUST reject it (Count Validation, spec Section 13). This catches a class the byte-identity and round-trip checks structurally cannot: a bug where all six SDKs *agree* and are all *wrong* together, for example silently truncating a wire whose declared count is smaller than its actual rows. Byte-identity and value-equality are relative invariants (the SDKs must match each other); rejecting malformed input is an absolute one (correct regardless of agreement). Round-trip fuzz, at any scale, never exercises this because it only ever feeds decoders the encoder's own well-formed output. A silent accept (`mutation_silent_accept` in the run summary) fails the run and names the SDK.
+
 The tree-sitter grammar participates in the same run as a seventh party: every canonical wire the six SDKs agree on is also parsed through [`tree-sitter-gcf`](https://github.com/blackwell-systems/tree-sitter-gcf), which must produce zero ERROR or MISSING nodes (`grammar_parse_fail` in the run summary). This ties the grammar to real SDK output on the adversarial corpus, not just the enumerated fixtures, so the grammar cannot drift from what the SDKs emit.
 
 ### 5. Coverage-matrix ratchet (CI gate)
@@ -63,7 +65,7 @@ Losslessness proves a machine can round-trip the format. It does not prove a lan
 | Conformance fixtures | Cross-language divergence on enumerated inputs; unhandled operations; specific rejection cases |
 | Property / round-trip | Per-SDK loss and decoder panics |
 | Fuzz at scale | Loss on rare value shapes no fixture enumerates |
-| Differential cross-SDK fuzz | Cross-language divergence on inputs no fixture enumerates |
+| Differential cross-SDK fuzz | Cross-language divergence on inputs no fixture enumerates; silent acceptance of count-contradicting input (all SDKs agreeing on wrong behavior) |
 | Coverage-matrix ratchet | Spec growth outrunning its fixtures; encoder-invariant drift |
 | Comprehension eval | Lossless but illegible output |
 

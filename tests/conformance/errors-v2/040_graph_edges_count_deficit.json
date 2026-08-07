@@ -1,0 +1,7 @@
+{
+  "name": "graph_edges_count_deficit",
+  "description": "A graph payload whose '## edges [N]' section declares more edges than are present must be rejected. SPEC Section 13: a mismatch (fewer or more items than declared) is an error; decoders MUST reject count mismatches. Complements 039 (surplus) so the graph edges count is covered in both directions.",
+  "input": "GCF profile=graph tool=t budget=5000 tokens=1847 symbols=2 edges=2\n## targets\n@0 fn pkg.Auth 0.78 lsp_resolved\n## related\n@1 fn pkg.Server 0.54 lsp_resolved\n## edges [2]\n@0<@1 calls\n",
+  "expectedError": "count_mismatch",
+  "operation": "error"
+}

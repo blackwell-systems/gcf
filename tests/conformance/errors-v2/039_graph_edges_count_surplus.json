@@ -1,0 +1,7 @@
+{
+  "name": "graph_edges_count_surplus",
+  "description": "A graph payload whose '## edges [N]' section declares fewer edges than are present must be rejected. SPEC Section 13 is top-level ('Declared counts are normative at every nesting level; when a section header declares [N], exactly N data items MUST follow; decoders MUST reject count mismatches') and the graph edges section declares [N] (Section 6).",
+  "input": "GCF profile=graph tool=t budget=5000 tokens=1847 symbols=2 edges=1\n## targets\n@0 fn pkg.Auth 0.78 lsp_resolved\n## related\n@1 fn pkg.Server 0.54 lsp_resolved\n## edges [1]\n@0<@1 calls\n@1<@0 calls\n",
+  "expectedError": "count_mismatch",
+  "operation": "error"
+}

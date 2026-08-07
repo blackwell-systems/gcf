@@ -6,7 +6,7 @@
 
 ## Summary
 
-- Fixtures: **258** across 22 directories, 14 operations
+- Fixtures: **264** across 22 directories, 14 operations
 - Section 16.5 conditions covered: **31/31**
 - Uncovered (known gaps, tracked below): **0**
 - Uncovered (unexpected, fails the build): **0**
@@ -33,7 +33,7 @@
 | Structural | Same key twice in the same object scope | `duplicate_key` | covered | `errors-v2/005_duplicate_key.json` |
 | Structural | Same field name twice in a tabular field declaration | `duplicate_field_name` | covered | `errors-v2/006_duplicate_field_name.json` |
 | Structural | Pipe-separated values do not match field count | `row_width_mismatch` | covered | `errors-v2/012_row_width_mismatch.json`, `keyed-map/025_error_row_width_mismatch.json` |
-| Structural | Number of data items does not match declared [count] | `count_mismatch` | covered | `errors-v2/013_count_mismatch.json`, `errors-v2/014_inline_count_mismatch.json`, `errors-v2/034_summary_count_arity.json`, `errors-v2/035_summary_count_mismatch.json` |
+| Structural | Number of data items does not match declared [count] | `count_mismatch` | covered | `errors-v2/013_count_mismatch.json`, `errors-v2/014_inline_count_mismatch.json`, `errors-v2/034_summary_count_arity.json`, `errors-v2/035_summary_count_mismatch.json`, `errors-v2/038_root_array_count_surplus.json`, `errors-v2/039_graph_edges_count_surplus.json`, `errors-v2/040_graph_edges_count_deficit.json`, `keyed-map/031_error_count_surplus.json`, `keyed-map/032_error_count_deficit.json` |
 | Structural | [count] is not 0, a no-leading-zero decimal, or ? | `invalid_count` | covered | `errors-v2/020_leading_zero_count.json` |
 | Structural | Leading whitespace contains tab characters | `tab_indentation` | covered | `errors-v2/007_tab_indentation.json` |
 | Structural | Indentation increases by more than one level | `invalid_indent` | covered | `errors-v2/008_invalid_indent_jump.json` |
@@ -58,9 +58,9 @@
 | `delta` | 2 | yes |
 | `delta-verify` | 1 | yes |
 | `encode` | 148 | yes |
-| `error` | 40 | yes |
+| `error` | 45 | yes |
 | `generic-delta` | 2 | yes |
-| `generic-delta-decode` | 2 | yes |
+| `generic-delta-decode` | 3 | yes |
 | `generic-delta-session` | 3 | yes |
 | `generic-delta-verify` | 4 | yes |
 | `generic-pack-root` | 5 | yes |
@@ -92,12 +92,12 @@
 | 16.2 | Two-space indentation per nesting level | covered | `containers/` (9) |
 | 16.3 | Parse header/nodes/edges; kind expansion + unknown passthrough | covered | `graph-decode/` (4) |
 | 16.3 | Accept ? deferred count; summary metadata; counts positional|labeled | covered | `streaming-v2/` (13) |
-| 16.3 | Reject edges referencing undeclared symbol IDs | covered | op `error` (40) |
+| 16.3 | Reject edges referencing undeclared symbol IDs | covered | op `error` (45) |
 | 16.4 | Scalar grammar + full JSON string escapes; reject malformed UTF-8 | covered | `decode/` (6) |
 | 16.4 | Interpret - (null), ~ (absent), ^ / ^{fields} attachments | covered | `inline-schema/` (15) |
 | 16.4 | Keys bare+quoted; tabular headers; row-width validation | covered | `keys/` (13) |
 | 16.4 | Whitespace/indentation handling | covered | `whitespace/` (3) |
-| 16.4 | Count validation at every level | covered | op `error` (40) |
+| 16.4 | Count validation at every level | covered | op `error` (45) |
 | 16.4 | Round-trip invariant decode(encode(v)) == v (representative values) | covered | op `roundtrip` (5) |
 
 _`invariant` = mechanical scan below; `property` = verified by the SDK property / round-trip suites (not a single fixture)._
@@ -120,9 +120,9 @@ Scanned over every fixture `expected` output; a violation fails the build.
 | `attachments` | 7 |
 | `containers` | 9 |
 | `decode` | 6 |
-| `errors-v2` | 36 |
+| `errors-v2` | 39 |
 | `flatten` | 25 |
-| `generic-delta` | 8 |
+| `generic-delta` | 9 |
 | `generic-delta-session` | 3 |
 | `generic-pack-root` | 5 |
 | `graph-decode` | 4 |
@@ -131,7 +131,7 @@ Scanned over every fixture `expected` output; a violation fails the build.
 | `graph-pack-root` | 4 |
 | `graph-session` | 3 |
 | `inline-schema` | 15 |
-| `keyed-map` | 30 |
+| `keyed-map` | 32 |
 | `keys` | 13 |
 | `numbers` | 16 |
 | `roots` | 11 |

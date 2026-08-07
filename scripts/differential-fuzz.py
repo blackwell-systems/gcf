@@ -18,6 +18,14 @@ do not enumerate. A divergence names the offending SDK. Every divergence it find
 must be pinned with a conformance fixture before it is considered fixed (see
 docs/guide/testing.md, "Every discovered bug becomes a fixture").
 
+It also runs a MUTATION-DECODER layer: each agreed-on valid wire is perturbed into
+a count-contradicting variant (a surplus or a dropped data row, header unchanged)
+that every SDK MUST reject (SPEC 13, Count Validation). A silent accept of such a
+wire is a decoder-robustness failure. Round-trip fuzz alone cannot catch this
+class: it only ever feeds decoders the encoder's own well-formed output, so it is
+blind to decoding malformed/foreign input. This layer surfaces silent
+count-truncation (e.g. a declared [N] smaller than the actual number of rows).
+
 Prerequisites: each SDK CLI must be built first. The script resolves each CLI
 from an env var, falling back to the conventional built-binary location in the
 sibling SDK checkout (this repo and the six gcf-<lang> repos side by side):
@@ -166,22 +174,85 @@ def treesitter_check(wires):
     return fails
 
 
+# Scalars safe to place unquoted in tabular rows, so the uniform generators below
+# reliably yield the tabular/keyed shapes whose surplus is silently truncated.
+SAFE_CELLS = [0, 1, 42, -3, 7, "x", "y", "ok", "val", "aa"]
+
+
+def guniform_array():
+    """An array of uniform objects -> tabular `## [N]{...}` wire (the shape whose
+    surplus row is silently truncated by an unfixed decoder)."""
+    keys = rng.sample(["a", "b", "c", "d", "id", "name"], rng.randint(2, 3))
+    return [{k: rng.choice(SAFE_CELLS) for k in keys} for _ in range(rng.randint(2, 5))]
+
+
+def gkeyed_uniform():
+    """An object of uniform objects with distinct keys -> keyed `## [N:]{...}` wire."""
+    keys = rng.sample(["a", "b", "c", "d"], rng.randint(2, 3))
+    return {f"k{i}": {k: rng.choice(SAFE_CELLS) for k in keys} for i in range(rng.randint(2, 5))}
+
+
 def gen_input():
     r = rng.random()
-    if r < 0.45:
+    if r < 0.15:
+        return guniform_array()
+    if r < 0.30:
+        return gkeyed_uniform()
+    if r < 0.55:
         return gmap_of_objects(4)
-    if r < 0.75:
+    if r < 0.78:
         return [gval(4) for _ in range(rng.randint(1, 4))]
     if r < 0.92:
         return gval(5)
     return gscalar()
 
 
+def mutate_count(wire):
+    """Perturb a valid tabular/keyed/array wire into count-contradicting variants
+    the encoder never emits: a surplus data row and a dropped data row, header
+    (and its declared [N]) unchanged. Every SDK MUST reject each variant (SPEC 13).
+    Returns [] for wires without a counted section (e.g. inline arrays, whose count
+    is validated on the header line and covered elsewhere)."""
+    lines = wire.rstrip("\n").split("\n")
+    hi = next((i for i, l in enumerate(lines) if l.startswith("## [")), -1)
+    if hi < 0:
+        return []
+    di = hi + 1
+    dj = di
+    while dj < len(lines) and not lines[dj].startswith("## ") and not lines[dj].startswith("##! "):
+        dj += 1
+    if dj - di < 1:  # no separate data rows (e.g. inline array on the header line)
+        return []
+    # Only simple positional rows have a clean one-line-per-row count model. An
+    # attachment line (".field"), the missing marker ("~"), or an expanded "@N" item
+    # spans or shifts rows, so a naive line add/drop does not cleanly change the row
+    # count and would false-positive. Skip those shapes (the uniform generators
+    # produce attachment-free rows, so the count class stays reliably covered).
+    for r in lines[di:dj]:
+        if r.startswith(".") or r.startswith("@") or r.strip() == "~":
+            return []
+    # For the surplus row, a keyed map (## [N:]) needs a row with a FRESH key so the
+    # mutation tests the count, not duplicate-key detection; a tabular array can
+    # reuse a row verbatim. (An expanded `@N` array's dup row is caught by the ID
+    # sequence check, which is a correct rejection, so it is harmless here.)
+    keyed = ":]" in lines[hi].split("{", 1)[0]
+    extra = lines[di]
+    if keyed:
+        bar = extra.find("|")
+        extra = ("z" + extra) if bar < 0 else ("z" + extra[:bar] + extra[bar:])
+    muts = []
+    # surplus: add a row -> actual rows = N+1 vs declared N
+    muts.append("\n".join(lines[:di] + [extra] + lines[di:]) + "\n")
+    # deficit: drop the first data row -> actual rows = N-1 vs declared N
+    muts.append("\n".join(lines[:di] + lines[di + 1:]) + "\n")
+    return muts
+
+
 def main():
     tbl = sdk_table()
     names = list(tbl.keys())
     print(f"SDKs: {names}  seed={SEED} N={N}", flush=True)
-    enc_div = dec_div = rt_fail = errors = 0
+    enc_div = dec_div = rt_fail = errors = mut_accept = 0
     wires_seen = set()
     for i in range(N):
         src = json.dumps(gen_input())
@@ -231,12 +302,22 @@ def main():
         if next(iter(groups)) != wire:
             rt_fail += 1
             print(f"[{i}] ROUNDTRIP MISMATCH\n  wire={json.dumps(wire)[:300]}\n  renc={json.dumps(next(iter(groups)))[:300]}", flush=True)
+        # Mutation-decoder layer: a count-contradicting variant of the valid wire
+        # MUST be rejected by every SDK (SPEC 13). A silent accept (rc==0) is a
+        # decoder-robustness failure the round-trip layer above cannot see.
+        for mw in mutate_count(wire):
+            for s in names:
+                cwd, denc, denv = tbl[s]("decode-generic")
+                rc, _out, _err = run(cwd, denc, denv, mw)
+                if rc == 0:
+                    mut_accept += 1
+                    print(f"[{i}] MUTATION SILENTLY ACCEPTED by {s}: count-contradicting wire not rejected\n  wire={json.dumps(mw)[:300]}", flush=True)
     grammar_fail = treesitter_check(wires_seen)
     gf = grammar_fail or 0
     print(f"\nDONE N={N} seed={SEED}: encode_divergence={enc_div} decode_divergence={dec_div} "
-          f"roundtrip_fail={rt_fail} errors={errors} "
+          f"roundtrip_fail={rt_fail} mutation_silent_accept={mut_accept} errors={errors} "
           f"grammar_parse_fail={'skipped' if grammar_fail is None else gf}", flush=True)
-    sys.exit(1 if (enc_div or dec_div or rt_fail or errors or gf) else 0)
+    sys.exit(1 if (enc_div or dec_div or rt_fail or mut_accept or errors or gf) else 0)
 
 
 if __name__ == "__main__":

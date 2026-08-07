@@ -1,0 +1,15 @@
+{
+  "name": "generic_delta_decode_count_surplus",
+  "description": "A delta payload whose '## added [N]' section declares fewer rows than are present must be rejected. SPEC Section 13 is top-level and applies to every [N] section header; the delta added/changed/removed sections declare [N] (Section 10a.2).",
+  "operation": "generic-delta-decode",
+  "input": {
+    "wire": "GCF profile=generic tool=t delta=true base_root=sha256:aaa new_root=sha256:bbb key=id savings=50%\n## added [1]{@id,total}\n1004|75\n1005|80\n## removed [1]{@id}\n1001\n",
+    "base": {
+      "key": "id",
+      "fields": ["id", "total"],
+      "rows": [{"id": 1001, "total": 10}]
+    },
+    "expectedNewRoot": "sha256:bbb"
+  },
+  "expectedError": "count_mismatch"
+}
