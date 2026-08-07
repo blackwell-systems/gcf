@@ -1,0 +1,7 @@
+{
+  "name": "leading_space_grapheme_extending_value",
+  "description": "A value whose leading space is immediately followed by a grapheme-extending scalar (\" \" + U+0ACC) must still be quoted: the leading structural space is a code point (SPEC 2.4), so an encoder that tests String.first (a grapheme cluster) would leave it bare and lose the space on round-trip. Round-trip verified.",
+  "operation": "encode",
+  "input": {"note": " ૌx", "ok": true},
+  "expected": "GCF profile=generic\nnote=\" ૌx\"\nok=true\n"
+}
