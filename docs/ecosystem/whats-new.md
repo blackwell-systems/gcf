@@ -7,8 +7,27 @@ release see the [GitHub releases](https://github.com/blackwell-systems/gcf/relea
 The spec has grown **additively since v3.0** with no breaking changes: a v3.0 decoder
 ignores anything it does not recognize.
 
-**Current ecosystem:** Spec **v3.4.1** · SDKs **v2.4.0** (Go **v1.5.1**) · gcf-proxy
-**v0.11.3** · tree-sitter-gcf **v1.3.3** · 204 conformance fixtures.
+**Current ecosystem:** Spec **v3.5.0** · SDKs **v2.5.1** (Go **v1.6.1**, Swift **v2.6.0**) ·
+gcf-proxy **v0.11.4** · tree-sitter-gcf **v1.4.0** · 264 conformance fixtures.
+
+## v3.5.0 — Keyed-tabular map encoding
+
+_2026-08-07_
+
+- A JSON object whose values are uniform objects (an id-keyed map: config by flag,
+  metrics by host, a service registry, a cache) now encodes as a keyed table (Spec §7.2a):
+  the shared fields are declared once and each entry is one positional row prefixed by its
+  key. Lossless, key-order preserving, and first-class in nested, streaming, and delta positions.
+- On realistic map shapes this is about **29% fewer tokens than minified JSON**, consistent
+  across 42 production tokenizers (23% to 56% per tokenizer).
+- Also folded in: negative zero canonicalizes to `0` (Spec §2.3.1), the buffered graph header
+  omits zero-valued `budget`/`tokens`/`edges` (Spec §3.2), and structural delimiters are matched
+  at the Unicode scalar level (Spec §1).
+- Hardening (SDKs v2.5.1, Go v1.6.1, Swift v2.6.0): decoders now reject a declared `[N]` section
+  count that does not match the actual item count, in both directions (Spec §13), backed by a new
+  cross-SDK mutation-decoder fuzz that feeds every SDK malformed wire round-trip testing cannot reach.
+- Shipped across all six SDKs, tree-sitter-gcf v1.4.0, and gcf-proxy v0.11.4.
+- [Release notes](https://github.com/blackwell-systems/gcf/releases/tag/v3.5.0)
 
 ## v3.4.1 — Graph delta verification
 
