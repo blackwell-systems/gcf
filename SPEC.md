@@ -39,6 +39,8 @@ GCF supports two encoding profiles:
 
 Both profiles share the same grammar primitives: `##` section headers, `@` local IDs, the common scalar grammar (Section 2), and the common key grammar (Section 2a). The savings come from eliminating three sources of waste: field name repetition (positional encoding), identifier repetition (local IDs), and per-record metadata (hierarchical grouping).
 
+All structural tokens and delimiters in this grammar (for example `|`, `,`, `=`, spaces, `>`, `[`, `]`, `{`, `}`, `"`, `@`, `#`) are defined and matched at the level of Unicode scalar values (code points), not grapheme clusters. A conforming implementation MUST locate and compare structural delimiters by code point; it MUST NOT apply grapheme-cluster segmentation when parsing structure, because a delimiter immediately adjacent to a combining (grapheme-extending) scalar in the data would otherwise be missed, corrupting the parse. This matters only in languages whose default string iteration is grapheme-based; the requirement makes structural parsing identical across all implementations.
+
 ### 1.1 Lossless round-trip invariant
 
 The generic profile preserves the JSON data model. A conforming implementation MUST satisfy:
@@ -272,6 +274,8 @@ GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=10 edges
 | `base_root` | string | Pack root of the prior payload (delta mode only) |
 | `new_root` | string | Pack root of the current payload (delta mode only) |
 | `savings` | string | Token savings percentage (delta mode only, e.g. `81%`) |
+
+Canonical emission (buffered mode): an encoder MUST always emit `symbols`, and MUST emit `budget`, `tokens`, and `edges` only when their value is nonzero. A zero-valued `budget`, `tokens`, or `edges` field is omitted rather than emitted as `=0`, so two conformant encoders produce byte-identical headers for the same payload. (Streaming mode omits the count fields when unknown, per Section 8.4.)
 
 ### 3.3 Generic profile header
 
@@ -1653,7 +1657,7 @@ Conforming graph-profile encoders MUST:
 
 - Emit UTF-8 output with LF line endings
 - Emit a header line beginning with `GCF profile=graph` (the `tool` field is optional, Section 3.2; emit it when a producing-tool name is available)
-- Emit the `edges` field in the header with an accurate count (buffered mode), OR omit it and provide counts in `##! summary` (streaming mode)
+- Emit `symbols` in the header always; emit `budget`, `tokens`, and `edges` only when their value is nonzero, omitting each field when its value is zero (buffered mode). In streaming mode, omit the count fields (`symbols`, `edges`) and provide counts in `##! summary` (Section 8.4.1). A zero-valued count field is never emitted, so header output is deterministic across encoders.
 - Assign symbol IDs sequentially starting from 0 in non-session payloads; preserve stable session-scoped IDs when `session=true`
 - Emit scores with exactly 2 decimal places
 - Emit kind abbreviations from the standard table (Section 5) when available
