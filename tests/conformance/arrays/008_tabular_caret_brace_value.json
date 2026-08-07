@@ -1,0 +1,14 @@
+{
+  "name": "tabular_caret_brace_value",
+  "description": "A string cell value shaped like an inline-schema attachment marker (^{...}) must be quoted so it round-trips as a string, not decoded as an attachment (SPEC 2.4)",
+  "operation": "encode",
+  "input": [
+    {
+      "v": "^{a}"
+    },
+    {
+      "v": "x"
+    }
+  ],
+  "expected": "GCF profile=generic\n## [2]{v}\n\"^{a}\"\nx\n"
+}

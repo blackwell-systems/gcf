@@ -1,0 +1,14 @@
+{
+  "name": "tabular_non_ascii_value",
+  "description": "A non-ASCII string cell value is bare (non-ASCII characters do not require quoting under Section 2.4); it round-trips unquoted",
+  "operation": "encode",
+  "input": [
+    {
+      "v": "café"
+    },
+    {
+      "v": "x"
+    }
+  ],
+  "expected": "GCF profile=generic\n## [2]{v}\ncafé\nx\n"
+}
