@@ -55,6 +55,9 @@ jobs:
       - name: Checkout gcf-swift
         uses: actions/checkout@v4
         with: { repository: blackwell-systems/gcf-swift, path: gcf-swift, token: '${{ secrets.GCF_CI_TOKEN || github.token }}' }
+      - name: Checkout tree-sitter-gcf
+        uses: actions/checkout@v4
+        with: { repository: blackwell-systems/tree-sitter-gcf, path: tree-sitter-gcf, token: '${{ secrets.GCF_CI_TOKEN || github.token }}' }
 
       - uses: actions/setup-go@v5
         with: { go-version: 'stable' }
@@ -77,6 +80,8 @@ jobs:
       - name: Build Swift CLI
         run: cd gcf-swift && swift build -c release
       # Python needs no build; the script runs `python -m gcf` with PYTHONPATH=src.
+      - name: Build tree-sitter grammar
+        run: cd tree-sitter-gcf && npm ci && npx tree-sitter generate
 
       - name: Run differential fuzz
         env:

@@ -32,7 +32,7 @@ sibling SDK checkout (this repo and the six gcf-<lang> repos side by side):
 Env: DIFF_SEED (default 1), DIFF_N (default 300).
 Exit code is nonzero if any divergence, round-trip failure, or CLI error occurs.
 """
-import json, subprocess, random, sys, os, shutil
+import json, subprocess, random, sys, os, shutil, tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))  # parent of the gcf repo (sibling layout)
@@ -125,6 +125,47 @@ def gmap_of_objects(depth):
     return o
 
 
+def treesitter_check(wires):
+    """Parse every canonical wire the six SDKs agreed on through the tree-sitter
+    grammar, asserting zero ERROR/MISSING nodes. This makes the grammar a seventh
+    participant in the differential: whatever the SDKs emit, the grammar must parse.
+    Returns the failure count, or None if the grammar repo/CLI is unavailable
+    (skipped, not failed). Set GCF_SKIP_GRAMMAR=1 to skip explicitly."""
+    if os.environ.get("GCF_SKIP_GRAMMAR"):
+        return None
+    ts_dir = os.environ.get("GCF_TREESITTER_DIR", os.path.join(ROOT, "tree-sitter-gcf"))
+    if not os.path.isdir(ts_dir):
+        print(f"grammar: {ts_dir} not found; skipping grammar interop (set GCF_TREESITTER_DIR)", flush=True)
+        return None
+    ts = os.environ.get("TREE_SITTER", shutil.which("tree-sitter"))
+    base_argv = [ts, "parse", "-q"] if ts else ["npx", "tree-sitter", "parse", "-q"]
+    fails = 0
+    with tempfile.TemporaryDirectory() as td:
+        paths = []
+        for idx, w in enumerate(sorted(wires)):
+            p = os.path.join(td, f"w{idx:05d}.gcf")
+            with open(p, "w") as f:
+                f.write(w)
+            paths.append(p)
+        # tree-sitter parse -q prints a summary line only for files with an error,
+        # containing (ERROR ...) or (MISSING ...), and exits nonzero if any fail.
+        p = subprocess.run(base_argv + paths, cwd=ts_dir,
+                           stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        out = p.stdout.decode("utf-8", "replace") + p.stderr.decode("utf-8", "replace")
+        for line in out.splitlines():
+            if "ERROR" in line or "MISSING" in line:
+                fails += 1
+                fname = line.split()[0] if line.split() else ""
+                wire = ""
+                try:
+                    wire = open(fname).read() if os.path.exists(fname) else ""
+                except Exception:
+                    pass
+                print(f"[grammar] PARSE FAIL: {line.strip()[:200]}\n  wire={json.dumps(wire)[:300]}", flush=True)
+    print(f"grammar: {len(wires)} unique canonical wires parsed, {fails} grammar parse failures", flush=True)
+    return fails
+
+
 def gen_input():
     r = rng.random()
     if r < 0.45:
@@ -141,6 +182,7 @@ def main():
     names = list(tbl.keys())
     print(f"SDKs: {names}  seed={SEED} N={N}", flush=True)
     enc_div = dec_div = rt_fail = errors = 0
+    wires_seen = set()
     for i in range(N):
         src = json.dumps(gen_input())
         wires, errored = {}, False
@@ -164,6 +206,7 @@ def main():
                 print(f"    MINORITY {ss}: {json.dumps(out)[:300]}", flush=True)
             continue
         wire = next(iter(wires.values()))
+        wires_seen.add(wire)
         rencs = {}
         for s in names:
             cwd, denc, denv = tbl[s]("decode-generic")
@@ -188,9 +231,12 @@ def main():
         if next(iter(groups)) != wire:
             rt_fail += 1
             print(f"[{i}] ROUNDTRIP MISMATCH\n  wire={json.dumps(wire)[:300]}\n  renc={json.dumps(next(iter(groups)))[:300]}", flush=True)
+    grammar_fail = treesitter_check(wires_seen)
+    gf = grammar_fail or 0
     print(f"\nDONE N={N} seed={SEED}: encode_divergence={enc_div} decode_divergence={dec_div} "
-          f"roundtrip_fail={rt_fail} errors={errors}", flush=True)
-    sys.exit(1 if (enc_div or dec_div or rt_fail or errors) else 0)
+          f"roundtrip_fail={rt_fail} errors={errors} "
+          f"grammar_parse_fail={'skipped' if grammar_fail is None else gf}", flush=True)
+    sys.exit(1 if (enc_div or dec_div or rt_fail or errors or gf) else 0)
 
 
 if __name__ == "__main__":
