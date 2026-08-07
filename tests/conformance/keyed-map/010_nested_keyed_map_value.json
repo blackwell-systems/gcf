@@ -1,6 +1,6 @@
 {
   "name": "010_nested_keyed_map_value",
-  "description": "A value field that is itself a map of objects is a keyed-map attachment .field [N:]; symmetric across members (1- and 2-entry)",
+  "description": "A value field that is a multi-member map of objects is a keyed-map attachment (.field [N:]); a value field that is a single-member map is a section (## key), since a keyed map requires at least two members",
   "operation": "encode",
   "input": {
     "g1": {
@@ -23,5 +23,5 @@
       }
     }
   },
-  "expected": "GCF profile=generic\n## [2:]{key,name,members}\n@0 g1|grp1|^\n.members [2:]{key,role}\n    m1|admin\n    m2|user\n@1 g2|grp2|^\n.members [1:]{key,role}\n    m3|user\n"
+  "expected": "GCF profile=generic\n## [2:]{key,name,members}\n@0 g1|grp1|^\n.members [2:]{key,role}\n    m1|admin\n    m2|user\n@1 g2|grp2|^\n.members {}\n    ## m3\n      role=user\n"
 }

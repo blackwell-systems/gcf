@@ -1,6 +1,6 @@
 {
-  "name": "011_single_member_record",
-  "description": "A single-member map whose value is a flat record keys as [1:] (mirrors a one-row array)",
+  "name": "single_member_not_keyed",
+  "description": "A single-member map is not encoded as a keyed table (a one-row table has no benefit); it uses ordinary section encoding. A keyed map requires at least two members (SPEC 7.2a.1)",
   "operation": "encode",
   "input": {
     "only": {
@@ -8,5 +8,5 @@
       "b": 2
     }
   },
-  "expected": "GCF profile=generic\n## [1:]{key,a,b}\nonly|1|2\n"
+  "expected": "GCF profile=generic\n## only\n  a=1\n  b=2\n"
 }

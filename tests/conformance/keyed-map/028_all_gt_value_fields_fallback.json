@@ -1,0 +1,14 @@
+{
+  "name": "all_gt_value_fields_fallback",
+  "description": "A map of objects whose value fields all contain '>' (which cannot be tabular columns, SPEC 7.4.6.1.4) is not keyed; it uses Section 7.2 section encoding, the object analogue of an array falling back to expanded form",
+  "operation": "encode",
+  "input": {
+    "a": {
+      "x>y": 1
+    },
+    "b": {
+      "x>y": 2
+    }
+  },
+  "expected": "GCF profile=generic\n## a\n  \"x>y\"=1\n## b\n  \"x>y\"=2\n"
+}
