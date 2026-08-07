@@ -1,0 +1,16 @@
+{
+  "name": "graph_decode_grapheme_extending_scalar_fields",
+  "description": "A qualifiedName, provenance, or edge field beginning with a grapheme-extending scalar (U+0BD7) must not merge with the preceding space delimiter: node and edge lines are space-delimited over code points (SPEC 2.4), not grapheme clusters.",
+  "input": "GCF profile=graph tool=test symbols=2\n## targets\n@0 fn ௗpkg.handler 0.95 lsp\n@1 fn pkg.other 0.80 ௗast\n## edges\n@1<@0 calls active\n",
+  "expected": {
+    "tool": "test",
+    "symbols": [
+      {"qualifiedName": "ௗpkg.handler", "kind": "function", "score": 0.95, "provenance": "lsp", "distance": 0},
+      {"qualifiedName": "pkg.other", "kind": "function", "score": 0.8, "provenance": "ௗast", "distance": 0}
+    ],
+    "edges": [
+      {"source": "ௗpkg.handler", "target": "pkg.other", "edgeType": "calls", "status": "active"}
+    ]
+  },
+  "operation": "decode"
+}

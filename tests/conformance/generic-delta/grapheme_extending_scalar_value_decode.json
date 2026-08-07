@@ -1,0 +1,18 @@
+{
+  "name": "generic_delta_decode_grapheme_extending_scalar_value",
+  "description": "Consumer path: parse a delta wire whose added/changed cells begin with a grapheme-extending scalar (U+0BD7), apply it to the held base, and confirm the recomputed root equals new_root. A decoder that splits cells or headers by grapheme cluster would merge the leading scalar with the preceding delimiter and corrupt the value (SPEC 2.4: scalars are code points).",
+  "operation": "generic-delta-decode",
+  "input": {
+    "wire": "GCF profile=generic tool=orders delta=true base_root=sha256:974d90484281147662697d638523b23d13d85d32eab8afa1d94e783cbee21afd new_root=sha256:d90b1dae6f3bbc8c50e3cb028151e756ec50163fd5f21accb29422fce6a26298 key=id\n## added [1]{@id,name,status}\nk3|ௗcarol|active\n## changed [1]{@id,name,status}\nk2|bob|ௗshipped\n## removed [1]{@id}\nk1\n",
+    "base": {
+      "key": "id",
+      "fields": ["id", "name", "status"],
+      "rows": [
+        {"id": "k1", "name": "ௗalice", "status": "active"},
+        {"id": "k2", "name": "bob", "status": "pending"}
+      ]
+    },
+    "expectedNewRoot": "sha256:d90b1dae6f3bbc8c50e3cb028151e756ec50163fd5f21accb29422fce6a26298"
+  },
+  "expected": "sha256:d90b1dae6f3bbc8c50e3cb028151e756ec50163fd5f21accb29422fce6a26298"
+}
