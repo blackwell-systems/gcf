@@ -1,0 +1,11 @@
+{
+  "name": "empty_object_row_mixed",
+  "description": "Tabular encoding with a multi-field union where a trailing member is empty and a later member omits a field: every absent field in every row is emitted as ~ (Section 7.4.2, 7.4.3). Confirms the field union is computed over ALL members and empty members do not switch the array to expanded form (Section 7.3).",
+  "operation": "encode",
+  "input": [
+    { "a": 1 },
+    {},
+    { "b": 9 }
+  ],
+  "expected": "GCF profile=generic\n## [3]{a,b}\n1|~\n~|~\n~|9\n"
+}

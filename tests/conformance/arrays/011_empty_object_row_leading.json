@@ -1,0 +1,10 @@
+{
+  "name": "empty_object_row_leading",
+  "description": "An all-object array with a non-empty field union MUST use tabular form even when a member object is empty; the empty row's absent field is emitted as ~ (Section 7.3, 7.4.2). Only an array of exclusively empty objects uses expanded form (containers/006). Regression guard: an empty leading object must not disqualify the array from tabular encoding.",
+  "operation": "encode",
+  "input": [
+    {},
+    { "a": 1 }
+  ],
+  "expected": "GCF profile=generic\n## [2]{a}\n~\n1\n"
+}
