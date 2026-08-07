@@ -1,0 +1,9 @@
+{
+  "name": "number_negative_zero_float_canonicalizes",
+  "description": "Floating-point negative zero (-0.0) canonicalizes to 0. -0.0 equals 0.0 by value, so the encoder emits 0 rather than -0 or -0.0 (SPEC 2.3.1).",
+  "input": {
+    "value": -0.0
+  },
+  "expected": "GCF profile=generic\nvalue=0\n",
+  "operation": "encode"
+}

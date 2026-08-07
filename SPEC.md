@@ -144,7 +144,7 @@ Tokens that do not match this grammar in their entirety fall through to bare str
 
 Conforming encoders MUST emit numbers in canonical form to ensure bit-for-byte deterministic output:
 
-- Zero is emitted as `0`; negative zero is emitted as `-0` when the source numeric model distinguishes it.
+- Zero is emitted as `0`. Negative zero is canonicalized to `0`: `-0` and `0` denote the same numeric value, and integer negative zero is not representable in most language number models, so encoders MUST emit `0` for both integer and floating-point negative zero and MUST NOT emit `-0`. Decoders MUST still accept `-0` as valid number syntax (it decodes to the value zero).
 - For non-zero values where `1e-6 <= abs(value) < 1e21`, emit plain decimal notation.
 - For non-zero values outside that range, emit normalized exponent notation using lowercase `e`, exactly one digit before the decimal point, no trailing fractional zeroes, an explicit exponent sign, and no leading exponent zeroes (for example `1.25e+21`, `4e-7`).
 - Plain decimals MUST have no leading zeroes except the single zero before a fractional point, and MUST have no trailing fractional zeroes.

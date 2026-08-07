@@ -6,7 +6,7 @@
 
 ## Summary
 
-- Fixtures: **253** across 22 directories, 14 operations
+- Fixtures: **254** across 22 directories, 14 operations
 - Section 16.5 conditions covered: **31/31**
 - Uncovered (known gaps, tracked below): **0**
 - Uncovered (unexpected, fails the build): **0**
@@ -57,7 +57,7 @@
 | `decode` | 30 | yes |
 | `delta` | 2 | yes |
 | `delta-verify` | 1 | yes |
-| `encode` | 145 | yes |
+| `encode` | 146 | yes |
 | `error` | 40 | yes |
 | `generic-delta` | 2 | yes |
 | `generic-delta-decode` | 1 | yes |
@@ -82,7 +82,7 @@
 | 16.1 | Order edges by source ID then target ID | covered | `graph-encode/` (3) |
 | 16.1 | Deterministic output (distance_N trailer group order) | covered | `streaming-v2/` (13) |
 | 16.2 | Header begins GCF profile=generic | covered | `scalar/` (26) |
-| 16.2 | Scalar grammar + encoder quoting; numbers/bool/null unquoted | covered | `numbers/` (15) |
+| 16.2 | Scalar grammar + encoder quoting; numbers/bool/null unquoted | covered | `numbers/` (16) |
 | 16.2 | Key grammar; quote invalid bare keys; reject duplicate keys | covered | `keys/` (13) |
 | 16.2 | Tabular: pipe separator, positional rows, field union, - / ~ | covered | `arrays/` (13) |
 | 16.2 | Inline object schemas; shared array schema reuse | covered | `inline-schema/` (15) |
@@ -133,7 +133,7 @@ Scanned over every fixture `expected` output; a violation fails the build.
 | `inline-schema` | 15 |
 | `keyed-map` | 30 |
 | `keys` | 13 |
-| `numbers` | 15 |
+| `numbers` | 16 |
 | `roots` | 11 |
 | `scalar` | 26 |
 | `streaming-v2` | 13 |

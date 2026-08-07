@@ -1,9 +1,9 @@
 {
-  "name": "number_negative_zero",
-  "description": "Negative zero preserves sign",
+  "name": "number_negative_zero_canonicalizes_to_zero",
+  "description": "Negative zero is canonicalized to 0 (integer or floating point). -0 and 0 denote the same value and integer -0 is not representable in most language number models, so encoders emit 0 (SPEC 2.3.1).",
   "input": {
     "value": -0
   },
-  "expected": "GCF profile=generic\nvalue=-0\n",
+  "expected": "GCF profile=generic\nvalue=0\n",
   "operation": "encode"
 }
