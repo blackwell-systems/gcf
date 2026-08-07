@@ -1,0 +1,7 @@
+{
+  "name": "grapheme_extending_scalar_delimiter",
+  "description": "A grapheme-extending scalar (U+0BD7) immediately following a structural delimiter must not merge with it: scalars are code points (SPEC 2.4), so decoders that iterate by grapheme cluster must detect delimiters on scalars. Round-trip verified.",
+  "operation": "encode",
+  "input": {"a>b": {"a>>b": "ௗP", "": "z"}, "x>b": {"a>b": "w"}},
+  "expected": "GCF profile=generic\n## [2:]{key,\"\"}\n@0 a>b|z\n.\"a>>b\" =ௗP\n@1 x>b|~\n.\"a>b\" =w\n"
+}
