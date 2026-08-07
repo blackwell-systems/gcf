@@ -1,0 +1,26 @@
+{
+  "name": "tabular_value_collision_strings",
+  "description": "String cell values that collide with non-string tokens (true, numeric, -, leading @, a pipe) are quoted so they round-trip as strings; the pipe case is specific to the tabular cell context (Section 2.4)",
+  "operation": "encode",
+  "input": [
+    {
+      "v": "true"
+    },
+    {
+      "v": "123"
+    },
+    {
+      "v": "-"
+    },
+    {
+      "v": "@x"
+    },
+    {
+      "v": "a|b"
+    },
+    {
+      "v": "plain"
+    }
+  ],
+  "expected": "GCF profile=generic\n## [6]{v}\n\"true\"\n\"123\"\n\"-\"\n\"@x\"\n\"a|b\"\nplain\n"
+}

@@ -1,0 +1,16 @@
+{
+  "name": "tabular_multibyte_field_name",
+  "description": "A tabular field name containing a multibyte character is quoted and round-trips; guards decoders that index the field declaration by character but slice by byte",
+  "operation": "encode",
+  "input": [
+    {
+      "id": 1,
+      "9中": 2
+    },
+    {
+      "id": 3,
+      "9中": 4
+    }
+  ],
+  "expected": "GCF profile=generic\n## [2]{id,\"9中\"}\n1|2\n3|4\n"
+}
