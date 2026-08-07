@@ -6,7 +6,7 @@
 
 ## Summary
 
-- Fixtures: **254** across 22 directories, 14 operations
+- Fixtures: **258** across 22 directories, 14 operations
 - Section 16.5 conditions covered: **31/31**
 - Uncovered (known gaps, tracked below): **0**
 - Uncovered (unexpected, fails the build): **0**
@@ -54,13 +54,13 @@
 
 | Operation | Fixtures | Required |
 |---|---|---|
-| `decode` | 30 | yes |
+| `decode` | 31 | yes |
 | `delta` | 2 | yes |
 | `delta-verify` | 1 | yes |
-| `encode` | 146 | yes |
+| `encode` | 148 | yes |
 | `error` | 40 | yes |
 | `generic-delta` | 2 | yes |
-| `generic-delta-decode` | 1 | yes |
+| `generic-delta-decode` | 2 | yes |
 | `generic-delta-session` | 3 | yes |
 | `generic-delta-verify` | 4 | yes |
 | `generic-pack-root` | 5 | yes |
@@ -81,7 +81,7 @@
 | 16.1 | Order symbols by score descending within each distance group | covered | `graph-encode/` (3) |
 | 16.1 | Order edges by source ID then target ID | covered | `graph-encode/` (3) |
 | 16.1 | Deterministic output (distance_N trailer group order) | covered | `streaming-v2/` (13) |
-| 16.2 | Header begins GCF profile=generic | covered | `scalar/` (26) |
+| 16.2 | Header begins GCF profile=generic | covered | `scalar/` (28) |
 | 16.2 | Scalar grammar + encoder quoting; numbers/bool/null unquoted | covered | `numbers/` (16) |
 | 16.2 | Key grammar; quote invalid bare keys; reject duplicate keys | covered | `keys/` (13) |
 | 16.2 | Tabular: pipe separator, positional rows, field union, - / ~ | covered | `arrays/` (13) |
@@ -90,7 +90,7 @@
 | 16.2 | Nested object flattening (> path columns, v3.2) | covered | `flatten/` (25) |
 | 16.2 | Root scalar (=value) and root array (## [N]) | covered | `roots/` (11) |
 | 16.2 | Two-space indentation per nesting level | covered | `containers/` (9) |
-| 16.3 | Parse header/nodes/edges; kind expansion + unknown passthrough | covered | `graph-decode/` (3) |
+| 16.3 | Parse header/nodes/edges; kind expansion + unknown passthrough | covered | `graph-decode/` (4) |
 | 16.3 | Accept ? deferred count; summary metadata; counts positional|labeled | covered | `streaming-v2/` (13) |
 | 16.3 | Reject edges referencing undeclared symbol IDs | covered | op `error` (40) |
 | 16.4 | Scalar grammar + full JSON string escapes; reject malformed UTF-8 | covered | `decode/` (6) |
@@ -122,10 +122,10 @@ Scanned over every fixture `expected` output; a violation fails the build.
 | `decode` | 6 |
 | `errors-v2` | 36 |
 | `flatten` | 25 |
-| `generic-delta` | 7 |
+| `generic-delta` | 8 |
 | `generic-delta-session` | 3 |
 | `generic-pack-root` | 5 |
-| `graph-decode` | 3 |
+| `graph-decode` | 4 |
 | `graph-delta` | 3 |
 | `graph-encode` | 3 |
 | `graph-pack-root` | 4 |
@@ -135,7 +135,7 @@ Scanned over every fixture `expected` output; a violation fails the build.
 | `keys` | 13 |
 | `numbers` | 16 |
 | `roots` | 11 |
-| `scalar` | 26 |
+| `scalar` | 28 |
 | `streaming-v2` | 13 |
 | `whitespace` | 3 |
 
