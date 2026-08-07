@@ -27,7 +27,7 @@ The [`tests/conformance/`](https://github.com/blackwell-systems/gcf/tree/main/te
 - **Content addressing** (`pack_root`, `generic_pack_root`) requires **hash-exact** agreement across languages.
 - **Error** fixtures (36 of them) require the decoder to reject a specific malformed input.
 
-Because all six languages consume the identical bytes and are checked against the identical expected output, passing the suite is a proof of cross-language agreement, not just per-language correctness. This is the **6x6 matrix**: any of the six encoders paired with any of the six decoders produces the same result.
+Because all six languages consume the identical bytes and are checked against the identical expected output, passing the suite proves cross-language agreement for every input it enumerates, not just per-language correctness. This is the **6x6 matrix**: for a fixture input, any of the six encoders paired with any of the six decoders produces the same result. Agreement on inputs the fixtures do not enumerate is covered by the differential cross-SDK fuzz (layer 4a).
 
 Each fixture carries an explicit `operation` field and follows the runner contract in [`tests/conformance/README.md`](https://github.com/blackwell-systems/gcf/blob/main/tests/conformance/README.md); a runner never infers direction from the shape of `input`/`expected`. Runners hard-fail on an unhandled operation rather than skipping it, so a capability gap surfaces as a failure instead of a silent pass.
 
@@ -38,6 +38,10 @@ Each SDK carries its own property and round-trip suite asserting the core invari
 ### 4. Fuzz at scale (billions of round-trips)
 
 The invariant is then verified against **43.27 billion+ random round-trips with zero failures** across five source formats (JSON, YAML, TOML, CSV, MessagePack). A seeded PRNG generates random structured values, serializes them through each format, parses them back, encodes as GCF, decodes, and deep-compares to the original. Seeds are sequential and deterministic, so any failure is reproducible. Full methodology, the per-format counts, reproduce commands, and edge-case coverage are in [Lossless Verification](/guide/lossless-verification).
+
+### 4a. Differential cross-SDK fuzz
+
+The fixture suite proves cross-language agreement for the inputs it enumerates; it cannot prove it for inputs no one thought to write down. The differential fuzz closes that gap: it generates adversarial random inputs, encodes each through every SDK, and requires the wire to be **byte-identical across all six**, then decodes that wire through every SDK and requires an identical value equal to the input. A divergence (one SDK's output differs) or a round-trip loss fails the run and names the offending SDK. This is what actually exercises the 6x6 matrix on inputs beyond the fixtures, and it is how per-SDK quoting and ordering divergences are caught before they reach a fixture.
 
 ### 5. Coverage-matrix ratchet (CI gate)
 
@@ -52,9 +56,10 @@ Losslessness proves a machine can round-trip the format. It does not prove a lan
 | Layer | Primary failure class caught |
 |---|---|
 | Spec (Section 16) | Ambiguity: two readings of the same requirement |
-| Conformance fixtures | Cross-language divergence; unhandled operations; specific rejection cases |
+| Conformance fixtures | Cross-language divergence on enumerated inputs; unhandled operations; specific rejection cases |
 | Property / round-trip | Per-SDK loss and decoder panics |
 | Fuzz at scale | Loss on rare value shapes no fixture enumerates |
+| Differential cross-SDK fuzz | Cross-language divergence on inputs no fixture enumerates |
 | Coverage-matrix ratchet | Spec growth outrunning its fixtures; encoder-invariant drift |
 | Comprehension eval | Lossless but illegible output |
 
@@ -92,6 +97,10 @@ Changes land in a fixed order, never SDK-first:
 4. Fan out to the other five SDKs.
 
 This order is what makes the byte-exact guarantee hold. A change implemented in one SDK first would define correctness by that implementation rather than by the spec, and the other five would drift toward it.
+
+## Every discovered bug becomes a fixture
+
+A bug found outside the fixture set, by a property test, the fuzz at scale, the differential cross-SDK fuzz, or a report, is not considered fixed until a conformance fixture pins it. The fixture is added **first** and must fail (red) against the unfixed code, then pass (green) once the fix lands, in every SDK. This is what stops a latent losslessness or divergence bug from silently returning. If the spec was silent or ambiguous on the case, the spec is clarified first (per the spec-first order above), so the fixture still pins a normative requirement rather than an implementation quirk. A fix without a fixture is incomplete.
 
 ## Deep dives
 
