@@ -1,0 +1,10 @@
+{
+  "name": "keyed_map_decode_preserves_field_order",
+  "description": "Keyed-map decode must reconstruct each member value object in the declared field-union order (z,a,m), not sorted. A decoder that rebuilds members into an unordered map re-encodes lexicographically (a,m,z) and fails the round-trip. Object key ordering is a preserved round-trip property (SPEC lines 52, 931).",
+  "operation": "encode",
+  "input": {
+    "m1": { "z": 1, "a": 2, "m": 3 },
+    "m2": { "z": 4, "a": 5, "m": 6 }
+  },
+  "expected": "GCF profile=generic\n## [2:]{key,z,a,m}\nm1|1|2|3\nm2|4|5|6\n"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "nested_object_decode_field_order",
+  "description": "A nested object decoded from an expanded section must preserve the order its key=value lines appear (z,a,m), not sort them. A decoder that rebuilds the nested object into an unordered map re-encodes lexicographically (a,m,z) and fails the round-trip. Object key ordering is a preserved round-trip property (SPEC lines 52, 931).",
+  "operation": "encode",
+  "input": {
+    "outer": { "z": 1, "a": 2, "m": 3 }
+  },
+  "expected": "GCF profile=generic\n## outer\n  z=1\n  a=2\n  m=3\n"
+}

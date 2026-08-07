@@ -1,0 +1,10 @@
+{
+  "name": "flatten_decode_field_order",
+  "description": "Flattened path columns must reconstruct the nested object at the declared position of its group (n between p and q), with nested keys in path-column order (x before y). A decoder that rebuilds objects into unordered maps re-encodes lexicographically and both moves the group and sorts its leaves. Object key ordering is a preserved round-trip property, and flatten round-trip must reconstruct exact key order (SPEC lines 52, 905, 931).",
+  "operation": "encode",
+  "input": [
+    { "p": 1, "n": { "x": 7, "y": 8 }, "q": 3 },
+    { "p": 4, "n": { "x": 9, "y": 0 }, "q": 6 }
+  ],
+  "expected": "GCF profile=generic\n## [2]{p,\"n>x\",\"n>y\",q}\n1|7|8|3\n4|9|0|6\n"
+}

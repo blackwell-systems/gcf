@@ -1,0 +1,10 @@
+{
+  "name": "decode_preserves_field_order",
+  "description": "Tabular decode must reconstruct each row object in the declared field-union order, not sorted. Fields z,a,m are non-alphabetical so a decoder that rebuilds objects into an unordered map (re-encoding lexicographically as a,m,z) fails the round-trip. Object key ordering is a preserved round-trip property (SPEC lines 52, 931).",
+  "operation": "encode",
+  "input": [
+    { "z": 1, "a": 2, "m": 3 },
+    { "z": 4, "a": 5, "m": 6 }
+  ],
+  "expected": "GCF profile=generic\n## [2]{z,a,m}\n1|2|3\n4|5|6\n"
+}
