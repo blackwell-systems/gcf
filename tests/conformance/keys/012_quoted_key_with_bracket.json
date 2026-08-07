@@ -1,0 +1,12 @@
+{
+  "name": "quoted_key_with_bracket",
+  "description": "A quoted section/key name containing ' [' must round-trip: the decoder must find the header count bracket outside quotes, not treat the ' [' inside the quoted name as a named-array header",
+  "operation": "encode",
+  "input": {
+    "a [1] b": {
+      "x": 1,
+      "y": 2
+    }
+  },
+  "expected": "GCF profile=generic\n## \"a [1] b\"\n  x=1\n  y=2\n"
+}
