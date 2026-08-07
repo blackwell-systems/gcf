@@ -1,0 +1,15 @@
+{
+  "name": "caret_brace_value_quoted_all_contexts",
+  "description": "A string value shaped like an inline-schema attachment marker (^{...}) is quoted in every context (key=value line and expanded array item, not only tabular cells) so it always round-trips as a string rather than decoding as an attachment (SPEC 2.4)",
+  "operation": "encode",
+  "input": {
+    "k": "^{a}",
+    "arr": [
+      "^{a}",
+      {
+        "x": 1
+      }
+    ]
+  },
+  "expected": "GCF profile=generic\nk=\"^{a}\"\n## arr [2]\n@0 =\"^{a}\"\n@1 {}\n  x=1\n"
+}
