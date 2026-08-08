@@ -28,7 +28,7 @@ We evaluated GCF across 2,500+ LLM evaluations spanning 11 models and 4 provider
 
 **Lossless verification:** **43 billion+** round-trips across 5 formats (JSON, YAML, MessagePack, CSV, TOML) with **zero failures**. Validated across 17 serialization formats in the Format Mega-Gauntlet.
 
-Session deduplication (84.3% cumulative savings over a 5-call session) and delta encoding (81.2% on re-queries) compound savings across multi-turn interactions. A streaming encoding extension enables zero-buffering encode with O(1) memory per row. The format is implemented in six languages (Go, TypeScript, Python, Rust, Swift, Kotlin), 204 conformance fixtures, and deployed in production MCP servers. Specification v3.4.1 Stable: gcformat.com.
+Session deduplication (84.3% cumulative savings over a 5-call session) and delta encoding (81.2% on re-queries) compound savings across multi-turn interactions. A streaming encoding extension enables zero-buffering encode with O(1) memory per row. The format is implemented in six languages (Go, TypeScript, Python, Rust, Swift, Kotlin), 264 conformance fixtures, and deployed in production MCP servers. Specification v3.5.0 Stable: gcformat.com.
 
 GCF's grammar was reverse-engineered from tokenization and attention-level experimentation, then shipped and validated on production models; the three formal companion papers below came afterward and independently confirm the mechanism at controlled-training scale (Section 2.0). It spans three companion papers: "Tokenizer-Attention Coupling" [DOI: 10.5281/zenodo.20925910](https://doi.org/10.5281/zenodo.20925910), "Stranded Attention" [DOI: 10.5281/zenodo.21158886](https://doi.org/10.5281/zenodo.21158886), and "Developmental Atlas of Attention Head Specialization" [DOI: 10.5281/zenodo.21205389](https://doi.org/10.5281/zenodo.21205389). Together, through controlled experiments across two architectures and two scales, they prove that BPE merge decisions permanently constrain which attention heads develop. Every attention head in a standard BPE model is structurally stranded (384/384 at 410M, 768/768 at 1.3B show 4x more delimiter attention when given clean boundaries); the damage is immediate (present by step 5,000), permanent (unchanged through step 40,000), and architecture-independent (removing whitespace-recovery "spacing" heads degrades both GPT-NeoX multi-head attention and Llama grouped-query attention by 64-67%); and at 1.3B scale standard BPE develops 124 counterproductive delimiter heads whose removal improves comprehension by 57%. The mechanism generalizes across structured data (3-738x), code (1.5x), and molecular notation (2.2x).
 
@@ -390,19 +390,19 @@ The **generic profile** (Section 10a, spec v3.3) diffs by a designated `@`-marke
 
 ## 4. Implementation Status
 
-GCF is not a speculative format proposal. It is implemented in six languages, published to seven package registries, covered by 204 conformance fixtures, verified across 43 billion+ lossless round-trips, and deployed in production MCP servers.
+GCF is not a speculative format proposal. It is implemented in six languages, published to seven package registries, covered by 264 conformance fixtures, verified across 43 billion+ lossless round-trips, and deployed in production MCP servers.
 
 The implementation includes:
 
-- **Go library** (`github.com/blackwell-systems/gcf-go`, v1.5.1): Encode, Decode, EncodeGeneric, DecodeGeneric, EncodeWithSession, EncodeDelta, EncodeGenericDelta, StreamEncoder, GenericStreamEncoder. Zero dependencies.
-- **TypeScript library** (`@blackwell-systems/gcf` on npm, v2.4.0): encode, decode, encodeGeneric, decodeGeneric, encodeWithSession, encodeDelta, encodeGenericDelta, StreamEncoder, GenericStreamEncoder. Zero dependencies, ESM.
-- **Python library** (`gcf-python` on PyPI, v2.4.0): encode, decode, encode_generic, decode_generic, encode_with_session, encode_delta, encode_generic_delta, StreamEncoder, GenericStreamEncoder. Zero dependencies, Python 3.9+.
-- **Rust library** (`gcf` on crates.io, v2.4.0): encode, decode, encode_generic, decode_generic, encode_with_session, encode_delta, encode_generic_delta, StreamEncoder, GenericStreamEncoder. Zero dependencies.
-- **Swift library** (`gcf-swift` via SPM, v2.4.0): encode, decode, encodeGeneric, decodeGeneric, encodeWithSession, encodeDelta, encodeGenericDelta, StreamEncoder, GenericStreamEncoder. Zero dependencies.
-- **Kotlin library** (`gcf-kotlin` via JitPack, v2.4.0): encode, decode, encodeGeneric, decodeGeneric, encodeWithSession, encodeDelta, encodeGenericDelta, StreamEncoder, GenericStreamEncoder. Zero dependencies.
+- **Go library** (`github.com/blackwell-systems/gcf-go`, v1.6.1): Encode, Decode, EncodeGeneric, DecodeGeneric, EncodeWithSession, EncodeDelta, EncodeGenericDelta, StreamEncoder, GenericStreamEncoder. Zero dependencies.
+- **TypeScript library** (`@blackwell-systems/gcf` on npm, v2.5.1): encode, decode, encodeGeneric, decodeGeneric, encodeWithSession, encodeDelta, encodeGenericDelta, StreamEncoder, GenericStreamEncoder. Zero dependencies, ESM.
+- **Python library** (`gcf-python` on PyPI, v2.5.1): encode, decode, encode_generic, decode_generic, encode_with_session, encode_delta, encode_generic_delta, StreamEncoder, GenericStreamEncoder. Zero dependencies, Python 3.9+.
+- **Rust library** (`gcf` on crates.io, v2.5.1): encode, decode, encode_generic, decode_generic, encode_with_session, encode_delta, encode_generic_delta, StreamEncoder, GenericStreamEncoder. Zero dependencies.
+- **Swift library** (`gcf-swift` via SPM, v2.6.0): encode, decode, encodeGeneric, decodeGeneric, encodeWithSession, encodeDelta, encodeGenericDelta, StreamEncoder, GenericStreamEncoder. Zero dependencies.
+- **Kotlin library** (`gcf-kotlin` via JitPack, v2.5.1): encode, decode, encodeGeneric, decodeGeneric, encodeWithSession, encodeDelta, encodeGenericDelta, StreamEncoder, GenericStreamEncoder. Zero dependencies.
 - **MCP proxy** (`github.com/blackwell-systems/gcf-proxy`): drop-in wrapper for any MCP server, re-encodes JSON responses as GCF with streaming progress notifications. Zero code changes to upstream.
-- **Conformance test suite** (204 v3 fixtures across both profiles): language-agnostic JSON fixtures validating encode, decode, session, delta (graph and generic), generic, streaming, and normative error cases.
-- **Specification** ([SPEC.md](https://github.com/blackwell-systems/gcf/blob/main/SPEC.md), v3.4.1 Stable): RFC 2119 keywords, conformance checklists, decoder error taxonomy, streaming extension, security considerations. Published at gcformat.com.
+- **Conformance test suite** (264 v3 fixtures across both profiles): language-agnostic JSON fixtures validating encode, decode, session, delta (graph and generic), generic, streaming, and normative error cases.
+- **Specification** ([SPEC.md](https://github.com/blackwell-systems/gcf/blob/main/SPEC.md), v3.5.0 Stable): RFC 2119 keywords, conformance checklists, decoder error taxonomy, streaming extension, security considerations. Published at gcformat.com.
 
 ### Correctness Validation
 
@@ -821,20 +821,20 @@ GCF's grammar was reverse-engineered from tokenization and attention-level exper
 
 ## Reference Implementation
 
-- **Specification:** [SPEC.md](https://github.com/blackwell-systems/gcf/blob/main/SPEC.md) (v3.4.1 Stable, RFC 2119 keywords, conformance checklists, streaming extension, error taxonomy). Published at gcformat.com.
-- **Go library:** `github.com/blackwell-systems/gcf-go` (v1.5.1)
-- **TypeScript library:** `@blackwell-systems/gcf` on npm (v2.4.0)
-- **Python library:** `gcf-python` on PyPI (v2.4.0)
-- **Rust library:** `gcf` on crates.io (v2.4.0)
-- **Swift library:** `gcf-swift` via SPM (v2.4.0)
-- **Kotlin library:** `gcf-kotlin` via JitPack (v2.4.0)
+- **Specification:** [SPEC.md](https://github.com/blackwell-systems/gcf/blob/main/SPEC.md) (v3.5.0 Stable, RFC 2119 keywords, conformance checklists, streaming extension, error taxonomy). Published at gcformat.com.
+- **Go library:** `github.com/blackwell-systems/gcf-go` (v1.6.1)
+- **TypeScript library:** `@blackwell-systems/gcf` on npm (v2.5.1)
+- **Python library:** `gcf-python` on PyPI (v2.5.1)
+- **Rust library:** `gcf` on crates.io (v2.5.1)
+- **Swift library:** `gcf-swift` via SPM (v2.6.0)
+- **Kotlin library:** `gcf-kotlin` via JitPack (v2.5.1)
 - **MCP proxy:** `github.com/blackwell-systems/gcf-proxy`: streaming progress notifications, drop-in wrapper, zero code changes
 - **Comprehension eval:** `github.com/blackwell-systems/gcf-go/eval` (generic profile: 500 orders, 27 runs, 11 models; graph profile: 500 symbols, 25 runs, 10 models; 13 questions, 3 formats)
 - **Tokenizer analysis:** `github.com/blackwell-systems/gcf/eval` (13 scripts, 43 tokenizers, 20 providers). See "Tokenizer-Attention Coupling" [DOI: 10.5281/zenodo.20925910](https://doi.org/10.5281/zenodo.20925910).
 - **Generation eval:** `github.com/blackwell-systems/gcf-go/eval` (5-100 symbols, GCF vs TOON vs JSON, 9 models, validated through real decoders)
 - **Eval results:** `github.com/blackwell-systems/gcf/eval/results` (all raw logs, failure taxonomy, artifacts)
 - **TOON benchmark fork:** `github.com/blackwell-systems/toon` (branch: gcf-comparison, their datasets, their tokenizer)
-- **Conformance test suite:** `github.com/blackwell-systems/gcf/tests/conformance` (204 v3 fixtures across both profiles, streaming, delta, and normative errors)
+- **Conformance test suite:** `github.com/blackwell-systems/gcf/tests/conformance` (264 v3 fixtures across both profiles, streaming, delta, and normative errors)
 - **Interactive playground:** gcformat.com/playground (three-way JSON vs TOON vs GCF comparison using real @toon-format/toon library)
 - **Production deployment:** 13 adopters including Chrome DevTools MCP (47K stars, Google), OmniRoute (17K stars), NetClaw (610 stars), NeuroNest (commercial), ctx (552 stars), Speakeasy, knowing (28 MCP tools), agent-lsp (66 MCP tools). Full list: [gcformat.com/ecosystem/adopters](https://gcformat.com/ecosystem/adopters)
 

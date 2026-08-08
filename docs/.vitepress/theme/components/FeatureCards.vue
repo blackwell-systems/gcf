@@ -22,8 +22,8 @@ const features = [
   },
   {
     icon: '🔒',
-    title: 'Proven lossless. 6 languages. Spec v3.4.1.',
-    details: '43B+ (yes, really) round-trips across JSON, YAML, TOML, CSV, and MessagePack. Zero failures. 204 conformance fixtures. Cross-language 6x6 encode/decode matrix verified. <a href="https://github.com/blackwell-systems/gcf/blob/main/SPEC.md">Read the spec</a>.',
+    title: 'Proven lossless. 6 languages. Spec v3.5.0.',
+    details: '43B+ (yes, really) round-trips across JSON, YAML, TOML, CSV, and MessagePack. Zero failures. 264 conformance fixtures. Cross-language 6x6 encode/decode matrix verified. <a href="https://github.com/blackwell-systems/gcf/blob/main/SPEC.md">Read the spec</a>.',
   },
   {
     icon: '🔬',
