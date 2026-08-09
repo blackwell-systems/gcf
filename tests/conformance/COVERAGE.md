@@ -6,7 +6,7 @@
 
 ## Summary
 
-- Fixtures: **264** across 22 directories, 14 operations
+- Fixtures: **265** across 22 directories, 14 operations
 - Section 16.5 conditions covered: **31/31**
 - Uncovered (known gaps, tracked below): **0**
 - Uncovered (unexpected, fails the build): **0**
@@ -57,7 +57,7 @@
 | `decode` | 31 | yes |
 | `delta` | 2 | yes |
 | `delta-verify` | 1 | yes |
-| `encode` | 148 | yes |
+| `encode` | 149 | yes |
 | `error` | 45 | yes |
 | `generic-delta` | 2 | yes |
 | `generic-delta-decode` | 3 | yes |
@@ -75,11 +75,11 @@
 |---|---|---|---|
 | 16.1 | UTF-8 / LF endings / no trailing whitespace | invariant | mechanical scan below |
 | 16.1 | Scores emitted with exactly 2 decimal places | invariant | mechanical scan below |
-| 16.1 | Header begins GCF profile=graph (tool optional) | covered | `graph-encode/` (3) |
+| 16.1 | Header begins GCF profile=graph (tool optional) | covered | `graph-encode/` (4) |
 | 16.1 | Sequential IDs from 0; stable session-scoped IDs | covered | `graph-session/` (3) |
-| 16.1 | Kind abbreviations, edges section header, edges between declared IDs | covered | `graph-encode/` (3) |
-| 16.1 | Order symbols by score descending within each distance group | covered | `graph-encode/` (3) |
-| 16.1 | Order edges by source ID then target ID | covered | `graph-encode/` (3) |
+| 16.1 | Kind abbreviations, edges section header, edges between declared IDs | covered | `graph-encode/` (4) |
+| 16.1 | Order symbols by score descending within each distance group | covered | `graph-encode/` (4) |
+| 16.1 | Order edges by source ID then target ID | covered | `graph-encode/` (4) |
 | 16.1 | Deterministic output (distance_N trailer group order) | covered | `streaming-v2/` (13) |
 | 16.2 | Header begins GCF profile=generic | covered | `scalar/` (28) |
 | 16.2 | Scalar grammar + encoder quoting; numbers/bool/null unquoted | covered | `numbers/` (16) |
@@ -127,7 +127,7 @@ Scanned over every fixture `expected` output; a violation fails the build.
 | `generic-pack-root` | 5 |
 | `graph-decode` | 4 |
 | `graph-delta` | 3 |
-| `graph-encode` | 3 |
+| `graph-encode` | 4 |
 | `graph-pack-root` | 4 |
 | `graph-session` | 3 |
 | `inline-schema` | 15 |
