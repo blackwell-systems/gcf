@@ -83,9 +83,15 @@ def sdk_table():
         cli = os.environ.get("GCF_SWIFT_CLI", os.path.join(ROOT, "gcf-swift", ".build", "release", "GCFCLI"))
         return (None, [cli, sub], None)
 
+    def dotnet_argv(sub):
+        cli = os.environ.get("GCF_DOTNET_CLI",
+                             os.path.join(ROOT, "gcf-dotnet", "src", "BlackwellSystems.Gcf.Cli",
+                                          "bin", "Release", "net8.0", "gcf.dll"))
+        return (None, ["dotnet", cli, sub], None)
+
     return {
         "go": go_argv, "rust": rust_argv, "python": py_argv,
-        "ts": ts_argv, "kotlin": kt_argv, "swift": sw_argv,
+        "ts": ts_argv, "kotlin": kt_argv, "swift": sw_argv, "dotnet": dotnet_argv,
     }
 
 

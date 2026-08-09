@@ -58,6 +58,9 @@ jobs:
       - name: Checkout tree-sitter-gcf
         uses: actions/checkout@v4
         with: { repository: blackwell-systems/tree-sitter-gcf, path: tree-sitter-gcf, token: '${{ secrets.GCF_CI_TOKEN || github.token }}' }
+      - name: Checkout gcf-dotnet
+        uses: actions/checkout@v4
+        with: { repository: blackwell-systems/gcf-dotnet, path: gcf-dotnet, token: '${{ secrets.GCF_CI_TOKEN || github.token }}' }
 
       - uses: actions/setup-go@v5
         with: { go-version: 'stable' }
@@ -68,6 +71,8 @@ jobs:
         with: { node-version: '20' }
       - uses: actions/setup-java@v4
         with: { distribution: temurin, java-version: '21' }
+      - uses: actions/setup-dotnet@v4
+        with: { dotnet-version: '8.0.x' }
 
       - name: Build go CLI
         run: cd gcf-go && go build -o gcf ./cmd/gcf
@@ -79,6 +84,8 @@ jobs:
         run: cd gcf-kotlin && ./gradlew --no-daemon installDist
       - name: Build Swift CLI
         run: cd gcf-swift && swift build -c release
+      - name: Build .NET CLI
+        run: cd gcf-dotnet && dotnet build -c Release src/BlackwellSystems.Gcf.Cli
       # Python needs no build; the script runs `python -m gcf` with PYTHONPATH=src.
       - name: Build tree-sitter grammar
         run: cd tree-sitter-gcf && npm ci && npx tree-sitter generate
