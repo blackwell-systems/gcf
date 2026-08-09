@@ -7,8 +7,27 @@ release see the [GitHub releases](https://github.com/blackwell-systems/gcf/relea
 The spec has grown **additively since v3.0** with no breaking changes: a v3.0 decoder
 ignores anything it does not recognize.
 
-**Current ecosystem:** Spec **v3.5.0** · SDKs **v2.5.1** (Go **v1.6.1**, Swift **v2.6.0**) ·
-gcf-proxy **v0.11.4** · tree-sitter-gcf **v1.4.0** · 264 conformance fixtures.
+**Current ecosystem:** Spec **v3.5.1** · **7 SDKs** (Go **v1.6.1**, Swift **v2.6.0**, the rest **v2.5.1**,
+.NET **v0.1.0**) · gcf-proxy **v0.11.4** · tree-sitter-gcf **v1.4.0** · 265 conformance fixtures.
+
+## v3.5.1 — Score-rounding errata, and a .NET SDK
+
+_2026-08-09_
+
+- **Spec errata (§5):** the graph score's two-decimal wire form is now pinned to **round-half-to-even**
+  on the exact IEEE-754 double. The rounding mode was previously unspecified, so implementations diverged
+  at exact binary midpoints (`0.125` → `0.12`, not `0.13`) between the printf-family SDKs and the
+  round-half-up ones (JavaScript, Kotlin). TypeScript and Kotlin were corrected; a new conformance fixture
+  locks it. A clarification, not a grammar change: correct decoders are unaffected.
+- GCF now has a first-party **.NET** implementation, [gcf-dotnet](https://github.com/blackwell-systems/gcf-dotnet)
+  (NuGet `BlackwellSystems.Gcf`), bringing the SDK count to seven. **Zero runtime dependencies**,
+  multi-targeting `netstandard2.0` and `net8.0`, so it runs on .NET Framework 4.6.1+, Mono, Unity,
+  and modern .NET.
+- Full parity with the other SDKs: generic and graph profiles, delta encoding (both profiles),
+  session deduplication, streaming, and the re-anchor session helper. Passes the complete
+  cross-SDK conformance suite, so it round-trips byte-identically to the Go, TypeScript, Python,
+  Rust, Swift, and Kotlin implementations.
+- [Release notes](https://github.com/blackwell-systems/gcf/releases/tag/v3.5.1)
 
 ## v3.5.0 — Keyed-tabular map encoding
 

@@ -2,7 +2,7 @@
 
 ## Graph Compact Format: A Token-Optimized Wire Format for LLM Interactions
 
-**Version:** 3.5.0
+**Version:** 3.5.1
 
 **Date:** 2026-08-06
 
@@ -1857,7 +1857,7 @@ This specification follows a three-stage lifecycle:
 | **Stable** | The grammar is frozen. No breaking changes. Additive extensions only. Implementations may depend on stability for production use. |
 | **Frozen** | No changes of any kind. The specification is archived. |
 
-Current status: **Stable** (v3.5.0 designated 2026-08-06).
+Current status: **Stable** (v3.5.1 designated 2026-08-09; v3.5.0 2026-08-06).
 
 ### 19.3 Version history
 
@@ -1868,6 +1868,8 @@ Since v3.0 the specification has grown additively only (Stable: no breaking chan
 **v3.4.1** added a trailing `distance` field to the graph delta `## added` line (Section 10.1), so a consumer can reconstruct the new snapshot and verify `new_root` (`pack_root` includes distance; Sections 10.2, 10.4). A delta-only line-form correction.
 
 **v3.5.0** added keyed-tabular map encoding (Section 7.2a): a JSON object whose values are all objects forming a losslessly-tabular set is encoded with the shared value fields declared once and one `key|values` row per member, marked by `[N:]`, first-class in nested (Sections 7.4.4, 7.6) and streaming (`[?:]`, Section 8) positions and reusing generic delta (Section 10a) unchanged with the map key as the delta identity. This changes the canonical output for such maps from per-key section blocks to a keyed table. Existing payloads are unaffected (the `[N:]` marker was previously an invalid count; all other constructs decode identically); a pre-v3.5 decoder rejects `[N:]`, so decoders MUST be updated to read v3.5 map output. Additive under the Stable lifecycle. v3.5.0 also canonicalizes negative zero to `0` for both integer and floating-point values (Section 2.3.1, superseding the prior sign-preserving guidance, since `-0` and `0` denote the same value and integer negative zero is not representable in most language number models), specifies that a buffered graph header omits zero-valued `budget`, `tokens`, and `edges` (Sections 3.2, 16.1), and states that structural tokens and delimiters are matched at the Unicode scalar (code point) level rather than grapheme clusters (Section 1).
+
+**v3.5.1** (errata) pins the graph score's two-decimal wire form to **round-half-to-even** applied to the exact IEEE-754 double (Section 5). The rounding mode was previously unspecified, so implementations diverged at exact binary midpoints: the printf-family SDKs (Go, Rust, Python, Swift, .NET) rounded half-to-even (`0.125` → `0.12`), while the round-half-up formatters (JavaScript `Number.toFixed`, Java `String.format` %f) produced `0.13`, a silent, non-interoperable wire. A clarification, not a grammar change: the two agree on every value except exact midpoints. TypeScript and Kotlin were corrected to match; a graph-encode midpoint conformance fixture locks it.
 
 V3 is the only supported encoding. Decoders are not required to accept v2-style indented attachments. Encoders emit v3 grammar exclusively.
 
