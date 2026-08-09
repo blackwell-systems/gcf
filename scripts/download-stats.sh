@@ -13,6 +13,7 @@ NPM_PROXY_PKG="@blackwell-systems/gcf-proxy"
 NPM_TREESITTER_PKG="tree-sitter-gcf"
 PYPI_PKG="gcf-python"
 PYPI_PROXY_PKG="gcf-proxy"
+NUGET_PKG="BlackwellSystems.Gcf"
 GCF_GO_REPO="blackwell-systems/gcf-go"
 GCF_PROXY_REPO="blackwell-systems/gcf-proxy"
 OUT="${1:-assets/download-stats.svg}"
@@ -45,6 +46,9 @@ gh_proxy_total=$(gh api "repos/${GCF_PROXY_REPO}/releases" --jq '[.[].assets[].d
 
 crates_total=$(curl -sf -A "$UA" --max-time 10 "https://crates.io/api/v1/crates/gcf" \
   | python3 -c "import json,sys; print(json.load(sys.stdin)['crate']['downloads'])" 2>/dev/null || echo "?")
+
+nuget_total=$(curl -sf -A "$UA" --max-time 10 "https://azuresearch-usnc.nuget.org/query?q=packageid:${NUGET_PKG}&prerelease=true" \
+  | python3 -c "import json,sys; d=json.load(sys.stdin); print(d['data'][0]['totalDownloads'] if d.get('data') else 0)" 2>/dev/null || echo "?")
 
 jetbrains_total=$(curl -sf --max-time 10 "https://plugins.jetbrains.com/api/plugins/com.blackwellsystems.gcf" \
   | python3 -c "import json,sys; print(json.load(sys.stdin).get('downloads',0))" 2>/dev/null || echo "?")
@@ -101,6 +105,7 @@ pypi_proxy_total=$(use_or_cache pypi_proxy "$pypi_proxy_total")
 gh_go_total=$(use_or_cache gh_go "$gh_go_total")
 gh_proxy_total=$(use_or_cache gh_proxy "$gh_proxy_total")
 crates_total=$(use_or_cache crates "$crates_total")
+nuget_total=$(use_or_cache nuget "$nuget_total")
 jetbrains_total=$(use_or_cache jetbrains "$jetbrains_total")
 vscode_total=$(use_or_cache vscode "$vscode_total")
 
@@ -114,13 +119,14 @@ pypi_proxy=${pypi_proxy_total}
 gh_go=${gh_go_total}
 gh_proxy=${gh_proxy_total}
 crates=${crates_total}
+nuget=${nuget_total}
 jetbrains=${jetbrains_total}
 vscode=${vscode_total}
 CACHEEOF
 
 # ── Calculate cumulative total ──────────────────────────────────────
 cumulative=0
-for v in "$npm_total" "$npm_n8n_total" "$npm_proxy_total" "$npm_treesitter_total" "$pypi_total" "$pypi_proxy_total" "$gh_go_total" "$gh_proxy_total" "$crates_total" "$vscode_total" "$jetbrains_total"; do
+for v in "$npm_total" "$npm_n8n_total" "$npm_proxy_total" "$npm_treesitter_total" "$pypi_total" "$pypi_proxy_total" "$gh_go_total" "$gh_proxy_total" "$crates_total" "$nuget_total" "$vscode_total" "$jetbrains_total"; do
   if [[ "$v" != "?" && "$v" != "--" ]]; then
     cumulative=$((cumulative + v))
   fi
@@ -139,6 +145,7 @@ pypi_fmt=$(fmt "$pypi_total" 2>/dev/null || echo "$pypi_total")
 gh_go_fmt=$(fmt "$gh_go_total" 2>/dev/null || echo "$gh_go_total")
 gh_proxy_fmt=$(fmt "$gh_proxy_total" 2>/dev/null || echo "$gh_proxy_total")
 crates_fmt=$(fmt "$crates_total" 2>/dev/null || echo "$crates_total")
+nuget_fmt=$(fmt "$nuget_total" 2>/dev/null || echo "$nuget_total")
 vscode_fmt=$(fmt "$vscode_total" 2>/dev/null || echo "$vscode_total")
 jetbrains_fmt=$(fmt "$jetbrains_total" 2>/dev/null || echo "$jetbrains_total")
 cumulative_fmt=$(fmt "$cumulative" 2>/dev/null || echo "$cumulative")
@@ -169,6 +176,7 @@ has_downloads "$npm_treesitter_total" && add_row "npm (tree-sitter-gcf)"  "$npm_
 has_downloads "$pypi_total"          && add_row "pypi (gcf-python)"       "$pypi_fmt"
 has_downloads "$pypi_proxy_total"    && add_row "pypi (gcf-proxy)"        "$pypi_proxy_fmt"
 has_downloads "$crates_total"        && add_row "crates.io (gcf)"         "$crates_fmt"
+has_downloads "$nuget_total"         && add_row "nuget (gcf-dotnet)"      "$nuget_fmt"
 has_downloads "$vscode_total"        && add_row "vscode marketplace"       "$vscode_fmt"
 has_downloads "$jetbrains_total"     && add_row "jetbrains marketplace"    "$jetbrains_fmt"
 has_downloads "$gh_go_total"         && add_row "github (gcf-go)"         "$gh_go_fmt"
@@ -224,4 +232,4 @@ BADGEEOF
 fi
 
 echo "Generated ${OUT}"
-echo "  npm-gcf: ${npm_total}  npm-proxy: ${npm_proxy_total}  npm-n8n: ${npm_n8n_total}  npm-treesitter: ${npm_treesitter_total}  pypi: ${pypi_total}  pypi-proxy: ${pypi_proxy_total}  crates: ${crates_total}  gh-go: ${gh_go_total}  gh-proxy: ${gh_proxy_total}  total: ${cumulative}"
+echo "  npm-gcf: ${npm_total}  npm-proxy: ${npm_proxy_total}  npm-n8n: ${npm_n8n_total}  npm-treesitter: ${npm_treesitter_total}  pypi: ${pypi_total}  pypi-proxy: ${pypi_proxy_total}  crates: ${crates_total}  nuget: ${nuget_total}  gh-go: ${gh_go_total}  gh-proxy: ${gh_proxy_total}  total: ${cumulative}"
