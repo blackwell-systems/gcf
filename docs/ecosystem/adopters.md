@@ -123,6 +123,19 @@ The integration replaced TOON entirely. All response formatting flows through a 
 - Reviewed and merged by the maintainer
 - Uses `@blackwell-systems/gcf`'s `encodeGeneric` (generic profile)
 
+## Wazuh MCP Server
+
+[Wazuh MCP Server](https://github.com/gensecaihq/Wazuh-MCP-Server) is a production-grade MCP server for the Wazuh SIEM, built by [GenSecAI](https://gensecai.org) (a non-profit community building open-source generative-AI security tools) and maintained by [alokemajumder](https://github.com/alokemajumder). It exposes 55 security tools for alert triage, threat hunting, vulnerability management, compliance (PCI DSS, GDPR, HIPAA, NIST CSF, ISO 27001), and active response, connecting Claude or any local LLM to a SOC, with OAuth 2.1, RBAC, multi-cluster, and air-gapped operation. 216 stars.
+
+Wazuh responses are a strong fit for GCF's generic profile: the alert, security-event, and vulnerability tools return arrays of uniform records under a `data.affected_items` array. GCF declares the field names once in a header and encodes values positionally, so the per-record key repetition JSON pays on every alert is eliminated. On a SIEM feeding high alert volumes to an LLM, that repetition is exactly the cost.
+
+The integration is deliberately conservative for a security tool: a format change only, with no cross-turn deduplication, so no alert is ever omitted from a result. It composes with the server's existing `compact` field-projection parameter.
+
+- Opt-in via `RESPONSE_FORMAT=gcf`; default JSON output is unchanged; every response stays complete (lossless, no dedup)
+- `gcf-python` ships as an optional `[gcf]` install extra (lazy import warns and falls back to JSON when absent)
+- Reviewed and merged by the maintainer, who audited the `gcf-python` source and round-tripped real alert shapes
+- Uses `gcf-python`'s `encode_generic` (generic profile)
+
 ## Open Data Products SDK (Linux Foundation)
 
 [Open Data Products SDK](https://opendataproducts.org/sdk/) is a Python toolkit and MCP server for working with data product standards under the Linux Foundation. It validates, generates, and publishes Open Data Product specifications.
