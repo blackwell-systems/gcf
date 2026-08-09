@@ -475,7 +475,7 @@ Fields are positional, separated by whitespace. No field names, no delimiters, n
 - **id**: Non-negative integer identifying the symbol. When `session` is absent or false, IDs MUST be unique within the payload and assigned sequentially starting from 0. When `session=true`, IDs are stable within the session, MUST remain bound to the same symbol across calls, and need not be contiguous within an individual payload.
 - **kind**: Abbreviated node type (see Kind Abbreviations).
 - **qualified_name**: Full identifier. MUST NOT contain whitespace.
-- **score**: Relevance score as a decimal float (e.g., `0.78`). Encoders MUST emit exactly 2 decimal places.
+- **score**: Relevance score as a decimal float (e.g., `0.78`). Encoders MUST emit exactly 2 decimal places, rounding the exact IEEE-754 double value with **round-half-to-even** (banker's rounding). This is the behaviour of the C/Go `printf` family (`%.2f`), Python `format`, Rust `{:.2}`, and .NET `F2`. Implementations MUST NOT use round-half-up (e.g. JavaScript `Number.prototype.toFixed`, Java `String.format("%f", …)`): the two agree on every value except exact binary midpoints (e.g. `0.125` → `0.12`, not `0.13`; `0.625` → `0.62`, not `0.63`), where round-half-up would produce a divergent, non-interoperable wire.
 - **provenance**: Discovery method (e.g., `lsp_resolved`, `ast_inferred`). MUST NOT contain whitespace.
 
 ### Kind Abbreviations

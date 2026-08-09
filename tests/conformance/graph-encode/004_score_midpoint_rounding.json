@@ -1,0 +1,14 @@
+{
+  "name": "graph_encode_score_midpoint_rounding",
+  "description": "Symbol score is formatted to two decimals with round-half-to-even (banker's rounding) applied to the exact IEEE-754 double, matching the gcf-go reference (strconv/printf family). Scores 0.625 and 0.125 are exact binary midpoints for two-decimal rounding; round-half-to-even yields 0.62 and 0.12 (round toward the even last digit), NOT the 0.63 / 0.13 that a round-half-up formatter (e.g. JS Number.toFixed, Java String.format %f) would produce. Non-midpoint scores are unaffected because every implementation rounds the same exact double the same direction; only exact ties differ.",
+  "input": {
+    "tool": "rounding_test",
+    "symbols": [
+      {"qualifiedName": "pkg.HalfA", "kind": "function", "score": 0.625, "provenance": "lsp", "distance": 0},
+      {"qualifiedName": "pkg.HalfB", "kind": "function", "score": 0.125, "provenance": "lsp", "distance": 0}
+    ],
+    "edges": []
+  },
+  "expected": "GCF profile=graph tool=rounding_test symbols=2\n## targets\n@0 fn pkg.HalfA 0.62 lsp\n@1 fn pkg.HalfB 0.12 lsp\n",
+  "operation": "encode"
+}
