@@ -114,6 +114,17 @@ def prebuild():
     else:
         print(f"  Swift: FAILED ({err.strip()[:80]})")
 
+    # .NET (run via `dotnet <gcf.dll>`)
+    out, err, rc = run(["dotnet", "build", "-c", "Release",
+                        str(HOME / "code/gcf-dotnet/src/BlackwellSystems.Gcf.Cli")],
+                       timeout=240)
+    dotnet_dll = HOME / "code/gcf-dotnet/src/BlackwellSystems.Gcf.Cli/bin/Release/net8.0/gcf.dll"
+    if rc == 0 and dotnet_dll.exists():
+        bins[".NET"] = str(dotnet_dll)
+        print("  .NET: OK")
+    else:
+        print(f"  .NET: FAILED ({err.strip()[:80]})")
+
     return bins
 
 
@@ -175,6 +186,14 @@ def make_runners(bins):
             else:
                 print(f"  Kotlin: skipped (no fat jar)")
 
+    # .NET
+    if ".NET" in bins:
+        d = bins[".NET"]
+        runners.append((".NET",
+                        ["dotnet", d, "encode-generic"],
+                        ["dotnet", d, "decode-generic"],
+                        None))
+
     return runners
 
 
@@ -185,7 +204,7 @@ def main():
 
     names = [r[0] for r in runners]
     print(f"\nLoaded {len(fixtures)} generic encode fixtures")
-    print(f"Languages: {', '.join(names)} ({len(names)} of 6)")
+    print(f"Languages: {', '.join(names)} ({len(names)} of 7)")
 
     # Phase 1: Encode agreement.
     print(f"\n=== Phase 1: Encode ({len(names)} languages x {len(fixtures)} fixtures) ===")
