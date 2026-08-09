@@ -29,7 +29,7 @@
 **GCF is built for the agentic loop, where the same structured context crosses the model boundary turn after turn.** A single payload is already 50-92% smaller than JSON. But GCF also deduplicates repeated structure across turns and sends only deltas when context changes, so by the 5th overlapping call each response costs 99% fewer tokens than the JSON equivalent, and a full 10-call session runs 94.4% cheaper than re-sending JSON every turn. Session dedup and delta both need local IDs and a multi-turn design: **neither JSON nor TOON can do this at all.**
 
 - **100% comprehension on every frontier model**, zero training required. 91.2% on structurally complex code graphs, where TOON drops to 68.8% and JSON to 54.1%.
-- **Proven lossless.** `decode(encode(value)) == value` for every structured value, verified across 43,000,000,000+ round-trips in 5 formats and 6 languages, with interop validated across 17 serialization formats. Zero runtime dependencies, in all six SDKs.
+- **Proven lossless.** `decode(encode(value)) == value` for every structured value, verified across 43,000,000,000+ round-trips in 5 formats and 6 languages, with interop validated across 17 serialization formats. Zero runtime dependencies, in all seven SDKs.
 - **One codec for every format.** Encode JSON, YAML, TOML, CSV, or MessagePack to GCF; the model reads it natively with zero format instructions; `decode()` converts back to any of them. Your existing schemas and validators work on the decoded output unchanged.
 
 No other single format is all four at once: **schema-free** (no `.proto`), **lossless**, **token-compact** (50-92% vs JSON), and **model-readable** with zero training. JSON is verbose, Protobuf needs a schema, MessagePack is binary, and TOON silently corrupts data (7.54% round-trip failure, 176,487 silent corruptions per 10M) and collapses on structured data (68.8% comprehension where GCF holds 91.2% and JSON 54.1%). GCF is designed at the tokenizer level: its pipe delimiter has a [0% merge rate with field names](https://gcformat.com/guide/tokenizer-analysis), while JSON's grammar symbols and TOON's tab are hardcoded as merged vocabulary entries in BPE tokenizers (TOON's tab merges with adjacent content on 32.91% of boundaries, the worst of any common separator, and JSON's quote on 8.17%), creating structural boundaries the model cannot recover.
@@ -39,6 +39,7 @@ pip install gcf-python                    # Python
 npm install @blackwell-systems/gcf        # TypeScript
 go get github.com/blackwell-systems/gcf-go  # Go
 cargo add gcf                             # Rust
+dotnet add package BlackwellSystems.Gcf   # .NET
 ```
 
 Or wrap any existing MCP server with zero code changes:
@@ -185,6 +186,7 @@ Read the full argument in the [Tokenizer Analysis](https://gcformat.com/guide/to
 | Rust | `cargo add gcf` | [gcf-rust](https://github.com/blackwell-systems/gcf-rust) |
 | Swift | Swift Package Manager | [gcf-swift](https://github.com/blackwell-systems/gcf-swift) |
 | Kotlin | JitPack | [gcf-kotlin](https://github.com/blackwell-systems/gcf-kotlin) |
+| .NET | `dotnet add package BlackwellSystems.Gcf` | [gcf-dotnet](https://github.com/blackwell-systems/gcf-dotnet) |
 | MCP Proxy | `pip install gcf-proxy` | [gcf-proxy](https://github.com/blackwell-systems/gcf-proxy) (bidirectional, session dedup, HTTP frontend) |
 | Claude Code Plugin | `/plugin install` | [gcf-claude-plugin](https://github.com/blackwell-systems/gcf-claude-plugin) (one-command install, session stats hook) |
 | Codex Plugin | `codex plugin add` | [gcf-codex-plugin](https://github.com/blackwell-systems/gcf-codex-plugin) (one-command install, session stats hook) |
@@ -194,9 +196,9 @@ Read the full argument in the [Tokenizer Analysis](https://gcformat.com/guide/to
 | Zed | Search "GCF" in Extensions | [gcf-zed](https://github.com/blackwell-systems/gcf-zed) (tree-sitter syntax highlighting) |
 | Tree-sitter | `npm install tree-sitter-gcf` | [tree-sitter-gcf](https://github.com/blackwell-systems/tree-sitter-gcf) |
 
-**Zero runtime dependencies. Permanently.** All six implementations depend only on their language's standard library. No transitive dependencies. No supply chain risk. This is a permanent commitment: GCF will never take on external runtime dependencies. MIT licensed. All implementations support both generic profile (`encodeGeneric`) and graph profile (`encode`). CLI included in all 6 languages. Syntax highlighting via tree-sitter (Neovim, Helix, Zed).
+**Zero runtime dependencies. Permanently.** All seven implementations depend only on their language's standard library. No transitive dependencies. No supply chain risk. This is a permanent commitment: GCF will never take on external runtime dependencies. MIT licensed. All implementations support both generic profile (`encodeGeneric`) and graph profile (`encode`). CLI included in the six original language SDKs. Syntax highlighting via tree-sitter (Neovim, Helix, Zed).
 
-**Specification:** [SPEC v3.4.1 Stable](SPEC.md) with 204 conformance fixtures, 43,000,000,000+ lossless round-trips verified across 5 formats and 6 languages. All implementations at v2.4.0+ (Go v1.5.1). Cross-language 6x6 matrix verified.
+**Specification:** [SPEC v3.5.1 Stable](SPEC.md) with 265 conformance fixtures, 43,000,000,000+ lossless round-trips verified across 5 formats and 6 languages. Seven implementations (Go v1.6.2, Swift v2.6.1, .NET v0.1.0, the rest v2.5.2). Cross-language conformance verified.
 
 ## Documentation
 
