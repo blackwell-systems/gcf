@@ -2,7 +2,7 @@
 
 ## Chrome DevTools MCP
 
-[Chrome DevTools MCP](https://github.com/ChromeDevTools/chrome-devtools-mcp) is the #1 most-starred MCP server on GitHub (47K stars). Built by the Google Chrome DevTools team, it exposes browser state (DOM, network, console, performance) to AI coding agents.
+[Chrome DevTools MCP](https://github.com/ChromeDevTools/chrome-devtools-mcp) is the #1 most-starred MCP server on GitHub (48.8K stars). Built by the Google Chrome DevTools team, it exposes browser state (DOM, network, console, performance) to AI coding agents.
 
 GCF ships as an experimental data format, merged after 11 days and 4 review rounds. The review process required npm provenance attestations (SLSA v1), a refactor from boolean flags to a unified `experimentalDataFormat` enum, optional peer dependency loading with clear error messages, and several other improvements.
 
@@ -14,7 +14,7 @@ GCF ships as an experimental data format, merged after 11 days and 4 review roun
 
 ## OmniRoute
 
-[OmniRoute](https://github.com/diegosouzapw/OmniRoute) is an AI gateway, registry, and proxy that sits between AI clients and model providers, built by [Diego Souza](https://github.com/diegosouzapw). MCP servers, A2A agents, REST/gRPC APIs: everything flows through it with centralized discovery, guardrails, rate limiting, auth, and observability. 17K stars.
+[OmniRoute](https://github.com/diegosouzapw/OmniRoute) is an AI gateway, registry, and proxy that sits between AI clients and model providers, built by [Diego Souza](https://github.com/diegosouzapw). MCP servers, A2A agents, REST/gRPC APIs: everything flows through it with centralized discovery, guardrails, rate limiting, auth, and observability. 43.9K stars.
 
 GCF's generic profile encoder is vendored directly into OmniRoute's headroom compression engine, replacing their custom `omni-tabular` encoder. Zero new dependencies added. This is GCF's first infrastructure-layer integration: a gateway that every request passes through.
 
@@ -55,7 +55,7 @@ GCF is a native output format (`--format gcf`). The Speakeasy team conducted a d
 
 ## NetClaw
 
-[NetClaw](https://github.com/automateyournetwork/netclaw) is an AI-powered network automation platform with 113 skills and 66 MCP integrations, built by [John Capobianco](https://github.com/automateyournetwork) (Head of AI and DevRel at Itential, Google Developer Expert). It automates network engineering workflows across Cisco, Juniper, Arista, Palo Alto, F5, AWS, and dozens of other platforms, with live BGP/OSPF control-plane participation, gNMI streaming telemetry, ITSM gating, and immutable audit trails. 610 stars.
+[NetClaw](https://github.com/automateyournetwork/netclaw) is an AI-powered network automation platform with 113 skills and 66 MCP integrations, built by [John Capobianco](https://github.com/automateyournetwork) (Head of AI and DevRel at Itential, Google Developer Expert). It automates network engineering workflows across Cisco, Juniper, Arista, Palo Alto, F5, AWS, and dozens of other platforms, with live BGP/OSPF control-plane participation, gNMI streaming telemetry, ITSM gating, and immutable audit trails. 627 stars.
 
 NetClaw previously used TOON for token optimization across its MCP servers. After benchmarking GCF against TOON on NetClaw's actual network data payloads, the project replaced TOON entirely. This was the first external project to switch from TOON to GCF.
 
@@ -70,7 +70,7 @@ The integration was surgical: all TOON serialization flowed through a single `se
 
 ## ctx
 
-[ctx](https://github.com/stevesolun/ctx) solves a problem every Claude Code user hits: there are 91K+ skills, 467 agents, and 10K+ MCP servers in the ecosystem, and loading them all wastes your context window on tools you're not using. Built by [Steve Solun](https://github.com/stevesolun), ctx watches your repo in real time, detects what stack you're working in (sees `.tsx` files, detects React; sees `sqlalchemy`, detects Postgres), then queries a 102,928-node knowledge graph with 2.9M edges to recommend only the 5-15 tools relevant to your current task. Nothing loads without your approval. It also detects stale tools you installed months ago and flags them for removal. 552 stars.
+[ctx](https://github.com/stevesolun/ctx) solves a problem every Claude Code user hits: there are 91K+ skills, 467 agents, and 10K+ MCP servers in the ecosystem, and loading them all wastes your context window on tools you're not using. Built by [Steve Solun](https://github.com/stevesolun), ctx watches your repo in real time, detects what stack you're working in (sees `.tsx` files, detects React; sees `sqlalchemy`, detects Postgres), then queries a 102,928-node knowledge graph with 2.9M edges to recommend only the 5-15 tools relevant to your current task. Nothing loads without your approval. It also detects stale tools you installed months ago and flags them for removal. 569 stars.
 
 Every ctx recommendation, graph query, and wiki search result lands directly in the LLM context window. These payloads are arrays of uniform objects (5-25 results with 6-17 fields each) where JSON repeats every field name on every record. GCF's positional encoding eliminates that repetition, cutting the token cost of every tool response roughly in half.
 
@@ -85,7 +85,7 @@ GCF encoding is opt-in per tool call via `output_format: "gcf"` in the tool argu
 
 ## Lynkr
 
-[Lynkr](https://github.com/Fast-Editor/Lynkr) is an LLM gateway (a local proxy on `localhost:8081`) that sits between AI coding clients (Claude Code, Cursor, Codex, Cline, Continue.dev) and model backends spanning local (Ollama, llama.cpp, LM Studio), cloud (Bedrock, OpenRouter, OpenAI), and enterprise (Databricks, Azure, Vertex AI), maintained by [Vishal Veera Reddy](https://github.com/veerareddyvishal144). It strips unused tool schemas, compresses tool results, caches semantically, routes by complexity tier, and converts between Anthropic and OpenAI formats. 531 stars.
+[Lynkr](https://github.com/Fast-Editor/Lynkr) is an LLM gateway (a local proxy on `localhost:8081`) that sits between AI coding clients (Claude Code, Cursor, Codex, Cline, Continue.dev) and model backends spanning local (Ollama, llama.cpp, LM Studio), cloud (Bedrock, OpenRouter, OpenAI), and enterprise (Databricks, Azure, Vertex AI), maintained by [Vishal Veera Reddy](https://github.com/veerareddyvishal144). It strips unused tool schemas, compresses tool results, caches semantically, routes by complexity tier, and converts between Anthropic and OpenAI formats. 541 stars.
 
 Every tool result flowing through the gateway is a compression target. Lynkr already compressed them with TOON; GCF was added as an opt-in, drop-in alternative through the same context adapter, so a deployment can switch formats without changing anything else in the proxy. Like OmniRoute, this is an infrastructure-layer integration, a gateway that every request passes through. Merged by the maintainer.
 
@@ -97,7 +97,7 @@ Every tool result flowing through the gateway is a compression target. Lynkr alr
 
 ## CodeGraphContext
 
-[CodeGraphContext](https://github.com/CodeGraphContext/CodeGraphContext) is an MCP server and CLI that indexes local code into a graph database (nodes for symbols, edges for calls/imports/inheritance) to feed structured context to AI assistants, maintained by [Shashank](https://github.com/Shashankss1205). 4K stars.
+[CodeGraphContext](https://github.com/CodeGraphContext/CodeGraphContext) is an MCP server and CLI that indexes local code into a graph database (nodes for symbols, edges for calls/imports/inheritance) to feed structured context to AI assistants, maintained by [Shashank](https://github.com/Shashankss1205). 4.1K stars.
 
 Code graph data is a strong fit for GCF: tool responses are arrays of uniform records (symbols, references, call hierarchies) with the same fields repeated across every row. GCF's positional encoding declares the keys once in a header and pipe-delimits the values per row, eliminating the repetition JSON pays on every record.
 
@@ -111,7 +111,7 @@ GCF encoding is opt-in via the `CGC_OUTPUT_FORMAT=gcf` environment variable, wit
 
 ## Cisco Support MCP Server
 
-[mcp-cisco-support](https://github.com/sieteunoseis/mcp-cisco-support) is a production-grade TypeScript MCP server for the Cisco Support APIs, maintained by [sieteunoseis](https://github.com/sieteunoseis) and listed on Cisco Code Exchange. It exposes 46 tools across 8 Cisco Support APIs (Bug Search, Case Management, EoX, PSIRT, Product, Software, Serial, and RMA), with OAuth 2.1 authentication and dual stdio/HTTP transport. 30 stars.
+[mcp-cisco-support](https://github.com/sieteunoseis/mcp-cisco-support) is a production-grade TypeScript MCP server for the Cisco Support APIs, maintained by [sieteunoseis](https://github.com/sieteunoseis) and listed on Cisco Code Exchange. It exposes 46 tools across 8 Cisco Support APIs (Bug Search, Case Management, EoX, PSIRT, Product, Software, Serial, and RMA), with OAuth 2.1 authentication and dual stdio/HTTP transport. 31 stars.
 
 Cisco Support responses are a strong fit for GCF's generic profile: bug lists, end-of-life lifecycle entries, PSIRT security advisories, and product and software listings are arrays of uniform records with the same fields repeated across every row. GCF declares the keys once in a header and encodes values positionally, eliminating the per-record key repetition JSON pays on every entry.
 
@@ -187,7 +187,7 @@ The team used GCF for cross-agent context passing in their multi-agent architect
 
 ## Raycast
 
-[Raycast](https://raycast.com) is a productivity launcher for macOS with 7.5K stars on their extensions repo.
+[Raycast](https://raycast.com) is a productivity launcher for macOS with 7.7K stars on their extensions repo.
 
 The [JSON to GCF Converter](https://raycast.com/blackwell-systems/json-to-gcf-converter) extension converts JSON data into GCF from the clipboard or selected text. Published to the Raycast Store.
 
