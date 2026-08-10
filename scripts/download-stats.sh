@@ -14,6 +14,7 @@ NPM_TREESITTER_PKG="tree-sitter-gcf"
 PYPI_PKG="gcf-python"
 PYPI_PROXY_PKG="gcf-proxy"
 NUGET_PKG="BlackwellSystems.Gcf"
+NUGET_CLI_PKG="BlackwellSystems.Gcf.Cli"
 GCF_GO_REPO="blackwell-systems/gcf-go"
 GCF_PROXY_REPO="blackwell-systems/gcf-proxy"
 OUT="${1:-assets/download-stats.svg}"
@@ -47,8 +48,18 @@ gh_proxy_total=$(gh api "repos/${GCF_PROXY_REPO}/releases" --jq '[.[].assets[].d
 crates_total=$(curl -sf -A "$UA" --max-time 10 "https://crates.io/api/v1/crates/gcf" \
   | python3 -c "import json,sys; print(json.load(sys.stdin)['crate']['downloads'])" 2>/dev/null || echo "?")
 
-nuget_total=$(curl -sf -A "$UA" --max-time 10 "https://azuresearch-usnc.nuget.org/query?q=packageid:${NUGET_PKG}&prerelease=true" \
-  | python3 -c "import json,sys; d=json.load(sys.stdin); print(d['data'][0]['totalDownloads'] if d.get('data') else 0)" 2>/dev/null || echo "?")
+nuget_fetch() {
+  curl -sf -A "$UA" --max-time 10 "https://azuresearch-usnc.nuget.org/query?q=packageid:${1}&prerelease=true" \
+    | python3 -c "import json,sys; d=json.load(sys.stdin); print(d['data'][0]['totalDownloads'] if d.get('data') else 0)" 2>/dev/null || echo "?"
+}
+nuget_codec=$(nuget_fetch "$NUGET_PKG")
+nuget_cli=$(nuget_fetch "$NUGET_CLI_PKG")
+# Sum the packages that returned a number; "?" only if both failed
+nuget_total=$(python3 -c "
+vals=['${nuget_codec}','${nuget_cli}']
+nums=[int(v) for v in vals if v.strip().isdigit()]
+print(sum(nums) if nums else '?')
+")
 
 jetbrains_total=$(curl -sf --max-time 10 "https://plugins.jetbrains.com/api/plugins/com.blackwellsystems.gcf" \
   | python3 -c "import json,sys; print(json.load(sys.stdin).get('downloads',0))" 2>/dev/null || echo "?")
