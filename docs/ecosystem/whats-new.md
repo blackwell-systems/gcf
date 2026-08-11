@@ -7,8 +7,7 @@ release see the [GitHub releases](https://github.com/blackwell-systems/gcf/relea
 The spec has grown **additively since v3.0** with no breaking changes: a v3.0 decoder
 ignores anything it does not recognize.
 
-**Current ecosystem:** Spec **v3.5.1** · **7 SDKs** (Go **v1.6.1**, Swift **v2.6.0**, the rest **v2.5.1**,
-.NET **v0.1.0**) · gcf-proxy **v0.11.4** · tree-sitter-gcf **v1.4.0** · 265 conformance fixtures.
+**Current ecosystem:** Spec **v3.5.1** · **7 SDKs** (Go **v1.6.2**, Swift **v2.6.2**, Python/Rust **v2.5.3**, TS/Kotlin **v2.5.2**, .NET **v0.1.2**) · gcf-proxy **v0.11.4** · tree-sitter-gcf **v1.4.0** · 265 conformance fixtures.
 
 ## v3.5.1 — Score-rounding errata, and a .NET SDK
 

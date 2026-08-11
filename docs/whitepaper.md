@@ -394,12 +394,12 @@ GCF is not a speculative format proposal. It is implemented in six languages, pu
 
 The implementation includes:
 
-- **Go library** (`github.com/blackwell-systems/gcf-go`, v1.6.1): Encode, Decode, EncodeGeneric, DecodeGeneric, EncodeWithSession, EncodeDelta, EncodeGenericDelta, StreamEncoder, GenericStreamEncoder. Zero dependencies.
-- **TypeScript library** (`@blackwell-systems/gcf` on npm, v2.5.1): encode, decode, encodeGeneric, decodeGeneric, encodeWithSession, encodeDelta, encodeGenericDelta, StreamEncoder, GenericStreamEncoder. Zero dependencies, ESM.
-- **Python library** (`gcf-python` on PyPI, v2.5.1): encode, decode, encode_generic, decode_generic, encode_with_session, encode_delta, encode_generic_delta, StreamEncoder, GenericStreamEncoder. Zero dependencies, Python 3.9+.
-- **Rust library** (`gcf` on crates.io, v2.5.1): encode, decode, encode_generic, decode_generic, encode_with_session, encode_delta, encode_generic_delta, StreamEncoder, GenericStreamEncoder. Zero dependencies.
-- **Swift library** (`gcf-swift` via SPM, v2.6.0): encode, decode, encodeGeneric, decodeGeneric, encodeWithSession, encodeDelta, encodeGenericDelta, StreamEncoder, GenericStreamEncoder. Zero dependencies.
-- **Kotlin library** (`gcf-kotlin` via JitPack, v2.5.1): encode, decode, encodeGeneric, decodeGeneric, encodeWithSession, encodeDelta, encodeGenericDelta, StreamEncoder, GenericStreamEncoder. Zero dependencies.
+- **Go library** (`github.com/blackwell-systems/gcf-go`, v1.6.2): Encode, Decode, EncodeGeneric, DecodeGeneric, EncodeWithSession, EncodeDelta, EncodeGenericDelta, StreamEncoder, GenericStreamEncoder. Zero dependencies.
+- **TypeScript library** (`@blackwell-systems/gcf` on npm, v2.5.2): encode, decode, encodeGeneric, decodeGeneric, encodeWithSession, encodeDelta, encodeGenericDelta, StreamEncoder, GenericStreamEncoder. Zero dependencies, ESM.
+- **Python library** (`gcf-python` on PyPI, v2.5.3): encode, decode, encode_generic, decode_generic, encode_with_session, encode_delta, encode_generic_delta, StreamEncoder, GenericStreamEncoder. Zero dependencies, Python 3.9+.
+- **Rust library** (`gcf` on crates.io, v2.5.3): encode, decode, encode_generic, decode_generic, encode_with_session, encode_delta, encode_generic_delta, StreamEncoder, GenericStreamEncoder. Zero dependencies.
+- **Swift library** (`gcf-swift` via SPM, v2.6.2): encode, decode, encodeGeneric, decodeGeneric, encodeWithSession, encodeDelta, encodeGenericDelta, StreamEncoder, GenericStreamEncoder. Zero dependencies.
+- **Kotlin library** (`gcf-kotlin` via JitPack, v2.5.2): encode, decode, encodeGeneric, decodeGeneric, encodeWithSession, encodeDelta, encodeGenericDelta, StreamEncoder, GenericStreamEncoder. Zero dependencies.
 - **MCP proxy** (`github.com/blackwell-systems/gcf-proxy`): drop-in wrapper for any MCP server, re-encodes JSON responses as GCF with streaming progress notifications. Zero code changes to upstream.
 - **Conformance test suite** (264 v3 fixtures across both profiles): language-agnostic JSON fixtures validating encode, decode, session, delta (graph and generic), generic, streaming, and normative error cases.
 - **Specification** ([SPEC.md](https://github.com/blackwell-systems/gcf/blob/main/SPEC.md), v3.5.0 Stable): RFC 2119 keywords, conformance checklists, decoder error taxonomy, streaming extension, security considerations. Published at gcformat.com.
