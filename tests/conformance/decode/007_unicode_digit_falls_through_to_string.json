@@ -1,0 +1,9 @@
+{
+  "name": "decode_unicode_digit_falls_through_to_string",
+  "description": "A bare token with a non-ASCII Unicode digit does not match the number grammar (DIGIT is ASCII 0-9, Section 2.3) and decodes as a string, never a number. Guards the cross-SDK losslessness defect where a Unicode-mode regex accepted 1.<U+0665> and a Unicode-folding number parse returned 1.5.",
+  "input": "GCF profile=generic\nvalue=1.٥\n",
+  "expected": {
+    "value": "1.٥"
+  },
+  "operation": "decode"
+}

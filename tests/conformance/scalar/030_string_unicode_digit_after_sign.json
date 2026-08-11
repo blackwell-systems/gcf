@@ -1,0 +1,9 @@
+{
+  "name": "string_unicode_digit_after_sign_not_numeric_like",
+  "description": "Numeric-like classification uses ASCII digits only (Section 2.4). A leading sign followed by a non-ASCII Unicode digit (+<U+0665>) is not numeric-like, so it is left bare.",
+  "input": {
+    "value": "+٥"
+  },
+  "expected": "GCF profile=generic\nvalue=+٥\n",
+  "operation": "encode"
+}

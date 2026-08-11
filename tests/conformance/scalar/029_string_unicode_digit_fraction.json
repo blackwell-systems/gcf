@@ -1,0 +1,9 @@
+{
+  "name": "string_unicode_digit_fraction_left_bare",
+  "description": "A string with a non-ASCII Unicode digit in the fraction position (1.<U+0665>) is not a JSON number, because DIGIT is ASCII 0-9 (Section 2.3). It is therefore not quoted and is emitted bare; it round-trips as a string.",
+  "input": {
+    "value": "1.٥"
+  },
+  "expected": "GCF profile=generic\nvalue=1.٥\n",
+  "operation": "encode"
+}

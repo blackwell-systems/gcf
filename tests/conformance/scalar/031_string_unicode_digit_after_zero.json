@@ -1,0 +1,9 @@
+{
+  "name": "string_unicode_digit_after_zero_not_numeric_like",
+  "description": "A leading 0 followed by a non-ASCII Unicode digit (0<U+0665>) is not numeric-like (ASCII digits only, Section 2.4) and is left bare.",
+  "input": {
+    "value": "0٥"
+  },
+  "expected": "GCF profile=generic\nvalue=0٥\n",
+  "operation": "encode"
+}

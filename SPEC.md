@@ -2,7 +2,7 @@
 
 ## Graph Compact Format: A Token-Optimized Wire Format for LLM Interactions
 
-**Version:** 3.5.1
+**Version:** 3.5.2
 
 **Date:** 2026-08-06
 
@@ -142,6 +142,8 @@ Invalid (MUST NOT be emitted by encoders as numbers): leading zeros (`01`, `00.5
 
 Tokens that do not match this grammar in their entirety fall through to bare string (precedence rule 7). Thus an unquoted token such as `01` decodes as the string `"01"`, not as a number and not as an error.
 
+The `DIGIT` and `DIGIT1-9` rules are the ASCII digits `0`-`9` (`%x30-39`) and `1`-`9` as defined by [RFC5234]. Non-ASCII Unicode decimal digits (for example U+0660-U+0669 Arabic-Indic, or U+FF10-U+FF19 fullwidth) are NOT digits under this grammar. A token containing any such code point does not match the number grammar in its entirety and therefore falls through to bare string: for example `1.٥` (ASCII `1`, `.`, then U+0665) decodes as the string `"1.٥"`, never as the number `1.5`. Implementations MUST NOT use a Unicode-aware digit class (such as a regex `\d` in Unicode mode, which matches `\p{Nd}`) for the number grammar; this same ASCII-only constraint applies to the numeric-like classification in Section 2.4.
+
 ### 2.3.1 Canonical number formatting
 
 Conforming encoders MUST emit numbers in canonical form to ensure bit-for-byte deterministic output:
@@ -167,7 +169,7 @@ An encoder MUST quote a string value when its bare form would be parsed as a non
 - it matches `^{fields}` using the field declaration grammar (would decode as an inline-schema attachment marker);
 - it equals `true` or `false` (would decode as boolean);
 - it matches the JSON number grammar (would decode as number);
-- it is numeric-like: after an optional leading `+` or `-`, it begins with a digit, or it begins with `.` followed by a digit;
+- it is numeric-like, meaning it begins with one of these shapes and could be misread as a malformed number: a `+` or `-` optionally followed by `.` and then an ASCII digit (`0`-`9`); or `.` followed by an ASCII digit; or `0` followed by an ASCII digit. Non-ASCII Unicode digits do not count here (see Section 2.3), and a token beginning with an ASCII digit `1`-`9` that is not itself a complete number is not numeric-like (for example `1.٥` and `123abc` are left bare);
 - it is empty (zero length);
 - it begins or ends with whitespace;
 - it begins with `#`, `@`, or `.` (would collide with comment, row-ID, or attachment syntax in positional contexts);
@@ -1857,7 +1859,7 @@ This specification follows a three-stage lifecycle:
 | **Stable** | The grammar is frozen. No breaking changes. Additive extensions only. Implementations may depend on stability for production use. |
 | **Frozen** | No changes of any kind. The specification is archived. |
 
-Current status: **Stable** (v3.5.1 designated 2026-08-09; v3.5.0 2026-08-06).
+Current status: **Stable** (v3.5.2 designated 2026-08-10; v3.5.1 2026-08-09; v3.5.0 2026-08-06).
 
 ### 19.3 Version history
 
@@ -1868,6 +1870,8 @@ Since v3.0 the specification has grown additively only (Stable: no breaking chan
 **v3.4.1** added a trailing `distance` field to the graph delta `## added` line (Section 10.1), so a consumer can reconstruct the new snapshot and verify `new_root` (`pack_root` includes distance; Sections 10.2, 10.4). A delta-only line-form correction.
 
 **v3.5.0** added keyed-tabular map encoding (Section 7.2a): a JSON object whose values are all objects forming a losslessly-tabular set is encoded with the shared value fields declared once and one `key|values` row per member, marked by `[N:]`, first-class in nested (Sections 7.4.4, 7.6) and streaming (`[?:]`, Section 8) positions and reusing generic delta (Section 10a) unchanged with the map key as the delta identity. This changes the canonical output for such maps from per-key section blocks to a keyed table. Existing payloads are unaffected (the `[N:]` marker was previously an invalid count; all other constructs decode identically); a pre-v3.5 decoder rejects `[N:]`, so decoders MUST be updated to read v3.5 map output. Additive under the Stable lifecycle. v3.5.0 also canonicalizes negative zero to `0` for both integer and floating-point values (Section 2.3.1, superseding the prior sign-preserving guidance, since `-0` and `0` denote the same value and integer negative zero is not representable in most language number models), specifies that a buffered graph header omits zero-valued `budget`, `tokens`, and `edges` (Sections 3.2, 16.1), and states that structural tokens and delimiters are matched at the Unicode scalar (code point) level rather than grapheme clusters (Section 1).
+
+**v3.5.2** (errata) clarifies that the `DIGIT` rules in the number grammar (Section 2.3) and the numeric-like classification (Section 2.4) are ASCII `0`-`9` per [RFC5234], and that non-ASCII Unicode decimal digits are not digits: a token such as `1.٥` does not match the number grammar and decodes as the string `"1.٥"`, never the number `1.5`. Not a grammar change (ABNF `DIGIT` was already ASCII); it makes the ASCII-only intent explicit because several SDKs used a regex `\d` in Unicode mode (matching `\p{Nd}`), which made encoders disagree on whether to quote such a value and let a bare non-ASCII-digit token decode as a number in one runtime while staying a string in another. A generic-encode/decode conformance fixture locks the ASCII-only behavior.
 
 **v3.5.1** (errata) pins the graph score's two-decimal wire form to **round-half-to-even** applied to the exact IEEE-754 double (Section 5). The rounding mode was previously unspecified, so implementations diverged at exact binary midpoints: the printf-family SDKs (Go, Rust, Python, Swift, .NET) rounded half-to-even (`0.125` → `0.12`), while the round-half-up formatters (JavaScript `Number.toFixed`, Java `String.format` %f) produced `0.13`, a silent, non-interoperable wire. A clarification, not a grammar change: the two agree on every value except exact midpoints. TypeScript and Kotlin were corrected to match; a graph-encode midpoint conformance fixture locks it.
 
