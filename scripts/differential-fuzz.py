@@ -108,7 +108,11 @@ rng = random.Random(SEED)
 KEYS = ["", ">", ">>", "a>b", "a>>b", ">b", "a|b", "a,b", "a=b", "@x", "#x", "5",
         "true", "key", "a b", "café", "x\n", '"q"', "a\\b", "id", "name", "ௗid", "aௗb"]
 SCALARS = [True, False, None, 0, -1, 42, 3.14, -0.0, 1e18, "5", "true", "-", "~", "^",
-           "@x", "a|b", "a,b", "café", "x\n", "", "^{a}", "plain", "=v", " ૌx", "ௗv"]
+           "@x", "a|b", "a,b", "café", "x\n", "", "^{a}", "plain", "=v", " ૌx", "ௗv",
+           # Non-ASCII digits: a Unicode-mode regex \d used to accept these in the
+           # number grammar (SPEC 2.3, ASCII-only), diverging across SDKs and letting
+           # a bare token decode as a number. All must stay strings, encoded bare.
+           "1.٥", "+٥", "0٥", "1٥", ".٥", "1.５", "٠١"]
 
 
 def gkey():    return rng.choice(KEYS)
