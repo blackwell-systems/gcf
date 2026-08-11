@@ -6,7 +6,7 @@
 
 ## Summary
 
-- Fixtures: **265** across 22 directories, 14 operations
+- Fixtures: **269** across 22 directories, 14 operations
 - Section 16.5 conditions covered: **31/31**
 - Uncovered (known gaps, tracked below): **0**
 - Uncovered (unexpected, fails the build): **0**
@@ -54,10 +54,10 @@
 
 | Operation | Fixtures | Required |
 |---|---|---|
-| `decode` | 31 | yes |
+| `decode` | 32 | yes |
 | `delta` | 2 | yes |
 | `delta-verify` | 1 | yes |
-| `encode` | 149 | yes |
+| `encode` | 152 | yes |
 | `error` | 45 | yes |
 | `generic-delta` | 2 | yes |
 | `generic-delta-decode` | 3 | yes |
@@ -81,7 +81,7 @@
 | 16.1 | Order symbols by score descending within each distance group | covered | `graph-encode/` (4) |
 | 16.1 | Order edges by source ID then target ID | covered | `graph-encode/` (4) |
 | 16.1 | Deterministic output (distance_N trailer group order) | covered | `streaming-v2/` (13) |
-| 16.2 | Header begins GCF profile=generic | covered | `scalar/` (28) |
+| 16.2 | Header begins GCF profile=generic | covered | `scalar/` (31) |
 | 16.2 | Scalar grammar + encoder quoting; numbers/bool/null unquoted | covered | `numbers/` (16) |
 | 16.2 | Key grammar; quote invalid bare keys; reject duplicate keys | covered | `keys/` (13) |
 | 16.2 | Tabular: pipe separator, positional rows, field union, - / ~ | covered | `arrays/` (13) |
@@ -93,7 +93,7 @@
 | 16.3 | Parse header/nodes/edges; kind expansion + unknown passthrough | covered | `graph-decode/` (4) |
 | 16.3 | Accept ? deferred count; summary metadata; counts positional|labeled | covered | `streaming-v2/` (13) |
 | 16.3 | Reject edges referencing undeclared symbol IDs | covered | op `error` (45) |
-| 16.4 | Scalar grammar + full JSON string escapes; reject malformed UTF-8 | covered | `decode/` (6) |
+| 16.4 | Scalar grammar + full JSON string escapes; reject malformed UTF-8 | covered | `decode/` (7) |
 | 16.4 | Interpret - (null), ~ (absent), ^ / ^{fields} attachments | covered | `inline-schema/` (15) |
 | 16.4 | Keys bare+quoted; tabular headers; row-width validation | covered | `keys/` (13) |
 | 16.4 | Whitespace/indentation handling | covered | `whitespace/` (3) |
@@ -119,7 +119,7 @@ Scanned over every fixture `expected` output; a violation fails the build.
 | `arrays` | 13 |
 | `attachments` | 7 |
 | `containers` | 9 |
-| `decode` | 6 |
+| `decode` | 7 |
 | `errors-v2` | 39 |
 | `flatten` | 25 |
 | `generic-delta` | 9 |
@@ -135,7 +135,7 @@ Scanned over every fixture `expected` output; a violation fails the build.
 | `keys` | 13 |
 | `numbers` | 16 |
 | `roots` | 11 |
-| `scalar` | 28 |
+| `scalar` | 31 |
 | `streaming-v2` | 13 |
 | `whitespace` | 3 |
 
