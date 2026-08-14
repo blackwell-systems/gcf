@@ -43,6 +43,12 @@ data = decode_generic(gcf_response)
 jsonschema.validate(data, existing_schema)
 ```
 
+## How are large integers and IDs handled?
+
+GCF's canonical numeric domain is a signed 64-bit integer (`int64`, `-2^63` to `2^63-1`) for whole numbers and an IEEE-754 double for everything else. Any integer within `int64` round-trips exactly. A value outside it, an unsigned-64 ID, a 128-bit hash, an exact decimal, is modeled as a **string**: the digits round-trip losslessly with no precision risk.
+
+GCF fails loud rather than approximate. The encoder rejects an out-of-range integer and the decoder rejects an out-of-range literal, instead of silently rounding it the way `JSON.parse` does past `2^53` in a JavaScript runtime. So if you emit raw nanosecond timestamps (on the order of `10^18`, well beyond a JavaScript `number`), send milliseconds or a string. Full domain in [`SPEC.md` Section 2.3.2](https://github.com/blackwell-systems/gcf/blob/main/SPEC.md).
+
 ## How does GCF compare to TOON?
 
 GCF wins on every measured dimension. 29% fewer tokens across 16 real-world datasets (15/16 wins; TOON's one win is 77 tokens on a single dataset). 91.2% comprehension where TOON averages 68.8%. 5/5 generation validity on every frontier model while TOON's decoder rejects output from 7 of 9 models. Session deduplication plus delta encoding (both profiles) that stack to 94% fewer tokens across a multi-turn session (up to 99% per call by the 5th), features TOON structurally cannot add.
