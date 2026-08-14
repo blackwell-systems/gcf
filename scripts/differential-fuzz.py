@@ -1,17 +1,36 @@
 #!/usr/bin/env python3
 """Differential cross-SDK fuzz (testing.md layer 4a).
 
-Generates adversarial random JSON, encodes each input through every SDK's
-`encode-generic` CLI, and requires the wire to be BYTE-IDENTICAL across all six.
-It then decodes that wire through every SDK and RE-ENCODES the decoded value
-through the same SDK; the re-encoded canonical wire must be identical across all
-SDKs and equal to the original wire.
+Generates adversarial random JSON and compares the SDKs in two layers, and the
+split between them is load-bearing:
 
-Comparing re-encoded canonical wire (not each language's native JSON object) is
-immune to representation-only differences that are not GCF divergences: whole
-numbers rendered as int vs float, or JSON key order in a language's own model.
-A genuine value or ordering divergence still surfaces, because encode() maps
-distinct values (and distinct field orders) to distinct wire.
+  * ENCODE phase - WIRE layer, BYTE-STRICT. Every SDK encodes the same input; the
+    wire must be byte-identical. This is where a wrong wire SHAPE for a type is
+    caught: after SPEC 2.3.2 a bare token is an int64 and a decimal/exponent token
+    is a double, so bare-vs-exponent is a real int64-vs-double discriminator that
+    MUST NOT be normalized away.
+  * DECODE phase - VALUE layer, NUMERIC-AND-ORDER-AWARE. Every SDK decodes the
+    agreed wire; the decoded VALUES must match, object key order included, with an
+    integer-valued double and an integer of the same value treated as equal.
+
+Why the split (and why not re-encode-and-byte-compare, which an earlier version of
+this script did): comparing re-encoded canonical wire was immune to "a whole number
+rendered as int vs float" ONLY while int and float shared one plain wire form (both
+plain below 1e21). SPEC 2.3.2 moved the double plain/exponent threshold to 2^53, so
+an integer-valued double now emits exponent (5e+18) while an int emits bare
+(5000000000000000000) - distinct wire, deliberately. A decoded double that a
+language's JSON stdlib renders plain (go/ts/swift render an integer-valued float64
+as plain digits; rust/python/kotlin/dotnet render it in exponent form) re-imports
+through GCF's bridge as an int64 and re-encodes bare, so the re-encoded wires
+legitimately diverge for the SAME value. That is a JSON-interchange display
+difference, not a GCF divergence: the wire codec round-trip is stable and
+conformance-green (fixtures 020/024), and the ENCODE phase above already proves the
+encoders agree exactly. The value-layer comparison restores the original
+int-vs-float immunity where it belongs - at the decoded VALUE - and is kept
+STRUCTURALLY separate from the byte-strict wire comparison (values_equal_ordered
+operates on parsed structures; the encode phase uses raw-string set-equality) so a
+future edit cannot loosen the wire check and blind the fuzz to a real shape
+divergence.
 
 This exercises the 6x6 encoder/decoder matrix on inputs the conformance fixtures
 do not enumerate. A divergence names the offending SDK. Every divergence it finds
@@ -112,7 +131,25 @@ SCALARS = [True, False, None, 0, -1, 42, 3.14, -0.0, 1e18, "5", "true", "-", "~"
            # Non-ASCII digits: a Unicode-mode regex \d used to accept these in the
            # number grammar (SPEC 2.3, ASCII-only), diverging across SDKs and letting
            # a bare token decode as a number. All must stay strings, encoded bare.
-           "1.٥", "+٥", "0٥", "1٥", ".٥", "1.５", "٠١"]
+           "1.٥", "+٥", "0٥", "1٥", ".٥", "1.５", "٠١",
+           # Numeric-domain boundary seeds (SPEC 2.3.2), in random nested and tabular
+           # positions. Two things are intentionally NOT seeded here, because they
+           # exercise the JSON interchange, not a GCF codec property (both are pinned
+           # in-process by the numbers/ and errors-v2/ conformance fixtures across all
+           # seven SDKs):
+           #   - Past-2^53 BARE integers: the reference JavaScript CLI decodes them
+           #     under its default 'error' largeInt policy, so a bare big-int round-trip
+           #     would need a per-SDK decode-mode flag.
+           #   - Doubles in [2^63, 1e21) (e.g. 1e20): a language whose JSON stdlib
+           #     renders an integer-valued float64 as plain digits (go/ts/swift) emits
+           #     a bare integer ABOVE int64 max, so re-encoding that JSON correctly
+           #     errors (out of domain). That is a JSON-interchange limit, not a codec
+           #     bug (fixture 020 pins the double 1e20 -> 1e+20 in-process).
+           # Seeded: safe-range int64 edges, and doubles that either stay below 2^63
+           # (rendered plain, a valid int64 -> absorbed by the value-layer compare) or
+           # sit above 1e21 (rendered exponent everywhere -> a clean double).
+           9007199254740991, -9007199254740991,   # +/- (2^53 - 1), the max safe integer
+           5e18, 9e18, -9e18, 1.5e300]             # doubles: below 2^63, and above 1e21
 
 
 def gkey():    return rng.choice(KEYS)
@@ -258,6 +295,35 @@ def mutate_count(wire):
     return muts
 
 
+def values_equal_ordered(a, b):
+    """VALUE-layer equality for two DECODED JSON structures (the output of the
+    decode-generic CLIs, parsed with json.loads). Deep, object-key-ORDER-sensitive,
+    and NUMERIC-VALUE aware: an integer-valued double and an integer of the same
+    value compare equal (5e18 == 5000000000000000000).
+
+    This is deliberately NOT the wire comparison. It takes PARSED structures, never
+    wire strings (a GCF wire is not valid JSON, so json.loads would reject it): that
+    is the structural guard that keeps this normalization off the wire layer. The
+    int64-vs-double wire-SHAPE discriminator (bare vs exponent) stays byte-strict in
+    the ENCODE phase; here we only absorb the type-lossy JSON rendering of an
+    integer-valued number, which is a display difference, not a GCF divergence.
+    """
+    # bool is an int subclass in Python; keep True/False distinct from 1/0.
+    if isinstance(a, bool) or isinstance(b, bool):
+        return a is b
+    if isinstance(a, dict) and isinstance(b, dict):
+        ia, ib = list(a.items()), list(b.items())
+        if len(ia) != len(ib):
+            return False
+        return all(ka == kb and values_equal_ordered(va, vb)
+                   for (ka, va), (kb, vb) in zip(ia, ib))
+    if isinstance(a, list) and isinstance(b, list):
+        return len(a) == len(b) and all(values_equal_ordered(x, y) for x, y in zip(a, b))
+    if isinstance(a, (int, float)) and isinstance(b, (int, float)):
+        return a == b  # numeric value equality across int/float rendering
+    return a == b
+
+
 def main():
     tbl = sdk_table()
     names = list(tbl.keys())
@@ -288,30 +354,61 @@ def main():
             continue
         wire = next(iter(wires.values()))
         wires_seen.add(wire)
-        rencs = {}
+        # DECODE phase - VALUE layer (see values_equal_ordered and the module
+        # docstring). Decode the agreed wire through every SDK, parse each decoded
+        # JSON, and compare the VALUES (order-sensitive, numeric-aware). This is kept
+        # structurally separate from the byte-strict wire comparison above: it never
+        # touches a wire string, only parsed structures.
+        decoded, dec_errored = {}, False
         for s in names:
             cwd, denc, denv = tbl[s]("decode-generic")
             rc, out, err = run(cwd, denc, denv, wire)
             if rc != 0:
-                errors += 1
+                errors += 1; dec_errored = True
                 print(f"[{i}] DECODE ERROR {s} rc={rc}: {err.strip()[:300]}\n  wire={json.dumps(wire)[:300]}", flush=True)
-                rencs[s] = ("DECODE_FAIL",); continue
-            cwd2, eenc, eenv = tbl[s]("encode-generic")
-            rc2, out2, _ = run(cwd2, eenc, eenv, out)
-            rencs[s] = out2 if rc2 == 0 else ("REENC_FAIL",)
-        groups = {}
-        for s in names:
-            groups.setdefault(rencs[s], []).append(s)
-        if len(groups) != 1:
-            dec_div += 1
-            ordered = sorted(groups.items(), key=lambda kv: -len(kv[1]))
-            print(f"[{i}] DECODE DIVERGENCE majority={ordered[0][1]}\n  wire={json.dumps(wire)[:300]}", flush=True)
-            for out, ss in ordered[1:]:
-                print(f"    MIN {ss}: {json.dumps(out)[:300]}", flush=True)
+                continue
+            try:
+                decoded[s] = json.loads(out)
+            except Exception as e:
+                errors += 1; dec_errored = True
+                print(f"[{i}] DECODE OUTPUT NOT JSON {s}: {e}\n  out={out[:300]}", flush=True)
+        if dec_errored or len(decoded) != len(names):
             continue
-        if next(iter(groups)) != wire:
-            rt_fail += 1
-            print(f"[{i}] ROUNDTRIP MISMATCH\n  wire={json.dumps(wire)[:300]}\n  renc={json.dumps(next(iter(groups)))[:300]}", flush=True)
+        ref = decoded[names[0]]
+        minority = [s for s in names[1:] if not values_equal_ordered(decoded[s], ref)]
+        if minority:
+            dec_div += 1
+            print(f"[{i}] DECODE DIVERGENCE (decoded values differ) minority={minority}\n"
+                  f"  wire={json.dumps(wire)[:300]}\n  {names[0]}={json.dumps(ref)[:300]}", flush=True)
+            for s in minority:
+                print(f"    {s}={json.dumps(decoded[s])[:300]}", flush=True)
+            continue
+        # Round-trip IDEMPOTENCE at the VALUE layer, via the reference SDK: re-encode
+        # the decoded value and decode it again; the twice-decoded value must equal
+        # the once-decoded value. This is the round-trip check that survives both
+        # confounds: it is immune to the JSON int-vs-double display difference (value
+        # compare, not wire compare) AND to the encoder's deterministic key reordering
+        # (tabular column promotion moves e.g. a null/attachment field after the
+        # columns) - both sides undergo the same encode->decode, so a stable round-trip
+        # is a value fixed point. It deliberately does NOT compare against the original
+        # input: that order is not preserved through tabular encoding, and requiring it
+        # would flag accepted, stable reordering. The codec's byte-strict wire fixed
+        # point is pinned separately by the roundtrip-wire conformance fixtures.
+        cwd_e, eenc, eenv = tbl[names[0]]("encode-generic")
+        rc_e, wire2, err_e = run(cwd_e, eenc, eenv, json.dumps(ref))
+        if rc_e != 0:
+            errors += 1
+            print(f"[{i}] REENCODE ERROR {names[0]} rc={rc_e}: {err_e.strip()[:300]}", flush=True)
+        else:
+            cwd_d, ddec, ddenv = tbl[names[0]]("decode-generic")
+            rc_d, out2, err_d = run(cwd_d, ddec, ddenv, wire2)
+            if rc_d != 0:
+                errors += 1
+                print(f"[{i}] REDECODE ERROR {names[0]} rc={rc_d}: {err_d.strip()[:300]}", flush=True)
+            elif not values_equal_ordered(json.loads(out2), ref):
+                rt_fail += 1
+                print(f"[{i}] ROUNDTRIP NOT VALUE-IDEMPOTENT ({names[0]})\n  wire={json.dumps(wire)[:300]}\n"
+                      f"  once={json.dumps(ref)[:300]}\n  twice={out2[:300]}", flush=True)
         # Mutation-decoder layer: a count-contradicting variant of the valid wire
         # MUST be rejected by every SDK (SPEC 13). A silent accept (rc==0) is a
         # decoder-robustness failure the round-trip layer above cannot see.
