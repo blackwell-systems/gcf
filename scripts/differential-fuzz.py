@@ -254,6 +254,49 @@ def gen_input():
     return gscalar()
 
 
+# Out-of-domain numeric inputs that EVERY SDK MUST reject on encode (SPEC 2.3.2).
+# This is the durable "all seven agree on rejection" boundary corpus: the coverage that
+# was missing when a Rust encode bug (a u64 in (int64max, u64max] emitted as an
+# un-decodable bare integer) slipped past the round-trip differential, which only ever
+# feeds decoders the encoders' own well-formed output.
+#
+# The corpus is exactly the (int64max, u64max] band, in scalar/array/object positions.
+# That band is the widest one every SDK rejects on encode: it is out of the int64 domain,
+# and a language whose JSON parser stores it as an unsigned 64-bit integer (Rust's
+# serde_json) hands GCF an exact u64 that GCF then rejects. Integers OUTSIDE [int64min,
+# u64max] on EITHER side (below -2^63, or above 2^64-1, e.g. 10^20) are intentionally not
+# here: such a value exceeds both the signed and unsigned 64-bit host integer types, so a
+# JSON parser that has no bignum type floats it to a double before GCF sees it, and it is
+# emitted as a double rather than rejected. That is a documented JSON-interchange limit
+# (see the Rust SDK notes); the decode-side rejection of those values is pinned by
+# conformance fixtures 041/042, and the encoder rejection of an in-domain-typed bignum by
+# the per-SDK native tests, so nothing is left uncovered.
+ENCODE_DOMAIN_ERRORS = [
+    '{"v": 9223372036854775808}',              # 2^63, one past int64 max
+    '{"v": 18446744073709551615}',             # 2^64 - 1 = u64 max
+    '{"v": 10000000000000000000}',             # 10^19, mid (int64max, u64max] band
+    '[1, 9223372036854775808, 3]',             # out-of-domain inside an array
+    '{"outer": {"v": 18446744073709551615}}',  # nested inside an object
+]
+
+
+def check_encode_domain_rejection(tbl, names):
+    """Every SDK MUST reject each out-of-domain encode input (SPEC 2.3.2). Returns the
+    number of (sdk, input) pairs that failed to reject (a silent accept is a domain
+    non-enforcement). Complements the round-trip differential, which cannot see this
+    class: it only feeds decoders the encoders' own valid output."""
+    fails = 0
+    for src in ENCODE_DOMAIN_ERRORS:
+        for s in names:
+            cwd, argv, env = tbl[s]("encode-generic")
+            rc, out, err = run(cwd, argv, env, src)
+            if rc == 0:
+                fails += 1
+                print(f"[domain] {s} did NOT reject out-of-domain encode input\n"
+                      f"  input:   {src}\n  emitted: {out.strip()[:200]}", flush=True)
+    return fails
+
+
 def mutate_count(wire):
     """Perturb a valid tabular/keyed/array wire into count-contradicting variants
     the encoder never emits: a surplus data row and a dropped data row, header
@@ -419,12 +462,16 @@ def main():
                 if rc == 0:
                     mut_accept += 1
                     print(f"[{i}] MUTATION SILENTLY ACCEPTED by {s}: count-contradicting wire not rejected\n  wire={json.dumps(mw)[:300]}", flush=True)
+    # Encode-domain rejection agreement (SPEC 2.3.2): fixed out-of-domain inputs every
+    # SDK must reject. A fixed corpus, run once, not per-iteration.
+    domain_reject_fail = check_encode_domain_rejection(tbl, names)
     grammar_fail = treesitter_check(wires_seen)
     gf = grammar_fail or 0
     print(f"\nDONE N={N} seed={SEED}: encode_divergence={enc_div} decode_divergence={dec_div} "
-          f"roundtrip_fail={rt_fail} mutation_silent_accept={mut_accept} errors={errors} "
+          f"roundtrip_fail={rt_fail} mutation_silent_accept={mut_accept} "
+          f"domain_reject_fail={domain_reject_fail} errors={errors} "
           f"grammar_parse_fail={'skipped' if grammar_fail is None else gf}", flush=True)
-    sys.exit(1 if (enc_div or dec_div or rt_fail or mut_accept or errors or gf) else 0)
+    sys.exit(1 if (enc_div or dec_div or rt_fail or mut_accept or domain_reject_fail or errors or gf) else 0)
 
 
 if __name__ == "__main__":
