@@ -1,0 +1,7 @@
+{
+  "name": "double_mid_band_renders_exponent",
+  "description": "A double in the (2^53, 2^63) band (5e18) MUST render in exponent notation, not plain decimal. This is the band that exposes the boundary: 5e18 is below the int64 edge, so a 2^63 plain threshold would emit the bare-integer token 5000000000000000000, which is > 2^53-1 and would be rejected by a binary64-integer host (JavaScript) decoding in its default policy, an encoder emitting a token it cannot read back. The double plain/exponent boundary is 2^53, so 5e18 renders 5e+18 and decodes as a double everywhere. SPEC 2.3.1.",
+  "input": {"value": 5e18},
+  "expected": "GCF profile=generic\nvalue=5e+18\n",
+  "operation": "encode"
+}

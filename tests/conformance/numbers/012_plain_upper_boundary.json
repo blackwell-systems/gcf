@@ -1,7 +1,7 @@
 {
-  "name": "number_plain_below_upper_boundary",
-  "description": "A value below 1e21 remains in plain decimal notation",
+  "name": "integer_literal_beyond_int64_rejected_on_ingest",
+  "description": "A bare-integer literal beyond int64 (10^20) is an int64-domain value that exceeds the domain, so ingest through the JSON->value bridge MUST raise an out-of-range error rather than silently approximating it to a double. Token shape follows domain (SPEC 2.3.2): bare digits are an int64 integer. A genuine double of this magnitude arrives in exponent shape instead (see 020). This fixture was formerly a plain-decimal formatting case; under the v3.5.3 numeric domain the value is out of range on ingest.",
   "input": {"value": 100000000000000000000},
-  "expected": "GCF profile=generic\nvalue=100000000000000000000\n",
-  "operation": "encode"
+  "expectedError": "out_of_range",
+  "operation": "encode-error"
 }

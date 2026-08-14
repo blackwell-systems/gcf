@@ -1,0 +1,7 @@
+{
+  "name": "int64_min_via_json_bridge",
+  "description": "int64 minimum (-2^63) presented as a bare-integer JSON literal is ingested through the JSON->value bridge into an exact int64 and emitted as plain decimal digits, not exponent notation. This is the asymmetric-interval edge on the render side: an encoder that gates plain-decimal on a magnitude (abs < 2^63) rather than the closed interval [-2^63, 2^63-1] would wrongly render -2^63 in exponent form (SPEC 2.3.1, 2.3.2).",
+  "input": {"value": -9223372036854775808},
+  "expected": "GCF profile=generic\nvalue=-9223372036854775808\n",
+  "operation": "encode"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "integer_2pow63_rejected_on_ingest",
+  "description": "The tight encode-side boundary: 2^63 (9223372036854775808, one past int64 max) presented as a bare-integer JSON literal MUST raise an out-of-range error on ingest, while 2^63-1 ingests exactly (021). Conformance is on the interval bound, not magnitude (SPEC 2.3.2).",
+  "input": {"value": 9223372036854775808},
+  "expectedError": "out_of_range",
+  "operation": "encode-error"
+}

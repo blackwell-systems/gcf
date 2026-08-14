@@ -1,0 +1,7 @@
+{
+  "name": "int64_max_wire_idempotent",
+  "description": "int64 maximum (2^63-1) is in-domain and round-trips exactly. Tested as wire idempotence (decode then re-encode equals the input wire) because the value cannot be carried as a JSON number without floating.",
+  "input": "GCF profile=generic\nv=9223372036854775807\n",
+  "expected": "GCF profile=generic\nv=9223372036854775807\n",
+  "operation": "roundtrip-wire"
+}

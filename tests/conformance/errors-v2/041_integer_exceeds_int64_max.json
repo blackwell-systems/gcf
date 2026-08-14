@@ -1,0 +1,7 @@
+{
+  "name": "integer_exceeds_int64_max",
+  "description": "An integer one past the int64 maximum (2^63 = 9223372036854775808) is out of the canonical numeric domain and MUST be rejected on decode, not silently approximated to a double. SPEC Section 2.3.2: values outside [-2^63, 2^63-1] are modeled as strings; a bare numeric literal beyond the domain is an error. A pre-errata decoder that floats the literal accepts it silently, so this fixture fails red against unfixed code.",
+  "input": "GCF profile=generic\nv=9223372036854775808\n",
+  "expectedError": "out_of_range",
+  "operation": "error"
+}

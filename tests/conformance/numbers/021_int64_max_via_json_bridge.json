@@ -1,0 +1,7 @@
+{
+  "name": "int64_max_via_json_bridge",
+  "description": "int64 maximum (2^63-1) presented as a bare-integer JSON literal is ingested through the JSON->value bridge into an exact int64 and encoded without loss. Confirms the bridge preserves the full int64 domain rather than routing integer literals through float64 (SPEC 2.3.2).",
+  "input": {"value": 9223372036854775807},
+  "expected": "GCF profile=generic\nvalue=9223372036854775807\n",
+  "operation": "encode"
+}

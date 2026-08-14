@@ -1,0 +1,7 @@
+{
+  "name": "int64_min_wire_idempotent",
+  "description": "int64 minimum (-2^63 = -9223372036854775808) is in-domain and MUST round-trip exactly. This is the asymmetric closed-interval edge: a decoder that tests magnitude (abs(v) >= 2^63) rather than the signed bounds would wrongly reject this valid value. Tested as wire idempotence because the value cannot be carried as a JSON number without floating. SPEC Section 2.3.2.",
+  "input": "GCF profile=generic\nv=-9223372036854775808\n",
+  "expected": "GCF profile=generic\nv=-9223372036854775808\n",
+  "operation": "roundtrip-wire"
+}

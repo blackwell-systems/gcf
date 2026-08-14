@@ -1,0 +1,7 @@
+{
+  "name": "integer_below_int64_min",
+  "description": "An integer one below the int64 minimum (-2^63-1 = -9223372036854775809) is out of the canonical numeric domain and MUST be rejected on decode. This pins the lower asymmetric edge: -9223372036854775808 is valid (fixture 019) but -9223372036854775809 is not. SPEC Section 2.3.2.",
+  "input": "GCF profile=generic\nv=-9223372036854775809\n",
+  "expectedError": "out_of_range",
+  "operation": "error"
+}

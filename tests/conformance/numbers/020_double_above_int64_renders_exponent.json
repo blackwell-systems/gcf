@@ -1,0 +1,7 @@
+{
+  "name": "double_above_int64_renders_exponent",
+  "description": "A large double (10^20, arriving unambiguously as a double via exponent shape) MUST be emitted in exponent notation, not plain decimal. Every double at or above 2^53 is integer-valued, so plain digits would emit a bare-integer token; exponent shape keeps it a double that decodes as the same double. This pins the encoder half of the token-shape invariant well above the boundary (see 024 for the (2^53, 2^63) mid-band edge). SPEC 2.3.1, 2.3.2.",
+  "input": {"value": 1e20},
+  "expected": "GCF profile=generic\nvalue=1e+20\n",
+  "operation": "encode"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "int64_beyond_js_safe_wire_idempotent",
+  "description": "An integer past the IEEE-754 safe range (2^53+1 = 9007199254740993) but well within int64 is in-domain and MUST round-trip exactly. A decoder that routes integer parsing through a double silently lands on 9007199254740992; wire idempotence catches that because the floated value re-encodes to different digits than the input wire. SPEC Section 2.3.2.",
+  "input": "GCF profile=generic\nv=9007199254740993\n",
+  "expected": "GCF profile=generic\nv=9007199254740993\n",
+  "operation": "roundtrip-wire"
+}
