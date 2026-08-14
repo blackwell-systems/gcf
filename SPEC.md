@@ -2,7 +2,7 @@
 
 ## Graph Compact Format: A Token-Optimized Wire Format for LLM Interactions
 
-**Version:** 3.5.2
+**Version:** 3.5.3
 
 **Date:** 2026-08-06
 
@@ -158,7 +158,24 @@ Two conforming encoders given the same parsed numeric value MUST produce the sam
 
 ### 2.3.2 Numeric domain and precision
 
-Implementations MUST document their supported numeric domain. A decoder that cannot represent an input number exactly in that domain MUST return an out-of-range error or an exact numeric/string representation exposed by its API; it MUST NOT silently return an approximate value. Non-finite host values are outside the JSON data model and encoders MUST reject them unless host-value normalization converts them before GCF encoding.
+The canonical numeric domain is **signed 64-bit integers** (`int64`: -2^63 to 2^63-1) for integer-valued numbers and **IEEE-754 binary64** ("double") for non-integer numbers. This is the largest integer domain losslessly representable in every reference language: natively in the six with a 64-bit integer type, and via `BigInt` in JavaScript. Unsigned 64-bit (`uint64`) is excluded because no single native type carries it losslessly in every target language; `int128`, arbitrary-precision integers, and arbitrary-precision decimals are likewise excluded.
+
+The wire grammar (Section 2.3) is unchanged and admits integer literals of any length. Domain conformance is enforced on the value, symmetrically on both sides:
+
+- A **decoder** MUST decode an integer literal into an exact `int64`-capable type. A value outside `int64` MUST raise an out-of-range error; a decoder MUST NOT return an approximate value and MUST NOT coerce the value to another type.
+- An **encoder** MUST reject a host integer outside `int64` with an out-of-range error, and MUST NOT substitute a string or an approximate number, since that changes the value's type in a way the decoder cannot reverse.
+
+The `int64` interval is closed and asymmetric: `-2^63` (the minimum) is in range while `-2^63-1` is out of range, exactly as `2^63-1` (the maximum) is in range while `2^63` is out of range. Conformance is enforced against the interval bounds, not against magnitude; a magnitude test such as `abs(v) >= 2^63` wrongly rejects the valid minimum `-2^63`.
+
+Values outside the domain (integers beyond `int64`, unsigned 64-bit identifiers, and exact or high-precision decimals) are modelled by the application as **strings**. A string-modelled number leaves the numeric domain: GCF guarantees the digits round-trip but treats the value as an opaque string; it does not treat the string as a number and applies no numeric canonicalization (leading zeros, sign, and number-ness are the application schema's concern). GCF has no decimal type; exact decimal and monetary values are likewise modelled as strings.
+
+An implementation whose native integer type is narrower than `int64` (notably JavaScript, whose `number` is a binary64 and is exact only to 2^53-1) cannot hold, as its native number type, an in-domain value whose magnitude exceeds 2^53-1, that is, the sub-ranges [2^53, 2^63-1] and [-2^63, -2^53] (the negative side reaching the domain minimum). This is a host-language boundary local to that implementation and is distinct from the numeric domain edge: the domain edge is the `int64` interval, enforced fleet-wide, whereas 2^53 is a magnitude only JavaScript reaches; the six SDKs with a native 64-bit integer represent these values without ceremony. Such an implementation MUST NOT silently approximate a value in these sub-ranges; it MUST apply a documented policy. The reference JavaScript SDK defaults to an out-of-range error, surfacing the decision at the decode or encode site rather than returning a value that would later fail in `number` arithmetic, and exposes a `largeInt` option: `'error'` (default), `'string'` (recommended for identifiers), `'bigint'` (native lossless, for consumers that compute on the value), and `'number'` (explicit lossy). On encode the policy is input-type-dependent: a `number` whose magnitude exceeds 2^53-1 is already lossy before it reaches the encoder and is rejected under the default, whereas a `bigint` within `int64` MUST be serialized to its exact digits and MUST NOT be routed through `number` (the purpose of `'bigint'` mode is to compute on a value and re-encode it losslessly). Because these sub-ranges are JavaScript-local, their handling is an SDK ergonomic policy, not a variation of the numeric domain, which remains `int64` across the fleet.
+
+An out-of-range error, whether at the fleet-wide `int64` domain edge or the JavaScript-local 2^53 boundary, SHOULD be actionable: it SHOULD name the offending value, state which range it exceeds, and give the remediation. The remediation is to model the value as a string at the producer; at the JavaScript boundary it additionally includes the available `largeInt` modes. (Exact wording is an implementation concern, but the content is not: a bare "value out of range" turns a one-time configuration choice into a hard failure, so implementations SHOULD carry the value and the remediation.) This is especially relevant for nanosecond-precision timestamps, whose magnitude (on the order of 10^18) exceeds 2^53 for every value, so a producer emitting raw nanosecond epochs as numbers reaches this boundary on every such field; emitting milliseconds (which fit exactly) or a string avoids it.
+
+Non-finite host values (`NaN`, `±Infinity`) are outside the JSON data model; encoders MUST reject them unless host-value normalization converts them before GCF encoding.
+
+The numeric domain is a versioned conformance property: a future profile MAY widen it (for example an unsigned-64 or 128-bit integer extension) as an additive change at a declared version boundary.
 
 ### 2.4 Encoder quoting obligation
 
@@ -1859,7 +1876,7 @@ This specification follows a three-stage lifecycle:
 | **Stable** | The grammar is frozen. No breaking changes. Additive extensions only. Implementations may depend on stability for production use. |
 | **Frozen** | No changes of any kind. The specification is archived. |
 
-Current status: **Stable** (v3.5.2 designated 2026-08-10; v3.5.1 2026-08-09; v3.5.0 2026-08-06).
+Current status: **Stable** (v3.5.3 designated 2026-08-14; v3.5.2 2026-08-10; v3.5.1 2026-08-09; v3.5.0 2026-08-06).
 
 ### 19.3 Version history
 
@@ -1870,6 +1887,8 @@ Since v3.0 the specification has grown additively only (Stable: no breaking chan
 **v3.4.1** added a trailing `distance` field to the graph delta `## added` line (Section 10.1), so a consumer can reconstruct the new snapshot and verify `new_root` (`pack_root` includes distance; Sections 10.2, 10.4). A delta-only line-form correction.
 
 **v3.5.0** added keyed-tabular map encoding (Section 7.2a): a JSON object whose values are all objects forming a losslessly-tabular set is encoded with the shared value fields declared once and one `key|values` row per member, marked by `[N:]`, first-class in nested (Sections 7.4.4, 7.6) and streaming (`[?:]`, Section 8) positions and reusing generic delta (Section 10a) unchanged with the map key as the delta identity. This changes the canonical output for such maps from per-key section blocks to a keyed table. Existing payloads are unaffected (the `[N:]` marker was previously an invalid count; all other constructs decode identically); a pre-v3.5 decoder rejects `[N:]`, so decoders MUST be updated to read v3.5 map output. Additive under the Stable lifecycle. v3.5.0 also canonicalizes negative zero to `0` for both integer and floating-point values (Section 2.3.1, superseding the prior sign-preserving guidance, since `-0` and `0` denote the same value and integer negative zero is not representable in most language number models), specifies that a buffered graph header omits zero-valued `budget`, `tokens`, and `edges` (Sections 3.2, 16.1), and states that structural tokens and delimiters are matched at the Unicode scalar (code point) level rather than grapheme clusters (Section 1).
+
+**v3.5.3** (normative) specifies the canonical numeric domain (Section 2.3.2) as signed `int64` for integers and IEEE-754 double for non-integers. Earlier versions left the numeric domain implementation-defined, so handling of integers beyond the double-exact range (above 2^53) followed each host language's numeric type. This version defines exact `int64` handling uniformly across the fleet: decoders parse integer literals into an exact `int64`-capable type and return an out-of-range error outside `int64`; encoders return an out-of-range error for host integers outside `int64`. Values beyond `int64`, including unsigned-64 identifiers and exact decimals, are modelled as strings. The wire grammar is unchanged. Because it changes value handling (an implementation-defined domain becomes a specified one), it is normative rather than a clarification like v3.5.2, and is gated at this version boundary. Accordingly, a v3.5.3 decoder returning an out-of-range error for a payload that an earlier, implementation-defined decoder accepted is correct behaviour at that boundary, not a regression. The domain is the closed interval `[-2^63, 2^63-1]` (asymmetric: `-2^63` valid, `-2^63-1` and `2^63` out of range), enforced fleet-wide on the interval bounds rather than magnitude. The 2^53 boundary is JavaScript-local (its `number` precision limit, not the domain), applies to both signs (magnitude above 2^53-1), and is handled by a documented SDK policy that defaults to an out-of-range error rather than silent approximation. Boundary conformance fixtures pin both edges, at both signs (including `-2^63` and `-2^63-1`).
 
 **v3.5.2** (errata) clarifies that the `DIGIT` rules in the number grammar (Section 2.3) and the numeric-like classification (Section 2.4) are ASCII `0`-`9` per [RFC5234], and that non-ASCII Unicode decimal digits are not digits: a token such as `1.٥` does not match the number grammar and decodes as the string `"1.٥"`, never the number `1.5`. Not a grammar change (ABNF `DIGIT` was already ASCII); it makes the ASCII-only intent explicit because several SDKs used a regex `\d` in Unicode mode (matching `\p{Nd}`), which made encoders disagree on whether to quote such a value and let a bare non-ASCII-digit token decode as a number in one runtime while staying a string in another. A generic-encode/decode conformance fixture locks the ASCII-only behavior.
 
