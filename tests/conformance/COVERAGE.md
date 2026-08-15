@@ -6,7 +6,7 @@
 
 ## Summary
 
-- Fixtures: **279** across 22 directories, 16 operations
+- Fixtures: **281** across 22 directories, 16 operations
 - Section 16.5 conditions covered: **31/31**
 - Uncovered (known gaps, tracked below): **0**
 - Uncovered (unexpected, fails the build): **0**
@@ -57,7 +57,7 @@
 | `decode` | 32 | yes |
 | `delta` | 2 | yes |
 | `delta-verify` | 1 | yes |
-| `encode` | 155 | yes |
+| `encode` | 154 | yes |
 | `encode-error` | 2 |  |
 | `error` | 47 | yes |
 | `generic-delta` | 2 | yes |
@@ -67,7 +67,7 @@
 | `generic-pack-root` | 5 | yes |
 | `graph-stream-encode` | 8 | yes |
 | `pack-root` | 4 | yes |
-| `roundtrip` | 5 | yes |
+| `roundtrip` | 8 | yes |
 | `roundtrip-wire` | 3 |  |
 | `session` | 3 | yes |
 
@@ -85,7 +85,7 @@
 | 16.1 | Deterministic output (distance_N trailer group order) | covered | `streaming-v2/` (13) |
 | 16.2 | Header begins GCF profile=generic | covered | `scalar/` (31) |
 | 16.2 | Scalar grammar + encoder quoting; numbers/bool/null unquoted | covered | `numbers/` (24) |
-| 16.2 | Key grammar; quote invalid bare keys; reject duplicate keys | covered | `keys/` (13) |
+| 16.2 | Key grammar; quote invalid bare keys; reject duplicate keys | covered | `keys/` (15) |
 | 16.2 | Tabular: pipe separator, positional rows, field union, - / ~ | covered | `arrays/` (13) |
 | 16.2 | Inline object schemas; shared array schema reuse | covered | `inline-schema/` (15) |
 | 16.2 | Attachments (^ / ^{fields} / .field); @{id} on nested rows | covered | `attachments/` (7) |
@@ -97,10 +97,10 @@
 | 16.3 | Reject edges referencing undeclared symbol IDs | covered | op `error` (47) |
 | 16.4 | Scalar grammar + full JSON string escapes; reject malformed UTF-8 | covered | `decode/` (7) |
 | 16.4 | Interpret - (null), ~ (absent), ^ / ^{fields} attachments | covered | `inline-schema/` (15) |
-| 16.4 | Keys bare+quoted; tabular headers; row-width validation | covered | `keys/` (13) |
+| 16.4 | Keys bare+quoted; tabular headers; row-width validation | covered | `keys/` (15) |
 | 16.4 | Whitespace/indentation handling | covered | `whitespace/` (3) |
 | 16.4 | Count validation at every level | covered | op `error` (47) |
-| 16.4 | Round-trip invariant decode(encode(v)) == v (representative values) | covered | op `roundtrip` (5) |
+| 16.4 | Round-trip invariant decode(encode(v)) == v (representative values) | covered | op `roundtrip` (8) |
 
 _`invariant` = mechanical scan below; `property` = verified by the SDK property / round-trip suites (not a single fixture)._
 
@@ -134,7 +134,7 @@ Scanned over every fixture `expected` output; a violation fails the build.
 | `graph-session` | 3 |
 | `inline-schema` | 15 |
 | `keyed-map` | 32 |
-| `keys` | 13 |
+| `keys` | 15 |
 | `numbers` | 24 |
 | `roots` | 11 |
 | `scalar` | 31 |
