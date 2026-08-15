@@ -85,11 +85,17 @@ Build everything locally and get every SDK green **before** anything is pushed.
 3. Push `gcf` main (spec + fixtures + fuzz corpus). If a local `eval/` WIP blocks the rebase:
    `git stash push --include-untracked` → `git pull --rebase` → push → `git stash pop`. Rebase
    past the download-stats bot commit.
-4. Tag `gcf` `vX.Y.Z` and create the GitHub release (neutral notes; no em dashes; no
-   self-disclosure).
-5. Push each SDK's `vX.Y.Z` tag — **this is the publish trigger** (PyPI, crates.io, npm,
-   NuGet, JitPack; Swift/SPM is the tag itself). Watch each workflow.
-6. Verify each registry actually indexes the new version, then set proper GitHub release notes
+4. **Wait for CI green before ANY tag.** A tag is the release / publish trigger, so nothing is
+   tagged until the pushed commit's CI has gone green. After each push (every SDK main and `gcf`
+   main), confirm the pushed HEAD passed — `gh run list --commit <sha>` or the repo's Actions
+   tab — before proceeding. Never tag on an unverified or red commit; a red push means
+   fix-forward on `main` and re-confirm green first. This gate applies to the spec release too:
+   push `gcf` main, wait for its CI green, *then* tag.
+5. Tag `gcf` `vX.Y.Z` (only once `gcf` main CI is green) and create the GitHub release (neutral
+   notes; no em dashes; no self-disclosure).
+6. Push each SDK's `vX.Y.Z` tag (only once that SDK's main CI is green) — **this is the publish
+   trigger** (PyPI, crates.io, npm, NuGet, JitPack; Swift/SPM is the tag itself). Watch each workflow.
+7. Verify each registry actually indexes the new version, then set proper GitHub release notes
    per SDK.
 
 **NuGet (`gcf-dotnet`) gotcha:** the publish workflow's `NuGet/login` `user:` must be the
@@ -105,6 +111,10 @@ fails with HTTP 400 ("fetching tokens directly for organizations is not supporte
 - Bump `gcf-proxy` if it depends on the changed `gcf-go`.
 
 ## Gates (do not skip)
+- **CI green before any tag.** A tag triggers the release / publish; never create one until the
+  pushed commit's CI is confirmed green (`gh run list --commit <sha>`). The order is always
+  push → wait for green → tag, for the spec and for every SDK. Tagging a commit whose CI has not
+  passed can ship a release on an unverified commit or publish a broken artifact.
 - **Review before push.** Show the full change/PR/release-notes before pushing or publishing.
 - **Publishing is spend + outbound.** Build and verify locally freely; do the actual
   registry publish (tag pushes) only on an explicit go, and one coordinated batch, not ad hoc.
