@@ -1,7 +1,7 @@
 # API Reference (Swift)
 
 ```swift
-.package(url: "https://github.com/blackwell-systems/gcf-swift", from: "2.6.2")
+.package(url: "https://github.com/blackwell-systems/gcf-swift", from: "2.7.0")
 ```
 
 ## Functions
@@ -380,7 +380,7 @@ public enum DecodeError: Error, Equatable, CustomStringConvertible {
 ## CLI
 
 ```bash
-# In Package.swift: .package(url: "https://github.com/blackwell-systems/gcf-swift", from: "2.6.2")
+# In Package.swift: .package(url: "https://github.com/blackwell-systems/gcf-swift", from: "2.7.0")
 swift run GCFCLI encode-generic < data.json
 swift run GCFCLI decode-generic < data.gcf
 ```

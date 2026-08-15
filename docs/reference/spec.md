@@ -23,7 +23,7 @@ It covers:
 
 ## Version
 
-Current: **GCF v3.5.0** (stable, 2026-08-07)
+Current: **GCF v3.5.3** (stable, 2026-08-14)
 
 ## Conventions
 

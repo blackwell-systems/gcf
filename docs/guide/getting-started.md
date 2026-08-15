@@ -94,12 +94,12 @@ cargo add gcf
 
 ```bash [Swift]
 # Package.swift
-.package(url: "https://github.com/blackwell-systems/gcf-swift", from: "2.6.2")
+.package(url: "https://github.com/blackwell-systems/gcf-swift", from: "2.7.0")
 ```
 
 ```bash [Kotlin]
 # build.gradle.kts
-implementation("com.github.blackwell-systems:gcf-kotlin:v2.5.2")
+implementation("com.github.blackwell-systems:gcf-kotlin:v2.6.0")
 ```
 
 :::

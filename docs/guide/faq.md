@@ -68,7 +68,7 @@ Six official implementations, all MIT licensed, zero runtime dependencies:
 - **Swift** ([SPM](https://github.com/blackwell-systems/gcf-swift)) v2.6.2
 - **Kotlin** ([JitPack](https://jitpack.io/#blackwell-systems/gcf-kotlin)) v2.5.2
 
-All pass 264 conformance fixtures. All support both generic and graph profiles, streaming, session dedup, delta encoding, and CLI. [Full details](/ecosystem/implementations).
+All pass 279 conformance fixtures. All support both generic and graph profiles, streaming, session dedup, delta encoding, and CLI. [Full details](/ecosystem/implementations).
 
 ## Does GCF work with open-weight models?
 
@@ -111,7 +111,7 @@ Yes. MIT licensed. The [spec](https://github.com/blackwell-systems/gcf), all six
 
 ## How stable is the spec?
 
-[Spec v3.5.0](https://github.com/blackwell-systems/gcf/blob/main/SPEC.md) is designated Stable. Six implementations at v2.5.2+ (Go v1.6.2, Swift v2.6.2), 264 conformance fixtures, <strong style="color: var(--vp-c-brand-1)">[43 billion+ lossless round-trips](/guide/lossless-verification)</strong> verified across 5 formats (JSON, YAML, TOML, CSV, MessagePack) and 6 language implementations, cross-language 6x6 matrix passing.
+[Spec v3.5.3](https://github.com/blackwell-systems/gcf/blob/main/SPEC.md) is designated Stable. Six implementations at v2.5.2+ (Go v1.6.2, Swift v2.6.2), 279 conformance fixtures, <strong style="color: var(--vp-c-brand-1)">[43 billion+ lossless round-trips](/guide/lossless-verification)</strong> verified across 5 formats (JSON, YAML, TOML, CSV, MessagePack) and 6 language implementations, cross-language 6x6 matrix passing.
 
 ## Why not just compress JSON with gzip?
 

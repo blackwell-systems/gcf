@@ -7,7 +7,15 @@ release see the [GitHub releases](https://github.com/blackwell-systems/gcf/relea
 The spec has grown **additively since v3.0** with no breaking changes: a v3.0 decoder
 ignores anything it does not recognize.
 
-**Current ecosystem:** Spec **v3.5.1** · **7 SDKs** (Go **v1.6.2**, Swift **v2.6.2**, Python/Rust **v2.5.3**, TS/Kotlin **v2.5.2**, .NET **v0.1.2**) · gcf-proxy **v0.11.4** · tree-sitter-gcf **v1.4.0** · 265 conformance fixtures.
+**Current ecosystem:** Spec **v3.5.3** · **7 SDKs** (Go **v1.7.0**, Rust **v3.0.0**, Swift **v2.7.0**, Python **v2.6.0**, TS/Kotlin **v2.6.0**, .NET **v0.2.0**) · gcf-proxy **v0.11.4** · tree-sitter-gcf **v1.4.0** · 279 conformance fixtures.
+
+## v3.5.3 — int64 numeric domain
+
+_2026-08-14_
+
+The canonical numeric domain is now specified (SPEC 2.3.2): signed `int64` for integers, IEEE-754 double for non-integers. Across all seven SDKs, decoders and encoders reject a value outside `int64` with an out-of-range error rather than following the host numeric type for integers beyond the double-exact range (2^53); values beyond `int64` (unsigned-64 identifiers, exact decimals) are modeled as strings. Canonical formatting renders a double at or above 2^53 in exponent notation. Rust's `encode_generic` becomes fallible (returns `Result`, a major); the other SDKs are non-breaking. TypeScript adds a `largeInt` decode option for the JavaScript 2^53 boundary.
+
+- [Release notes](https://github.com/blackwell-systems/gcf/releases/tag/v3.5.3)
 
 ## v3.5.1 — Score-rounding errata, and a .NET SDK
 
