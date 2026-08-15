@@ -125,7 +125,10 @@ rng = random.Random(SEED)
 # grapheme-extending scalars (which cluster with an adjacent delimiter in
 # grapheme-segmented languages) as both keys and values.
 KEYS = ["", ">", ">>", "a>b", "a>>b", ">b", "a|b", "a,b", "a=b", "@x", "#x", "5",
-        "true", "key", "a b", "café", "x\n", '"q"', "a\\b", "id", "name", "ௗid", "aௗb"]
+        "true", "key", "a b", "café", "x\n", '"q"', "a\\b", "id", "name", "ௗid", "aௗb",
+        # Brackets in keys: a quoted key containing '[' or ']' must not be mistaken
+        # for a named-array count bracket on decode (SPEC 4.2, keys/014-015).
+        "[", "]", "a[b", "a]b", "items[3]", "a[1]b", "\t["]
 SCALARS = [True, False, None, 0, -1, 42, 3.14, -0.0, 1e18, "5", "true", "-", "~", "^",
            "@x", "a|b", "a,b", "café", "x\n", "", "^{a}", "plain", "=v", " ૌx", "ௗv",
            # Non-ASCII digits: a Unicode-mode regex \d used to accept these in the

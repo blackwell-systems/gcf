@@ -1,0 +1,9 @@
+{
+  "name": "quoted_key_with_bracket_array_value",
+  "description": "A quoted key containing '[' with an ARRAY value produces a named-array line (\"a[b\"[1]: 1). The decoder MUST locate the count bracket after the quoted key, not treat the '[' inside the key as the array bracket (SPEC 4.2). Round-trip, since the defect is decode-side.",
+  "operation": "roundtrip",
+  "input": {
+    "a[b": [1]
+  },
+  "expected": "GCF profile=generic\n\"a[b\"[1]: 1\n"
+}

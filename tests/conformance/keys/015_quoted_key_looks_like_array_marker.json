@@ -1,0 +1,9 @@
+{
+  "name": "quoted_key_looks_like_array_marker",
+  "description": "A quoted key that itself contains a complete [N] pattern (\"items[3]\") with an array value. The decoder MUST NOT treat the '[3]' inside the quoted key as the array count bracket; the real count follows the closing quote (SPEC 4.2). Round-trip, since the defect is decode-side.",
+  "operation": "roundtrip",
+  "input": {
+    "items[3]": ["a", "b"]
+  },
+  "expected": "GCF profile=generic\n\"items[3]\"[2]: a,b\n"
+}

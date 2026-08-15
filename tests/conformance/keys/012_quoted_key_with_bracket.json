@@ -1,7 +1,7 @@
 {
   "name": "quoted_key_with_bracket",
-  "description": "A quoted section/key name containing ' [' must round-trip: the decoder must find the header count bracket outside quotes, not treat the ' [' inside the quoted name as a named-array header",
-  "operation": "encode",
+  "description": "A quoted section/key name containing ' [' must round-trip: the decoder must find the header count bracket outside quotes, not treat the ' [' inside the quoted name as a named-array header (SPEC 4.2). Round-trip, since the guarantee is decode-side.",
+  "operation": "roundtrip",
   "input": {
     "a [1] b": {
       "x": 1,
