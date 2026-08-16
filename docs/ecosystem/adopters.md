@@ -136,6 +136,19 @@ The integration is deliberately conservative for a security tool: a format chang
 - Reviewed and merged by the maintainer, who audited the `gcf-python` source and round-tripped real alert shapes
 - Uses `gcf-python`'s `encode_generic` (generic profile)
 
+## Elasticsearch MCP Server
+
+[elasticsearch-mcp-server](https://github.com/cr7258/elasticsearch-mcp-server) is an MCP server for **Elasticsearch and OpenSearch**, maintained by [cr7258](https://github.com/cr7258). It exposes search, index, document, cluster, and alias operations to agents over stdio and HTTP transports. 303 stars.
+
+Search responses are a natural fit for GCF's generic profile: query hits, index listings, mappings, and aggregation buckets are arrays of uniform records that repeat the same field names on every row. GCF declares the keys once in a header and encodes values positionally, cutting the per-record key repetition JSON pays on every hit, which is exactly where the cost lives when feeding search results into an LLM.
+
+The integration is wired as **response-formatting middleware**, and the maintainer added a dedicated GCF benchmark to the project.
+
+- Direct runtime dependency on `gcf-python`, pinned to `2.6.0` (a current release)
+- GCF applied as response middleware across the server's tool responses (`src/response_format.py`, `test_gcf_response_middleware.py`)
+- Maintainer added a GCF benchmark to the repo (`benchmarks/gcf_benchmark.py`)
+- Covers both Elasticsearch and OpenSearch
+
 ## Open Data Products SDK (Linux Foundation)
 
 [Open Data Products SDK](https://opendataproducts.org/sdk/) is a Python toolkit and MCP server for working with data product standards under the Linux Foundation. It validates, generates, and publishes Open Data Product specifications.
