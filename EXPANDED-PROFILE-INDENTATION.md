@@ -3,8 +3,8 @@
 **Status:** Investigation / measurement. Not a spec draft. Records a quantified token
 overhead in the expanded per-item encoding (§7.6) and a candidate direction, with honest
 scope limits. No normative change is proposed here; if pursued it would be a wire-format
-change to the expanded/nested profile (see §7 below) and would land at a declared version
-boundary.
+change to the expanded/nested profile (see §9 below) and would land at a declared version
+boundary, gated behind the comprehension eval in §7.
 
 **Surface touched if pursued:** §4.1 (indentation is normative and carries structure),
 §7.4.4 / §7.4.5 / §7.6 (nested/expanded encoding), the grammar's `INDENT` productions
@@ -79,7 +79,72 @@ This targets GCF's genuinely weakest axis — deeply-nested expanded mode — an
 nested payload, not only k8s. It is a wire change for expanded-mode output (a pre-change decoder
 would misparse), so it is gated at a version boundary; flat-uniform tabular output is byte-identical.
 
-## 6. Scope limits (what this does NOT fix)
+## 6. Worked example (before → after)
+
+Two nested, per-item-irregular Pod-like records (different container/label/port shapes, which
+forces expanded mode §7.6). The candidate keeps every marker and the field-factoring; only the
+leading whitespace is removed. Nesting is delimited by the markers, with **implicit
+sibling-close**: a new `.key {}` / `## header` / `@N` at a shallower position auto-closes the
+deeper blocks, so an explicit close token is needed only when a dedent lands on a bare value
+with no sibling marker to imply it.
+
+```
+BEFORE (current — nesting via normative §4.1 indentation)   AFTER (candidate — markers delimit; whitespace non-structural)
+@0 Pod|^|^|^                                                 @0 Pod|^|^|^
+.metadata {}                                                 .metadata {}
+    name=web-1                                               name=web-1
+    namespace=prod                                           namespace=prod
+    ## labels                                                ## labels
+      app=web                                                app=web
+      tier=front                                             tier=front
+.spec {}                                                     .spec {}
+    ## containers [1]{name,image,ports}                      ## containers [1]{name,image,ports}
+    @0 nginx|nginx:1.27|^                                    @0 nginx|nginx:1.27|^
+    .ports [1]{containerPort}                                .ports [1]{containerPort}
+        80                                                   80
+.status {}                                                   .status {}
+    phase=Running                                            phase=Running
+    ## conditions [1]{type,status}                           ## conditions [1]{type,status}
+    Ready|True                                               Ready|True
+```
+
+`.spec {}` following the labels block already signals "metadata closed"; no dedent token is
+emitted. Token effect (o200k, real `encodeGeneric`, BEFORE verified lossless):
+
+| payload                | compact JSON | GCF before      | GCF after (candidate) | note                          |
+|------------------------|-------------:|----------------:|----------------------:|-------------------------------|
+| 2-record example above |          186 |  244 (−31.2%)   |    212 (−14.0%)       | recovers 13.1% of the wire    |
+| real 14-pod capture    |       18,262 | 19,514 (−6.9%)  | **18,194 (+0.4%)**    | loss → win; 96 explicit `;` closes across 1,215 lines |
+
+Implicit sibling-close removes ~99% of the dedent tokens the naive "one close per level"
+design would emit (which nearly cancels the whitespace saving — measured at only 4.9% recovered),
+so nearly the full indentation saving survives and pods crosses to a small win.
+
+## 7. Comprehension impact (open — must be measured, not assumed)
+
+Indentation is not only bytes; it is a **spatial hierarchy cue** (depth reads off the left
+margin; columns align), and this change trades it for markers plus an implicit close-stack the
+reader must track. That risk is largest on exactly the deeply-nested, irregular data where the
+token win lives — a genuine token-vs-comprehension tension. Direction is not obvious a priori
+(fewer whitespace tokens may also reduce stranded attention), so it is an empirical question.
+
+- **The headline result is not at stake.** The validated generic-comprehension result (100% on
+  frontier models; ties/beats JSON+TOON on small models) is on the **flat tabular** form. This
+  candidate touches only the **expanded/nested** path, whose comprehension has not been
+  separately validated. Existing claims do not regress; the new form's comprehension is simply
+  unmeasured.
+- **Eval to run before any version-boundary commit** (three-arm, so both the before→after delta
+  and any regression vs JSON are visible): arms = current-indented / candidate-delimited / plain
+  JSON; payloads = nested-irregular real data, depth-stratified; probes = retrieval at varying
+  nesting depth (e.g. `spec.containers[1].ports[0].containerPort` for a named record), where a
+  hierarchy-cue change would surface; models = non-reasoning small/open instruct models
+  (reasoning models ceiling out and hide the effect); hygiene = gate on format-miss/blank rate,
+  measure the gap not absolutes, report CIs honestly.
+- **Prior:** likely neutral on shallow nesting, a comprehension risk at depth. If the eval shows
+  that, the candidate stays gated behind it — token savings alone do not justify shipping a
+  nesting-signal change ("adopt on comprehension, not just tokens").
+
+## 8. Scope limits (what this does NOT fix)
 
 - **Small-count lists stay negative.** deployments (4 records) is still −7.6% de-indented,
   services (3) −1.2%. With almost no array to amortize header + per-item scaffolding across,
@@ -93,7 +158,7 @@ would misparse), so it is gated at a version boundary; flat-uniform tabular outp
   still decline the small/irregular ones. It reaffirms rather than overturns the guidance that
   GCF wants flat, uniform records (events, +13.9%, is the clean win here).
 
-## 7. Normative surface if pursued
+## 9. Normative surface if pursued
 
 §4.1 (indentation status + parsing algorithm), the `INDENT`-bearing grammar productions
 (§ grammar: `object-section`, `object-item`, `object-attachment`, `keyed-map-item`,
@@ -101,12 +166,13 @@ would misparse), so it is gated at a version boundary; flat-uniform tabular outp
 §16 conformance fixtures (expanded-mode round-trip under the new nesting signal), §19.3 history.
 Delta/session/streaming reuse the same nesting and would inherit the change unchanged.
 
-## 8. Recommendation
+## 10. Recommendation
 
 Log as a spec candidate on its own merits (hardens the weak axis; broad nested-payload benefit),
 decoupled from any single adoption target. If prototyped, follow the standard order
-(spec text → conformance fixtures → Go oracle → other SDKs) and re-run this harness plus a
-comprehension check on nested-uniform data before committing to a version boundary.
+(spec text → conformance fixtures → Go oracle → other SDKs), run the §7 comprehension eval, and
+re-run this token harness before committing to a version boundary. Do not ship on token savings
+alone.
 
 **Reproducibility:** capture = `kubectl get {pods,deployments,services,events,configmaps} -A -o json | jq '.items'`
 on a `kind` cluster with a small nginx/redis workload; bench = `encodeGeneric` vs compact
