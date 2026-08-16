@@ -63,7 +63,7 @@ Six official implementations, all MIT licensed, zero runtime dependencies:
 
 - **Go** ([pkg.go.dev](https://pkg.go.dev/github.com/blackwell-systems/gcf-go)) v1.7.1
 - **TypeScript** ([npm](https://www.npmjs.com/package/@blackwell-systems/gcf)) v2.6.1
-- **Python** ([PyPI](https://pypi.org/project/gcf-python/)) v2.7.0
+- **Python** ([PyPI](https://pypi.org/project/gcf-python/)) v2.7.1
 - **Rust** ([crates.io](https://crates.io/crates/gcf)) v3.0.1
 - **Swift** ([SPM](https://github.com/blackwell-systems/gcf-swift)) v2.7.1
 - **Kotlin** ([JitPack](https://jitpack.io/#blackwell-systems/gcf-kotlin)) v2.6.1

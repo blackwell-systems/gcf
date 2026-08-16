@@ -8,7 +8,7 @@ Six official implementations, all MIT licensed and zero runtime dependencies. Th
 |----------|---------|---------|----------|--------|
 | Go | `gcf-go` | `go get github.com/blackwell-systems/gcf-go@v1.7.1` | [pkg.go.dev](https://pkg.go.dev/github.com/blackwell-systems/gcf-go) | v1.7.1 · 281 · 1B+ RT |
 | TypeScript | `@blackwell-systems/gcf` | `npm install @blackwell-systems/gcf@2.6.1` | [npm](https://www.npmjs.com/package/@blackwell-systems/gcf) | v2.6.1 · 281 · 20M RT |
-| Python | `gcf-python` | `pip install gcf-python==2.7.0` | [PyPI](https://pypi.org/project/gcf-python/) | v2.7.0 · 281 · 10M RT |
+| Python | `gcf-python` | `pip install gcf-python==2.7.1` | [PyPI](https://pypi.org/project/gcf-python/) | v2.7.1 · 281 · 10M RT |
 | Rust | `gcf` | `cargo add gcf@3.0.1` | [crates.io](https://crates.io/crates/gcf) | v3.0.1 · 281 · 43B+ RT |
 | Swift | `GCF` | `.package(url: "https://github.com/blackwell-systems/gcf-swift", from: "2.7.1")` | [GitHub](https://github.com/blackwell-systems/gcf-swift) | v2.7.1 · 281 · 20M RT |
 | Kotlin | `gcf` | `implementation("com.github.blackwell-systems:gcf-kotlin:2.6.1")` | [JitPack](https://jitpack.io/#blackwell-systems/gcf-kotlin) | v2.6.1 · 281 · 10M RT |
