@@ -140,13 +140,14 @@ The integration is deliberately conservative for a security tool: a format chang
 
 [elasticsearch-mcp-server](https://github.com/cr7258/elasticsearch-mcp-server) is an MCP server for **Elasticsearch and OpenSearch**, maintained by [cr7258](https://github.com/cr7258). It exposes search, index, document, cluster, and alias operations to agents over stdio and HTTP transports. 303 stars.
 
-Search responses are a natural fit for GCF's generic profile: query hits, index listings, mappings, and aggregation buckets are arrays of uniform records that repeat the same field names on every row. GCF declares the keys once in a header and encodes values positionally, cutting the per-record key repetition JSON pays on every hit, which is exactly where the cost lives when feeding search results into an LLM.
+Search responses are a natural fit for GCF's generic profile: query hits, index listings, mappings, and aggregation buckets are arrays of uniform records that repeat the same field names on every row. GCF declares the keys once in a header and encodes values positionally, cutting the per-record key repetition JSON pays on every hit, which is exactly where the cost lives when feeding search results into an LLM. On the maintainer's benchmark, GCF runs **~39% fewer tokens than compact JSON (40% on search hits), losslessly**.
 
-The integration is wired as **response-formatting middleware**, and the maintainer added a dedicated GCF benchmark to the project.
+The integration is a **FastMCP response-formatting middleware** and is production-careful: only the model-facing text block is re-encoded, so `structuredContent` is preserved (output schemas still validate and non-model clients keep receiving JSON). Encoding is fail-safe: any error, including a value outside GCF's canonical `int64` domain (which GCF rejects rather than silently approximating), leaves the original JSON untouched, so a tool call is never dropped over formatting.
 
+- Opt-in via `RESPONSE_FORMAT=gcf`; default output is unchanged
 - Direct runtime dependency on `gcf-python`, pinned to `2.6.0` (a current release)
-- GCF applied as response middleware across the server's tool responses (`src/response_format.py`, `test_gcf_response_middleware.py`)
-- Maintainer added a GCF benchmark to the repo (`benchmarks/gcf_benchmark.py`)
+- **~39% fewer tokens than compact JSON** on representative responses; reproducible benchmark in-repo (`benchmarks/gcf_benchmark.py`)
+- Uses `gcf-python`'s `encode_generic` (generic profile), applied as FastMCP middleware (`src/response_format.py`, `test_gcf_response_middleware.py`)
 - Covers both Elasticsearch and OpenSearch
 
 ## Open Data Products SDK (Linux Foundation)
