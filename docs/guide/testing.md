@@ -20,7 +20,7 @@ The layers below are ordered from the contract outward.
 
 ### 2. Shared conformance fixtures (cross-language, byte-exact)
 
-The [`tests/conformance/`](https://github.com/blackwell-systems/gcf/tree/main/tests/conformance) directory holds **264 language-agnostic JSON fixtures** across 21 directories and 14 operations. Every SDK runs the same fixtures from the same directory:
+The [`tests/conformance/`](https://github.com/blackwell-systems/gcf/tree/main/tests/conformance) directory holds **281 language-agnostic JSON fixtures** across 22 directories and 16 operations. Every SDK runs the same fixtures from the same directory:
 
 - **Encode** fixtures require **byte-exact** output (both profiles). The generic profile additionally requires the deterministic input-order contract.
 - **Decode** fixtures require **structural equality** for the graph profile.

@@ -1,18 +1,18 @@
 # Implementations
 
-Six official implementations, all MIT licensed and zero runtime dependencies. The current spec v3.5.3 contract is defined by [279 conformance fixtures](https://github.com/blackwell-systems/gcf/tree/main/tests/conformance). All six implementations pass 279 with 43B+ combined round-trips verified.
+Six official implementations, all MIT licensed and zero runtime dependencies. The current spec v3.5.3 contract is defined by [281 conformance fixtures](https://github.com/blackwell-systems/gcf/tree/main/tests/conformance). All six implementations pass 281 with 43B+ combined round-trips verified.
 
 ## Official Implementations
 
 | Language | Package | Install | Registry | Status |
 |----------|---------|---------|----------|--------|
-| Go | `gcf-go` | `go get github.com/blackwell-systems/gcf-go@v1.7.0` | [pkg.go.dev](https://pkg.go.dev/github.com/blackwell-systems/gcf-go) | v1.7.0 · 279 · 1B+ RT |
-| TypeScript | `@blackwell-systems/gcf` | `npm install @blackwell-systems/gcf@2.6.0` | [npm](https://www.npmjs.com/package/@blackwell-systems/gcf) | v2.6.0 · 279 · 20M RT |
-| Python | `gcf-python` | `pip install gcf-python==2.6.0` | [PyPI](https://pypi.org/project/gcf-python/) | v2.6.0 · 279 · 10M RT |
-| Rust | `gcf` | `cargo add gcf@3.0.0` | [crates.io](https://crates.io/crates/gcf) | v3.0.0 · 279 · 43B+ RT |
-| Swift | `GCF` | `.package(url: "https://github.com/blackwell-systems/gcf-swift", from: "2.7.0")` | [GitHub](https://github.com/blackwell-systems/gcf-swift) | v2.7.0 · 279 · 20M RT |
-| Kotlin | `gcf` | `implementation("com.github.blackwell-systems:gcf-kotlin:2.6.0")` | [JitPack](https://jitpack.io/#blackwell-systems/gcf-kotlin) | v2.6.0 · 279 · 10M RT |
-| .NET | `BlackwellSystems.Gcf` | `dotnet add package BlackwellSystems.Gcf` | [NuGet](https://www.nuget.org/packages/BlackwellSystems.Gcf) | v0.2.0 · 279 · new |
+| Go | `gcf-go` | `go get github.com/blackwell-systems/gcf-go@v1.7.1` | [pkg.go.dev](https://pkg.go.dev/github.com/blackwell-systems/gcf-go) | v1.7.1 · 281 · 1B+ RT |
+| TypeScript | `@blackwell-systems/gcf` | `npm install @blackwell-systems/gcf@2.6.1` | [npm](https://www.npmjs.com/package/@blackwell-systems/gcf) | v2.6.1 · 281 · 20M RT |
+| Python | `gcf-python` | `pip install gcf-python==2.7.0` | [PyPI](https://pypi.org/project/gcf-python/) | v2.7.0 · 281 · 10M RT |
+| Rust | `gcf` | `cargo add gcf@3.0.1` | [crates.io](https://crates.io/crates/gcf) | v3.0.1 · 281 · 43B+ RT |
+| Swift | `GCF` | `.package(url: "https://github.com/blackwell-systems/gcf-swift", from: "2.7.1")` | [GitHub](https://github.com/blackwell-systems/gcf-swift) | v2.7.1 · 281 · 20M RT |
+| Kotlin | `gcf` | `implementation("com.github.blackwell-systems:gcf-kotlin:2.6.1")` | [JitPack](https://jitpack.io/#blackwell-systems/gcf-kotlin) | v2.6.1 · 281 · 10M RT |
+| .NET | `BlackwellSystems.Gcf` | `dotnet add package BlackwellSystems.Gcf` | [NuGet](https://www.nuget.org/packages/BlackwellSystems.Gcf) | v0.2.1 · 281 · new |
 
 All seven support both encoding profiles:
 
@@ -71,4 +71,4 @@ All implementations produce byte-for-byte identical output for the same input. T
 |----------|-----------|------------|--------|
 | | *Your implementation here* | | |
 
-Building an implementation? [See the contribution guide.](https://github.com/blackwell-systems/gcf/blob/main/CONTRIBUTING.md) Validate against the [279 conformance fixtures](https://github.com/blackwell-systems/gcf/tree/main/tests/conformance), then PR a link here.
+Building an implementation? [See the contribution guide.](https://github.com/blackwell-systems/gcf/blob/main/CONTRIBUTING.md) Validate against the [281 conformance fixtures](https://github.com/blackwell-systems/gcf/tree/main/tests/conformance), then PR a link here.

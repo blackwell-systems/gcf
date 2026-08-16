@@ -23,16 +23,16 @@ The 5 formats tested are proof points. The capability is universal: any format t
 
 ## Per-language verification
 
-Six language implementations, all passing the same 279 conformance fixtures:
+Six language implementations, all passing the same 281 conformance fixtures:
 
 | Language | Package | Conformance | Round-trip fuzz |
 |----------|---------|-------------|-----------------|
-| Rust | gcf | 264/264 | **43B+ multi-format** (definitive suite) |
-| Go | gcf-go | 264/264 | 1B+ (native Go fuzzing) |
-| TypeScript | @blackwell-systems/gcf | 264/264 | Conformance-based |
-| Python | gcf-python | 264/264 | Conformance-based |
-| Swift | gcf-swift | 264/264 | Conformance-based |
-| Kotlin | gcf-kotlin | 264/264 | Conformance-based |
+| Rust | gcf | 281/281 | **43B+ multi-format** (definitive suite) |
+| Go | gcf-go | 281/281 | 1B+ (native Go fuzzing) |
+| TypeScript | @blackwell-systems/gcf | 281/281 | Conformance-based |
+| Python | gcf-python | 281/281 | Conformance-based |
+| Swift | gcf-swift | 281/281 | Conformance-based |
+| Kotlin | gcf-kotlin | 281/281 | Conformance-based |
 
 ### Cross-language matrix
 
@@ -84,7 +84,7 @@ All tests use Rayon for parallel execution across all available cores. Progress 
 
 ## Conformance fixtures
 
-279 fixtures in [tests/conformance/](https://github.com/blackwell-systems/gcf/tree/main/tests/conformance) covering:
+281 fixtures in [tests/conformance/](https://github.com/blackwell-systems/gcf/tree/main/tests/conformance) covering:
 
 | Category | Count | What it tests |
 |----------|-------|---------------|
