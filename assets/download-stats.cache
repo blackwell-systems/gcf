@@ -1,9 +1,9 @@
-npm=164014
-npm_n8n=672
-npm_proxy=3689
-npm_treesitter=1201
-pypi=25553
-pypi_proxy=25844
+npm=166981
+npm_n8n=677
+npm_proxy=3848
+npm_treesitter=1360
+pypi=28313
+pypi_proxy=26613
 gh_go=27
 gh_proxy=266
 crates=451
