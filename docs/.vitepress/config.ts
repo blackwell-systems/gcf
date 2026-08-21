@@ -101,7 +101,7 @@ export default defineConfig({
     siteTitle: false,
     socialLinks: [
       { icon: 'github', link: 'https://github.com/blackwell-systems/gcf' },
-      { icon: 'linkedin', link: 'https://www.linkedin.com/in/daynablackwell/' },
+      { icon: 'linkedin', link: 'https://www.linkedin.com/in/dayna-blackwell/' },
     ],
     footer: {
       message: '100% comprehension. 71% fewer tokens. 2,500+ LLM evaluations.',
