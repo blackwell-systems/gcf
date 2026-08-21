@@ -150,6 +150,20 @@ The integration is a **FastMCP response-formatting middleware** and is productio
 - Uses `gcf-python`'s `encode_generic` (generic profile), applied as FastMCP middleware (`src/response_format.py`, `test_gcf_response_middleware.py`)
 - Covers both Elasticsearch and OpenSearch
 
+## Equibles
+
+[Equibles](https://github.com/daniel3303/Equibles) is a self-hosted, open-source financial data MCP server for AI agents, built by [Daniel Oliveira](https://github.com/daniel3303). It exposes 64 tools across SEC filings, XBRL financials, 13F institutional holdings, insider and congressional trades, short interest, FRED, and CFTC/CBOE data. 199 stars.
+
+Most Equibles results are tables (holdings, filings, trades, price histories): arrays of uniform records where the same columns repeat on every row. That is the shape GCF's generic profile is built for, declaring the column names once in a header and encoding values positionally instead of repeating keys on every record.
+
+The integration is curation-preserving. Equibles renders its tables through a single formatter, and the GCF path encodes the exact cells that formatter already produced, so the maintainer's comma-grouping, adaptive-decimal, and other formatting stay intact. It is opt-in and never-grow: `EQUIBLES_OUTPUT_FORMAT=gcf` uses GCF only when the wire is smaller than the markdown, and falls back to markdown otherwise.
+
+- **13-16% fewer tokens** (o200k) on the tools' own table shapes, losslessly
+- Opt-in via `EQUIBLES_OUTPUT_FORMAT=gcf`; default markdown output is unchanged
+- First adoption of the `BlackwellSystems.Gcf` .NET SDK
+- Co-developed and merged by the maintainer
+- Uses `BlackwellSystems.Gcf`'s generic profile, encoding the rendered table cells
+
 ## Open Data Products SDK (Linux Foundation)
 
 [Open Data Products SDK](https://opendataproducts.org/sdk/) is a Python toolkit and MCP server for working with data product standards under the Linux Foundation. It validates, generates, and publishes Open Data Product specifications.
