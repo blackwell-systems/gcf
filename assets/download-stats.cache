@@ -7,6 +7,6 @@ pypi_proxy=27385
 gh_go=27
 gh_proxy=266
 crates=478
-nuget=808
+nuget=864
 jetbrains=?
 vscode=136
