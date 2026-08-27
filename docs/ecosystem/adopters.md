@@ -12,6 +12,14 @@ GCF ships as an experimental data format, merged after 11 days and 4 review roun
 - Runtime detection with actionable error messages when the package is missing
 - Merged after thorough review by Google Chrome DevTools maintainers
 
+## Opera DevTools MCP
+
+[opera-devtools-mcp](https://github.com/operasoftware/opera-devtools-mcp) is [Opera Software](https://www.opera.com)'s DevTools MCP server, published under the GitHub-verified `operasoftware` organization. It exposes browser state (DOM, network, console, performance) to AI agents from Opera's Chromium-based DevTools, and shares the Chrome DevTools MCP lineage, carrying the same GCF integration.
+
+- `@blackwell-systems/gcf` referenced in `src/McpResponse.ts`, loaded as an optional experimental data format (same integration model as Chrome DevTools MCP)
+- Pinned to a current GCF release (v2.2.2) in Opera's own actively-maintained repository
+- Second browser vendor to ship GCF in its DevTools MCP server
+
 ## OmniRoute
 
 [OmniRoute](https://github.com/diegosouzapw/OmniRoute) is an AI gateway, registry, and proxy that sits between AI clients and model providers, built by [Diego Souza](https://github.com/diegosouzapw). MCP servers, A2A agents, REST/gRPC APIs: everything flows through it with centralized discovery, guardrails, rate limiting, auth, and observability. 43.9K stars.
@@ -164,6 +172,19 @@ The integration is curation-preserving. Equibles renders its tables through a si
 - Co-developed and merged by the maintainer
 - Uses `BlackwellSystems.Gcf`'s generic profile, encoding the rendered table cells
 
+## PerformanceMonitor
+
+[PerformanceMonitor](https://github.com/erikdarlingdata/PerformanceMonitor) is free, open-source SQL Server performance monitoring built by [Erik Darling](https://github.com/erikdarlingdata) (Darling Data): specialized collectors, real-time alerts, a graphical execution-plan viewer, and a built-in MCP server that exposes its collected data to an AI assistant for analysis. It replaces monitoring tools that charge thousands per server per year, supports SQL Server 2016–2025 / Azure SQL / AWS RDS, and nothing phones home. 481 stars.
+
+The Darling edition's MCP host gained an opt-in GCF output mode (`DARLING_OUTPUT_FORMAT=gcf`). Its read tools return arrays of uniform records (blocking pairs, wait stats, index bloat, query and I/O stats) where JSON repeats every field name on every row; GCF factors those into a single header. It is applied at one place, a single call-tool filter (`AddCallToolFilter`) that post-processes every tool result, so every tool is covered with no per-tool change. `BlackwellSystems.Gcf` (the .NET SDK) is a zero-dependency package.
+
+Merged after a deep maintainer review: Erik built his own harness and measured against the server's compact JSON on eight real MCP payloads captured from a live PostgreSQL target.
+
+- **29.7% fewer tokens than compact JSON** (`o200k_base`) across the eight-payload set, every result lossless
+- The most uniform data wins most: `get_pg_column_stats` **55.4%**, `get_pg_index_bloat` **54.7%**, `get_pg_predicate_stats` **53.0%**, down to **11.3%** on a text-dominated result
+- Conservative in both directions: a result is re-encoded only when the GCF wire is both smaller than the JSON and decodes back to it exactly (integers keep full precision; a non-integer a double cannot hold, or any result the wire would grow, stays JSON)
+- Second adoption of the `BlackwellSystems.Gcf` .NET SDK; the maintainer independently benchmarked and reviewed the encoder before merging
+
 ## Open Data Products SDK (Linux Foundation)
 
 [Open Data Products SDK](https://opendataproducts.org/sdk/) is a Python toolkit and MCP server for working with data product standards under the Linux Foundation. It validates, generates, and publishes Open Data Product specifications.
@@ -223,6 +244,25 @@ The [JSON to GCF Converter](https://raycast.com/blackwell-systems/json-to-gcf-co
 - Uses `@blackwell-systems/gcf` npm package
 - Approved by Raycast maintainers (Greptile 5/5 confidence score)
 
+## Axon Bridge
+
+[Axon Bridge](https://github.com/chaitanya-sharmaa/axon) is a drop-in OpenAI-compatible proxy with autonomous token compression and multi-provider routing (via LiteLLM), maintained by [chaitanya-sharmaa](https://github.com/chaitanya-sharmaa). It sits between AI clients and model providers and compresses payloads in flight.
+
+- GCF wired directly into the token-optimization path (`axon/services/token_optimizer.py`, `axon/services/bridge_service.py`)
+- `gcf-python` declared as a direct dependency in `pyproject.toml`
+- Benchmarked against other strategies in-repo (`examples/strategy_benchmark.py`, `examples/session_benchmark.py`)
+- Independent third-party adoption
+
+## neterse
+
+[neterse](https://github.com/pcDamasceno/neterse) produces minimum-token renderings of network CLI output for LLM agents, maintained by [pcDamasceno](https://github.com/pcDamasceno). It parses raw device output and re-encodes it in the smallest faithful representation for the model.
+
+- GCF is one of its output encoders (alongside TextFSM and TOON), selected per call by smallest faithful size
+- `gcf-python` declared as a direct dependency in `pyproject.toml`; used in `neterse/parsed.py`
+- Round-trip and spec coverage in tests (`tests/test_spec_formats.py`, `tests/test_reference_encoders.py`)
+- Extends the network-automation cluster ([NetClaw](#netclaw))
+- Independent third-party adoption
+
 ## Also in the wild
 
 Smaller projects and community tools where GCF shows up — packaged downstream, listed in registries, or carried into dependency trees by upstream tooling.
@@ -231,11 +271,6 @@ Smaller projects and community tools where GCF shows up — packaged downstream,
 
 - **[NUR (Nix User Repository)](https://github.com/nix-community/nur-combined)** — agent-lsp (GCF token-optimized output) packaged and installable across NixOS.
 - **[Codex plugin marketplaces](https://github.com/hashgraph-online/awesome-codex-plugins)** — the GCF Proxy plugin (wrap any MCP server, 71% token reduction) is listed across multiple Codex plugin registries.
-
-**Declared direct dependencies:** projects that name `gcf-python` as a direct, opt-in dependency. Both are token-compression tools for LLMs that reach for GCF as a component — GCF being picked up inside the niche it competes in.
-
-- **[Axon Bridge](https://github.com/chaitanya-sharmaa/axon)** — a drop-in OpenAI proxy with autonomous token compression and multi-provider routing (via LiteLLM). Pulls in `gcf-python` as part of its compression toolkit.
-- **[neterse](https://github.com/pcDamasceno/neterse)** — minimum-token renderings of network CLI output for LLM agents. Supports GCF as one of its output encoders (alongside TextFSM and TOON), selected per call by smallest faithful size. Extends the network-automation cluster ([NetClaw](#netclaw)).
 
 **Transitive reach** (GCF resolves into these projects' dependency trees via upstream tooling — present in the lockfile, not a declared direct dependency):
 
