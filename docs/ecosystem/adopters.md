@@ -265,7 +265,11 @@ The [JSON to GCF Converter](https://raycast.com/blackwell-systems/json-to-gcf-co
 
 ## Also in the wild
 
-Smaller projects and community tools where GCF shows up — packaged downstream, listed in registries, or carried into dependency trees by upstream tooling.
+Smaller projects and community tools where GCF shows up — declared as a direct dependency in small projects, packaged downstream, listed in registries, or carried into dependency trees by upstream tooling.
+
+**Direct adopters (small / early):**
+
+- **[TimeLens](https://github.com/rifen/timelens-mono)** — a cross-editor dev tool (VS Code + Neovim) that hovers integer durations in code and shows them as human-readable time. Declares `@blackwell-systems/gcf` as a direct dependency and emits GCF as the default output of its agent skill for token-efficient use in agentic loops (Pi, Antigravity, Claude Code), citing 50–90% token reduction vs JSON. Uses both the generic tabular profile (`encodeGeneric`) and the code-graph profile (symbols and edges). Independent third-party adoption.
 
 **Packaged & listed:**
 
