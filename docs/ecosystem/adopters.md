@@ -185,6 +185,17 @@ Merged after a deep maintainer review: Erik built his own harness and measured a
 - Conservative in both directions: a result is re-encoded only when the GCF wire is both smaller than the JSON and decodes back to it exactly (integers keep full precision; a non-integer a double cannot hold, or any result the wire would grow, stays JSON)
 - Second adoption of the `BlackwellSystems.Gcf` .NET SDK; the maintainer independently benchmarked and reviewed the encoder before merging
 
+## PerformanceStudio
+
+[PerformanceStudio](https://github.com/erikdarlingdata/PerformanceStudio) is a free, open-source SQL Server execution-plan analyzer by [Erik Darling](https://github.com/erikdarlingdata) (Darling Data): a cross-platform GUI + CLI with 30 analysis rules, missing-index detection, an SSMS extension, and a built-in MCP server for AI-assisted plan review. 236 stars. This is **Darling Data's second product to ship GCF** — after the same maintainer independently benchmarked and adopted it in [PerformanceMonitor](#performancemonitor), he carried it into a second tool.
+
+The embedded MCP server gained an opt-in GCF output mode (`PLANVIEWER_OUTPUT_FORMAT=gcf`). Its record-heavy tool results (Query Store top-N plan lists, plan/connection/statement listings) repeat every field name on every row in JSON; GCF factors them into a single header. Same integration shape as PerformanceMonitor: one call-tool filter registered once on the MCP host, covering every tool with no per-tool change. `BlackwellSystems.Gcf` (the .NET SDK) is pinned exact and has zero runtime dependencies.
+
+- **~29–31% fewer tokens than compact JSON** (`o200k`) on `get_query_store_top`, scaling with N (29.0% at top-10 → 31.5% at top-50), every round-trip verified lossless
+- Honest baseline: measured against *compact* JSON (no whitespace credit); against the tools' actual indented output the reduction is ~45%, and a metrics-only result lands nearer 36%
+- Never-grow, exact-decode guard: a result is re-encoded only when the GCF wire is smaller AND decodes back to the same value; integers parse to `long` (no float-rounding of ids/counts/durations), non-integers kept only if they survive as an exact double
+- Third adoption of the `BlackwellSystems.Gcf` .NET SDK, and the second in the Darling Data product line
+
 ## Open Data Products SDK (Linux Foundation)
 
 [Open Data Products SDK](https://opendataproducts.org/sdk/) is a Python toolkit and MCP server for working with data product standards under the Linux Foundation. It validates, generates, and publishes Open Data Product specifications.
