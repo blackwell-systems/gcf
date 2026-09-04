@@ -263,6 +263,18 @@ The [JSON to GCF Converter](https://raycast.com/blackwell-systems/json-to-gcf-co
 - Extends the network-automation cluster ([NetClaw](#netclaw))
 - Independent third-party adoption
 
+## vmcp
+
+[vmcp](https://github.com/hewimetall/vmcp) is an MCP tool gateway with a GraphQL surface, built in Rust by [hewimetall](https://github.com/hewimetall). It aggregates MCP servers and exposes them through a unified `/mcp` (GraphQL) and `/mcp-proxy` interface, and it also runs [agent-lsp](https://github.com/blackwell-systems/agent-lsp) as a code-intelligence backend.
+
+vmcp is the **first adoption of the GCF Rust SDK** (the `gcf` crate). It adds optional GCF output on two independent paths: the `query_graphql` envelope on `/mcp`, and upstream tool results on `/mcp-proxy`. Like OmniRoute and Lynkr, this is an infrastructure-layer integration: a gateway every request passes through, so encoding there benefits every downstream tool at once.
+
+- Opt-in via two runtime flags, `[gql].gcf` (env `VMCP_GQL__GCF`) and `[proxy].gcf` (env `VMCP_PROXY__GCF`); both default off
+- Encodes the GraphQL `data`/`errors` envelope and proxied tool results as GCF generic profile (pipe-tabular)
+- Fail-safe: any encode error falls back to JSON so the call still returns
+- Tool descriptions instruct models to read GCF natively rather than request JSON
+- Uses the `gcf` Rust crate (v3.x) via a dedicated `gcf_out.rs` encoder in `crates/vmcp-server`
+
 ## Also in the wild
 
 Smaller projects and community tools where GCF shows up — declared as a direct dependency in small projects, packaged downstream, listed in registries, or carried into dependency trees by upstream tooling.
