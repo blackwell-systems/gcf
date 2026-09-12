@@ -1,6 +1,6 @@
-# GCF v2.0 Conformance Suite
+# GCF Conformance Suite (v2 fixture format)
 
-This directory is the canonical conformance suite for `SPEC.md` v2.0. Implementations SHOULD recursively load JSON fixtures from this directory and dispatch each fixture using its explicit `operation` field.
+This directory is the canonical conformance suite for the current `SPEC.md`. Implementations SHOULD recursively load JSON fixtures from this directory and dispatch each fixture using its explicit `operation` field.
 
 The incompatible v1 fixtures are retained in `tests/conformance-v1/` for historical implementation migration. They MUST NOT be included in v2 conformance runs.
 
