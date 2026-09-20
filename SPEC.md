@@ -2,7 +2,7 @@
 
 ## Graph Compact Format: A Token-Optimized Wire Format for LLM Interactions
 
-**Version:** 3.5.3
+**Version:** 3.6.0
 
 **Date:** 2026-08-06
 
@@ -425,6 +425,12 @@ ref-line            = "@" id SP SP "# previously transmitted"
 delta-symbol-line   = kind SP qname
 delta-added-line    = node-line SP distance  ; graph delta `## added`: node line plus trailing distance (Section 10.1)
 delta-edge-line     = qname SP "->" SP qname SP edge-type
+loc-line            = "@" id SP loc-file SP line SP column [ SP end-line SP end-column ]
+loc-file            = quoted-string / 1*( %x21-7E )  ; bare form is printable non-whitespace ASCII; paths with whitespace use the quoted form (Section 2.4)
+line                = 1*DIGIT  ; 1-indexed
+column              = 1*DIGIT  ; 1-indexed
+end-line            = 1*DIGIT  ; 1-indexed
+end-column          = 1*DIGIT  ; 1-indexed
 id                  = 1*DIGIT
 distance            = 1*DIGIT
 target-id           = id
@@ -439,7 +445,7 @@ score               = [ "-" ] 1*DIGIT "." 2DIGIT
 provenance          = 1*( %x21-7E )  ; printable non-whitespace ASCII (graph profile constraint)
 edge-type           = 1*( %x21-7E )  ; printable non-whitespace ASCII (graph profile constraint)
 status              = "added" / "removed"
-group-name          = "targets" / "related" / "extended" / "edges"
+group-name          = "targets" / "related" / "extended" / "edges" / "loc"
                     / ( "distance_" 1*DIGIT )
                     / "removed" / "added" / "edges_removed" / "edges_added"
                     / bare-key
@@ -483,7 +489,7 @@ Indentation is normative and carries structure.
 
 ## 5. Node Lines (Graph Profile)
 
-*Sections 5, 6, and 6a define the graph profile. Implementations that only support the generic profile (Section 7) may skip these sections. The two profiles share the common scalar grammar (Section 2), key grammar (Section 2a), and header (Section 3).*
+*Sections 5, 6, 6a, and 6b define the graph profile. Implementations that only support the generic profile (Section 7) may skip these sections. The two profiles share the common scalar grammar (Section 2), key grammar (Section 2a), and header (Section 3).*
 
 ```
 @{id} {kind} {qualified_name} {score} {provenance}
@@ -553,6 +559,27 @@ Group headers partition the payload into semantic sections. The group a node app
 | `distance_N` | N | Explicit distance for N > 2 |
 
 Group headers eliminate per-node distance fields. One header replaces N repeated fields. The `[N]` suffix on the edges header provides an explicit count, enabling LLMs to verify edge totals without scanning.
+
+## 6b. Location Lines (Graph Profile)
+
+```
+## loc [N]
+@{id} {file} {line} {column} [{end_line} {end_column}]
+```
+
+The optional `loc` section carries source positions for symbols declared earlier in the payload. It lets a graph payload answer *where* a symbol is, for navigation and editing, complementing the node lines (*what*) and edge lines (*how related*). A payload MAY omit the section entirely; its absence means no positions are provided, and a payload without it is byte-identical to one produced before this section existed. Existing decoders that do not recognize the section skip it as an unknown group header.
+
+- **id**: References a symbol `@{id}` declared earlier in the payload, using the same referencing rule as edge lines (Section 6). Encoders MUST NOT emit a `loc` line for an undeclared id; decoders MUST reject one.
+- **file**: Source file path. A bare path is printable non-whitespace ASCII; a path containing whitespace uses the quoted-string form (Section 2.4).
+- **line**, **column**: Position of the symbol's definition. Both are **1-indexed** (first line is `1`, first column is `1`). This is a MUST: the wire convention is fixed so consumers reason about positions uniformly regardless of a producer's internal representation, which is often 0-indexed (for example LSP).
+- **end_line**, **end_column**: Optional end of the symbol's range (1-indexed, same rules). They are emitted as a pair or not at all: a `loc` line carries either two trailing integers (`line column`) or four (`line column end_line end_column`).
+- **[N]**: Optional count of `loc` lines in the section, as with `## edges [N]`.
+
+**Positions are not identity.** A `loc` line carries data *about* a symbol; it never defines or changes symbol identity (Section 9.1) and never participates in `pack_root` (Section 10.2). This is deliberate: line and column are the most volatile attributes a symbol has, since any edit above a symbol shifts them, so folding them into identity or the content hash would churn session deduplication and inflate deltas for symbols that did not semantically change.
+
+**Session and delta behavior.** Because position is non-identity, a symbol may be deduplicated (delivered as a bare reference, Section 9.2) while its position has changed since it was last sent. When a consumer needs current positions, the producer MUST emit a `loc` line with the current position for every referenced symbol whose position is required, including symbols delivered as bare references in that call. A delta payload (Section 10) MAY include a `loc` section carrying updated positions; because positions are excluded from `pack_root`, a position change alone does not place a symbol in `## added`.
+
+**Streaming.** In streaming mode (Section 8), the `loc` section, when present, follows the node and edge sections and precedes the `##!` summary trailer; its `[N]` count MAY be deferred as `[?]` and reconciled in the trailer, consistent with other deferred counts.
 
 ## 7. Generic Profile
 
@@ -1310,7 +1337,7 @@ A bare `@{id}` followed by `# previously transmitted` is a reference to a symbol
 
 ### 9.1 Symbol identity
 
-Symbol identity within a session is defined by the pair `(kind, qualified_name)`. Changes to `score`, `provenance`, or `distance` do not create a new symbol identity but may require retransmission or a delta update if the consumer needs the updated values.
+Symbol identity within a session is defined by the pair `(kind, qualified_name)`. Changes to `score`, `provenance`, `distance`, or source position (Section 6b) do not create a new symbol identity but may require retransmission or a delta update if the consumer needs the updated values.
 
 ### 9.2 Session ID lifecycle
 
@@ -1397,7 +1424,7 @@ Algorithm `gcf-pack-root-v1`:
    S<TAB>kind<TAB>qualified_name<TAB>score<TAB>provenance<TAB>distance<LF>
    ```
 
-   Where `score` is formatted using the canonical number rules (Section 2.3.1) and `distance` is the decimal integer.
+   Where `score` is formatted using the canonical number rules (Section 2.3.1) and `distance` is the decimal integer. Source position (Section 6b) is intentionally excluded from this record: positions are non-identity data (Section 9.1), so a symbol that only moved lines yields the same `pack_root` and does not appear as changed in a delta.
 
 3. Build one canonical record for each edge:
 
@@ -1883,6 +1910,8 @@ Current status: **Stable** (v3.5.3 designated 2026-08-14; v3.5.2 2026-08-10; v3.
 This specification (v3.0) supersedes v2.0 and adds inline object schemas, positional inline attachment bodies, shared array attachment schemas, and expanded quoting protections. The graph profile is unchanged.
 
 Since v3.0 the specification has grown additively only (Stable: no breaking changes): **v3.1** made the graph header `tool` field optional; **v3.2** added nested-object flattening (`>` path columns); **v3.3** added delta encoding for the generic profile (Section 10a), with the `@`-marked identity column and the non-normative producer re-anchor guidance (Section 10a.8); **v3.4** added an optional labeled form for the graph streaming trailer's `counts` field (Section 8.4.1), a producer-side comprehension aid whose default positional form is unchanged. Every extension through v3.4 is backward-compatible; a v3.0 decoder ignores what it does not recognize.
+
+**v3.6.0** adds an optional location section to the graph profile (Section 6b): a `## loc` group whose `@{id} {file} {line} {column} [end_line end_column]` lines carry 1-indexed source positions for symbols declared earlier in the payload, letting a graph result convey where a symbol is (for navigation and editing) alongside what it is (node lines) and how it relates (edge lines). Positions are non-identity data: they do not affect symbol identity (Section 9.1) and are excluded from `pack_root` (Section 10.2), so a symbol that only moved lines yields the same root and does not appear in a delta's `## added`. The section is optional and additive; a payload without it is byte-identical to prior output and a pre-v3.6 decoder skips the unrecognized group. Backward-compatible under the Stable lifecycle.
 
 **v3.4.1** added a trailing `distance` field to the graph delta `## added` line (Section 10.1), so a consumer can reconstruct the new snapshot and verify `new_root` (`pack_root` includes distance; Sections 10.2, 10.4). A delta-only line-form correction.
 
