@@ -1,0 +1,47 @@
+Backend: openai (mistralai/mistral-nemo) | model: mistralai/mistral-nemo | runs/cell: 3
+
+=== fixture large (500 symbols, 200 edges) ===
+  arm A    tokens(est) 11098
+  arm B    tokens(est) 11096
+  arm C    tokens(est) 11096
+  arm ADJ  tokens(est) 15625
+  arm JSON tokens(est) 20223
+  A    fwd_calls    0/3  e.g.="DeleteHandler calls directly:"
+  B    fwd_calls    0/3  e.g.="@166, @169, @172, @175, @186, @190, @193, @196, @205, @"
+  C    fwd_calls    0/3  e.g.="@166"
+  ADJ  fwd_calls    2/3  e.g.="DeleteHandler calls directly: - UpdateResult - MergeHan"
+  JSON fwd_calls    3/3  e.g.="DeleteHandler directly calls the following symbols: - U"
+  REL  fwd_calls    0/3  e.g.="@10"
+  A    bwd_callers  0/3  e.g.="@0"
+  B    bwd_callers  0/3  e.g.="@0"
+  C    bwd_callers  0/3  e.g.="@0"
+  ADJ  bwd_callers  0/3  e.g.="@0"
+  JSON bwd_callers  0/3  e.g.="HandleResponse, ProcessOptions"
+  REL  bwd_callers  0/3  e.g.="None"
+  A    shared_out   0/3  e.g.="Result.Merge"
+  B    shared_out   0/3  e.g.="Result.Validate"
+  C    shared_out   0/3  e.g.="Result, ValidateResult"
+  ADJ  shared_out   0/3  e.g.="@4, @5, @6, @7, @8, @9, @10, @11, @12, @13, @14, @15, @"
+  JSON shared_out   1/3  e.g.="- UpdateService - UpdateStore - UpdateClient"
+  REL  shared_out   0/3  e.g.="UpdateResult"
+  A    shared_in    0/3  e.g.="@124, @126, @168, @184, @204, @228, @244, @264, @288, @"
+  B    shared_in    0/3  e.g.="@124"
+  C    shared_in    0/3  e.g.="@124, @126, @128, @130, @132, @134, @136, @138, @140, @"
+  ADJ  shared_in    0/3  e.g.="CreateOptions, UpdateHandler"
+  JSON shared_in    3/3  e.g.="- Update - DeleteHandler"
+  REL  shared_in    1/3  e.g.="UpdateResult"
+
+=== EDGE PILOT SUMMARY (mistralai/mistral-nemo) ===
+arm    accuracy
+A           0%   (0/12)
+B           0%   (0/12)
+C           0%   (0/12)
+ADJ        17%   (2/12)
+JSON       58%   (7/12)
+REL         8%   (1/12)
+
+by query type (correct/total):
+  fwd_calls:  A=0/3  B=0/3  C=0/3  ADJ=2/3  JSON=3/3  REL=0/3
+  bwd_callers:  A=0/3  B=0/3  C=0/3  ADJ=0/3  JSON=0/3  REL=0/3
+  shared_out:  A=0/3  B=0/3  C=0/3  ADJ=0/3  JSON=1/3  REL=0/3
+  shared_in:  A=0/3  B=0/3  C=0/3  ADJ=0/3  JSON=3/3  REL=1/3

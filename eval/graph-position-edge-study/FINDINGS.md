@@ -128,6 +128,31 @@ At 500 symbols the finding holds and sharpens, with one refinement:
 - **The shared-node query is hard for everyone at 500** (even JSON only 14/24) — a
   multi-neighbor node in a large payload is the stressor; JSON still best.
 
+### REL validation (500-symbol, direction-explicit `## rel` arm, 8 models x 3 runs)
+
+The edge-presentation proposal predicted a **scoped named-SVO** section (`## rel`,
+`{source_qname} {type} {target_qname}`, scoped to the probe node's incident edges) would be
+*the* robust form. Added as a 6th arm and run at 500 symbols. Totals /96 (8 models x 4
+queries x 3 runs):
+
+| Arm | A | B | C | ADJ | REL | JSON |
+|---|--:|--:|--:|--:|--:|--:|
+| /96 | 14 | 12 | 14 | 39 | **66** | **77** |
+
+- **REL is strong and beats whole-graph adjacency decisively** (66 vs 39) and the compact
+  syntaxes (12-14). On some capable models it rescued the query that beat everything else
+  (gpt-4o-mini `shared_out` at 500: JSON 0/3, ADJ 0/3, **REL 3/3**).
+- **REL did NOT beat JSON (66 vs 77). The proposal's specific bet is not confirmed.** Two
+  causes in the data: (1) REL still carried the full 500-node section with the small `## rel`
+  block appended, so on the weakest models the block was lost (llama-3.1-8b REL 4/12,
+  mistral-nemo 1/12, where JSON did better); (2) explicit *labeled* source/target (JSON's
+  `{source,target,type}`) reads more reliably than bare SVO lines for some models.
+- **Corrected direction for the fix:** direction-explicit is confirmed the answer, but lead
+  with **explicit labeled source/target (JSON-shape)**, the most robust form measured. A
+  *fully*-scoped neighborhood payload (trim nodes AND edges, not full-graph + scoped rel) is
+  the untested next hypothesis that might beat JSON; do not ship `## rel` as drafted on this
+  evidence. Logs: `results/relval-edge-probe-*.log`.
+
 ### Conclusions (edge direction)
 
 1. **Direction-explicit presentation beats compact edge lines at every scale** (20 to 500
@@ -146,10 +171,12 @@ At 500 symbols the finding holds and sharpens, with one refinement:
    compact forms even at 72B** (all ~3/6) and need presentation regardless.
 5. **Do not flip the edge arrow** (breaking, and it does not help). The actionable, additive
    fix is a direction-explicit rendering for direction-heavy tools (`find_callers`,
-   `blast_radius`) and weak consumers — explicit source/target, or a targeted adjacency for
-   the queried neighborhood (not a whole-graph adjacency dump, which does not scale to 500) —
-   keeping compact `## edges` as the default. Its own spec proposal + eval, separate from
-   positions.
+   `blast_radius`) and weak consumers, keeping compact `## edges` as the default. The REL
+   validation refined *which* form: **lead with explicit labeled source/target (JSON-shape),
+   the most robust at 500** (77/96). Scoped named-SVO (`## rel`, 66/96) beats adjacency and
+   rescues some hard cases but did not beat JSON, partly because it retained the full node
+   section; a *fully*-scoped neighborhood payload is the untested next step. Its own spec
+   proposal + one more eval, separate from positions.
 
 ### Caveat
 

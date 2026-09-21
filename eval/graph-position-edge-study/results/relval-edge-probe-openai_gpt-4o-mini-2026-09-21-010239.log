@@ -1,0 +1,47 @@
+Backend: openai (openai/gpt-4o-mini) | model: openai/gpt-4o-mini | runs/cell: 3
+
+=== fixture large (500 symbols, 200 edges) ===
+  arm A    tokens(est) 11098
+  arm B    tokens(est) 11096
+  arm C    tokens(est) 11096
+  arm ADJ  tokens(est) 15625
+  arm JSON tokens(est) 20223
+  A    fwd_calls    0/3  e.g.="DeleteHandler calls directly: - Clear - Validate - Dele"
+  B    fwd_calls    0/3  e.g.="DeleteHandler calls directly: - ClearFactory - DeleteHa"
+  C    fwd_calls    0/3  e.g.="DeleteHandler calls directly: - ClearFactory - UpdateHa"
+  ADJ  fwd_calls    3/3  e.g.="DeleteHandler calls UpdateResult directly."
+  JSON fwd_calls    3/3  e.g.="DeleteHandler calls directly:  1. UpdateResult"
+  REL  fwd_calls    3/3  e.g.="DeleteHandler calls directly:  1. UpdateResult"
+  A    bwd_callers  3/3  e.g.="The symbols that call `HandleRequest` directly are: - `"
+  B    bwd_callers  3/3  e.g.="The symbols that call `HandleRequest` directly are:  - "
+  C    bwd_callers  3/3  e.g.="The symbols that call `HandleRequest` directly are:  - "
+  ADJ  bwd_callers  3/3  e.g.="The symbols that call `HandleRequest` directly are:  - "
+  JSON bwd_callers  3/3  e.g.="- ProcessResponse"
+  REL  bwd_callers  3/3  e.g.="The symbols that call `HandleRequest` directly are:  1."
+  A    shared_out   0/3  e.g.="- HandleRequest - Validate - ResetClient - ClearFactory"
+  B    shared_out   0/3  e.g.="- ResetClient - FlushClient - ValidateResult - NotifyAd"
+  C    shared_out   0/3  e.g.="- ResetClient - Validate - FlushClient - CreateResult -"
+  ADJ  shared_out   0/3  e.g.="- CreateOptions - DeleteHandler"
+  JSON shared_out   0/3  e.g.="- CreateOptions - DeleteHandler"
+  REL  shared_out   3/3  e.g.="CreateOptions"
+  A    shared_in    1/3  e.g.="- HandleRequest - Validate - UpdateHandler - CreateResu"
+  B    shared_in    0/3  e.g.="- UpdateResult - Validate - ProcessResponse - Check - C"
+  C    shared_in    1/3  e.g.="- UpdateResult - Validate - ProcessResponse - Check - D"
+  ADJ  shared_in    0/3  e.g.="- CreateOptions - DeleteHandler"
+  JSON shared_in    3/3  e.g.="- DeleteHandler - CheckStore - UpdateHandler"
+  REL  shared_in    3/3  e.g.="- DeleteHandler"
+
+=== EDGE PILOT SUMMARY (openai/gpt-4o-mini) ===
+arm    accuracy
+A          33%   (4/12)
+B          25%   (3/12)
+C          33%   (4/12)
+ADJ        50%   (6/12)
+JSON       75%   (9/12)
+REL       100%   (12/12)
+
+by query type (correct/total):
+  fwd_calls:  A=0/3  B=0/3  C=0/3  ADJ=3/3  JSON=3/3  REL=3/3
+  bwd_callers:  A=3/3  B=3/3  C=3/3  ADJ=3/3  JSON=3/3  REL=3/3
+  shared_out:  A=0/3  B=0/3  C=0/3  ADJ=0/3  JSON=0/3  REL=3/3
+  shared_in:  A=1/3  B=0/3  C=1/3  ADJ=0/3  JSON=3/3  REL=3/3

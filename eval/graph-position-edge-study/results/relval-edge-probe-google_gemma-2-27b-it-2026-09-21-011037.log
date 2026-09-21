@@ -1,0 +1,47 @@
+Backend: openai (google/gemma-2-27b-it) | model: google/gemma-2-27b-it | runs/cell: 3
+
+=== fixture large (500 symbols, 200 edges) ===
+  arm A    tokens(est) 11098
+  arm B    tokens(est) 11096
+  arm C    tokens(est) 11096
+  arm ADJ  tokens(est) 15625
+  arm JSON tokens(est) 20223
+  A    fwd_calls    0/3  e.g.="- CheckResponse - GetResponse"
+  B    fwd_calls    0/3  e.g.="DeleteOptions, SetRequest, ParseResponse"
+  C    fwd_calls    0/3  e.g.="DeleteHandler calls:  * DeleteOptions * DeleteResolver"
+  ADJ  fwd_calls    0/3  e.g.="DeleteResolver  GetResolver"
+  JSON fwd_calls    0/3  e.g.="DeleteHandler"
+  REL  fwd_calls    3/3  e.g.="UpdateResult"
+  A    bwd_callers  1/3  e.g.="github.com/org/project/internal/auth.Factory  github.co"
+  B    bwd_callers  3/3  e.g.="github.com/org/project/internal/auth.Factory github.com"
+  C    bwd_callers  1/3  e.g.="github.com/org/project/internal/auth.Factory github.com"
+  ADJ  bwd_callers  0/3  e.g.="HandleRequest is called directly by:  * OpenHandler * P"
+  JSON bwd_callers  3/3  e.g.="ProcessResponse,  LookupService"
+  REL  bwd_callers  3/3  e.g.="ProcessResponse"
+  A    shared_out   0/3  e.g.="Config, Service, Options"
+  B    shared_out   0/3  e.g.="Config, Provider"
+  C    shared_out   0/3  e.g.="UpdateProvider"
+  ADJ  shared_out   0/3  e.g.="DeleteResolver"
+  JSON shared_out   2/3  e.g.="Merge, Flush, CreateOptions, DecodeResolver"
+  REL  shared_out   0/3  e.g.="DeleteHandler"
+  A    shared_in    1/3  e.g.="github.com/org/project/internal/config.UpdateResult git"
+  B    shared_in    0/3  e.g.="github.com/org/project/internal/config.UpdateResult git"
+  C    shared_in    0/3  e.g.="@4, @24, @48, @109, @145, @181, @217, @253, @289, @325,"
+  ADJ  shared_in    0/3  e.g.="UpdateProvider DeleteResolver"
+  JSON shared_in    2/3  e.g.="HandleRequest, DeleteHandler, Get, SetService, CheckSto"
+  REL  shared_in    3/3  e.g.="DeleteHandler"
+
+=== EDGE PILOT SUMMARY (google/gemma-2-27b-it) ===
+arm    accuracy
+A          17%   (2/12)
+B          25%   (3/12)
+C           8%   (1/12)
+ADJ         0%   (0/12)
+JSON       58%   (7/12)
+REL        75%   (9/12)
+
+by query type (correct/total):
+  fwd_calls:  A=0/3  B=0/3  C=0/3  ADJ=0/3  JSON=0/3  REL=3/3
+  bwd_callers:  A=1/3  B=3/3  C=1/3  ADJ=0/3  JSON=3/3  REL=3/3
+  shared_out:  A=0/3  B=0/3  C=0/3  ADJ=0/3  JSON=2/3  REL=0/3
+  shared_in:  A=1/3  B=0/3  C=0/3  ADJ=0/3  JSON=2/3  REL=3/3
