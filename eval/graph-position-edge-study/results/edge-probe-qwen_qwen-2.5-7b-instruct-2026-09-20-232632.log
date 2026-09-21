@@ -1,0 +1,69 @@
+Backend: openai (qwen/qwen-2.5-7b-instruct) | model: qwen/qwen-2.5-7b-instruct | runs/cell: 3
+
+=== fixture small (20 symbols, 12 edges) ===
+  arm A    tokens(est) 496
+  arm B    tokens(est) 495
+  arm C    tokens(est) 495
+  arm ADJ  tokens(est) 731
+  arm JSON tokens(est) 912
+  A    fwd_calls    0/3  e.g.="Based on the provided code context, `DeleteHandler` doe"
+  B    fwd_calls    0/3  e.g.="DeleteHandler does not call any symbols directly based "
+  C    fwd_calls    1/3  e.g.="DeleteHandler does not call any symbols directly based "
+  ADJ  fwd_calls    3/3  e.g.="UpdateResult"
+  JSON fwd_calls    3/3  e.g.="UpdateResult"
+  A    bwd_callers  0/3  e.g.="EncodeProvider is called directly by the following symb"
+  B    bwd_callers  0/3  e.g.="EncodeProvider is called directly by the following symb"
+  C    bwd_callers  0/3  e.g.="@13"
+  ADJ  bwd_callers  0/3  e.g.="EncodeResolver"
+  JSON bwd_callers  3/3  e.g.="DecodeResolver"
+  A    shared_out   0/3  e.g.="ProcessResponse points to the following symbols:  - Con"
+  B    shared_out   0/3  e.g.="ProcessResponse points to: - DeleteHandler"
+  C    shared_out   0/3  e.g.="ProcessResponse points to: - UpdateResult"
+  ADJ  shared_out   3/3  e.g.="HandleRequest"
+  JSON shared_out   3/3  e.g.="HandleRequest"
+  A    shared_in    0/3  e.g.="github.com/org/project/internal/server.ProcessResponse"
+  B    shared_in    0/3  e.g.="@1"
+  C    shared_in    0/3  e.g.="@5"
+  ADJ  shared_in    0/3  e.g.="HandleRequest"
+  JSON shared_in    0/3  e.g.="Validate, HandleRequest"
+
+=== fixture med (50 symbols, 30 edges) ===
+  arm A    tokens(est) 1174
+  arm B    tokens(est) 1172
+  arm C    tokens(est) 1172
+  arm ADJ  tokens(est) 1757
+  arm JSON tokens(est) 2273
+  A    fwd_calls    0/3  e.g.="Based on the provided context, FlushStore does not call"
+  B    fwd_calls    0/3  e.g.="Based on the provided context, FlushStore does not dire"
+  C    fwd_calls    0/3  e.g.="FlushStore does not call any other symbol directly acco"
+  ADJ  fwd_calls    3/3  e.g.="FlushStore calls Write directly."
+  JSON fwd_calls    3/3  e.g.="FlushStore calls directly the symbol Write."
+  A    bwd_callers  3/3  e.g.="ProcessResponse"
+  B    bwd_callers  3/3  e.g.="ProcessResponse"
+  C    bwd_callers  2/3  e.g.="DecodeResolver EncodeProvider FormatBuilder SortOptions"
+  ADJ  bwd_callers  3/3  e.g.="ProcessResponse"
+  JSON bwd_callers  3/3  e.g.="ProcessResponse"
+  A    shared_out   0/3  e.g.="github.com/org/project/internal/store.Config Validate g"
+  B    shared_out   0/3  e.g.="github.com/org/project/internal/store.Config Validate"
+  C    shared_out   2/3  e.g.="github.com/org/project/internal/server.ProcessResponse "
+  ADJ  shared_out   3/3  e.g.="HandleRequest"
+  JSON shared_out   3/3  e.g.="HandleRequest"
+  A    shared_in    0/3  e.g.="github.com/org/project/internal/auth.HandleRequest"
+  B    shared_in    0/3  e.g.="@1"
+  C    shared_in    0/3  e.g.="@1"
+  ADJ  shared_in    0/3  e.g.="HandleRequest"
+  JSON shared_in    0/3  e.g.="HandleRequest"
+
+=== EDGE PILOT SUMMARY (qwen/qwen-2.5-7b-instruct) ===
+arm    accuracy
+A          12%   (3/24)
+B          12%   (3/24)
+C          21%   (5/24)
+ADJ        62%   (15/24)
+JSON       75%   (18/24)
+
+by query type (correct/total):
+  fwd_calls:  A=0/6  B=0/6  C=1/6  ADJ=6/6  JSON=6/6
+  bwd_callers:  A=3/6  B=3/6  C=2/6  ADJ=3/6  JSON=6/6
+  shared_out:  A=0/6  B=0/6  C=2/6  ADJ=6/6  JSON=6/6
+  shared_in:  A=0/6  B=0/6  C=0/6  ADJ=0/6  JSON=0/6

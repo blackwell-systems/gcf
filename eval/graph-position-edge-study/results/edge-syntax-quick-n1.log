@@ -1,0 +1,18 @@
+[A target<source] openai/gpt-4o-mini: 3/4  (calls_direct:P direction:P ts_references:F ts_referenced_by:P)
+[A target<source] google/gemini-2.5-flash-lite: 2/4  (calls_direct:P direction:P ts_references:F ts_referenced_by:F)
+[A target<source] qwen/qwen-2.5-7b-instruct: 2/4  (calls_direct:P direction:P ts_references:F ts_referenced_by:F)
+[A target<source] meta-llama/llama-3.1-8b-instruct: 3/4  (calls_direct:P direction:P ts_references:P ts_referenced_by:F)
+[B source>target] openai/gpt-4o-mini: 4/4  (calls_direct:P direction:P ts_references:P ts_referenced_by:P)
+[B source>target] google/gemini-2.5-flash-lite: 3/4  (calls_direct:P direction:P ts_references:P ts_referenced_by:F)
+[B source>target] qwen/qwen-2.5-7b-instruct: 3/4  (calls_direct:P direction:P ts_references:P ts_referenced_by:F)
+[B source>target] meta-llama/llama-3.1-8b-instruct: 3/4  (calls_direct:P direction:P ts_references:P ts_referenced_by:F)
+[C natural SVO] openai/gpt-4o-mini: 4/4  (calls_direct:P direction:P ts_references:P ts_referenced_by:P)
+[C natural SVO] google/gemini-2.5-flash-lite: 2/4  (calls_direct:P direction:P ts_references:F ts_referenced_by:F)
+[C natural SVO] qwen/qwen-2.5-7b-instruct: 2/4  (calls_direct:P direction:P ts_references:F ts_referenced_by:F)
+[C natural SVO] meta-llama/llama-3.1-8b-instruct: 2/4  (calls_direct:F direction:P ts_references:P ts_referenced_by:F)
+
+=== SUMMARY (accuracy by edge syntax) ===
+A target<source    10/16 (63%)
+B source>target    13/16 (81%)
+C natural SVO      10/16 (63%)
+DONE

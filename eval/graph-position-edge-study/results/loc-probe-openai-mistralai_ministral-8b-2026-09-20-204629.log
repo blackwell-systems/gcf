@@ -1,0 +1,25 @@
+Log: results/comprehension/loc-probe-openai-mistralai_ministral-8b-2026-09-20-204629.log
+Backend: openai (mistralai/ministral-8b)
+Fixture: 500 symbols, 200 edges | absent probe: github.com/org/project/internal/store.Provider.Collect
+  json-loc    tokens (est): 43933
+  gcf-loc     tokens (est): 15909
+  gcf-inline  tokens (est): 15310
+
+  SKIP symbol_location  gcf-inline  error: OpenAI API 404: {"error":{"message":"No endpoints found for mistralai/ministral-8b.","code":404},"user_id":"user_3FVRbszRx5Ok3ubXQPqWpj7pj5j"}
+  SKIP symbol_location  gcf-loc     error: OpenAI API 404: {"error":{"message":"No endpoints found for mistralai/ministral-8b.","code":404},"user_id":"user_3FVRbszRx5Ok3ubXQPqWpj7pj5j"}
+  SKIP symbol_location  json-loc    error: OpenAI API 404: {"error":{"message":"No endpoints found for mistralai/ministral-8b.","code":404},"user_id":"user_3FVRbszRx5Ok3ubXQPqWpj7pj5j"}
+  SKIP symbol_location2 gcf-inline  error: OpenAI API 404: {"error":{"message":"No endpoints found for mistralai/ministral-8b.","code":404},"user_id":"user_3FVRbszRx5Ok3ubXQPqWpj7pj5j"}
+  SKIP symbol_location2 gcf-loc     error: OpenAI API 404: {"error":{"message":"No endpoints found for mistralai/ministral-8b.","code":404},"user_id":"user_3FVRbszRx5Ok3ubXQPqWpj7pj5j"}
+  SKIP symbol_location2 json-loc    error: OpenAI API 404: {"error":{"message":"No endpoints found for mistralai/ministral-8b.","code":404},"user_id":"user_3FVRbszRx5Ok3ubXQPqWpj7pj5j"}
+  SKIP edit_target      gcf-inline  error: OpenAI API 404: {"error":{"message":"No endpoints found for mistralai/ministral-8b.","code":404},"user_id":"user_3FVRbszRx5Ok3ubXQPqWpj7pj5j"}
+  SKIP edit_target      gcf-loc     error: OpenAI API 404: {"error":{"message":"No endpoints found for mistralai/ministral-8b.","code":404},"user_id":"user_3FVRbszRx5Ok3ubXQPqWpj7pj5j"}
+  SKIP edit_target      json-loc    error: OpenAI API 404: {"error":{"message":"No endpoints found for mistralai/ministral-8b.","code":404},"user_id":"user_3FVRbszRx5Ok3ubXQPqWpj7pj5j"}
+  SKIP absent_location  gcf-inline  error: OpenAI API 404: {"error":{"message":"No endpoints found for mistralai/ministral-8b.","code":404},"user_id":"user_3FVRbszRx5Ok3ubXQPqWpj7pj5j"}
+  SKIP absent_location  json-loc    error: OpenAI API 404: {"error":{"message":"No endpoints found for mistralai/ministral-8b.","code":404},"user_id":"user_3FVRbszRx5Ok3ubXQPqWpj7pj5j"}
+  SKIP absent_location  gcf-loc     error: OpenAI API 404: {"error":{"message":"No endpoints found for mistralai/ministral-8b.","code":404},"user_id":"user_3FVRbszRx5Ok3ubXQPqWpj7pj5j"}
+
+=== Loc probe summary (openai (mistralai/ministral-8b)) ===
+Arm          Accuracy   Est Tokens   buckets correct/wrong/none/halluc/declined
+json-loc         0.0%   43933        0/0/0/0/0
+gcf-loc          0.0%   15909        0/0/0/0/0
+gcf-inline       0.0%   15310        0/0/0/0/0

@@ -1,0 +1,34 @@
+
+### openai/gpt-4o-mini  5/6
+  PASS calls_direct   "Server.HandleLogin calls the following functions directly:\n- ValidateT"
+  PASS pos_validate   "ValidateToken is defined at pkg/auth/token.go, line 44."
+  PASS direction      "No."
+  PASS unlinked       "The symbol with no edges connecting it to any other symbol is `@5 type"
+  FAIL tokenstore_ref "The TokenStore interface references the ValidateToken function."
+  PASS pos_hashpw     "You would edit `pkg/auth/hash.go` at line 18."
+
+### google/gemini-2.5-flash-lite  5/6
+  PASS calls_direct   "ValidateToken, hashPassword"
+  PASS pos_validate   "pkg/auth/token.go:44"
+  PASS direction      "no"
+  FAIL unlinked       "@5"
+  PASS tokenstore_ref "The TokenStore interface references the Invalidate function."
+  PASS pos_hashpw     "pkg/auth/hash.go:18"
+
+### qwen/qwen-2.5-7b-instruct  5/6
+  PASS calls_direct   "github.com/acme/api/pkg/auth.ValidateToken, github.com/acme/api/pkg/au"
+  PASS pos_validate   "`ValidateToken` is defined in `pkg/auth/token.go` at line 44."
+  PASS direction      "No"
+  PASS unlinked       "@5 type github.com/acme/api/pkg/model.Session 0.40 ast_inferred pkg/mo"
+  FAIL tokenstore_ref "The TokenStore interface references the ValidateToken function."
+  PASS pos_hashpw     "To change `hashPassword`, you would edit the file `pkg/auth/hash.go` a"
+
+### meta-llama/llama-3.1-8b-instruct  4/6
+  PASS calls_direct   "Based on the provided code context payload, the functions that `Server"
+  PASS pos_validate   "pkg/auth/token.go, line 44."
+  PASS direction      "No."
+  FAIL unlinked       "The symbol \"@0\" has no edges connecting it to any other symbol."
+  FAIL tokenstore_ref "The TokenStore interface references the ValidateToken function."
+  PASS pos_hashpw     "pkg/auth/hash.go:18"
+
+DONE

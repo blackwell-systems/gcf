@@ -1,0 +1,25 @@
+Log: results/comprehension/loc-probe-openai-qwen_qwen-2.5-7b-instruct-2026-09-20-204928.log
+Backend: openai (qwen/qwen-2.5-7b-instruct)
+Fixture: 500 symbols, 200 edges | absent probe: github.com/org/project/internal/store.Provider.Collect
+  json-loc    tokens (est): 43933
+  gcf-loc     tokens (est): 15909
+  gcf-inline  tokens (est): 15310
+
+  PASS symbol_location  gcf-inline  [correct] got="internal/model/model.go:392"
+  FAIL symbol_location  gcf-loc     [wrong] got="internal/model/model.go:377"
+  SKIP symbol_location  json-loc    error: OpenAI API 400: {"error":{"message":"This endpoint's maximum context length is 32768 tokens. However, you requested about 45735 tokens (45535 of text input, 200 in the output). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically.","code":400,"metadata":{"provider_name":null}}}
+  FAIL symbol_location2 gcf-inline  [wrong] got="internal/service/service.go:907"
+  FAIL symbol_location2 gcf-loc     [wrong] got="internal/service/service.go:188"
+  SKIP symbol_location2 json-loc    error: OpenAI API 400: {"error":{"message":"This endpoint's maximum context length is 32768 tokens. However, you requested about 45736 tokens (45536 of text input, 200 in the output). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically.","code":400,"metadata":{"provider_name":null}}}
+  FAIL edit_target      gcf-loc     [wrong] got="internal/server/server.go:458"
+  PASS edit_target      gcf-inline  [correct] got="internal/server/server.go:742"
+  SKIP edit_target      json-loc    error: OpenAI API 400: {"error":{"message":"This endpoint's maximum context length is 32768 tokens. However, you requested about 45744 tokens (45544 of text input, 200 in the output). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically.","code":400,"metadata":{"provider_name":null}}}
+  PASS absent_location  gcf-inline  [declined] got="unknown"
+  PASS absent_location  gcf-loc     [declined] got="unknown"
+  SKIP absent_location  json-loc    error: OpenAI API 400: {"error":{"message":"This endpoint's maximum context length is 32768 tokens. However, you requested about 45714 tokens (45514 of text input, 200 in the output). Please reduce the length of either one, or use the context-compression plugin to compress your prompt automatically.","code":400,"metadata":{"provider_name":null}}}
+
+=== Loc probe summary (openai (qwen/qwen-2.5-7b-instruct)) ===
+Arm          Accuracy   Est Tokens   buckets correct/wrong/none/halluc/declined
+json-loc         0.0%   43933        0/0/0/0/0
+gcf-loc         25.0%   15909        0/3/0/0/1
+gcf-inline      75.0%   15310        2/1/0/0/1

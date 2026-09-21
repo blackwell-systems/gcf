@@ -1,0 +1,69 @@
+Backend: openai (openai/gpt-4o-mini) | model: openai/gpt-4o-mini | runs/cell: 3
+
+=== fixture small (20 symbols, 12 edges) ===
+  arm A    tokens(est) 496
+  arm B    tokens(est) 495
+  arm C    tokens(est) 495
+  arm ADJ  tokens(est) 731
+  arm JSON tokens(est) 912
+  A    fwd_calls    3/3  e.g.="DeleteHandler calls directly: UpdateResult."
+  B    fwd_calls    3/3  e.g.="DeleteHandler calls directly: UpdateResult."
+  C    fwd_calls    3/3  e.g.="DeleteHandler calls UpdateResult directly."
+  ADJ  fwd_calls    3/3  e.g.="DeleteHandler calls directly: UpdateResult."
+  JSON fwd_calls    3/3  e.g.="DeleteHandler calls directly:   - UpdateResult"
+  A    bwd_callers  3/3  e.g.="The symbols that call `HandleRequest` directly are:  - "
+  B    bwd_callers  3/3  e.g.="- ProcessResponse - UpdateResult - DeleteHandler"
+  C    bwd_callers  3/3  e.g.="The symbols that call `HandleRequest` directly are:  - "
+  ADJ  bwd_callers  3/3  e.g.="ProcessResponse"
+  JSON bwd_callers  3/3  e.g.="ProcessResponse"
+  A    shared_out   0/3  e.g.="ProcessResponse points to the following symbols:  1. Va"
+  B    shared_out   0/3  e.g.="ProcessResponse points to the following symbols:  - Han"
+  C    shared_out   0/3  e.g.="ProcessResponse points to the following symbols: - Hand"
+  ADJ  shared_out   3/3  e.g.="ProcessResponse points to the following symbols: - Hand"
+  JSON shared_out   0/3  e.g.="ProcessResponse points to the following symbols:  1. Ha"
+  A    shared_in    0/3  e.g.="The symbols that point to `ProcessResponse` are:  1. `H"
+  B    shared_in    0/3  e.g.="The symbols that point to `ProcessResponse` are:  - `Ha"
+  C    shared_in    1/3  e.g.="The symbols that point to `ProcessResponse` are:  - `Ha"
+  ADJ  shared_in    0/3  e.g.="The symbols that point to ProcessResponse are:  - Handl"
+  JSON shared_in    3/3  e.g.="The symbols that point to ProcessResponse are:  - Valid"
+
+=== fixture med (50 symbols, 30 edges) ===
+  arm A    tokens(est) 1174
+  arm B    tokens(est) 1172
+  arm C    tokens(est) 1172
+  arm ADJ  tokens(est) 1757
+  arm JSON tokens(est) 2273
+  A    fwd_calls    0/3  e.g.="FlushStore does not call any symbols directly."
+  B    fwd_calls    0/3  e.g.="FlushStore does not call any symbols directly."
+  C    fwd_calls    0/3  e.g.="FlushStore does not call any symbols directly."
+  ADJ  fwd_calls    3/3  e.g.="FlushStore calls directly: Write."
+  JSON fwd_calls    3/3  e.g.="FlushStore calls directly:   - Write"
+  A    bwd_callers  3/3  e.g.="The symbols that call `DisconnectOptions` directly are:"
+  B    bwd_callers  0/3  e.g.="The symbols that call `DisconnectOptions` directly are:"
+  C    bwd_callers  3/3  e.g.="The symbols that call `DisconnectOptions` directly are:"
+  ADJ  bwd_callers  0/3  e.g.="No symbols call DisconnectOptions directly."
+  JSON bwd_callers  3/3  e.g.="AuthenticateResult"
+  A    shared_out   0/3  e.g.="ProcessResponse points to the following symbols:  1. Va"
+  B    shared_out   0/3  e.g.="ProcessResponse points to the following symbols:  1. Ha"
+  C    shared_out   2/3  e.g.="ProcessResponse points to the following symbols:  1. Ha"
+  ADJ  shared_out   3/3  e.g.="ProcessResponse points to the following symbols:  - Han"
+  JSON shared_out   0/3  e.g.="ProcessResponse points to the following symbols:  1. Ha"
+  A    shared_in    0/3  e.g.="The symbols that point to `ProcessResponse` are:  1. `H"
+  B    shared_in    0/3  e.g.="The symbols that point to `ProcessResponse` are:  - `Ha"
+  C    shared_in    0/3  e.g.="The symbols that point to `ProcessResponse` are:  1. `H"
+  ADJ  shared_in    0/3  e.g.="The symbols that point to `ProcessResponse` are:  - `Ha"
+  JSON shared_in    2/3  e.g.="The symbols that point to ProcessResponse are:  - Valid"
+
+=== EDGE PILOT SUMMARY (openai/gpt-4o-mini) ===
+arm    accuracy
+A          38%   (9/24)
+B          25%   (6/24)
+C          50%   (12/24)
+ADJ        62%   (15/24)
+JSON       71%   (17/24)
+
+by query type (correct/total):
+  fwd_calls:  A=3/6  B=3/6  C=3/6  ADJ=6/6  JSON=6/6
+  bwd_callers:  A=6/6  B=3/6  C=6/6  ADJ=3/6  JSON=6/6
+  shared_out:  A=0/6  B=0/6  C=2/6  ADJ=6/6  JSON=0/6
+  shared_in:  A=0/6  B=0/6  C=1/6  ADJ=0/6  JSON=5/6

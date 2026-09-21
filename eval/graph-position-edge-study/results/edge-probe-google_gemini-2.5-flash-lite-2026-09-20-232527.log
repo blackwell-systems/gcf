@@ -1,0 +1,69 @@
+Backend: openai (google/gemini-2.5-flash-lite) | model: google/gemini-2.5-flash-lite | runs/cell: 3
+
+=== fixture small (20 symbols, 12 edges) ===
+  arm A    tokens(est) 496
+  arm B    tokens(est) 495
+  arm C    tokens(est) 495
+  arm ADJ  tokens(est) 731
+  arm JSON tokens(est) 912
+  A    fwd_calls    0/3  e.g.="There are no symbols that DeleteHandler calls directly."
+  B    fwd_calls    3/3  e.g.="UpdateResult"
+  C    fwd_calls    0/3  e.g.="There are no symbols that DeleteHandler calls directly."
+  ADJ  fwd_calls    3/3  e.g.="UpdateResult"
+  JSON fwd_calls    3/3  e.g.="UpdateResult"
+  A    bwd_callers  0/3  e.g.="@1"
+  B    bwd_callers  0/3  e.g.="@5 DeleteHandler @13 DecodeResolver"
+  C    bwd_callers  0/3  e.g.="@5"
+  ADJ  bwd_callers  3/3  e.g.="ProcessResponse"
+  JSON bwd_callers  3/3  e.g.="ProcessResponse"
+  A    shared_out   0/3  e.g.="Config.Validate CreateOptions UpdateResult DeleteHandle"
+  B    shared_out   0/3  e.g.="ProcessResponse references Config.Validate"
+  C    shared_out   0/3  e.g.="ProcessResponse does not point to any symbols."
+  ADJ  shared_out   3/3  e.g.="HandleRequest"
+  JSON shared_out   3/3  e.g.="HandleRequest"
+  A    shared_in    0/3  e.g.="@0<@1 calls"
+  B    shared_in    0/3  e.g.="ProcessResponse"
+  C    shared_in    0/3  e.g.="ProcessResponse has no incoming relationships."
+  ADJ  shared_in    0/3  e.g.="HandleRequest"
+  JSON shared_in    3/3  e.g.="Validate"
+
+=== fixture med (50 symbols, 30 edges) ===
+  arm A    tokens(est) 1174
+  arm B    tokens(est) 1172
+  arm C    tokens(est) 1172
+  arm ADJ  tokens(est) 1757
+  arm JSON tokens(est) 2273
+  A    fwd_calls    0/3  e.g.="SplitHandler does not call any symbols directly."
+  B    fwd_calls    0/3  e.g.="SplitHandler does not directly call any symbols."
+  C    fwd_calls    0/3  e.g.="SplitHandler"
+  ADJ  fwd_calls    3/3  e.g.="Merge"
+  JSON fwd_calls    3/3  e.g.="Merge"
+  A    bwd_callers  0/3  e.g.="@48 fn github.com/org/project/internal/service.Disconne"
+  B    bwd_callers  0/3  e.g.="Service"
+  C    bwd_callers  0/3  e.g.="@48"
+  ADJ  bwd_callers  3/3  e.g.="AuthenticateResult"
+  JSON bwd_callers  3/3  e.g.="AuthenticateResult"
+  A    shared_out   0/3  e.g.="github.com/org/project/internal/server.ProcessResponse "
+  B    shared_out   0/3  e.g.="ProcessResponse does not point to any symbols."
+  C    shared_out   0/3  e.g.="ProcessResponse imports github.com/org/project/internal"
+  ADJ  shared_out   3/3  e.g.="HandleRequest"
+  JSON shared_out   3/3  e.g.="HandleRequest"
+  A    shared_in    0/3  e.g.="github.com/org/project/internal/server.ProcessResponse"
+  B    shared_in    0/3  e.g.="ProcessResponse"
+  C    shared_in    0/3  e.g.="ProcessResponse"
+  ADJ  shared_in    3/3  e.g.="Validate"
+  JSON shared_in    3/3  e.g.="Validate"
+
+=== EDGE PILOT SUMMARY (google/gemini-2.5-flash-lite) ===
+arm    accuracy
+A           0%   (0/24)
+B          12%   (3/24)
+C           0%   (0/24)
+ADJ        88%   (21/24)
+JSON      100%   (24/24)
+
+by query type (correct/total):
+  fwd_calls:  A=0/6  B=3/6  C=0/6  ADJ=6/6  JSON=6/6
+  bwd_callers:  A=0/6  B=0/6  C=0/6  ADJ=6/6  JSON=6/6
+  shared_out:  A=0/6  B=0/6  C=0/6  ADJ=6/6  JSON=6/6
+  shared_in:  A=0/6  B=0/6  C=0/6  ADJ=3/6  JSON=6/6

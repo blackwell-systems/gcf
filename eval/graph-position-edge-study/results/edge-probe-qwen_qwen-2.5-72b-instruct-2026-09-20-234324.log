@@ -1,0 +1,69 @@
+Backend: openai (qwen/qwen-2.5-72b-instruct) | model: qwen/qwen-2.5-72b-instruct | runs/cell: 3
+
+=== fixture small (20 symbols, 12 edges) ===
+  arm A    tokens(est) 496
+  arm B    tokens(est) 495
+  arm C    tokens(est) 495
+  arm ADJ  tokens(est) 731
+  arm JSON tokens(est) 912
+  A    fwd_calls    0/3  e.g.="Based on the provided context, `DeleteHandler` does not"
+  B    fwd_calls    0/3  e.g.="Based on the provided context, `DeleteHandler` does not"
+  C    fwd_calls    3/3  e.g.="UpdateResult, EncodeProvider"
+  ADJ  fwd_calls    3/3  e.g.="UpdateResult"
+  JSON fwd_calls    3/3  e.g.="UpdateResult"
+  A    bwd_callers  3/3  e.g.="[@12] EncodeProvider is called directly by the symbol w"
+  B    bwd_callers  3/3  e.g.="@12 EncodeProvider is called directly by @13 DecodeReso"
+  C    bwd_callers  3/3  e.g.="DecodeResolver"
+  ADJ  bwd_callers  3/3  e.g.="DecodeResolver"
+  JSON bwd_callers  3/3  e.g.="DecodeResolver"
+  A    shared_out   0/3  e.g.="Validate, Config, DeleteHandler, FormatBuilder, EncodeP"
+  B    shared_out   0/3  e.g.="Config, Validate, UpdateResult, EncodeProvider, Transfo"
+  C    shared_out   0/3  e.g.="Config, Validate, UpdateResult, CreateOptions"
+  ADJ  shared_out   3/3  e.g.="HandleRequest"
+  JSON shared_out   0/3  e.g.="HandleRequest, Validate"
+  A    shared_in    0/3  e.g.="HandleRequest, Validate, DeleteHandler, FormatBuilder, "
+  B    shared_in    0/3  e.g.="@1 type github.com/org/project/internal/server.ProcessR"
+  C    shared_in    2/3  e.g.="Config.Validate, DeleteHandler"
+  ADJ  shared_in    0/3  e.g.="Validate, HandleRequest"
+  JSON shared_in    0/3  e.g.="HandleRequest, Validate"
+
+=== fixture med (50 symbols, 30 edges) ===
+  arm A    tokens(est) 1174
+  arm B    tokens(est) 1172
+  arm C    tokens(est) 1172
+  arm ADJ  tokens(est) 1757
+  arm JSON tokens(est) 2273
+  A    fwd_calls    3/3  e.g.="Write, Collect"
+  B    fwd_calls    3/3  e.g.="Write, Collect"
+  C    fwd_calls    3/3  e.g.="Write, Collect"
+  ADJ  fwd_calls    3/3  e.g.="Write"
+  JSON fwd_calls    3/3  e.g.="Write"
+  A    bwd_callers  0/3  e.g.="No symbols call `DisconnectOptions` directly based on t"
+  B    bwd_callers  0/3  e.g.="No symbols call `DisconnectOptions` directly based on t"
+  C    bwd_callers  0/3  e.g.="No symbols call DisconnectOptions directly based on the"
+  ADJ  bwd_callers  3/3  e.g.="AuthenticateResult"
+  JSON bwd_callers  3/3  e.g.="AuthenticateResult"
+  A    shared_out   0/3  e.g.="Config.Validate, auth.Factory.Parse, server.FormatBuild"
+  B    shared_out   0/3  e.g.="HandleRequest, Config, Validate, CreateOptions, UpdateR"
+  C    shared_out   3/3  e.g.="HandleRequest, Config, CreateOptions, DeleteHandler, Up"
+  ADJ  shared_out   3/3  e.g.="HandleRequest"
+  JSON shared_out   2/3  e.g.="HandleRequest, Validate"
+  A    shared_in    0/3  e.g.="HandleRequest, Config.Validate, CreateOptions, UpdateRe"
+  B    shared_in    0/3  e.g.="HandleRequest, Config, CreateOptions, FormatBuilder, Ad"
+  C    shared_in    1/3  e.g.="@1 type github.com/org/project/internal/server.ProcessR"
+  ADJ  shared_in    0/3  e.g.="HandleRequest, Validate"
+  JSON shared_in    0/3  e.g.="HandleRequest, Validate"
+
+=== EDGE PILOT SUMMARY (qwen/qwen-2.5-72b-instruct) ===
+arm    accuracy
+A          25%   (6/24)
+B          25%   (6/24)
+C          62%   (15/24)
+ADJ        75%   (18/24)
+JSON       58%   (14/24)
+
+by query type (correct/total):
+  fwd_calls:  A=3/6  B=3/6  C=6/6  ADJ=6/6  JSON=6/6
+  bwd_callers:  A=3/6  B=3/6  C=3/6  ADJ=6/6  JSON=6/6
+  shared_out:  A=0/6  B=0/6  C=3/6  ADJ=6/6  JSON=2/6
+  shared_in:  A=0/6  B=0/6  C=3/6  ADJ=0/6  JSON=0/6

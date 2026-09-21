@@ -1,0 +1,25 @@
+Log: results/comprehension/loc-probe-openai-meta-llama_llama-3.1-8b-instruct-2026-09-20-200603.log
+Backend: openai (meta-llama/llama-3.1-8b-instruct)
+Fixture: 500 symbols, 200 edges | absent probe: github.com/org/project/internal/store.Provider.Collect
+  json-loc    tokens (est): 43933
+  gcf-loc     tokens (est): 15909
+  gcf-inline  tokens (est): 15310
+
+  FAIL symbol_location  gcf-inline  [wrong] got="internal/model/model.go:809"
+  FAIL symbol_location  gcf-loc     [wrong] got="internal/model/model.go:137"
+  FAIL symbol_location  json-loc    [wrong] got="internal/model/model.go:809"
+  PASS symbol_location2 gcf-inline  [correct] got="internal/service/service.go:302"
+  FAIL symbol_location2 json-loc    [wrong] got="internal/service/service.go:740"
+  FAIL symbol_location2 gcf-loc     [wrong] got="internal/service/service.go:907"
+  SKIP edit_target      gcf-loc     error: Post "https://openrouter.ai/api/v1/chat/completions": remote error: tls: bad record MAC
+  SKIP edit_target      json-loc    error: Post "https://openrouter.ai/api/v1/chat/completions": remote error: tls: bad record MAC
+  SKIP edit_target      gcf-inline  error: Post "https://openrouter.ai/api/v1/chat/completions": remote error: tls: bad record MAC
+  PASS absent_location  json-loc    [declined] got="unknown"
+  FAIL absent_location  gcf-inline  [hallucinated] got="internal/store/store.go 42"
+  FAIL absent_location  gcf-loc     [none] got="@12 fn github.com/org/project/internal/store.EncodeProvider "
+
+=== Loc probe summary (openai (meta-llama/llama-3.1-8b-instruct)) ===
+Arm          Accuracy   Est Tokens   buckets correct/wrong/none/halluc/declined
+json-loc        33.3%   43933        0/2/0/0/1
+gcf-loc          0.0%   15909        0/2/1/0/0
+gcf-inline      33.3%   15310        1/1/0/1/0

@@ -1,0 +1,25 @@
+Log: results/comprehension/loc-probe-openai-meta-llama_llama-3.1-8b-instruct-2026-09-20-200058.log
+Backend: openai (meta-llama/llama-3.1-8b-instruct)
+Fixture: 500 symbols, 200 edges | absent probe: github.com/org/project/internal/store.Provider.Collect
+  json-loc    tokens (est): 43933
+  gcf-loc     tokens (est): 15909
+  gcf-inline  tokens (est): 15310
+
+  FAIL symbol_location  gcf-inline  [file=true line=false] got="internal/model/model.go:809"
+  FAIL symbol_location  gcf-loc     [file=false line=false] got="@197 0.10 ast_inferred"
+  PASS symbol_location  json-loc    [file+line] got="internal/model/model.go:392"
+  FAIL caller_location  gcf-inline  [file=false line=false] got="internal/auth/auth.go:381"
+  FAIL caller_location  gcf-loc     [file=false line=false] got="@0 internal/auth/auth.go 381 76"
+  FAIL caller_location  json-loc    [file=false line=false] got="internal/server/process_response.go:70"
+  PASS edit_target      gcf-inline  [file+line] got="internal/server/server.go:742"
+  FAIL edit_target      gcf-loc     [file=true line=false] got="internal/server/server.go:808"
+  PASS edit_target      json-loc    [file+line] got="internal/server/server.go:742"
+  PASS absent_location  gcf-inline  [declined] got="unknown"
+  FAIL absent_location  json-loc    [hallucinated file] got="file:internal/store/store.go,line:641"
+  FAIL absent_location  gcf-loc     [did not decline] got="@42 fn github.com/org/project/internal/store.EncodeProvider "
+
+=== Loc probe summary ===
+Arm         Accuracy Est Tokens
+json-loc       50.0%      43933
+gcf-loc         0.0%      15909
+gcf-inline     50.0%      15310

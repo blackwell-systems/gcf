@@ -74,6 +74,23 @@ EVAL_BACKEND=google GOOGLE_API_KEY=... EVAL_MODEL=gemini-2.5-flash GOWORK=off go
 EVAL_BACKEND=google GOOGLE_API_KEY=... EVAL_MODEL=gemini-2.5-flash EVAL_FORMATS=gcf,json,toon EVAL_NUM_ORDERS=500 GOWORK=off go test -run TestGenericComprehension -v -timeout 60m
 ```
 
+## Graph Position & Edge-Direction Study
+
+**SDK: gcf-go** (test harnesses in `gcf-go/eval/`); self-contained writeup in
+[`graph-position-edge-study/`](graph-position-edge-study/).
+
+Two staged design questions for the graph profile: (1) how a symbol should carry its
+source position (inline on the node line vs an id-keyed `## loc` side section), and (2)
+whether non-frontier models misread edge direction because of the `@target<@source`
+*syntax* or the *presentation*. Findings: **inline** for positions (the side-section
+`@id` join fails 0/3 on non-frontier models; inline matches JSON at ~36% of the tokens),
+and edge direction is a **presentation** problem (per-node adjacency / explicit
+source-target dominate at every scale; the current arrow is the worst form and does not
+improve with size; flipping it is refuted). See
+[graph-position-edge-study/FINDINGS.md](graph-position-edge-study/FINDINGS.md); harnesses
+`loc_comprehension_test.go` (gated `EVAL_LOC`) and `edge_comprehension_test.go` (gated
+`EVAL_EDGE`).
+
 ## Generation Eval
 
 **SDK: gcf-go** (decoder validation), **gcf-python** (generation scripts)

@@ -1,0 +1,69 @@
+Backend: openai (mistralai/mistral-nemo) | model: mistralai/mistral-nemo | runs/cell: 3
+
+=== fixture small (20 symbols, 12 edges) ===
+  arm A    tokens(est) 496
+  arm B    tokens(est) 495
+  arm C    tokens(est) 495
+  arm ADJ  tokens(est) 731
+  arm JSON tokens(est) 912
+  A    fwd_calls    0/3  e.g.="DeleteHandler"
+  B    fwd_calls    3/3  e.g.="DeleteHandler calls directly: - UpdateResult"
+  C    fwd_calls    0/3  e.g.="DeleteHandler"
+  ADJ  fwd_calls    3/3  e.g.="UpdateResult"
+  JSON fwd_calls    3/3  e.g.="UpdateResult"
+  A    bwd_callers  0/3  e.g.="@12"
+  B    bwd_callers  0/3  e.g.="@13"
+  C    bwd_callers  0/3  e.g.="@13"
+  ADJ  bwd_callers  2/3  e.g.="DecodeResolver"
+  JSON bwd_callers  3/3  e.g.="DecodeResolver"
+  A    shared_out   0/3  e.g.="- Validate - DeleteHandler"
+  B    shared_out   0/3  e.g.="@10"
+  C    shared_out   0/3  e.g.="ProcessResponse calls HandleRequest and imports Config."
+  ADJ  shared_out   3/3  e.g.="- HandleRequest"
+  JSON shared_out   3/3  e.g.="- HandleRequest"
+  A    shared_in    0/3  e.g.="@0"
+  B    shared_in    0/3  e.g.="@2"
+  C    shared_in    0/3  e.g.="@1, @2, @7, @11"
+  ADJ  shared_in    3/3  e.g.="Validate"
+  JSON shared_in    3/3  e.g.="- Validate - DeleteHandler - SetService - Parse - Trans"
+
+=== fixture med (50 symbols, 30 edges) ===
+  arm A    tokens(est) 1174
+  arm B    tokens(est) 1172
+  arm C    tokens(est) 1172
+  arm ADJ  tokens(est) 1757
+  arm JSON tokens(est) 2273
+  A    fwd_calls    0/3  e.g.="SplitHandler"
+  B    fwd_calls    0/3  e.g.="SplitHandler"
+  C    fwd_calls    0/3  e.g.="SplitHandler"
+  ADJ  fwd_calls    0/3  e.g.="SplitHandler"
+  JSON fwd_calls    3/3  e.g.="Merge"
+  A    bwd_callers  0/3  e.g.="@12"
+  B    bwd_callers  0/3  e.g.="@13"
+  C    bwd_callers  0/3  e.g.="@12"
+  ADJ  bwd_callers  0/3  e.g.="None"
+  JSON bwd_callers  3/3  e.g.="DecodeResolver"
+  A    shared_out   0/3  e.g.="- Validate - Get - Transform - Write - Merge - Reduce -"
+  B    shared_out   1/3  e.g.="@1, @2, @7, @10, @13, @16, @22, @25, @28, @32, @35, @38"
+  C    shared_out   1/3  e.g.="- @16 (LoadResponse) - @22 (Write) - @23 (FlushStore) -"
+  ADJ  shared_out   3/3  e.g.="- HandleRequest"
+  JSON shared_out   2/3  e.g.="- HandleRequest"
+  A    shared_in    0/3  e.g.="@0"
+  B    shared_in    0/3  e.g.="@2, @4, @14"
+  C    shared_in    0/3  e.g.="@1, @2, @4, @7, @11, @13, @14, @16, @17, @19, @20, @22,"
+  ADJ  shared_in    1/3  e.g.="- Validate - UpdateResult - Parse - DecodeResolver - Co"
+  JSON shared_in    3/3  e.g.="- Validate - UpdateResult - DeleteHandler - SetService "
+
+=== EDGE PILOT SUMMARY (mistralai/mistral-nemo) ===
+arm    accuracy
+A           0%   (0/24)
+B          17%   (4/24)
+C           4%   (1/24)
+ADJ        62%   (15/24)
+JSON       96%   (23/24)
+
+by query type (correct/total):
+  fwd_calls:  A=0/6  B=3/6  C=0/6  ADJ=3/6  JSON=6/6
+  bwd_callers:  A=0/6  B=0/6  C=0/6  ADJ=2/6  JSON=6/6
+  shared_out:  A=0/6  B=1/6  C=1/6  ADJ=6/6  JSON=5/6
+  shared_in:  A=0/6  B=0/6  C=0/6  ADJ=4/6  JSON=6/6

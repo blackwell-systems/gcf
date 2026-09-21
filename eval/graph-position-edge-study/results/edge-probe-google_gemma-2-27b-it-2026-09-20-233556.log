@@ -1,0 +1,69 @@
+Backend: openai (google/gemma-2-27b-it) | model: google/gemma-2-27b-it | runs/cell: 3
+
+=== fixture small (20 symbols, 12 edges) ===
+  arm A    tokens(est) 496
+  arm B    tokens(est) 495
+  arm C    tokens(est) 495
+  arm ADJ  tokens(est) 731
+  arm JSON tokens(est) 912
+  A    fwd_calls    0/3  e.g.="ProcessResponse"
+  B    fwd_calls    3/3  e.g.="UpdateResult"
+  C    fwd_calls    3/3  e.g.="UpdateResult"
+  ADJ  fwd_calls    3/3  e.g.="UpdateResult"
+  JSON fwd_calls    3/3  e.g.="UpdateResult"
+  A    bwd_callers  0/3  e.g.="@0"
+  B    bwd_callers  0/3  e.g.="@1"
+  C    bwd_callers  0/3  e.g.="@1"
+  ADJ  bwd_callers  3/3  e.g.="ProcessResponse"
+  JSON bwd_callers  3/3  e.g.="ProcessResponse"
+  A    shared_out   0/3  e.g.="ProcessResponse points to:  - Config"
+  B    shared_out   3/3  e.g.="HandleRequest"
+  C    shared_out   3/3  e.g.="HandleRequest"
+  ADJ  shared_out   3/3  e.g.="HandleRequest"
+  JSON shared_out   3/3  e.g.="HandleRequest"
+  A    shared_in    0/3  e.g.="@0, @1"
+  B    shared_in    0/3  e.g.="@1, @2"
+  C    shared_in    0/3  e.g.="@1, @2"
+  ADJ  shared_in    0/3  e.g.="HandleRequest"
+  JSON shared_in    0/3  e.g.="HandleRequest, Validate"
+
+=== fixture med (50 symbols, 30 edges) ===
+  arm A    tokens(est) 1174
+  arm B    tokens(est) 1172
+  arm C    tokens(est) 1172
+  arm ADJ  tokens(est) 1757
+  arm JSON tokens(est) 2273
+  A    fwd_calls    0/3  e.g.="FormatBuilder calls:  * ReadManager * LookupResponse"
+  B    fwd_calls    0/3  e.g.="LoadResponse"
+  C    fwd_calls    3/3  e.g.="Parse"
+  ADJ  fwd_calls    3/3  e.g.="Parse"
+  JSON fwd_calls    3/3  e.g.="Parse"
+  A    bwd_callers  0/3  e.g.="JoinManager"
+  B    bwd_callers  0/3  e.g.="- JoinManager"
+  C    bwd_callers  0/3  e.g.="@36"
+  ADJ  bwd_callers  3/3  e.g.="MapService"
+  JSON bwd_callers  0/3  e.g.="SplitHandler"
+  A    shared_out   2/3  e.g.="ProcessResponse points to:  * Config * HandleRequest"
+  B    shared_out   3/3  e.g.="HandleRequest"
+  C    shared_out   3/3  e.g.="HandleRequest"
+  ADJ  shared_out   3/3  e.g.="HandleRequest"
+  JSON shared_out   3/3  e.g.="HandleRequest"
+  A    shared_in    0/3  e.g.="HandleRequest"
+  B    shared_in    0/3  e.g.="HandleRequest  Config"
+  C    shared_in    0/3  e.g.="@1  @16"
+  ADJ  shared_in    0/3  e.g.="HandleRequest"
+  JSON shared_in    0/3  e.g.="HandleRequest"
+
+=== EDGE PILOT SUMMARY (google/gemma-2-27b-it) ===
+arm    accuracy
+A           8%   (2/24)
+B          38%   (9/24)
+C          50%   (12/24)
+ADJ        75%   (18/24)
+JSON       62%   (15/24)
+
+by query type (correct/total):
+  fwd_calls:  A=0/6  B=3/6  C=6/6  ADJ=6/6  JSON=6/6
+  bwd_callers:  A=0/6  B=0/6  C=0/6  ADJ=6/6  JSON=3/6
+  shared_out:  A=2/6  B=6/6  C=6/6  ADJ=6/6  JSON=6/6
+  shared_in:  A=0/6  B=0/6  C=0/6  ADJ=0/6  JSON=0/6
