@@ -70,7 +70,8 @@ opposite/reversed direction): `fwd_calls`, `bwd_callers` (reverse), `shared_out`
 point to X" was read as *outgoing* by the models even in the ADJ arm, so it measured
 wording, not format (see FINDINGS).
 
-**Fixtures:** two sizes, 20 and 50 symbols.
+**Fixtures:** three sizes, 20, 50, and 500 symbols (500 = flagship scale, matching the
+comprehension eval). `EVAL_EDGE_FIXTURES=large` runs only the 500-symbol rung.
 
 **Harness:** `gcf-go/eval/edge_comprehension_test.go`
 - `TestEdgeProbeArtifacts` — verifies arm construction + probe selection, no LLM.

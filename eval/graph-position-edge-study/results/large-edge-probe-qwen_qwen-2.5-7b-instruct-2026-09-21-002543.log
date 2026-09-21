@@ -1,0 +1,42 @@
+Backend: openai (qwen/qwen-2.5-7b-instruct) | model: qwen/qwen-2.5-7b-instruct | runs/cell: 3
+
+=== fixture large (500 symbols, 200 edges) ===
+  arm A    tokens(est) 11098
+  arm B    tokens(est) 11096
+  arm C    tokens(est) 11096
+  arm ADJ  tokens(est) 15625
+  arm JSON tokens(est) 20223
+  A    fwd_calls    0/3  e.g.="Based on the provided context, `DeleteHandler` does not"
+  B    fwd_calls    0/3  e.g.="Based on the provided context, the `DeleteHandler` does"
+  C    fwd_calls    0/3  e.g.="Based on the provided context, the `DeleteHandler` symb"
+  ADJ  fwd_calls    1/3  e.g.="Based on the adjacency information provided, DeleteHand"
+  JSON fwd_calls    3/3  e.g.="UpdateResult"
+  A    bwd_callers  0/3  e.g.="Based on the provided context, `HandleRequest` is calle"
+  B    bwd_callers  0/3  e.g.="@0"
+  C    bwd_callers  0/3  e.g.="@1"
+  ADJ  bwd_callers  1/3  e.g.="None of the symbols call HandleRequest directly. The ad"
+  JSON bwd_callers  3/3  e.g.="ProcessResponse"
+  A    shared_out   0/3  e.g.="fn github.com/org/project/internal/service.UpdateStore"
+  B    shared_out   0/3  e.g.="fn github.com/org/project/internal/service.UpdateStore"
+  C    shared_out   0/3  e.g.="UpdateResult points to no symbols directly, as it is li"
+  ADJ  shared_out   3/3  e.g.="CreateOptions"
+  JSON shared_out   3/3  e.g.="CreateOptions"
+  A    shared_in    0/3  e.g.="@4"
+  B    shared_in    0/3  e.g.="@4"
+  C    shared_in    0/3  e.g.="@4"
+  ADJ  shared_in    0/3  e.g.="CreateOptions"
+  JSON shared_in    0/3  e.g.="UpdateHandler"
+
+=== EDGE PILOT SUMMARY (qwen/qwen-2.5-7b-instruct) ===
+arm    accuracy
+A           0%   (0/12)
+B           0%   (0/12)
+C           0%   (0/12)
+ADJ        42%   (5/12)
+JSON       75%   (9/12)
+
+by query type (correct/total):
+  fwd_calls:  A=0/3  B=0/3  C=0/3  ADJ=1/3  JSON=3/3
+  bwd_callers:  A=0/3  B=0/3  C=0/3  ADJ=1/3  JSON=3/3
+  shared_out:  A=0/3  B=0/3  C=0/3  ADJ=3/3  JSON=3/3
+  shared_in:  A=0/3  B=0/3  C=0/3  ADJ=0/3  JSON=0/3

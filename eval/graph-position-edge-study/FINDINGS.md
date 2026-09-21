@@ -96,20 +96,45 @@ Per-model (fwd / bwd / shared_out, correct/6):
 - llama-3.3-70b: A 3/4/1 · B 3/3/6 · C 5/3/6 · ADJ 6/5/6 · JSON 6/6/5
 - qwen-2.5-72b: A 3/3/0 · B 3/3/0 · C 6/3/3 · ADJ 6/6/6 · JSON 6/6/2
 
-### The crossover (small -> medium totals, /72 across the 3 clean queries)
+### Flagship scale (500-symbol / 200-edge fixture, 8 models x 3 runs)
 
-| Arm | small | medium |
-|---|--:|--:|
-| A `@t<@s` (current) | 12 | 16 |
-| B `@s>@t` | 18 | 31 |
-| C SVO | 21 | 39 |
-| ADJ | 59 | 64 |
-| JSON | 56 | 63 |
+Correct / 24 on the clean queries (single large fixture, so 3 runs/query/model):
+
+| Query | A | B | C | ADJ | JSON |
+|---|--:|--:|--:|--:|--:|
+| fwd_calls | 1 | 0 | 0 | 19 | 21 |
+| bwd_callers | 8 | 7 | 6 | 11 | 21 |
+| shared_out | 1 | 1 | 7 | 9 | 14 |
+| **total /72** | **10** | **8** | **13** | **39** | **56** |
+
+### The crossover, all three scales (totals /72 across the 3 clean queries)
+
+| Arm | small (20-50) | medium (12-72B) | large (500) |
+|---|--:|--:|--:|
+| A `@t<@s` (current) | 12 | 16 | 10 |
+| B `@s>@t` | 18 | 31 | 8 |
+| C SVO | 21 | 39 | 13 |
+| ADJ | 59 | 64 | 39 |
+| JSON | 56 | 63 | 56 |
+
+At 500 symbols the finding holds and sharpens, with one refinement:
+- **Compact edge syntax collapses.** On `fwd_calls` A/B/C score ~0/24 at 500 while ADJ/JSON
+  stay near-perfect. The presentation gap is *widest* at flagship scale.
+- **JSON is the most robust at scale; whole-graph adjacency degrades.** JSON holds at 56/72;
+  ADJ drops from 59-64 (small/medium) to 39 because the `## adjacency` section becomes 400+
+  lines and the model loses the right row. Refinement: explicit source/target objects scale
+  better than a full-graph adjacency dump; a *targeted* adjacency (only the queried
+  neighborhood) would likely recover it.
+- **The shared-node query is hard for everyone at 500** (even JSON only 14/24) — a
+  multi-neighbor node in a large payload is the stressor; JSON still best.
 
 ### Conclusions (edge direction)
 
-1. **Presentation (ADJ/JSON) is reliable at every scale**, 8B to 72B. The scale-independent
-   answer.
+1. **Direction-explicit presentation beats compact edge lines at every scale** (20 to 500
+   symbols, 8B to 72B). Explicit source/target objects (JSON-style) are the most robust and
+   hold at 500; a whole-graph adjacency dump wins at small/medium but degrades at 500 (the
+   section grows too long), so at scale prefer explicit objects or a *targeted* adjacency
+   (the queried neighborhood only).
 2. **The current `@target<@source` (A) is the worst at every rung and barely improves with
    size** (12 -> 16/72), never becoming reliable even at 72B. The one unambiguous
    "this wire syntax is a real weakness" result.
@@ -119,10 +144,12 @@ Per-model (fwd / bwd / shared_out, correct/6):
    instinct, refuted.
 4. **Below ~27B only presentation works; reverse queries ("who calls X") stay hard for all
    compact forms even at 72B** (all ~3/6) and need presentation regardless.
-5. **Do not flip the edge arrow** (breaking, and it does not help). The actionable,
-   additive fix is an optional per-node adjacency rendering for direction-heavy tools
-   (`find_callers`, `blast_radius`) and weak consumers, keeping compact `## edges` as the
-   default. That is its own spec proposal + eval, separate from positions.
+5. **Do not flip the edge arrow** (breaking, and it does not help). The actionable, additive
+   fix is a direction-explicit rendering for direction-heavy tools (`find_callers`,
+   `blast_radius`) and weak consumers — explicit source/target, or a targeted adjacency for
+   the queried neighborhood (not a whole-graph adjacency dump, which does not scale to 500) —
+   keeping compact `## edges` as the default. Its own spec proposal + eval, separate from
+   positions.
 
 ### Caveat
 

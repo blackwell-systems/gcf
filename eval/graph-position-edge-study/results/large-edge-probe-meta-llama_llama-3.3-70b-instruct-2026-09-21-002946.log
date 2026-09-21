@@ -1,0 +1,42 @@
+Backend: openai (meta-llama/llama-3.3-70b-instruct) | model: meta-llama/llama-3.3-70b-instruct | runs/cell: 3
+
+=== fixture large (500 symbols, 200 edges) ===
+  arm A    tokens(est) 11098
+  arm B    tokens(est) 11096
+  arm C    tokens(est) 11096
+  arm ADJ  tokens(est) 15625
+  arm JSON tokens(est) 20223
+  A    fwd_calls    1/3  e.g.="None are listed in the provided edges."
+  B    fwd_calls    0/3  e.g.="DeleteHandler calls ProcessResponse directly."
+  C    fwd_calls    0/3  e.g.="DeleteHandler calls ProcessResponse directly."
+  ADJ  fwd_calls    3/3  e.g.="UpdateResult"
+  JSON fwd_calls    3/3  e.g.="UpdateResult"
+  A    bwd_callers  0/3  e.g.="None are listed as calling HandleRequest directly."
+  B    bwd_callers  0/3  e.g.="None are listed as calling HandleRequest directly."
+  C    bwd_callers  0/3  e.g.="None"
+  ADJ  bwd_callers  3/3  e.g.="None, only ProcessResponse references HandleRequest."
+  JSON bwd_callers  3/3  e.g.="ProcessResponse"
+  A    shared_out   0/3  e.g.="UpdateResult (@64) points to:  - CreateHandler (@125)  "
+  B    shared_out   1/3  e.g.="UpdateResult (@4) points to:  - github.com/org/project/"
+  C    shared_out   2/3  e.g.="UpdateResult (@4) points to:  - CreateOptions (@3)  - P"
+  ADJ  shared_out   3/3  e.g.="CreateOptions"
+  JSON shared_out   2/3  e.g.="CreateOptions"
+  A    shared_in    0/3  e.g.="@64"
+  B    shared_in    0/3  e.g.="@64, @138, @258, @318, @378, @438"
+  C    shared_in    0/3  e.g.="@4, @64, @128, @248, @309, @370"
+  ADJ  shared_in    0/3  e.g.="@4 UpdateResult is pointed to by: - @3 CreateOptions  -"
+  JSON shared_in    3/3  e.g.="DeleteHandler"
+
+=== EDGE PILOT SUMMARY (meta-llama/llama-3.3-70b-instruct) ===
+arm    accuracy
+A           8%   (1/12)
+B           8%   (1/12)
+C          17%   (2/12)
+ADJ        75%   (9/12)
+JSON       92%   (11/12)
+
+by query type (correct/total):
+  fwd_calls:  A=1/3  B=0/3  C=0/3  ADJ=3/3  JSON=3/3
+  bwd_callers:  A=0/3  B=0/3  C=0/3  ADJ=3/3  JSON=3/3
+  shared_out:  A=0/3  B=1/3  C=2/3  ADJ=3/3  JSON=2/3
+  shared_in:  A=0/3  B=0/3  C=0/3  ADJ=0/3  JSON=3/3
