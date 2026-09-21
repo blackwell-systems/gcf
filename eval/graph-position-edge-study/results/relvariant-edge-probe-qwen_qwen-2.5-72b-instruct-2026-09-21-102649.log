@@ -1,0 +1,42 @@
+Backend: openai (qwen/qwen-2.5-72b-instruct) | model: qwen/qwen-2.5-72b-instruct | runs/cell: 3
+
+=== fixture large (500 symbols, 200 edges) ===
+  arm A    tokens(est) 11098
+  arm B    tokens(est) 11096
+  arm C    tokens(est) 11096
+  arm ADJ  tokens(est) 15625
+  arm JSON tokens(est) 20223
+  JSON fwd_calls    3/3  e.g.="UpdateResult"
+  REL  fwd_calls    3/3  e.g.="UpdateResult"
+  RELL fwd_calls    3/3  e.g.="UpdateResult"
+  RELS fwd_calls    3/3  e.g.="UpdateResult"
+  RELSL fwd_calls    3/3  e.g.="UpdateResult"
+  JSON bwd_callers  3/3  e.g.="ProcessResponse"
+  REL  bwd_callers  3/3  e.g.="ProcessResponse"
+  RELL bwd_callers  3/3  e.g.="ProcessResponse"
+  RELS bwd_callers  3/3  e.g.="ProcessResponse"
+  RELSL bwd_callers  3/3  e.g.="ProcessResponse"
+  JSON shared_out   3/3  e.g.="CreateOptions"
+  REL  shared_out   0/3  e.g.="CreateOptions, DeleteHandler"
+  RELL shared_out   0/3  e.g.="CreateOptions, DeleteHandler"
+  RELS shared_out   0/3  e.g.="CreateOptions, DeleteHandler"
+  RELSL shared_out   2/3  e.g.="CreateOptions"
+  JSON shared_in    3/3  e.g.="DeleteHandler, CreateResult"
+  REL  shared_in    0/3  e.g.="DeleteHandler, CreateOptions"
+  RELL shared_in    3/3  e.g.="middleware.DeleteHandler, config.UpdateResult"
+  RELS shared_in    3/3  e.g.="config, middleware.DeleteHandler"
+  RELSL shared_in    3/3  e.g.="- config.UpdateResult - middleware.DeleteHandler"
+
+=== EDGE PILOT SUMMARY (qwen/qwen-2.5-72b-instruct) ===
+arm    accuracy
+JSON      100%   (12/12)
+REL        50%   (6/12)
+RELL       75%   (9/12)
+RELS       75%   (9/12)
+RELSL       92%   (11/12)
+
+by query type (correct/total):
+  fwd_calls:  JSON=3/3  REL=3/3  RELL=3/3  RELS=3/3  RELSL=3/3
+  bwd_callers:  JSON=3/3  REL=3/3  RELL=3/3  RELS=3/3  RELSL=3/3
+  shared_out:  JSON=3/3  REL=0/3  RELL=0/3  RELS=0/3  RELSL=2/3
+  shared_in:  JSON=3/3  REL=0/3  RELL=3/3  RELS=3/3  RELSL=3/3

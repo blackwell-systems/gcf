@@ -1,0 +1,42 @@
+Backend: openai (meta-llama/llama-3.1-8b-instruct) | model: meta-llama/llama-3.1-8b-instruct | runs/cell: 3
+
+=== fixture large (500 symbols, 200 edges) ===
+  arm A    tokens(est) 11098
+  arm B    tokens(est) 11096
+  arm C    tokens(est) 11096
+  arm ADJ  tokens(est) 15625
+  arm JSON tokens(est) 20223
+  JSON fwd_calls    3/3  e.g.="UpdateResult"
+  REL  fwd_calls    0/3  e.g.="@4"
+  RELL fwd_calls    2/3  e.g.="Unfortunately, the provided code snippet does not expli"
+  RELS fwd_calls    3/3  e.g.="UpdateResult"
+  RELSL fwd_calls    3/3  e.g.="UpdateResult"
+  JSON bwd_callers  3/3  e.g.="Here are the symbols that call HandleRequest directly: "
+  REL  bwd_callers  0/3  e.g.="@0 github.com/org/project/internal/auth.HandleRequest"
+  RELL bwd_callers  0/3  e.g.="@0"
+  RELS bwd_callers  2/3  e.g.="Based on the given code context, the answer is:  None, "
+  RELSL bwd_callers  3/3  e.g.="Based on the code context payload, the answer is:  None"
+  JSON shared_out   2/3  e.g.="Here are the symbols that are the TARGET of a relations"
+  REL  shared_out   1/3  e.g.="@4, @3, @5, @1, @2, @7, @8, @9, @10, @11, @13, @15, @17"
+  RELL shared_out   0/3  e.g.="Here are the symbols that are the TARGET of a relations"
+  RELS shared_out   0/3  e.g.="DeleteHandler"
+  RELSL shared_out   0/3  e.g.="Based on the provided code context payload, the symbols"
+  JSON shared_in    0/3  e.g.="Here are the symbols that are the source of a relations"
+  REL  shared_in    2/3  e.g.="Here are the symbols that are the SOURCE of a relations"
+  RELL shared_in    2/3  e.g.="Here are the symbols that are the SOURCE of a relations"
+  RELS shared_in    0/3  e.g.="Based on the code context payload, the symbols that are"
+  RELSL shared_in    2/3  e.g.="Based on the provided code context payload, the symbols"
+
+=== EDGE PILOT SUMMARY (meta-llama/llama-3.1-8b-instruct) ===
+arm    accuracy
+JSON       67%   (8/12)
+REL        25%   (3/12)
+RELL       33%   (4/12)
+RELS       42%   (5/12)
+RELSL       67%   (8/12)
+
+by query type (correct/total):
+  fwd_calls:  JSON=3/3  REL=0/3  RELL=2/3  RELS=3/3  RELSL=3/3
+  bwd_callers:  JSON=3/3  REL=0/3  RELL=0/3  RELS=2/3  RELSL=3/3
+  shared_out:  JSON=2/3  REL=1/3  RELL=0/3  RELS=0/3  RELSL=0/3
+  shared_in:  JSON=0/3  REL=2/3  RELL=2/3  RELS=0/3  RELSL=2/3

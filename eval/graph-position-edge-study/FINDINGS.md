@@ -153,6 +153,27 @@ queries x 3 runs):
   the untested next hypothesis that might beat JSON; do not ship `## rel` as drafted on this
   evidence. Logs: `results/relval-edge-probe-*.log`.
 
+### REL variant sweep — fully-scoped + labeled wins (500-symbol, 8 models x 3 runs)
+
+Followed up by A/B-ing the two levers: **labeled** (`source= target= type=`) vs bare SVO,
+and **scoped** (only the neighborhood's node lines) vs full node section. Four variants plus
+the JSON baseline. Totals /96:
+
+| Arm | REL (bare, full) | RELL (labeled, full) | JSON | RELS (bare, scoped) | RELSL (labeled, scoped) |
+|---|--:|--:|--:|--:|--:|
+| /96 | 65 | 66 | 72 | 76 | **88** |
+
+- **Fully-scoped + labeled (RELSL) wins: 88/96, beating JSON (72).** The proposal's untested
+  hypothesis is confirmed.
+- **Both levers matter and compound.** Scoping is the bigger one (trimming the 500-node bulk:
+  65 -> 76); labeling adds more on top of scoping (76 -> 88).
+- **It fixes the weak-model failures that sank plain REL:** mistral-nemo REL 1 -> RELSL 12
+  (JSON 5); gemma-2-27b RELSL 12 (JSON 5); llama-3.1-8b REL 3 -> RELSL 8 (JSON 8). RELSL
+  beats or ties JSON on 6 of 8 models (qwen-72b edges it 12-11, llama-70b ties).
+- **The wire to spec:** a fully-scoped neighborhood payload (only the queried symbol's nodes
+  and its incident edges) with **labeled source/target/type** relationship lines. Logs:
+  `results/relvariant-edge-probe-*.log`.
+
 ### Conclusions (edge direction)
 
 1. **Direction-explicit presentation beats compact edge lines at every scale** (20 to 500
@@ -171,12 +192,12 @@ queries x 3 runs):
    compact forms even at 72B** (all ~3/6) and need presentation regardless.
 5. **Do not flip the edge arrow** (breaking, and it does not help). The actionable, additive
    fix is a direction-explicit rendering for direction-heavy tools (`find_callers`,
-   `blast_radius`) and weak consumers, keeping compact `## edges` as the default. The REL
-   validation refined *which* form: **lead with explicit labeled source/target (JSON-shape),
-   the most robust at 500** (77/96). Scoped named-SVO (`## rel`, 66/96) beats adjacency and
-   rescues some hard cases but did not beat JSON, partly because it retained the full node
-   section; a *fully*-scoped neighborhood payload is the untested next step. Its own spec
-   proposal + one more eval, separate from positions.
+   `blast_radius`) and weak consumers, keeping compact `## edges` as the default. The variant
+   sweep settled the form: **a fully-scoped neighborhood payload (only the queried symbol's
+   nodes + its incident edges) with labeled source/target/type wins — 88/96, beating JSON
+   (72)** and rescuing the weak models where earlier forms failed. Both levers compound:
+   scoping (trim the node bulk) is the bigger one, labeling adds more on top. That is the wire
+   to spec; its own proposal, separate from positions.
 
 ### Caveat
 

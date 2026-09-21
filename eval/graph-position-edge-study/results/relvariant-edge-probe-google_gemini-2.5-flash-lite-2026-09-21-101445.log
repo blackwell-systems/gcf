@@ -1,0 +1,42 @@
+Backend: openai (google/gemini-2.5-flash-lite) | model: google/gemini-2.5-flash-lite | runs/cell: 3
+
+=== fixture large (500 symbols, 200 edges) ===
+  arm A    tokens(est) 11098
+  arm B    tokens(est) 11096
+  arm C    tokens(est) 11096
+  arm ADJ  tokens(est) 15625
+  arm JSON tokens(est) 20223
+  JSON fwd_calls    3/3  e.g.="UpdateResult"
+  REL  fwd_calls    3/3  e.g.="UpdateResult"
+  RELL fwd_calls    3/3  e.g.="UpdateResult"
+  RELS fwd_calls    3/3  e.g.="UpdateResult"
+  RELSL fwd_calls    3/3  e.g.="UpdateResult"
+  JSON bwd_callers  3/3  e.g.="ProcessResponse"
+  REL  bwd_callers  3/3  e.g.="github.com/org/project/internal/server.ProcessResponse"
+  RELL bwd_callers  0/3  e.g.="There are no symbols that directly call `github.com/org"
+  RELS bwd_callers  3/3  e.g.="github.com/org/project/internal/server.ProcessResponse"
+  RELSL bwd_callers  3/3  e.g.="github.com/org/project/internal/server.ProcessResponse"
+  JSON shared_out   3/3  e.g.="CreateOptions"
+  REL  shared_out   3/3  e.g.="CreateOptions"
+  RELL shared_out   3/3  e.g.="CreateOptions"
+  RELS shared_out   3/3  e.g.="CreateOptions"
+  RELSL shared_out   3/3  e.g.="CreateOptions"
+  JSON shared_in    3/3  e.g.="DeleteHandler"
+  REL  shared_in    3/3  e.g.="github.com/org/project/internal/middleware.DeleteHandle"
+  RELL shared_in    0/3  e.g.="github.com/org/project/internal/config.UpdateResult"
+  RELS shared_in    3/3  e.g.="DeleteHandler"
+  RELSL shared_in    3/3  e.g.="DeleteHandler"
+
+=== EDGE PILOT SUMMARY (google/gemini-2.5-flash-lite) ===
+arm    accuracy
+JSON      100%   (12/12)
+REL       100%   (12/12)
+RELL       50%   (6/12)
+RELS      100%   (12/12)
+RELSL      100%   (12/12)
+
+by query type (correct/total):
+  fwd_calls:  JSON=3/3  REL=3/3  RELL=3/3  RELS=3/3  RELSL=3/3
+  bwd_callers:  JSON=3/3  REL=3/3  RELL=0/3  RELS=3/3  RELSL=3/3
+  shared_out:  JSON=3/3  REL=3/3  RELL=3/3  RELS=3/3  RELSL=3/3
+  shared_in:  JSON=3/3  REL=3/3  RELL=0/3  RELS=3/3  RELSL=3/3
