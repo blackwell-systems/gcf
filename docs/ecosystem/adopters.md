@@ -144,6 +144,15 @@ The integration is deliberately conservative for a security tool: a format chang
 - Reviewed and merged by the maintainer, who audited the `gcf-python` source and round-tripped real alert shapes
 - Uses `gcf-python`'s `encode_generic` (generic profile)
 
+## pfSense MCP Server
+
+[pfSense MCP Server](https://github.com/gensecaihq/pfsense-mcp-server) is a production-grade MCP server for pfSense firewall management, built by [GenSecAI](https://gensecai.org) (a non-profit community building open-source generative-AI security tools). It exposes 333 wire-format-verified tools for the pfSense REST API, firewall rules, VPNs, DNS, DHCP, and diagnostics in natural language from Claude or any MCP client, with safety guardrails and config backup and rollback on every change. 102 stars. This is **GenSecAI's second GCF adoption**, after Wazuh MCP: the same team carried it into a second security tool.
+
+The fit mirrors Wazuh. The rule, lease, and diagnostic tools return arrays of uniform records, exactly the shape where GCF declares the field names once in a header and encodes values positionally, cutting the per-record key repetition JSON pays on every firewall rule and DHCP lease. Same conservative security-tool posture: a format change only, lossless, no cross-turn dedup, so no record is ever omitted from a result.
+
+- Opt-in via `RESPONSE_FORMAT=gcf`; default JSON output unchanged; every response stays complete (lossless).
+- Merged in [#87](https://github.com/gensecaihq/pfsense-mcp-server/pull/87), 2026-09-23.
+
 ## Elasticsearch MCP Server
 
 [elasticsearch-mcp-server](https://github.com/cr7258/elasticsearch-mcp-server) is an MCP server for **Elasticsearch and OpenSearch**, maintained by [cr7258](https://github.com/cr7258). It exposes search, index, document, cluster, and alias operations to agents over stdio and HTTP transports. 303 stars.
