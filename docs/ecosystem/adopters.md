@@ -151,7 +151,7 @@ The integration is deliberately conservative for a security tool: a format chang
 The fit mirrors Wazuh. The rule, lease, and diagnostic tools return arrays of uniform records, exactly the shape where GCF declares the field names once in a header and encodes values positionally, cutting the per-record key repetition JSON pays on every firewall rule and DHCP lease. Same conservative security-tool posture: a format change only, lossless, no cross-turn dedup, so no record is ever omitted from a result.
 
 - Opt-in via `RESPONSE_FORMAT=gcf`; default JSON output unchanged; every response stays complete (lossless).
-- Merged in [#87](https://github.com/gensecaihq/pfsense-mcp-server/pull/87), 2026-09-23.
+- Merged and shipping as of 2026-09-23.
 
 ## Elasticsearch MCP Server
 
