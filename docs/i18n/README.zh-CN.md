@@ -1,4 +1,4 @@
-[English](../../README.md) · **简体中文** · [Русский](README.ru.md) · [हिन्दी](README.hi.md)
+[English](../../README.md) · **简体中文** · [Русский](README.ru.md) · [हिन्दी](README.hi.md) · [العربية](README.ar.md)
 
 <p align="center">
   <a href="https://gcformat.com/playground.html"><img src="https://img.shields.io/badge/playground-live-2563eb?style=for-the-badge" alt="Playground"></a>
