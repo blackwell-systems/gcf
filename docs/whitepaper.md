@@ -54,7 +54,7 @@ Token overhead is the visible problem. The deeper problem is invisible: JSON's g
 
 When GPT-4's tokenizer encounters `"name":"Alice"`, it produces `["name][":"][Alice]["]` (4 tokens). The opening quote has fused with the field name into token #32586. Claude's tokenizer produces `["][name][":"][Alice]["]` (5 tokens). The structural boundary (where the field name starts) is at a different token position depending on which model processes the data.
 
-![Delimiter merge rates: pipe 0.47%, quote 8.17%, tab 32.91%](/charts/delimiter-merge-rates.png)
+![Delimiter merge rates: pipe 0.47%, quote 8.17%, tab 32.91%, space 71%](/charts/delimiter-merge-rates.png)
 
 An exhaustive vocabulary scan across 43 tokenizers from 20 providers reveals the scope of the merging:
 

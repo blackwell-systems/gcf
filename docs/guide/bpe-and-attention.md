@@ -64,8 +64,9 @@ To measure how universal this is, the tokenizer-attention-coupling study analyze
 | GCF | pipe (`\|`) | **0.47%** |
 | JSON | quote (`"`) | **8.17%** |
 | TOON | tab (`\t`) | **32.91%** |
+| whitespace-delimited | space (` `) | **71%** |
 
-The pipe almost never merges. The quote merges on roughly one in twelve boundaries. The tab (used by TOON, a competing token-efficient format) merges on a third of all boundaries measured, and on GPT-4o's tokenizer, the tab merges on 100% of the words tested. Tab-separated data was so common in tokenizer training corpora (TSV files, log output, terminal formatting) that GPT-4's cl100k vocabulary contains 1,173 distinct tab-plus-letter entries.
+The pipe almost never merges. The quote merges on roughly one in twelve boundaries. The tab (used by TOON, a competing token-efficient format) merges on a third of all boundaries measured, and on GPT-4o's tokenizer, the tab merges on 100% of the words tested. Tab-separated data was so common in tokenizer training corpora (TSV files, log output, terminal formatting) that GPT-4's cl100k vocabulary contains 1,173 distinct tab-plus-letter entries. A plain space, the boundary used by space-delimited formats, is worse still: it merges into adjacent content about 71% of the time, more than double the tab, because leading-space tokens (`▁word`) are the dominant unit BPE learns. It is the most-merged structural boundary of all, which is why GCF does not use whitespace to separate fields.
 
 There is a paradox worth naming: the more of a format a tokenizer saw during training, the more aggressively it merged that format's delimiters, and the more boundaries it hid. "Trained on lots of JSON" is not an advantage for structural comprehension. It is the mechanism that creates the ambiguity. The tokenizer's compression efficiency is the model's structural handicap.
 

@@ -10,6 +10,7 @@ Every LLM uses a different tokenizer. A format designed for one tokenizer might 
 - **GCF boundary merge rate:** 0.47% (pipe never merges with field names)
 - **JSON boundary merge rate:** 8.17% (quote fuses with field names on 30% of tokenizers)
 - **TOON boundary merge rate:** 32.91% (tab merges on 100% of GPT-4o tokens tested)
+- **Whitespace boundary merge rate:** 71% (a plain space, the boundary of space-delimited formats, is the most-merged structural character of all)
 - **GCF grammar isolation:** 99.5% (@ and < are 100%, | is 99.2%)
 - **JSON grammar fusion:** 92.5% of quote tokens are multi-grammar fusions on 43/43 tokenizers
 - **Controlled proof:** merge barriers produce 3x better structured data comprehension, 3-5x better code comprehension, zero NL cost
@@ -246,11 +247,12 @@ TOON, the primary competing token-efficient format, uses tab characters as colum
 
 | Format | Delimiter merge rate | Checks |
 |--------|---------------------|--------|
+| space (whitespace) | **71%** | 600/840 |
 | TOON (tab) | **32.91%** | 283/860 |
 | JSON (quote) | 8.17% | 158/1,935 |
 | GCF (pipe) | **0.47%** | 135/29,025 |
 
-GPT-4o has a **100% tab merge rate**: every single word tested merges with the preceding tab. GPT-4 cl100k merges 95%. These are the two most widely deployed tokenizers in the world. See [GCF vs TOON](/guide/vs-toon) for the full comparison.
+GPT-4o has a **100% tab merge rate**: every single word tested merges with the preceding tab. GPT-4 cl100k merges 95%. These are the two most widely deployed tokenizers in the world. A plain space is worse still, 71% across the 43 tokenizers and the most-merged boundary measured, because leading-space tokens are the dominant unit BPE learns; this is why GCF separates fields with the pipe rather than whitespace. See [GCF vs TOON](/guide/vs-toon) for the full comparison.
 
 ### Why merging matters for comprehension
 
