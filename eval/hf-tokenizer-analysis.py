@@ -10,7 +10,8 @@ Tests:
 1. Pipe delimiter merge rate (GCF's structural boundary)
 2. Quote+colon merge rate (JSON's structural boundary)
 3. Tab merge rate (TOON's structural boundary)
-4. Vocabulary entry analysis (quote+letter vs pipe+letter counts)
+4. Space merge rate (whitespace-delimited formats' structural boundary)
+5. Vocabulary entry analysis (quote+letter vs pipe+letter counts)
 
 Run:
   cd eval
@@ -204,6 +205,20 @@ def check_tab_merge(tok, word: str) -> bool:
     decoded = decode_tokens(tok, ids)
     for t in decoded:
         if "\t" in t and len(t.replace("\t", "")) > 0:
+            return True
+    return False
+
+
+def check_space_merge(tok, word: str) -> bool:
+    """Check if a space merges with an adjacent word in 'word word' pattern.
+
+    Whitespace is the structural boundary used by space-delimited formats.
+    """
+    pattern = f"data {word}"
+    ids = encode(tok, pattern)
+    decoded = decode_tokens(tok, ids)
+    for t in decoded:
+        if " " in t and len(t.replace(" ", "")) > 0:
             return True
     return False
 
@@ -434,6 +449,33 @@ def main():
           f"({tab_merges/tab_total*100:.2f}%)")
 
     # ===================================================================
+    # TEST 3b: Space merge rate (whitespace-delimited boundary)
+    # ===================================================================
+    print()
+    print("=" * 80)
+    print(f"TEST 3b: SPACE MERGE RATE ({len(TAB_TEST_WORDS)} words x {n_tok} tokenizers)")
+    print("=" * 80)
+    print()
+
+    space_total = 0
+    space_merges = 0
+    space_per_tok = {}
+
+    for tname, tok in tokenizers.items():
+        tok_merges = 0
+        for word in TAB_TEST_WORDS:
+            space_total += 1
+            if check_space_merge(tok, word):
+                tok_merges += 1
+                space_merges += 1
+        space_per_tok[tname] = tok_merges
+        rate = tok_merges / len(TAB_TEST_WORDS) * 100
+        print(f"  {tname[:40].ljust(40)} {tok_merges}/{len(TAB_TEST_WORDS)} ({rate:.0f}%)")
+
+    print(f"\nOverall space merge rate: {space_merges}/{space_total} "
+          f"({space_merges/space_total*100:.2f}%)")
+
+    # ===================================================================
     # TEST 4: Vocabulary entry analysis
     # ===================================================================
     print()
@@ -623,6 +665,8 @@ def main():
           f"  ({pipe_merges}/{pipe_total} checks)")
     print(f"TOON (tab)   boundary merge rate:  {tab_merges/tab_total*100:.2f}%"
           f"  ({tab_merges}/{tab_total} checks)")
+    print(f"space        boundary merge rate:  {space_merges/space_total*100:.2f}%"
+          f"  ({space_merges}/{space_total} checks)")
     print()
 
     if pipe_merges == 0:
@@ -639,6 +683,7 @@ def main():
     print(f"  GCF     | {pipe_merges/pipe_total*100:>8.4f}%  | Every model sees identical structure")
     print(f"  JSON    | {total_quote_merges/total_quote_checks*100:>8.2f}%  | Structure varies per model")
     print(f"  TOON    | {tab_merges/tab_total*100:>8.2f}%  | Worse than JSON")
+    print(f"  space   | {space_merges/space_total*100:>8.2f}%  | Whitespace-packed formats (worst measured)")
 
     # Save results to JSON for downstream use
     output = {
@@ -649,8 +694,10 @@ def main():
         "quote_merge_rate": total_quote_merges / total_quote_checks,
         "pipe_merge_rate": pipe_merges / pipe_total,
         "tab_merge_rate": tab_merges / tab_total,
+        "space_merge_rate": space_merges / space_total,
         "per_tokenizer_quote_merges": tok_quote_counts,
         "per_tokenizer_tab_merges": tab_per_tok,
+        "per_tokenizer_space_merges": space_per_tok,
         "pipe_merge_count": pipe_merges,
         "field_merge_ranking": [(f, c) for f, c in field_merge_counts],
         "vocab_analysis": {k: v for k, v in vocab_results.items()},
