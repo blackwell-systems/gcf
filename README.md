@@ -198,7 +198,7 @@ Read the full argument in the [Tokenizer Analysis](https://gcformat.com/guide/to
 | Zed | Search "GCF" in Extensions | [gcf-zed](https://github.com/blackwell-systems/gcf-zed) (tree-sitter syntax highlighting) |
 | Tree-sitter | `npm install tree-sitter-gcf` | [tree-sitter-gcf](https://github.com/blackwell-systems/tree-sitter-gcf) |
 
-**Zero runtime dependencies. Permanently.** All seven implementations depend only on their language's standard library. No transitive dependencies. No supply chain risk. This is a permanent commitment: GCF will never take on external runtime dependencies. MIT licensed. All implementations support both generic profile (`encodeGeneric`) and graph profile (`encode`). CLI included in the six original language SDKs. Syntax highlighting via tree-sitter (Neovim, Helix, Zed).
+**Zero runtime dependencies. Permanently.** All seven implementations depend only on their language's standard library. No transitive dependencies. No supply chain risk. This is a permanent commitment: GCF will never take on external runtime dependencies. Apache-2.0 licensed. All implementations support both generic profile (`encodeGeneric`) and graph profile (`encode`). CLI included in the six original language SDKs. Syntax highlighting via tree-sitter (Neovim, Helix, Zed).
 
 **Specification:** [SPEC v3.5.1 Stable](SPEC.md) with 265 conformance fixtures, 43,000,000,000+ lossless round-trips verified across 5 formats and 6 languages. Seven implementations (Go v1.6.2, Swift v2.6.1, .NET v0.1.0, the rest v2.5.2). Cross-language conformance verified.
 
@@ -252,4 +252,4 @@ Read the full argument in the [Tokenizer Analysis](https://gcformat.com/guide/to
 
 ## License
 
-MIT - [Dayna Blackwell](https://github.com/blackwell-systems)
+Apache-2.0 - [Dayna Blackwell](https://github.com/blackwell-systems)

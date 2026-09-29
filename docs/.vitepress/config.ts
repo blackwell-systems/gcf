@@ -6,6 +6,8 @@ export default defineConfig({
   description: 'Token-optimized wire format for LLM tool responses',
   appearance: 'force-dark',
   base: '/',
+  // README translations are GitHub-rendered docs, not site pages
+  srcExclude: ['i18n/**'],
   markdown: {
     languages: [gcfGrammar as any],
   },
@@ -105,7 +107,7 @@ export default defineConfig({
     ],
     footer: {
       message: '100% comprehension. 71% fewer tokens. 2,500+ LLM evaluations.',
-      copyright: '&copy; 2026 <a href="https://blackwell-systems.com">Blackwell Systems</a>. MIT Licensed.',
+      copyright: '&copy; 2026 <a href="https://blackwell-systems.com">Blackwell Systems</a>. Apache-2.0 Licensed.',
     },
   },
 })

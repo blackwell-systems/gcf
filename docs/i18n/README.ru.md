@@ -4,17 +4,17 @@
   <a href="https://gcformat.com/playground.html"><img src="https://img.shields.io/badge/playground-live-2563eb?style=for-the-badge" alt="Playground"></a>
   <a href="https://gcformat.com/guide/benchmarks.html"><img src="https://img.shields.io/badge/benchmarks-2%2C500%2B%20evals-22c55e?style=for-the-badge" alt="Benchmarks"></a>
   <a href="https://github.com/blackwell-systems/gcf"><img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/blackwell-systems/gcf/main/assets/downloads-badge.json&style=for-the-badge" alt="Downloads"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache_2.0-333?style=for-the-badge" alt="License"></a>
+  <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-Apache_2.0-333?style=for-the-badge" alt="License"></a>
 </p>
 
 <p align="center">
-  <img src="assets/gcf-hero-wire-delta.png" alt="GCF" width="760">
+  <img src="../../assets/gcf-hero-wire-delta.png" alt="GCF" width="760">
 </p>
 
 <h3 align="center">AI-нативный формат передачи структурированных данных. Создан для агентного цикла.</h3>
 
 <p align="center">
-  <img src="assets/divider-wave-2.png" alt="" width="100%">
+  <img src="../../assets/divider-wave-2.png" alt="" width="100%">
 </p>
 
 > [!IMPORTANT]
@@ -25,7 +25,7 @@
 > - [Developmental Atlas of Attention Head Specialization: Spacing, Stranding, and the Capacity Tax of BPE Tokenization](https://doi.org/10.5281/zenodo.21205389)
 
 <p align="center">
-  <img src="assets/divider.png" alt="" width="100%">
+  <img src="../../assets/divider.png" alt="" width="100%">
 </p>
 
 **GCF создан для агентного цикла, в котором один и тот же структурированный контекст пересекает границу модели раз за разом.** Одна полезная нагрузка уже на 50-92% меньше, чем JSON. Но GCF также дедуплицирует повторяющуюся структуру между ходами и отправляет только дельты при изменении контекста, так что к 5-му перекрывающемуся вызову каждый ответ стоит на 99% меньше токенов, чем эквивалент на JSON, а полная сессия из 10 вызовов обходится на 94,4% дешевле повторной отправки JSON на каждом ходу. И дедупликация сессии, и дельта требуют локальных ID и многоходовой архитектуры: **ни JSON, ни TOON не способны на это вовсе.**
@@ -51,7 +51,7 @@ pip install gcf-proxy
 ```
 
 <p align="center">
-  <img src="assets/divider.png" alt="" width="100%">
+  <img src="../../assets/divider.png" alt="" width="100%">
 </p>
 
 ## Бенчмарки
@@ -126,7 +126,7 @@ GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=2 edges=
 
 Локальные ID (`@0`, `@1`) заменяют полные имена в рёбрах. 81 токен вместо 191 для JSON.
 
-[![Playground](assets/playground.png)](https://gcformat.com/playground.html)
+[![Playground](../../assets/playground.png)](https://gcformat.com/playground.html)
 
 **[Попробуйте вживую в playground](https://gcformat.com/playground.html)** с многоформатным сравнением в реальном времени. Вставьте JSON, YAML или TOML. Кодируйте из JSON, YAML, TOML, CSV и MessagePack и декодируйте обратно в них.
 
@@ -198,9 +198,9 @@ GCF не подбирался методом проб и ошибок. Его г
 | Zed | Поиск "GCF" в Extensions | [gcf-zed](https://github.com/blackwell-systems/gcf-zed) (подсветка синтаксиса на tree-sitter) |
 | Tree-sitter | `npm install tree-sitter-gcf` | [tree-sitter-gcf](https://github.com/blackwell-systems/tree-sitter-gcf) |
 
-**Нулевые зависимости во время выполнения. Навсегда.** Все семь реализаций зависят только от стандартной библиотеки своего языка. Никаких транзитивных зависимостей. Никакого риска цепочки поставок. Это постоянное обязательство: GCF никогда не возьмёт на себя внешних зависимостей во время выполнения. Лицензия MIT. Все реализации поддерживают и generic-профиль (`encodeGeneric`), и graph-профиль (`encode`). CLI включён в шесть исходных языковых SDK. Подсветка синтаксиса через tree-sitter (Neovim, Helix, Zed).
+**Нулевые зависимости во время выполнения. Навсегда.** Все семь реализаций зависят только от стандартной библиотеки своего языка. Никаких транзитивных зависимостей. Никакого риска цепочки поставок. Это постоянное обязательство: GCF никогда не возьмёт на себя внешних зависимостей во время выполнения. Лицензия Apache-2.0. Все реализации поддерживают и generic-профиль (`encodeGeneric`), и graph-профиль (`encode`). CLI включён в шесть исходных языковых SDK. Подсветка синтаксиса через tree-sitter (Neovim, Helix, Zed).
 
-**Спецификация:** [SPEC v3.5.1 Stable](SPEC.md) с 265 фикстурами соответствия, 43 000 000 000+ безошибочных циклов туда-обратно, проверенных в 5 форматах и 6 языках. Семь реализаций (Go v1.6.2, Swift v2.6.1, .NET v0.1.0, остальные v2.5.2). Межъязыковое соответствие проверено.
+**Спецификация:** [SPEC v3.5.1 Stable](../../SPEC.md) с 265 фикстурами соответствия, 43 000 000 000+ безошибочных циклов туда-обратно, проверенных в 5 форматах и 6 языках. Семь реализаций (Go v1.6.2, Swift v2.6.1, .NET v0.1.0, остальные v2.5.2). Межъязыковое соответствие проверено.
 
 ## Документация
 
@@ -215,7 +215,7 @@ GCF не подбирался методом проб и ошибок. Его г
 - [Tokenizer Analysis](https://gcformat.com/guide/tokenizer-analysis.html) (почему грамматика JSON ломается на уровне BPE)
 - [GCF on Small Models](https://gcformat.com/guide/small-models.html) (где на самом деле живёт разрыв в понимании: дешёвые, локальные модели с открытыми весами)
 - [Playground](https://gcformat.com/playground.html)
-- [Specification](SPEC.md)
+- [Specification](../../SPEC.md)
 
 ## Кто использует
 
@@ -252,4 +252,4 @@ GCF не подбирался методом проб и ошибок. Его г
 
 ## Лицензия
 
-MIT - [Dayna Blackwell](https://github.com/blackwell-systems)
+Apache-2.0 - [Dayna Blackwell](https://github.com/blackwell-systems)

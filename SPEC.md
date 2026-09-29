@@ -10,7 +10,7 @@
 
 **Authors:** Dayna Blackwell, Blackwell Systems
 
-**License:** MIT
+**License:** Apache-2.0
 
 ---
 
@@ -1911,4 +1911,4 @@ GCF is a UTF-8 format. All text (keys, values, field names, qualified names) is 
 
 ## 21. Intellectual Property
 
-This specification is released under the MIT License. No patent disclosures are known at the time of publication. The authors intend this specification to be freely implementable without royalty requirements.
+This specification is released under the Apache License, Version 2.0, which includes an express patent license from each contributor. No patent disclosures are known at the time of publication. The authors intend this specification to be freely implementable without royalty requirements.

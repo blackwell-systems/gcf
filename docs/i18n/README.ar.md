@@ -4,17 +4,17 @@
   <a href="https://gcformat.com/playground.html"><img src="https://img.shields.io/badge/playground-live-2563eb?style=for-the-badge" alt="Playground"></a>
   <a href="https://gcformat.com/guide/benchmarks.html"><img src="https://img.shields.io/badge/benchmarks-2%2C500%2B%20evals-22c55e?style=for-the-badge" alt="Benchmarks"></a>
   <a href="https://github.com/blackwell-systems/gcf"><img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/blackwell-systems/gcf/main/assets/downloads-badge.json&style=for-the-badge" alt="Downloads"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache_2.0-333?style=for-the-badge" alt="License"></a>
+  <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-Apache_2.0-333?style=for-the-badge" alt="License"></a>
 </p>
 
 <p align="center">
-  <img src="assets/gcf-hero-wire-delta.png" alt="GCF" width="760">
+  <img src="../../assets/gcf-hero-wire-delta.png" alt="GCF" width="760">
 </p>
 
 <h3 align="center">تنسيق الإرسال الأصيل للذكاء الاصطناعي للبيانات المهيكلة. مبني من أجل الحلقة الوكيلية.</h3>
 
 <p align="center">
-  <img src="assets/divider-wave-2.png" alt="" width="100%">
+  <img src="../../assets/divider-wave-2.png" alt="" width="100%">
 </p>
 
 > [!IMPORTANT]
@@ -25,7 +25,7 @@
 > - [Developmental Atlas of Attention Head Specialization: Spacing, Stranding, and the Capacity Tax of BPE Tokenization](https://doi.org/10.5281/zenodo.21205389)
 
 <p align="center">
-  <img src="assets/divider.png" alt="" width="100%">
+  <img src="../../assets/divider.png" alt="" width="100%">
 </p>
 
 **تم بناء GCF من أجل الحلقة الوكيلية، حيث يعبر نفس السياق المهيكل حدود النموذج دورة تلو الأخرى.** حمولة واحدة تكون بالفعل أصغر بنسبة 50-92% من JSON. لكن GCF يزيل أيضًا تكرار البنية المتكررة عبر الأدوار ويرسل الفروق (deltas) فقط عند تغير السياق، بحيث تكلف كل استجابة بحلول الاستدعاء المتداخل الخامس عددًا أقل من الرموز (tokens) بنسبة 99% مقارنةً بمكافئ JSON، وتعمل جلسة كاملة من 10 استدعاءات بتكلفة أرخص بنسبة 94.4% من إعادة إرسال JSON في كل دور. يحتاج كل من إزالة تكرار الجلسة والفرق إلى معرّفات محلية وتصميم متعدد الأدوار: **لا يستطيع JSON ولا TOON فعل هذا على الإطلاق.**
@@ -51,7 +51,7 @@ pip install gcf-proxy
 ```
 
 <p align="center">
-  <img src="assets/divider.png" alt="" width="100%">
+  <img src="../../assets/divider.png" alt="" width="100%">
 </p>
 
 ## المقاييس المرجعية
@@ -126,7 +126,7 @@ GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=2 edges=
 
 تحل المعرّفات المحلية (`@0`، `@1`) محل الأسماء الكاملة في الحواف. 81 رمزًا بدلًا من 191 لـ JSON.
 
-[![Playground](assets/playground.png)](https://gcformat.com/playground.html)
+[![Playground](../../assets/playground.png)](https://gcformat.com/playground.html)
 
 **[جرّبه مباشرةً في playground](https://gcformat.com/playground.html)** مع مقارنة متعددة التنسيقات في الوقت الفعلي. ألصق JSON أو YAML أو TOML. رمّز من JSON وYAML وTOML وCSV وMessagePack وفُك الترميز إليها.
 
@@ -198,9 +198,9 @@ GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=2 edges=
 | Zed | ابحث عن "GCF" في Extensions | [gcf-zed](https://github.com/blackwell-systems/gcf-zed) (تمييز بناء الجملة عبر tree-sitter) |
 | Tree-sitter | `npm install tree-sitter-gcf` | [tree-sitter-gcf](https://github.com/blackwell-systems/tree-sitter-gcf) |
 
-**صفر اعتماديات وقت التشغيل. بشكل دائم.** تعتمد كل عمليات التنفيذ السبع على المكتبة القياسية للغتها فقط. لا اعتماديات متعدية. لا مخاطر لسلسلة التوريد. هذا التزام دائم: لن يتبنى GCF أبدًا اعتماديات خارجية لوقت التشغيل. مرخّص بموجب MIT. تدعم كل عمليات التنفيذ ملف generic (`encodeGeneric`) وملف graph (`encode`) معًا. واجهة سطر الأوامر مضمّنة في الحزم البرمجية الست الأصلية. تمييز بناء الجملة عبر tree-sitter (Neovim، Helix، Zed).
+**صفر اعتماديات وقت التشغيل. بشكل دائم.** تعتمد كل عمليات التنفيذ السبع على المكتبة القياسية للغتها فقط. لا اعتماديات متعدية. لا مخاطر لسلسلة التوريد. هذا التزام دائم: لن يتبنى GCF أبدًا اعتماديات خارجية لوقت التشغيل. مرخّص بموجب Apache-2.0. تدعم كل عمليات التنفيذ ملف generic (`encodeGeneric`) وملف graph (`encode`) معًا. واجهة سطر الأوامر مضمّنة في الحزم البرمجية الست الأصلية. تمييز بناء الجملة عبر tree-sitter (Neovim، Helix، Zed).
 
-**المواصفة:** [SPEC v3.5.1 Stable](SPEC.md) مع 265 تركيبة اختبار مطابقة، و43,000,000,000+ دورة ذهاب وإياب بلا فقدان تم التحقق منها عبر 5 تنسيقات و6 لغات. سبع عمليات تنفيذ (Go v1.6.2، Swift v2.6.1، .NET v0.1.0، والبقية v2.5.2). تم التحقق من المطابقة عبر اللغات.
+**المواصفة:** [SPEC v3.5.1 Stable](../../SPEC.md) مع 265 تركيبة اختبار مطابقة، و43,000,000,000+ دورة ذهاب وإياب بلا فقدان تم التحقق منها عبر 5 تنسيقات و6 لغات. سبع عمليات تنفيذ (Go v1.6.2، Swift v2.6.1، .NET v0.1.0، والبقية v2.5.2). تم التحقق من المطابقة عبر اللغات.
 
 ## التوثيق
 
@@ -215,7 +215,7 @@ GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=2 edges=
 - [Tokenizer Analysis](https://gcformat.com/guide/tokenizer-analysis.html) (لماذا تنكسر قواعد JSON على مستوى BPE)
 - [GCF on Small Models](https://gcformat.com/guide/small-models.html) (أين تكمن فجوة الفهم فعليًا: النماذج الرخيصة والمحلية والمفتوحة الأوزان)
 - [Playground](https://gcformat.com/playground.html)
-- [Specification](SPEC.md)
+- [Specification](../../SPEC.md)
 
 ## من تبنّاه
 
@@ -252,4 +252,4 @@ GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=2 edges=
 
 ## الترخيص
 
-MIT - [Dayna Blackwell](https://github.com/blackwell-systems)
+Apache-2.0 - [Dayna Blackwell](https://github.com/blackwell-systems)

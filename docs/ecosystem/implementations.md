@@ -1,6 +1,6 @@
 # Implementations
 
-Six official implementations, all MIT licensed and zero runtime dependencies. The current spec v3.5.3 contract is defined by [281 conformance fixtures](https://github.com/blackwell-systems/gcf/tree/main/tests/conformance). All six implementations pass 281 with 43B+ combined round-trips verified.
+Seven official implementations, all Apache-2.0 licensed and zero runtime dependencies. The current spec v3.5.3 contract is defined by [281 conformance fixtures](https://github.com/blackwell-systems/gcf/tree/main/tests/conformance). All seven implementations pass 281, with 43B+ combined round-trips verified.
 
 ## Official Implementations
 
@@ -12,7 +12,7 @@ Six official implementations, all MIT licensed and zero runtime dependencies. Th
 | Rust | `gcf` | `cargo add gcf@3.0.1` | [crates.io](https://crates.io/crates/gcf) | v3.0.1 · 281 · 43B+ RT |
 | Swift | `GCF` | `.package(url: "https://github.com/blackwell-systems/gcf-swift", from: "2.7.1")` | [GitHub](https://github.com/blackwell-systems/gcf-swift) | v2.7.1 · 281 · 20M RT |
 | Kotlin | `gcf` | `implementation("com.github.blackwell-systems:gcf-kotlin:2.6.1")` | [JitPack](https://jitpack.io/#blackwell-systems/gcf-kotlin) | v2.6.1 · 281 · 10M RT |
-| .NET | `BlackwellSystems.Gcf` | `dotnet add package BlackwellSystems.Gcf` | [NuGet](https://www.nuget.org/packages/BlackwellSystems.Gcf) | v0.2.1 · 281 · new |
+| .NET | `BlackwellSystems.Gcf` | `dotnet add package BlackwellSystems.Gcf` | [NuGet](https://www.nuget.org/packages/BlackwellSystems.Gcf) | v1.0.0 · 281 · new |
 
 All seven support both encoding profiles:
 

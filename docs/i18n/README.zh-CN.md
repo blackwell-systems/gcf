@@ -4,17 +4,17 @@
   <a href="https://gcformat.com/playground.html"><img src="https://img.shields.io/badge/playground-live-2563eb?style=for-the-badge" alt="Playground"></a>
   <a href="https://gcformat.com/guide/benchmarks.html"><img src="https://img.shields.io/badge/benchmarks-2%2C500%2B%20evals-22c55e?style=for-the-badge" alt="Benchmarks"></a>
   <a href="https://github.com/blackwell-systems/gcf"><img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/blackwell-systems/gcf/main/assets/downloads-badge.json&style=for-the-badge" alt="Downloads"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache_2.0-333?style=for-the-badge" alt="License"></a>
+  <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-Apache_2.0-333?style=for-the-badge" alt="License"></a>
 </p>
 
 <p align="center">
-  <img src="assets/gcf-hero-wire-delta.png" alt="GCF" width="760">
+  <img src="../../assets/gcf-hero-wire-delta.png" alt="GCF" width="760">
 </p>
 
 <h3 align="center">面向结构化数据的 AI 原生传输格式。为智能体循环而生。</h3>
 
 <p align="center">
-  <img src="assets/divider-wave-2.png" alt="" width="100%">
+  <img src="../../assets/divider-wave-2.png" alt="" width="100%">
 </p>
 
 > [!IMPORTANT]
@@ -25,7 +25,7 @@
 > - [Developmental Atlas of Attention Head Specialization: Spacing, Stranding, and the Capacity Tax of BPE Tokenization](https://doi.org/10.5281/zenodo.21205389)
 
 <p align="center">
-  <img src="assets/divider.png" alt="" width="100%">
+  <img src="../../assets/divider.png" alt="" width="100%">
 </p>
 
 **GCF 为智能体循环而构建，在这种循环中同一份结构化上下文会一轮又一轮地穿越模型边界。** 单个载荷就已经比 JSON 小 50-92%。但 GCF 还会跨轮次对重复结构去重，仅在上下文变化时发送增量，因此到第 5 次重叠调用时，每个响应比等价的 JSON 少花 99% 的 token，而一次完整的 10 次调用会话比每轮都重新发送 JSON 便宜 94.4%。会话去重与增量都需要本地 ID 和多轮设计：**JSON 和 TOON 都完全做不到这一点。**
@@ -51,7 +51,7 @@ pip install gcf-proxy
 ```
 
 <p align="center">
-  <img src="assets/divider.png" alt="" width="100%">
+  <img src="../../assets/divider.png" alt="" width="100%">
 </p>
 
 ## 基准测试
@@ -126,7 +126,7 @@ GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=2 edges=
 
 本地 ID（`@0`、`@1`）在边中取代完整名称。81 个 token，而 JSON 需要 191 个。
 
-[![Playground](assets/playground.png)](https://gcformat.com/playground.html)
+[![Playground](../../assets/playground.png)](https://gcformat.com/playground.html)
 
 **[在 playground 中实时试用](https://gcformat.com/playground.html)**，进行实时多格式对比。粘贴 JSON、YAML 或 TOML。可从 JSON、YAML、TOML、CSV 和 MessagePack 编码，并解码回这些格式。
 
@@ -198,9 +198,9 @@ Dayna Blackwell 撰写的四篇论文（2026 年，当前审稿中）确立了�
 | Zed | 在 Extensions 中搜索 "GCF" | [gcf-zed](https://github.com/blackwell-systems/gcf-zed)（tree-sitter 语法高亮） |
 | Tree-sitter | `npm install tree-sitter-gcf` | [tree-sitter-gcf](https://github.com/blackwell-systems/tree-sitter-gcf) |
 
-**零运行时依赖。永久如此。** 所有七个实现都只依赖各自语言的标准库。无传递依赖。无供应链风险。这是一项永久承诺：GCF 永远不会引入外部运行时依赖。采用 MIT 许可。所有实现都同时支持通用画像（`encodeGeneric`）和图画像（`encode`）。最初的六个语言 SDK 均内置 CLI。通过 tree-sitter 提供语法高亮（Neovim、Helix、Zed）。
+**零运行时依赖。永久如此。** 所有七个实现都只依赖各自语言的标准库。无传递依赖。无供应链风险。这是一项永久承诺：GCF 永远不会引入外部运行时依赖。采用 Apache-2.0 许可。所有实现都同时支持通用画像（`encodeGeneric`）和图画像（`encode`）。最初的六个语言 SDK 均内置 CLI。通过 tree-sitter 提供语法高亮（Neovim、Helix、Zed）。
 
-**规范：** [SPEC v3.5.1 Stable](SPEC.md)，含 265 个一致性测试夹具，在 5 种格式和 6 种语言上验证了 43,000,000,000+ 次无损往返。七个实现（Go v1.6.2、Swift v2.6.1、.NET v0.1.0，其余为 v2.5.2）。已验证跨语言一致性。
+**规范：** [SPEC v3.5.1 Stable](../../SPEC.md)，含 265 个一致性测试夹具，在 5 种格式和 6 种语言上验证了 43,000,000,000+ 次无损往返。七个实现（Go v1.6.2、Swift v2.6.1、.NET v0.1.0，其余为 v2.5.2）。已验证跨语言一致性。
 
 ## 文档
 
@@ -215,7 +215,7 @@ Dayna Blackwell 撰写的四篇论文（2026 年，当前审稿中）确立了�
 - [Tokenizer Analysis](https://gcformat.com/guide/tokenizer-analysis.html)（为何 JSON 的语法在 BPE 层面崩坏）
 - [GCF on Small Models](https://gcformat.com/guide/small-models.html)（理解率差距究竟出现在哪里：廉价、本地、开放权重的模型）
 - [Playground](https://gcformat.com/playground.html)
-- [Specification](SPEC.md)
+- [Specification](../../SPEC.md)
 
 ## 采用者
 
@@ -252,4 +252,4 @@ Dayna Blackwell 撰写的四篇论文（2026 年，当前审稿中）确立了�
 
 ## 许可
 
-MIT - [Dayna Blackwell](https://github.com/blackwell-systems)
+Apache-2.0 - [Dayna Blackwell](https://github.com/blackwell-systems)

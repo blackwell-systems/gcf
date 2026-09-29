@@ -4,17 +4,17 @@
   <a href="https://gcformat.com/playground.html"><img src="https://img.shields.io/badge/playground-live-2563eb?style=for-the-badge" alt="Playground"></a>
   <a href="https://gcformat.com/guide/benchmarks.html"><img src="https://img.shields.io/badge/benchmarks-2%2C500%2B%20evals-22c55e?style=for-the-badge" alt="Benchmarks"></a>
   <a href="https://github.com/blackwell-systems/gcf"><img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/blackwell-systems/gcf/main/assets/downloads-badge.json&style=for-the-badge" alt="Downloads"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache_2.0-333?style=for-the-badge" alt="License"></a>
+  <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-Apache_2.0-333?style=for-the-badge" alt="License"></a>
 </p>
 
 <p align="center">
-  <img src="assets/gcf-hero-wire-delta.png" alt="GCF" width="760">
+  <img src="../../assets/gcf-hero-wire-delta.png" alt="GCF" width="760">
 </p>
 
 <h3 align="center">संरचित डेटा के लिए AI-नेटिव वायर फ़ॉर्मैट। एजेंटिक लूप के लिए बनाया गया।</h3>
 
 <p align="center">
-  <img src="assets/divider-wave-2.png" alt="" width="100%">
+  <img src="../../assets/divider-wave-2.png" alt="" width="100%">
 </p>
 
 > [!IMPORTANT]
@@ -25,7 +25,7 @@
 > - [Developmental Atlas of Attention Head Specialization: Spacing, Stranding, and the Capacity Tax of BPE Tokenization](https://doi.org/10.5281/zenodo.21205389)
 
 <p align="center">
-  <img src="assets/divider.png" alt="" width="100%">
+  <img src="../../assets/divider.png" alt="" width="100%">
 </p>
 
 **GCF एजेंटिक लूप के लिए बनाया गया है, जहाँ वही संरचित संदर्भ बारी-बारी मॉडल की सीमा को बार-बार पार करता है।** एक अकेला पेलोड ही JSON से 50-92% छोटा होता है। लेकिन GCF बारी-बारी दोहराई गई संरचना को डीडुप्लिकेट भी करता है और संदर्भ बदलने पर केवल डेल्टा भेजता है, इसलिए 5वें ओवरलैपिंग कॉल तक हर प्रतिक्रिया JSON के समतुल्य की तुलना में 99% कम टोकन खर्च करती है, और पूरा 10-कॉल का सत्र हर बारी JSON को दोबारा भेजने की तुलना में 94.4% सस्ता चलता है। सत्र डीडुप और डेल्टा दोनों को लोकल ID और एक मल्टी-टर्न डिज़ाइन की ज़रूरत होती है: **JSON और TOON दोनों में से कोई भी यह बिल्कुल नहीं कर सकता।**
@@ -51,7 +51,7 @@ pip install gcf-proxy
 ```
 
 <p align="center">
-  <img src="assets/divider.png" alt="" width="100%">
+  <img src="../../assets/divider.png" alt="" width="100%">
 </p>
 
 ## बेंचमार्क
@@ -126,7 +126,7 @@ GCF profile=graph tool=context_for_task budget=5000 tokens=1847 symbols=2 edges=
 
 लोकल ID (`@0`, `@1`) एज में पूरे नामों की जगह लेते हैं। JSON के लिए 191 के बजाय 81 टोकन।
 
-[![Playground](assets/playground.png)](https://gcformat.com/playground.html)
+[![Playground](../../assets/playground.png)](https://gcformat.com/playground.html)
 
 **[playground में इसे लाइव आज़माएँ](https://gcformat.com/playground.html)** रीयल-टाइम मल्टी-फ़ॉर्मैट तुलना के साथ। JSON, YAML, या TOML पेस्ट करें। JSON, YAML, TOML, CSV, और MessagePack से एन्कोड करें और उनमें डिकोड करें।
 
@@ -198,9 +198,9 @@ Dayna Blackwell के चार शोधपत्र (2026, वर्तमा
 | Zed | Extensions में "GCF" खोजें | [gcf-zed](https://github.com/blackwell-systems/gcf-zed) (tree-sitter सिंटैक्स हाइलाइटिंग) |
 | Tree-sitter | `npm install tree-sitter-gcf` | [tree-sitter-gcf](https://github.com/blackwell-systems/tree-sitter-gcf) |
 
-**शून्य रनटाइम निर्भरताएँ। स्थायी रूप से।** सभी सातों कार्यान्वयन केवल अपनी भाषा की मानक लाइब्रेरी पर निर्भर करते हैं। कोई सकर्मक निर्भरता नहीं। कोई सप्लाई चेन जोखिम नहीं। यह एक स्थायी प्रतिबद्धता है: GCF कभी भी बाहरी रनटाइम निर्भरताएँ नहीं लेगा। MIT लाइसेंस प्राप्त। सभी कार्यान्वयन generic प्रोफ़ाइल (`encodeGeneric`) और graph प्रोफ़ाइल (`encode`) दोनों का समर्थन करते हैं। मूल छह भाषा SDK में CLI शामिल है। tree-sitter के माध्यम से सिंटैक्स हाइलाइटिंग (Neovim, Helix, Zed)।
+**शून्य रनटाइम निर्भरताएँ। स्थायी रूप से।** सभी सातों कार्यान्वयन केवल अपनी भाषा की मानक लाइब्रेरी पर निर्भर करते हैं। कोई सकर्मक निर्भरता नहीं। कोई सप्लाई चेन जोखिम नहीं। यह एक स्थायी प्रतिबद्धता है: GCF कभी भी बाहरी रनटाइम निर्भरताएँ नहीं लेगा। Apache-2.0 लाइसेंस प्राप्त। सभी कार्यान्वयन generic प्रोफ़ाइल (`encodeGeneric`) और graph प्रोफ़ाइल (`encode`) दोनों का समर्थन करते हैं। मूल छह भाषा SDK में CLI शामिल है। tree-sitter के माध्यम से सिंटैक्स हाइलाइटिंग (Neovim, Helix, Zed)।
 
-**विनिर्देश:** [SPEC v3.5.1 Stable](SPEC.md) 265 अनुरूपता फ़िक्स्चर के साथ, 5 फ़ॉर्मैट और 6 भाषाओं में 43,000,000,000+ लॉसलेस राउंड-ट्रिप सत्यापित। सात कार्यान्वयन (Go v1.6.2, Swift v2.6.1, .NET v0.1.0, बाकी v2.5.2)। क्रॉस-भाषा अनुरूपता सत्यापित।
+**विनिर्देश:** [SPEC v3.5.1 Stable](../../SPEC.md) 265 अनुरूपता फ़िक्स्चर के साथ, 5 फ़ॉर्मैट और 6 भाषाओं में 43,000,000,000+ लॉसलेस राउंड-ट्रिप सत्यापित। सात कार्यान्वयन (Go v1.6.2, Swift v2.6.1, .NET v0.1.0, बाकी v2.5.2)। क्रॉस-भाषा अनुरूपता सत्यापित।
 
 ## दस्तावेज़ीकरण
 
@@ -215,7 +215,7 @@ Dayna Blackwell के चार शोधपत्र (2026, वर्तमा
 - [Tokenizer Analysis](https://gcformat.com/guide/tokenizer-analysis.html) (JSON का व्याकरण BPE स्तर पर क्यों टूटता है)
 - [GCF on Small Models](https://gcformat.com/guide/small-models.html) (समझ का अंतर वास्तव में कहाँ रहता है: सस्ते, लोकल, और ओपन-वेट मॉडल)
 - [Playground](https://gcformat.com/playground.html)
-- [Specification](SPEC.md)
+- [Specification](../../SPEC.md)
 
 ## किसने अपनाया
 
@@ -252,4 +252,4 @@ Dayna Blackwell के चार शोधपत्र (2026, वर्तमा
 
 ## लाइसेंस
 
-MIT - [Dayna Blackwell](https://github.com/blackwell-systems)
+Apache-2.0 - [Dayna Blackwell](https://github.com/blackwell-systems)

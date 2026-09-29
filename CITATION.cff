@@ -1,0 +1,32 @@
+cff-version: 1.2.0
+message: "If you use GCF in your work, please cite the format paper below."
+title: "GCF: Graph Compact Format"
+abstract: "A token-optimized, lossless wire format for structured LLM interactions, with a generic profile for arbitrary JSON and a graph profile for code-graph payloads."
+type: software
+authors:
+  - family-names: Blackwell
+    given-names: Dayna
+    affiliation: Blackwell Systems
+repository-code: "https://github.com/blackwell-systems/gcf"
+url: "https://gcformat.com"
+license: Apache-2.0
+version: "3.5.3"
+date-released: "2026-08-14"
+keywords:
+  - wire format
+  - LLM
+  - token efficiency
+  - MCP
+preferred-citation:
+  type: report
+  title: "GCF: A Token-Optimized Wire Format for Structured LLM Interactions"
+  authors:
+    - family-names: Blackwell
+      given-names: Dayna
+      affiliation: Blackwell Systems
+  year: 2026
+  publisher:
+    name: Zenodo
+  doi: "10.5281/zenodo.20579817"
+  url: "https://doi.org/10.5281/zenodo.20579817"
+  notes: "Self-published preprint archived on Zenodo."

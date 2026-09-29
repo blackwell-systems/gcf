@@ -1,6 +1,6 @@
 <template>
   <div class="zdep-banner">
-    <p class="zdep-text">Zero runtime dependencies. Zero supply chain risk. Every implementation. MIT licensed.</p>
+    <p class="zdep-text">Zero runtime dependencies. Zero supply chain risk. Every implementation. Apache-2.0 licensed.</p>
   </div>
 </template>
 
