@@ -1,0 +1,86 @@
+=== RUN   TestGenericComprehension
+    generic_comprehension_test.go:619: === Generic-Profile Comprehension Eval ===
+    generic_comprehension_test.go:620: Backend:    openai (meta-llama/llama-3.1-8b-instruct)
+    generic_comprehension_test.go:621: Orders:     500
+    generic_comprehension_test.go:622: Questions:  19
+    generic_comprehension_test.go:623: Formats:    bpp, gcf, json
+    generic_comprehension_test.go:624: 
+    generic_comprehension_test.go:626: bpp       70821 bytes, ~17705 tokens
+    generic_comprehension_test.go:626: gcf      112163 bytes, ~28040 tokens
+    generic_comprehension_test.go:626: json     341128 bytes, ~85282 tokens
+    generic_comprehension_test.go:628: 
+    generic_comprehension_test.go:651: Generic-Profile Comprehension Eval
+    generic_comprehension_test.go:651: Backend: openai (meta-llama/llama-3.1-8b-instruct)
+    generic_comprehension_test.go:651: Orders: 500, Questions: 19, Formats: bpp, gcf, json
+    generic_comprehension_test.go:651: bpp       70821 bytes, ~17705 tokens
+    generic_comprehension_test.go:651: gcf      112163 bytes, ~28040 tokens
+    generic_comprehension_test.go:651: json     341128 bytes, ~85282 tokens
+    generic_comprehension_test.go:651: 
+    generic_comprehension_test.go:651:   FAIL order_count               bpp      [got "121"] expected="500" got="121"
+    generic_comprehension_test.go:651:   PASS order_count               gcf      [exact] expected="500" got="500"
+    generic_comprehension_test.go:651:   FAIL order_count               json     [got "50"] expected="500" got="50"
+    generic_comprehension_test.go:651:   PASS first_customer_name       bpp      [exact] expected="Customer Number 00000" got="Customer Number 00000"
+    generic_comprehension_test.go:651:   PASS first_customer_name       gcf      [exact] expected="Customer Number 00000" got="Customer Number 00000"
+    generic_comprehension_test.go:651:   PASS first_customer_name       json     [exact] expected="Customer Number 00000" got="Customer Number 00000"
+    generic_comprehension_test.go:651:   PASS last_order_status         bpp      [exact] expected="cancelled" got="cancelled"
+    generic_comprehension_test.go:651:   FAIL last_order_status         gcf      [got "ORD-0500"] expected="cancelled" got="ORD-0500"
+    generic_comprehension_test.go:651:   PASS last_order_status         json     [exact] expected="cancelled" got="cancelled"
+    generic_comprehension_test.go:651:   FAIL total_items_first_order   bpp      [got "3"] expected="1" got="3"
+    generic_comprehension_test.go:651:   FAIL total_items_first_order   gcf      [got "3"] expected="1" got="3"
+    generic_comprehension_test.go:651:   PASS total_items_first_order   json     [exact] expected="1" got="1"
+    generic_comprehension_test.go:651:   FAIL customer_email_order5     bpp      [got "customer.00005@example.com"] expected="customer.00004@example.com" got="customer.00005@example.com"
+    generic_comprehension_test.go:651:   PASS customer_email_order5     gcf      [exact] expected="customer.00004@example.com" got="customer.00004@example.com"
+    generic_comprehension_test.go:651:   PASS customer_email_order5     json     [exact] expected="customer.00004@example.com" got="customer.00004@example.com"
+    generic_comprehension_test.go:651:   FAIL count_shipped             bpp      [got "46"] expected="100" got="46"
+    generic_comprehension_test.go:651:   FAIL count_shipped             gcf      [got "161"] expected="100" got="161"
+    generic_comprehension_test.go:651:   FAIL count_shipped             json     [got "47"] expected="100" got="47"
+    generic_comprehension_test.go:651:   FAIL count_premium_customers   bpp      [got "14"] expected="200" got="14"
+    generic_comprehension_test.go:651:   FAIL count_premium_customers   gcf      [got "92"] expected="200" got="92"
+    generic_comprehension_test.go:651:   FAIL count_premium_customers   json     [got "44"] expected="200" got="44"
+    generic_comprehension_test.go:651:   FAIL highest_total             bpp      [got "925.2"] expected="1006.62" got="925.2"
+    generic_comprehension_test.go:651:   PASS highest_total             gcf      [exact] expected="1006.62" got="1006.62"
+    generic_comprehension_test.go:651:   FAIL highest_total             json     [got "878.9"] expected="1006.62" got="878.9"
+    generic_comprehension_test.go:651:   FAIL sku_first_item_order3     bpp      [got "Product Item 000002"] expected="SKU-000006" got="Product Item 000002"
+    generic_comprehension_test.go:651:   FAIL sku_first_item_order3     gcf      [got "000006"] expected="SKU-000006" got="000006"
+    generic_comprehension_test.go:651:   PASS sku_first_item_order3     json     [exact] expected="SKU-000006" got="SKU-000006"
+    generic_comprehension_test.go:651:   FAIL total_revenue_shipped     bpp      [got "To calculate the sum of all order totals where status is 'shipped' I'll need to parse the data and extract the relevant information. Here's the result:\n\n*0 1 standard ORD-0001 shipped 10 0.8 10.8 Customer Number 00000\n*1 2 premium ORD-0002 pending 41.77 3.34 45.11 Customer Number 00001\n*2 3 enterprise ORD-0003 processing 107.08 8.57 115.65 Customer Number 00002\n*3 4 standard ORD-0004 delivered 149.18 11.93 161.11 Customer Number 00003\n*4 5 premium ORD-0005 cancelled 22.84 1.83 24.67 Customer Number 00004\n*5 6 standard ORD-0006 shipped 77.29 6.18 83.47 Customer Number 00005\n*"] expected="32914.90" got="To calculate the sum of all order totals where status is 'shipped', I'll need to parse the data and extract the relevant information. Here's the result:\n\n*0 1 standard ORD-0001 shipped 10 0.8 10.8 Customer Number 00000\n*1 2 premium ORD-0002 pending 41.77 3.34 45.11 Customer Number 00001\n*2 3 enterprise ORD-0003 processing 107.08 8.57 115.65 Customer Number 00002\n*3 4 standard ORD-0004 delivered 149.18 11.93 161.11 Customer Number 00003\n*4 5 premium ORD-0005 cancelled 22.84 1.83 24.67 Customer Number 00004\n*5 6 standard ORD-0006 shipped 77.29 6.18 83.47 Customer Number 00005\n*"
+    generic_comprehension_test.go:651:   FAIL total_revenue_shipped     gcf      [got "10.8 + 45.11 + 115.65 + 161.11 + 125.07 + 269.09 + 340.14 + 192.37 + 250.62 + 140.83 + 429.65 + 417.87 + 861.17 + 216.03 + 784.45 + 940.3 + 417.87 + 665.29 + 302.79 + 625.6 + 754.8 + 109.48 + 341.15 + 707.72 + 844.31 + 861.17 + 103.7 + 323.82 + 811.43 + 122.27 + 379.51 + 784.45 + 940.3 + 128.04 + 471.07 + 638.39 + 625.6 + 754.8 + 754.8 + 754.8 +"] expected="32914.90" got="10.8 + 45.11 + 115.65 + 161.11 + 125.07 + 269.09 + 340.14 + 192.37 + 250.62 + 140.83 + 429.65 + 417.87 + 861.17 + 216.03 + 784.45 + 940.3 + 417.87 + 665.29 + 302.79 + 625.6 + 754.8 + 109.48 + 341.15 + 707.72 + 844.31 + 861.17 + 103.7 + 323.82 + 811.43 + 122.27 + 379.51 + 784.45 + 940.3 + 128.04 + 471.07 + 638.39 + 625.6 + 754.8 + 754.8 + 754.8 +"
+    generic_comprehension_test.go:651:   FAIL total_revenue_shipped     json     [got "1234.56"] expected="32914.90" got="1234.56"
+    generic_comprehension_test.go:651:   PASS unique_statuses           bpp      [exact] expected="cancelled, delivered, pending, processing, shipped" got="cancelled, delivered, pending, processing, shipped"
+    generic_comprehension_test.go:651:   PASS unique_statuses           gcf      [all present] expected="cancelled, delivered, pending, processing, shipped" got="cancelled,delivered,processing,pending,shipped"
+    generic_comprehension_test.go:651:   PASS unique_statuses           json     [exact] expected="cancelled, delivered, pending, processing, shipped" got="cancelled,delivered,pending,processing,shipped"
+    generic_comprehension_test.go:651:   FAIL count_orders_with_3plus_items bpp      [got "121"] expected="250" got="121"
+    generic_comprehension_test.go:651:   FAIL count_orders_with_3plus_items gcf      [got "37"] expected="250" got="37"
+    generic_comprehension_test.go:651:   FAIL count_orders_with_3plus_items json     [got "25"] expected="250" got="25"
+    generic_comprehension_test.go:651:   FAIL customer_tier_last_order  bpp      [got "standard"] expected="premium" got="standard"
+    generic_comprehension_test.go:651:   FAIL customer_tier_last_order  gcf      [got ""] expected="premium" got=""
+    generic_comprehension_test.go:651:   PASS customer_tier_last_order  json     [exact] expected="premium" got="premium"
+    generic_comprehension_test.go:651:   FAIL email_mid_ORD-0250        bpp      [got "Customer Number 00000"] expected="customer.00124@example.com" got="Customer Number 00000"
+    generic_comprehension_test.go:651:   FAIL email_mid_ORD-0250        gcf      [got "Customer Number 00124@example.com"] expected="customer.00124@example.com" got="Customer Number 00124@example.com"
+    generic_comprehension_test.go:651:   PASS email_mid_ORD-0250        json     [exact] expected="customer.00124@example.com" got="customer.00124@example.com"
+    generic_comprehension_test.go:651:   PASS email_deep_ORD-0500       bpp      [exact] expected="customer.00124@example.com" got="customer.00124@example.com"
+    generic_comprehension_test.go:651:   PASS email_deep_ORD-0500       gcf      [exact] expected="customer.00124@example.com" got="customer.00124@example.com"
+    generic_comprehension_test.go:651:   PASS email_deep_ORD-0500       json     [exact] expected="customer.00124@example.com" got="customer.00124@example.com"
+    generic_comprehension_test.go:651:   FAIL sku_mid_ORD-0250          bpp      [got "*125"] expected="SKU-000122" got="*125"
+    generic_comprehension_test.go:651:   FAIL sku_mid_ORD-0250          gcf      [got "000122"] expected="SKU-000122" got="000122"
+    generic_comprehension_test.go:651:   PASS sku_mid_ORD-0250          json     [exact] expected="SKU-000122" got="SKU-000122"
+    generic_comprehension_test.go:651:   FAIL sku_deep_ORD-0500         bpp      [got "*250"] expected="SKU-000122" got="*250"
+    generic_comprehension_test.go:651:   FAIL sku_deep_ORD-0500         gcf      [got "000122"] expected="SKU-000122" got="000122"
+    generic_comprehension_test.go:651:   FAIL sku_deep_ORD-0500         json     [got "SKU-000000"] expected="SKU-000122" got="SKU-000000"
+    generic_comprehension_test.go:651:   PASS tier_mid_ORD-0250         bpp      [exact] expected="premium" got="premium"
+    generic_comprehension_test.go:651:   PASS tier_mid_ORD-0250         gcf      [exact] expected="premium" got="premium"
+    generic_comprehension_test.go:651:   PASS tier_mid_ORD-0250         json     [exact] expected="premium" got="premium"
+    generic_comprehension_test.go:651:   PASS tier_deep_ORD-0500        bpp      [exact] expected="premium" got="premium"
+    generic_comprehension_test.go:651:   PASS tier_deep_ORD-0500        gcf      [exact] expected="premium" got="premium"
+    generic_comprehension_test.go:651:   PASS tier_deep_ORD-0500        json     [exact] expected="premium" got="premium"
+    generic_comprehension_test.go:651: 
+    generic_comprehension_test.go:651: === Summary ===
+    generic_comprehension_test.go:651: Format     Accuracy   Pass/Total
+    generic_comprehension_test.go:651: bpp           31.6%      6/19
+    generic_comprehension_test.go:651: gcf           42.1%      8/19
+    generic_comprehension_test.go:651: json          63.2%     12/19
+    generic_comprehension_test.go:651: 
+    generic_comprehension_test.go:651: Log: results/v3/comprehension/generic-500orders-openai-meta-llama_llama-3.1-8b-instruct-2026-09-30-152254.log
+--- PASS: TestGenericComprehension (262.57s)
+PASS
+ok  	github.com/blackwell-systems/gcf-go/eval	262.818s

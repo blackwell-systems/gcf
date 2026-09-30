@@ -74,6 +74,20 @@ EVAL_BACKEND=google GOOGLE_API_KEY=... EVAL_MODEL=gemini-2.5-flash GOWORK=off go
 EVAL_BACKEND=google GOOGLE_API_KEY=... EVAL_MODEL=gemini-2.5-flash EVAL_FORMATS=gcf,json,toon EVAL_NUM_ORDERS=500 GOWORK=off go test -run TestGenericComprehension -v -timeout 60m
 ```
 
+### Adversarial bpp comparison (whitespace-delimited generic format)
+
+A stress study asking whether a whitespace-delimited, reference-interned generic format
+(`bpp`) that beats GCF on raw token count survives comprehension at scale, or whether its
+grammar degrades structural reading. Full writeup, data, charts, and reproduction:
+[`bpp-comprehension/`](bpp-comprehension/).
+
+Result across 8 models / 5 families / ~770K records read: mean per-model-cell error **GCF
+31% vs JSON 40% vs bpp 54%** (bpp 1.7x GCF). GCF is the only format that beats JSON on tokens
+*and* comprehension at once; bpp's token win is erased once errors are priced, and its
+`&N`/`*N` reference indirection makes models return the pointer instead of the value. The
+adversarial harness lives in `gcf-go/eval/generic_comprehension_test.go` behind `EVAL_ADV=1`
+(the `bpp` arm shells out to `bpp-comprehension/scripts/bpp_encode.py`).
+
 ## Generation Eval
 
 **SDK: gcf-go** (decoder validation), **gcf-python** (generation scripts)

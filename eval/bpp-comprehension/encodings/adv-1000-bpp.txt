@@ -1,0 +1,4252 @@
+bpp4
+&0 customer.00000@example.com
+&1 customer.00001@example.com
+&2 customer.00002@example.com
+&3 customer.00003@example.com
+&4 customer.00004@example.com
+&5 customer.00005@example.com
+&6 customer.00006@example.com
+&7 customer.00007@example.com
+&8 customer.00008@example.com
+&9 customer.00009@example.com
+&10 customer.00010@example.com
+&11 customer.00011@example.com
+&12 customer.00012@example.com
+&13 customer.00013@example.com
+&14 customer.00014@example.com
+&15 customer.00015@example.com
+&16 customer.00016@example.com
+&17 customer.00017@example.com
+&18 customer.00018@example.com
+&19 customer.00019@example.com
+&20 customer.00020@example.com
+&21 customer.00021@example.com
+&22 customer.00022@example.com
+&23 customer.00023@example.com
+&24 customer.00024@example.com
+&25 customer.00025@example.com
+&26 customer.00026@example.com
+&27 customer.00027@example.com
+&28 customer.00028@example.com
+&29 customer.00029@example.com
+&30 customer.00030@example.com
+&31 customer.00031@example.com
+&32 customer.00032@example.com
+&33 customer.00033@example.com
+&34 customer.00034@example.com
+&35 customer.00035@example.com
+&36 customer.00036@example.com
+&37 customer.00037@example.com
+&38 customer.00038@example.com
+&39 customer.00039@example.com
+&40 customer.00040@example.com
+&41 customer.00041@example.com
+&42 customer.00042@example.com
+&43 customer.00043@example.com
+&44 customer.00044@example.com
+&45 customer.00045@example.com
+&46 customer.00046@example.com
+&47 customer.00047@example.com
+&48 customer.00048@example.com
+&49 customer.00049@example.com
+&50 customer.00050@example.com
+&51 customer.00051@example.com
+&52 customer.00052@example.com
+&53 customer.00053@example.com
+&54 customer.00054@example.com
+&55 customer.00055@example.com
+&56 customer.00056@example.com
+&57 customer.00057@example.com
+&58 customer.00058@example.com
+&59 customer.00059@example.com
+&60 customer.00060@example.com
+&61 customer.00061@example.com
+&62 customer.00062@example.com
+&63 customer.00063@example.com
+&64 customer.00064@example.com
+&65 customer.00065@example.com
+&66 customer.00066@example.com
+&67 customer.00067@example.com
+&68 customer.00068@example.com
+&69 customer.00069@example.com
+&70 customer.00070@example.com
+&71 customer.00071@example.com
+&72 customer.00072@example.com
+&73 customer.00073@example.com
+&74 customer.00074@example.com
+&75 customer.00075@example.com
+&76 customer.00076@example.com
+&77 customer.00077@example.com
+&78 customer.00078@example.com
+&79 customer.00079@example.com
+&80 customer.00080@example.com
+&81 customer.00081@example.com
+&82 customer.00082@example.com
+&83 customer.00083@example.com
+&84 customer.00084@example.com
+&85 customer.00085@example.com
+&86 customer.00086@example.com
+&87 customer.00087@example.com
+&88 customer.00088@example.com
+&89 customer.00089@example.com
+&90 customer.00090@example.com
+&91 customer.00091@example.com
+&92 customer.00092@example.com
+&93 customer.00093@example.com
+&94 customer.00094@example.com
+&95 customer.00095@example.com
+&96 customer.00096@example.com
+&97 customer.00097@example.com
+&98 customer.00098@example.com
+&99 customer.00099@example.com
+&100 customer.00100@example.com
+&101 customer.00101@example.com
+&102 customer.00102@example.com
+&103 customer.00103@example.com
+&104 customer.00104@example.com
+&105 customer.00105@example.com
+&106 customer.00106@example.com
+&107 customer.00107@example.com
+&108 customer.00108@example.com
+&109 customer.00109@example.com
+&110 customer.00110@example.com
+&111 customer.00111@example.com
+&112 customer.00112@example.com
+&113 customer.00113@example.com
+&114 customer.00114@example.com
+&115 customer.00115@example.com
+&116 customer.00116@example.com
+&117 customer.00117@example.com
+&118 customer.00118@example.com
+&119 customer.00119@example.com
+&120 customer.00120@example.com
+&121 customer.00121@example.com
+&122 customer.00122@example.com
+&123 customer.00123@example.com
+&124 customer.00124@example.com
+&125 customer.00125@example.com
+&126 customer.00126@example.com
+&127 customer.00127@example.com
+&128 customer.00128@example.com
+&129 customer.00129@example.com
+&130 customer.00130@example.com
+&131 customer.00131@example.com
+&132 customer.00132@example.com
+&133 customer.00133@example.com
+&134 customer.00134@example.com
+&135 customer.00135@example.com
+&136 customer.00136@example.com
+&137 customer.00137@example.com
+&138 customer.00138@example.com
+&139 customer.00139@example.com
+&140 customer.00140@example.com
+&141 customer.00141@example.com
+&142 customer.00142@example.com
+&143 customer.00143@example.com
+&144 customer.00144@example.com
+&145 customer.00145@example.com
+&146 customer.00146@example.com
+&147 customer.00147@example.com
+&148 customer.00148@example.com
+&149 customer.00149@example.com
+&150 customer.00150@example.com
+&151 customer.00151@example.com
+&152 customer.00152@example.com
+&153 customer.00153@example.com
+&154 customer.00154@example.com
+&155 customer.00155@example.com
+&156 customer.00156@example.com
+&157 customer.00157@example.com
+&158 customer.00158@example.com
+&159 customer.00159@example.com
+&160 customer.00160@example.com
+&161 customer.00161@example.com
+&162 customer.00162@example.com
+&163 customer.00163@example.com
+&164 customer.00164@example.com
+&165 customer.00165@example.com
+&166 customer.00166@example.com
+&167 customer.00167@example.com
+&168 customer.00168@example.com
+&169 customer.00169@example.com
+&170 customer.00170@example.com
+&171 customer.00171@example.com
+&172 customer.00172@example.com
+&173 customer.00173@example.com
+&174 customer.00174@example.com
+&175 customer.00175@example.com
+&176 customer.00176@example.com
+&177 customer.00177@example.com
+&178 customer.00178@example.com
+&179 customer.00179@example.com
+&180 customer.00180@example.com
+&181 customer.00181@example.com
+&182 customer.00182@example.com
+&183 customer.00183@example.com
+&184 customer.00184@example.com
+&185 customer.00185@example.com
+&186 customer.00186@example.com
+&187 customer.00187@example.com
+&188 customer.00188@example.com
+&189 customer.00189@example.com
+&190 customer.00190@example.com
+&191 customer.00191@example.com
+&192 customer.00192@example.com
+&193 customer.00193@example.com
+&194 customer.00194@example.com
+&195 customer.00195@example.com
+&196 customer.00196@example.com
+&197 customer.00197@example.com
+&198 customer.00198@example.com
+&199 customer.00199@example.com
+&200 customer.00200@example.com
+&201 customer.00201@example.com
+&202 customer.00202@example.com
+&203 customer.00203@example.com
+&204 customer.00204@example.com
+&205 customer.00205@example.com
+&206 customer.00206@example.com
+&207 customer.00207@example.com
+&208 customer.00208@example.com
+&209 customer.00209@example.com
+&210 customer.00210@example.com
+&211 customer.00211@example.com
+&212 customer.00212@example.com
+&213 customer.00213@example.com
+&214 customer.00214@example.com
+&215 customer.00215@example.com
+&216 customer.00216@example.com
+&217 customer.00217@example.com
+&218 customer.00218@example.com
+&219 customer.00219@example.com
+&220 customer.00220@example.com
+&221 customer.00221@example.com
+&222 customer.00222@example.com
+&223 customer.00223@example.com
+&224 customer.00224@example.com
+&225 customer.00225@example.com
+&226 customer.00226@example.com
+&227 customer.00227@example.com
+&228 customer.00228@example.com
+&229 customer.00229@example.com
+&230 customer.00230@example.com
+&231 customer.00231@example.com
+&232 customer.00232@example.com
+&233 customer.00233@example.com
+&234 customer.00234@example.com
+&235 customer.00235@example.com
+&236 customer.00236@example.com
+&237 customer.00237@example.com
+&238 customer.00238@example.com
+&239 customer.00239@example.com
+&240 customer.00240@example.com
+&241 customer.00241@example.com
+&242 customer.00242@example.com
+&243 customer.00243@example.com
+&244 customer.00244@example.com
+&245 customer.00245@example.com
+&246 customer.00246@example.com
+&247 customer.00247@example.com
+&248 customer.00248@example.com
+&249 customer.00249@example.com
+&250 Product Item 000000
+&251 Product Item 000002
+&252 Product Item 000004
+&253 Product Item 000006
+&254 Product Item 000008
+&255 Product Item 000010
+&256 Product Item 000012
+&257 Product Item 000014
+&258 Product Item 000016
+&259 Product Item 000018
+&260 Product Item 000020
+&261 Product Item 000022
+&262 Product Item 000024
+&263 Product Item 000026
+&264 Product Item 000028
+&265 Product Item 000030
+&266 Product Item 000032
+&267 Product Item 000034
+&268 Product Item 000036
+&269 Product Item 000038
+&270 Product Item 000040
+&271 Product Item 000042
+&272 Product Item 000044
+&273 Product Item 000046
+&274 Product Item 000048
+&275 Product Item 000050
+&276 Product Item 000052
+&277 Product Item 000054
+&278 Product Item 000056
+&279 Product Item 000058
+&280 Product Item 000060
+&281 Product Item 000062
+&282 Product Item 000064
+&283 Product Item 000066
+&284 Product Item 000068
+&285 Product Item 000070
+&286 Product Item 000072
+&287 Product Item 000074
+&288 Product Item 000076
+&289 Product Item 000078
+&290 Product Item 000080
+&291 Product Item 000082
+&292 Product Item 000084
+&293 Product Item 000086
+&294 Product Item 000088
+&295 Product Item 000090
+&296 Product Item 000092
+&297 Product Item 000094
+&298 Product Item 000096
+&299 Product Item 000098
+&300 Product Item 000100
+&301 Product Item 000102
+&302 Product Item 000104
+&303 Product Item 000106
+&304 Product Item 000108
+&305 Product Item 000110
+&306 Product Item 000112
+&307 Product Item 000114
+&308 Product Item 000116
+&309 Product Item 000118
+&310 Product Item 000120
+&311 Product Item 000122
+&312 Product Item 000124
+&313 Product Item 000126
+&314 Product Item 000128
+&315 Product Item 000130
+&316 Product Item 000132
+&317 Product Item 000134
+&318 Product Item 000136
+&319 Product Item 000138
+&320 Product Item 000140
+&321 Product Item 000142
+&322 Product Item 000144
+&323 Product Item 000146
+&324 Product Item 000148
+&325 Product Item 000150
+&326 Product Item 000152
+&327 Product Item 000154
+&328 Product Item 000156
+&329 Product Item 000158
+&330 Product Item 000160
+&331 Product Item 000162
+&332 Product Item 000164
+&333 Product Item 000166
+&334 Product Item 000168
+&335 Product Item 000170
+&336 Product Item 000172
+&337 Product Item 000174
+&338 Product Item 000176
+&339 Product Item 000178
+&340 Product Item 000180
+&341 Product Item 000182
+&342 Product Item 000184
+&343 Product Item 000186
+&344 Product Item 000188
+&345 Product Item 000190
+&346 Product Item 000192
+&347 Product Item 000194
+&348 Product Item 000196
+&349 Product Item 000198
+&350 Product Item 000200
+&351 Product Item 000202
+&352 Product Item 000204
+&353 Product Item 000206
+&354 Product Item 000208
+&355 Product Item 000210
+&356 Product Item 000212
+&357 Product Item 000214
+&358 Product Item 000216
+&359 Product Item 000218
+&360 Product Item 000220
+&361 Product Item 000222
+&362 Product Item 000224
+&363 Product Item 000226
+&364 Product Item 000228
+&365 Product Item 000230
+&366 Product Item 000232
+&367 Product Item 000234
+&368 Product Item 000236
+&369 Product Item 000238
+&370 Product Item 000240
+&371 Product Item 000242
+&372 Product Item 000244
+&373 Product Item 000246
+&374 Product Item 000248
+&375 SKU-000000
+&376 SKU-000002
+&377 SKU-000004
+&378 SKU-000006
+&379 SKU-000008
+&380 SKU-000010
+&381 SKU-000012
+&382 SKU-000014
+&383 SKU-000016
+&384 SKU-000018
+&385 SKU-000020
+&386 SKU-000022
+&387 SKU-000024
+&388 SKU-000026
+&389 SKU-000028
+&390 SKU-000030
+&391 SKU-000032
+&392 SKU-000034
+&393 SKU-000036
+&394 SKU-000038
+&395 SKU-000040
+&396 SKU-000042
+&397 SKU-000044
+&398 SKU-000046
+&399 SKU-000048
+&400 SKU-000050
+&401 SKU-000052
+&402 SKU-000054
+&403 SKU-000056
+&404 SKU-000058
+&405 SKU-000060
+&406 SKU-000062
+&407 SKU-000064
+&408 SKU-000066
+&409 SKU-000068
+&410 SKU-000070
+&411 SKU-000072
+&412 SKU-000074
+&413 SKU-000076
+&414 SKU-000078
+&415 SKU-000080
+&416 SKU-000082
+&417 SKU-000084
+&418 SKU-000086
+&419 SKU-000088
+&420 SKU-000090
+&421 SKU-000092
+&422 SKU-000094
+&423 SKU-000096
+&424 SKU-000098
+&425 SKU-000100
+&426 SKU-000102
+&427 SKU-000104
+&428 SKU-000106
+&429 SKU-000108
+&430 SKU-000110
+&431 SKU-000112
+&432 SKU-000114
+&433 SKU-000116
+&434 SKU-000118
+&435 SKU-000120
+&436 SKU-000122
+&437 SKU-000124
+&438 SKU-000126
+&439 SKU-000128
+&440 SKU-000130
+&441 SKU-000132
+&442 SKU-000134
+&443 SKU-000136
+&444 SKU-000138
+&445 SKU-000140
+&446 SKU-000142
+&447 SKU-000144
+&448 SKU-000146
+&449 SKU-000148
+&450 SKU-000150
+&451 SKU-000152
+&452 SKU-000154
+&453 SKU-000156
+&454 SKU-000158
+&455 SKU-000160
+&456 SKU-000162
+&457 SKU-000164
+&458 SKU-000166
+&459 SKU-000168
+&460 SKU-000170
+&461 SKU-000172
+&462 SKU-000174
+&463 SKU-000176
+&464 SKU-000178
+&465 SKU-000180
+&466 SKU-000182
+&467 SKU-000184
+&468 SKU-000186
+&469 SKU-000188
+&470 SKU-000190
+&471 SKU-000192
+&472 SKU-000194
+&473 SKU-000196
+&474 SKU-000198
+&475 SKU-000200
+&476 SKU-000202
+&477 SKU-000204
+&478 SKU-000206
+&479 SKU-000208
+&480 SKU-000210
+&481 SKU-000212
+&482 SKU-000214
+&483 SKU-000216
+&484 SKU-000218
+&485 SKU-000220
+&486 SKU-000222
+&487 SKU-000224
+&488 SKU-000226
+&489 SKU-000228
+&490 SKU-000230
+&491 SKU-000232
+&492 SKU-000234
+&493 SKU-000236
+&494 SKU-000238
+&495 SKU-000240
+&496 SKU-000242
+&497 SKU-000244
+&498 SKU-000246
+&499 SKU-000248
+&500 Product Item 000001
+&501 Product Item 000003
+&502 Product Item 000005
+&503 Product Item 000007
+&504 Product Item 000009
+&505 Product Item 000011
+&506 Product Item 000013
+&507 Product Item 000015
+&508 Product Item 000017
+&509 Product Item 000019
+&510 Product Item 000021
+&511 Product Item 000023
+&512 Product Item 000025
+&513 Product Item 000027
+&514 Product Item 000029
+&515 Product Item 000031
+&516 Product Item 000033
+&517 Product Item 000035
+&518 Product Item 000037
+&519 Product Item 000039
+&520 Product Item 000041
+&521 Product Item 000043
+&522 Product Item 000045
+&523 Product Item 000047
+&524 Product Item 000049
+&525 Product Item 000051
+&526 Product Item 000053
+&527 Product Item 000055
+&528 Product Item 000057
+&529 Product Item 000059
+&530 Product Item 000061
+&531 Product Item 000063
+&532 Product Item 000065
+&533 Product Item 000067
+&534 Product Item 000069
+&535 Product Item 000071
+&536 Product Item 000073
+&537 Product Item 000075
+&538 Product Item 000077
+&539 Product Item 000079
+&540 Product Item 000081
+&541 Product Item 000083
+&542 Product Item 000085
+&543 Product Item 000087
+&544 Product Item 000089
+&545 Product Item 000091
+&546 Product Item 000093
+&547 Product Item 000095
+&548 Product Item 000097
+&549 Product Item 000099
+&550 Product Item 000101
+&551 Product Item 000103
+&552 Product Item 000105
+&553 Product Item 000107
+&554 Product Item 000109
+&555 Product Item 000111
+&556 Product Item 000113
+&557 Product Item 000115
+&558 Product Item 000117
+&559 Product Item 000119
+&560 Product Item 000121
+&561 Product Item 000123
+&562 Product Item 000125
+&563 Product Item 000127
+&564 Product Item 000129
+&565 Product Item 000131
+&566 Product Item 000133
+&567 Product Item 000135
+&568 Product Item 000137
+&569 Product Item 000139
+&570 Product Item 000141
+&571 Product Item 000143
+&572 Product Item 000145
+&573 Product Item 000147
+&574 Product Item 000149
+&575 Product Item 000151
+&576 Product Item 000153
+&577 Product Item 000155
+&578 Product Item 000157
+&579 Product Item 000159
+&580 Product Item 000161
+&581 Product Item 000163
+&582 Product Item 000165
+&583 Product Item 000167
+&584 Product Item 000169
+&585 Product Item 000171
+&586 Product Item 000173
+&587 Product Item 000175
+&588 Product Item 000177
+&589 Product Item 000179
+&590 Product Item 000181
+&591 Product Item 000183
+&592 Product Item 000185
+&593 Product Item 000187
+&594 Product Item 000189
+&595 Product Item 000191
+&596 Product Item 000193
+&597 Product Item 000195
+&598 Product Item 000197
+&599 Product Item 000199
+&600 Product Item 000201
+&601 Product Item 000203
+&602 Product Item 000205
+&603 Product Item 000207
+&604 Product Item 000209
+&605 Product Item 000211
+&606 Product Item 000213
+&607 Product Item 000215
+&608 Product Item 000217
+&609 Product Item 000219
+&610 Product Item 000221
+&611 Product Item 000223
+&612 Product Item 000225
+&613 Product Item 000227
+&614 Product Item 000229
+&615 Product Item 000231
+&616 Product Item 000233
+&617 Product Item 000235
+&618 Product Item 000237
+&619 Product Item 000239
+&620 Product Item 000241
+&621 Product Item 000243
+&622 Product Item 000245
+&623 Product Item 000247
+&624 Product Item 000249
+&625 SKU-000001
+&626 SKU-000003
+&627 SKU-000005
+&628 SKU-000007
+&629 SKU-000009
+&630 SKU-000011
+&631 SKU-000013
+&632 SKU-000015
+&633 SKU-000017
+&634 SKU-000019
+&635 SKU-000021
+&636 SKU-000023
+&637 SKU-000025
+&638 SKU-000027
+&639 SKU-000029
+&640 SKU-000031
+&641 SKU-000033
+&642 SKU-000035
+&643 SKU-000037
+&644 SKU-000039
+&645 SKU-000041
+&646 SKU-000043
+&647 SKU-000045
+&648 SKU-000047
+&649 SKU-000049
+&650 SKU-000051
+&651 SKU-000053
+&652 SKU-000055
+&653 SKU-000057
+&654 SKU-000059
+&655 SKU-000061
+&656 SKU-000063
+&657 SKU-000065
+&658 SKU-000067
+&659 SKU-000069
+&660 SKU-000071
+&661 SKU-000073
+&662 SKU-000075
+&663 SKU-000077
+&664 SKU-000079
+&665 SKU-000081
+&666 SKU-000083
+&667 SKU-000085
+&668 SKU-000087
+&669 SKU-000089
+&670 SKU-000091
+&671 SKU-000093
+&672 SKU-000095
+&673 SKU-000097
+&674 SKU-000099
+&675 SKU-000101
+&676 SKU-000103
+&677 SKU-000105
+&678 SKU-000107
+&679 SKU-000109
+&680 SKU-000111
+&681 SKU-000113
+&682 SKU-000115
+&683 SKU-000117
+&684 SKU-000119
+&685 SKU-000121
+&686 SKU-000123
+&687 SKU-000125
+&688 SKU-000127
+&689 SKU-000129
+&690 SKU-000131
+&691 SKU-000133
+&692 SKU-000135
+&693 SKU-000137
+&694 SKU-000139
+&695 SKU-000141
+&696 SKU-000143
+&697 SKU-000145
+&698 SKU-000147
+&699 SKU-000149
+&700 SKU-000151
+&701 SKU-000153
+&702 SKU-000155
+&703 SKU-000157
+&704 SKU-000159
+&705 SKU-000161
+&706 SKU-000163
+&707 SKU-000165
+&708 SKU-000167
+&709 SKU-000169
+&710 SKU-000171
+&711 SKU-000173
+&712 SKU-000175
+&713 SKU-000177
+&714 SKU-000179
+&715 SKU-000181
+&716 SKU-000183
+&717 SKU-000185
+&718 SKU-000187
+&719 SKU-000189
+&720 SKU-000191
+&721 SKU-000193
+&722 SKU-000195
+&723 SKU-000197
+&724 SKU-000199
+&725 SKU-000201
+&726 SKU-000203
+&727 SKU-000205
+&728 SKU-000207
+&729 SKU-000209
+&730 SKU-000211
+&731 SKU-000213
+&732 SKU-000215
+&733 SKU-000217
+&734 SKU-000219
+&735 SKU-000221
+&736 SKU-000223
+&737 SKU-000225
+&738 SKU-000227
+&739 SKU-000229
+&740 SKU-000231
+&741 SKU-000233
+&742 SKU-000235
+&743 SKU-000237
+&744 SKU-000239
+&745 SKU-000241
+&746 SKU-000243
+&747 SKU-000245
+&748 SKU-000247
+&749 SKU-000249
+orders[1000]{customer.email customer.id customer.tier orderId status subtotal tax total customer.name}>items{price quantity sku name}
+*0 1 standard ORD-0001 shipped 10 0.8 10.8 Customer Number 00000
+ 10 1 *375 *250
+*1 2 premium ORD-0002 pending 41.77 3.34 45.11 Customer Number 00001
+ 13.21 1 *626 *501
+ 14.28 2 *377 *252
+*2 3 enterprise ORD-0003 processing 107.08 8.57 115.65 Customer Number 00002
+ 16.42 1 *378 *253
+ 17.49 2 *628 *503
+ 18.56 3 *379 *254
+*3 4 standard ORD-0004 delivered 149.18 11.93 161.11 Customer Number 00003
+ 19.63 1 *629 *504
+ 20.7 2 *380 *255
+ 21.77 3 *630 *505
+ 22.84 1 *381 *256
+*4 5 premium ORD-0005 cancelled 22.84 1.83 24.67 Customer Number 00004
+ 22.84 1 *381 *256
+*5 6 standard ORD-0006 shipped 77.29 6.18 83.47 Customer Number 00005
+ 25.05 1 *632 *507
+ 26.12 2 *383 *258
+*6 7 premium ORD-0007 pending 178.12 14.25 192.37 Customer Number 00006
+ 28.26 1 *384 *259
+ 29.33 2 *634 *509
+ 30.4 3 *385 *260
+*7 8 enterprise ORD-0008 processing 232.06 18.56 250.62 Customer Number 00007
+ 31.47 1 *635 *510
+ 32.54 2 *386 *261
+ 33.61 3 *636 *511
+ 34.68 1 *387 *262
+*8 9 standard ORD-0009 delivered 34.68 2.77 37.45 Customer Number 00008
+ 34.68 1 *387 *262
+*9 10 premium ORD-0010 cancelled 115.81 9.26 125.07 Customer Number 00009
+ 37.89 1 *638 *513
+ 38.96 2 *389 *264
+*10 11 standard ORD-0011 shipped 249.16 19.93 269.09 Customer Number 00010
+ 40.1 1 *390 *265
+ 41.17 2 *640 *515
+ 42.24 3 *391 *266
+*11 12 premium ORD-0012 pending 314.94 25.2 340.14 Customer Number 00011
+ 43.31 1 *641 *516
+ 44.38 2 *392 *267
+ 45.45 3 *642 *517
+ 46.52 1 *393 *268
+*12 13 enterprise ORD-0013 processing 46.52 3.72 50.24 Customer Number 00012
+ 46.52 1 *393 *268
+*13 14 standard ORD-0014 delivered 151.33 12.11 163.44 Customer Number 00013
+ 49.73 1 *644 *519
+ 50.8 2 *395 *270
+*14 15 premium ORD-0015 cancelled 321.2 25.7 346.9 Customer Number 00014
+ 52.94 1 *396 *271
+ 53.01 2 *646 *521
+ 54.08 3 *397 *272
+*15 16 standard ORD-0016 shipped 397.82 31.83 429.65 Customer Number 00015
+ 55.15 1 *647 *522
+ 56.22 2 *398 *273
+ 57.29 3 *648 *523
+ 58.36 1 *399 *274
+*16 17 premium ORD-0017 pending 58.36 4.67 63.03 Customer Number 00016
+ 58.36 1 *399 *274
+*17 18 enterprise ORD-0018 processing 186.85 14.95 201.8 Customer Number 00017
+ 61.57 1 *650 *525
+ 62.64 2 *401 *276
+*18 19 standard ORD-0019 delivered 397.24 31.78 429.02 Customer Number 00018
+ 64.78 1 *402 *277
+ 65.85 2 *652 *527
+ 66.92 3 *403 *278
+*19 20 premium ORD-0020 cancelled 481.7 38.54 520.24 Customer Number 00019
+ 67.99 1 *653 *528
+ 68.06 2 *404 *279
+ 69.13 3 *654 *529
+ 70.2 1 *405 *280
+*20 21 standard ORD-0021 shipped 70.2 5.62 75.82 Customer Number 00020
+ 70.2 1 *405 *280
+*21 22 premium ORD-0022 pending 222.37 17.79 240.16 Customer Number 00021
+ 73.41 1 *656 *531
+ 74.48 2 *407 *282
+*22 23 enterprise ORD-0023 processing 468.28 37.46 505.74 Customer Number 00022
+ 76.62 1 *408 *283
+ 77.69 2 *658 *533
+ 78.76 3 *409 *284
+*23 24 standard ORD-0024 delivered 569.58 45.57 615.15 Customer Number 00023
+ 79.83 1 *659 *534
+ 80.9 2 *410 *285
+ 81.97 3 *660 *535
+ 82.04 1 *411 *286
+*24 25 premium ORD-0025 cancelled 82.04 6.56 88.6 Customer Number 00024
+ 82.04 1 *411 *286
+*25 26 standard ORD-0026 shipped 257.89 20.63 278.52 Customer Number 00025
+ 85.25 1 *662 *537
+ 86.32 2 *413 *288
+*26 27 premium ORD-0027 pending 539.32 43.15 582.47 Customer Number 00026
+ 88.46 1 *414 *289
+ 89.53 2 *664 *539
+ 90.6 3 *415 *290
+*27 28 enterprise ORD-0028 processing 653.46 52.28 705.74 Customer Number 00027
+ 91.67 1 *665 *540
+ 92.74 2 *416 *291
+ 93.81 3 *666 *541
+ 94.88 1 *417 *292
+*28 29 standard ORD-0029 delivered 94.88 7.59 102.47 Customer Number 00028
+ 94.88 1 *417 *292
+*29 30 premium ORD-0030 cancelled 293.41 23.47 316.88 Customer Number 00029
+ 97.09 1 *668 *543
+ 98.16 2 *419 *294
+*30 31 standard ORD-0031 shipped 610.36 48.83 659.19 Customer Number 00030
+ 100.3 1 *420 *295
+ 101.37 2 *670 *545
+ 102.44 3 *421 *296
+*31 32 premium ORD-0032 pending 736.34 58.91 795.25 Customer Number 00031
+ 103.51 1 *671 *546
+ 104.58 2 *422 *297
+ 105.65 3 *672 *547
+ 106.72 1 *423 *298
+*32 33 enterprise ORD-0033 processing 106.72 8.54 115.26 Customer Number 00032
+ 106.72 1 *423 *298
+*33 34 standard ORD-0034 delivered 329.93 26.39 356.32 Customer Number 00033
+ 109.93 1 *674 *549
+ 110 2 *425 *300
+*34 35 premium ORD-0035 cancelled 681.4 54.51 735.91 Customer Number 00034
+ 112.14 1 *426 *301
+ 113.21 2 *676 *551
+ 114.28 3 *427 *302
+*35 36 standard ORD-0036 shipped 819.22 65.54 884.76 Customer Number 00035
+ 115.35 1 *677 *552
+ 116.42 2 *428 *303
+ 117.49 3 *678 *553
+ 118.56 1 *429 *304
+*36 37 premium ORD-0037 pending 118.56 9.48 128.04 Customer Number 00036
+ 118.56 1 *429 *304
+*37 38 enterprise ORD-0038 processing 367.45 29.4 396.85 Customer Number 00037
+ 121.77 1 *680 *555
+ 122.84 2 *431 *306
+*38 39 standard ORD-0039 delivered 753.44 60.28 813.72 Customer Number 00038
+ 124.98 1 *432 *307
+ 125.05 2 *682 *557
+ 126.12 3 *433 *308
+*39 40 premium ORD-0040 cancelled 902.1 72.17 974.27 Customer Number 00039
+ 127.19 1 *683 *558
+ 128.26 2 *434 *309
+ 129.33 3 *684 *559
+ 130.4 1 *435 *310
+*40 41 standard ORD-0041 shipped 130.4 10.43 140.83 Customer Number 00040
+ 130.4 1 *435 *310
+*41 42 premium ORD-0042 pending 402.97 32.24 435.21 Customer Number 00041
+ 133.61 1 *686 *561
+ 134.68 2 *437 *312
+*42 43 enterprise ORD-0043 processing 829.48 66.36 895.84 Customer Number 00042
+ 136.82 1 *438 *313
+ 137.89 2 *688 *563
+ 138.96 3 *439 *314
+*43 44 standard ORD-0044 delivered 984.98 78.8 1063.78 Customer Number 00043
+ 139.03 1 *689 *564
+ 140.1 2 *440 *315
+ 141.17 3 *690 *565
+ 142.24 1 *441 *316
+*44 45 premium ORD-0045 cancelled 142.24 11.38 153.62 Customer Number 00044
+ 142.24 1 *441 *316
+*45 46 standard ORD-0046 shipped 438.49 35.08 473.57 Customer Number 00045
+ 145.45 1 *692 *567
+ 146.52 2 *443 *318
+*46 47 premium ORD-0047 pending 900.52 72.04 972.56 Customer Number 00046
+ 148.66 1 *444 *319
+ 149.73 2 *694 *569
+ 150.8 3 *445 *320
+*47 48 enterprise ORD-0048 processing 1070.86 85.67 1156.53 Customer Number 00047
+ 151.87 1 *695 *570
+ 152.94 2 *446 *321
+ 153.01 3 *696 *571
+ 154.08 1 *447 *322
+*48 49 standard ORD-0049 delivered 154.08 12.33 166.41 Customer Number 00048
+ 154.08 1 *447 *322
+*49 50 premium ORD-0050 cancelled 474.01 37.92 511.93 Customer Number 00049
+ 157.29 1 *698 *573
+ 158.36 2 *449 *324
+*50 51 standard ORD-0051 shipped 971.56 77.72 1049.28 Customer Number 00050
+ 160.5 1 *450 *325
+ 161.57 2 *700 *575
+ 162.64 3 *451 *326
+*51 52 premium ORD-0052 pending 1157.74 92.62 1250.36 Customer Number 00051
+ 163.71 1 *701 *576
+ 164.78 2 *452 *327
+ 165.85 3 *702 *577
+ 166.92 1 *453 *328
+*52 53 enterprise ORD-0053 processing 166.92 13.35 180.27 Customer Number 00052
+ 166.92 1 *453 *328
+*53 54 standard ORD-0054 delivered 509.53 40.76 550.29 Customer Number 00053
+ 169.13 1 *704 *579
+ 170.2 2 *455 *330
+*54 55 premium ORD-0055 cancelled 1042.6 83.41 1126.01 Customer Number 00054
+ 172.34 1 *456 *331
+ 173.41 2 *706 *581
+ 174.48 3 *457 *332
+*55 56 standard ORD-0056 shipped 1240.62 99.25 1339.87 Customer Number 00055
+ 175.55 1 *707 *582
+ 176.62 2 *458 *333
+ 177.69 3 *708 *583
+ 178.76 1 *459 *334
+*56 57 premium ORD-0057 pending 178.76 14.3 193.06 Customer Number 00056
+ 178.76 1 *459 *334
+*57 58 enterprise ORD-0058 processing 546.05 43.68 589.73 Customer Number 00057
+ 181.97 1 *710 *585
+ 182.04 2 *461 *336
+*58 59 standard ORD-0059 delivered 1113.64 89.09 1202.73 Customer Number 00058
+ 184.18 1 *462 *337
+ 185.25 2 *712 *587
+ 186.32 3 *463 *338
+*59 60 premium ORD-0060 cancelled 1323.5 105.88 1429.38 Customer Number 00059
+ 187.39 1 *713 *588
+ 188.46 2 *464 *339
+ 189.53 3 *714 *589
+ 190.6 1 *465 *340
+*60 61 standard ORD-0061 shipped 190.6 15.25 205.85 Customer Number 00060
+ 190.6 1 *465 *340
+*61 62 premium ORD-0062 pending 583.57 46.69 630.26 Customer Number 00061
+ 193.81 1 *716 *591
+ 194.88 2 *467 *342
+*62 63 enterprise ORD-0063 processing 1184.68 94.77 1279.45 Customer Number 00062
+ 196.02 1 *468 *343
+ 197.09 2 *718 *593
+ 198.16 3 *469 *344
+*63 64 standard ORD-0064 delivered 1406.38 112.51 1518.89 Customer Number 00063
+ 199.23 1 *719 *594
+ 200.3 2 *470 *345
+ 201.37 3 *720 *595
+ 202.44 1 *471 *346
+*64 65 premium ORD-0065 cancelled 202.44 16.2 218.64 Customer Number 00064
+ 202.44 1 *471 *346
+*65 66 standard ORD-0066 shipped 619.09 49.53 668.62 Customer Number 00065
+ 205.65 1 *722 *597
+ 206.72 2 *473 *348
+*66 67 premium ORD-0067 pending 1258.72 100.7 1359.42 Customer Number 00066
+ 208.86 1 *474 *349
+ 209.93 2 *724 *599
+ 210 3 *475 *350
+*67 68 enterprise ORD-0068 processing 1489.26 119.14 1608.4 Customer Number 00067
+ 211.07 1 *725 *600
+ 212.14 2 *476 *351
+ 213.21 3 *726 *601
+ 214.28 1 *477 *352
+*68 69 standard ORD-0069 delivered 214.28 17.14 231.42 Customer Number 00068
+ 214.28 1 *477 *352
+*69 70 premium ORD-0070 cancelled 654.61 52.37 706.98 Customer Number 00069
+ 217.49 1 *728 *603
+ 218.56 2 *479 *354
+*70 71 standard ORD-0071 shipped 1332.76 106.62 1439.38 Customer Number 00070
+ 220.7 1 *480 *355
+ 221.77 2 *730 *605
+ 222.84 3 *481 *356
+*71 72 premium ORD-0072 pending 1575.14 126.01 1701.15 Customer Number 00071
+ 223.91 1 *731 *606
+ 224.98 2 *482 *357
+ 225.05 3 *732 *607
+ 226.12 1 *483 *358
+*72 73 enterprise ORD-0073 processing 226.12 18.09 244.21 Customer Number 00072
+ 226.12 1 *483 *358
+*73 74 standard ORD-0074 delivered 690.13 55.21 745.34 Customer Number 00073
+ 229.33 1 *734 *609
+ 230.4 2 *485 *360
+*74 75 premium ORD-0075 cancelled 1403.8 112.3 1516.1 Customer Number 00074
+ 232.54 1 *486 *361
+ 233.61 2 *736 *611
+ 234.68 3 *487 *362
+*75 76 standard ORD-0076 shipped 1662.02 132.96 1794.98 Customer Number 00075
+ 235.75 1 *737 *612
+ 236.82 2 *488 *363
+ 237.89 3 *738 *613
+ 238.96 1 *489 *364
+*76 77 premium ORD-0077 pending 238.96 19.12 258.08 Customer Number 00076
+ 238.96 1 *489 *364
+*77 78 enterprise ORD-0078 processing 725.65 58.05 783.7 Customer Number 00077
+ 241.17 1 *740 *615
+ 242.24 2 *491 *366
+*78 79 standard ORD-0079 delivered 1474.84 117.99 1592.83 Customer Number 00078
+ 244.38 1 *492 *367
+ 245.45 2 *742 *617
+ 246.52 3 *493 *368
+*79 80 premium ORD-0080 cancelled 1744.9 139.59 1884.49 Customer Number 00079
+ 247.59 1 *743 *618
+ 248.66 2 *494 *369
+ 249.73 3 *744 *619
+ 250.8 1 *495 *370
+*80 81 standard ORD-0081 shipped 250.8 20.06 270.86 Customer Number 00080
+ 250.8 1 *495 *370
+*81 82 premium ORD-0082 pending 761.17 60.89 822.06 Customer Number 00081
+ 253.01 1 *746 *621
+ 254.08 2 *497 *372
+*82 83 enterprise ORD-0083 processing 1545.88 123.67 1669.55 Customer Number 00082
+ 256.22 1 *498 *373
+ 257.29 2 *748 *623
+ 258.36 3 *499 *374
+*83 84 standard ORD-0084 delivered 324.78 25.98 350.76 Customer Number 00083
+ 259.43 1 *749 *624
+ 10 2 *375 *250
+ 11.07 3 *625 *500
+ 12.14 1 *376 *251
+*84 85 premium ORD-0085 cancelled 12.14 0.97 13.11 Customer Number 00084
+ 12.14 1 *376 *251
+*85 86 standard ORD-0086 shipped 48.19 3.86 52.05 Customer Number 00085
+ 15.35 1 *627 *502
+ 16.42 2 *378 *253
+*86 87 premium ORD-0087 pending 119.92 9.59 129.51 Customer Number 00086
+ 18.56 1 *379 *254
+ 19.63 2 *629 *504
+ 20.7 3 *380 *255
+*87 88 enterprise ORD-0088 processing 164.16 13.13 177.29 Customer Number 00087
+ 21.77 1 *630 *505
+ 22.84 2 *381 *256
+ 23.91 3 *631 *506
+ 24.98 1 *382 *257
+*88 89 standard ORD-0089 delivered 24.98 2 26.98 Customer Number 00088
+ 24.98 1 *382 *257
+*89 90 premium ORD-0090 cancelled 83.71 6.7 90.41 Customer Number 00089
+ 27.19 1 *633 *508
+ 28.26 2 *384 *259
+*90 91 standard ORD-0091 shipped 190.96 15.28 206.24 Customer Number 00090
+ 30.4 1 *385 *260
+ 31.47 2 *635 *510
+ 32.54 3 *386 *261
+*91 92 premium ORD-0092 pending 247.04 19.76 266.8 Customer Number 00091
+ 33.61 1 *636 *511
+ 34.68 2 *387 *262
+ 35.75 3 *637 *512
+ 36.82 1 *388 *263
+*92 93 enterprise ORD-0093 processing 36.82 2.95 39.77 Customer Number 00092
+ 36.82 1 *388 *263
+*93 94 standard ORD-0094 delivered 119.23 9.54 128.77 Customer Number 00093
+ 39.03 1 *639 *514
+ 40.1 2 *390 *265
+*94 95 premium ORD-0095 cancelled 262 20.96 282.96 Customer Number 00094
+ 42.24 1 *391 *266
+ 43.31 2 *641 *516
+ 44.38 3 *392 *267
+*95 96 standard ORD-0096 shipped 329.92 26.39 356.31 Customer Number 00095
+ 45.45 1 *642 *517
+ 46.52 2 *393 *268
+ 47.59 3 *643 *518
+ 48.66 1 *394 *269
+*96 97 premium ORD-0097 pending 48.66 3.89 52.55 Customer Number 00096
+ 48.66 1 *394 *269
+*97 98 enterprise ORD-0098 processing 157.75 12.62 170.37 Customer Number 00097
+ 51.87 1 *645 *520
+ 52.94 2 *396 *271
+*98 99 standard ORD-0099 delivered 333.04 26.64 359.68 Customer Number 00098
+ 54.08 1 *397 *272
+ 55.15 2 *647 *522
+ 56.22 3 *398 *273
+*99 100 premium ORD-0100 cancelled 412.8 33.02 445.82 Customer Number 00099
+ 57.29 1 *648 *523
+ 58.36 2 *399 *274
+ 59.43 3 *649 *524
+ 60.5 1 *400 *275
+*100 101 standard ORD-0101 shipped 60.5 4.84 65.34 Customer Number 00100
+ 60.5 1 *400 *275
+*101 102 premium ORD-0102 pending 193.27 15.46 208.73 Customer Number 00101
+ 63.71 1 *651 *526
+ 64.78 2 *402 *277
+*102 103 enterprise ORD-0103 processing 407.08 32.57 439.65 Customer Number 00102
+ 66.92 1 *403 *278
+ 67.99 2 *653 *528
+ 68.06 3 *404 *279
+*103 104 standard ORD-0104 delivered 495.68 39.65 535.33 Customer Number 00103
+ 69.13 1 *654 *529
+ 70.2 2 *405 *280
+ 71.27 3 *655 *530
+ 72.34 1 *406 *281
+*104 105 premium ORD-0105 cancelled 72.34 5.79 78.13 Customer Number 00104
+ 72.34 1 *406 *281
+*105 106 standard ORD-0106 shipped 228.79 18.3 247.09 Customer Number 00105
+ 75.55 1 *657 *532
+ 76.62 2 *408 *283
+*106 107 premium ORD-0107 pending 481.12 38.49 519.61 Customer Number 00106
+ 78.76 1 *409 *284
+ 79.83 2 *659 *534
+ 80.9 3 *410 *285
+*107 108 enterprise ORD-0108 processing 579.56 46.36 625.92 Customer Number 00107
+ 81.97 1 *660 *535
+ 82.04 2 *411 *286
+ 83.11 3 *661 *536
+ 84.18 1 *412 *287
+*108 109 standard ORD-0109 delivered 84.18 6.73 90.91 Customer Number 00108
+ 84.18 1 *412 *287
+*109 110 premium ORD-0110 cancelled 264.31 21.14 285.45 Customer Number 00109
+ 87.39 1 *663 *538
+ 88.46 2 *414 *289
+*110 111 standard ORD-0111 shipped 552.16 44.17 596.33 Customer Number 00110
+ 90.6 1 *415 *290
+ 91.67 2 *665 *540
+ 92.74 3 *416 *291
+*111 112 premium ORD-0112 pending 667.44 53.4 720.84 Customer Number 00111
+ 93.81 1 *666 *541
+ 94.88 2 *417 *292
+ 95.95 3 *667 *542
+ 96.02 1 *418 *293
+*112 113 enterprise ORD-0113 processing 96.02 7.68 103.7 Customer Number 00112
+ 96.02 1 *418 *293
+*113 114 standard ORD-0114 delivered 299.83 23.99 323.82 Customer Number 00113
+ 99.23 1 *669 *544
+ 100.3 2 *420 *295
+*114 115 premium ORD-0115 cancelled 623.2 49.86 673.06 Customer Number 00114
+ 102.44 1 *421 *296
+ 103.51 2 *671 *546
+ 104.58 3 *422 *297
+*115 116 standard ORD-0116 shipped 751.32 60.11 811.43 Customer Number 00115
+ 105.65 1 *672 *547
+ 106.72 2 *423 *298
+ 107.79 3 *673 *548
+ 108.86 1 *424 *299
+*116 117 premium ORD-0117 pending 108.86 8.71 117.57 Customer Number 00116
+ 108.86 1 *424 *299
+*117 118 enterprise ORD-0118 processing 335.35 26.83 362.18 Customer Number 00117
+ 111.07 1 *675 *550
+ 112.14 2 *426 *301
+*118 119 standard ORD-0119 delivered 694.24 55.54 749.78 Customer Number 00118
+ 114.28 1 *427 *302
+ 115.35 2 *677 *552
+ 116.42 3 *428 *303
+*119 120 premium ORD-0120 cancelled 834.2 66.74 900.94 Customer Number 00119
+ 117.49 1 *678 *553
+ 118.56 2 *429 *304
+ 119.63 3 *679 *554
+ 120.7 1 *430 *305
+*120 121 standard ORD-0121 shipped 120.7 9.66 130.36 Customer Number 00120
+ 120.7 1 *430 *305
+*121 122 premium ORD-0122 pending 373.87 29.91 403.78 Customer Number 00121
+ 123.91 1 *681 *556
+ 124.98 2 *432 *307
+*122 123 enterprise ORD-0123 processing 765.28 61.22 826.5 Customer Number 00122
+ 126.12 1 *433 *308
+ 127.19 2 *683 *558
+ 128.26 3 *434 *309
+*123 124 standard ORD-0124 delivered 917.08 73.37 990.45 Customer Number 00123
+ 129.33 1 *684 *559
+ 130.4 2 *435 *310
+ 131.47 3 *685 *560
+ 132.54 1 *436 *311
+*124 125 premium ORD-0125 cancelled 132.54 10.6 143.14 Customer Number 00124
+ 132.54 1 *436 *311
+*125 126 standard ORD-0126 shipped 409.39 32.75 442.14 Customer Number 00125
+ 135.75 1 *687 *562
+ 136.82 2 *438 *313
+*126 127 premium ORD-0127 pending 837.32 66.99 904.31 Customer Number 00126
+ 138.96 1 *439 *314
+ 139.03 2 *689 *564
+ 140.1 3 *440 *315
+*127 128 enterprise ORD-0128 processing 999.96 80 1079.96 Customer Number 00127
+ 141.17 1 *690 *565
+ 142.24 2 *441 *316
+ 143.31 3 *691 *566
+ 144.38 1 *442 *317
+*128 129 standard ORD-0129 delivered 144.38 11.55 155.93 Customer Number 00128
+ 144.38 1 *442 *317
+*129 130 premium ORD-0130 cancelled 444.91 35.59 480.5 Customer Number 00129
+ 147.59 1 *693 *568
+ 148.66 2 *444 *319
+*130 131 standard ORD-0131 shipped 913.36 73.07 986.43 Customer Number 00130
+ 150.8 1 *445 *320
+ 151.87 2 *695 *570
+ 152.94 3 *446 *321
+*131 132 premium ORD-0132 pending 1082.84 86.63 1169.47 Customer Number 00131
+ 153.01 1 *696 *571
+ 154.08 2 *447 *322
+ 155.15 3 *697 *572
+ 156.22 1 *448 *323
+*132 133 enterprise ORD-0133 processing 156.22 12.5 168.72 Customer Number 00132
+ 156.22 1 *448 *323
+*133 134 standard ORD-0134 delivered 480.43 38.43 518.86 Customer Number 00133
+ 159.43 1 *699 *574
+ 160.5 2 *450 *325
+*134 135 premium ORD-0135 cancelled 984.4 78.75 1063.15 Customer Number 00134
+ 162.64 1 *451 *326
+ 163.71 2 *701 *576
+ 164.78 3 *452 *327
+*135 136 standard ORD-0136 shipped 1171.72 93.74 1265.46 Customer Number 00135
+ 165.85 1 *702 *577
+ 166.92 2 *453 *328
+ 167.99 3 *703 *578
+ 168.06 1 *454 *329
+*136 137 premium ORD-0137 pending 168.06 13.44 181.5 Customer Number 00136
+ 168.06 1 *454 *329
+*137 138 enterprise ORD-0138 processing 515.95 41.28 557.23 Customer Number 00137
+ 171.27 1 *705 *580
+ 172.34 2 *456 *331
+*138 139 standard ORD-0139 delivered 1055.44 84.44 1139.88 Customer Number 00138
+ 174.48 1 *457 *332
+ 175.55 2 *707 *582
+ 176.62 3 *458 *333
+*139 140 premium ORD-0140 cancelled 1255.6 100.45 1356.05 Customer Number 00139
+ 177.69 1 *708 *583
+ 178.76 2 *459 *334
+ 179.83 3 *709 *584
+ 180.9 1 *460 *335
+*140 141 standard ORD-0141 shipped 180.9 14.47 195.37 Customer Number 00140
+ 180.9 1 *460 *335
+*141 142 premium ORD-0142 pending 551.47 44.12 595.59 Customer Number 00141
+ 183.11 1 *711 *586
+ 184.18 2 *462 *337
+*142 143 enterprise ORD-0143 processing 1126.48 90.12 1216.6 Customer Number 00142
+ 186.32 1 *463 *338
+ 187.39 2 *713 *588
+ 188.46 3 *464 *339
+*143 144 standard ORD-0144 delivered 1338.48 107.08 1445.56 Customer Number 00143
+ 189.53 1 *714 *589
+ 190.6 2 *465 *340
+ 191.67 3 *715 *590
+ 192.74 1 *466 *341
+*144 145 premium ORD-0145 cancelled 192.74 15.42 208.16 Customer Number 00144
+ 192.74 1 *466 *341
+*145 146 standard ORD-0146 shipped 587.99 47.04 635.03 Customer Number 00145
+ 195.95 1 *717 *592
+ 196.02 2 *468 *343
+*146 147 premium ORD-0147 pending 1197.52 95.8 1293.32 Customer Number 00146
+ 198.16 1 *469 *344
+ 199.23 2 *719 *594
+ 200.3 3 *470 *345
+*147 148 enterprise ORD-0148 processing 1421.36 113.71 1535.07 Customer Number 00147
+ 201.37 1 *720 *595
+ 202.44 2 *471 *346
+ 203.51 3 *721 *596
+ 204.58 1 *472 *347
+*148 149 standard ORD-0149 delivered 204.58 16.37 220.95 Customer Number 00148
+ 204.58 1 *472 *347
+*149 150 premium ORD-0150 cancelled 625.51 50.04 675.55 Customer Number 00149
+ 207.79 1 *723 *598
+ 208.86 2 *474 *349
+*150 151 standard ORD-0151 shipped 1268.56 101.48 1370.04 Customer Number 00150
+ 210 1 *475 *350
+ 211.07 2 *725 *600
+ 212.14 3 *476 *351
+*151 152 premium ORD-0152 pending 1504.24 120.34 1624.58 Customer Number 00151
+ 213.21 1 *726 *601
+ 214.28 2 *477 *352
+ 215.35 3 *727 *602
+ 216.42 1 *478 *353
+*152 153 enterprise ORD-0153 processing 216.42 17.31 233.73 Customer Number 00152
+ 216.42 1 *478 *353
+*153 154 standard ORD-0154 delivered 661.03 52.88 713.91 Customer Number 00153
+ 219.63 1 *729 *604
+ 220.7 2 *480 *355
+*154 155 premium ORD-0155 cancelled 1345.6 107.65 1453.25 Customer Number 00154
+ 222.84 1 *481 *356
+ 223.91 2 *731 *606
+ 224.98 3 *482 *357
+*155 156 standard ORD-0156 shipped 1587.12 126.97 1714.09 Customer Number 00155
+ 225.05 1 *732 *607
+ 226.12 2 *483 *358
+ 227.19 3 *733 *608
+ 228.26 1 *484 *359
+*156 157 premium ORD-0157 pending 228.26 18.26 246.52 Customer Number 00156
+ 228.26 1 *484 *359
+*157 158 enterprise ORD-0158 processing 696.55 55.72 752.27 Customer Number 00157
+ 231.47 1 *735 *610
+ 232.54 2 *486 *361
+*158 159 standard ORD-0159 delivered 1416.64 113.33 1529.97 Customer Number 00158
+ 234.68 1 *487 *362
+ 235.75 2 *737 *612
+ 236.82 3 *488 *363
+*159 160 premium ORD-0160 cancelled 1673 133.84 1806.84 Customer Number 00159
+ 237.89 1 *738 *613
+ 238.96 2 *489 *364
+ 239.03 3 *739 *614
+ 240.1 1 *490 *365
+*160 161 standard ORD-0161 shipped 240.1 19.21 259.31 Customer Number 00160
+ 240.1 1 *490 *365
+*161 162 premium ORD-0162 pending 732.07 58.57 790.64 Customer Number 00161
+ 243.31 1 *741 *616
+ 244.38 2 *492 *367
+*162 163 enterprise ORD-0163 processing 1487.68 119.01 1606.69 Customer Number 00162
+ 246.52 1 *493 *368
+ 247.59 2 *743 *618
+ 248.66 3 *494 *369
+*163 164 standard ORD-0164 delivered 1759.88 140.79 1900.67 Customer Number 00163
+ 249.73 1 *744 *619
+ 250.8 2 *495 *370
+ 251.87 3 *745 *620
+ 252.94 1 *496 *371
+*164 165 premium ORD-0165 cancelled 252.94 20.24 273.18 Customer Number 00164
+ 252.94 1 *496 *371
+*165 166 standard ORD-0166 shipped 767.59 61.41 829 Customer Number 00165
+ 255.15 1 *747 *622
+ 256.22 2 *498 *373
+*166 167 premium ORD-0167 pending 807.22 64.58 871.8 Customer Number 00166
+ 258.36 1 *499 *374
+ 259.43 2 *749 *624
+ 10 3 *375 *250
+*167 168 enterprise ORD-0168 processing 89.26 7.14 96.4 Customer Number 00167
+ 11.07 1 *625 *500
+ 12.14 2 *376 *251
+ 13.21 3 *626 *501
+ 14.28 1 *377 *252
+*168 169 standard ORD-0169 delivered 14.28 1.14 15.42 Customer Number 00168
+ 14.28 1 *377 *252
+*169 170 premium ORD-0170 cancelled 54.61 4.37 58.98 Customer Number 00169
+ 17.49 1 *628 *503
+ 18.56 2 *379 *254
+*170 171 standard ORD-0171 shipped 132.76 10.62 143.38 Customer Number 00170
+ 20.7 1 *380 *255
+ 21.77 2 *630 *505
+ 22.84 3 *381 *256
+*171 172 premium ORD-0172 pending 175.14 14.01 189.15 Customer Number 00171
+ 23.91 1 *631 *506
+ 24.98 2 *382 *257
+ 25.05 3 *632 *507
+ 26.12 1 *383 *258
+*172 173 enterprise ORD-0173 processing 26.12 2.09 28.21 Customer Number 00172
+ 26.12 1 *383 *258
+*173 174 standard ORD-0174 delivered 90.13 7.21 97.34 Customer Number 00173
+ 29.33 1 *634 *509
+ 30.4 2 *385 *260
+*174 175 premium ORD-0175 cancelled 203.8 16.3 220.1 Customer Number 00174
+ 32.54 1 *386 *261
+ 33.61 2 *636 *511
+ 34.68 3 *387 *262
+*175 176 standard ORD-0176 shipped 262.02 20.96 282.98 Customer Number 00175
+ 35.75 1 *637 *512
+ 36.82 2 *388 *263
+ 37.89 3 *638 *513
+ 38.96 1 *389 *264
+*176 177 premium ORD-0177 pending 38.96 3.12 42.08 Customer Number 00176
+ 38.96 1 *389 *264
+*177 178 enterprise ORD-0178 processing 125.65 10.05 135.7 Customer Number 00177
+ 41.17 1 *640 *515
+ 42.24 2 *391 *266
+*178 179 standard ORD-0179 delivered 274.84 21.99 296.83 Customer Number 00178
+ 44.38 1 *392 *267
+ 45.45 2 *642 *517
+ 46.52 3 *393 *268
+*179 180 premium ORD-0180 cancelled 344.9 27.59 372.49 Customer Number 00179
+ 47.59 1 *643 *518
+ 48.66 2 *394 *269
+ 49.73 3 *644 *519
+ 50.8 1 *395 *270
+*180 181 standard ORD-0181 shipped 50.8 4.06 54.86 Customer Number 00180
+ 50.8 1 *395 *270
+*181 182 premium ORD-0182 pending 161.17 12.89 174.06 Customer Number 00181
+ 53.01 1 *646 *521
+ 54.08 2 *397 *272
+*182 183 enterprise ORD-0183 processing 345.88 27.67 373.55 Customer Number 00182
+ 56.22 1 *398 *273
+ 57.29 2 *648 *523
+ 58.36 3 *399 *274
+*183 184 standard ORD-0184 delivered 427.78 34.22 462 Customer Number 00183
+ 59.43 1 *649 *524
+ 60.5 2 *400 *275
+ 61.57 3 *650 *525
+ 62.64 1 *401 *276
+*184 185 premium ORD-0185 cancelled 62.64 5.01 67.65 Customer Number 00184
+ 62.64 1 *401 *276
+*185 186 standard ORD-0186 shipped 199.69 15.98 215.67 Customer Number 00185
+ 65.85 1 *652 *527
+ 66.92 2 *403 *278
+*186 187 premium ORD-0187 pending 416.92 33.35 450.27 Customer Number 00186
+ 68.06 1 *404 *279
+ 69.13 2 *654 *529
+ 70.2 3 *405 *280
+*187 188 enterprise ORD-0188 processing 510.66 40.85 551.51 Customer Number 00187
+ 71.27 1 *655 *530
+ 72.34 2 *406 *281
+ 73.41 3 *656 *531
+ 74.48 1 *407 *282
+*188 189 standard ORD-0189 delivered 74.48 5.96 80.44 Customer Number 00188
+ 74.48 1 *407 *282
+*189 190 premium ORD-0190 cancelled 235.21 18.82 254.03 Customer Number 00189
+ 77.69 1 *658 *533
+ 78.76 2 *409 *284
+*190 191 standard ORD-0191 shipped 490.96 39.28 530.24 Customer Number 00190
+ 80.9 1 *410 *285
+ 81.97 2 *660 *535
+ 82.04 3 *411 *286
+*191 192 premium ORD-0192 pending 593.54 47.48 641.02 Customer Number 00191
+ 83.11 1 *661 *536
+ 84.18 2 *412 *287
+ 85.25 3 *662 *537
+ 86.32 1 *413 *288
+*192 193 enterprise ORD-0193 processing 86.32 6.91 93.23 Customer Number 00192
+ 86.32 1 *413 *288
+*193 194 standard ORD-0194 delivered 270.73 21.66 292.39 Customer Number 00193
+ 89.53 1 *664 *539
+ 90.6 2 *415 *290
+*194 195 premium ORD-0195 cancelled 565 45.2 610.2 Customer Number 00194
+ 92.74 1 *416 *291
+ 93.81 2 *666 *541
+ 94.88 3 *417 *292
+*195 196 standard ORD-0196 shipped 677.42 54.19 731.61 Customer Number 00195
+ 95.95 1 *667 *542
+ 96.02 2 *418 *293
+ 97.09 3 *668 *543
+ 98.16 1 *419 *294
+*196 197 premium ORD-0197 pending 98.16 7.85 106.01 Customer Number 00196
+ 98.16 1 *419 *294
+*197 198 enterprise ORD-0198 processing 306.25 24.5 330.75 Customer Number 00197
+ 101.37 1 *670 *545
+ 102.44 2 *421 *296
+*198 199 standard ORD-0199 delivered 636.04 50.88 686.92 Customer Number 00198
+ 104.58 1 *422 *297
+ 105.65 2 *672 *547
+ 106.72 3 *423 *298
+*199 200 premium ORD-0200 cancelled 765.3 61.22 826.52 Customer Number 00199
+ 107.79 1 *673 *548
+ 108.86 2 *424 *299
+ 109.93 3 *674 *549
+ 110 1 *425 *300
+*200 201 standard ORD-0201 shipped 110 8.8 118.8 Customer Number 00200
+ 110 1 *425 *300
+*201 202 premium ORD-0202 pending 341.77 27.34 369.11 Customer Number 00201
+ 113.21 1 *676 *551
+ 114.28 2 *427 *302
+*202 203 enterprise ORD-0203 processing 707.08 56.57 763.65 Customer Number 00202
+ 116.42 1 *428 *303
+ 117.49 2 *678 *553
+ 118.56 3 *429 *304
+*203 204 standard ORD-0204 delivered 849.18 67.93 917.11 Customer Number 00203
+ 119.63 1 *679 *554
+ 120.7 2 *430 *305
+ 121.77 3 *680 *555
+ 122.84 1 *431 *306
+*204 205 premium ORD-0205 cancelled 122.84 9.83 132.67 Customer Number 00204
+ 122.84 1 *431 *306
+*205 206 standard ORD-0206 shipped 377.29 30.18 407.47 Customer Number 00205
+ 125.05 1 *682 *557
+ 126.12 2 *433 *308
+*206 207 premium ORD-0207 pending 778.12 62.25 840.37 Customer Number 00206
+ 128.26 1 *434 *309
+ 129.33 2 *684 *559
+ 130.4 3 *435 *310
+*207 208 enterprise ORD-0208 processing 932.06 74.56 1006.62 Customer Number 00207
+ 131.47 1 *685 *560
+ 132.54 2 *436 *311
+ 133.61 3 *686 *561
+ 134.68 1 *437 *312
+*208 209 standard ORD-0209 delivered 134.68 10.77 145.45 Customer Number 00208
+ 134.68 1 *437 *312
+*209 210 premium ORD-0210 cancelled 415.81 33.26 449.07 Customer Number 00209
+ 137.89 1 *688 *563
+ 138.96 2 *439 *314
+*210 211 standard ORD-0211 shipped 849.16 67.93 917.09 Customer Number 00210
+ 140.1 1 *440 *315
+ 141.17 2 *690 *565
+ 142.24 3 *441 *316
+*211 212 premium ORD-0212 pending 1014.94 81.2 1096.14 Customer Number 00211
+ 143.31 1 *691 *566
+ 144.38 2 *442 *317
+ 145.45 3 *692 *567
+ 146.52 1 *443 *318
+*212 213 enterprise ORD-0213 processing 146.52 11.72 158.24 Customer Number 00212
+ 146.52 1 *443 *318
+*213 214 standard ORD-0214 delivered 451.33 36.11 487.44 Customer Number 00213
+ 149.73 1 *694 *569
+ 150.8 2 *445 *320
+*214 215 premium ORD-0215 cancelled 921.2 73.7 994.9 Customer Number 00214
+ 152.94 1 *446 *321
+ 153.01 2 *696 *571
+ 154.08 3 *447 *322
+*215 216 standard ORD-0216 shipped 1097.82 87.83 1185.65 Customer Number 00215
+ 155.15 1 *697 *572
+ 156.22 2 *448 *323
+ 157.29 3 *698 *573
+ 158.36 1 *449 *324
+*216 217 premium ORD-0217 pending 158.36 12.67 171.03 Customer Number 00216
+ 158.36 1 *449 *324
+*217 218 enterprise ORD-0218 processing 486.85 38.95 525.8 Customer Number 00217
+ 161.57 1 *700 *575
+ 162.64 2 *451 *326
+*218 219 standard ORD-0219 delivered 997.24 79.78 1077.02 Customer Number 00218
+ 164.78 1 *452 *327
+ 165.85 2 *702 *577
+ 166.92 3 *453 *328
+*219 220 premium ORD-0220 cancelled 1181.7 94.54 1276.24 Customer Number 00219
+ 167.99 1 *703 *578
+ 168.06 2 *454 *329
+ 169.13 3 *704 *579
+ 170.2 1 *455 *330
+*220 221 standard ORD-0221 shipped 170.2 13.62 183.82 Customer Number 00220
+ 170.2 1 *455 *330
+*221 222 premium ORD-0222 pending 522.37 41.79 564.16 Customer Number 00221
+ 173.41 1 *706 *581
+ 174.48 2 *457 *332
+*222 223 enterprise ORD-0223 processing 1068.28 85.46 1153.74 Customer Number 00222
+ 176.62 1 *458 *333
+ 177.69 2 *708 *583
+ 178.76 3 *459 *334
+*223 224 standard ORD-0224 delivered 1269.58 101.57 1371.15 Customer Number 00223
+ 179.83 1 *709 *584
+ 180.9 2 *460 *335
+ 181.97 3 *710 *585
+ 182.04 1 *461 *336
+*224 225 premium ORD-0225 cancelled 182.04 14.56 196.6 Customer Number 00224
+ 182.04 1 *461 *336
+*225 226 standard ORD-0226 shipped 557.89 44.63 602.52 Customer Number 00225
+ 185.25 1 *712 *587
+ 186.32 2 *463 *338
+*226 227 premium ORD-0227 pending 1139.32 91.15 1230.47 Customer Number 00226
+ 188.46 1 *464 *339
+ 189.53 2 *714 *589
+ 190.6 3 *465 *340
+*227 228 enterprise ORD-0228 processing 1353.46 108.28 1461.74 Customer Number 00227
+ 191.67 1 *715 *590
+ 192.74 2 *466 *341
+ 193.81 3 *716 *591
+ 194.88 1 *467 *342
+*228 229 standard ORD-0229 delivered 194.88 15.59 210.47 Customer Number 00228
+ 194.88 1 *467 *342
+*229 230 premium ORD-0230 cancelled 593.41 47.47 640.88 Customer Number 00229
+ 197.09 1 *718 *593
+ 198.16 2 *469 *344
+*230 231 standard ORD-0231 shipped 1210.36 96.83 1307.19 Customer Number 00230
+ 200.3 1 *470 *345
+ 201.37 2 *720 *595
+ 202.44 3 *471 *346
+*231 232 premium ORD-0232 pending 1436.34 114.91 1551.25 Customer Number 00231
+ 203.51 1 *721 *596
+ 204.58 2 *472 *347
+ 205.65 3 *722 *597
+ 206.72 1 *473 *348
+*232 233 enterprise ORD-0233 processing 206.72 16.54 223.26 Customer Number 00232
+ 206.72 1 *473 *348
+*233 234 standard ORD-0234 delivered 629.93 50.39 680.32 Customer Number 00233
+ 209.93 1 *724 *599
+ 210 2 *475 *350
+*234 235 premium ORD-0235 cancelled 1281.4 102.51 1383.91 Customer Number 00234
+ 212.14 1 *476 *351
+ 213.21 2 *726 *601
+ 214.28 3 *477 *352
+*235 236 standard ORD-0236 shipped 1519.22 121.54 1640.76 Customer Number 00235
+ 215.35 1 *727 *602
+ 216.42 2 *478 *353
+ 217.49 3 *728 *603
+ 218.56 1 *479 *354
+*236 237 premium ORD-0237 pending 218.56 17.48 236.04 Customer Number 00236
+ 218.56 1 *479 *354
+*237 238 enterprise ORD-0238 processing 667.45 53.4 720.85 Customer Number 00237
+ 221.77 1 *730 *605
+ 222.84 2 *481 *356
+*238 239 standard ORD-0239 delivered 1353.44 108.28 1461.72 Customer Number 00238
+ 224.98 1 *482 *357
+ 225.05 2 *732 *607
+ 226.12 3 *483 *358
+*239 240 premium ORD-0240 cancelled 1602.1 128.17 1730.27 Customer Number 00239
+ 227.19 1 *733 *608
+ 228.26 2 *484 *359
+ 229.33 3 *734 *609
+ 230.4 1 *485 *360
+*240 241 standard ORD-0241 shipped 230.4 18.43 248.83 Customer Number 00240
+ 230.4 1 *485 *360
+*241 242 premium ORD-0242 pending 702.97 56.24 759.21 Customer Number 00241
+ 233.61 1 *736 *611
+ 234.68 2 *487 *362
+*242 243 enterprise ORD-0243 processing 1429.48 114.36 1543.84 Customer Number 00242
+ 236.82 1 *488 *363
+ 237.89 2 *738 *613
+ 238.96 3 *489 *364
+*243 244 standard ORD-0244 delivered 1684.98 134.8 1819.78 Customer Number 00243
+ 239.03 1 *739 *614
+ 240.1 2 *490 *365
+ 241.17 3 *740 *615
+ 242.24 1 *491 *366
+*244 245 premium ORD-0245 cancelled 242.24 19.38 261.62 Customer Number 00244
+ 242.24 1 *491 *366
+*245 246 standard ORD-0246 shipped 738.49 59.08 797.57 Customer Number 00245
+ 245.45 1 *742 *617
+ 246.52 2 *493 *368
+*246 247 premium ORD-0247 pending 1500.52 120.04 1620.56 Customer Number 00246
+ 248.66 1 *494 *369
+ 249.73 2 *744 *619
+ 250.8 3 *495 *370
+*247 248 enterprise ORD-0248 processing 1770.86 141.67 1912.53 Customer Number 00247
+ 251.87 1 *745 *620
+ 252.94 2 *496 *371
+ 253.01 3 *746 *621
+ 254.08 1 *497 *372
+*248 249 standard ORD-0249 delivered 254.08 20.33 274.41 Customer Number 00248
+ 254.08 1 *497 *372
+*249 250 premium ORD-0250 cancelled 774.01 61.92 835.93 Customer Number 00249
+ 257.29 1 *748 *623
+ 258.36 2 *499 *374
+*0 1 standard ORD-0251 shipped 68.56 5.48 74.04 Customer Number 00000
+ 10 1 *375 *250
+ 11.07 2 *625 *500
+ 12.14 3 *376 *251
+*1 2 premium ORD-0252 pending 104.24 8.34 112.58 Customer Number 00001
+ 13.21 1 *626 *501
+ 14.28 2 *377 *252
+ 15.35 3 *627 *502
+ 16.42 1 *378 *253
+*2 3 enterprise ORD-0253 processing 16.42 1.31 17.73 Customer Number 00002
+ 16.42 1 *378 *253
+*3 4 standard ORD-0254 delivered 61.03 4.88 65.91 Customer Number 00003
+ 19.63 1 *629 *504
+ 20.7 2 *380 *255
+*4 5 premium ORD-0255 cancelled 145.6 11.65 157.25 Customer Number 00004
+ 22.84 1 *381 *256
+ 23.91 2 *631 *506
+ 24.98 3 *382 *257
+*5 6 standard ORD-0256 shipped 187.12 14.97 202.09 Customer Number 00005
+ 25.05 1 *632 *507
+ 26.12 2 *383 *258
+ 27.19 3 *633 *508
+ 28.26 1 *384 *259
+*6 7 premium ORD-0257 pending 28.26 2.26 30.52 Customer Number 00006
+ 28.26 1 *384 *259
+*7 8 enterprise ORD-0258 processing 96.55 7.72 104.27 Customer Number 00007
+ 31.47 1 *635 *510
+ 32.54 2 *386 *261
+*8 9 standard ORD-0259 delivered 216.64 17.33 233.97 Customer Number 00008
+ 34.68 1 *387 *262
+ 35.75 2 *637 *512
+ 36.82 3 *388 *263
+*9 10 premium ORD-0260 cancelled 273 21.84 294.84 Customer Number 00009
+ 37.89 1 *638 *513
+ 38.96 2 *389 *264
+ 39.03 3 *639 *514
+ 40.1 1 *390 *265
+*10 11 standard ORD-0261 shipped 40.1 3.21 43.31 Customer Number 00010
+ 40.1 1 *390 *265
+*11 12 premium ORD-0262 pending 132.07 10.57 142.64 Customer Number 00011
+ 43.31 1 *641 *516
+ 44.38 2 *392 *267
+*12 13 enterprise ORD-0263 processing 287.68 23.01 310.69 Customer Number 00012
+ 46.52 1 *393 *268
+ 47.59 2 *643 *518
+ 48.66 3 *394 *269
+*13 14 standard ORD-0264 delivered 359.88 28.79 388.67 Customer Number 00013
+ 49.73 1 *644 *519
+ 50.8 2 *395 *270
+ 51.87 3 *645 *520
+ 52.94 1 *396 *271
+*14 15 premium ORD-0265 cancelled 52.94 4.24 57.18 Customer Number 00014
+ 52.94 1 *396 *271
+*15 16 standard ORD-0266 shipped 167.59 13.41 181 Customer Number 00015
+ 55.15 1 *647 *522
+ 56.22 2 *398 *273
+*16 17 premium ORD-0267 pending 358.72 28.7 387.42 Customer Number 00016
+ 58.36 1 *399 *274
+ 59.43 2 *649 *524
+ 60.5 3 *400 *275
+*17 18 enterprise ORD-0268 processing 442.76 35.42 478.18 Customer Number 00017
+ 61.57 1 *650 *525
+ 62.64 2 *401 *276
+ 63.71 3 *651 *526
+ 64.78 1 *402 *277
+*18 19 standard ORD-0269 delivered 64.78 5.18 69.96 Customer Number 00018
+ 64.78 1 *402 *277
+*19 20 premium ORD-0270 cancelled 204.11 16.33 220.44 Customer Number 00019
+ 67.99 1 *653 *528
+ 68.06 2 *404 *279
+*20 21 standard ORD-0271 shipped 429.76 34.38 464.14 Customer Number 00020
+ 70.2 1 *405 *280
+ 71.27 2 *655 *530
+ 72.34 3 *406 *281
+*21 22 premium ORD-0272 pending 525.64 42.05 567.69 Customer Number 00021
+ 73.41 1 *656 *531
+ 74.48 2 *407 *282
+ 75.55 3 *657 *532
+ 76.62 1 *408 *283
+*22 23 enterprise ORD-0273 processing 76.62 6.13 82.75 Customer Number 00022
+ 76.62 1 *408 *283
+*23 24 standard ORD-0274 delivered 241.63 19.33 260.96 Customer Number 00023
+ 79.83 1 *659 *534
+ 80.9 2 *410 *285
+*24 25 premium ORD-0275 cancelled 500.8 40.06 540.86 Customer Number 00024
+ 82.04 1 *411 *286
+ 83.11 2 *661 *536
+ 84.18 3 *412 *287
+*25 26 standard ORD-0276 shipped 608.52 48.68 657.2 Customer Number 00025
+ 85.25 1 *662 *537
+ 86.32 2 *413 *288
+ 87.39 3 *663 *538
+ 88.46 1 *414 *289
+*26 27 premium ORD-0277 pending 88.46 7.08 95.54 Customer Number 00026
+ 88.46 1 *414 *289
+*27 28 enterprise ORD-0278 processing 277.15 22.17 299.32 Customer Number 00027
+ 91.67 1 *665 *540
+ 92.74 2 *416 *291
+*28 29 standard ORD-0279 delivered 574.84 45.99 620.83 Customer Number 00028
+ 94.88 1 *417 *292
+ 95.95 2 *667 *542
+ 96.02 3 *418 *293
+*29 30 premium ORD-0280 cancelled 691.4 55.31 746.71 Customer Number 00029
+ 97.09 1 *668 *543
+ 98.16 2 *419 *294
+ 99.23 3 *669 *544
+ 100.3 1 *420 *295
+*30 31 standard ORD-0281 shipped 100.3 8.02 108.32 Customer Number 00030
+ 100.3 1 *420 *295
+*31 32 premium ORD-0282 pending 312.67 25.01 337.68 Customer Number 00031
+ 103.51 1 *671 *546
+ 104.58 2 *422 *297
+*32 33 enterprise ORD-0283 processing 648.88 51.91 700.79 Customer Number 00032
+ 106.72 1 *423 *298
+ 107.79 2 *673 *548
+ 108.86 3 *424 *299
+*33 34 standard ORD-0284 delivered 775.28 62.02 837.3 Customer Number 00033
+ 109.93 1 *674 *549
+ 110 2 *425 *300
+ 111.07 3 *675 *550
+ 112.14 1 *426 *301
+*34 35 premium ORD-0285 cancelled 112.14 8.97 121.11 Customer Number 00034
+ 112.14 1 *426 *301
+*35 36 standard ORD-0286 shipped 348.19 27.86 376.05 Customer Number 00035
+ 115.35 1 *677 *552
+ 116.42 2 *428 *303
+*36 37 premium ORD-0287 pending 719.92 57.59 777.51 Customer Number 00036
+ 118.56 1 *429 *304
+ 119.63 2 *679 *554
+ 120.7 3 *430 *305
+*37 38 enterprise ORD-0288 processing 864.16 69.13 933.29 Customer Number 00037
+ 121.77 1 *680 *555
+ 122.84 2 *431 *306
+ 123.91 3 *681 *556
+ 124.98 1 *432 *307
+*38 39 standard ORD-0289 delivered 124.98 10 134.98 Customer Number 00038
+ 124.98 1 *432 *307
+*39 40 premium ORD-0290 cancelled 383.71 30.7 414.41 Customer Number 00039
+ 127.19 1 *683 *558
+ 128.26 2 *434 *309
+*40 41 standard ORD-0291 shipped 790.96 63.28 854.24 Customer Number 00040
+ 130.4 1 *435 *310
+ 131.47 2 *685 *560
+ 132.54 3 *436 *311
+*41 42 premium ORD-0292 pending 947.04 75.76 1022.8 Customer Number 00041
+ 133.61 1 *686 *561
+ 134.68 2 *437 *312
+ 135.75 3 *687 *562
+ 136.82 1 *438 *313
+*42 43 enterprise ORD-0293 processing 136.82 10.95 147.77 Customer Number 00042
+ 136.82 1 *438 *313
+*43 44 standard ORD-0294 delivered 419.23 33.54 452.77 Customer Number 00043
+ 139.03 1 *689 *564
+ 140.1 2 *440 *315
+*44 45 premium ORD-0295 cancelled 862 68.96 930.96 Customer Number 00044
+ 142.24 1 *441 *316
+ 143.31 2 *691 *566
+ 144.38 3 *442 *317
+*45 46 standard ORD-0296 shipped 1029.92 82.39 1112.31 Customer Number 00045
+ 145.45 1 *692 *567
+ 146.52 2 *443 *318
+ 147.59 3 *693 *568
+ 148.66 1 *444 *319
+*46 47 premium ORD-0297 pending 148.66 11.89 160.55 Customer Number 00046
+ 148.66 1 *444 *319
+*47 48 enterprise ORD-0298 processing 457.75 36.62 494.37 Customer Number 00047
+ 151.87 1 *695 *570
+ 152.94 2 *446 *321
+*48 49 standard ORD-0299 delivered 933.04 74.64 1007.68 Customer Number 00048
+ 154.08 1 *447 *322
+ 155.15 2 *697 *572
+ 156.22 3 *448 *323
+*49 50 premium ORD-0300 cancelled 1112.8 89.02 1201.82 Customer Number 00049
+ 157.29 1 *698 *573
+ 158.36 2 *449 *324
+ 159.43 3 *699 *574
+ 160.5 1 *450 *325
+*50 51 standard ORD-0301 shipped 160.5 12.84 173.34 Customer Number 00050
+ 160.5 1 *450 *325
+*51 52 premium ORD-0302 pending 493.27 39.46 532.73 Customer Number 00051
+ 163.71 1 *701 *576
+ 164.78 2 *452 *327
+*52 53 enterprise ORD-0303 processing 1007.08 80.57 1087.65 Customer Number 00052
+ 166.92 1 *453 *328
+ 167.99 2 *703 *578
+ 168.06 3 *454 *329
+*53 54 standard ORD-0304 delivered 1195.68 95.65 1291.33 Customer Number 00053
+ 169.13 1 *704 *579
+ 170.2 2 *455 *330
+ 171.27 3 *705 *580
+ 172.34 1 *456 *331
+*54 55 premium ORD-0305 cancelled 172.34 13.79 186.13 Customer Number 00054
+ 172.34 1 *456 *331
+*55 56 standard ORD-0306 shipped 528.79 42.3 571.09 Customer Number 00055
+ 175.55 1 *707 *582
+ 176.62 2 *458 *333
+*56 57 premium ORD-0307 pending 1081.12 86.49 1167.61 Customer Number 00056
+ 178.76 1 *459 *334
+ 179.83 2 *709 *584
+ 180.9 3 *460 *335
+*57 58 enterprise ORD-0308 processing 1279.56 102.36 1381.92 Customer Number 00057
+ 181.97 1 *710 *585
+ 182.04 2 *461 *336
+ 183.11 3 *711 *586
+ 184.18 1 *462 *337
+*58 59 standard ORD-0309 delivered 184.18 14.73 198.91 Customer Number 00058
+ 184.18 1 *462 *337
+*59 60 premium ORD-0310 cancelled 564.31 45.14 609.45 Customer Number 00059
+ 187.39 1 *713 *588
+ 188.46 2 *464 *339
+*60 61 standard ORD-0311 shipped 1152.16 92.17 1244.33 Customer Number 00060
+ 190.6 1 *465 *340
+ 191.67 2 *715 *590
+ 192.74 3 *466 *341
+*61 62 premium ORD-0312 pending 1367.44 109.4 1476.84 Customer Number 00061
+ 193.81 1 *716 *591
+ 194.88 2 *467 *342
+ 195.95 3 *717 *592
+ 196.02 1 *468 *343
+*62 63 enterprise ORD-0313 processing 196.02 15.68 211.7 Customer Number 00062
+ 196.02 1 *468 *343
+*63 64 standard ORD-0314 delivered 599.83 47.99 647.82 Customer Number 00063
+ 199.23 1 *719 *594
+ 200.3 2 *470 *345
+*64 65 premium ORD-0315 cancelled 1223.2 97.86 1321.06 Customer Number 00064
+ 202.44 1 *471 *346
+ 203.51 2 *721 *596
+ 204.58 3 *472 *347
+*65 66 standard ORD-0316 shipped 1451.32 116.11 1567.43 Customer Number 00065
+ 205.65 1 *722 *597
+ 206.72 2 *473 *348
+ 207.79 3 *723 *598
+ 208.86 1 *474 *349
+*66 67 premium ORD-0317 pending 208.86 16.71 225.57 Customer Number 00066
+ 208.86 1 *474 *349
+*67 68 enterprise ORD-0318 processing 635.35 50.83 686.18 Customer Number 00067
+ 211.07 1 *725 *600
+ 212.14 2 *476 *351
+*68 69 standard ORD-0319 delivered 1294.24 103.54 1397.78 Customer Number 00068
+ 214.28 1 *477 *352
+ 215.35 2 *727 *602
+ 216.42 3 *478 *353
+*69 70 premium ORD-0320 cancelled 1534.2 122.74 1656.94 Customer Number 00069
+ 217.49 1 *728 *603
+ 218.56 2 *479 *354
+ 219.63 3 *729 *604
+ 220.7 1 *480 *355
+*70 71 standard ORD-0321 shipped 220.7 17.66 238.36 Customer Number 00070
+ 220.7 1 *480 *355
+*71 72 premium ORD-0322 pending 673.87 53.91 727.78 Customer Number 00071
+ 223.91 1 *731 *606
+ 224.98 2 *482 *357
+*72 73 enterprise ORD-0323 processing 1365.28 109.22 1474.5 Customer Number 00072
+ 226.12 1 *483 *358
+ 227.19 2 *733 *608
+ 228.26 3 *484 *359
+*73 74 standard ORD-0324 delivered 1617.08 129.37 1746.45 Customer Number 00073
+ 229.33 1 *734 *609
+ 230.4 2 *485 *360
+ 231.47 3 *735 *610
+ 232.54 1 *486 *361
+*74 75 premium ORD-0325 cancelled 232.54 18.6 251.14 Customer Number 00074
+ 232.54 1 *486 *361
+*75 76 standard ORD-0326 shipped 709.39 56.75 766.14 Customer Number 00075
+ 235.75 1 *737 *612
+ 236.82 2 *488 *363
+*76 77 premium ORD-0327 pending 1437.32 114.99 1552.31 Customer Number 00076
+ 238.96 1 *489 *364
+ 239.03 2 *739 *614
+ 240.1 3 *490 *365
+*77 78 enterprise ORD-0328 processing 1699.96 136 1835.96 Customer Number 00077
+ 241.17 1 *740 *615
+ 242.24 2 *491 *366
+ 243.31 3 *741 *616
+ 244.38 1 *492 *367
+*78 79 standard ORD-0329 delivered 244.38 19.55 263.93 Customer Number 00078
+ 244.38 1 *492 *367
+*79 80 premium ORD-0330 cancelled 744.91 59.59 804.5 Customer Number 00079
+ 247.59 1 *743 *618
+ 248.66 2 *494 *369
+*80 81 standard ORD-0331 shipped 1513.36 121.07 1634.43 Customer Number 00080
+ 250.8 1 *495 *370
+ 251.87 2 *745 *620
+ 252.94 3 *496 *371
+*81 82 premium ORD-0332 pending 1782.84 142.63 1925.47 Customer Number 00081
+ 253.01 1 *746 *621
+ 254.08 2 *497 *372
+ 255.15 3 *747 *622
+ 256.22 1 *498 *373
+*82 83 enterprise ORD-0333 processing 256.22 20.5 276.72 Customer Number 00082
+ 256.22 1 *498 *373
+*83 84 standard ORD-0334 delivered 279.43 22.35 301.78 Customer Number 00083
+ 259.43 1 *749 *624
+ 10 2 *375 *250
+*84 85 premium ORD-0335 cancelled 81.4 6.51 87.91 Customer Number 00084
+ 12.14 1 *376 *251
+ 13.21 2 *626 *501
+ 14.28 3 *377 *252
+*85 86 standard ORD-0336 shipped 119.22 9.54 128.76 Customer Number 00085
+ 15.35 1 *627 *502
+ 16.42 2 *378 *253
+ 17.49 3 *628 *503
+ 18.56 1 *379 *254
+*86 87 premium ORD-0337 pending 18.56 1.48 20.04 Customer Number 00086
+ 18.56 1 *379 *254
+*87 88 enterprise ORD-0338 processing 67.45 5.4 72.85 Customer Number 00087
+ 21.77 1 *630 *505
+ 22.84 2 *381 *256
+*88 89 standard ORD-0339 delivered 153.44 12.28 165.72 Customer Number 00088
+ 24.98 1 *382 *257
+ 25.05 2 *632 *507
+ 26.12 3 *383 *258
+*89 90 premium ORD-0340 cancelled 202.1 16.17 218.27 Customer Number 00089
+ 27.19 1 *633 *508
+ 28.26 2 *384 *259
+ 29.33 3 *634 *509
+ 30.4 1 *385 *260
+*90 91 standard ORD-0341 shipped 30.4 2.43 32.83 Customer Number 00090
+ 30.4 1 *385 *260
+*91 92 premium ORD-0342 pending 102.97 8.24 111.21 Customer Number 00091
+ 33.61 1 *636 *511
+ 34.68 2 *387 *262
+*92 93 enterprise ORD-0343 processing 229.48 18.36 247.84 Customer Number 00092
+ 36.82 1 *388 *263
+ 37.89 2 *638 *513
+ 38.96 3 *389 *264
+*93 94 standard ORD-0344 delivered 284.98 22.8 307.78 Customer Number 00093
+ 39.03 1 *639 *514
+ 40.1 2 *390 *265
+ 41.17 3 *640 *515
+ 42.24 1 *391 *266
+*94 95 premium ORD-0345 cancelled 42.24 3.38 45.62 Customer Number 00094
+ 42.24 1 *391 *266
+*95 96 standard ORD-0346 shipped 138.49 11.08 149.57 Customer Number 00095
+ 45.45 1 *642 *517
+ 46.52 2 *393 *268
+*96 97 premium ORD-0347 pending 300.52 24.04 324.56 Customer Number 00096
+ 48.66 1 *394 *269
+ 49.73 2 *644 *519
+ 50.8 3 *395 *270
+*97 98 enterprise ORD-0348 processing 370.86 29.67 400.53 Customer Number 00097
+ 51.87 1 *645 *520
+ 52.94 2 *396 *271
+ 53.01 3 *646 *521
+ 54.08 1 *397 *272
+*98 99 standard ORD-0349 delivered 54.08 4.33 58.41 Customer Number 00098
+ 54.08 1 *397 *272
+*99 100 premium ORD-0350 cancelled 174.01 13.92 187.93 Customer Number 00099
+ 57.29 1 *648 *523
+ 58.36 2 *399 *274
+*100 101 standard ORD-0351 shipped 371.56 29.72 401.28 Customer Number 00100
+ 60.5 1 *400 *275
+ 61.57 2 *650 *525
+ 62.64 3 *401 *276
+*101 102 premium ORD-0352 pending 457.74 36.62 494.36 Customer Number 00101
+ 63.71 1 *651 *526
+ 64.78 2 *402 *277
+ 65.85 3 *652 *527
+ 66.92 1 *403 *278
+*102 103 enterprise ORD-0353 processing 66.92 5.35 72.27 Customer Number 00102
+ 66.92 1 *403 *278
+*103 104 standard ORD-0354 delivered 209.53 16.76 226.29 Customer Number 00103
+ 69.13 1 *654 *529
+ 70.2 2 *405 *280
+*104 105 premium ORD-0355 cancelled 442.6 35.41 478.01 Customer Number 00104
+ 72.34 1 *406 *281
+ 73.41 2 *656 *531
+ 74.48 3 *407 *282
+*105 106 standard ORD-0356 shipped 540.62 43.25 583.87 Customer Number 00105
+ 75.55 1 *657 *532
+ 76.62 2 *408 *283
+ 77.69 3 *658 *533
+ 78.76 1 *409 *284
+*106 107 premium ORD-0357 pending 78.76 6.3 85.06 Customer Number 00106
+ 78.76 1 *409 *284
+*107 108 enterprise ORD-0358 processing 246.05 19.68 265.73 Customer Number 00107
+ 81.97 1 *660 *535
+ 82.04 2 *411 *286
+*108 109 standard ORD-0359 delivered 513.64 41.09 554.73 Customer Number 00108
+ 84.18 1 *412 *287
+ 85.25 2 *662 *537
+ 86.32 3 *413 *288
+*109 110 premium ORD-0360 cancelled 623.5 49.88 673.38 Customer Number 00109
+ 87.39 1 *663 *538
+ 88.46 2 *414 *289
+ 89.53 3 *664 *539
+ 90.6 1 *415 *290
+*110 111 standard ORD-0361 shipped 90.6 7.25 97.85 Customer Number 00110
+ 90.6 1 *415 *290
+*111 112 premium ORD-0362 pending 283.57 22.69 306.26 Customer Number 00111
+ 93.81 1 *666 *541
+ 94.88 2 *417 *292
+*112 113 enterprise ORD-0363 processing 584.68 46.77 631.45 Customer Number 00112
+ 96.02 1 *418 *293
+ 97.09 2 *668 *543
+ 98.16 3 *419 *294
+*113 114 standard ORD-0364 delivered 706.38 56.51 762.89 Customer Number 00113
+ 99.23 1 *669 *544
+ 100.3 2 *420 *295
+ 101.37 3 *670 *545
+ 102.44 1 *421 *296
+*114 115 premium ORD-0365 cancelled 102.44 8.2 110.64 Customer Number 00114
+ 102.44 1 *421 *296
+*115 116 standard ORD-0366 shipped 319.09 25.53 344.62 Customer Number 00115
+ 105.65 1 *672 *547
+ 106.72 2 *423 *298
+*116 117 premium ORD-0367 pending 658.72 52.7 711.42 Customer Number 00116
+ 108.86 1 *424 *299
+ 109.93 2 *674 *549
+ 110 3 *425 *300
+*117 118 enterprise ORD-0368 processing 789.26 63.14 852.4 Customer Number 00117
+ 111.07 1 *675 *550
+ 112.14 2 *426 *301
+ 113.21 3 *676 *551
+ 114.28 1 *427 *302
+*118 119 standard ORD-0369 delivered 114.28 9.14 123.42 Customer Number 00118
+ 114.28 1 *427 *302
+*119 120 premium ORD-0370 cancelled 354.61 28.37 382.98 Customer Number 00119
+ 117.49 1 *678 *553
+ 118.56 2 *429 *304
+*120 121 standard ORD-0371 shipped 732.76 58.62 791.38 Customer Number 00120
+ 120.7 1 *430 *305
+ 121.77 2 *680 *555
+ 122.84 3 *431 *306
+*121 122 premium ORD-0372 pending 875.14 70.01 945.15 Customer Number 00121
+ 123.91 1 *681 *556
+ 124.98 2 *432 *307
+ 125.05 3 *682 *557
+ 126.12 1 *433 *308
+*122 123 enterprise ORD-0373 processing 126.12 10.09 136.21 Customer Number 00122
+ 126.12 1 *433 *308
+*123 124 standard ORD-0374 delivered 390.13 31.21 421.34 Customer Number 00123
+ 129.33 1 *684 *559
+ 130.4 2 *435 *310
+*124 125 premium ORD-0375 cancelled 803.8 64.3 868.1 Customer Number 00124
+ 132.54 1 *436 *311
+ 133.61 2 *686 *561
+ 134.68 3 *437 *312
+*125 126 standard ORD-0376 shipped 962.02 76.96 1038.98 Customer Number 00125
+ 135.75 1 *687 *562
+ 136.82 2 *438 *313
+ 137.89 3 *688 *563
+ 138.96 1 *439 *314
+*126 127 premium ORD-0377 pending 138.96 11.12 150.08 Customer Number 00126
+ 138.96 1 *439 *314
+*127 128 enterprise ORD-0378 processing 425.65 34.05 459.7 Customer Number 00127
+ 141.17 1 *690 *565
+ 142.24 2 *441 *316
+*128 129 standard ORD-0379 delivered 874.84 69.99 944.83 Customer Number 00128
+ 144.38 1 *442 *317
+ 145.45 2 *692 *567
+ 146.52 3 *443 *318
+*129 130 premium ORD-0380 cancelled 1044.9 83.59 1128.49 Customer Number 00129
+ 147.59 1 *693 *568
+ 148.66 2 *444 *319
+ 149.73 3 *694 *569
+ 150.8 1 *445 *320
+*130 131 standard ORD-0381 shipped 150.8 12.06 162.86 Customer Number 00130
+ 150.8 1 *445 *320
+*131 132 premium ORD-0382 pending 461.17 36.89 498.06 Customer Number 00131
+ 153.01 1 *696 *571
+ 154.08 2 *447 *322
+*132 133 enterprise ORD-0383 processing 945.88 75.67 1021.55 Customer Number 00132
+ 156.22 1 *448 *323
+ 157.29 2 *698 *573
+ 158.36 3 *449 *324
+*133 134 standard ORD-0384 delivered 1127.78 90.22 1218 Customer Number 00133
+ 159.43 1 *699 *574
+ 160.5 2 *450 *325
+ 161.57 3 *700 *575
+ 162.64 1 *451 *326
+*134 135 premium ORD-0385 cancelled 162.64 13.01 175.65 Customer Number 00134
+ 162.64 1 *451 *326
+*135 136 standard ORD-0386 shipped 499.69 39.98 539.67 Customer Number 00135
+ 165.85 1 *702 *577
+ 166.92 2 *453 *328
+*136 137 premium ORD-0387 pending 1016.92 81.35 1098.27 Customer Number 00136
+ 168.06 1 *454 *329
+ 169.13 2 *704 *579
+ 170.2 3 *455 *330
+*137 138 enterprise ORD-0388 processing 1210.66 96.85 1307.51 Customer Number 00137
+ 171.27 1 *705 *580
+ 172.34 2 *456 *331
+ 173.41 3 *706 *581
+ 174.48 1 *457 *332
+*138 139 standard ORD-0389 delivered 174.48 13.96 188.44 Customer Number 00138
+ 174.48 1 *457 *332
+*139 140 premium ORD-0390 cancelled 535.21 42.82 578.03 Customer Number 00139
+ 177.69 1 *708 *583
+ 178.76 2 *459 *334
+*140 141 standard ORD-0391 shipped 1090.96 87.28 1178.24 Customer Number 00140
+ 180.9 1 *460 *335
+ 181.97 2 *710 *585
+ 182.04 3 *461 *336
+*141 142 premium ORD-0392 pending 1293.54 103.48 1397.02 Customer Number 00141
+ 183.11 1 *711 *586
+ 184.18 2 *462 *337
+ 185.25 3 *712 *587
+ 186.32 1 *463 *338
+*142 143 enterprise ORD-0393 processing 186.32 14.91 201.23 Customer Number 00142
+ 186.32 1 *463 *338
+*143 144 standard ORD-0394 delivered 570.73 45.66 616.39 Customer Number 00143
+ 189.53 1 *714 *589
+ 190.6 2 *465 *340
+*144 145 premium ORD-0395 cancelled 1165 93.2 1258.2 Customer Number 00144
+ 192.74 1 *466 *341
+ 193.81 2 *716 *591
+ 194.88 3 *467 *342
+*145 146 standard ORD-0396 shipped 1377.42 110.19 1487.61 Customer Number 00145
+ 195.95 1 *717 *592
+ 196.02 2 *468 *343
+ 197.09 3 *718 *593
+ 198.16 1 *469 *344
+*146 147 premium ORD-0397 pending 198.16 15.85 214.01 Customer Number 00146
+ 198.16 1 *469 *344
+*147 148 enterprise ORD-0398 processing 606.25 48.5 654.75 Customer Number 00147
+ 201.37 1 *720 *595
+ 202.44 2 *471 *346
+*148 149 standard ORD-0399 delivered 1236.04 98.88 1334.92 Customer Number 00148
+ 204.58 1 *472 *347
+ 205.65 2 *722 *597
+ 206.72 3 *473 *348
+*149 150 premium ORD-0400 cancelled 1465.3 117.22 1582.52 Customer Number 00149
+ 207.79 1 *723 *598
+ 208.86 2 *474 *349
+ 209.93 3 *724 *599
+ 210 1 *475 *350
+*150 151 standard ORD-0401 shipped 210 16.8 226.8 Customer Number 00150
+ 210 1 *475 *350
+*151 152 premium ORD-0402 pending 641.77 51.34 693.11 Customer Number 00151
+ 213.21 1 *726 *601
+ 214.28 2 *477 *352
+*152 153 enterprise ORD-0403 processing 1307.08 104.57 1411.65 Customer Number 00152
+ 216.42 1 *478 *353
+ 217.49 2 *728 *603
+ 218.56 3 *479 *354
+*153 154 standard ORD-0404 delivered 1549.18 123.93 1673.11 Customer Number 00153
+ 219.63 1 *729 *604
+ 220.7 2 *480 *355
+ 221.77 3 *730 *605
+ 222.84 1 *481 *356
+*154 155 premium ORD-0405 cancelled 222.84 17.83 240.67 Customer Number 00154
+ 222.84 1 *481 *356
+*155 156 standard ORD-0406 shipped 677.29 54.18 731.47 Customer Number 00155
+ 225.05 1 *732 *607
+ 226.12 2 *483 *358
+*156 157 premium ORD-0407 pending 1378.12 110.25 1488.37 Customer Number 00156
+ 228.26 1 *484 *359
+ 229.33 2 *734 *609
+ 230.4 3 *485 *360
+*157 158 enterprise ORD-0408 processing 1632.06 130.56 1762.62 Customer Number 00157
+ 231.47 1 *735 *610
+ 232.54 2 *486 *361
+ 233.61 3 *736 *611
+ 234.68 1 *487 *362
+*158 159 standard ORD-0409 delivered 234.68 18.77 253.45 Customer Number 00158
+ 234.68 1 *487 *362
+*159 160 premium ORD-0410 cancelled 715.81 57.26 773.07 Customer Number 00159
+ 237.89 1 *738 *613
+ 238.96 2 *489 *364
+*160 161 standard ORD-0411 shipped 1449.16 115.93 1565.09 Customer Number 00160
+ 240.1 1 *490 *365
+ 241.17 2 *740 *615
+ 242.24 3 *491 *366
+*161 162 premium ORD-0412 pending 1714.94 137.2 1852.14 Customer Number 00161
+ 243.31 1 *741 *616
+ 244.38 2 *492 *367
+ 245.45 3 *742 *617
+ 246.52 1 *493 *368
+*162 163 enterprise ORD-0413 processing 246.52 19.72 266.24 Customer Number 00162
+ 246.52 1 *493 *368
+*163 164 standard ORD-0414 delivered 751.33 60.11 811.44 Customer Number 00163
+ 249.73 1 *744 *619
+ 250.8 2 *495 *370
+*164 165 premium ORD-0415 cancelled 1521.2 121.7 1642.9 Customer Number 00164
+ 252.94 1 *496 *371
+ 253.01 2 *746 *621
+ 254.08 3 *497 *372
+*165 166 standard ORD-0416 shipped 1797.82 143.83 1941.65 Customer Number 00165
+ 255.15 1 *747 *622
+ 256.22 2 *498 *373
+ 257.29 3 *748 *623
+ 258.36 1 *499 *374
+*166 167 premium ORD-0417 pending 258.36 20.67 279.03 Customer Number 00166
+ 258.36 1 *499 *374
+*167 168 enterprise ORD-0418 processing 35.35 2.83 38.18 Customer Number 00167
+ 11.07 1 *625 *500
+ 12.14 2 *376 *251
+*168 169 standard ORD-0419 delivered 94.24 7.54 101.78 Customer Number 00168
+ 14.28 1 *377 *252
+ 15.35 2 *627 *502
+ 16.42 3 *378 *253
+*169 170 premium ORD-0420 cancelled 134.2 10.74 144.94 Customer Number 00169
+ 17.49 1 *628 *503
+ 18.56 2 *379 *254
+ 19.63 3 *629 *504
+ 20.7 1 *380 *255
+*170 171 standard ORD-0421 shipped 20.7 1.66 22.36 Customer Number 00170
+ 20.7 1 *380 *255
+*171 172 premium ORD-0422 pending 73.87 5.91 79.78 Customer Number 00171
+ 23.91 1 *631 *506
+ 24.98 2 *382 *257
+*172 173 enterprise ORD-0423 processing 165.28 13.22 178.5 Customer Number 00172
+ 26.12 1 *383 *258
+ 27.19 2 *633 *508
+ 28.26 3 *384 *259
+*173 174 standard ORD-0424 delivered 217.08 17.37 234.45 Customer Number 00173
+ 29.33 1 *634 *509
+ 30.4 2 *385 *260
+ 31.47 3 *635 *510
+ 32.54 1 *386 *261
+*174 175 premium ORD-0425 cancelled 32.54 2.6 35.14 Customer Number 00174
+ 32.54 1 *386 *261
+*175 176 standard ORD-0426 shipped 109.39 8.75 118.14 Customer Number 00175
+ 35.75 1 *637 *512
+ 36.82 2 *388 *263
+*176 177 premium ORD-0427 pending 237.32 18.99 256.31 Customer Number 00176
+ 38.96 1 *389 *264
+ 39.03 2 *639 *514
+ 40.1 3 *390 *265
+*177 178 enterprise ORD-0428 processing 299.96 24 323.96 Customer Number 00177
+ 41.17 1 *640 *515
+ 42.24 2 *391 *266
+ 43.31 3 *641 *516
+ 44.38 1 *392 *267
+*178 179 standard ORD-0429 delivered 44.38 3.55 47.93 Customer Number 00178
+ 44.38 1 *392 *267
+*179 180 premium ORD-0430 cancelled 144.91 11.59 156.5 Customer Number 00179
+ 47.59 1 *643 *518
+ 48.66 2 *394 *269
+*180 181 standard ORD-0431 shipped 313.36 25.07 338.43 Customer Number 00180
+ 50.8 1 *395 *270
+ 51.87 2 *645 *520
+ 52.94 3 *396 *271
+*181 182 premium ORD-0432 pending 382.84 30.63 413.47 Customer Number 00181
+ 53.01 1 *646 *521
+ 54.08 2 *397 *272
+ 55.15 3 *647 *522
+ 56.22 1 *398 *273
+*182 183 enterprise ORD-0433 processing 56.22 4.5 60.72 Customer Number 00182
+ 56.22 1 *398 *273
+*183 184 standard ORD-0434 delivered 180.43 14.43 194.86 Customer Number 00183
+ 59.43 1 *649 *524
+ 60.5 2 *400 *275
+*184 185 premium ORD-0435 cancelled 384.4 30.75 415.15 Customer Number 00184
+ 62.64 1 *401 *276
+ 63.71 2 *651 *526
+ 64.78 3 *402 *277
+*185 186 standard ORD-0436 shipped 471.72 37.74 509.46 Customer Number 00185
+ 65.85 1 *652 *527
+ 66.92 2 *403 *278
+ 67.99 3 *653 *528
+ 68.06 1 *404 *279
+*186 187 premium ORD-0437 pending 68.06 5.44 73.5 Customer Number 00186
+ 68.06 1 *404 *279
+*187 188 enterprise ORD-0438 processing 215.95 17.28 233.23 Customer Number 00187
+ 71.27 1 *655 *530
+ 72.34 2 *406 *281
+*188 189 standard ORD-0439 delivered 455.44 36.44 491.88 Customer Number 00188
+ 74.48 1 *407 *282
+ 75.55 2 *657 *532
+ 76.62 3 *408 *283
+*189 190 premium ORD-0440 cancelled 555.6 44.45 600.05 Customer Number 00189
+ 77.69 1 *658 *533
+ 78.76 2 *409 *284
+ 79.83 3 *659 *534
+ 80.9 1 *410 *285
+*190 191 standard ORD-0441 shipped 80.9 6.47 87.37 Customer Number 00190
+ 80.9 1 *410 *285
+*191 192 premium ORD-0442 pending 251.47 20.12 271.59 Customer Number 00191
+ 83.11 1 *661 *536
+ 84.18 2 *412 *287
+*192 193 enterprise ORD-0443 processing 526.48 42.12 568.6 Customer Number 00192
+ 86.32 1 *413 *288
+ 87.39 2 *663 *538
+ 88.46 3 *414 *289
+*193 194 standard ORD-0444 delivered 638.48 51.08 689.56 Customer Number 00193
+ 89.53 1 *664 *539
+ 90.6 2 *415 *290
+ 91.67 3 *665 *540
+ 92.74 1 *416 *291
+*194 195 premium ORD-0445 cancelled 92.74 7.42 100.16 Customer Number 00194
+ 92.74 1 *416 *291
+*195 196 standard ORD-0446 shipped 287.99 23.04 311.03 Customer Number 00195
+ 95.95 1 *667 *542
+ 96.02 2 *418 *293
+*196 197 premium ORD-0447 pending 597.52 47.8 645.32 Customer Number 00196
+ 98.16 1 *419 *294
+ 99.23 2 *669 *544
+ 100.3 3 *420 *295
+*197 198 enterprise ORD-0448 processing 721.36 57.71 779.07 Customer Number 00197
+ 101.37 1 *670 *545
+ 102.44 2 *421 *296
+ 103.51 3 *671 *546
+ 104.58 1 *422 *297
+*198 199 standard ORD-0449 delivered 104.58 8.37 112.95 Customer Number 00198
+ 104.58 1 *422 *297
+*199 200 premium ORD-0450 cancelled 325.51 26.04 351.55 Customer Number 00199
+ 107.79 1 *673 *548
+ 108.86 2 *424 *299
+*200 201 standard ORD-0451 shipped 668.56 53.48 722.04 Customer Number 00200
+ 110 1 *425 *300
+ 111.07 2 *675 *550
+ 112.14 3 *426 *301
+*201 202 premium ORD-0452 pending 804.24 64.34 868.58 Customer Number 00201
+ 113.21 1 *676 *551
+ 114.28 2 *427 *302
+ 115.35 3 *677 *552
+ 116.42 1 *428 *303
+*202 203 enterprise ORD-0453 processing 116.42 9.31 125.73 Customer Number 00202
+ 116.42 1 *428 *303
+*203 204 standard ORD-0454 delivered 361.03 28.88 389.91 Customer Number 00203
+ 119.63 1 *679 *554
+ 120.7 2 *430 *305
+*204 205 premium ORD-0455 cancelled 745.6 59.65 805.25 Customer Number 00204
+ 122.84 1 *431 *306
+ 123.91 2 *681 *556
+ 124.98 3 *432 *307
+*205 206 standard ORD-0456 shipped 887.12 70.97 958.09 Customer Number 00205
+ 125.05 1 *682 *557
+ 126.12 2 *433 *308
+ 127.19 3 *683 *558
+ 128.26 1 *434 *309
+*206 207 premium ORD-0457 pending 128.26 10.26 138.52 Customer Number 00206
+ 128.26 1 *434 *309
+*207 208 enterprise ORD-0458 processing 396.55 31.72 428.27 Customer Number 00207
+ 131.47 1 *685 *560
+ 132.54 2 *436 *311
+*208 209 standard ORD-0459 delivered 816.64 65.33 881.97 Customer Number 00208
+ 134.68 1 *437 *312
+ 135.75 2 *687 *562
+ 136.82 3 *438 *313
+*209 210 premium ORD-0460 cancelled 973 77.84 1050.84 Customer Number 00209
+ 137.89 1 *688 *563
+ 138.96 2 *439 *314
+ 139.03 3 *689 *564
+ 140.1 1 *440 *315
+*210 211 standard ORD-0461 shipped 140.1 11.21 151.31 Customer Number 00210
+ 140.1 1 *440 *315
+*211 212 premium ORD-0462 pending 432.07 34.57 466.64 Customer Number 00211
+ 143.31 1 *691 *566
+ 144.38 2 *442 *317
+*212 213 enterprise ORD-0463 processing 887.68 71.01 958.69 Customer Number 00212
+ 146.52 1 *443 *318
+ 147.59 2 *693 *568
+ 148.66 3 *444 *319
+*213 214 standard ORD-0464 delivered 1059.88 84.79 1144.67 Customer Number 00213
+ 149.73 1 *694 *569
+ 150.8 2 *445 *320
+ 151.87 3 *695 *570
+ 152.94 1 *446 *321
+*214 215 premium ORD-0465 cancelled 152.94 12.24 165.18 Customer Number 00214
+ 152.94 1 *446 *321
+*215 216 standard ORD-0466 shipped 467.59 37.41 505 Customer Number 00215
+ 155.15 1 *697 *572
+ 156.22 2 *448 *323
+*216 217 premium ORD-0467 pending 958.72 76.7 1035.42 Customer Number 00216
+ 158.36 1 *449 *324
+ 159.43 2 *699 *574
+ 160.5 3 *450 *325
+*217 218 enterprise ORD-0468 processing 1142.76 91.42 1234.18 Customer Number 00217
+ 161.57 1 *700 *575
+ 162.64 2 *451 *326
+ 163.71 3 *701 *576
+ 164.78 1 *452 *327
+*218 219 standard ORD-0469 delivered 164.78 13.18 177.96 Customer Number 00218
+ 164.78 1 *452 *327
+*219 220 premium ORD-0470 cancelled 504.11 40.33 544.44 Customer Number 00219
+ 167.99 1 *703 *578
+ 168.06 2 *454 *329
+*220 221 standard ORD-0471 shipped 1029.76 82.38 1112.14 Customer Number 00220
+ 170.2 1 *455 *330
+ 171.27 2 *705 *580
+ 172.34 3 *456 *331
+*221 222 premium ORD-0472 pending 1225.64 98.05 1323.69 Customer Number 00221
+ 173.41 1 *706 *581
+ 174.48 2 *457 *332
+ 175.55 3 *707 *582
+ 176.62 1 *458 *333
+*222 223 enterprise ORD-0473 processing 176.62 14.13 190.75 Customer Number 00222
+ 176.62 1 *458 *333
+*223 224 standard ORD-0474 delivered 541.63 43.33 584.96 Customer Number 00223
+ 179.83 1 *709 *584
+ 180.9 2 *460 *335
+*224 225 premium ORD-0475 cancelled 1100.8 88.06 1188.86 Customer Number 00224
+ 182.04 1 *461 *336
+ 183.11 2 *711 *586
+ 184.18 3 *462 *337
+*225 226 standard ORD-0476 shipped 1308.52 104.68 1413.2 Customer Number 00225
+ 185.25 1 *712 *587
+ 186.32 2 *463 *338
+ 187.39 3 *713 *588
+ 188.46 1 *464 *339
+*226 227 premium ORD-0477 pending 188.46 15.08 203.54 Customer Number 00226
+ 188.46 1 *464 *339
+*227 228 enterprise ORD-0478 processing 577.15 46.17 623.32 Customer Number 00227
+ 191.67 1 *715 *590
+ 192.74 2 *466 *341
+*228 229 standard ORD-0479 delivered 1174.84 93.99 1268.83 Customer Number 00228
+ 194.88 1 *467 *342
+ 195.95 2 *717 *592
+ 196.02 3 *468 *343
+*229 230 premium ORD-0480 cancelled 1391.4 111.31 1502.71 Customer Number 00229
+ 197.09 1 *718 *593
+ 198.16 2 *469 *344
+ 199.23 3 *719 *594
+ 200.3 1 *470 *345
+*230 231 standard ORD-0481 shipped 200.3 16.02 216.32 Customer Number 00230
+ 200.3 1 *470 *345
+*231 232 premium ORD-0482 pending 612.67 49.01 661.68 Customer Number 00231
+ 203.51 1 *721 *596
+ 204.58 2 *472 *347
+*232 233 enterprise ORD-0483 processing 1248.88 99.91 1348.79 Customer Number 00232
+ 206.72 1 *473 *348
+ 207.79 2 *723 *598
+ 208.86 3 *474 *349
+*233 234 standard ORD-0484 delivered 1475.28 118.02 1593.3 Customer Number 00233
+ 209.93 1 *724 *599
+ 210 2 *475 *350
+ 211.07 3 *725 *600
+ 212.14 1 *476 *351
+*234 235 premium ORD-0485 cancelled 212.14 16.97 229.11 Customer Number 00234
+ 212.14 1 *476 *351
+*235 236 standard ORD-0486 shipped 648.19 51.86 700.05 Customer Number 00235
+ 215.35 1 *727 *602
+ 216.42 2 *478 *353
+*236 237 premium ORD-0487 pending 1319.92 105.59 1425.51 Customer Number 00236
+ 218.56 1 *479 *354
+ 219.63 2 *729 *604
+ 220.7 3 *480 *355
+*237 238 enterprise ORD-0488 processing 1564.16 125.13 1689.29 Customer Number 00237
+ 221.77 1 *730 *605
+ 222.84 2 *481 *356
+ 223.91 3 *731 *606
+ 224.98 1 *482 *357
+*238 239 standard ORD-0489 delivered 224.98 18 242.98 Customer Number 00238
+ 224.98 1 *482 *357
+*239 240 premium ORD-0490 cancelled 683.71 54.7 738.41 Customer Number 00239
+ 227.19 1 *733 *608
+ 228.26 2 *484 *359
+*240 241 standard ORD-0491 shipped 1390.96 111.28 1502.24 Customer Number 00240
+ 230.4 1 *485 *360
+ 231.47 2 *735 *610
+ 232.54 3 *486 *361
+*241 242 premium ORD-0492 pending 1647.04 131.76 1778.8 Customer Number 00241
+ 233.61 1 *736 *611
+ 234.68 2 *487 *362
+ 235.75 3 *737 *612
+ 236.82 1 *488 *363
+*242 243 enterprise ORD-0493 processing 236.82 18.95 255.77 Customer Number 00242
+ 236.82 1 *488 *363
+*243 244 standard ORD-0494 delivered 719.23 57.54 776.77 Customer Number 00243
+ 239.03 1 *739 *614
+ 240.1 2 *490 *365
+*244 245 premium ORD-0495 cancelled 1462 116.96 1578.96 Customer Number 00244
+ 242.24 1 *491 *366
+ 243.31 2 *741 *616
+ 244.38 3 *492 *367
+*245 246 standard ORD-0496 shipped 1729.92 138.39 1868.31 Customer Number 00245
+ 245.45 1 *742 *617
+ 246.52 2 *493 *368
+ 247.59 3 *743 *618
+ 248.66 1 *494 *369
+*246 247 premium ORD-0497 pending 248.66 19.89 268.55 Customer Number 00246
+ 248.66 1 *494 *369
+*247 248 enterprise ORD-0498 processing 757.75 60.62 818.37 Customer Number 00247
+ 251.87 1 *745 *620
+ 252.94 2 *496 *371
+*248 249 standard ORD-0499 delivered 1533.04 122.64 1655.68 Customer Number 00248
+ 254.08 1 *497 *372
+ 255.15 2 *747 *622
+ 256.22 3 *498 *373
+*249 250 premium ORD-0500 cancelled 1562.3 124.98 1687.28 Customer Number 00249
+ 257.29 1 *748 *623
+ 258.36 2 *499 *374
+ 259.43 3 *749 *624
+ 10 1 *375 *250
+*0 1 standard ORD-0501 shipped 10 0.8 10.8 Customer Number 00000
+ 10 1 *375 *250
+*1 2 premium ORD-0502 pending 41.77 3.34 45.11 Customer Number 00001
+ 13.21 1 *626 *501
+ 14.28 2 *377 *252
+*2 3 enterprise ORD-0503 processing 107.08 8.57 115.65 Customer Number 00002
+ 16.42 1 *378 *253
+ 17.49 2 *628 *503
+ 18.56 3 *379 *254
+*3 4 standard ORD-0504 delivered 149.18 11.93 161.11 Customer Number 00003
+ 19.63 1 *629 *504
+ 20.7 2 *380 *255
+ 21.77 3 *630 *505
+ 22.84 1 *381 *256
+*4 5 premium ORD-0505 cancelled 22.84 1.83 24.67 Customer Number 00004
+ 22.84 1 *381 *256
+*5 6 standard ORD-0506 shipped 77.29 6.18 83.47 Customer Number 00005
+ 25.05 1 *632 *507
+ 26.12 2 *383 *258
+*6 7 premium ORD-0507 pending 178.12 14.25 192.37 Customer Number 00006
+ 28.26 1 *384 *259
+ 29.33 2 *634 *509
+ 30.4 3 *385 *260
+*7 8 enterprise ORD-0508 processing 232.06 18.56 250.62 Customer Number 00007
+ 31.47 1 *635 *510
+ 32.54 2 *386 *261
+ 33.61 3 *636 *511
+ 34.68 1 *387 *262
+*8 9 standard ORD-0509 delivered 34.68 2.77 37.45 Customer Number 00008
+ 34.68 1 *387 *262
+*9 10 premium ORD-0510 cancelled 115.81 9.26 125.07 Customer Number 00009
+ 37.89 1 *638 *513
+ 38.96 2 *389 *264
+*10 11 standard ORD-0511 shipped 249.16 19.93 269.09 Customer Number 00010
+ 40.1 1 *390 *265
+ 41.17 2 *640 *515
+ 42.24 3 *391 *266
+*11 12 premium ORD-0512 pending 314.94 25.2 340.14 Customer Number 00011
+ 43.31 1 *641 *516
+ 44.38 2 *392 *267
+ 45.45 3 *642 *517
+ 46.52 1 *393 *268
+*12 13 enterprise ORD-0513 processing 46.52 3.72 50.24 Customer Number 00012
+ 46.52 1 *393 *268
+*13 14 standard ORD-0514 delivered 151.33 12.11 163.44 Customer Number 00013
+ 49.73 1 *644 *519
+ 50.8 2 *395 *270
+*14 15 premium ORD-0515 cancelled 321.2 25.7 346.9 Customer Number 00014
+ 52.94 1 *396 *271
+ 53.01 2 *646 *521
+ 54.08 3 *397 *272
+*15 16 standard ORD-0516 shipped 397.82 31.83 429.65 Customer Number 00015
+ 55.15 1 *647 *522
+ 56.22 2 *398 *273
+ 57.29 3 *648 *523
+ 58.36 1 *399 *274
+*16 17 premium ORD-0517 pending 58.36 4.67 63.03 Customer Number 00016
+ 58.36 1 *399 *274
+*17 18 enterprise ORD-0518 processing 186.85 14.95 201.8 Customer Number 00017
+ 61.57 1 *650 *525
+ 62.64 2 *401 *276
+*18 19 standard ORD-0519 delivered 397.24 31.78 429.02 Customer Number 00018
+ 64.78 1 *402 *277
+ 65.85 2 *652 *527
+ 66.92 3 *403 *278
+*19 20 premium ORD-0520 cancelled 481.7 38.54 520.24 Customer Number 00019
+ 67.99 1 *653 *528
+ 68.06 2 *404 *279
+ 69.13 3 *654 *529
+ 70.2 1 *405 *280
+*20 21 standard ORD-0521 shipped 70.2 5.62 75.82 Customer Number 00020
+ 70.2 1 *405 *280
+*21 22 premium ORD-0522 pending 222.37 17.79 240.16 Customer Number 00021
+ 73.41 1 *656 *531
+ 74.48 2 *407 *282
+*22 23 enterprise ORD-0523 processing 468.28 37.46 505.74 Customer Number 00022
+ 76.62 1 *408 *283
+ 77.69 2 *658 *533
+ 78.76 3 *409 *284
+*23 24 standard ORD-0524 delivered 569.58 45.57 615.15 Customer Number 00023
+ 79.83 1 *659 *534
+ 80.9 2 *410 *285
+ 81.97 3 *660 *535
+ 82.04 1 *411 *286
+*24 25 premium ORD-0525 cancelled 82.04 6.56 88.6 Customer Number 00024
+ 82.04 1 *411 *286
+*25 26 standard ORD-0526 shipped 257.89 20.63 278.52 Customer Number 00025
+ 85.25 1 *662 *537
+ 86.32 2 *413 *288
+*26 27 premium ORD-0527 pending 539.32 43.15 582.47 Customer Number 00026
+ 88.46 1 *414 *289
+ 89.53 2 *664 *539
+ 90.6 3 *415 *290
+*27 28 enterprise ORD-0528 processing 653.46 52.28 705.74 Customer Number 00027
+ 91.67 1 *665 *540
+ 92.74 2 *416 *291
+ 93.81 3 *666 *541
+ 94.88 1 *417 *292
+*28 29 standard ORD-0529 delivered 94.88 7.59 102.47 Customer Number 00028
+ 94.88 1 *417 *292
+*29 30 premium ORD-0530 cancelled 293.41 23.47 316.88 Customer Number 00029
+ 97.09 1 *668 *543
+ 98.16 2 *419 *294
+*30 31 standard ORD-0531 shipped 610.36 48.83 659.19 Customer Number 00030
+ 100.3 1 *420 *295
+ 101.37 2 *670 *545
+ 102.44 3 *421 *296
+*31 32 premium ORD-0532 pending 736.34 58.91 795.25 Customer Number 00031
+ 103.51 1 *671 *546
+ 104.58 2 *422 *297
+ 105.65 3 *672 *547
+ 106.72 1 *423 *298
+*32 33 enterprise ORD-0533 processing 106.72 8.54 115.26 Customer Number 00032
+ 106.72 1 *423 *298
+*33 34 standard ORD-0534 delivered 329.93 26.39 356.32 Customer Number 00033
+ 109.93 1 *674 *549
+ 110 2 *425 *300
+*34 35 premium ORD-0535 cancelled 681.4 54.51 735.91 Customer Number 00034
+ 112.14 1 *426 *301
+ 113.21 2 *676 *551
+ 114.28 3 *427 *302
+*35 36 standard ORD-0536 shipped 819.22 65.54 884.76 Customer Number 00035
+ 115.35 1 *677 *552
+ 116.42 2 *428 *303
+ 117.49 3 *678 *553
+ 118.56 1 *429 *304
+*36 37 premium ORD-0537 pending 118.56 9.48 128.04 Customer Number 00036
+ 118.56 1 *429 *304
+*37 38 enterprise ORD-0538 processing 367.45 29.4 396.85 Customer Number 00037
+ 121.77 1 *680 *555
+ 122.84 2 *431 *306
+*38 39 standard ORD-0539 delivered 753.44 60.28 813.72 Customer Number 00038
+ 124.98 1 *432 *307
+ 125.05 2 *682 *557
+ 126.12 3 *433 *308
+*39 40 premium ORD-0540 cancelled 902.1 72.17 974.27 Customer Number 00039
+ 127.19 1 *683 *558
+ 128.26 2 *434 *309
+ 129.33 3 *684 *559
+ 130.4 1 *435 *310
+*40 41 standard ORD-0541 shipped 130.4 10.43 140.83 Customer Number 00040
+ 130.4 1 *435 *310
+*41 42 premium ORD-0542 pending 402.97 32.24 435.21 Customer Number 00041
+ 133.61 1 *686 *561
+ 134.68 2 *437 *312
+*42 43 enterprise ORD-0543 processing 829.48 66.36 895.84 Customer Number 00042
+ 136.82 1 *438 *313
+ 137.89 2 *688 *563
+ 138.96 3 *439 *314
+*43 44 standard ORD-0544 delivered 984.98 78.8 1063.78 Customer Number 00043
+ 139.03 1 *689 *564
+ 140.1 2 *440 *315
+ 141.17 3 *690 *565
+ 142.24 1 *441 *316
+*44 45 premium ORD-0545 cancelled 142.24 11.38 153.62 Customer Number 00044
+ 142.24 1 *441 *316
+*45 46 standard ORD-0546 shipped 438.49 35.08 473.57 Customer Number 00045
+ 145.45 1 *692 *567
+ 146.52 2 *443 *318
+*46 47 premium ORD-0547 pending 900.52 72.04 972.56 Customer Number 00046
+ 148.66 1 *444 *319
+ 149.73 2 *694 *569
+ 150.8 3 *445 *320
+*47 48 enterprise ORD-0548 processing 1070.86 85.67 1156.53 Customer Number 00047
+ 151.87 1 *695 *570
+ 152.94 2 *446 *321
+ 153.01 3 *696 *571
+ 154.08 1 *447 *322
+*48 49 standard ORD-0549 delivered 154.08 12.33 166.41 Customer Number 00048
+ 154.08 1 *447 *322
+*49 50 premium ORD-0550 cancelled 474.01 37.92 511.93 Customer Number 00049
+ 157.29 1 *698 *573
+ 158.36 2 *449 *324
+*50 51 standard ORD-0551 shipped 971.56 77.72 1049.28 Customer Number 00050
+ 160.5 1 *450 *325
+ 161.57 2 *700 *575
+ 162.64 3 *451 *326
+*51 52 premium ORD-0552 pending 1157.74 92.62 1250.36 Customer Number 00051
+ 163.71 1 *701 *576
+ 164.78 2 *452 *327
+ 165.85 3 *702 *577
+ 166.92 1 *453 *328
+*52 53 enterprise ORD-0553 processing 166.92 13.35 180.27 Customer Number 00052
+ 166.92 1 *453 *328
+*53 54 standard ORD-0554 delivered 509.53 40.76 550.29 Customer Number 00053
+ 169.13 1 *704 *579
+ 170.2 2 *455 *330
+*54 55 premium ORD-0555 cancelled 1042.6 83.41 1126.01 Customer Number 00054
+ 172.34 1 *456 *331
+ 173.41 2 *706 *581
+ 174.48 3 *457 *332
+*55 56 standard ORD-0556 shipped 1240.62 99.25 1339.87 Customer Number 00055
+ 175.55 1 *707 *582
+ 176.62 2 *458 *333
+ 177.69 3 *708 *583
+ 178.76 1 *459 *334
+*56 57 premium ORD-0557 pending 178.76 14.3 193.06 Customer Number 00056
+ 178.76 1 *459 *334
+*57 58 enterprise ORD-0558 processing 546.05 43.68 589.73 Customer Number 00057
+ 181.97 1 *710 *585
+ 182.04 2 *461 *336
+*58 59 standard ORD-0559 delivered 1113.64 89.09 1202.73 Customer Number 00058
+ 184.18 1 *462 *337
+ 185.25 2 *712 *587
+ 186.32 3 *463 *338
+*59 60 premium ORD-0560 cancelled 1323.5 105.88 1429.38 Customer Number 00059
+ 187.39 1 *713 *588
+ 188.46 2 *464 *339
+ 189.53 3 *714 *589
+ 190.6 1 *465 *340
+*60 61 standard ORD-0561 shipped 190.6 15.25 205.85 Customer Number 00060
+ 190.6 1 *465 *340
+*61 62 premium ORD-0562 pending 583.57 46.69 630.26 Customer Number 00061
+ 193.81 1 *716 *591
+ 194.88 2 *467 *342
+*62 63 enterprise ORD-0563 processing 1184.68 94.77 1279.45 Customer Number 00062
+ 196.02 1 *468 *343
+ 197.09 2 *718 *593
+ 198.16 3 *469 *344
+*63 64 standard ORD-0564 delivered 1406.38 112.51 1518.89 Customer Number 00063
+ 199.23 1 *719 *594
+ 200.3 2 *470 *345
+ 201.37 3 *720 *595
+ 202.44 1 *471 *346
+*64 65 premium ORD-0565 cancelled 202.44 16.2 218.64 Customer Number 00064
+ 202.44 1 *471 *346
+*65 66 standard ORD-0566 shipped 619.09 49.53 668.62 Customer Number 00065
+ 205.65 1 *722 *597
+ 206.72 2 *473 *348
+*66 67 premium ORD-0567 pending 1258.72 100.7 1359.42 Customer Number 00066
+ 208.86 1 *474 *349
+ 209.93 2 *724 *599
+ 210 3 *475 *350
+*67 68 enterprise ORD-0568 processing 1489.26 119.14 1608.4 Customer Number 00067
+ 211.07 1 *725 *600
+ 212.14 2 *476 *351
+ 213.21 3 *726 *601
+ 214.28 1 *477 *352
+*68 69 standard ORD-0569 delivered 214.28 17.14 231.42 Customer Number 00068
+ 214.28 1 *477 *352
+*69 70 premium ORD-0570 cancelled 654.61 52.37 706.98 Customer Number 00069
+ 217.49 1 *728 *603
+ 218.56 2 *479 *354
+*70 71 standard ORD-0571 shipped 1332.76 106.62 1439.38 Customer Number 00070
+ 220.7 1 *480 *355
+ 221.77 2 *730 *605
+ 222.84 3 *481 *356
+*71 72 premium ORD-0572 pending 1575.14 126.01 1701.15 Customer Number 00071
+ 223.91 1 *731 *606
+ 224.98 2 *482 *357
+ 225.05 3 *732 *607
+ 226.12 1 *483 *358
+*72 73 enterprise ORD-0573 processing 226.12 18.09 244.21 Customer Number 00072
+ 226.12 1 *483 *358
+*73 74 standard ORD-0574 delivered 690.13 55.21 745.34 Customer Number 00073
+ 229.33 1 *734 *609
+ 230.4 2 *485 *360
+*74 75 premium ORD-0575 cancelled 1403.8 112.3 1516.1 Customer Number 00074
+ 232.54 1 *486 *361
+ 233.61 2 *736 *611
+ 234.68 3 *487 *362
+*75 76 standard ORD-0576 shipped 1662.02 132.96 1794.98 Customer Number 00075
+ 235.75 1 *737 *612
+ 236.82 2 *488 *363
+ 237.89 3 *738 *613
+ 238.96 1 *489 *364
+*76 77 premium ORD-0577 pending 238.96 19.12 258.08 Customer Number 00076
+ 238.96 1 *489 *364
+*77 78 enterprise ORD-0578 processing 725.65 58.05 783.7 Customer Number 00077
+ 241.17 1 *740 *615
+ 242.24 2 *491 *366
+*78 79 standard ORD-0579 delivered 1474.84 117.99 1592.83 Customer Number 00078
+ 244.38 1 *492 *367
+ 245.45 2 *742 *617
+ 246.52 3 *493 *368
+*79 80 premium ORD-0580 cancelled 1744.9 139.59 1884.49 Customer Number 00079
+ 247.59 1 *743 *618
+ 248.66 2 *494 *369
+ 249.73 3 *744 *619
+ 250.8 1 *495 *370
+*80 81 standard ORD-0581 shipped 250.8 20.06 270.86 Customer Number 00080
+ 250.8 1 *495 *370
+*81 82 premium ORD-0582 pending 761.17 60.89 822.06 Customer Number 00081
+ 253.01 1 *746 *621
+ 254.08 2 *497 *372
+*82 83 enterprise ORD-0583 processing 1545.88 123.67 1669.55 Customer Number 00082
+ 256.22 1 *498 *373
+ 257.29 2 *748 *623
+ 258.36 3 *499 *374
+*83 84 standard ORD-0584 delivered 324.78 25.98 350.76 Customer Number 00083
+ 259.43 1 *749 *624
+ 10 2 *375 *250
+ 11.07 3 *625 *500
+ 12.14 1 *376 *251
+*84 85 premium ORD-0585 cancelled 12.14 0.97 13.11 Customer Number 00084
+ 12.14 1 *376 *251
+*85 86 standard ORD-0586 shipped 48.19 3.86 52.05 Customer Number 00085
+ 15.35 1 *627 *502
+ 16.42 2 *378 *253
+*86 87 premium ORD-0587 pending 119.92 9.59 129.51 Customer Number 00086
+ 18.56 1 *379 *254
+ 19.63 2 *629 *504
+ 20.7 3 *380 *255
+*87 88 enterprise ORD-0588 processing 164.16 13.13 177.29 Customer Number 00087
+ 21.77 1 *630 *505
+ 22.84 2 *381 *256
+ 23.91 3 *631 *506
+ 24.98 1 *382 *257
+*88 89 standard ORD-0589 delivered 24.98 2 26.98 Customer Number 00088
+ 24.98 1 *382 *257
+*89 90 premium ORD-0590 cancelled 83.71 6.7 90.41 Customer Number 00089
+ 27.19 1 *633 *508
+ 28.26 2 *384 *259
+*90 91 standard ORD-0591 shipped 190.96 15.28 206.24 Customer Number 00090
+ 30.4 1 *385 *260
+ 31.47 2 *635 *510
+ 32.54 3 *386 *261
+*91 92 premium ORD-0592 pending 247.04 19.76 266.8 Customer Number 00091
+ 33.61 1 *636 *511
+ 34.68 2 *387 *262
+ 35.75 3 *637 *512
+ 36.82 1 *388 *263
+*92 93 enterprise ORD-0593 processing 36.82 2.95 39.77 Customer Number 00092
+ 36.82 1 *388 *263
+*93 94 standard ORD-0594 delivered 119.23 9.54 128.77 Customer Number 00093
+ 39.03 1 *639 *514
+ 40.1 2 *390 *265
+*94 95 premium ORD-0595 cancelled 262 20.96 282.96 Customer Number 00094
+ 42.24 1 *391 *266
+ 43.31 2 *641 *516
+ 44.38 3 *392 *267
+*95 96 standard ORD-0596 shipped 329.92 26.39 356.31 Customer Number 00095
+ 45.45 1 *642 *517
+ 46.52 2 *393 *268
+ 47.59 3 *643 *518
+ 48.66 1 *394 *269
+*96 97 premium ORD-0597 pending 48.66 3.89 52.55 Customer Number 00096
+ 48.66 1 *394 *269
+*97 98 enterprise ORD-0598 processing 157.75 12.62 170.37 Customer Number 00097
+ 51.87 1 *645 *520
+ 52.94 2 *396 *271
+*98 99 standard ORD-0599 delivered 333.04 26.64 359.68 Customer Number 00098
+ 54.08 1 *397 *272
+ 55.15 2 *647 *522
+ 56.22 3 *398 *273
+*99 100 premium ORD-0600 cancelled 412.8 33.02 445.82 Customer Number 00099
+ 57.29 1 *648 *523
+ 58.36 2 *399 *274
+ 59.43 3 *649 *524
+ 60.5 1 *400 *275
+*100 101 standard ORD-0601 shipped 60.5 4.84 65.34 Customer Number 00100
+ 60.5 1 *400 *275
+*101 102 premium ORD-0602 pending 193.27 15.46 208.73 Customer Number 00101
+ 63.71 1 *651 *526
+ 64.78 2 *402 *277
+*102 103 enterprise ORD-0603 processing 407.08 32.57 439.65 Customer Number 00102
+ 66.92 1 *403 *278
+ 67.99 2 *653 *528
+ 68.06 3 *404 *279
+*103 104 standard ORD-0604 delivered 495.68 39.65 535.33 Customer Number 00103
+ 69.13 1 *654 *529
+ 70.2 2 *405 *280
+ 71.27 3 *655 *530
+ 72.34 1 *406 *281
+*104 105 premium ORD-0605 cancelled 72.34 5.79 78.13 Customer Number 00104
+ 72.34 1 *406 *281
+*105 106 standard ORD-0606 shipped 228.79 18.3 247.09 Customer Number 00105
+ 75.55 1 *657 *532
+ 76.62 2 *408 *283
+*106 107 premium ORD-0607 pending 481.12 38.49 519.61 Customer Number 00106
+ 78.76 1 *409 *284
+ 79.83 2 *659 *534
+ 80.9 3 *410 *285
+*107 108 enterprise ORD-0608 processing 579.56 46.36 625.92 Customer Number 00107
+ 81.97 1 *660 *535
+ 82.04 2 *411 *286
+ 83.11 3 *661 *536
+ 84.18 1 *412 *287
+*108 109 standard ORD-0609 delivered 84.18 6.73 90.91 Customer Number 00108
+ 84.18 1 *412 *287
+*109 110 premium ORD-0610 cancelled 264.31 21.14 285.45 Customer Number 00109
+ 87.39 1 *663 *538
+ 88.46 2 *414 *289
+*110 111 standard ORD-0611 shipped 552.16 44.17 596.33 Customer Number 00110
+ 90.6 1 *415 *290
+ 91.67 2 *665 *540
+ 92.74 3 *416 *291
+*111 112 premium ORD-0612 pending 667.44 53.4 720.84 Customer Number 00111
+ 93.81 1 *666 *541
+ 94.88 2 *417 *292
+ 95.95 3 *667 *542
+ 96.02 1 *418 *293
+*112 113 enterprise ORD-0613 processing 96.02 7.68 103.7 Customer Number 00112
+ 96.02 1 *418 *293
+*113 114 standard ORD-0614 delivered 299.83 23.99 323.82 Customer Number 00113
+ 99.23 1 *669 *544
+ 100.3 2 *420 *295
+*114 115 premium ORD-0615 cancelled 623.2 49.86 673.06 Customer Number 00114
+ 102.44 1 *421 *296
+ 103.51 2 *671 *546
+ 104.58 3 *422 *297
+*115 116 standard ORD-0616 shipped 751.32 60.11 811.43 Customer Number 00115
+ 105.65 1 *672 *547
+ 106.72 2 *423 *298
+ 107.79 3 *673 *548
+ 108.86 1 *424 *299
+*116 117 premium ORD-0617 pending 108.86 8.71 117.57 Customer Number 00116
+ 108.86 1 *424 *299
+*117 118 enterprise ORD-0618 processing 335.35 26.83 362.18 Customer Number 00117
+ 111.07 1 *675 *550
+ 112.14 2 *426 *301
+*118 119 standard ORD-0619 delivered 694.24 55.54 749.78 Customer Number 00118
+ 114.28 1 *427 *302
+ 115.35 2 *677 *552
+ 116.42 3 *428 *303
+*119 120 premium ORD-0620 cancelled 834.2 66.74 900.94 Customer Number 00119
+ 117.49 1 *678 *553
+ 118.56 2 *429 *304
+ 119.63 3 *679 *554
+ 120.7 1 *430 *305
+*120 121 standard ORD-0621 shipped 120.7 9.66 130.36 Customer Number 00120
+ 120.7 1 *430 *305
+*121 122 premium ORD-0622 pending 373.87 29.91 403.78 Customer Number 00121
+ 123.91 1 *681 *556
+ 124.98 2 *432 *307
+*122 123 enterprise ORD-0623 processing 765.28 61.22 826.5 Customer Number 00122
+ 126.12 1 *433 *308
+ 127.19 2 *683 *558
+ 128.26 3 *434 *309
+*123 124 standard ORD-0624 delivered 917.08 73.37 990.45 Customer Number 00123
+ 129.33 1 *684 *559
+ 130.4 2 *435 *310
+ 131.47 3 *685 *560
+ 132.54 1 *436 *311
+*124 125 premium ORD-0625 cancelled 132.54 10.6 143.14 Customer Number 00124
+ 132.54 1 *436 *311
+*125 126 standard ORD-0626 shipped 409.39 32.75 442.14 Customer Number 00125
+ 135.75 1 *687 *562
+ 136.82 2 *438 *313
+*126 127 premium ORD-0627 pending 837.32 66.99 904.31 Customer Number 00126
+ 138.96 1 *439 *314
+ 139.03 2 *689 *564
+ 140.1 3 *440 *315
+*127 128 enterprise ORD-0628 processing 999.96 80 1079.96 Customer Number 00127
+ 141.17 1 *690 *565
+ 142.24 2 *441 *316
+ 143.31 3 *691 *566
+ 144.38 1 *442 *317
+*128 129 standard ORD-0629 delivered 144.38 11.55 155.93 Customer Number 00128
+ 144.38 1 *442 *317
+*129 130 premium ORD-0630 cancelled 444.91 35.59 480.5 Customer Number 00129
+ 147.59 1 *693 *568
+ 148.66 2 *444 *319
+*130 131 standard ORD-0631 shipped 913.36 73.07 986.43 Customer Number 00130
+ 150.8 1 *445 *320
+ 151.87 2 *695 *570
+ 152.94 3 *446 *321
+*131 132 premium ORD-0632 pending 1082.84 86.63 1169.47 Customer Number 00131
+ 153.01 1 *696 *571
+ 154.08 2 *447 *322
+ 155.15 3 *697 *572
+ 156.22 1 *448 *323
+*132 133 enterprise ORD-0633 processing 156.22 12.5 168.72 Customer Number 00132
+ 156.22 1 *448 *323
+*133 134 standard ORD-0634 delivered 480.43 38.43 518.86 Customer Number 00133
+ 159.43 1 *699 *574
+ 160.5 2 *450 *325
+*134 135 premium ORD-0635 cancelled 984.4 78.75 1063.15 Customer Number 00134
+ 162.64 1 *451 *326
+ 163.71 2 *701 *576
+ 164.78 3 *452 *327
+*135 136 standard ORD-0636 shipped 1171.72 93.74 1265.46 Customer Number 00135
+ 165.85 1 *702 *577
+ 166.92 2 *453 *328
+ 167.99 3 *703 *578
+ 168.06 1 *454 *329
+*136 137 premium ORD-0637 pending 168.06 13.44 181.5 Customer Number 00136
+ 168.06 1 *454 *329
+*137 138 enterprise ORD-0638 processing 515.95 41.28 557.23 Customer Number 00137
+ 171.27 1 *705 *580
+ 172.34 2 *456 *331
+*138 139 standard ORD-0639 delivered 1055.44 84.44 1139.88 Customer Number 00138
+ 174.48 1 *457 *332
+ 175.55 2 *707 *582
+ 176.62 3 *458 *333
+*139 140 premium ORD-0640 cancelled 1255.6 100.45 1356.05 Customer Number 00139
+ 177.69 1 *708 *583
+ 178.76 2 *459 *334
+ 179.83 3 *709 *584
+ 180.9 1 *460 *335
+*140 141 standard ORD-0641 shipped 180.9 14.47 195.37 Customer Number 00140
+ 180.9 1 *460 *335
+*141 142 premium ORD-0642 pending 551.47 44.12 595.59 Customer Number 00141
+ 183.11 1 *711 *586
+ 184.18 2 *462 *337
+*142 143 enterprise ORD-0643 processing 1126.48 90.12 1216.6 Customer Number 00142
+ 186.32 1 *463 *338
+ 187.39 2 *713 *588
+ 188.46 3 *464 *339
+*143 144 standard ORD-0644 delivered 1338.48 107.08 1445.56 Customer Number 00143
+ 189.53 1 *714 *589
+ 190.6 2 *465 *340
+ 191.67 3 *715 *590
+ 192.74 1 *466 *341
+*144 145 premium ORD-0645 cancelled 192.74 15.42 208.16 Customer Number 00144
+ 192.74 1 *466 *341
+*145 146 standard ORD-0646 shipped 587.99 47.04 635.03 Customer Number 00145
+ 195.95 1 *717 *592
+ 196.02 2 *468 *343
+*146 147 premium ORD-0647 pending 1197.52 95.8 1293.32 Customer Number 00146
+ 198.16 1 *469 *344
+ 199.23 2 *719 *594
+ 200.3 3 *470 *345
+*147 148 enterprise ORD-0648 processing 1421.36 113.71 1535.07 Customer Number 00147
+ 201.37 1 *720 *595
+ 202.44 2 *471 *346
+ 203.51 3 *721 *596
+ 204.58 1 *472 *347
+*148 149 standard ORD-0649 delivered 204.58 16.37 220.95 Customer Number 00148
+ 204.58 1 *472 *347
+*149 150 premium ORD-0650 cancelled 625.51 50.04 675.55 Customer Number 00149
+ 207.79 1 *723 *598
+ 208.86 2 *474 *349
+*150 151 standard ORD-0651 shipped 1268.56 101.48 1370.04 Customer Number 00150
+ 210 1 *475 *350
+ 211.07 2 *725 *600
+ 212.14 3 *476 *351
+*151 152 premium ORD-0652 pending 1504.24 120.34 1624.58 Customer Number 00151
+ 213.21 1 *726 *601
+ 214.28 2 *477 *352
+ 215.35 3 *727 *602
+ 216.42 1 *478 *353
+*152 153 enterprise ORD-0653 processing 216.42 17.31 233.73 Customer Number 00152
+ 216.42 1 *478 *353
+*153 154 standard ORD-0654 delivered 661.03 52.88 713.91 Customer Number 00153
+ 219.63 1 *729 *604
+ 220.7 2 *480 *355
+*154 155 premium ORD-0655 cancelled 1345.6 107.65 1453.25 Customer Number 00154
+ 222.84 1 *481 *356
+ 223.91 2 *731 *606
+ 224.98 3 *482 *357
+*155 156 standard ORD-0656 shipped 1587.12 126.97 1714.09 Customer Number 00155
+ 225.05 1 *732 *607
+ 226.12 2 *483 *358
+ 227.19 3 *733 *608
+ 228.26 1 *484 *359
+*156 157 premium ORD-0657 pending 228.26 18.26 246.52 Customer Number 00156
+ 228.26 1 *484 *359
+*157 158 enterprise ORD-0658 processing 696.55 55.72 752.27 Customer Number 00157
+ 231.47 1 *735 *610
+ 232.54 2 *486 *361
+*158 159 standard ORD-0659 delivered 1416.64 113.33 1529.97 Customer Number 00158
+ 234.68 1 *487 *362
+ 235.75 2 *737 *612
+ 236.82 3 *488 *363
+*159 160 premium ORD-0660 cancelled 1673 133.84 1806.84 Customer Number 00159
+ 237.89 1 *738 *613
+ 238.96 2 *489 *364
+ 239.03 3 *739 *614
+ 240.1 1 *490 *365
+*160 161 standard ORD-0661 shipped 240.1 19.21 259.31 Customer Number 00160
+ 240.1 1 *490 *365
+*161 162 premium ORD-0662 pending 732.07 58.57 790.64 Customer Number 00161
+ 243.31 1 *741 *616
+ 244.38 2 *492 *367
+*162 163 enterprise ORD-0663 processing 1487.68 119.01 1606.69 Customer Number 00162
+ 246.52 1 *493 *368
+ 247.59 2 *743 *618
+ 248.66 3 *494 *369
+*163 164 standard ORD-0664 delivered 1759.88 140.79 1900.67 Customer Number 00163
+ 249.73 1 *744 *619
+ 250.8 2 *495 *370
+ 251.87 3 *745 *620
+ 252.94 1 *496 *371
+*164 165 premium ORD-0665 cancelled 252.94 20.24 273.18 Customer Number 00164
+ 252.94 1 *496 *371
+*165 166 standard ORD-0666 shipped 767.59 61.41 829 Customer Number 00165
+ 255.15 1 *747 *622
+ 256.22 2 *498 *373
+*166 167 premium ORD-0667 pending 807.22 64.58 871.8 Customer Number 00166
+ 258.36 1 *499 *374
+ 259.43 2 *749 *624
+ 10 3 *375 *250
+*167 168 enterprise ORD-0668 processing 89.26 7.14 96.4 Customer Number 00167
+ 11.07 1 *625 *500
+ 12.14 2 *376 *251
+ 13.21 3 *626 *501
+ 14.28 1 *377 *252
+*168 169 standard ORD-0669 delivered 14.28 1.14 15.42 Customer Number 00168
+ 14.28 1 *377 *252
+*169 170 premium ORD-0670 cancelled 54.61 4.37 58.98 Customer Number 00169
+ 17.49 1 *628 *503
+ 18.56 2 *379 *254
+*170 171 standard ORD-0671 shipped 132.76 10.62 143.38 Customer Number 00170
+ 20.7 1 *380 *255
+ 21.77 2 *630 *505
+ 22.84 3 *381 *256
+*171 172 premium ORD-0672 pending 175.14 14.01 189.15 Customer Number 00171
+ 23.91 1 *631 *506
+ 24.98 2 *382 *257
+ 25.05 3 *632 *507
+ 26.12 1 *383 *258
+*172 173 enterprise ORD-0673 processing 26.12 2.09 28.21 Customer Number 00172
+ 26.12 1 *383 *258
+*173 174 standard ORD-0674 delivered 90.13 7.21 97.34 Customer Number 00173
+ 29.33 1 *634 *509
+ 30.4 2 *385 *260
+*174 175 premium ORD-0675 cancelled 203.8 16.3 220.1 Customer Number 00174
+ 32.54 1 *386 *261
+ 33.61 2 *636 *511
+ 34.68 3 *387 *262
+*175 176 standard ORD-0676 shipped 262.02 20.96 282.98 Customer Number 00175
+ 35.75 1 *637 *512
+ 36.82 2 *388 *263
+ 37.89 3 *638 *513
+ 38.96 1 *389 *264
+*176 177 premium ORD-0677 pending 38.96 3.12 42.08 Customer Number 00176
+ 38.96 1 *389 *264
+*177 178 enterprise ORD-0678 processing 125.65 10.05 135.7 Customer Number 00177
+ 41.17 1 *640 *515
+ 42.24 2 *391 *266
+*178 179 standard ORD-0679 delivered 274.84 21.99 296.83 Customer Number 00178
+ 44.38 1 *392 *267
+ 45.45 2 *642 *517
+ 46.52 3 *393 *268
+*179 180 premium ORD-0680 cancelled 344.9 27.59 372.49 Customer Number 00179
+ 47.59 1 *643 *518
+ 48.66 2 *394 *269
+ 49.73 3 *644 *519
+ 50.8 1 *395 *270
+*180 181 standard ORD-0681 shipped 50.8 4.06 54.86 Customer Number 00180
+ 50.8 1 *395 *270
+*181 182 premium ORD-0682 pending 161.17 12.89 174.06 Customer Number 00181
+ 53.01 1 *646 *521
+ 54.08 2 *397 *272
+*182 183 enterprise ORD-0683 processing 345.88 27.67 373.55 Customer Number 00182
+ 56.22 1 *398 *273
+ 57.29 2 *648 *523
+ 58.36 3 *399 *274
+*183 184 standard ORD-0684 delivered 427.78 34.22 462 Customer Number 00183
+ 59.43 1 *649 *524
+ 60.5 2 *400 *275
+ 61.57 3 *650 *525
+ 62.64 1 *401 *276
+*184 185 premium ORD-0685 cancelled 62.64 5.01 67.65 Customer Number 00184
+ 62.64 1 *401 *276
+*185 186 standard ORD-0686 shipped 199.69 15.98 215.67 Customer Number 00185
+ 65.85 1 *652 *527
+ 66.92 2 *403 *278
+*186 187 premium ORD-0687 pending 416.92 33.35 450.27 Customer Number 00186
+ 68.06 1 *404 *279
+ 69.13 2 *654 *529
+ 70.2 3 *405 *280
+*187 188 enterprise ORD-0688 processing 510.66 40.85 551.51 Customer Number 00187
+ 71.27 1 *655 *530
+ 72.34 2 *406 *281
+ 73.41 3 *656 *531
+ 74.48 1 *407 *282
+*188 189 standard ORD-0689 delivered 74.48 5.96 80.44 Customer Number 00188
+ 74.48 1 *407 *282
+*189 190 premium ORD-0690 cancelled 235.21 18.82 254.03 Customer Number 00189
+ 77.69 1 *658 *533
+ 78.76 2 *409 *284
+*190 191 standard ORD-0691 shipped 490.96 39.28 530.24 Customer Number 00190
+ 80.9 1 *410 *285
+ 81.97 2 *660 *535
+ 82.04 3 *411 *286
+*191 192 premium ORD-0692 pending 593.54 47.48 641.02 Customer Number 00191
+ 83.11 1 *661 *536
+ 84.18 2 *412 *287
+ 85.25 3 *662 *537
+ 86.32 1 *413 *288
+*192 193 enterprise ORD-0693 processing 86.32 6.91 93.23 Customer Number 00192
+ 86.32 1 *413 *288
+*193 194 standard ORD-0694 delivered 270.73 21.66 292.39 Customer Number 00193
+ 89.53 1 *664 *539
+ 90.6 2 *415 *290
+*194 195 premium ORD-0695 cancelled 565 45.2 610.2 Customer Number 00194
+ 92.74 1 *416 *291
+ 93.81 2 *666 *541
+ 94.88 3 *417 *292
+*195 196 standard ORD-0696 shipped 677.42 54.19 731.61 Customer Number 00195
+ 95.95 1 *667 *542
+ 96.02 2 *418 *293
+ 97.09 3 *668 *543
+ 98.16 1 *419 *294
+*196 197 premium ORD-0697 pending 98.16 7.85 106.01 Customer Number 00196
+ 98.16 1 *419 *294
+*197 198 enterprise ORD-0698 processing 306.25 24.5 330.75 Customer Number 00197
+ 101.37 1 *670 *545
+ 102.44 2 *421 *296
+*198 199 standard ORD-0699 delivered 636.04 50.88 686.92 Customer Number 00198
+ 104.58 1 *422 *297
+ 105.65 2 *672 *547
+ 106.72 3 *423 *298
+*199 200 premium ORD-0700 cancelled 765.3 61.22 826.52 Customer Number 00199
+ 107.79 1 *673 *548
+ 108.86 2 *424 *299
+ 109.93 3 *674 *549
+ 110 1 *425 *300
+*200 201 standard ORD-0701 shipped 110 8.8 118.8 Customer Number 00200
+ 110 1 *425 *300
+*201 202 premium ORD-0702 pending 341.77 27.34 369.11 Customer Number 00201
+ 113.21 1 *676 *551
+ 114.28 2 *427 *302
+*202 203 enterprise ORD-0703 processing 707.08 56.57 763.65 Customer Number 00202
+ 116.42 1 *428 *303
+ 117.49 2 *678 *553
+ 118.56 3 *429 *304
+*203 204 standard ORD-0704 delivered 849.18 67.93 917.11 Customer Number 00203
+ 119.63 1 *679 *554
+ 120.7 2 *430 *305
+ 121.77 3 *680 *555
+ 122.84 1 *431 *306
+*204 205 premium ORD-0705 cancelled 122.84 9.83 132.67 Customer Number 00204
+ 122.84 1 *431 *306
+*205 206 standard ORD-0706 shipped 377.29 30.18 407.47 Customer Number 00205
+ 125.05 1 *682 *557
+ 126.12 2 *433 *308
+*206 207 premium ORD-0707 pending 778.12 62.25 840.37 Customer Number 00206
+ 128.26 1 *434 *309
+ 129.33 2 *684 *559
+ 130.4 3 *435 *310
+*207 208 enterprise ORD-0708 processing 932.06 74.56 1006.62 Customer Number 00207
+ 131.47 1 *685 *560
+ 132.54 2 *436 *311
+ 133.61 3 *686 *561
+ 134.68 1 *437 *312
+*208 209 standard ORD-0709 delivered 134.68 10.77 145.45 Customer Number 00208
+ 134.68 1 *437 *312
+*209 210 premium ORD-0710 cancelled 415.81 33.26 449.07 Customer Number 00209
+ 137.89 1 *688 *563
+ 138.96 2 *439 *314
+*210 211 standard ORD-0711 shipped 849.16 67.93 917.09 Customer Number 00210
+ 140.1 1 *440 *315
+ 141.17 2 *690 *565
+ 142.24 3 *441 *316
+*211 212 premium ORD-0712 pending 1014.94 81.2 1096.14 Customer Number 00211
+ 143.31 1 *691 *566
+ 144.38 2 *442 *317
+ 145.45 3 *692 *567
+ 146.52 1 *443 *318
+*212 213 enterprise ORD-0713 processing 146.52 11.72 158.24 Customer Number 00212
+ 146.52 1 *443 *318
+*213 214 standard ORD-0714 delivered 451.33 36.11 487.44 Customer Number 00213
+ 149.73 1 *694 *569
+ 150.8 2 *445 *320
+*214 215 premium ORD-0715 cancelled 921.2 73.7 994.9 Customer Number 00214
+ 152.94 1 *446 *321
+ 153.01 2 *696 *571
+ 154.08 3 *447 *322
+*215 216 standard ORD-0716 shipped 1097.82 87.83 1185.65 Customer Number 00215
+ 155.15 1 *697 *572
+ 156.22 2 *448 *323
+ 157.29 3 *698 *573
+ 158.36 1 *449 *324
+*216 217 premium ORD-0717 pending 158.36 12.67 171.03 Customer Number 00216
+ 158.36 1 *449 *324
+*217 218 enterprise ORD-0718 processing 486.85 38.95 525.8 Customer Number 00217
+ 161.57 1 *700 *575
+ 162.64 2 *451 *326
+*218 219 standard ORD-0719 delivered 997.24 79.78 1077.02 Customer Number 00218
+ 164.78 1 *452 *327
+ 165.85 2 *702 *577
+ 166.92 3 *453 *328
+*219 220 premium ORD-0720 cancelled 1181.7 94.54 1276.24 Customer Number 00219
+ 167.99 1 *703 *578
+ 168.06 2 *454 *329
+ 169.13 3 *704 *579
+ 170.2 1 *455 *330
+*220 221 standard ORD-0721 shipped 170.2 13.62 183.82 Customer Number 00220
+ 170.2 1 *455 *330
+*221 222 premium ORD-0722 pending 522.37 41.79 564.16 Customer Number 00221
+ 173.41 1 *706 *581
+ 174.48 2 *457 *332
+*222 223 enterprise ORD-0723 processing 1068.28 85.46 1153.74 Customer Number 00222
+ 176.62 1 *458 *333
+ 177.69 2 *708 *583
+ 178.76 3 *459 *334
+*223 224 standard ORD-0724 delivered 1269.58 101.57 1371.15 Customer Number 00223
+ 179.83 1 *709 *584
+ 180.9 2 *460 *335
+ 181.97 3 *710 *585
+ 182.04 1 *461 *336
+*224 225 premium ORD-0725 cancelled 182.04 14.56 196.6 Customer Number 00224
+ 182.04 1 *461 *336
+*225 226 standard ORD-0726 shipped 557.89 44.63 602.52 Customer Number 00225
+ 185.25 1 *712 *587
+ 186.32 2 *463 *338
+*226 227 premium ORD-0727 pending 1139.32 91.15 1230.47 Customer Number 00226
+ 188.46 1 *464 *339
+ 189.53 2 *714 *589
+ 190.6 3 *465 *340
+*227 228 enterprise ORD-0728 processing 1353.46 108.28 1461.74 Customer Number 00227
+ 191.67 1 *715 *590
+ 192.74 2 *466 *341
+ 193.81 3 *716 *591
+ 194.88 1 *467 *342
+*228 229 standard ORD-0729 delivered 194.88 15.59 210.47 Customer Number 00228
+ 194.88 1 *467 *342
+*229 230 premium ORD-0730 cancelled 593.41 47.47 640.88 Customer Number 00229
+ 197.09 1 *718 *593
+ 198.16 2 *469 *344
+*230 231 standard ORD-0731 shipped 1210.36 96.83 1307.19 Customer Number 00230
+ 200.3 1 *470 *345
+ 201.37 2 *720 *595
+ 202.44 3 *471 *346
+*231 232 premium ORD-0732 pending 1436.34 114.91 1551.25 Customer Number 00231
+ 203.51 1 *721 *596
+ 204.58 2 *472 *347
+ 205.65 3 *722 *597
+ 206.72 1 *473 *348
+*232 233 enterprise ORD-0733 processing 206.72 16.54 223.26 Customer Number 00232
+ 206.72 1 *473 *348
+*233 234 standard ORD-0734 delivered 629.93 50.39 680.32 Customer Number 00233
+ 209.93 1 *724 *599
+ 210 2 *475 *350
+*234 235 premium ORD-0735 cancelled 1281.4 102.51 1383.91 Customer Number 00234
+ 212.14 1 *476 *351
+ 213.21 2 *726 *601
+ 214.28 3 *477 *352
+*235 236 standard ORD-0736 shipped 1519.22 121.54 1640.76 Customer Number 00235
+ 215.35 1 *727 *602
+ 216.42 2 *478 *353
+ 217.49 3 *728 *603
+ 218.56 1 *479 *354
+*236 237 premium ORD-0737 pending 218.56 17.48 236.04 Customer Number 00236
+ 218.56 1 *479 *354
+*237 238 enterprise ORD-0738 processing 667.45 53.4 720.85 Customer Number 00237
+ 221.77 1 *730 *605
+ 222.84 2 *481 *356
+*238 239 standard ORD-0739 delivered 1353.44 108.28 1461.72 Customer Number 00238
+ 224.98 1 *482 *357
+ 225.05 2 *732 *607
+ 226.12 3 *483 *358
+*239 240 premium ORD-0740 cancelled 1602.1 128.17 1730.27 Customer Number 00239
+ 227.19 1 *733 *608
+ 228.26 2 *484 *359
+ 229.33 3 *734 *609
+ 230.4 1 *485 *360
+*240 241 standard ORD-0741 shipped 230.4 18.43 248.83 Customer Number 00240
+ 230.4 1 *485 *360
+*241 242 premium ORD-0742 pending 702.97 56.24 759.21 Customer Number 00241
+ 233.61 1 *736 *611
+ 234.68 2 *487 *362
+*242 243 enterprise ORD-0743 processing 1429.48 114.36 1543.84 Customer Number 00242
+ 236.82 1 *488 *363
+ 237.89 2 *738 *613
+ 238.96 3 *489 *364
+*243 244 standard ORD-0744 delivered 1684.98 134.8 1819.78 Customer Number 00243
+ 239.03 1 *739 *614
+ 240.1 2 *490 *365
+ 241.17 3 *740 *615
+ 242.24 1 *491 *366
+*244 245 premium ORD-0745 cancelled 242.24 19.38 261.62 Customer Number 00244
+ 242.24 1 *491 *366
+*245 246 standard ORD-0746 shipped 738.49 59.08 797.57 Customer Number 00245
+ 245.45 1 *742 *617
+ 246.52 2 *493 *368
+*246 247 premium ORD-0747 pending 1500.52 120.04 1620.56 Customer Number 00246
+ 248.66 1 *494 *369
+ 249.73 2 *744 *619
+ 250.8 3 *495 *370
+*247 248 enterprise ORD-0748 processing 1770.86 141.67 1912.53 Customer Number 00247
+ 251.87 1 *745 *620
+ 252.94 2 *496 *371
+ 253.01 3 *746 *621
+ 254.08 1 *497 *372
+*248 249 standard ORD-0749 delivered 254.08 20.33 274.41 Customer Number 00248
+ 254.08 1 *497 *372
+*249 250 premium ORD-0750 cancelled 774.01 61.92 835.93 Customer Number 00249
+ 257.29 1 *748 *623
+ 258.36 2 *499 *374
+*0 1 standard ORD-0751 shipped 68.56 5.48 74.04 Customer Number 00000
+ 10 1 *375 *250
+ 11.07 2 *625 *500
+ 12.14 3 *376 *251
+*1 2 premium ORD-0752 pending 104.24 8.34 112.58 Customer Number 00001
+ 13.21 1 *626 *501
+ 14.28 2 *377 *252
+ 15.35 3 *627 *502
+ 16.42 1 *378 *253
+*2 3 enterprise ORD-0753 processing 16.42 1.31 17.73 Customer Number 00002
+ 16.42 1 *378 *253
+*3 4 standard ORD-0754 delivered 61.03 4.88 65.91 Customer Number 00003
+ 19.63 1 *629 *504
+ 20.7 2 *380 *255
+*4 5 premium ORD-0755 cancelled 145.6 11.65 157.25 Customer Number 00004
+ 22.84 1 *381 *256
+ 23.91 2 *631 *506
+ 24.98 3 *382 *257
+*5 6 standard ORD-0756 shipped 187.12 14.97 202.09 Customer Number 00005
+ 25.05 1 *632 *507
+ 26.12 2 *383 *258
+ 27.19 3 *633 *508
+ 28.26 1 *384 *259
+*6 7 premium ORD-0757 pending 28.26 2.26 30.52 Customer Number 00006
+ 28.26 1 *384 *259
+*7 8 enterprise ORD-0758 processing 96.55 7.72 104.27 Customer Number 00007
+ 31.47 1 *635 *510
+ 32.54 2 *386 *261
+*8 9 standard ORD-0759 delivered 216.64 17.33 233.97 Customer Number 00008
+ 34.68 1 *387 *262
+ 35.75 2 *637 *512
+ 36.82 3 *388 *263
+*9 10 premium ORD-0760 cancelled 273 21.84 294.84 Customer Number 00009
+ 37.89 1 *638 *513
+ 38.96 2 *389 *264
+ 39.03 3 *639 *514
+ 40.1 1 *390 *265
+*10 11 standard ORD-0761 shipped 40.1 3.21 43.31 Customer Number 00010
+ 40.1 1 *390 *265
+*11 12 premium ORD-0762 pending 132.07 10.57 142.64 Customer Number 00011
+ 43.31 1 *641 *516
+ 44.38 2 *392 *267
+*12 13 enterprise ORD-0763 processing 287.68 23.01 310.69 Customer Number 00012
+ 46.52 1 *393 *268
+ 47.59 2 *643 *518
+ 48.66 3 *394 *269
+*13 14 standard ORD-0764 delivered 359.88 28.79 388.67 Customer Number 00013
+ 49.73 1 *644 *519
+ 50.8 2 *395 *270
+ 51.87 3 *645 *520
+ 52.94 1 *396 *271
+*14 15 premium ORD-0765 cancelled 52.94 4.24 57.18 Customer Number 00014
+ 52.94 1 *396 *271
+*15 16 standard ORD-0766 shipped 167.59 13.41 181 Customer Number 00015
+ 55.15 1 *647 *522
+ 56.22 2 *398 *273
+*16 17 premium ORD-0767 pending 358.72 28.7 387.42 Customer Number 00016
+ 58.36 1 *399 *274
+ 59.43 2 *649 *524
+ 60.5 3 *400 *275
+*17 18 enterprise ORD-0768 processing 442.76 35.42 478.18 Customer Number 00017
+ 61.57 1 *650 *525
+ 62.64 2 *401 *276
+ 63.71 3 *651 *526
+ 64.78 1 *402 *277
+*18 19 standard ORD-0769 delivered 64.78 5.18 69.96 Customer Number 00018
+ 64.78 1 *402 *277
+*19 20 premium ORD-0770 cancelled 204.11 16.33 220.44 Customer Number 00019
+ 67.99 1 *653 *528
+ 68.06 2 *404 *279
+*20 21 standard ORD-0771 shipped 429.76 34.38 464.14 Customer Number 00020
+ 70.2 1 *405 *280
+ 71.27 2 *655 *530
+ 72.34 3 *406 *281
+*21 22 premium ORD-0772 pending 525.64 42.05 567.69 Customer Number 00021
+ 73.41 1 *656 *531
+ 74.48 2 *407 *282
+ 75.55 3 *657 *532
+ 76.62 1 *408 *283
+*22 23 enterprise ORD-0773 processing 76.62 6.13 82.75 Customer Number 00022
+ 76.62 1 *408 *283
+*23 24 standard ORD-0774 delivered 241.63 19.33 260.96 Customer Number 00023
+ 79.83 1 *659 *534
+ 80.9 2 *410 *285
+*24 25 premium ORD-0775 cancelled 500.8 40.06 540.86 Customer Number 00024
+ 82.04 1 *411 *286
+ 83.11 2 *661 *536
+ 84.18 3 *412 *287
+*25 26 standard ORD-0776 shipped 608.52 48.68 657.2 Customer Number 00025
+ 85.25 1 *662 *537
+ 86.32 2 *413 *288
+ 87.39 3 *663 *538
+ 88.46 1 *414 *289
+*26 27 premium ORD-0777 pending 88.46 7.08 95.54 Customer Number 00026
+ 88.46 1 *414 *289
+*27 28 enterprise ORD-0778 processing 277.15 22.17 299.32 Customer Number 00027
+ 91.67 1 *665 *540
+ 92.74 2 *416 *291
+*28 29 standard ORD-0779 delivered 574.84 45.99 620.83 Customer Number 00028
+ 94.88 1 *417 *292
+ 95.95 2 *667 *542
+ 96.02 3 *418 *293
+*29 30 premium ORD-0780 cancelled 691.4 55.31 746.71 Customer Number 00029
+ 97.09 1 *668 *543
+ 98.16 2 *419 *294
+ 99.23 3 *669 *544
+ 100.3 1 *420 *295
+*30 31 standard ORD-0781 shipped 100.3 8.02 108.32 Customer Number 00030
+ 100.3 1 *420 *295
+*31 32 premium ORD-0782 pending 312.67 25.01 337.68 Customer Number 00031
+ 103.51 1 *671 *546
+ 104.58 2 *422 *297
+*32 33 enterprise ORD-0783 processing 648.88 51.91 700.79 Customer Number 00032
+ 106.72 1 *423 *298
+ 107.79 2 *673 *548
+ 108.86 3 *424 *299
+*33 34 standard ORD-0784 delivered 775.28 62.02 837.3 Customer Number 00033
+ 109.93 1 *674 *549
+ 110 2 *425 *300
+ 111.07 3 *675 *550
+ 112.14 1 *426 *301
+*34 35 premium ORD-0785 cancelled 112.14 8.97 121.11 Customer Number 00034
+ 112.14 1 *426 *301
+*35 36 standard ORD-0786 shipped 348.19 27.86 376.05 Customer Number 00035
+ 115.35 1 *677 *552
+ 116.42 2 *428 *303
+*36 37 premium ORD-0787 pending 719.92 57.59 777.51 Customer Number 00036
+ 118.56 1 *429 *304
+ 119.63 2 *679 *554
+ 120.7 3 *430 *305
+*37 38 enterprise ORD-0788 processing 864.16 69.13 933.29 Customer Number 00037
+ 121.77 1 *680 *555
+ 122.84 2 *431 *306
+ 123.91 3 *681 *556
+ 124.98 1 *432 *307
+*38 39 standard ORD-0789 delivered 124.98 10 134.98 Customer Number 00038
+ 124.98 1 *432 *307
+*39 40 premium ORD-0790 cancelled 383.71 30.7 414.41 Customer Number 00039
+ 127.19 1 *683 *558
+ 128.26 2 *434 *309
+*40 41 standard ORD-0791 shipped 790.96 63.28 854.24 Customer Number 00040
+ 130.4 1 *435 *310
+ 131.47 2 *685 *560
+ 132.54 3 *436 *311
+*41 42 premium ORD-0792 pending 947.04 75.76 1022.8 Customer Number 00041
+ 133.61 1 *686 *561
+ 134.68 2 *437 *312
+ 135.75 3 *687 *562
+ 136.82 1 *438 *313
+*42 43 enterprise ORD-0793 processing 136.82 10.95 147.77 Customer Number 00042
+ 136.82 1 *438 *313
+*43 44 standard ORD-0794 delivered 419.23 33.54 452.77 Customer Number 00043
+ 139.03 1 *689 *564
+ 140.1 2 *440 *315
+*44 45 premium ORD-0795 cancelled 862 68.96 930.96 Customer Number 00044
+ 142.24 1 *441 *316
+ 143.31 2 *691 *566
+ 144.38 3 *442 *317
+*45 46 standard ORD-0796 shipped 1029.92 82.39 1112.31 Customer Number 00045
+ 145.45 1 *692 *567
+ 146.52 2 *443 *318
+ 147.59 3 *693 *568
+ 148.66 1 *444 *319
+*46 47 premium ORD-0797 pending 148.66 11.89 160.55 Customer Number 00046
+ 148.66 1 *444 *319
+*47 48 enterprise ORD-0798 processing 457.75 36.62 494.37 Customer Number 00047
+ 151.87 1 *695 *570
+ 152.94 2 *446 *321
+*48 49 standard ORD-0799 delivered 933.04 74.64 1007.68 Customer Number 00048
+ 154.08 1 *447 *322
+ 155.15 2 *697 *572
+ 156.22 3 *448 *323
+*49 50 premium ORD-0800 cancelled 1112.8 89.02 1201.82 Customer Number 00049
+ 157.29 1 *698 *573
+ 158.36 2 *449 *324
+ 159.43 3 *699 *574
+ 160.5 1 *450 *325
+*50 51 standard ORD-0801 shipped 160.5 12.84 173.34 Customer Number 00050
+ 160.5 1 *450 *325
+*51 52 premium ORD-0802 pending 493.27 39.46 532.73 Customer Number 00051
+ 163.71 1 *701 *576
+ 164.78 2 *452 *327
+*52 53 enterprise ORD-0803 processing 1007.08 80.57 1087.65 Customer Number 00052
+ 166.92 1 *453 *328
+ 167.99 2 *703 *578
+ 168.06 3 *454 *329
+*53 54 standard ORD-0804 delivered 1195.68 95.65 1291.33 Customer Number 00053
+ 169.13 1 *704 *579
+ 170.2 2 *455 *330
+ 171.27 3 *705 *580
+ 172.34 1 *456 *331
+*54 55 premium ORD-0805 cancelled 172.34 13.79 186.13 Customer Number 00054
+ 172.34 1 *456 *331
+*55 56 standard ORD-0806 shipped 528.79 42.3 571.09 Customer Number 00055
+ 175.55 1 *707 *582
+ 176.62 2 *458 *333
+*56 57 premium ORD-0807 pending 1081.12 86.49 1167.61 Customer Number 00056
+ 178.76 1 *459 *334
+ 179.83 2 *709 *584
+ 180.9 3 *460 *335
+*57 58 enterprise ORD-0808 processing 1279.56 102.36 1381.92 Customer Number 00057
+ 181.97 1 *710 *585
+ 182.04 2 *461 *336
+ 183.11 3 *711 *586
+ 184.18 1 *462 *337
+*58 59 standard ORD-0809 delivered 184.18 14.73 198.91 Customer Number 00058
+ 184.18 1 *462 *337
+*59 60 premium ORD-0810 cancelled 564.31 45.14 609.45 Customer Number 00059
+ 187.39 1 *713 *588
+ 188.46 2 *464 *339
+*60 61 standard ORD-0811 shipped 1152.16 92.17 1244.33 Customer Number 00060
+ 190.6 1 *465 *340
+ 191.67 2 *715 *590
+ 192.74 3 *466 *341
+*61 62 premium ORD-0812 pending 1367.44 109.4 1476.84 Customer Number 00061
+ 193.81 1 *716 *591
+ 194.88 2 *467 *342
+ 195.95 3 *717 *592
+ 196.02 1 *468 *343
+*62 63 enterprise ORD-0813 processing 196.02 15.68 211.7 Customer Number 00062
+ 196.02 1 *468 *343
+*63 64 standard ORD-0814 delivered 599.83 47.99 647.82 Customer Number 00063
+ 199.23 1 *719 *594
+ 200.3 2 *470 *345
+*64 65 premium ORD-0815 cancelled 1223.2 97.86 1321.06 Customer Number 00064
+ 202.44 1 *471 *346
+ 203.51 2 *721 *596
+ 204.58 3 *472 *347
+*65 66 standard ORD-0816 shipped 1451.32 116.11 1567.43 Customer Number 00065
+ 205.65 1 *722 *597
+ 206.72 2 *473 *348
+ 207.79 3 *723 *598
+ 208.86 1 *474 *349
+*66 67 premium ORD-0817 pending 208.86 16.71 225.57 Customer Number 00066
+ 208.86 1 *474 *349
+*67 68 enterprise ORD-0818 processing 635.35 50.83 686.18 Customer Number 00067
+ 211.07 1 *725 *600
+ 212.14 2 *476 *351
+*68 69 standard ORD-0819 delivered 1294.24 103.54 1397.78 Customer Number 00068
+ 214.28 1 *477 *352
+ 215.35 2 *727 *602
+ 216.42 3 *478 *353
+*69 70 premium ORD-0820 cancelled 1534.2 122.74 1656.94 Customer Number 00069
+ 217.49 1 *728 *603
+ 218.56 2 *479 *354
+ 219.63 3 *729 *604
+ 220.7 1 *480 *355
+*70 71 standard ORD-0821 shipped 220.7 17.66 238.36 Customer Number 00070
+ 220.7 1 *480 *355
+*71 72 premium ORD-0822 pending 673.87 53.91 727.78 Customer Number 00071
+ 223.91 1 *731 *606
+ 224.98 2 *482 *357
+*72 73 enterprise ORD-0823 processing 1365.28 109.22 1474.5 Customer Number 00072
+ 226.12 1 *483 *358
+ 227.19 2 *733 *608
+ 228.26 3 *484 *359
+*73 74 standard ORD-0824 delivered 1617.08 129.37 1746.45 Customer Number 00073
+ 229.33 1 *734 *609
+ 230.4 2 *485 *360
+ 231.47 3 *735 *610
+ 232.54 1 *486 *361
+*74 75 premium ORD-0825 cancelled 232.54 18.6 251.14 Customer Number 00074
+ 232.54 1 *486 *361
+*75 76 standard ORD-0826 shipped 709.39 56.75 766.14 Customer Number 00075
+ 235.75 1 *737 *612
+ 236.82 2 *488 *363
+*76 77 premium ORD-0827 pending 1437.32 114.99 1552.31 Customer Number 00076
+ 238.96 1 *489 *364
+ 239.03 2 *739 *614
+ 240.1 3 *490 *365
+*77 78 enterprise ORD-0828 processing 1699.96 136 1835.96 Customer Number 00077
+ 241.17 1 *740 *615
+ 242.24 2 *491 *366
+ 243.31 3 *741 *616
+ 244.38 1 *492 *367
+*78 79 standard ORD-0829 delivered 244.38 19.55 263.93 Customer Number 00078
+ 244.38 1 *492 *367
+*79 80 premium ORD-0830 cancelled 744.91 59.59 804.5 Customer Number 00079
+ 247.59 1 *743 *618
+ 248.66 2 *494 *369
+*80 81 standard ORD-0831 shipped 1513.36 121.07 1634.43 Customer Number 00080
+ 250.8 1 *495 *370
+ 251.87 2 *745 *620
+ 252.94 3 *496 *371
+*81 82 premium ORD-0832 pending 1782.84 142.63 1925.47 Customer Number 00081
+ 253.01 1 *746 *621
+ 254.08 2 *497 *372
+ 255.15 3 *747 *622
+ 256.22 1 *498 *373
+*82 83 enterprise ORD-0833 processing 256.22 20.5 276.72 Customer Number 00082
+ 256.22 1 *498 *373
+*83 84 standard ORD-0834 delivered 279.43 22.35 301.78 Customer Number 00083
+ 259.43 1 *749 *624
+ 10 2 *375 *250
+*84 85 premium ORD-0835 cancelled 81.4 6.51 87.91 Customer Number 00084
+ 12.14 1 *376 *251
+ 13.21 2 *626 *501
+ 14.28 3 *377 *252
+*85 86 standard ORD-0836 shipped 119.22 9.54 128.76 Customer Number 00085
+ 15.35 1 *627 *502
+ 16.42 2 *378 *253
+ 17.49 3 *628 *503
+ 18.56 1 *379 *254
+*86 87 premium ORD-0837 pending 18.56 1.48 20.04 Customer Number 00086
+ 18.56 1 *379 *254
+*87 88 enterprise ORD-0838 processing 67.45 5.4 72.85 Customer Number 00087
+ 21.77 1 *630 *505
+ 22.84 2 *381 *256
+*88 89 standard ORD-0839 delivered 153.44 12.28 165.72 Customer Number 00088
+ 24.98 1 *382 *257
+ 25.05 2 *632 *507
+ 26.12 3 *383 *258
+*89 90 premium ORD-0840 cancelled 202.1 16.17 218.27 Customer Number 00089
+ 27.19 1 *633 *508
+ 28.26 2 *384 *259
+ 29.33 3 *634 *509
+ 30.4 1 *385 *260
+*90 91 standard ORD-0841 shipped 30.4 2.43 32.83 Customer Number 00090
+ 30.4 1 *385 *260
+*91 92 premium ORD-0842 pending 102.97 8.24 111.21 Customer Number 00091
+ 33.61 1 *636 *511
+ 34.68 2 *387 *262
+*92 93 enterprise ORD-0843 processing 229.48 18.36 247.84 Customer Number 00092
+ 36.82 1 *388 *263
+ 37.89 2 *638 *513
+ 38.96 3 *389 *264
+*93 94 standard ORD-0844 delivered 284.98 22.8 307.78 Customer Number 00093
+ 39.03 1 *639 *514
+ 40.1 2 *390 *265
+ 41.17 3 *640 *515
+ 42.24 1 *391 *266
+*94 95 premium ORD-0845 cancelled 42.24 3.38 45.62 Customer Number 00094
+ 42.24 1 *391 *266
+*95 96 standard ORD-0846 shipped 138.49 11.08 149.57 Customer Number 00095
+ 45.45 1 *642 *517
+ 46.52 2 *393 *268
+*96 97 premium ORD-0847 pending 300.52 24.04 324.56 Customer Number 00096
+ 48.66 1 *394 *269
+ 49.73 2 *644 *519
+ 50.8 3 *395 *270
+*97 98 enterprise ORD-0848 processing 370.86 29.67 400.53 Customer Number 00097
+ 51.87 1 *645 *520
+ 52.94 2 *396 *271
+ 53.01 3 *646 *521
+ 54.08 1 *397 *272
+*98 99 standard ORD-0849 delivered 54.08 4.33 58.41 Customer Number 00098
+ 54.08 1 *397 *272
+*99 100 premium ORD-0850 cancelled 174.01 13.92 187.93 Customer Number 00099
+ 57.29 1 *648 *523
+ 58.36 2 *399 *274
+*100 101 standard ORD-0851 shipped 371.56 29.72 401.28 Customer Number 00100
+ 60.5 1 *400 *275
+ 61.57 2 *650 *525
+ 62.64 3 *401 *276
+*101 102 premium ORD-0852 pending 457.74 36.62 494.36 Customer Number 00101
+ 63.71 1 *651 *526
+ 64.78 2 *402 *277
+ 65.85 3 *652 *527
+ 66.92 1 *403 *278
+*102 103 enterprise ORD-0853 processing 66.92 5.35 72.27 Customer Number 00102
+ 66.92 1 *403 *278
+*103 104 standard ORD-0854 delivered 209.53 16.76 226.29 Customer Number 00103
+ 69.13 1 *654 *529
+ 70.2 2 *405 *280
+*104 105 premium ORD-0855 cancelled 442.6 35.41 478.01 Customer Number 00104
+ 72.34 1 *406 *281
+ 73.41 2 *656 *531
+ 74.48 3 *407 *282
+*105 106 standard ORD-0856 shipped 540.62 43.25 583.87 Customer Number 00105
+ 75.55 1 *657 *532
+ 76.62 2 *408 *283
+ 77.69 3 *658 *533
+ 78.76 1 *409 *284
+*106 107 premium ORD-0857 pending 78.76 6.3 85.06 Customer Number 00106
+ 78.76 1 *409 *284
+*107 108 enterprise ORD-0858 processing 246.05 19.68 265.73 Customer Number 00107
+ 81.97 1 *660 *535
+ 82.04 2 *411 *286
+*108 109 standard ORD-0859 delivered 513.64 41.09 554.73 Customer Number 00108
+ 84.18 1 *412 *287
+ 85.25 2 *662 *537
+ 86.32 3 *413 *288
+*109 110 premium ORD-0860 cancelled 623.5 49.88 673.38 Customer Number 00109
+ 87.39 1 *663 *538
+ 88.46 2 *414 *289
+ 89.53 3 *664 *539
+ 90.6 1 *415 *290
+*110 111 standard ORD-0861 shipped 90.6 7.25 97.85 Customer Number 00110
+ 90.6 1 *415 *290
+*111 112 premium ORD-0862 pending 283.57 22.69 306.26 Customer Number 00111
+ 93.81 1 *666 *541
+ 94.88 2 *417 *292
+*112 113 enterprise ORD-0863 processing 584.68 46.77 631.45 Customer Number 00112
+ 96.02 1 *418 *293
+ 97.09 2 *668 *543
+ 98.16 3 *419 *294
+*113 114 standard ORD-0864 delivered 706.38 56.51 762.89 Customer Number 00113
+ 99.23 1 *669 *544
+ 100.3 2 *420 *295
+ 101.37 3 *670 *545
+ 102.44 1 *421 *296
+*114 115 premium ORD-0865 cancelled 102.44 8.2 110.64 Customer Number 00114
+ 102.44 1 *421 *296
+*115 116 standard ORD-0866 shipped 319.09 25.53 344.62 Customer Number 00115
+ 105.65 1 *672 *547
+ 106.72 2 *423 *298
+*116 117 premium ORD-0867 pending 658.72 52.7 711.42 Customer Number 00116
+ 108.86 1 *424 *299
+ 109.93 2 *674 *549
+ 110 3 *425 *300
+*117 118 enterprise ORD-0868 processing 789.26 63.14 852.4 Customer Number 00117
+ 111.07 1 *675 *550
+ 112.14 2 *426 *301
+ 113.21 3 *676 *551
+ 114.28 1 *427 *302
+*118 119 standard ORD-0869 delivered 114.28 9.14 123.42 Customer Number 00118
+ 114.28 1 *427 *302
+*119 120 premium ORD-0870 cancelled 354.61 28.37 382.98 Customer Number 00119
+ 117.49 1 *678 *553
+ 118.56 2 *429 *304
+*120 121 standard ORD-0871 shipped 732.76 58.62 791.38 Customer Number 00120
+ 120.7 1 *430 *305
+ 121.77 2 *680 *555
+ 122.84 3 *431 *306
+*121 122 premium ORD-0872 pending 875.14 70.01 945.15 Customer Number 00121
+ 123.91 1 *681 *556
+ 124.98 2 *432 *307
+ 125.05 3 *682 *557
+ 126.12 1 *433 *308
+*122 123 enterprise ORD-0873 processing 126.12 10.09 136.21 Customer Number 00122
+ 126.12 1 *433 *308
+*123 124 standard ORD-0874 delivered 390.13 31.21 421.34 Customer Number 00123
+ 129.33 1 *684 *559
+ 130.4 2 *435 *310
+*124 125 premium ORD-0875 cancelled 803.8 64.3 868.1 Customer Number 00124
+ 132.54 1 *436 *311
+ 133.61 2 *686 *561
+ 134.68 3 *437 *312
+*125 126 standard ORD-0876 shipped 962.02 76.96 1038.98 Customer Number 00125
+ 135.75 1 *687 *562
+ 136.82 2 *438 *313
+ 137.89 3 *688 *563
+ 138.96 1 *439 *314
+*126 127 premium ORD-0877 pending 138.96 11.12 150.08 Customer Number 00126
+ 138.96 1 *439 *314
+*127 128 enterprise ORD-0878 processing 425.65 34.05 459.7 Customer Number 00127
+ 141.17 1 *690 *565
+ 142.24 2 *441 *316
+*128 129 standard ORD-0879 delivered 874.84 69.99 944.83 Customer Number 00128
+ 144.38 1 *442 *317
+ 145.45 2 *692 *567
+ 146.52 3 *443 *318
+*129 130 premium ORD-0880 cancelled 1044.9 83.59 1128.49 Customer Number 00129
+ 147.59 1 *693 *568
+ 148.66 2 *444 *319
+ 149.73 3 *694 *569
+ 150.8 1 *445 *320
+*130 131 standard ORD-0881 shipped 150.8 12.06 162.86 Customer Number 00130
+ 150.8 1 *445 *320
+*131 132 premium ORD-0882 pending 461.17 36.89 498.06 Customer Number 00131
+ 153.01 1 *696 *571
+ 154.08 2 *447 *322
+*132 133 enterprise ORD-0883 processing 945.88 75.67 1021.55 Customer Number 00132
+ 156.22 1 *448 *323
+ 157.29 2 *698 *573
+ 158.36 3 *449 *324
+*133 134 standard ORD-0884 delivered 1127.78 90.22 1218 Customer Number 00133
+ 159.43 1 *699 *574
+ 160.5 2 *450 *325
+ 161.57 3 *700 *575
+ 162.64 1 *451 *326
+*134 135 premium ORD-0885 cancelled 162.64 13.01 175.65 Customer Number 00134
+ 162.64 1 *451 *326
+*135 136 standard ORD-0886 shipped 499.69 39.98 539.67 Customer Number 00135
+ 165.85 1 *702 *577
+ 166.92 2 *453 *328
+*136 137 premium ORD-0887 pending 1016.92 81.35 1098.27 Customer Number 00136
+ 168.06 1 *454 *329
+ 169.13 2 *704 *579
+ 170.2 3 *455 *330
+*137 138 enterprise ORD-0888 processing 1210.66 96.85 1307.51 Customer Number 00137
+ 171.27 1 *705 *580
+ 172.34 2 *456 *331
+ 173.41 3 *706 *581
+ 174.48 1 *457 *332
+*138 139 standard ORD-0889 delivered 174.48 13.96 188.44 Customer Number 00138
+ 174.48 1 *457 *332
+*139 140 premium ORD-0890 cancelled 535.21 42.82 578.03 Customer Number 00139
+ 177.69 1 *708 *583
+ 178.76 2 *459 *334
+*140 141 standard ORD-0891 shipped 1090.96 87.28 1178.24 Customer Number 00140
+ 180.9 1 *460 *335
+ 181.97 2 *710 *585
+ 182.04 3 *461 *336
+*141 142 premium ORD-0892 pending 1293.54 103.48 1397.02 Customer Number 00141
+ 183.11 1 *711 *586
+ 184.18 2 *462 *337
+ 185.25 3 *712 *587
+ 186.32 1 *463 *338
+*142 143 enterprise ORD-0893 processing 186.32 14.91 201.23 Customer Number 00142
+ 186.32 1 *463 *338
+*143 144 standard ORD-0894 delivered 570.73 45.66 616.39 Customer Number 00143
+ 189.53 1 *714 *589
+ 190.6 2 *465 *340
+*144 145 premium ORD-0895 cancelled 1165 93.2 1258.2 Customer Number 00144
+ 192.74 1 *466 *341
+ 193.81 2 *716 *591
+ 194.88 3 *467 *342
+*145 146 standard ORD-0896 shipped 1377.42 110.19 1487.61 Customer Number 00145
+ 195.95 1 *717 *592
+ 196.02 2 *468 *343
+ 197.09 3 *718 *593
+ 198.16 1 *469 *344
+*146 147 premium ORD-0897 pending 198.16 15.85 214.01 Customer Number 00146
+ 198.16 1 *469 *344
+*147 148 enterprise ORD-0898 processing 606.25 48.5 654.75 Customer Number 00147
+ 201.37 1 *720 *595
+ 202.44 2 *471 *346
+*148 149 standard ORD-0899 delivered 1236.04 98.88 1334.92 Customer Number 00148
+ 204.58 1 *472 *347
+ 205.65 2 *722 *597
+ 206.72 3 *473 *348
+*149 150 premium ORD-0900 cancelled 1465.3 117.22 1582.52 Customer Number 00149
+ 207.79 1 *723 *598
+ 208.86 2 *474 *349
+ 209.93 3 *724 *599
+ 210 1 *475 *350
+*150 151 standard ORD-0901 shipped 210 16.8 226.8 Customer Number 00150
+ 210 1 *475 *350
+*151 152 premium ORD-0902 pending 641.77 51.34 693.11 Customer Number 00151
+ 213.21 1 *726 *601
+ 214.28 2 *477 *352
+*152 153 enterprise ORD-0903 processing 1307.08 104.57 1411.65 Customer Number 00152
+ 216.42 1 *478 *353
+ 217.49 2 *728 *603
+ 218.56 3 *479 *354
+*153 154 standard ORD-0904 delivered 1549.18 123.93 1673.11 Customer Number 00153
+ 219.63 1 *729 *604
+ 220.7 2 *480 *355
+ 221.77 3 *730 *605
+ 222.84 1 *481 *356
+*154 155 premium ORD-0905 cancelled 222.84 17.83 240.67 Customer Number 00154
+ 222.84 1 *481 *356
+*155 156 standard ORD-0906 shipped 677.29 54.18 731.47 Customer Number 00155
+ 225.05 1 *732 *607
+ 226.12 2 *483 *358
+*156 157 premium ORD-0907 pending 1378.12 110.25 1488.37 Customer Number 00156
+ 228.26 1 *484 *359
+ 229.33 2 *734 *609
+ 230.4 3 *485 *360
+*157 158 enterprise ORD-0908 processing 1632.06 130.56 1762.62 Customer Number 00157
+ 231.47 1 *735 *610
+ 232.54 2 *486 *361
+ 233.61 3 *736 *611
+ 234.68 1 *487 *362
+*158 159 standard ORD-0909 delivered 234.68 18.77 253.45 Customer Number 00158
+ 234.68 1 *487 *362
+*159 160 premium ORD-0910 cancelled 715.81 57.26 773.07 Customer Number 00159
+ 237.89 1 *738 *613
+ 238.96 2 *489 *364
+*160 161 standard ORD-0911 shipped 1449.16 115.93 1565.09 Customer Number 00160
+ 240.1 1 *490 *365
+ 241.17 2 *740 *615
+ 242.24 3 *491 *366
+*161 162 premium ORD-0912 pending 1714.94 137.2 1852.14 Customer Number 00161
+ 243.31 1 *741 *616
+ 244.38 2 *492 *367
+ 245.45 3 *742 *617
+ 246.52 1 *493 *368
+*162 163 enterprise ORD-0913 processing 246.52 19.72 266.24 Customer Number 00162
+ 246.52 1 *493 *368
+*163 164 standard ORD-0914 delivered 751.33 60.11 811.44 Customer Number 00163
+ 249.73 1 *744 *619
+ 250.8 2 *495 *370
+*164 165 premium ORD-0915 cancelled 1521.2 121.7 1642.9 Customer Number 00164
+ 252.94 1 *496 *371
+ 253.01 2 *746 *621
+ 254.08 3 *497 *372
+*165 166 standard ORD-0916 shipped 1797.82 143.83 1941.65 Customer Number 00165
+ 255.15 1 *747 *622
+ 256.22 2 *498 *373
+ 257.29 3 *748 *623
+ 258.36 1 *499 *374
+*166 167 premium ORD-0917 pending 258.36 20.67 279.03 Customer Number 00166
+ 258.36 1 *499 *374
+*167 168 enterprise ORD-0918 processing 35.35 2.83 38.18 Customer Number 00167
+ 11.07 1 *625 *500
+ 12.14 2 *376 *251
+*168 169 standard ORD-0919 delivered 94.24 7.54 101.78 Customer Number 00168
+ 14.28 1 *377 *252
+ 15.35 2 *627 *502
+ 16.42 3 *378 *253
+*169 170 premium ORD-0920 cancelled 134.2 10.74 144.94 Customer Number 00169
+ 17.49 1 *628 *503
+ 18.56 2 *379 *254
+ 19.63 3 *629 *504
+ 20.7 1 *380 *255
+*170 171 standard ORD-0921 shipped 20.7 1.66 22.36 Customer Number 00170
+ 20.7 1 *380 *255
+*171 172 premium ORD-0922 pending 73.87 5.91 79.78 Customer Number 00171
+ 23.91 1 *631 *506
+ 24.98 2 *382 *257
+*172 173 enterprise ORD-0923 processing 165.28 13.22 178.5 Customer Number 00172
+ 26.12 1 *383 *258
+ 27.19 2 *633 *508
+ 28.26 3 *384 *259
+*173 174 standard ORD-0924 delivered 217.08 17.37 234.45 Customer Number 00173
+ 29.33 1 *634 *509
+ 30.4 2 *385 *260
+ 31.47 3 *635 *510
+ 32.54 1 *386 *261
+*174 175 premium ORD-0925 cancelled 32.54 2.6 35.14 Customer Number 00174
+ 32.54 1 *386 *261
+*175 176 standard ORD-0926 shipped 109.39 8.75 118.14 Customer Number 00175
+ 35.75 1 *637 *512
+ 36.82 2 *388 *263
+*176 177 premium ORD-0927 pending 237.32 18.99 256.31 Customer Number 00176
+ 38.96 1 *389 *264
+ 39.03 2 *639 *514
+ 40.1 3 *390 *265
+*177 178 enterprise ORD-0928 processing 299.96 24 323.96 Customer Number 00177
+ 41.17 1 *640 *515
+ 42.24 2 *391 *266
+ 43.31 3 *641 *516
+ 44.38 1 *392 *267
+*178 179 standard ORD-0929 delivered 44.38 3.55 47.93 Customer Number 00178
+ 44.38 1 *392 *267
+*179 180 premium ORD-0930 cancelled 144.91 11.59 156.5 Customer Number 00179
+ 47.59 1 *643 *518
+ 48.66 2 *394 *269
+*180 181 standard ORD-0931 shipped 313.36 25.07 338.43 Customer Number 00180
+ 50.8 1 *395 *270
+ 51.87 2 *645 *520
+ 52.94 3 *396 *271
+*181 182 premium ORD-0932 pending 382.84 30.63 413.47 Customer Number 00181
+ 53.01 1 *646 *521
+ 54.08 2 *397 *272
+ 55.15 3 *647 *522
+ 56.22 1 *398 *273
+*182 183 enterprise ORD-0933 processing 56.22 4.5 60.72 Customer Number 00182
+ 56.22 1 *398 *273
+*183 184 standard ORD-0934 delivered 180.43 14.43 194.86 Customer Number 00183
+ 59.43 1 *649 *524
+ 60.5 2 *400 *275
+*184 185 premium ORD-0935 cancelled 384.4 30.75 415.15 Customer Number 00184
+ 62.64 1 *401 *276
+ 63.71 2 *651 *526
+ 64.78 3 *402 *277
+*185 186 standard ORD-0936 shipped 471.72 37.74 509.46 Customer Number 00185
+ 65.85 1 *652 *527
+ 66.92 2 *403 *278
+ 67.99 3 *653 *528
+ 68.06 1 *404 *279
+*186 187 premium ORD-0937 pending 68.06 5.44 73.5 Customer Number 00186
+ 68.06 1 *404 *279
+*187 188 enterprise ORD-0938 processing 215.95 17.28 233.23 Customer Number 00187
+ 71.27 1 *655 *530
+ 72.34 2 *406 *281
+*188 189 standard ORD-0939 delivered 455.44 36.44 491.88 Customer Number 00188
+ 74.48 1 *407 *282
+ 75.55 2 *657 *532
+ 76.62 3 *408 *283
+*189 190 premium ORD-0940 cancelled 555.6 44.45 600.05 Customer Number 00189
+ 77.69 1 *658 *533
+ 78.76 2 *409 *284
+ 79.83 3 *659 *534
+ 80.9 1 *410 *285
+*190 191 standard ORD-0941 shipped 80.9 6.47 87.37 Customer Number 00190
+ 80.9 1 *410 *285
+*191 192 premium ORD-0942 pending 251.47 20.12 271.59 Customer Number 00191
+ 83.11 1 *661 *536
+ 84.18 2 *412 *287
+*192 193 enterprise ORD-0943 processing 526.48 42.12 568.6 Customer Number 00192
+ 86.32 1 *413 *288
+ 87.39 2 *663 *538
+ 88.46 3 *414 *289
+*193 194 standard ORD-0944 delivered 638.48 51.08 689.56 Customer Number 00193
+ 89.53 1 *664 *539
+ 90.6 2 *415 *290
+ 91.67 3 *665 *540
+ 92.74 1 *416 *291
+*194 195 premium ORD-0945 cancelled 92.74 7.42 100.16 Customer Number 00194
+ 92.74 1 *416 *291
+*195 196 standard ORD-0946 shipped 287.99 23.04 311.03 Customer Number 00195
+ 95.95 1 *667 *542
+ 96.02 2 *418 *293
+*196 197 premium ORD-0947 pending 597.52 47.8 645.32 Customer Number 00196
+ 98.16 1 *419 *294
+ 99.23 2 *669 *544
+ 100.3 3 *420 *295
+*197 198 enterprise ORD-0948 processing 721.36 57.71 779.07 Customer Number 00197
+ 101.37 1 *670 *545
+ 102.44 2 *421 *296
+ 103.51 3 *671 *546
+ 104.58 1 *422 *297
+*198 199 standard ORD-0949 delivered 104.58 8.37 112.95 Customer Number 00198
+ 104.58 1 *422 *297
+*199 200 premium ORD-0950 cancelled 325.51 26.04 351.55 Customer Number 00199
+ 107.79 1 *673 *548
+ 108.86 2 *424 *299
+*200 201 standard ORD-0951 shipped 668.56 53.48 722.04 Customer Number 00200
+ 110 1 *425 *300
+ 111.07 2 *675 *550
+ 112.14 3 *426 *301
+*201 202 premium ORD-0952 pending 804.24 64.34 868.58 Customer Number 00201
+ 113.21 1 *676 *551
+ 114.28 2 *427 *302
+ 115.35 3 *677 *552
+ 116.42 1 *428 *303
+*202 203 enterprise ORD-0953 processing 116.42 9.31 125.73 Customer Number 00202
+ 116.42 1 *428 *303
+*203 204 standard ORD-0954 delivered 361.03 28.88 389.91 Customer Number 00203
+ 119.63 1 *679 *554
+ 120.7 2 *430 *305
+*204 205 premium ORD-0955 cancelled 745.6 59.65 805.25 Customer Number 00204
+ 122.84 1 *431 *306
+ 123.91 2 *681 *556
+ 124.98 3 *432 *307
+*205 206 standard ORD-0956 shipped 887.12 70.97 958.09 Customer Number 00205
+ 125.05 1 *682 *557
+ 126.12 2 *433 *308
+ 127.19 3 *683 *558
+ 128.26 1 *434 *309
+*206 207 premium ORD-0957 pending 128.26 10.26 138.52 Customer Number 00206
+ 128.26 1 *434 *309
+*207 208 enterprise ORD-0958 processing 396.55 31.72 428.27 Customer Number 00207
+ 131.47 1 *685 *560
+ 132.54 2 *436 *311
+*208 209 standard ORD-0959 delivered 816.64 65.33 881.97 Customer Number 00208
+ 134.68 1 *437 *312
+ 135.75 2 *687 *562
+ 136.82 3 *438 *313
+*209 210 premium ORD-0960 cancelled 973 77.84 1050.84 Customer Number 00209
+ 137.89 1 *688 *563
+ 138.96 2 *439 *314
+ 139.03 3 *689 *564
+ 140.1 1 *440 *315
+*210 211 standard ORD-0961 shipped 140.1 11.21 151.31 Customer Number 00210
+ 140.1 1 *440 *315
+*211 212 premium ORD-0962 pending 432.07 34.57 466.64 Customer Number 00211
+ 143.31 1 *691 *566
+ 144.38 2 *442 *317
+*212 213 enterprise ORD-0963 processing 887.68 71.01 958.69 Customer Number 00212
+ 146.52 1 *443 *318
+ 147.59 2 *693 *568
+ 148.66 3 *444 *319
+*213 214 standard ORD-0964 delivered 1059.88 84.79 1144.67 Customer Number 00213
+ 149.73 1 *694 *569
+ 150.8 2 *445 *320
+ 151.87 3 *695 *570
+ 152.94 1 *446 *321
+*214 215 premium ORD-0965 cancelled 152.94 12.24 165.18 Customer Number 00214
+ 152.94 1 *446 *321
+*215 216 standard ORD-0966 shipped 467.59 37.41 505 Customer Number 00215
+ 155.15 1 *697 *572
+ 156.22 2 *448 *323
+*216 217 premium ORD-0967 pending 958.72 76.7 1035.42 Customer Number 00216
+ 158.36 1 *449 *324
+ 159.43 2 *699 *574
+ 160.5 3 *450 *325
+*217 218 enterprise ORD-0968 processing 1142.76 91.42 1234.18 Customer Number 00217
+ 161.57 1 *700 *575
+ 162.64 2 *451 *326
+ 163.71 3 *701 *576
+ 164.78 1 *452 *327
+*218 219 standard ORD-0969 delivered 164.78 13.18 177.96 Customer Number 00218
+ 164.78 1 *452 *327
+*219 220 premium ORD-0970 cancelled 504.11 40.33 544.44 Customer Number 00219
+ 167.99 1 *703 *578
+ 168.06 2 *454 *329
+*220 221 standard ORD-0971 shipped 1029.76 82.38 1112.14 Customer Number 00220
+ 170.2 1 *455 *330
+ 171.27 2 *705 *580
+ 172.34 3 *456 *331
+*221 222 premium ORD-0972 pending 1225.64 98.05 1323.69 Customer Number 00221
+ 173.41 1 *706 *581
+ 174.48 2 *457 *332
+ 175.55 3 *707 *582
+ 176.62 1 *458 *333
+*222 223 enterprise ORD-0973 processing 176.62 14.13 190.75 Customer Number 00222
+ 176.62 1 *458 *333
+*223 224 standard ORD-0974 delivered 541.63 43.33 584.96 Customer Number 00223
+ 179.83 1 *709 *584
+ 180.9 2 *460 *335
+*224 225 premium ORD-0975 cancelled 1100.8 88.06 1188.86 Customer Number 00224
+ 182.04 1 *461 *336
+ 183.11 2 *711 *586
+ 184.18 3 *462 *337
+*225 226 standard ORD-0976 shipped 1308.52 104.68 1413.2 Customer Number 00225
+ 185.25 1 *712 *587
+ 186.32 2 *463 *338
+ 187.39 3 *713 *588
+ 188.46 1 *464 *339
+*226 227 premium ORD-0977 pending 188.46 15.08 203.54 Customer Number 00226
+ 188.46 1 *464 *339
+*227 228 enterprise ORD-0978 processing 577.15 46.17 623.32 Customer Number 00227
+ 191.67 1 *715 *590
+ 192.74 2 *466 *341
+*228 229 standard ORD-0979 delivered 1174.84 93.99 1268.83 Customer Number 00228
+ 194.88 1 *467 *342
+ 195.95 2 *717 *592
+ 196.02 3 *468 *343
+*229 230 premium ORD-0980 cancelled 1391.4 111.31 1502.71 Customer Number 00229
+ 197.09 1 *718 *593
+ 198.16 2 *469 *344
+ 199.23 3 *719 *594
+ 200.3 1 *470 *345
+*230 231 standard ORD-0981 shipped 200.3 16.02 216.32 Customer Number 00230
+ 200.3 1 *470 *345
+*231 232 premium ORD-0982 pending 612.67 49.01 661.68 Customer Number 00231
+ 203.51 1 *721 *596
+ 204.58 2 *472 *347
+*232 233 enterprise ORD-0983 processing 1248.88 99.91 1348.79 Customer Number 00232
+ 206.72 1 *473 *348
+ 207.79 2 *723 *598
+ 208.86 3 *474 *349
+*233 234 standard ORD-0984 delivered 1475.28 118.02 1593.3 Customer Number 00233
+ 209.93 1 *724 *599
+ 210 2 *475 *350
+ 211.07 3 *725 *600
+ 212.14 1 *476 *351
+*234 235 premium ORD-0985 cancelled 212.14 16.97 229.11 Customer Number 00234
+ 212.14 1 *476 *351
+*235 236 standard ORD-0986 shipped 648.19 51.86 700.05 Customer Number 00235
+ 215.35 1 *727 *602
+ 216.42 2 *478 *353
+*236 237 premium ORD-0987 pending 1319.92 105.59 1425.51 Customer Number 00236
+ 218.56 1 *479 *354
+ 219.63 2 *729 *604
+ 220.7 3 *480 *355
+*237 238 enterprise ORD-0988 processing 1564.16 125.13 1689.29 Customer Number 00237
+ 221.77 1 *730 *605
+ 222.84 2 *481 *356
+ 223.91 3 *731 *606
+ 224.98 1 *482 *357
+*238 239 standard ORD-0989 delivered 224.98 18 242.98 Customer Number 00238
+ 224.98 1 *482 *357
+*239 240 premium ORD-0990 cancelled 683.71 54.7 738.41 Customer Number 00239
+ 227.19 1 *733 *608
+ 228.26 2 *484 *359
+*240 241 standard ORD-0991 shipped 1390.96 111.28 1502.24 Customer Number 00240
+ 230.4 1 *485 *360
+ 231.47 2 *735 *610
+ 232.54 3 *486 *361
+*241 242 premium ORD-0992 pending 1647.04 131.76 1778.8 Customer Number 00241
+ 233.61 1 *736 *611
+ 234.68 2 *487 *362
+ 235.75 3 *737 *612
+ 236.82 1 *488 *363
+*242 243 enterprise ORD-0993 processing 236.82 18.95 255.77 Customer Number 00242
+ 236.82 1 *488 *363
+*243 244 standard ORD-0994 delivered 719.23 57.54 776.77 Customer Number 00243
+ 239.03 1 *739 *614
+ 240.1 2 *490 *365
+*244 245 premium ORD-0995 cancelled 1462 116.96 1578.96 Customer Number 00244
+ 242.24 1 *491 *366
+ 243.31 2 *741 *616
+ 244.38 3 *492 *367
+*245 246 standard ORD-0996 shipped 1729.92 138.39 1868.31 Customer Number 00245
+ 245.45 1 *742 *617
+ 246.52 2 *493 *368
+ 247.59 3 *743 *618
+ 248.66 1 *494 *369
+*246 247 premium ORD-0997 pending 248.66 19.89 268.55 Customer Number 00246
+ 248.66 1 *494 *369
+*247 248 enterprise ORD-0998 processing 757.75 60.62 818.37 Customer Number 00247
+ 251.87 1 *745 *620
+ 252.94 2 *496 *371
+*248 249 standard ORD-0999 delivered 1533.04 122.64 1655.68 Customer Number 00248
+ 254.08 1 *497 *372
+ 255.15 2 *747 *622
+ 256.22 3 *498 *373
+*249 250 premium ORD-1000 cancelled 1562.3 124.98 1687.28 Customer Number 00249
+ 257.29 1 *748 *623
+ 258.36 2 *499 *374
+ 259.43 3 *749 *624
+ 10 1 *375 *250

@@ -1,0 +1,2252 @@
+GCF profile=generic
+## orders [500]{"customer>email","customer>id","customer>name","customer>tier",items,orderId,status,subtotal,tax,total}
+@0 customer.00000@example.com|1|Customer Number 00000|standard|^|ORD-0001|shipped|10|0.8|10.8
+.items [1]{name,price,quantity,sku}
+    Product Item 000000|10|1|SKU-000000
+@1 customer.00001@example.com|2|Customer Number 00001|premium|^|ORD-0002|pending|41.77|3.34|45.11
+.items [2]
+    Product Item 000003|13.21|1|SKU-000003
+    Product Item 000004|14.28|2|SKU-000004
+@2 customer.00002@example.com|3|Customer Number 00002|enterprise|^|ORD-0003|processing|107.08|8.57|115.65
+.items [3]
+    Product Item 000006|16.42|1|SKU-000006
+    Product Item 000007|17.49|2|SKU-000007
+    Product Item 000008|18.56|3|SKU-000008
+@3 customer.00003@example.com|4|Customer Number 00003|standard|^|ORD-0004|delivered|149.18|11.93|161.11
+.items [4]
+    Product Item 000009|19.63|1|SKU-000009
+    Product Item 000010|20.7|2|SKU-000010
+    Product Item 000011|21.77|3|SKU-000011
+    Product Item 000012|22.84|1|SKU-000012
+@4 customer.00004@example.com|5|Customer Number 00004|premium|^|ORD-0005|cancelled|22.84|1.83|24.67
+.items [1]
+    Product Item 000012|22.84|1|SKU-000012
+@5 customer.00005@example.com|6|Customer Number 00005|standard|^|ORD-0006|shipped|77.29|6.18|83.47
+.items [2]
+    Product Item 000015|25.05|1|SKU-000015
+    Product Item 000016|26.12|2|SKU-000016
+@6 customer.00006@example.com|7|Customer Number 00006|premium|^|ORD-0007|pending|178.12|14.25|192.37
+.items [3]
+    Product Item 000018|28.26|1|SKU-000018
+    Product Item 000019|29.33|2|SKU-000019
+    Product Item 000020|30.4|3|SKU-000020
+@7 customer.00007@example.com|8|Customer Number 00007|enterprise|^|ORD-0008|processing|232.06|18.56|250.62
+.items [4]
+    Product Item 000021|31.47|1|SKU-000021
+    Product Item 000022|32.54|2|SKU-000022
+    Product Item 000023|33.61|3|SKU-000023
+    Product Item 000024|34.68|1|SKU-000024
+@8 customer.00008@example.com|9|Customer Number 00008|standard|^|ORD-0009|delivered|34.68|2.77|37.45
+.items [1]
+    Product Item 000024|34.68|1|SKU-000024
+@9 customer.00009@example.com|10|Customer Number 00009|premium|^|ORD-0010|cancelled|115.81|9.26|125.07
+.items [2]
+    Product Item 000027|37.89|1|SKU-000027
+    Product Item 000028|38.96|2|SKU-000028
+@10 customer.00010@example.com|11|Customer Number 00010|standard|^|ORD-0011|shipped|249.16|19.93|269.09
+.items [3]
+    Product Item 000030|40.1|1|SKU-000030
+    Product Item 000031|41.17|2|SKU-000031
+    Product Item 000032|42.24|3|SKU-000032
+@11 customer.00011@example.com|12|Customer Number 00011|premium|^|ORD-0012|pending|314.94|25.2|340.14
+.items [4]
+    Product Item 000033|43.31|1|SKU-000033
+    Product Item 000034|44.38|2|SKU-000034
+    Product Item 000035|45.45|3|SKU-000035
+    Product Item 000036|46.52|1|SKU-000036
+@12 customer.00012@example.com|13|Customer Number 00012|enterprise|^|ORD-0013|processing|46.52|3.72|50.24
+.items [1]
+    Product Item 000036|46.52|1|SKU-000036
+@13 customer.00013@example.com|14|Customer Number 00013|standard|^|ORD-0014|delivered|151.33|12.11|163.44
+.items [2]
+    Product Item 000039|49.73|1|SKU-000039
+    Product Item 000040|50.8|2|SKU-000040
+@14 customer.00014@example.com|15|Customer Number 00014|premium|^|ORD-0015|cancelled|321.2|25.7|346.9
+.items [3]
+    Product Item 000042|52.94|1|SKU-000042
+    Product Item 000043|53.01|2|SKU-000043
+    Product Item 000044|54.08|3|SKU-000044
+@15 customer.00015@example.com|16|Customer Number 00015|standard|^|ORD-0016|shipped|397.82|31.83|429.65
+.items [4]
+    Product Item 000045|55.15|1|SKU-000045
+    Product Item 000046|56.22|2|SKU-000046
+    Product Item 000047|57.29|3|SKU-000047
+    Product Item 000048|58.36|1|SKU-000048
+@16 customer.00016@example.com|17|Customer Number 00016|premium|^|ORD-0017|pending|58.36|4.67|63.03
+.items [1]
+    Product Item 000048|58.36|1|SKU-000048
+@17 customer.00017@example.com|18|Customer Number 00017|enterprise|^|ORD-0018|processing|186.85|14.95|201.8
+.items [2]
+    Product Item 000051|61.57|1|SKU-000051
+    Product Item 000052|62.64|2|SKU-000052
+@18 customer.00018@example.com|19|Customer Number 00018|standard|^|ORD-0019|delivered|397.24|31.78|429.02
+.items [3]
+    Product Item 000054|64.78|1|SKU-000054
+    Product Item 000055|65.85|2|SKU-000055
+    Product Item 000056|66.92|3|SKU-000056
+@19 customer.00019@example.com|20|Customer Number 00019|premium|^|ORD-0020|cancelled|481.7|38.54|520.24
+.items [4]
+    Product Item 000057|67.99|1|SKU-000057
+    Product Item 000058|68.06|2|SKU-000058
+    Product Item 000059|69.13|3|SKU-000059
+    Product Item 000060|70.2|1|SKU-000060
+@20 customer.00020@example.com|21|Customer Number 00020|standard|^|ORD-0021|shipped|70.2|5.62|75.82
+.items [1]
+    Product Item 000060|70.2|1|SKU-000060
+@21 customer.00021@example.com|22|Customer Number 00021|premium|^|ORD-0022|pending|222.37|17.79|240.16
+.items [2]
+    Product Item 000063|73.41|1|SKU-000063
+    Product Item 000064|74.48|2|SKU-000064
+@22 customer.00022@example.com|23|Customer Number 00022|enterprise|^|ORD-0023|processing|468.28|37.46|505.74
+.items [3]
+    Product Item 000066|76.62|1|SKU-000066
+    Product Item 000067|77.69|2|SKU-000067
+    Product Item 000068|78.76|3|SKU-000068
+@23 customer.00023@example.com|24|Customer Number 00023|standard|^|ORD-0024|delivered|569.58|45.57|615.15
+.items [4]
+    Product Item 000069|79.83|1|SKU-000069
+    Product Item 000070|80.9|2|SKU-000070
+    Product Item 000071|81.97|3|SKU-000071
+    Product Item 000072|82.04|1|SKU-000072
+@24 customer.00024@example.com|25|Customer Number 00024|premium|^|ORD-0025|cancelled|82.04|6.56|88.6
+.items [1]
+    Product Item 000072|82.04|1|SKU-000072
+@25 customer.00025@example.com|26|Customer Number 00025|standard|^|ORD-0026|shipped|257.89|20.63|278.52
+.items [2]
+    Product Item 000075|85.25|1|SKU-000075
+    Product Item 000076|86.32|2|SKU-000076
+@26 customer.00026@example.com|27|Customer Number 00026|premium|^|ORD-0027|pending|539.32|43.15|582.47
+.items [3]
+    Product Item 000078|88.46|1|SKU-000078
+    Product Item 000079|89.53|2|SKU-000079
+    Product Item 000080|90.6|3|SKU-000080
+@27 customer.00027@example.com|28|Customer Number 00027|enterprise|^|ORD-0028|processing|653.46|52.28|705.74
+.items [4]
+    Product Item 000081|91.67|1|SKU-000081
+    Product Item 000082|92.74|2|SKU-000082
+    Product Item 000083|93.81|3|SKU-000083
+    Product Item 000084|94.88|1|SKU-000084
+@28 customer.00028@example.com|29|Customer Number 00028|standard|^|ORD-0029|delivered|94.88|7.59|102.47
+.items [1]
+    Product Item 000084|94.88|1|SKU-000084
+@29 customer.00029@example.com|30|Customer Number 00029|premium|^|ORD-0030|cancelled|293.41|23.47|316.88
+.items [2]
+    Product Item 000087|97.09|1|SKU-000087
+    Product Item 000088|98.16|2|SKU-000088
+@30 customer.00030@example.com|31|Customer Number 00030|standard|^|ORD-0031|shipped|610.36|48.83|659.19
+.items [3]
+    Product Item 000090|100.3|1|SKU-000090
+    Product Item 000091|101.37|2|SKU-000091
+    Product Item 000092|102.44|3|SKU-000092
+@31 customer.00031@example.com|32|Customer Number 00031|premium|^|ORD-0032|pending|736.34|58.91|795.25
+.items [4]
+    Product Item 000093|103.51|1|SKU-000093
+    Product Item 000094|104.58|2|SKU-000094
+    Product Item 000095|105.65|3|SKU-000095
+    Product Item 000096|106.72|1|SKU-000096
+@32 customer.00032@example.com|33|Customer Number 00032|enterprise|^|ORD-0033|processing|106.72|8.54|115.26
+.items [1]
+    Product Item 000096|106.72|1|SKU-000096
+@33 customer.00033@example.com|34|Customer Number 00033|standard|^|ORD-0034|delivered|329.93|26.39|356.32
+.items [2]
+    Product Item 000099|109.93|1|SKU-000099
+    Product Item 000100|110|2|SKU-000100
+@34 customer.00034@example.com|35|Customer Number 00034|premium|^|ORD-0035|cancelled|681.4|54.51|735.91
+.items [3]
+    Product Item 000102|112.14|1|SKU-000102
+    Product Item 000103|113.21|2|SKU-000103
+    Product Item 000104|114.28|3|SKU-000104
+@35 customer.00035@example.com|36|Customer Number 00035|standard|^|ORD-0036|shipped|819.22|65.54|884.76
+.items [4]
+    Product Item 000105|115.35|1|SKU-000105
+    Product Item 000106|116.42|2|SKU-000106
+    Product Item 000107|117.49|3|SKU-000107
+    Product Item 000108|118.56|1|SKU-000108
+@36 customer.00036@example.com|37|Customer Number 00036|premium|^|ORD-0037|pending|118.56|9.48|128.04
+.items [1]
+    Product Item 000108|118.56|1|SKU-000108
+@37 customer.00037@example.com|38|Customer Number 00037|enterprise|^|ORD-0038|processing|367.45|29.4|396.85
+.items [2]
+    Product Item 000111|121.77|1|SKU-000111
+    Product Item 000112|122.84|2|SKU-000112
+@38 customer.00038@example.com|39|Customer Number 00038|standard|^|ORD-0039|delivered|753.44|60.28|813.72
+.items [3]
+    Product Item 000114|124.98|1|SKU-000114
+    Product Item 000115|125.05|2|SKU-000115
+    Product Item 000116|126.12|3|SKU-000116
+@39 customer.00039@example.com|40|Customer Number 00039|premium|^|ORD-0040|cancelled|902.1|72.17|974.27
+.items [4]
+    Product Item 000117|127.19|1|SKU-000117
+    Product Item 000118|128.26|2|SKU-000118
+    Product Item 000119|129.33|3|SKU-000119
+    Product Item 000120|130.4|1|SKU-000120
+@40 customer.00040@example.com|41|Customer Number 00040|standard|^|ORD-0041|shipped|130.4|10.43|140.83
+.items [1]
+    Product Item 000120|130.4|1|SKU-000120
+@41 customer.00041@example.com|42|Customer Number 00041|premium|^|ORD-0042|pending|402.97|32.24|435.21
+.items [2]
+    Product Item 000123|133.61|1|SKU-000123
+    Product Item 000124|134.68|2|SKU-000124
+@42 customer.00042@example.com|43|Customer Number 00042|enterprise|^|ORD-0043|processing|74.98|6|80.98
+.items [3]
+    Product Item 000001|11.07|1|SKU-000001
+    Product Item 000002|12.14|2|SKU-000002
+    Product Item 000003|13.21|3|SKU-000003
+@43 customer.00043@example.com|44|Customer Number 00043|standard|^|ORD-0044|delivered|111.73|8.94|120.67
+.items [4]
+    Product Item 000004|14.28|1|SKU-000004
+    Product Item 000005|15.35|2|SKU-000005
+    Product Item 000006|16.42|3|SKU-000006
+    Product Item 000007|17.49|1|SKU-000007
+@44 customer.00044@example.com|45|Customer Number 00044|premium|^|ORD-0045|cancelled|17.49|1.4|18.89
+.items [1]
+    Product Item 000007|17.49|1|SKU-000007
+@45 customer.00045@example.com|46|Customer Number 00045|standard|^|ORD-0046|shipped|64.24|5.14|69.38
+.items [2]
+    Product Item 000010|20.7|1|SKU-000010
+    Product Item 000011|21.77|2|SKU-000011
+@46 customer.00046@example.com|47|Customer Number 00046|premium|^|ORD-0047|pending|149.02|11.92|160.94
+.items [3]
+    Product Item 000013|23.91|1|SKU-000013
+    Product Item 000014|24.98|2|SKU-000014
+    Product Item 000015|25.05|3|SKU-000015
+@47 customer.00047@example.com|48|Customer Number 00047|enterprise|^|ORD-0048|processing|194.61|15.57|210.18
+.items [4]
+    Product Item 000016|26.12|1|SKU-000016
+    Product Item 000017|27.19|2|SKU-000017
+    Product Item 000018|28.26|3|SKU-000018
+    Product Item 000019|29.33|1|SKU-000019
+@48 customer.00048@example.com|49|Customer Number 00048|standard|^|ORD-0049|delivered|29.33|2.35|31.68
+.items [1]
+    Product Item 000019|29.33|1|SKU-000019
+@49 customer.00049@example.com|50|Customer Number 00049|premium|^|ORD-0050|cancelled|99.76|7.98|107.74
+.items [2]
+    Product Item 000022|32.54|1|SKU-000022
+    Product Item 000023|33.61|2|SKU-000023
+@50 customer.00050@example.com|51|Customer Number 00050|standard|^|ORD-0051|shipped|223.06|17.84|240.9
+.items [3]
+    Product Item 000025|35.75|1|SKU-000025
+    Product Item 000026|36.82|2|SKU-000026
+    Product Item 000027|37.89|3|SKU-000027
+@51 customer.00051@example.com|52|Customer Number 00051|premium|^|ORD-0052|pending|278.49|22.28|300.77
+.items [4]
+    Product Item 000028|38.96|1|SKU-000028
+    Product Item 000029|39.03|2|SKU-000029
+    Product Item 000030|40.1|3|SKU-000030
+    Product Item 000031|41.17|1|SKU-000031
+@52 customer.00052@example.com|53|Customer Number 00052|enterprise|^|ORD-0053|processing|41.17|3.29|44.46
+.items [1]
+    Product Item 000031|41.17|1|SKU-000031
+@53 customer.00053@example.com|54|Customer Number 00053|standard|^|ORD-0054|delivered|135.28|10.82|146.1
+.items [2]
+    Product Item 000034|44.38|1|SKU-000034
+    Product Item 000035|45.45|2|SKU-000035
+@54 customer.00054@example.com|55|Customer Number 00054|premium|^|ORD-0055|cancelled|294.1|23.53|317.63
+.items [3]
+    Product Item 000037|47.59|1|SKU-000037
+    Product Item 000038|48.66|2|SKU-000038
+    Product Item 000039|49.73|3|SKU-000039
+@55 customer.00055@example.com|56|Customer Number 00055|standard|^|ORD-0056|shipped|366.37|29.31|395.68
+.items [4]
+    Product Item 000040|50.8|1|SKU-000040
+    Product Item 000041|51.87|2|SKU-000041
+    Product Item 000042|52.94|3|SKU-000042
+    Product Item 000043|53.01|1|SKU-000043
+@56 customer.00056@example.com|57|Customer Number 00056|premium|^|ORD-0057|pending|53.01|4.24|57.25
+.items [1]
+    Product Item 000043|53.01|1|SKU-000043
+@57 customer.00057@example.com|58|Customer Number 00057|enterprise|^|ORD-0058|processing|170.8|13.66|184.46
+.items [2]
+    Product Item 000046|56.22|1|SKU-000046
+    Product Item 000047|57.29|2|SKU-000047
+@58 customer.00058@example.com|59|Customer Number 00058|standard|^|ORD-0059|delivered|365.14|29.21|394.35
+.items [3]
+    Product Item 000049|59.43|1|SKU-000049
+    Product Item 000050|60.5|2|SKU-000050
+    Product Item 000051|61.57|3|SKU-000051
+@59 customer.00059@example.com|60|Customer Number 00059|premium|^|ORD-0060|cancelled|450.25|36.02|486.27
+.items [4]
+    Product Item 000052|62.64|1|SKU-000052
+    Product Item 000053|63.71|2|SKU-000053
+    Product Item 000054|64.78|3|SKU-000054
+    Product Item 000055|65.85|1|SKU-000055
+@60 customer.00060@example.com|61|Customer Number 00060|standard|^|ORD-0061|shipped|65.85|5.27|71.12
+.items [1]
+    Product Item 000055|65.85|1|SKU-000055
+@61 customer.00061@example.com|62|Customer Number 00061|premium|^|ORD-0062|pending|206.32|16.51|222.83
+.items [2]
+    Product Item 000058|68.06|1|SKU-000058
+    Product Item 000059|69.13|2|SKU-000059
+@62 customer.00062@example.com|63|Customer Number 00062|enterprise|^|ORD-0063|processing|436.18|34.89|471.07
+.items [3]
+    Product Item 000061|71.27|1|SKU-000061
+    Product Item 000062|72.34|2|SKU-000062
+    Product Item 000063|73.41|3|SKU-000063
+@63 customer.00063@example.com|64|Customer Number 00063|standard|^|ORD-0064|delivered|533.13|42.65|575.78
+.items [4]
+    Product Item 000064|74.48|1|SKU-000064
+    Product Item 000065|75.55|2|SKU-000065
+    Product Item 000066|76.62|3|SKU-000066
+    Product Item 000067|77.69|1|SKU-000067
+@64 customer.00064@example.com|65|Customer Number 00064|premium|^|ORD-0065|cancelled|77.69|6.22|83.91
+.items [1]
+    Product Item 000067|77.69|1|SKU-000067
+@65 customer.00065@example.com|66|Customer Number 00065|standard|^|ORD-0066|shipped|244.84|19.59|264.43
+.items [2]
+    Product Item 000070|80.9|1|SKU-000070
+    Product Item 000071|81.97|2|SKU-000071
+@66 customer.00066@example.com|67|Customer Number 00066|premium|^|ORD-0067|pending|507.22|40.58|547.8
+.items [3]
+    Product Item 000073|83.11|1|SKU-000073
+    Product Item 000074|84.18|2|SKU-000074
+    Product Item 000075|85.25|3|SKU-000075
+@67 customer.00067@example.com|68|Customer Number 00067|enterprise|^|ORD-0068|processing|616.01|49.28|665.29
+.items [4]
+    Product Item 000076|86.32|1|SKU-000076
+    Product Item 000077|87.39|2|SKU-000077
+    Product Item 000078|88.46|3|SKU-000078
+    Product Item 000079|89.53|1|SKU-000079
+@68 customer.00068@example.com|69|Customer Number 00068|standard|^|ORD-0069|delivered|89.53|7.16|96.69
+.items [1]
+    Product Item 000079|89.53|1|SKU-000079
+@69 customer.00069@example.com|70|Customer Number 00069|premium|^|ORD-0070|cancelled|280.36|22.43|302.79
+.items [2]
+    Product Item 000082|92.74|1|SKU-000082
+    Product Item 000083|93.81|2|SKU-000083
+@70 customer.00070@example.com|71|Customer Number 00070|standard|^|ORD-0071|shipped|579.26|46.34|625.6
+.items [3]
+    Product Item 000085|95.95|1|SKU-000085
+    Product Item 000086|96.02|2|SKU-000086
+    Product Item 000087|97.09|3|SKU-000087
+@71 customer.00071@example.com|72|Customer Number 00071|premium|^|ORD-0072|pending|698.89|55.91|754.8
+.items [4]
+    Product Item 000088|98.16|1|SKU-000088
+    Product Item 000089|99.23|2|SKU-000089
+    Product Item 000090|100.3|3|SKU-000090
+    Product Item 000091|101.37|1|SKU-000091
+@72 customer.00072@example.com|73|Customer Number 00072|enterprise|^|ORD-0073|processing|101.37|8.11|109.48
+.items [1]
+    Product Item 000091|101.37|1|SKU-000091
+@73 customer.00073@example.com|74|Customer Number 00073|standard|^|ORD-0074|delivered|315.88|25.27|341.15
+.items [2]
+    Product Item 000094|104.58|1|SKU-000094
+    Product Item 000095|105.65|2|SKU-000095
+@74 customer.00074@example.com|75|Customer Number 00074|premium|^|ORD-0075|cancelled|655.3|52.42|707.72
+.items [3]
+    Product Item 000097|107.79|1|SKU-000097
+    Product Item 000098|108.86|2|SKU-000098
+    Product Item 000099|109.93|3|SKU-000099
+@75 customer.00075@example.com|76|Customer Number 00075|standard|^|ORD-0076|shipped|781.77|62.54|844.31
+.items [4]
+    Product Item 000100|110|1|SKU-000100
+    Product Item 000101|111.07|2|SKU-000101
+    Product Item 000102|112.14|3|SKU-000102
+    Product Item 000103|113.21|1|SKU-000103
+@76 customer.00076@example.com|77|Customer Number 00076|premium|^|ORD-0077|pending|113.21|9.06|122.27
+.items [1]
+    Product Item 000103|113.21|1|SKU-000103
+@77 customer.00077@example.com|78|Customer Number 00077|enterprise|^|ORD-0078|processing|351.4|28.11|379.51
+.items [2]
+    Product Item 000106|116.42|1|SKU-000106
+    Product Item 000107|117.49|2|SKU-000107
+@78 customer.00078@example.com|79|Customer Number 00078|standard|^|ORD-0079|delivered|726.34|58.11|784.45
+.items [3]
+    Product Item 000109|119.63|1|SKU-000109
+    Product Item 000110|120.7|2|SKU-000110
+    Product Item 000111|121.77|3|SKU-000111
+@79 customer.00079@example.com|80|Customer Number 00079|premium|^|ORD-0080|cancelled|870.65|69.65|940.3
+.items [4]
+    Product Item 000112|122.84|1|SKU-000112
+    Product Item 000113|123.91|2|SKU-000113
+    Product Item 000114|124.98|3|SKU-000114
+    Product Item 000115|125.05|1|SKU-000115
+@80 customer.00080@example.com|81|Customer Number 00080|standard|^|ORD-0081|shipped|125.05|10|135.05
+.items [1]
+    Product Item 000115|125.05|1|SKU-000115
+@81 customer.00081@example.com|82|Customer Number 00081|premium|^|ORD-0082|pending|386.92|30.95|417.87
+.items [2]
+    Product Item 000118|128.26|1|SKU-000118
+    Product Item 000119|129.33|2|SKU-000119
+@82 customer.00082@example.com|83|Customer Number 00082|enterprise|^|ORD-0083|processing|797.38|63.79|861.17
+.items [3]
+    Product Item 000121|131.47|1|SKU-000121
+    Product Item 000122|132.54|2|SKU-000122
+    Product Item 000123|133.61|3|SKU-000123
+@83 customer.00083@example.com|84|Customer Number 00083|standard|^|ORD-0084|delivered|200.03|16|216.03
+.items [4]
+    Product Item 000124|134.68|1|SKU-000124
+    Product Item 000000|10|2|SKU-000000
+    Product Item 000001|11.07|3|SKU-000001
+    Product Item 000002|12.14|1|SKU-000002
+@84 customer.00084@example.com|85|Customer Number 00084|premium|^|ORD-0085|cancelled|12.14|0.97|13.11
+.items [1]
+    Product Item 000002|12.14|1|SKU-000002
+@85 customer.00085@example.com|86|Customer Number 00085|standard|^|ORD-0086|shipped|48.19|3.86|52.05
+.items [2]
+    Product Item 000005|15.35|1|SKU-000005
+    Product Item 000006|16.42|2|SKU-000006
+@86 customer.00086@example.com|87|Customer Number 00086|premium|^|ORD-0087|pending|119.92|9.59|129.51
+.items [3]
+    Product Item 000008|18.56|1|SKU-000008
+    Product Item 000009|19.63|2|SKU-000009
+    Product Item 000010|20.7|3|SKU-000010
+@87 customer.00087@example.com|88|Customer Number 00087|enterprise|^|ORD-0088|processing|164.16|13.13|177.29
+.items [4]
+    Product Item 000011|21.77|1|SKU-000011
+    Product Item 000012|22.84|2|SKU-000012
+    Product Item 000013|23.91|3|SKU-000013
+    Product Item 000014|24.98|1|SKU-000014
+@88 customer.00088@example.com|89|Customer Number 00088|standard|^|ORD-0089|delivered|24.98|2|26.98
+.items [1]
+    Product Item 000014|24.98|1|SKU-000014
+@89 customer.00089@example.com|90|Customer Number 00089|premium|^|ORD-0090|cancelled|83.71|6.7|90.41
+.items [2]
+    Product Item 000017|27.19|1|SKU-000017
+    Product Item 000018|28.26|2|SKU-000018
+@90 customer.00090@example.com|91|Customer Number 00090|standard|^|ORD-0091|shipped|190.96|15.28|206.24
+.items [3]
+    Product Item 000020|30.4|1|SKU-000020
+    Product Item 000021|31.47|2|SKU-000021
+    Product Item 000022|32.54|3|SKU-000022
+@91 customer.00091@example.com|92|Customer Number 00091|premium|^|ORD-0092|pending|247.04|19.76|266.8
+.items [4]
+    Product Item 000023|33.61|1|SKU-000023
+    Product Item 000024|34.68|2|SKU-000024
+    Product Item 000025|35.75|3|SKU-000025
+    Product Item 000026|36.82|1|SKU-000026
+@92 customer.00092@example.com|93|Customer Number 00092|enterprise|^|ORD-0093|processing|36.82|2.95|39.77
+.items [1]
+    Product Item 000026|36.82|1|SKU-000026
+@93 customer.00093@example.com|94|Customer Number 00093|standard|^|ORD-0094|delivered|119.23|9.54|128.77
+.items [2]
+    Product Item 000029|39.03|1|SKU-000029
+    Product Item 000030|40.1|2|SKU-000030
+@94 customer.00094@example.com|95|Customer Number 00094|premium|^|ORD-0095|cancelled|262|20.96|282.96
+.items [3]
+    Product Item 000032|42.24|1|SKU-000032
+    Product Item 000033|43.31|2|SKU-000033
+    Product Item 000034|44.38|3|SKU-000034
+@95 customer.00095@example.com|96|Customer Number 00095|standard|^|ORD-0096|shipped|329.92|26.39|356.31
+.items [4]
+    Product Item 000035|45.45|1|SKU-000035
+    Product Item 000036|46.52|2|SKU-000036
+    Product Item 000037|47.59|3|SKU-000037
+    Product Item 000038|48.66|1|SKU-000038
+@96 customer.00096@example.com|97|Customer Number 00096|premium|^|ORD-0097|pending|48.66|3.89|52.55
+.items [1]
+    Product Item 000038|48.66|1|SKU-000038
+@97 customer.00097@example.com|98|Customer Number 00097|enterprise|^|ORD-0098|processing|157.75|12.62|170.37
+.items [2]
+    Product Item 000041|51.87|1|SKU-000041
+    Product Item 000042|52.94|2|SKU-000042
+@98 customer.00098@example.com|99|Customer Number 00098|standard|^|ORD-0099|delivered|333.04|26.64|359.68
+.items [3]
+    Product Item 000044|54.08|1|SKU-000044
+    Product Item 000045|55.15|2|SKU-000045
+    Product Item 000046|56.22|3|SKU-000046
+@99 customer.00099@example.com|100|Customer Number 00099|premium|^|ORD-0100|cancelled|412.8|33.02|445.82
+.items [4]
+    Product Item 000047|57.29|1|SKU-000047
+    Product Item 000048|58.36|2|SKU-000048
+    Product Item 000049|59.43|3|SKU-000049
+    Product Item 000050|60.5|1|SKU-000050
+@100 customer.00100@example.com|101|Customer Number 00100|standard|^|ORD-0101|shipped|60.5|4.84|65.34
+.items [1]
+    Product Item 000050|60.5|1|SKU-000050
+@101 customer.00101@example.com|102|Customer Number 00101|premium|^|ORD-0102|pending|193.27|15.46|208.73
+.items [2]
+    Product Item 000053|63.71|1|SKU-000053
+    Product Item 000054|64.78|2|SKU-000054
+@102 customer.00102@example.com|103|Customer Number 00102|enterprise|^|ORD-0103|processing|407.08|32.57|439.65
+.items [3]
+    Product Item 000056|66.92|1|SKU-000056
+    Product Item 000057|67.99|2|SKU-000057
+    Product Item 000058|68.06|3|SKU-000058
+@103 customer.00103@example.com|104|Customer Number 00103|standard|^|ORD-0104|delivered|495.68|39.65|535.33
+.items [4]
+    Product Item 000059|69.13|1|SKU-000059
+    Product Item 000060|70.2|2|SKU-000060
+    Product Item 000061|71.27|3|SKU-000061
+    Product Item 000062|72.34|1|SKU-000062
+@104 customer.00104@example.com|105|Customer Number 00104|premium|^|ORD-0105|cancelled|72.34|5.79|78.13
+.items [1]
+    Product Item 000062|72.34|1|SKU-000062
+@105 customer.00105@example.com|106|Customer Number 00105|standard|^|ORD-0106|shipped|228.79|18.3|247.09
+.items [2]
+    Product Item 000065|75.55|1|SKU-000065
+    Product Item 000066|76.62|2|SKU-000066
+@106 customer.00106@example.com|107|Customer Number 00106|premium|^|ORD-0107|pending|481.12|38.49|519.61
+.items [3]
+    Product Item 000068|78.76|1|SKU-000068
+    Product Item 000069|79.83|2|SKU-000069
+    Product Item 000070|80.9|3|SKU-000070
+@107 customer.00107@example.com|108|Customer Number 00107|enterprise|^|ORD-0108|processing|579.56|46.36|625.92
+.items [4]
+    Product Item 000071|81.97|1|SKU-000071
+    Product Item 000072|82.04|2|SKU-000072
+    Product Item 000073|83.11|3|SKU-000073
+    Product Item 000074|84.18|1|SKU-000074
+@108 customer.00108@example.com|109|Customer Number 00108|standard|^|ORD-0109|delivered|84.18|6.73|90.91
+.items [1]
+    Product Item 000074|84.18|1|SKU-000074
+@109 customer.00109@example.com|110|Customer Number 00109|premium|^|ORD-0110|cancelled|264.31|21.14|285.45
+.items [2]
+    Product Item 000077|87.39|1|SKU-000077
+    Product Item 000078|88.46|2|SKU-000078
+@110 customer.00110@example.com|111|Customer Number 00110|standard|^|ORD-0111|shipped|552.16|44.17|596.33
+.items [3]
+    Product Item 000080|90.6|1|SKU-000080
+    Product Item 000081|91.67|2|SKU-000081
+    Product Item 000082|92.74|3|SKU-000082
+@111 customer.00111@example.com|112|Customer Number 00111|premium|^|ORD-0112|pending|667.44|53.4|720.84
+.items [4]
+    Product Item 000083|93.81|1|SKU-000083
+    Product Item 000084|94.88|2|SKU-000084
+    Product Item 000085|95.95|3|SKU-000085
+    Product Item 000086|96.02|1|SKU-000086
+@112 customer.00112@example.com|113|Customer Number 00112|enterprise|^|ORD-0113|processing|96.02|7.68|103.7
+.items [1]
+    Product Item 000086|96.02|1|SKU-000086
+@113 customer.00113@example.com|114|Customer Number 00113|standard|^|ORD-0114|delivered|299.83|23.99|323.82
+.items [2]
+    Product Item 000089|99.23|1|SKU-000089
+    Product Item 000090|100.3|2|SKU-000090
+@114 customer.00114@example.com|115|Customer Number 00114|premium|^|ORD-0115|cancelled|623.2|49.86|673.06
+.items [3]
+    Product Item 000092|102.44|1|SKU-000092
+    Product Item 000093|103.51|2|SKU-000093
+    Product Item 000094|104.58|3|SKU-000094
+@115 customer.00115@example.com|116|Customer Number 00115|standard|^|ORD-0116|shipped|751.32|60.11|811.43
+.items [4]
+    Product Item 000095|105.65|1|SKU-000095
+    Product Item 000096|106.72|2|SKU-000096
+    Product Item 000097|107.79|3|SKU-000097
+    Product Item 000098|108.86|1|SKU-000098
+@116 customer.00116@example.com|117|Customer Number 00116|premium|^|ORD-0117|pending|108.86|8.71|117.57
+.items [1]
+    Product Item 000098|108.86|1|SKU-000098
+@117 customer.00117@example.com|118|Customer Number 00117|enterprise|^|ORD-0118|processing|335.35|26.83|362.18
+.items [2]
+    Product Item 000101|111.07|1|SKU-000101
+    Product Item 000102|112.14|2|SKU-000102
+@118 customer.00118@example.com|119|Customer Number 00118|standard|^|ORD-0119|delivered|694.24|55.54|749.78
+.items [3]
+    Product Item 000104|114.28|1|SKU-000104
+    Product Item 000105|115.35|2|SKU-000105
+    Product Item 000106|116.42|3|SKU-000106
+@119 customer.00119@example.com|120|Customer Number 00119|premium|^|ORD-0120|cancelled|834.2|66.74|900.94
+.items [4]
+    Product Item 000107|117.49|1|SKU-000107
+    Product Item 000108|118.56|2|SKU-000108
+    Product Item 000109|119.63|3|SKU-000109
+    Product Item 000110|120.7|1|SKU-000110
+@120 customer.00120@example.com|121|Customer Number 00120|standard|^|ORD-0121|shipped|120.7|9.66|130.36
+.items [1]
+    Product Item 000110|120.7|1|SKU-000110
+@121 customer.00121@example.com|122|Customer Number 00121|premium|^|ORD-0122|pending|373.87|29.91|403.78
+.items [2]
+    Product Item 000113|123.91|1|SKU-000113
+    Product Item 000114|124.98|2|SKU-000114
+@122 customer.00122@example.com|123|Customer Number 00122|enterprise|^|ORD-0123|processing|765.28|61.22|826.5
+.items [3]
+    Product Item 000116|126.12|1|SKU-000116
+    Product Item 000117|127.19|2|SKU-000117
+    Product Item 000118|128.26|3|SKU-000118
+@123 customer.00123@example.com|124|Customer Number 00123|standard|^|ORD-0124|delivered|917.08|73.37|990.45
+.items [4]
+    Product Item 000119|129.33|1|SKU-000119
+    Product Item 000120|130.4|2|SKU-000120
+    Product Item 000121|131.47|3|SKU-000121
+    Product Item 000122|132.54|1|SKU-000122
+@124 customer.00124@example.com|125|Customer Number 00124|premium|^|ORD-0125|cancelled|132.54|10.6|143.14
+.items [1]
+    Product Item 000122|132.54|1|SKU-000122
+@125 customer.00000@example.com|1|Customer Number 00000|standard|^|ORD-0126|shipped|32.14|2.57|34.71
+.items [2]
+    Product Item 000000|10|1|SKU-000000
+    Product Item 000001|11.07|2|SKU-000001
+@126 customer.00001@example.com|2|Customer Number 00001|premium|^|ORD-0127|pending|87.82|7.03|94.85
+.items [3]
+    Product Item 000003|13.21|1|SKU-000003
+    Product Item 000004|14.28|2|SKU-000004
+    Product Item 000005|15.35|3|SKU-000005
+@127 customer.00002@example.com|3|Customer Number 00002|enterprise|^|ORD-0128|processing|126.71|10.14|136.85
+.items [4]
+    Product Item 000006|16.42|1|SKU-000006
+    Product Item 000007|17.49|2|SKU-000007
+    Product Item 000008|18.56|3|SKU-000008
+    Product Item 000009|19.63|1|SKU-000009
+@128 customer.00003@example.com|4|Customer Number 00003|standard|^|ORD-0129|delivered|19.63|1.57|21.2
+.items [1]
+    Product Item 000009|19.63|1|SKU-000009
+@129 customer.00004@example.com|5|Customer Number 00004|premium|^|ORD-0130|cancelled|70.66|5.65|76.31
+.items [2]
+    Product Item 000012|22.84|1|SKU-000012
+    Product Item 000013|23.91|2|SKU-000013
+@130 customer.00005@example.com|6|Customer Number 00005|standard|^|ORD-0131|shipped|158.86|12.71|171.57
+.items [3]
+    Product Item 000015|25.05|1|SKU-000015
+    Product Item 000016|26.12|2|SKU-000016
+    Product Item 000017|27.19|3|SKU-000017
+@131 customer.00006@example.com|7|Customer Number 00006|premium|^|ORD-0132|pending|209.59|16.77|226.36
+.items [4]
+    Product Item 000018|28.26|1|SKU-000018
+    Product Item 000019|29.33|2|SKU-000019
+    Product Item 000020|30.4|3|SKU-000020
+    Product Item 000021|31.47|1|SKU-000021
+@132 customer.00007@example.com|8|Customer Number 00007|enterprise|^|ORD-0133|processing|31.47|2.52|33.99
+.items [1]
+    Product Item 000021|31.47|1|SKU-000021
+@133 customer.00008@example.com|9|Customer Number 00008|standard|^|ORD-0134|delivered|106.18|8.49|114.67
+.items [2]
+    Product Item 000024|34.68|1|SKU-000024
+    Product Item 000025|35.75|2|SKU-000025
+@134 customer.00009@example.com|10|Customer Number 00009|premium|^|ORD-0135|cancelled|232.9|18.63|251.53
+.items [3]
+    Product Item 000027|37.89|1|SKU-000027
+    Product Item 000028|38.96|2|SKU-000028
+    Product Item 000029|39.03|3|SKU-000029
+@135 customer.00010@example.com|11|Customer Number 00010|standard|^|ORD-0136|shipped|292.47|23.4|315.87
+.items [4]
+    Product Item 000030|40.1|1|SKU-000030
+    Product Item 000031|41.17|2|SKU-000031
+    Product Item 000032|42.24|3|SKU-000032
+    Product Item 000033|43.31|1|SKU-000033
+@136 customer.00011@example.com|12|Customer Number 00011|premium|^|ORD-0137|pending|43.31|3.46|46.77
+.items [1]
+    Product Item 000033|43.31|1|SKU-000033
+@137 customer.00012@example.com|13|Customer Number 00012|enterprise|^|ORD-0138|processing|141.7|11.34|153.04
+.items [2]
+    Product Item 000036|46.52|1|SKU-000036
+    Product Item 000037|47.59|2|SKU-000037
+@138 customer.00013@example.com|14|Customer Number 00013|standard|^|ORD-0139|delivered|306.94|24.56|331.5
+.items [3]
+    Product Item 000039|49.73|1|SKU-000039
+    Product Item 000040|50.8|2|SKU-000040
+    Product Item 000041|51.87|3|SKU-000041
+@139 customer.00014@example.com|15|Customer Number 00014|premium|^|ORD-0140|cancelled|376.35|30.11|406.46
+.items [4]
+    Product Item 000042|52.94|1|SKU-000042
+    Product Item 000043|53.01|2|SKU-000043
+    Product Item 000044|54.08|3|SKU-000044
+    Product Item 000045|55.15|1|SKU-000045
+@140 customer.00015@example.com|16|Customer Number 00015|standard|^|ORD-0141|shipped|55.15|4.41|59.56
+.items [1]
+    Product Item 000045|55.15|1|SKU-000045
+@141 customer.00016@example.com|17|Customer Number 00016|premium|^|ORD-0142|pending|177.22|14.18|191.4
+.items [2]
+    Product Item 000048|58.36|1|SKU-000048
+    Product Item 000049|59.43|2|SKU-000049
+@142 customer.00017@example.com|18|Customer Number 00017|enterprise|^|ORD-0143|processing|377.98|30.24|408.22
+.items [3]
+    Product Item 000051|61.57|1|SKU-000051
+    Product Item 000052|62.64|2|SKU-000052
+    Product Item 000053|63.71|3|SKU-000053
+@143 customer.00018@example.com|19|Customer Number 00018|standard|^|ORD-0144|delivered|465.23|37.22|502.45
+.items [4]
+    Product Item 000054|64.78|1|SKU-000054
+    Product Item 000055|65.85|2|SKU-000055
+    Product Item 000056|66.92|3|SKU-000056
+    Product Item 000057|67.99|1|SKU-000057
+@144 customer.00019@example.com|20|Customer Number 00019|premium|^|ORD-0145|cancelled|67.99|5.44|73.43
+.items [1]
+    Product Item 000057|67.99|1|SKU-000057
+@145 customer.00020@example.com|21|Customer Number 00020|standard|^|ORD-0146|shipped|212.74|17.02|229.76
+.items [2]
+    Product Item 000060|70.2|1|SKU-000060
+    Product Item 000061|71.27|2|SKU-000061
+@146 customer.00021@example.com|22|Customer Number 00021|premium|^|ORD-0147|pending|449.02|35.92|484.94
+.items [3]
+    Product Item 000063|73.41|1|SKU-000063
+    Product Item 000064|74.48|2|SKU-000064
+    Product Item 000065|75.55|3|SKU-000065
+@147 customer.00022@example.com|23|Customer Number 00022|enterprise|^|ORD-0148|processing|548.11|43.85|591.96
+.items [4]
+    Product Item 000066|76.62|1|SKU-000066
+    Product Item 000067|77.69|2|SKU-000067
+    Product Item 000068|78.76|3|SKU-000068
+    Product Item 000069|79.83|1|SKU-000069
+@148 customer.00023@example.com|24|Customer Number 00023|standard|^|ORD-0149|delivered|79.83|6.39|86.22
+.items [1]
+    Product Item 000069|79.83|1|SKU-000069
+@149 customer.00024@example.com|25|Customer Number 00024|premium|^|ORD-0150|cancelled|248.26|19.86|268.12
+.items [2]
+    Product Item 000072|82.04|1|SKU-000072
+    Product Item 000073|83.11|2|SKU-000073
+@150 customer.00025@example.com|26|Customer Number 00025|standard|^|ORD-0151|shipped|520.06|41.6|561.66
+.items [3]
+    Product Item 000075|85.25|1|SKU-000075
+    Product Item 000076|86.32|2|SKU-000076
+    Product Item 000077|87.39|3|SKU-000077
+@151 customer.00026@example.com|27|Customer Number 00026|premium|^|ORD-0152|pending|630.99|50.48|681.47
+.items [4]
+    Product Item 000078|88.46|1|SKU-000078
+    Product Item 000079|89.53|2|SKU-000079
+    Product Item 000080|90.6|3|SKU-000080
+    Product Item 000081|91.67|1|SKU-000081
+@152 customer.00027@example.com|28|Customer Number 00027|enterprise|^|ORD-0153|processing|91.67|7.33|99
+.items [1]
+    Product Item 000081|91.67|1|SKU-000081
+@153 customer.00028@example.com|29|Customer Number 00028|standard|^|ORD-0154|delivered|286.78|22.94|309.72
+.items [2]
+    Product Item 000084|94.88|1|SKU-000084
+    Product Item 000085|95.95|2|SKU-000085
+@154 customer.00029@example.com|30|Customer Number 00029|premium|^|ORD-0155|cancelled|591.1|47.29|638.39
+.items [3]
+    Product Item 000087|97.09|1|SKU-000087
+    Product Item 000088|98.16|2|SKU-000088
+    Product Item 000089|99.23|3|SKU-000089
+@155 customer.00030@example.com|31|Customer Number 00030|standard|^|ORD-0156|shipped|713.87|57.11|770.98
+.items [4]
+    Product Item 000090|100.3|1|SKU-000090
+    Product Item 000091|101.37|2|SKU-000091
+    Product Item 000092|102.44|3|SKU-000092
+    Product Item 000093|103.51|1|SKU-000093
+@156 customer.00031@example.com|32|Customer Number 00031|premium|^|ORD-0157|pending|103.51|8.28|111.79
+.items [1]
+    Product Item 000093|103.51|1|SKU-000093
+@157 customer.00032@example.com|33|Customer Number 00032|enterprise|^|ORD-0158|processing|322.3|25.78|348.08
+.items [2]
+    Product Item 000096|106.72|1|SKU-000096
+    Product Item 000097|107.79|2|SKU-000097
+@158 customer.00033@example.com|34|Customer Number 00033|standard|^|ORD-0159|delivered|663.14|53.05|716.19
+.items [3]
+    Product Item 000099|109.93|1|SKU-000099
+    Product Item 000100|110|2|SKU-000100
+    Product Item 000101|111.07|3|SKU-000101
+@159 customer.00034@example.com|35|Customer Number 00034|premium|^|ORD-0160|cancelled|796.75|63.74|860.49
+.items [4]
+    Product Item 000102|112.14|1|SKU-000102
+    Product Item 000103|113.21|2|SKU-000103
+    Product Item 000104|114.28|3|SKU-000104
+    Product Item 000105|115.35|1|SKU-000105
+@160 customer.00035@example.com|36|Customer Number 00035|standard|^|ORD-0161|shipped|115.35|9.23|124.58
+.items [1]
+    Product Item 000105|115.35|1|SKU-000105
+@161 customer.00036@example.com|37|Customer Number 00036|premium|^|ORD-0162|pending|357.82|28.63|386.45
+.items [2]
+    Product Item 000108|118.56|1|SKU-000108
+    Product Item 000109|119.63|2|SKU-000109
+@162 customer.00037@example.com|38|Customer Number 00037|enterprise|^|ORD-0163|processing|739.18|59.13|798.31
+.items [3]
+    Product Item 000111|121.77|1|SKU-000111
+    Product Item 000112|122.84|2|SKU-000112
+    Product Item 000113|123.91|3|SKU-000113
+@163 customer.00038@example.com|39|Customer Number 00038|standard|^|ORD-0164|delivered|880.63|70.45|951.08
+.items [4]
+    Product Item 000114|124.98|1|SKU-000114
+    Product Item 000115|125.05|2|SKU-000115
+    Product Item 000116|126.12|3|SKU-000116
+    Product Item 000117|127.19|1|SKU-000117
+@164 customer.00039@example.com|40|Customer Number 00039|premium|^|ORD-0165|cancelled|127.19|10.18|137.37
+.items [1]
+    Product Item 000117|127.19|1|SKU-000117
+@165 customer.00040@example.com|41|Customer Number 00040|standard|^|ORD-0166|shipped|393.34|31.47|424.81
+.items [2]
+    Product Item 000120|130.4|1|SKU-000120
+    Product Item 000121|131.47|2|SKU-000121
+@166 customer.00041@example.com|42|Customer Number 00041|premium|^|ORD-0167|pending|432.97|34.64|467.61
+.items [3]
+    Product Item 000123|133.61|1|SKU-000123
+    Product Item 000124|134.68|2|SKU-000124
+    Product Item 000000|10|3|SKU-000000
+@167 customer.00042@example.com|43|Customer Number 00042|enterprise|^|ORD-0168|processing|89.26|7.14|96.4
+.items [4]
+    Product Item 000001|11.07|1|SKU-000001
+    Product Item 000002|12.14|2|SKU-000002
+    Product Item 000003|13.21|3|SKU-000003
+    Product Item 000004|14.28|1|SKU-000004
+@168 customer.00043@example.com|44|Customer Number 00043|standard|^|ORD-0169|delivered|14.28|1.14|15.42
+.items [1]
+    Product Item 000004|14.28|1|SKU-000004
+@169 customer.00044@example.com|45|Customer Number 00044|premium|^|ORD-0170|cancelled|54.61|4.37|58.98
+.items [2]
+    Product Item 000007|17.49|1|SKU-000007
+    Product Item 000008|18.56|2|SKU-000008
+@170 customer.00045@example.com|46|Customer Number 00045|standard|^|ORD-0171|shipped|132.76|10.62|143.38
+.items [3]
+    Product Item 000010|20.7|1|SKU-000010
+    Product Item 000011|21.77|2|SKU-000011
+    Product Item 000012|22.84|3|SKU-000012
+@171 customer.00046@example.com|47|Customer Number 00046|premium|^|ORD-0172|pending|175.14|14.01|189.15
+.items [4]
+    Product Item 000013|23.91|1|SKU-000013
+    Product Item 000014|24.98|2|SKU-000014
+    Product Item 000015|25.05|3|SKU-000015
+    Product Item 000016|26.12|1|SKU-000016
+@172 customer.00047@example.com|48|Customer Number 00047|enterprise|^|ORD-0173|processing|26.12|2.09|28.21
+.items [1]
+    Product Item 000016|26.12|1|SKU-000016
+@173 customer.00048@example.com|49|Customer Number 00048|standard|^|ORD-0174|delivered|90.13|7.21|97.34
+.items [2]
+    Product Item 000019|29.33|1|SKU-000019
+    Product Item 000020|30.4|2|SKU-000020
+@174 customer.00049@example.com|50|Customer Number 00049|premium|^|ORD-0175|cancelled|203.8|16.3|220.1
+.items [3]
+    Product Item 000022|32.54|1|SKU-000022
+    Product Item 000023|33.61|2|SKU-000023
+    Product Item 000024|34.68|3|SKU-000024
+@175 customer.00050@example.com|51|Customer Number 00050|standard|^|ORD-0176|shipped|262.02|20.96|282.98
+.items [4]
+    Product Item 000025|35.75|1|SKU-000025
+    Product Item 000026|36.82|2|SKU-000026
+    Product Item 000027|37.89|3|SKU-000027
+    Product Item 000028|38.96|1|SKU-000028
+@176 customer.00051@example.com|52|Customer Number 00051|premium|^|ORD-0177|pending|38.96|3.12|42.08
+.items [1]
+    Product Item 000028|38.96|1|SKU-000028
+@177 customer.00052@example.com|53|Customer Number 00052|enterprise|^|ORD-0178|processing|125.65|10.05|135.7
+.items [2]
+    Product Item 000031|41.17|1|SKU-000031
+    Product Item 000032|42.24|2|SKU-000032
+@178 customer.00053@example.com|54|Customer Number 00053|standard|^|ORD-0179|delivered|274.84|21.99|296.83
+.items [3]
+    Product Item 000034|44.38|1|SKU-000034
+    Product Item 000035|45.45|2|SKU-000035
+    Product Item 000036|46.52|3|SKU-000036
+@179 customer.00054@example.com|55|Customer Number 00054|premium|^|ORD-0180|cancelled|344.9|27.59|372.49
+.items [4]
+    Product Item 000037|47.59|1|SKU-000037
+    Product Item 000038|48.66|2|SKU-000038
+    Product Item 000039|49.73|3|SKU-000039
+    Product Item 000040|50.8|1|SKU-000040
+@180 customer.00055@example.com|56|Customer Number 00055|standard|^|ORD-0181|shipped|50.8|4.06|54.86
+.items [1]
+    Product Item 000040|50.8|1|SKU-000040
+@181 customer.00056@example.com|57|Customer Number 00056|premium|^|ORD-0182|pending|161.17|12.89|174.06
+.items [2]
+    Product Item 000043|53.01|1|SKU-000043
+    Product Item 000044|54.08|2|SKU-000044
+@182 customer.00057@example.com|58|Customer Number 00057|enterprise|^|ORD-0183|processing|345.88|27.67|373.55
+.items [3]
+    Product Item 000046|56.22|1|SKU-000046
+    Product Item 000047|57.29|2|SKU-000047
+    Product Item 000048|58.36|3|SKU-000048
+@183 customer.00058@example.com|59|Customer Number 00058|standard|^|ORD-0184|delivered|427.78|34.22|462
+.items [4]
+    Product Item 000049|59.43|1|SKU-000049
+    Product Item 000050|60.5|2|SKU-000050
+    Product Item 000051|61.57|3|SKU-000051
+    Product Item 000052|62.64|1|SKU-000052
+@184 customer.00059@example.com|60|Customer Number 00059|premium|^|ORD-0185|cancelled|62.64|5.01|67.65
+.items [1]
+    Product Item 000052|62.64|1|SKU-000052
+@185 customer.00060@example.com|61|Customer Number 00060|standard|^|ORD-0186|shipped|199.69|15.98|215.67
+.items [2]
+    Product Item 000055|65.85|1|SKU-000055
+    Product Item 000056|66.92|2|SKU-000056
+@186 customer.00061@example.com|62|Customer Number 00061|premium|^|ORD-0187|pending|416.92|33.35|450.27
+.items [3]
+    Product Item 000058|68.06|1|SKU-000058
+    Product Item 000059|69.13|2|SKU-000059
+    Product Item 000060|70.2|3|SKU-000060
+@187 customer.00062@example.com|63|Customer Number 00062|enterprise|^|ORD-0188|processing|510.66|40.85|551.51
+.items [4]
+    Product Item 000061|71.27|1|SKU-000061
+    Product Item 000062|72.34|2|SKU-000062
+    Product Item 000063|73.41|3|SKU-000063
+    Product Item 000064|74.48|1|SKU-000064
+@188 customer.00063@example.com|64|Customer Number 00063|standard|^|ORD-0189|delivered|74.48|5.96|80.44
+.items [1]
+    Product Item 000064|74.48|1|SKU-000064
+@189 customer.00064@example.com|65|Customer Number 00064|premium|^|ORD-0190|cancelled|235.21|18.82|254.03
+.items [2]
+    Product Item 000067|77.69|1|SKU-000067
+    Product Item 000068|78.76|2|SKU-000068
+@190 customer.00065@example.com|66|Customer Number 00065|standard|^|ORD-0191|shipped|490.96|39.28|530.24
+.items [3]
+    Product Item 000070|80.9|1|SKU-000070
+    Product Item 000071|81.97|2|SKU-000071
+    Product Item 000072|82.04|3|SKU-000072
+@191 customer.00066@example.com|67|Customer Number 00066|premium|^|ORD-0192|pending|593.54|47.48|641.02
+.items [4]
+    Product Item 000073|83.11|1|SKU-000073
+    Product Item 000074|84.18|2|SKU-000074
+    Product Item 000075|85.25|3|SKU-000075
+    Product Item 000076|86.32|1|SKU-000076
+@192 customer.00067@example.com|68|Customer Number 00067|enterprise|^|ORD-0193|processing|86.32|6.91|93.23
+.items [1]
+    Product Item 000076|86.32|1|SKU-000076
+@193 customer.00068@example.com|69|Customer Number 00068|standard|^|ORD-0194|delivered|270.73|21.66|292.39
+.items [2]
+    Product Item 000079|89.53|1|SKU-000079
+    Product Item 000080|90.6|2|SKU-000080
+@194 customer.00069@example.com|70|Customer Number 00069|premium|^|ORD-0195|cancelled|565|45.2|610.2
+.items [3]
+    Product Item 000082|92.74|1|SKU-000082
+    Product Item 000083|93.81|2|SKU-000083
+    Product Item 000084|94.88|3|SKU-000084
+@195 customer.00070@example.com|71|Customer Number 00070|standard|^|ORD-0196|shipped|677.42|54.19|731.61
+.items [4]
+    Product Item 000085|95.95|1|SKU-000085
+    Product Item 000086|96.02|2|SKU-000086
+    Product Item 000087|97.09|3|SKU-000087
+    Product Item 000088|98.16|1|SKU-000088
+@196 customer.00071@example.com|72|Customer Number 00071|premium|^|ORD-0197|pending|98.16|7.85|106.01
+.items [1]
+    Product Item 000088|98.16|1|SKU-000088
+@197 customer.00072@example.com|73|Customer Number 00072|enterprise|^|ORD-0198|processing|306.25|24.5|330.75
+.items [2]
+    Product Item 000091|101.37|1|SKU-000091
+    Product Item 000092|102.44|2|SKU-000092
+@198 customer.00073@example.com|74|Customer Number 00073|standard|^|ORD-0199|delivered|636.04|50.88|686.92
+.items [3]
+    Product Item 000094|104.58|1|SKU-000094
+    Product Item 000095|105.65|2|SKU-000095
+    Product Item 000096|106.72|3|SKU-000096
+@199 customer.00074@example.com|75|Customer Number 00074|premium|^|ORD-0200|cancelled|765.3|61.22|826.52
+.items [4]
+    Product Item 000097|107.79|1|SKU-000097
+    Product Item 000098|108.86|2|SKU-000098
+    Product Item 000099|109.93|3|SKU-000099
+    Product Item 000100|110|1|SKU-000100
+@200 customer.00075@example.com|76|Customer Number 00075|standard|^|ORD-0201|shipped|110|8.8|118.8
+.items [1]
+    Product Item 000100|110|1|SKU-000100
+@201 customer.00076@example.com|77|Customer Number 00076|premium|^|ORD-0202|pending|341.77|27.34|369.11
+.items [2]
+    Product Item 000103|113.21|1|SKU-000103
+    Product Item 000104|114.28|2|SKU-000104
+@202 customer.00077@example.com|78|Customer Number 00077|enterprise|^|ORD-0203|processing|707.08|56.57|763.65
+.items [3]
+    Product Item 000106|116.42|1|SKU-000106
+    Product Item 000107|117.49|2|SKU-000107
+    Product Item 000108|118.56|3|SKU-000108
+@203 customer.00078@example.com|79|Customer Number 00078|standard|^|ORD-0204|delivered|849.18|67.93|917.11
+.items [4]
+    Product Item 000109|119.63|1|SKU-000109
+    Product Item 000110|120.7|2|SKU-000110
+    Product Item 000111|121.77|3|SKU-000111
+    Product Item 000112|122.84|1|SKU-000112
+@204 customer.00079@example.com|80|Customer Number 00079|premium|^|ORD-0205|cancelled|122.84|9.83|132.67
+.items [1]
+    Product Item 000112|122.84|1|SKU-000112
+@205 customer.00080@example.com|81|Customer Number 00080|standard|^|ORD-0206|shipped|377.29|30.18|407.47
+.items [2]
+    Product Item 000115|125.05|1|SKU-000115
+    Product Item 000116|126.12|2|SKU-000116
+@206 customer.00081@example.com|82|Customer Number 00081|premium|^|ORD-0207|pending|778.12|62.25|840.37
+.items [3]
+    Product Item 000118|128.26|1|SKU-000118
+    Product Item 000119|129.33|2|SKU-000119
+    Product Item 000120|130.4|3|SKU-000120
+@207 customer.00082@example.com|83|Customer Number 00082|enterprise|^|ORD-0208|processing|932.06|74.56|1006.62
+.items [4]
+    Product Item 000121|131.47|1|SKU-000121
+    Product Item 000122|132.54|2|SKU-000122
+    Product Item 000123|133.61|3|SKU-000123
+    Product Item 000124|134.68|1|SKU-000124
+@208 customer.00083@example.com|84|Customer Number 00083|standard|^|ORD-0209|delivered|134.68|10.77|145.45
+.items [1]
+    Product Item 000124|134.68|1|SKU-000124
+@209 customer.00084@example.com|85|Customer Number 00084|premium|^|ORD-0210|cancelled|38.56|3.08|41.64
+.items [2]
+    Product Item 000002|12.14|1|SKU-000002
+    Product Item 000003|13.21|2|SKU-000003
+@210 customer.00085@example.com|86|Customer Number 00085|standard|^|ORD-0211|shipped|100.66|8.05|108.71
+.items [3]
+    Product Item 000005|15.35|1|SKU-000005
+    Product Item 000006|16.42|2|SKU-000006
+    Product Item 000007|17.49|3|SKU-000007
+@211 customer.00086@example.com|87|Customer Number 00086|premium|^|ORD-0212|pending|141.69|11.34|153.03
+.items [4]
+    Product Item 000008|18.56|1|SKU-000008
+    Product Item 000009|19.63|2|SKU-000009
+    Product Item 000010|20.7|3|SKU-000010
+    Product Item 000011|21.77|1|SKU-000011
+@212 customer.00087@example.com|88|Customer Number 00087|enterprise|^|ORD-0213|processing|21.77|1.74|23.51
+.items [1]
+    Product Item 000011|21.77|1|SKU-000011
+@213 customer.00088@example.com|89|Customer Number 00088|standard|^|ORD-0214|delivered|75.08|6.01|81.09
+.items [2]
+    Product Item 000014|24.98|1|SKU-000014
+    Product Item 000015|25.05|2|SKU-000015
+@214 customer.00089@example.com|90|Customer Number 00089|premium|^|ORD-0215|cancelled|171.7|13.74|185.44
+.items [3]
+    Product Item 000017|27.19|1|SKU-000017
+    Product Item 000018|28.26|2|SKU-000018
+    Product Item 000019|29.33|3|SKU-000019
+@215 customer.00090@example.com|91|Customer Number 00090|standard|^|ORD-0216|shipped|224.57|17.97|242.54
+.items [4]
+    Product Item 000020|30.4|1|SKU-000020
+    Product Item 000021|31.47|2|SKU-000021
+    Product Item 000022|32.54|3|SKU-000022
+    Product Item 000023|33.61|1|SKU-000023
+@216 customer.00091@example.com|92|Customer Number 00091|premium|^|ORD-0217|pending|33.61|2.69|36.3
+.items [1]
+    Product Item 000023|33.61|1|SKU-000023
+@217 customer.00092@example.com|93|Customer Number 00092|enterprise|^|ORD-0218|processing|112.6|9.01|121.61
+.items [2]
+    Product Item 000026|36.82|1|SKU-000026
+    Product Item 000027|37.89|2|SKU-000027
+@218 customer.00093@example.com|94|Customer Number 00093|standard|^|ORD-0219|delivered|242.74|19.42|262.16
+.items [3]
+    Product Item 000029|39.03|1|SKU-000029
+    Product Item 000030|40.1|2|SKU-000030
+    Product Item 000031|41.17|3|SKU-000031
+@219 customer.00094@example.com|95|Customer Number 00094|premium|^|ORD-0220|cancelled|307.45|24.6|332.05
+.items [4]
+    Product Item 000032|42.24|1|SKU-000032
+    Product Item 000033|43.31|2|SKU-000033
+    Product Item 000034|44.38|3|SKU-000034
+    Product Item 000035|45.45|1|SKU-000035
+@220 customer.00095@example.com|96|Customer Number 00095|standard|^|ORD-0221|shipped|45.45|3.64|49.09
+.items [1]
+    Product Item 000035|45.45|1|SKU-000035
+@221 customer.00096@example.com|97|Customer Number 00096|premium|^|ORD-0222|pending|148.12|11.85|159.97
+.items [2]
+    Product Item 000038|48.66|1|SKU-000038
+    Product Item 000039|49.73|2|SKU-000039
+@222 customer.00097@example.com|98|Customer Number 00097|enterprise|^|ORD-0223|processing|316.78|25.34|342.12
+.items [3]
+    Product Item 000041|51.87|1|SKU-000041
+    Product Item 000042|52.94|2|SKU-000042
+    Product Item 000043|53.01|3|SKU-000043
+@223 customer.00098@example.com|99|Customer Number 00098|standard|^|ORD-0224|delivered|390.33|31.23|421.56
+.items [4]
+    Product Item 000044|54.08|1|SKU-000044
+    Product Item 000045|55.15|2|SKU-000045
+    Product Item 000046|56.22|3|SKU-000046
+    Product Item 000047|57.29|1|SKU-000047
+@224 customer.00099@example.com|100|Customer Number 00099|premium|^|ORD-0225|cancelled|57.29|4.58|61.87
+.items [1]
+    Product Item 000047|57.29|1|SKU-000047
+@225 customer.00100@example.com|101|Customer Number 00100|standard|^|ORD-0226|shipped|183.64|14.69|198.33
+.items [2]
+    Product Item 000050|60.5|1|SKU-000050
+    Product Item 000051|61.57|2|SKU-000051
+@226 customer.00101@example.com|102|Customer Number 00101|premium|^|ORD-0227|pending|390.82|31.27|422.09
+.items [3]
+    Product Item 000053|63.71|1|SKU-000053
+    Product Item 000054|64.78|2|SKU-000054
+    Product Item 000055|65.85|3|SKU-000055
+@227 customer.00102@example.com|103|Customer Number 00102|enterprise|^|ORD-0228|processing|476.21|38.1|514.31
+.items [4]
+    Product Item 000056|66.92|1|SKU-000056
+    Product Item 000057|67.99|2|SKU-000057
+    Product Item 000058|68.06|3|SKU-000058
+    Product Item 000059|69.13|1|SKU-000059
+@228 customer.00103@example.com|104|Customer Number 00103|standard|^|ORD-0229|delivered|69.13|5.53|74.66
+.items [1]
+    Product Item 000059|69.13|1|SKU-000059
+@229 customer.00104@example.com|105|Customer Number 00104|premium|^|ORD-0230|cancelled|219.16|17.53|236.69
+.items [2]
+    Product Item 000062|72.34|1|SKU-000062
+    Product Item 000063|73.41|2|SKU-000063
+@230 customer.00105@example.com|106|Customer Number 00105|standard|^|ORD-0231|shipped|461.86|36.95|498.81
+.items [3]
+    Product Item 000065|75.55|1|SKU-000065
+    Product Item 000066|76.62|2|SKU-000066
+    Product Item 000067|77.69|3|SKU-000067
+@231 customer.00106@example.com|107|Customer Number 00106|premium|^|ORD-0232|pending|563.09|45.05|608.14
+.items [4]
+    Product Item 000068|78.76|1|SKU-000068
+    Product Item 000069|79.83|2|SKU-000069
+    Product Item 000070|80.9|3|SKU-000070
+    Product Item 000071|81.97|1|SKU-000071
+@232 customer.00107@example.com|108|Customer Number 00107|enterprise|^|ORD-0233|processing|81.97|6.56|88.53
+.items [1]
+    Product Item 000071|81.97|1|SKU-000071
+@233 customer.00108@example.com|109|Customer Number 00108|standard|^|ORD-0234|delivered|254.68|20.37|275.05
+.items [2]
+    Product Item 000074|84.18|1|SKU-000074
+    Product Item 000075|85.25|2|SKU-000075
+@234 customer.00109@example.com|110|Customer Number 00109|premium|^|ORD-0235|cancelled|532.9|42.63|575.53
+.items [3]
+    Product Item 000077|87.39|1|SKU-000077
+    Product Item 000078|88.46|2|SKU-000078
+    Product Item 000079|89.53|3|SKU-000079
+@235 customer.00110@example.com|111|Customer Number 00110|standard|^|ORD-0236|shipped|645.97|51.68|697.65
+.items [4]
+    Product Item 000080|90.6|1|SKU-000080
+    Product Item 000081|91.67|2|SKU-000081
+    Product Item 000082|92.74|3|SKU-000082
+    Product Item 000083|93.81|1|SKU-000083
+@236 customer.00111@example.com|112|Customer Number 00111|premium|^|ORD-0237|pending|93.81|7.5|101.31
+.items [1]
+    Product Item 000083|93.81|1|SKU-000083
+@237 customer.00112@example.com|113|Customer Number 00112|enterprise|^|ORD-0238|processing|290.2|23.22|313.42
+.items [2]
+    Product Item 000086|96.02|1|SKU-000086
+    Product Item 000087|97.09|2|SKU-000087
+@238 customer.00113@example.com|114|Customer Number 00113|standard|^|ORD-0239|delivered|603.94|48.32|652.26
+.items [3]
+    Product Item 000089|99.23|1|SKU-000089
+    Product Item 000090|100.3|2|SKU-000090
+    Product Item 000091|101.37|3|SKU-000091
+@239 customer.00114@example.com|115|Customer Number 00114|premium|^|ORD-0240|cancelled|728.85|58.31|787.16
+.items [4]
+    Product Item 000092|102.44|1|SKU-000092
+    Product Item 000093|103.51|2|SKU-000093
+    Product Item 000094|104.58|3|SKU-000094
+    Product Item 000095|105.65|1|SKU-000095
+@240 customer.00115@example.com|116|Customer Number 00115|standard|^|ORD-0241|shipped|105.65|8.45|114.1
+.items [1]
+    Product Item 000095|105.65|1|SKU-000095
+@241 customer.00116@example.com|117|Customer Number 00116|premium|^|ORD-0242|pending|328.72|26.3|355.02
+.items [2]
+    Product Item 000098|108.86|1|SKU-000098
+    Product Item 000099|109.93|2|SKU-000099
+@242 customer.00117@example.com|118|Customer Number 00117|enterprise|^|ORD-0243|processing|674.98|54|728.98
+.items [3]
+    Product Item 000101|111.07|1|SKU-000101
+    Product Item 000102|112.14|2|SKU-000102
+    Product Item 000103|113.21|3|SKU-000103
+@243 customer.00118@example.com|119|Customer Number 00118|standard|^|ORD-0244|delivered|811.73|64.94|876.67
+.items [4]
+    Product Item 000104|114.28|1|SKU-000104
+    Product Item 000105|115.35|2|SKU-000105
+    Product Item 000106|116.42|3|SKU-000106
+    Product Item 000107|117.49|1|SKU-000107
+@244 customer.00119@example.com|120|Customer Number 00119|premium|^|ORD-0245|cancelled|117.49|9.4|126.89
+.items [1]
+    Product Item 000107|117.49|1|SKU-000107
+@245 customer.00120@example.com|121|Customer Number 00120|standard|^|ORD-0246|shipped|364.24|29.14|393.38
+.items [2]
+    Product Item 000110|120.7|1|SKU-000110
+    Product Item 000111|121.77|2|SKU-000111
+@246 customer.00121@example.com|122|Customer Number 00121|premium|^|ORD-0247|pending|749.02|59.92|808.94
+.items [3]
+    Product Item 000113|123.91|1|SKU-000113
+    Product Item 000114|124.98|2|SKU-000114
+    Product Item 000115|125.05|3|SKU-000115
+@247 customer.00122@example.com|123|Customer Number 00122|enterprise|^|ORD-0248|processing|894.61|71.57|966.18
+.items [4]
+    Product Item 000116|126.12|1|SKU-000116
+    Product Item 000117|127.19|2|SKU-000117
+    Product Item 000118|128.26|3|SKU-000118
+    Product Item 000119|129.33|1|SKU-000119
+@248 customer.00123@example.com|124|Customer Number 00123|standard|^|ORD-0249|delivered|129.33|10.35|139.68
+.items [1]
+    Product Item 000119|129.33|1|SKU-000119
+@249 customer.00124@example.com|125|Customer Number 00124|premium|^|ORD-0250|cancelled|399.76|31.98|431.74
+.items [2]
+    Product Item 000122|132.54|1|SKU-000122
+    Product Item 000123|133.61|2|SKU-000123
+@250 customer.00000@example.com|1|Customer Number 00000|standard|^|ORD-0251|shipped|68.56|5.48|74.04
+.items [3]
+    Product Item 000000|10|1|SKU-000000
+    Product Item 000001|11.07|2|SKU-000001
+    Product Item 000002|12.14|3|SKU-000002
+@251 customer.00001@example.com|2|Customer Number 00001|premium|^|ORD-0252|pending|104.24|8.34|112.58
+.items [4]
+    Product Item 000003|13.21|1|SKU-000003
+    Product Item 000004|14.28|2|SKU-000004
+    Product Item 000005|15.35|3|SKU-000005
+    Product Item 000006|16.42|1|SKU-000006
+@252 customer.00002@example.com|3|Customer Number 00002|enterprise|^|ORD-0253|processing|16.42|1.31|17.73
+.items [1]
+    Product Item 000006|16.42|1|SKU-000006
+@253 customer.00003@example.com|4|Customer Number 00003|standard|^|ORD-0254|delivered|61.03|4.88|65.91
+.items [2]
+    Product Item 000009|19.63|1|SKU-000009
+    Product Item 000010|20.7|2|SKU-000010
+@254 customer.00004@example.com|5|Customer Number 00004|premium|^|ORD-0255|cancelled|145.6|11.65|157.25
+.items [3]
+    Product Item 000012|22.84|1|SKU-000012
+    Product Item 000013|23.91|2|SKU-000013
+    Product Item 000014|24.98|3|SKU-000014
+@255 customer.00005@example.com|6|Customer Number 00005|standard|^|ORD-0256|shipped|187.12|14.97|202.09
+.items [4]
+    Product Item 000015|25.05|1|SKU-000015
+    Product Item 000016|26.12|2|SKU-000016
+    Product Item 000017|27.19|3|SKU-000017
+    Product Item 000018|28.26|1|SKU-000018
+@256 customer.00006@example.com|7|Customer Number 00006|premium|^|ORD-0257|pending|28.26|2.26|30.52
+.items [1]
+    Product Item 000018|28.26|1|SKU-000018
+@257 customer.00007@example.com|8|Customer Number 00007|enterprise|^|ORD-0258|processing|96.55|7.72|104.27
+.items [2]
+    Product Item 000021|31.47|1|SKU-000021
+    Product Item 000022|32.54|2|SKU-000022
+@258 customer.00008@example.com|9|Customer Number 00008|standard|^|ORD-0259|delivered|216.64|17.33|233.97
+.items [3]
+    Product Item 000024|34.68|1|SKU-000024
+    Product Item 000025|35.75|2|SKU-000025
+    Product Item 000026|36.82|3|SKU-000026
+@259 customer.00009@example.com|10|Customer Number 00009|premium|^|ORD-0260|cancelled|273|21.84|294.84
+.items [4]
+    Product Item 000027|37.89|1|SKU-000027
+    Product Item 000028|38.96|2|SKU-000028
+    Product Item 000029|39.03|3|SKU-000029
+    Product Item 000030|40.1|1|SKU-000030
+@260 customer.00010@example.com|11|Customer Number 00010|standard|^|ORD-0261|shipped|40.1|3.21|43.31
+.items [1]
+    Product Item 000030|40.1|1|SKU-000030
+@261 customer.00011@example.com|12|Customer Number 00011|premium|^|ORD-0262|pending|132.07|10.57|142.64
+.items [2]
+    Product Item 000033|43.31|1|SKU-000033
+    Product Item 000034|44.38|2|SKU-000034
+@262 customer.00012@example.com|13|Customer Number 00012|enterprise|^|ORD-0263|processing|287.68|23.01|310.69
+.items [3]
+    Product Item 000036|46.52|1|SKU-000036
+    Product Item 000037|47.59|2|SKU-000037
+    Product Item 000038|48.66|3|SKU-000038
+@263 customer.00013@example.com|14|Customer Number 00013|standard|^|ORD-0264|delivered|359.88|28.79|388.67
+.items [4]
+    Product Item 000039|49.73|1|SKU-000039
+    Product Item 000040|50.8|2|SKU-000040
+    Product Item 000041|51.87|3|SKU-000041
+    Product Item 000042|52.94|1|SKU-000042
+@264 customer.00014@example.com|15|Customer Number 00014|premium|^|ORD-0265|cancelled|52.94|4.24|57.18
+.items [1]
+    Product Item 000042|52.94|1|SKU-000042
+@265 customer.00015@example.com|16|Customer Number 00015|standard|^|ORD-0266|shipped|167.59|13.41|181
+.items [2]
+    Product Item 000045|55.15|1|SKU-000045
+    Product Item 000046|56.22|2|SKU-000046
+@266 customer.00016@example.com|17|Customer Number 00016|premium|^|ORD-0267|pending|358.72|28.7|387.42
+.items [3]
+    Product Item 000048|58.36|1|SKU-000048
+    Product Item 000049|59.43|2|SKU-000049
+    Product Item 000050|60.5|3|SKU-000050
+@267 customer.00017@example.com|18|Customer Number 00017|enterprise|^|ORD-0268|processing|442.76|35.42|478.18
+.items [4]
+    Product Item 000051|61.57|1|SKU-000051
+    Product Item 000052|62.64|2|SKU-000052
+    Product Item 000053|63.71|3|SKU-000053
+    Product Item 000054|64.78|1|SKU-000054
+@268 customer.00018@example.com|19|Customer Number 00018|standard|^|ORD-0269|delivered|64.78|5.18|69.96
+.items [1]
+    Product Item 000054|64.78|1|SKU-000054
+@269 customer.00019@example.com|20|Customer Number 00019|premium|^|ORD-0270|cancelled|204.11|16.33|220.44
+.items [2]
+    Product Item 000057|67.99|1|SKU-000057
+    Product Item 000058|68.06|2|SKU-000058
+@270 customer.00020@example.com|21|Customer Number 00020|standard|^|ORD-0271|shipped|429.76|34.38|464.14
+.items [3]
+    Product Item 000060|70.2|1|SKU-000060
+    Product Item 000061|71.27|2|SKU-000061
+    Product Item 000062|72.34|3|SKU-000062
+@271 customer.00021@example.com|22|Customer Number 00021|premium|^|ORD-0272|pending|525.64|42.05|567.69
+.items [4]
+    Product Item 000063|73.41|1|SKU-000063
+    Product Item 000064|74.48|2|SKU-000064
+    Product Item 000065|75.55|3|SKU-000065
+    Product Item 000066|76.62|1|SKU-000066
+@272 customer.00022@example.com|23|Customer Number 00022|enterprise|^|ORD-0273|processing|76.62|6.13|82.75
+.items [1]
+    Product Item 000066|76.62|1|SKU-000066
+@273 customer.00023@example.com|24|Customer Number 00023|standard|^|ORD-0274|delivered|241.63|19.33|260.96
+.items [2]
+    Product Item 000069|79.83|1|SKU-000069
+    Product Item 000070|80.9|2|SKU-000070
+@274 customer.00024@example.com|25|Customer Number 00024|premium|^|ORD-0275|cancelled|500.8|40.06|540.86
+.items [3]
+    Product Item 000072|82.04|1|SKU-000072
+    Product Item 000073|83.11|2|SKU-000073
+    Product Item 000074|84.18|3|SKU-000074
+@275 customer.00025@example.com|26|Customer Number 00025|standard|^|ORD-0276|shipped|608.52|48.68|657.2
+.items [4]
+    Product Item 000075|85.25|1|SKU-000075
+    Product Item 000076|86.32|2|SKU-000076
+    Product Item 000077|87.39|3|SKU-000077
+    Product Item 000078|88.46|1|SKU-000078
+@276 customer.00026@example.com|27|Customer Number 00026|premium|^|ORD-0277|pending|88.46|7.08|95.54
+.items [1]
+    Product Item 000078|88.46|1|SKU-000078
+@277 customer.00027@example.com|28|Customer Number 00027|enterprise|^|ORD-0278|processing|277.15|22.17|299.32
+.items [2]
+    Product Item 000081|91.67|1|SKU-000081
+    Product Item 000082|92.74|2|SKU-000082
+@278 customer.00028@example.com|29|Customer Number 00028|standard|^|ORD-0279|delivered|574.84|45.99|620.83
+.items [3]
+    Product Item 000084|94.88|1|SKU-000084
+    Product Item 000085|95.95|2|SKU-000085
+    Product Item 000086|96.02|3|SKU-000086
+@279 customer.00029@example.com|30|Customer Number 00029|premium|^|ORD-0280|cancelled|691.4|55.31|746.71
+.items [4]
+    Product Item 000087|97.09|1|SKU-000087
+    Product Item 000088|98.16|2|SKU-000088
+    Product Item 000089|99.23|3|SKU-000089
+    Product Item 000090|100.3|1|SKU-000090
+@280 customer.00030@example.com|31|Customer Number 00030|standard|^|ORD-0281|shipped|100.3|8.02|108.32
+.items [1]
+    Product Item 000090|100.3|1|SKU-000090
+@281 customer.00031@example.com|32|Customer Number 00031|premium|^|ORD-0282|pending|312.67|25.01|337.68
+.items [2]
+    Product Item 000093|103.51|1|SKU-000093
+    Product Item 000094|104.58|2|SKU-000094
+@282 customer.00032@example.com|33|Customer Number 00032|enterprise|^|ORD-0283|processing|648.88|51.91|700.79
+.items [3]
+    Product Item 000096|106.72|1|SKU-000096
+    Product Item 000097|107.79|2|SKU-000097
+    Product Item 000098|108.86|3|SKU-000098
+@283 customer.00033@example.com|34|Customer Number 00033|standard|^|ORD-0284|delivered|775.28|62.02|837.3
+.items [4]
+    Product Item 000099|109.93|1|SKU-000099
+    Product Item 000100|110|2|SKU-000100
+    Product Item 000101|111.07|3|SKU-000101
+    Product Item 000102|112.14|1|SKU-000102
+@284 customer.00034@example.com|35|Customer Number 00034|premium|^|ORD-0285|cancelled|112.14|8.97|121.11
+.items [1]
+    Product Item 000102|112.14|1|SKU-000102
+@285 customer.00035@example.com|36|Customer Number 00035|standard|^|ORD-0286|shipped|348.19|27.86|376.05
+.items [2]
+    Product Item 000105|115.35|1|SKU-000105
+    Product Item 000106|116.42|2|SKU-000106
+@286 customer.00036@example.com|37|Customer Number 00036|premium|^|ORD-0287|pending|719.92|57.59|777.51
+.items [3]
+    Product Item 000108|118.56|1|SKU-000108
+    Product Item 000109|119.63|2|SKU-000109
+    Product Item 000110|120.7|3|SKU-000110
+@287 customer.00037@example.com|38|Customer Number 00037|enterprise|^|ORD-0288|processing|864.16|69.13|933.29
+.items [4]
+    Product Item 000111|121.77|1|SKU-000111
+    Product Item 000112|122.84|2|SKU-000112
+    Product Item 000113|123.91|3|SKU-000113
+    Product Item 000114|124.98|1|SKU-000114
+@288 customer.00038@example.com|39|Customer Number 00038|standard|^|ORD-0289|delivered|124.98|10|134.98
+.items [1]
+    Product Item 000114|124.98|1|SKU-000114
+@289 customer.00039@example.com|40|Customer Number 00039|premium|^|ORD-0290|cancelled|383.71|30.7|414.41
+.items [2]
+    Product Item 000117|127.19|1|SKU-000117
+    Product Item 000118|128.26|2|SKU-000118
+@290 customer.00040@example.com|41|Customer Number 00040|standard|^|ORD-0291|shipped|790.96|63.28|854.24
+.items [3]
+    Product Item 000120|130.4|1|SKU-000120
+    Product Item 000121|131.47|2|SKU-000121
+    Product Item 000122|132.54|3|SKU-000122
+@291 customer.00041@example.com|42|Customer Number 00041|premium|^|ORD-0292|pending|444.04|35.52|479.56
+.items [4]
+    Product Item 000123|133.61|1|SKU-000123
+    Product Item 000124|134.68|2|SKU-000124
+    Product Item 000000|10|3|SKU-000000
+    Product Item 000001|11.07|1|SKU-000001
+@292 customer.00042@example.com|43|Customer Number 00042|enterprise|^|ORD-0293|processing|11.07|0.89|11.96
+.items [1]
+    Product Item 000001|11.07|1|SKU-000001
+@293 customer.00043@example.com|44|Customer Number 00043|standard|^|ORD-0294|delivered|44.98|3.6|48.58
+.items [2]
+    Product Item 000004|14.28|1|SKU-000004
+    Product Item 000005|15.35|2|SKU-000005
+@294 customer.00044@example.com|45|Customer Number 00044|premium|^|ORD-0295|cancelled|113.5|9.08|122.58
+.items [3]
+    Product Item 000007|17.49|1|SKU-000007
+    Product Item 000008|18.56|2|SKU-000008
+    Product Item 000009|19.63|3|SKU-000009
+@295 customer.00045@example.com|46|Customer Number 00045|standard|^|ORD-0296|shipped|156.67|12.53|169.2
+.items [4]
+    Product Item 000010|20.7|1|SKU-000010
+    Product Item 000011|21.77|2|SKU-000011
+    Product Item 000012|22.84|3|SKU-000012
+    Product Item 000013|23.91|1|SKU-000013
+@296 customer.00046@example.com|47|Customer Number 00046|premium|^|ORD-0297|pending|23.91|1.91|25.82
+.items [1]
+    Product Item 000013|23.91|1|SKU-000013
+@297 customer.00047@example.com|48|Customer Number 00047|enterprise|^|ORD-0298|processing|80.5|6.44|86.94
+.items [2]
+    Product Item 000016|26.12|1|SKU-000016
+    Product Item 000017|27.19|2|SKU-000017
+@298 customer.00048@example.com|49|Customer Number 00048|standard|^|ORD-0299|delivered|184.54|14.76|199.3
+.items [3]
+    Product Item 000019|29.33|1|SKU-000019
+    Product Item 000020|30.4|2|SKU-000020
+    Product Item 000021|31.47|3|SKU-000021
+@299 customer.00049@example.com|50|Customer Number 00049|premium|^|ORD-0300|cancelled|239.55|19.16|258.71
+.items [4]
+    Product Item 000022|32.54|1|SKU-000022
+    Product Item 000023|33.61|2|SKU-000023
+    Product Item 000024|34.68|3|SKU-000024
+    Product Item 000025|35.75|1|SKU-000025
+@300 customer.00050@example.com|51|Customer Number 00050|standard|^|ORD-0301|shipped|35.75|2.86|38.61
+.items [1]
+    Product Item 000025|35.75|1|SKU-000025
+@301 customer.00051@example.com|52|Customer Number 00051|premium|^|ORD-0302|pending|117.02|9.36|126.38
+.items [2]
+    Product Item 000028|38.96|1|SKU-000028
+    Product Item 000029|39.03|2|SKU-000029
+@302 customer.00052@example.com|53|Customer Number 00052|enterprise|^|ORD-0303|processing|255.58|20.45|276.03
+.items [3]
+    Product Item 000031|41.17|1|SKU-000031
+    Product Item 000032|42.24|2|SKU-000032
+    Product Item 000033|43.31|3|SKU-000033
+@303 customer.00053@example.com|54|Customer Number 00053|standard|^|ORD-0304|delivered|322.43|25.79|348.22
+.items [4]
+    Product Item 000034|44.38|1|SKU-000034
+    Product Item 000035|45.45|2|SKU-000035
+    Product Item 000036|46.52|3|SKU-000036
+    Product Item 000037|47.59|1|SKU-000037
+@304 customer.00054@example.com|55|Customer Number 00054|premium|^|ORD-0305|cancelled|47.59|3.81|51.4
+.items [1]
+    Product Item 000037|47.59|1|SKU-000037
+@305 customer.00055@example.com|56|Customer Number 00055|standard|^|ORD-0306|shipped|154.54|12.36|166.9
+.items [2]
+    Product Item 000040|50.8|1|SKU-000040
+    Product Item 000041|51.87|2|SKU-000041
+@306 customer.00056@example.com|57|Customer Number 00056|premium|^|ORD-0307|pending|326.62|26.13|352.75
+.items [3]
+    Product Item 000043|53.01|1|SKU-000043
+    Product Item 000044|54.08|2|SKU-000044
+    Product Item 000045|55.15|3|SKU-000045
+@307 customer.00057@example.com|58|Customer Number 00057|enterprise|^|ORD-0308|processing|405.31|32.42|437.73
+.items [4]
+    Product Item 000046|56.22|1|SKU-000046
+    Product Item 000047|57.29|2|SKU-000047
+    Product Item 000048|58.36|3|SKU-000048
+    Product Item 000049|59.43|1|SKU-000049
+@308 customer.00058@example.com|59|Customer Number 00058|standard|^|ORD-0309|delivered|59.43|4.75|64.18
+.items [1]
+    Product Item 000049|59.43|1|SKU-000049
+@309 customer.00059@example.com|60|Customer Number 00059|premium|^|ORD-0310|cancelled|190.06|15.2|205.26
+.items [2]
+    Product Item 000052|62.64|1|SKU-000052
+    Product Item 000053|63.71|2|SKU-000053
+@310 customer.00060@example.com|61|Customer Number 00060|standard|^|ORD-0311|shipped|403.66|32.29|435.95
+.items [3]
+    Product Item 000055|65.85|1|SKU-000055
+    Product Item 000056|66.92|2|SKU-000056
+    Product Item 000057|67.99|3|SKU-000057
+@311 customer.00061@example.com|62|Customer Number 00061|premium|^|ORD-0312|pending|488.19|39.06|527.25
+.items [4]
+    Product Item 000058|68.06|1|SKU-000058
+    Product Item 000059|69.13|2|SKU-000059
+    Product Item 000060|70.2|3|SKU-000060
+    Product Item 000061|71.27|1|SKU-000061
+@312 customer.00062@example.com|63|Customer Number 00062|enterprise|^|ORD-0313|processing|71.27|5.7|76.97
+.items [1]
+    Product Item 000061|71.27|1|SKU-000061
+@313 customer.00063@example.com|64|Customer Number 00063|standard|^|ORD-0314|delivered|225.58|18.05|243.63
+.items [2]
+    Product Item 000064|74.48|1|SKU-000064
+    Product Item 000065|75.55|2|SKU-000065
+@314 customer.00064@example.com|65|Customer Number 00064|premium|^|ORD-0315|cancelled|474.7|37.98|512.68
+.items [3]
+    Product Item 000067|77.69|1|SKU-000067
+    Product Item 000068|78.76|2|SKU-000068
+    Product Item 000069|79.83|3|SKU-000069
+@315 customer.00065@example.com|66|Customer Number 00065|standard|^|ORD-0316|shipped|574.07|45.93|620
+.items [4]
+    Product Item 000070|80.9|1|SKU-000070
+    Product Item 000071|81.97|2|SKU-000071
+    Product Item 000072|82.04|3|SKU-000072
+    Product Item 000073|83.11|1|SKU-000073
+@316 customer.00066@example.com|67|Customer Number 00066|premium|^|ORD-0317|pending|83.11|6.65|89.76
+.items [1]
+    Product Item 000073|83.11|1|SKU-000073
+@317 customer.00067@example.com|68|Customer Number 00067|enterprise|^|ORD-0318|processing|261.1|20.89|281.99
+.items [2]
+    Product Item 000076|86.32|1|SKU-000076
+    Product Item 000077|87.39|2|SKU-000077
+@318 customer.00068@example.com|69|Customer Number 00068|standard|^|ORD-0319|delivered|545.74|43.66|589.4
+.items [3]
+    Product Item 000079|89.53|1|SKU-000079
+    Product Item 000080|90.6|2|SKU-000080
+    Product Item 000081|91.67|3|SKU-000081
+@319 customer.00069@example.com|70|Customer Number 00069|premium|^|ORD-0320|cancelled|660.95|52.88|713.83
+.items [4]
+    Product Item 000082|92.74|1|SKU-000082
+    Product Item 000083|93.81|2|SKU-000083
+    Product Item 000084|94.88|3|SKU-000084
+    Product Item 000085|95.95|1|SKU-000085
+@320 customer.00070@example.com|71|Customer Number 00070|standard|^|ORD-0321|shipped|95.95|7.68|103.63
+.items [1]
+    Product Item 000085|95.95|1|SKU-000085
+@321 customer.00071@example.com|72|Customer Number 00071|premium|^|ORD-0322|pending|296.62|23.73|320.35
+.items [2]
+    Product Item 000088|98.16|1|SKU-000088
+    Product Item 000089|99.23|2|SKU-000089
+@322 customer.00072@example.com|73|Customer Number 00072|enterprise|^|ORD-0323|processing|616.78|49.34|666.12
+.items [3]
+    Product Item 000091|101.37|1|SKU-000091
+    Product Item 000092|102.44|2|SKU-000092
+    Product Item 000093|103.51|3|SKU-000093
+@323 customer.00073@example.com|74|Customer Number 00073|standard|^|ORD-0324|delivered|743.83|59.51|803.34
+.items [4]
+    Product Item 000094|104.58|1|SKU-000094
+    Product Item 000095|105.65|2|SKU-000095
+    Product Item 000096|106.72|3|SKU-000096
+    Product Item 000097|107.79|1|SKU-000097
+@324 customer.00074@example.com|75|Customer Number 00074|premium|^|ORD-0325|cancelled|107.79|8.62|116.41
+.items [1]
+    Product Item 000097|107.79|1|SKU-000097
+@325 customer.00075@example.com|76|Customer Number 00075|standard|^|ORD-0326|shipped|332.14|26.57|358.71
+.items [2]
+    Product Item 000100|110|1|SKU-000100
+    Product Item 000101|111.07|2|SKU-000101
+@326 customer.00076@example.com|77|Customer Number 00076|premium|^|ORD-0327|pending|687.82|55.03|742.85
+.items [3]
+    Product Item 000103|113.21|1|SKU-000103
+    Product Item 000104|114.28|2|SKU-000104
+    Product Item 000105|115.35|3|SKU-000105
+@327 customer.00077@example.com|78|Customer Number 00077|enterprise|^|ORD-0328|processing|826.71|66.14|892.85
+.items [4]
+    Product Item 000106|116.42|1|SKU-000106
+    Product Item 000107|117.49|2|SKU-000107
+    Product Item 000108|118.56|3|SKU-000108
+    Product Item 000109|119.63|1|SKU-000109
+@328 customer.00078@example.com|79|Customer Number 00078|standard|^|ORD-0329|delivered|119.63|9.57|129.2
+.items [1]
+    Product Item 000109|119.63|1|SKU-000109
+@329 customer.00079@example.com|80|Customer Number 00079|premium|^|ORD-0330|cancelled|370.66|29.65|400.31
+.items [2]
+    Product Item 000112|122.84|1|SKU-000112
+    Product Item 000113|123.91|2|SKU-000113
+@330 customer.00080@example.com|81|Customer Number 00080|standard|^|ORD-0331|shipped|758.86|60.71|819.57
+.items [3]
+    Product Item 000115|125.05|1|SKU-000115
+    Product Item 000116|126.12|2|SKU-000116
+    Product Item 000117|127.19|3|SKU-000117
+@331 customer.00081@example.com|82|Customer Number 00081|premium|^|ORD-0332|pending|909.59|72.77|982.36
+.items [4]
+    Product Item 000118|128.26|1|SKU-000118
+    Product Item 000119|129.33|2|SKU-000119
+    Product Item 000120|130.4|3|SKU-000120
+    Product Item 000121|131.47|1|SKU-000121
+@332 customer.00082@example.com|83|Customer Number 00082|enterprise|^|ORD-0333|processing|131.47|10.52|141.99
+.items [1]
+    Product Item 000121|131.47|1|SKU-000121
+@333 customer.00083@example.com|84|Customer Number 00083|standard|^|ORD-0334|delivered|154.68|12.37|167.05
+.items [2]
+    Product Item 000124|134.68|1|SKU-000124
+    Product Item 000000|10|2|SKU-000000
+@334 customer.00084@example.com|85|Customer Number 00084|premium|^|ORD-0335|cancelled|81.4|6.51|87.91
+.items [3]
+    Product Item 000002|12.14|1|SKU-000002
+    Product Item 000003|13.21|2|SKU-000003
+    Product Item 000004|14.28|3|SKU-000004
+@335 customer.00085@example.com|86|Customer Number 00085|standard|^|ORD-0336|shipped|119.22|9.54|128.76
+.items [4]
+    Product Item 000005|15.35|1|SKU-000005
+    Product Item 000006|16.42|2|SKU-000006
+    Product Item 000007|17.49|3|SKU-000007
+    Product Item 000008|18.56|1|SKU-000008
+@336 customer.00086@example.com|87|Customer Number 00086|premium|^|ORD-0337|pending|18.56|1.48|20.04
+.items [1]
+    Product Item 000008|18.56|1|SKU-000008
+@337 customer.00087@example.com|88|Customer Number 00087|enterprise|^|ORD-0338|processing|67.45|5.4|72.85
+.items [2]
+    Product Item 000011|21.77|1|SKU-000011
+    Product Item 000012|22.84|2|SKU-000012
+@338 customer.00088@example.com|89|Customer Number 00088|standard|^|ORD-0339|delivered|153.44|12.28|165.72
+.items [3]
+    Product Item 000014|24.98|1|SKU-000014
+    Product Item 000015|25.05|2|SKU-000015
+    Product Item 000016|26.12|3|SKU-000016
+@339 customer.00089@example.com|90|Customer Number 00089|premium|^|ORD-0340|cancelled|202.1|16.17|218.27
+.items [4]
+    Product Item 000017|27.19|1|SKU-000017
+    Product Item 000018|28.26|2|SKU-000018
+    Product Item 000019|29.33|3|SKU-000019
+    Product Item 000020|30.4|1|SKU-000020
+@340 customer.00090@example.com|91|Customer Number 00090|standard|^|ORD-0341|shipped|30.4|2.43|32.83
+.items [1]
+    Product Item 000020|30.4|1|SKU-000020
+@341 customer.00091@example.com|92|Customer Number 00091|premium|^|ORD-0342|pending|102.97|8.24|111.21
+.items [2]
+    Product Item 000023|33.61|1|SKU-000023
+    Product Item 000024|34.68|2|SKU-000024
+@342 customer.00092@example.com|93|Customer Number 00092|enterprise|^|ORD-0343|processing|229.48|18.36|247.84
+.items [3]
+    Product Item 000026|36.82|1|SKU-000026
+    Product Item 000027|37.89|2|SKU-000027
+    Product Item 000028|38.96|3|SKU-000028
+@343 customer.00093@example.com|94|Customer Number 00093|standard|^|ORD-0344|delivered|284.98|22.8|307.78
+.items [4]
+    Product Item 000029|39.03|1|SKU-000029
+    Product Item 000030|40.1|2|SKU-000030
+    Product Item 000031|41.17|3|SKU-000031
+    Product Item 000032|42.24|1|SKU-000032
+@344 customer.00094@example.com|95|Customer Number 00094|premium|^|ORD-0345|cancelled|42.24|3.38|45.62
+.items [1]
+    Product Item 000032|42.24|1|SKU-000032
+@345 customer.00095@example.com|96|Customer Number 00095|standard|^|ORD-0346|shipped|138.49|11.08|149.57
+.items [2]
+    Product Item 000035|45.45|1|SKU-000035
+    Product Item 000036|46.52|2|SKU-000036
+@346 customer.00096@example.com|97|Customer Number 00096|premium|^|ORD-0347|pending|300.52|24.04|324.56
+.items [3]
+    Product Item 000038|48.66|1|SKU-000038
+    Product Item 000039|49.73|2|SKU-000039
+    Product Item 000040|50.8|3|SKU-000040
+@347 customer.00097@example.com|98|Customer Number 00097|enterprise|^|ORD-0348|processing|370.86|29.67|400.53
+.items [4]
+    Product Item 000041|51.87|1|SKU-000041
+    Product Item 000042|52.94|2|SKU-000042
+    Product Item 000043|53.01|3|SKU-000043
+    Product Item 000044|54.08|1|SKU-000044
+@348 customer.00098@example.com|99|Customer Number 00098|standard|^|ORD-0349|delivered|54.08|4.33|58.41
+.items [1]
+    Product Item 000044|54.08|1|SKU-000044
+@349 customer.00099@example.com|100|Customer Number 00099|premium|^|ORD-0350|cancelled|174.01|13.92|187.93
+.items [2]
+    Product Item 000047|57.29|1|SKU-000047
+    Product Item 000048|58.36|2|SKU-000048
+@350 customer.00100@example.com|101|Customer Number 00100|standard|^|ORD-0351|shipped|371.56|29.72|401.28
+.items [3]
+    Product Item 000050|60.5|1|SKU-000050
+    Product Item 000051|61.57|2|SKU-000051
+    Product Item 000052|62.64|3|SKU-000052
+@351 customer.00101@example.com|102|Customer Number 00101|premium|^|ORD-0352|pending|457.74|36.62|494.36
+.items [4]
+    Product Item 000053|63.71|1|SKU-000053
+    Product Item 000054|64.78|2|SKU-000054
+    Product Item 000055|65.85|3|SKU-000055
+    Product Item 000056|66.92|1|SKU-000056
+@352 customer.00102@example.com|103|Customer Number 00102|enterprise|^|ORD-0353|processing|66.92|5.35|72.27
+.items [1]
+    Product Item 000056|66.92|1|SKU-000056
+@353 customer.00103@example.com|104|Customer Number 00103|standard|^|ORD-0354|delivered|209.53|16.76|226.29
+.items [2]
+    Product Item 000059|69.13|1|SKU-000059
+    Product Item 000060|70.2|2|SKU-000060
+@354 customer.00104@example.com|105|Customer Number 00104|premium|^|ORD-0355|cancelled|442.6|35.41|478.01
+.items [3]
+    Product Item 000062|72.34|1|SKU-000062
+    Product Item 000063|73.41|2|SKU-000063
+    Product Item 000064|74.48|3|SKU-000064
+@355 customer.00105@example.com|106|Customer Number 00105|standard|^|ORD-0356|shipped|540.62|43.25|583.87
+.items [4]
+    Product Item 000065|75.55|1|SKU-000065
+    Product Item 000066|76.62|2|SKU-000066
+    Product Item 000067|77.69|3|SKU-000067
+    Product Item 000068|78.76|1|SKU-000068
+@356 customer.00106@example.com|107|Customer Number 00106|premium|^|ORD-0357|pending|78.76|6.3|85.06
+.items [1]
+    Product Item 000068|78.76|1|SKU-000068
+@357 customer.00107@example.com|108|Customer Number 00107|enterprise|^|ORD-0358|processing|246.05|19.68|265.73
+.items [2]
+    Product Item 000071|81.97|1|SKU-000071
+    Product Item 000072|82.04|2|SKU-000072
+@358 customer.00108@example.com|109|Customer Number 00108|standard|^|ORD-0359|delivered|513.64|41.09|554.73
+.items [3]
+    Product Item 000074|84.18|1|SKU-000074
+    Product Item 000075|85.25|2|SKU-000075
+    Product Item 000076|86.32|3|SKU-000076
+@359 customer.00109@example.com|110|Customer Number 00109|premium|^|ORD-0360|cancelled|623.5|49.88|673.38
+.items [4]
+    Product Item 000077|87.39|1|SKU-000077
+    Product Item 000078|88.46|2|SKU-000078
+    Product Item 000079|89.53|3|SKU-000079
+    Product Item 000080|90.6|1|SKU-000080
+@360 customer.00110@example.com|111|Customer Number 00110|standard|^|ORD-0361|shipped|90.6|7.25|97.85
+.items [1]
+    Product Item 000080|90.6|1|SKU-000080
+@361 customer.00111@example.com|112|Customer Number 00111|premium|^|ORD-0362|pending|283.57|22.69|306.26
+.items [2]
+    Product Item 000083|93.81|1|SKU-000083
+    Product Item 000084|94.88|2|SKU-000084
+@362 customer.00112@example.com|113|Customer Number 00112|enterprise|^|ORD-0363|processing|584.68|46.77|631.45
+.items [3]
+    Product Item 000086|96.02|1|SKU-000086
+    Product Item 000087|97.09|2|SKU-000087
+    Product Item 000088|98.16|3|SKU-000088
+@363 customer.00113@example.com|114|Customer Number 00113|standard|^|ORD-0364|delivered|706.38|56.51|762.89
+.items [4]
+    Product Item 000089|99.23|1|SKU-000089
+    Product Item 000090|100.3|2|SKU-000090
+    Product Item 000091|101.37|3|SKU-000091
+    Product Item 000092|102.44|1|SKU-000092
+@364 customer.00114@example.com|115|Customer Number 00114|premium|^|ORD-0365|cancelled|102.44|8.2|110.64
+.items [1]
+    Product Item 000092|102.44|1|SKU-000092
+@365 customer.00115@example.com|116|Customer Number 00115|standard|^|ORD-0366|shipped|319.09|25.53|344.62
+.items [2]
+    Product Item 000095|105.65|1|SKU-000095
+    Product Item 000096|106.72|2|SKU-000096
+@366 customer.00116@example.com|117|Customer Number 00116|premium|^|ORD-0367|pending|658.72|52.7|711.42
+.items [3]
+    Product Item 000098|108.86|1|SKU-000098
+    Product Item 000099|109.93|2|SKU-000099
+    Product Item 000100|110|3|SKU-000100
+@367 customer.00117@example.com|118|Customer Number 00117|enterprise|^|ORD-0368|processing|789.26|63.14|852.4
+.items [4]
+    Product Item 000101|111.07|1|SKU-000101
+    Product Item 000102|112.14|2|SKU-000102
+    Product Item 000103|113.21|3|SKU-000103
+    Product Item 000104|114.28|1|SKU-000104
+@368 customer.00118@example.com|119|Customer Number 00118|standard|^|ORD-0369|delivered|114.28|9.14|123.42
+.items [1]
+    Product Item 000104|114.28|1|SKU-000104
+@369 customer.00119@example.com|120|Customer Number 00119|premium|^|ORD-0370|cancelled|354.61|28.37|382.98
+.items [2]
+    Product Item 000107|117.49|1|SKU-000107
+    Product Item 000108|118.56|2|SKU-000108
+@370 customer.00120@example.com|121|Customer Number 00120|standard|^|ORD-0371|shipped|732.76|58.62|791.38
+.items [3]
+    Product Item 000110|120.7|1|SKU-000110
+    Product Item 000111|121.77|2|SKU-000111
+    Product Item 000112|122.84|3|SKU-000112
+@371 customer.00121@example.com|122|Customer Number 00121|premium|^|ORD-0372|pending|875.14|70.01|945.15
+.items [4]
+    Product Item 000113|123.91|1|SKU-000113
+    Product Item 000114|124.98|2|SKU-000114
+    Product Item 000115|125.05|3|SKU-000115
+    Product Item 000116|126.12|1|SKU-000116
+@372 customer.00122@example.com|123|Customer Number 00122|enterprise|^|ORD-0373|processing|126.12|10.09|136.21
+.items [1]
+    Product Item 000116|126.12|1|SKU-000116
+@373 customer.00123@example.com|124|Customer Number 00123|standard|^|ORD-0374|delivered|390.13|31.21|421.34
+.items [2]
+    Product Item 000119|129.33|1|SKU-000119
+    Product Item 000120|130.4|2|SKU-000120
+@374 customer.00124@example.com|125|Customer Number 00124|premium|^|ORD-0375|cancelled|803.8|64.3|868.1
+.items [3]
+    Product Item 000122|132.54|1|SKU-000122
+    Product Item 000123|133.61|2|SKU-000123
+    Product Item 000124|134.68|3|SKU-000124
+@375 customer.00000@example.com|1|Customer Number 00000|standard|^|ORD-0376|shipped|81.77|6.54|88.31
+.items [4]
+    Product Item 000000|10|1|SKU-000000
+    Product Item 000001|11.07|2|SKU-000001
+    Product Item 000002|12.14|3|SKU-000002
+    Product Item 000003|13.21|1|SKU-000003
+@376 customer.00001@example.com|2|Customer Number 00001|premium|^|ORD-0377|pending|13.21|1.06|14.27
+.items [1]
+    Product Item 000003|13.21|1|SKU-000003
+@377 customer.00002@example.com|3|Customer Number 00002|enterprise|^|ORD-0378|processing|51.4|4.11|55.51
+.items [2]
+    Product Item 000006|16.42|1|SKU-000006
+    Product Item 000007|17.49|2|SKU-000007
+@378 customer.00003@example.com|4|Customer Number 00003|standard|^|ORD-0379|delivered|126.34|10.11|136.45
+.items [3]
+    Product Item 000009|19.63|1|SKU-000009
+    Product Item 000010|20.7|2|SKU-000010
+    Product Item 000011|21.77|3|SKU-000011
+@379 customer.00004@example.com|5|Customer Number 00004|premium|^|ORD-0380|cancelled|170.65|13.65|184.3
+.items [4]
+    Product Item 000012|22.84|1|SKU-000012
+    Product Item 000013|23.91|2|SKU-000013
+    Product Item 000014|24.98|3|SKU-000014
+    Product Item 000015|25.05|1|SKU-000015
+@380 customer.00005@example.com|6|Customer Number 00005|standard|^|ORD-0381|shipped|25.05|2|27.05
+.items [1]
+    Product Item 000015|25.05|1|SKU-000015
+@381 customer.00006@example.com|7|Customer Number 00006|premium|^|ORD-0382|pending|86.92|6.95|93.87
+.items [2]
+    Product Item 000018|28.26|1|SKU-000018
+    Product Item 000019|29.33|2|SKU-000019
+@382 customer.00007@example.com|8|Customer Number 00007|enterprise|^|ORD-0383|processing|197.38|15.79|213.17
+.items [3]
+    Product Item 000021|31.47|1|SKU-000021
+    Product Item 000022|32.54|2|SKU-000022
+    Product Item 000023|33.61|3|SKU-000023
+@383 customer.00008@example.com|9|Customer Number 00008|standard|^|ORD-0384|delivered|254.53|20.36|274.89
+.items [4]
+    Product Item 000024|34.68|1|SKU-000024
+    Product Item 000025|35.75|2|SKU-000025
+    Product Item 000026|36.82|3|SKU-000026
+    Product Item 000027|37.89|1|SKU-000027
+@384 customer.00009@example.com|10|Customer Number 00009|premium|^|ORD-0385|cancelled|37.89|3.03|40.92
+.items [1]
+    Product Item 000027|37.89|1|SKU-000027
+@385 customer.00010@example.com|11|Customer Number 00010|standard|^|ORD-0386|shipped|122.44|9.8|132.24
+.items [2]
+    Product Item 000030|40.1|1|SKU-000030
+    Product Item 000031|41.17|2|SKU-000031
+@386 customer.00011@example.com|12|Customer Number 00011|premium|^|ORD-0387|pending|268.42|21.47|289.89
+.items [3]
+    Product Item 000033|43.31|1|SKU-000033
+    Product Item 000034|44.38|2|SKU-000034
+    Product Item 000035|45.45|3|SKU-000035
+@387 customer.00012@example.com|13|Customer Number 00012|enterprise|^|ORD-0388|processing|337.41|26.99|364.4
+.items [4]
+    Product Item 000036|46.52|1|SKU-000036
+    Product Item 000037|47.59|2|SKU-000037
+    Product Item 000038|48.66|3|SKU-000038
+    Product Item 000039|49.73|1|SKU-000039
+@388 customer.00013@example.com|14|Customer Number 00013|standard|^|ORD-0389|delivered|49.73|3.98|53.71
+.items [1]
+    Product Item 000039|49.73|1|SKU-000039
+@389 customer.00014@example.com|15|Customer Number 00014|premium|^|ORD-0390|cancelled|158.96|12.72|171.68
+.items [2]
+    Product Item 000042|52.94|1|SKU-000042
+    Product Item 000043|53.01|2|SKU-000043
+@390 customer.00015@example.com|16|Customer Number 00015|standard|^|ORD-0391|shipped|339.46|27.16|366.62
+.items [3]
+    Product Item 000045|55.15|1|SKU-000045
+    Product Item 000046|56.22|2|SKU-000046
+    Product Item 000047|57.29|3|SKU-000047
+@391 customer.00016@example.com|17|Customer Number 00016|premium|^|ORD-0392|pending|420.29|33.62|453.91
+.items [4]
+    Product Item 000048|58.36|1|SKU-000048
+    Product Item 000049|59.43|2|SKU-000049
+    Product Item 000050|60.5|3|SKU-000050
+    Product Item 000051|61.57|1|SKU-000051
+@392 customer.00017@example.com|18|Customer Number 00017|enterprise|^|ORD-0393|processing|61.57|4.93|66.5
+.items [1]
+    Product Item 000051|61.57|1|SKU-000051
+@393 customer.00018@example.com|19|Customer Number 00018|standard|^|ORD-0394|delivered|196.48|15.72|212.2
+.items [2]
+    Product Item 000054|64.78|1|SKU-000054
+    Product Item 000055|65.85|2|SKU-000055
+@394 customer.00019@example.com|20|Customer Number 00019|premium|^|ORD-0395|cancelled|411.5|32.92|444.42
+.items [3]
+    Product Item 000057|67.99|1|SKU-000057
+    Product Item 000058|68.06|2|SKU-000058
+    Product Item 000059|69.13|3|SKU-000059
+@395 customer.00020@example.com|21|Customer Number 00020|standard|^|ORD-0396|shipped|503.17|40.25|543.42
+.items [4]
+    Product Item 000060|70.2|1|SKU-000060
+    Product Item 000061|71.27|2|SKU-000061
+    Product Item 000062|72.34|3|SKU-000062
+    Product Item 000063|73.41|1|SKU-000063
+@396 customer.00021@example.com|22|Customer Number 00021|premium|^|ORD-0397|pending|73.41|5.87|79.28
+.items [1]
+    Product Item 000063|73.41|1|SKU-000063
+@397 customer.00022@example.com|23|Customer Number 00022|enterprise|^|ORD-0398|processing|232|18.56|250.56
+.items [2]
+    Product Item 000066|76.62|1|SKU-000066
+    Product Item 000067|77.69|2|SKU-000067
+@398 customer.00023@example.com|24|Customer Number 00023|standard|^|ORD-0399|delivered|487.54|39|526.54
+.items [3]
+    Product Item 000069|79.83|1|SKU-000069
+    Product Item 000070|80.9|2|SKU-000070
+    Product Item 000071|81.97|3|SKU-000071
+@399 customer.00024@example.com|25|Customer Number 00024|premium|^|ORD-0400|cancelled|586.05|46.88|632.93
+.items [4]
+    Product Item 000072|82.04|1|SKU-000072
+    Product Item 000073|83.11|2|SKU-000073
+    Product Item 000074|84.18|3|SKU-000074
+    Product Item 000075|85.25|1|SKU-000075
+@400 customer.00025@example.com|26|Customer Number 00025|standard|^|ORD-0401|shipped|85.25|6.82|92.07
+.items [1]
+    Product Item 000075|85.25|1|SKU-000075
+@401 customer.00026@example.com|27|Customer Number 00026|premium|^|ORD-0402|pending|267.52|21.4|288.92
+.items [2]
+    Product Item 000078|88.46|1|SKU-000078
+    Product Item 000079|89.53|2|SKU-000079
+@402 customer.00027@example.com|28|Customer Number 00027|enterprise|^|ORD-0403|processing|558.58|44.69|603.27
+.items [3]
+    Product Item 000081|91.67|1|SKU-000081
+    Product Item 000082|92.74|2|SKU-000082
+    Product Item 000083|93.81|3|SKU-000083
+@403 customer.00028@example.com|29|Customer Number 00028|standard|^|ORD-0404|delivered|671.93|53.75|725.68
+.items [4]
+    Product Item 000084|94.88|1|SKU-000084
+    Product Item 000085|95.95|2|SKU-000085
+    Product Item 000086|96.02|3|SKU-000086
+    Product Item 000087|97.09|1|SKU-000087
+@404 customer.00029@example.com|30|Customer Number 00029|premium|^|ORD-0405|cancelled|97.09|7.77|104.86
+.items [1]
+    Product Item 000087|97.09|1|SKU-000087
+@405 customer.00030@example.com|31|Customer Number 00030|standard|^|ORD-0406|shipped|303.04|24.24|327.28
+.items [2]
+    Product Item 000090|100.3|1|SKU-000090
+    Product Item 000091|101.37|2|SKU-000091
+@406 customer.00031@example.com|32|Customer Number 00031|premium|^|ORD-0407|pending|629.62|50.37|679.99
+.items [3]
+    Product Item 000093|103.51|1|SKU-000093
+    Product Item 000094|104.58|2|SKU-000094
+    Product Item 000095|105.65|3|SKU-000095
+@407 customer.00032@example.com|33|Customer Number 00032|enterprise|^|ORD-0408|processing|758.81|60.7|819.51
+.items [4]
+    Product Item 000096|106.72|1|SKU-000096
+    Product Item 000097|107.79|2|SKU-000097
+    Product Item 000098|108.86|3|SKU-000098
+    Product Item 000099|109.93|1|SKU-000099
+@408 customer.00033@example.com|34|Customer Number 00033|standard|^|ORD-0409|delivered|109.93|8.79|118.72
+.items [1]
+    Product Item 000099|109.93|1|SKU-000099
+@409 customer.00034@example.com|35|Customer Number 00034|premium|^|ORD-0410|cancelled|338.56|27.08|365.64
+.items [2]
+    Product Item 000102|112.14|1|SKU-000102
+    Product Item 000103|113.21|2|SKU-000103
+@410 customer.00035@example.com|36|Customer Number 00035|standard|^|ORD-0411|shipped|700.66|56.05|756.71
+.items [3]
+    Product Item 000105|115.35|1|SKU-000105
+    Product Item 000106|116.42|2|SKU-000106
+    Product Item 000107|117.49|3|SKU-000107
+@411 customer.00036@example.com|37|Customer Number 00036|premium|^|ORD-0412|pending|841.69|67.34|909.03
+.items [4]
+    Product Item 000108|118.56|1|SKU-000108
+    Product Item 000109|119.63|2|SKU-000109
+    Product Item 000110|120.7|3|SKU-000110
+    Product Item 000111|121.77|1|SKU-000111
+@412 customer.00037@example.com|38|Customer Number 00037|enterprise|^|ORD-0413|processing|121.77|9.74|131.51
+.items [1]
+    Product Item 000111|121.77|1|SKU-000111
+@413 customer.00038@example.com|39|Customer Number 00038|standard|^|ORD-0414|delivered|375.08|30.01|405.09
+.items [2]
+    Product Item 000114|124.98|1|SKU-000114
+    Product Item 000115|125.05|2|SKU-000115
+@414 customer.00039@example.com|40|Customer Number 00039|premium|^|ORD-0415|cancelled|771.7|61.74|833.44
+.items [3]
+    Product Item 000117|127.19|1|SKU-000117
+    Product Item 000118|128.26|2|SKU-000118
+    Product Item 000119|129.33|3|SKU-000119
+@415 customer.00040@example.com|41|Customer Number 00040|standard|^|ORD-0416|shipped|924.57|73.97|998.54
+.items [4]
+    Product Item 000120|130.4|1|SKU-000120
+    Product Item 000121|131.47|2|SKU-000121
+    Product Item 000122|132.54|3|SKU-000122
+    Product Item 000123|133.61|1|SKU-000123
+@416 customer.00041@example.com|42|Customer Number 00041|premium|^|ORD-0417|pending|133.61|10.69|144.3
+.items [1]
+    Product Item 000123|133.61|1|SKU-000123
+@417 customer.00042@example.com|43|Customer Number 00042|enterprise|^|ORD-0418|processing|35.35|2.83|38.18
+.items [2]
+    Product Item 000001|11.07|1|SKU-000001
+    Product Item 000002|12.14|2|SKU-000002
+@418 customer.00043@example.com|44|Customer Number 00043|standard|^|ORD-0419|delivered|94.24|7.54|101.78
+.items [3]
+    Product Item 000004|14.28|1|SKU-000004
+    Product Item 000005|15.35|2|SKU-000005
+    Product Item 000006|16.42|3|SKU-000006
+@419 customer.00044@example.com|45|Customer Number 00044|premium|^|ORD-0420|cancelled|134.2|10.74|144.94
+.items [4]
+    Product Item 000007|17.49|1|SKU-000007
+    Product Item 000008|18.56|2|SKU-000008
+    Product Item 000009|19.63|3|SKU-000009
+    Product Item 000010|20.7|1|SKU-000010
+@420 customer.00045@example.com|46|Customer Number 00045|standard|^|ORD-0421|shipped|20.7|1.66|22.36
+.items [1]
+    Product Item 000010|20.7|1|SKU-000010
+@421 customer.00046@example.com|47|Customer Number 00046|premium|^|ORD-0422|pending|73.87|5.91|79.78
+.items [2]
+    Product Item 000013|23.91|1|SKU-000013
+    Product Item 000014|24.98|2|SKU-000014
+@422 customer.00047@example.com|48|Customer Number 00047|enterprise|^|ORD-0423|processing|165.28|13.22|178.5
+.items [3]
+    Product Item 000016|26.12|1|SKU-000016
+    Product Item 000017|27.19|2|SKU-000017
+    Product Item 000018|28.26|3|SKU-000018
+@423 customer.00048@example.com|49|Customer Number 00048|standard|^|ORD-0424|delivered|217.08|17.37|234.45
+.items [4]
+    Product Item 000019|29.33|1|SKU-000019
+    Product Item 000020|30.4|2|SKU-000020
+    Product Item 000021|31.47|3|SKU-000021
+    Product Item 000022|32.54|1|SKU-000022
+@424 customer.00049@example.com|50|Customer Number 00049|premium|^|ORD-0425|cancelled|32.54|2.6|35.14
+.items [1]
+    Product Item 000022|32.54|1|SKU-000022
+@425 customer.00050@example.com|51|Customer Number 00050|standard|^|ORD-0426|shipped|109.39|8.75|118.14
+.items [2]
+    Product Item 000025|35.75|1|SKU-000025
+    Product Item 000026|36.82|2|SKU-000026
+@426 customer.00051@example.com|52|Customer Number 00051|premium|^|ORD-0427|pending|237.32|18.99|256.31
+.items [3]
+    Product Item 000028|38.96|1|SKU-000028
+    Product Item 000029|39.03|2|SKU-000029
+    Product Item 000030|40.1|3|SKU-000030
+@427 customer.00052@example.com|53|Customer Number 00052|enterprise|^|ORD-0428|processing|299.96|24|323.96
+.items [4]
+    Product Item 000031|41.17|1|SKU-000031
+    Product Item 000032|42.24|2|SKU-000032
+    Product Item 000033|43.31|3|SKU-000033
+    Product Item 000034|44.38|1|SKU-000034
+@428 customer.00053@example.com|54|Customer Number 00053|standard|^|ORD-0429|delivered|44.38|3.55|47.93
+.items [1]
+    Product Item 000034|44.38|1|SKU-000034
+@429 customer.00054@example.com|55|Customer Number 00054|premium|^|ORD-0430|cancelled|144.91|11.59|156.5
+.items [2]
+    Product Item 000037|47.59|1|SKU-000037
+    Product Item 000038|48.66|2|SKU-000038
+@430 customer.00055@example.com|56|Customer Number 00055|standard|^|ORD-0431|shipped|313.36|25.07|338.43
+.items [3]
+    Product Item 000040|50.8|1|SKU-000040
+    Product Item 000041|51.87|2|SKU-000041
+    Product Item 000042|52.94|3|SKU-000042
+@431 customer.00056@example.com|57|Customer Number 00056|premium|^|ORD-0432|pending|382.84|30.63|413.47
+.items [4]
+    Product Item 000043|53.01|1|SKU-000043
+    Product Item 000044|54.08|2|SKU-000044
+    Product Item 000045|55.15|3|SKU-000045
+    Product Item 000046|56.22|1|SKU-000046
+@432 customer.00057@example.com|58|Customer Number 00057|enterprise|^|ORD-0433|processing|56.22|4.5|60.72
+.items [1]
+    Product Item 000046|56.22|1|SKU-000046
+@433 customer.00058@example.com|59|Customer Number 00058|standard|^|ORD-0434|delivered|180.43|14.43|194.86
+.items [2]
+    Product Item 000049|59.43|1|SKU-000049
+    Product Item 000050|60.5|2|SKU-000050
+@434 customer.00059@example.com|60|Customer Number 00059|premium|^|ORD-0435|cancelled|384.4|30.75|415.15
+.items [3]
+    Product Item 000052|62.64|1|SKU-000052
+    Product Item 000053|63.71|2|SKU-000053
+    Product Item 000054|64.78|3|SKU-000054
+@435 customer.00060@example.com|61|Customer Number 00060|standard|^|ORD-0436|shipped|471.72|37.74|509.46
+.items [4]
+    Product Item 000055|65.85|1|SKU-000055
+    Product Item 000056|66.92|2|SKU-000056
+    Product Item 000057|67.99|3|SKU-000057
+    Product Item 000058|68.06|1|SKU-000058
+@436 customer.00061@example.com|62|Customer Number 00061|premium|^|ORD-0437|pending|68.06|5.44|73.5
+.items [1]
+    Product Item 000058|68.06|1|SKU-000058
+@437 customer.00062@example.com|63|Customer Number 00062|enterprise|^|ORD-0438|processing|215.95|17.28|233.23
+.items [2]
+    Product Item 000061|71.27|1|SKU-000061
+    Product Item 000062|72.34|2|SKU-000062
+@438 customer.00063@example.com|64|Customer Number 00063|standard|^|ORD-0439|delivered|455.44|36.44|491.88
+.items [3]
+    Product Item 000064|74.48|1|SKU-000064
+    Product Item 000065|75.55|2|SKU-000065
+    Product Item 000066|76.62|3|SKU-000066
+@439 customer.00064@example.com|65|Customer Number 00064|premium|^|ORD-0440|cancelled|555.6|44.45|600.05
+.items [4]
+    Product Item 000067|77.69|1|SKU-000067
+    Product Item 000068|78.76|2|SKU-000068
+    Product Item 000069|79.83|3|SKU-000069
+    Product Item 000070|80.9|1|SKU-000070
+@440 customer.00065@example.com|66|Customer Number 00065|standard|^|ORD-0441|shipped|80.9|6.47|87.37
+.items [1]
+    Product Item 000070|80.9|1|SKU-000070
+@441 customer.00066@example.com|67|Customer Number 00066|premium|^|ORD-0442|pending|251.47|20.12|271.59
+.items [2]
+    Product Item 000073|83.11|1|SKU-000073
+    Product Item 000074|84.18|2|SKU-000074
+@442 customer.00067@example.com|68|Customer Number 00067|enterprise|^|ORD-0443|processing|526.48|42.12|568.6
+.items [3]
+    Product Item 000076|86.32|1|SKU-000076
+    Product Item 000077|87.39|2|SKU-000077
+    Product Item 000078|88.46|3|SKU-000078
+@443 customer.00068@example.com|69|Customer Number 00068|standard|^|ORD-0444|delivered|638.48|51.08|689.56
+.items [4]
+    Product Item 000079|89.53|1|SKU-000079
+    Product Item 000080|90.6|2|SKU-000080
+    Product Item 000081|91.67|3|SKU-000081
+    Product Item 000082|92.74|1|SKU-000082
+@444 customer.00069@example.com|70|Customer Number 00069|premium|^|ORD-0445|cancelled|92.74|7.42|100.16
+.items [1]
+    Product Item 000082|92.74|1|SKU-000082
+@445 customer.00070@example.com|71|Customer Number 00070|standard|^|ORD-0446|shipped|287.99|23.04|311.03
+.items [2]
+    Product Item 000085|95.95|1|SKU-000085
+    Product Item 000086|96.02|2|SKU-000086
+@446 customer.00071@example.com|72|Customer Number 00071|premium|^|ORD-0447|pending|597.52|47.8|645.32
+.items [3]
+    Product Item 000088|98.16|1|SKU-000088
+    Product Item 000089|99.23|2|SKU-000089
+    Product Item 000090|100.3|3|SKU-000090
+@447 customer.00072@example.com|73|Customer Number 00072|enterprise|^|ORD-0448|processing|721.36|57.71|779.07
+.items [4]
+    Product Item 000091|101.37|1|SKU-000091
+    Product Item 000092|102.44|2|SKU-000092
+    Product Item 000093|103.51|3|SKU-000093
+    Product Item 000094|104.58|1|SKU-000094
+@448 customer.00073@example.com|74|Customer Number 00073|standard|^|ORD-0449|delivered|104.58|8.37|112.95
+.items [1]
+    Product Item 000094|104.58|1|SKU-000094
+@449 customer.00074@example.com|75|Customer Number 00074|premium|^|ORD-0450|cancelled|325.51|26.04|351.55
+.items [2]
+    Product Item 000097|107.79|1|SKU-000097
+    Product Item 000098|108.86|2|SKU-000098
+@450 customer.00075@example.com|76|Customer Number 00075|standard|^|ORD-0451|shipped|668.56|53.48|722.04
+.items [3]
+    Product Item 000100|110|1|SKU-000100
+    Product Item 000101|111.07|2|SKU-000101
+    Product Item 000102|112.14|3|SKU-000102
+@451 customer.00076@example.com|77|Customer Number 00076|premium|^|ORD-0452|pending|804.24|64.34|868.58
+.items [4]
+    Product Item 000103|113.21|1|SKU-000103
+    Product Item 000104|114.28|2|SKU-000104
+    Product Item 000105|115.35|3|SKU-000105
+    Product Item 000106|116.42|1|SKU-000106
+@452 customer.00077@example.com|78|Customer Number 00077|enterprise|^|ORD-0453|processing|116.42|9.31|125.73
+.items [1]
+    Product Item 000106|116.42|1|SKU-000106
+@453 customer.00078@example.com|79|Customer Number 00078|standard|^|ORD-0454|delivered|361.03|28.88|389.91
+.items [2]
+    Product Item 000109|119.63|1|SKU-000109
+    Product Item 000110|120.7|2|SKU-000110
+@454 customer.00079@example.com|80|Customer Number 00079|premium|^|ORD-0455|cancelled|745.6|59.65|805.25
+.items [3]
+    Product Item 000112|122.84|1|SKU-000112
+    Product Item 000113|123.91|2|SKU-000113
+    Product Item 000114|124.98|3|SKU-000114
+@455 customer.00080@example.com|81|Customer Number 00080|standard|^|ORD-0456|shipped|887.12|70.97|958.09
+.items [4]
+    Product Item 000115|125.05|1|SKU-000115
+    Product Item 000116|126.12|2|SKU-000116
+    Product Item 000117|127.19|3|SKU-000117
+    Product Item 000118|128.26|1|SKU-000118
+@456 customer.00081@example.com|82|Customer Number 00081|premium|^|ORD-0457|pending|128.26|10.26|138.52
+.items [1]
+    Product Item 000118|128.26|1|SKU-000118
+@457 customer.00082@example.com|83|Customer Number 00082|enterprise|^|ORD-0458|processing|396.55|31.72|428.27
+.items [2]
+    Product Item 000121|131.47|1|SKU-000121
+    Product Item 000122|132.54|2|SKU-000122
+@458 customer.00083@example.com|84|Customer Number 00083|standard|^|ORD-0459|delivered|187.89|15.03|202.92
+.items [3]
+    Product Item 000124|134.68|1|SKU-000124
+    Product Item 000000|10|2|SKU-000000
+    Product Item 000001|11.07|3|SKU-000001
+@459 customer.00084@example.com|85|Customer Number 00084|premium|^|ORD-0460|cancelled|96.75|7.74|104.49
+.items [4]
+    Product Item 000002|12.14|1|SKU-000002
+    Product Item 000003|13.21|2|SKU-000003
+    Product Item 000004|14.28|3|SKU-000004
+    Product Item 000005|15.35|1|SKU-000005
+@460 customer.00085@example.com|86|Customer Number 00085|standard|^|ORD-0461|shipped|15.35|1.23|16.58
+.items [1]
+    Product Item 000005|15.35|1|SKU-000005
+@461 customer.00086@example.com|87|Customer Number 00086|premium|^|ORD-0462|pending|57.82|4.63|62.45
+.items [2]
+    Product Item 000008|18.56|1|SKU-000008
+    Product Item 000009|19.63|2|SKU-000009
+@462 customer.00087@example.com|88|Customer Number 00087|enterprise|^|ORD-0463|processing|139.18|11.13|150.31
+.items [3]
+    Product Item 000011|21.77|1|SKU-000011
+    Product Item 000012|22.84|2|SKU-000012
+    Product Item 000013|23.91|3|SKU-000013
+@463 customer.00088@example.com|89|Customer Number 00088|standard|^|ORD-0464|delivered|180.63|14.45|195.08
+.items [4]
+    Product Item 000014|24.98|1|SKU-000014
+    Product Item 000015|25.05|2|SKU-000015
+    Product Item 000016|26.12|3|SKU-000016
+    Product Item 000017|27.19|1|SKU-000017
+@464 customer.00089@example.com|90|Customer Number 00089|premium|^|ORD-0465|cancelled|27.19|2.18|29.37
+.items [1]
+    Product Item 000017|27.19|1|SKU-000017
+@465 customer.00090@example.com|91|Customer Number 00090|standard|^|ORD-0466|shipped|93.34|7.47|100.81
+.items [2]
+    Product Item 000020|30.4|1|SKU-000020
+    Product Item 000021|31.47|2|SKU-000021
+@466 customer.00091@example.com|92|Customer Number 00091|premium|^|ORD-0467|pending|210.22|16.82|227.04
+.items [3]
+    Product Item 000023|33.61|1|SKU-000023
+    Product Item 000024|34.68|2|SKU-000024
+    Product Item 000025|35.75|3|SKU-000025
+@467 customer.00092@example.com|93|Customer Number 00092|enterprise|^|ORD-0468|processing|268.51|21.48|289.99
+.items [4]
+    Product Item 000026|36.82|1|SKU-000026
+    Product Item 000027|37.89|2|SKU-000027
+    Product Item 000028|38.96|3|SKU-000028
+    Product Item 000029|39.03|1|SKU-000029
+@468 customer.00093@example.com|94|Customer Number 00093|standard|^|ORD-0469|delivered|39.03|3.12|42.15
+.items [1]
+    Product Item 000029|39.03|1|SKU-000029
+@469 customer.00094@example.com|95|Customer Number 00094|premium|^|ORD-0470|cancelled|128.86|10.31|139.17
+.items [2]
+    Product Item 000032|42.24|1|SKU-000032
+    Product Item 000033|43.31|2|SKU-000033
+@470 customer.00095@example.com|96|Customer Number 00095|standard|^|ORD-0471|shipped|281.26|22.5|303.76
+.items [3]
+    Product Item 000035|45.45|1|SKU-000035
+    Product Item 000036|46.52|2|SKU-000036
+    Product Item 000037|47.59|3|SKU-000037
+@471 customer.00096@example.com|97|Customer Number 00096|premium|^|ORD-0472|pending|352.39|28.19|380.58
+.items [4]
+    Product Item 000038|48.66|1|SKU-000038
+    Product Item 000039|49.73|2|SKU-000039
+    Product Item 000040|50.8|3|SKU-000040
+    Product Item 000041|51.87|1|SKU-000041
+@472 customer.00097@example.com|98|Customer Number 00097|enterprise|^|ORD-0473|processing|51.87|4.15|56.02
+.items [1]
+    Product Item 000041|51.87|1|SKU-000041
+@473 customer.00098@example.com|99|Customer Number 00098|standard|^|ORD-0474|delivered|164.38|13.15|177.53
+.items [2]
+    Product Item 000044|54.08|1|SKU-000044
+    Product Item 000045|55.15|2|SKU-000045
+@474 customer.00099@example.com|100|Customer Number 00099|premium|^|ORD-0475|cancelled|352.3|28.18|380.48
+.items [3]
+    Product Item 000047|57.29|1|SKU-000047
+    Product Item 000048|58.36|2|SKU-000048
+    Product Item 000049|59.43|3|SKU-000049
+@475 customer.00100@example.com|101|Customer Number 00100|standard|^|ORD-0476|shipped|435.27|34.82|470.09
+.items [4]
+    Product Item 000050|60.5|1|SKU-000050
+    Product Item 000051|61.57|2|SKU-000051
+    Product Item 000052|62.64|3|SKU-000052
+    Product Item 000053|63.71|1|SKU-000053
+@476 customer.00101@example.com|102|Customer Number 00101|premium|^|ORD-0477|pending|63.71|5.1|68.81
+.items [1]
+    Product Item 000053|63.71|1|SKU-000053
+@477 customer.00102@example.com|103|Customer Number 00102|enterprise|^|ORD-0478|processing|202.9|16.23|219.13
+.items [2]
+    Product Item 000056|66.92|1|SKU-000056
+    Product Item 000057|67.99|2|SKU-000057
+@478 customer.00103@example.com|104|Customer Number 00103|standard|^|ORD-0479|delivered|423.34|33.87|457.21
+.items [3]
+    Product Item 000059|69.13|1|SKU-000059
+    Product Item 000060|70.2|2|SKU-000060
+    Product Item 000061|71.27|3|SKU-000061
+@479 customer.00104@example.com|105|Customer Number 00104|premium|^|ORD-0480|cancelled|518.15|41.45|559.6
+.items [4]
+    Product Item 000062|72.34|1|SKU-000062
+    Product Item 000063|73.41|2|SKU-000063
+    Product Item 000064|74.48|3|SKU-000064
+    Product Item 000065|75.55|1|SKU-000065
+@480 customer.00105@example.com|106|Customer Number 00105|standard|^|ORD-0481|shipped|75.55|6.04|81.59
+.items [1]
+    Product Item 000065|75.55|1|SKU-000065
+@481 customer.00106@example.com|107|Customer Number 00106|premium|^|ORD-0482|pending|238.42|19.07|257.49
+.items [2]
+    Product Item 000068|78.76|1|SKU-000068
+    Product Item 000069|79.83|2|SKU-000069
+@482 customer.00107@example.com|108|Customer Number 00107|enterprise|^|ORD-0483|processing|495.38|39.63|535.01
+.items [3]
+    Product Item 000071|81.97|1|SKU-000071
+    Product Item 000072|82.04|2|SKU-000072
+    Product Item 000073|83.11|3|SKU-000073
+@483 customer.00108@example.com|109|Customer Number 00108|standard|^|ORD-0484|delivered|601.03|48.08|649.11
+.items [4]
+    Product Item 000074|84.18|1|SKU-000074
+    Product Item 000075|85.25|2|SKU-000075
+    Product Item 000076|86.32|3|SKU-000076
+    Product Item 000077|87.39|1|SKU-000077
+@484 customer.00109@example.com|110|Customer Number 00109|premium|^|ORD-0485|cancelled|87.39|6.99|94.38
+.items [1]
+    Product Item 000077|87.39|1|SKU-000077
+@485 customer.00110@example.com|111|Customer Number 00110|standard|^|ORD-0486|shipped|273.94|21.92|295.86
+.items [2]
+    Product Item 000080|90.6|1|SKU-000080
+    Product Item 000081|91.67|2|SKU-000081
+@486 customer.00111@example.com|112|Customer Number 00111|premium|^|ORD-0487|pending|571.42|45.71|617.13
+.items [3]
+    Product Item 000083|93.81|1|SKU-000083
+    Product Item 000084|94.88|2|SKU-000084
+    Product Item 000085|95.95|3|SKU-000085
+@487 customer.00112@example.com|113|Customer Number 00112|enterprise|^|ORD-0488|processing|683.91|54.71|738.62
+.items [4]
+    Product Item 000086|96.02|1|SKU-000086
+    Product Item 000087|97.09|2|SKU-000087
+    Product Item 000088|98.16|3|SKU-000088
+    Product Item 000089|99.23|1|SKU-000089
+@488 customer.00113@example.com|114|Customer Number 00113|standard|^|ORD-0489|delivered|99.23|7.94|107.17
+.items [1]
+    Product Item 000089|99.23|1|SKU-000089
+@489 customer.00114@example.com|115|Customer Number 00114|premium|^|ORD-0490|cancelled|309.46|24.76|334.22
+.items [2]
+    Product Item 000092|102.44|1|SKU-000092
+    Product Item 000093|103.51|2|SKU-000093
+@490 customer.00115@example.com|116|Customer Number 00115|standard|^|ORD-0491|shipped|642.46|51.4|693.86
+.items [3]
+    Product Item 000095|105.65|1|SKU-000095
+    Product Item 000096|106.72|2|SKU-000096
+    Product Item 000097|107.79|3|SKU-000097
+@491 customer.00116@example.com|117|Customer Number 00116|premium|^|ORD-0492|pending|769.79|61.58|831.37
+.items [4]
+    Product Item 000098|108.86|1|SKU-000098
+    Product Item 000099|109.93|2|SKU-000099
+    Product Item 000100|110|3|SKU-000100
+    Product Item 000101|111.07|1|SKU-000101
+@492 customer.00117@example.com|118|Customer Number 00117|enterprise|^|ORD-0493|processing|111.07|8.89|119.96
+.items [1]
+    Product Item 000101|111.07|1|SKU-000101
+@493 customer.00118@example.com|119|Customer Number 00118|standard|^|ORD-0494|delivered|344.98|27.6|372.58
+.items [2]
+    Product Item 000104|114.28|1|SKU-000104
+    Product Item 000105|115.35|2|SKU-000105
+@494 customer.00119@example.com|120|Customer Number 00119|premium|^|ORD-0495|cancelled|713.5|57.08|770.58
+.items [3]
+    Product Item 000107|117.49|1|SKU-000107
+    Product Item 000108|118.56|2|SKU-000108
+    Product Item 000109|119.63|3|SKU-000109
+@495 customer.00120@example.com|121|Customer Number 00120|standard|^|ORD-0496|shipped|856.67|68.53|925.2
+.items [4]
+    Product Item 000110|120.7|1|SKU-000110
+    Product Item 000111|121.77|2|SKU-000111
+    Product Item 000112|122.84|3|SKU-000112
+    Product Item 000113|123.91|1|SKU-000113
+@496 customer.00121@example.com|122|Customer Number 00121|premium|^|ORD-0497|pending|123.91|9.91|133.82
+.items [1]
+    Product Item 000113|123.91|1|SKU-000113
+@497 customer.00122@example.com|123|Customer Number 00122|enterprise|^|ORD-0498|processing|380.5|30.44|410.94
+.items [2]
+    Product Item 000116|126.12|1|SKU-000116
+    Product Item 000117|127.19|2|SKU-000117
+@498 customer.00123@example.com|124|Customer Number 00123|standard|^|ORD-0499|delivered|784.54|62.76|847.3
+.items [3]
+    Product Item 000119|129.33|1|SKU-000119
+    Product Item 000120|130.4|2|SKU-000120
+    Product Item 000121|131.47|3|SKU-000121
+@499 customer.00124@example.com|125|Customer Number 00124|premium|^|ORD-0500|cancelled|813.8|65.1|878.9
+.items [4]
+    Product Item 000122|132.54|1|SKU-000122
+    Product Item 000123|133.61|2|SKU-000123
+    Product Item 000124|134.68|3|SKU-000124
+    Product Item 000000|10|1|SKU-000000
