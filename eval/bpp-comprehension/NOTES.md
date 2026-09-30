@@ -99,7 +99,7 @@ have passed. So JSON's rate is deflated; true ~14/19.
 | gemini-2.5-flash 1000 r1 | 68.4 | 70.6* | 52.6 | *1 infra skip |
 | gemini-2.5-flash 1000 r2 | 68.4 | 72.2* | 52.6 | replicates r1; bpp identical fails |
 | llama-3.1-8b 500 | **63.2** | 57.9 | 42.1 | weak model: gcf > json > bpp; bpp craters |
-| llama-3.3-70b 500 | **73.7** | 52.6 | 42.1 | 8b->70b lifts gcf +10, bpp FROZEN at 42.1 |
+| llama-3.3-70b 500 | **73.7** | 52.6 | 42.1 | 8b(mean 47.8)->70b lifts gcf +26; bpp flat (38.8->42.1) |
 | llama-4-maverick 1000 | **63.2** | 52.6 | 57.9 | json choked on 203k payload; gcf beats both |
 | deepseek-v3 500 | **88.2** | 81.2 | 63.2 | frontier-class; bpp still -25 (infra skips on gcf/json) |
 | gemma-3-27b 500 | **61.1** | n/a | 31.6 | json provider-rejected (context cap); bpp halved |
@@ -115,8 +115,9 @@ Models: 8 counted (7 families: Google, Meta, DeepSeek, Mistral, Gemma, Cohere). 
 
 GCF has the lowest error rate of the three in every pooling. bpp sits near a coin-flip.
 
-**Capacity does not rescue bpp.** Scaling the model 8b -> 70b improved GCF +10 points but
-left bpp flat at 42.1. The 70b STILL returns literal pointer tokens (`"*256"`, `"*322"`,
+**Capacity does not rescue bpp.** Scaling the model 8b -> 70b improved GCF's mean accuracy
++26 points (47.8% over 8 runs -> 73.7%, n=1) but barely moved bpp (38.8% -> 42.1%). The 70b
+STILL returns literal pointer tokens (`"*256"`, `"*322"`,
 `"*372"`) for the SKU lookups. So "just use a better model" fails: a capable 70B confronted
 with bpp's reference table hands back the raw `*N` undereferenced, while it reads GCF fine
 and improves with scale. The indirection defeats the model regardless of capacity.
