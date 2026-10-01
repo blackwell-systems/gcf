@@ -174,6 +174,29 @@ tabular for open-weight. Harness `gcf-go/eval/keyed_map_comprehension_test.go`; 
 `results/comprehension/keyedmap-*.log`; summary `results/keyed-map-comprehension.json`. See
 `ENCODE-AUTO-DESIGN.md` Appendix B.
 
+### Near-constant-column factoring (safe-tier cardinality check, 60 members)
+
+A column holding one value across every row can be factored to a single declaration (lossless).
+Unlike dictionary/affix techniques (per-row reference indirection), this is one global fact, so
+it should be comprehension-safe. 8 runs, 5 models, arms repeated (column on every row) / factored
+(declared once) / json; weak models repeated to n=2.
+
+| Model | overall rep/fac | region questions (the constant) rep vs fac |
+|-------|-----------------|--------------------------------------------|
+| command-r | 100% / 100% | 6/6 vs 6/6 |
+| mistral-nemo | 100% / 100% | 6/6 vs 6/6 |
+| LLaMA 3.1 8B | 100% / 100% | 6/6 vs 6/6 |
+| LLaMA 3.3 70B | 100% / 100% | 3/3 vs 3/3 |
+| Gemini 3.8 Flash | 100% / 100% | 3/3 vs 3/3 |
+
+Pooled region questions: repeated 24/24, factored 24/24 (100% both). The decisive contrast:
+command-r and mistral-nemo cratered on keyed-map (-25, -19) but read the factored constant
+perfectly. A single global constant stated once is one fact applied to all rows; per-row
+reference indirection is a lookup weak models fail. So near-constant factoring is the one
+cardinality technique eligible for the SAFE auto tier; dictionary/affix stay lossy-gated.
+Harness `gcf-go/eval/constant_column_comprehension_test.go`; logs
+`results/comprehension/constcol-*.log`; summary `results/constant-column-comprehension.json`.
+
 ### Methodology notes
 
 - OpenAI runs used default temperature (non-zero). This introduces variance across runs but reflects real-world usage. Future runs should set `temperature: 0` for tighter confidence intervals.

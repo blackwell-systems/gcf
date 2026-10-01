@@ -1,0 +1,31 @@
+Constant-Column Factoring Comprehension Eval
+Backend: openai (mistralai/mistral-nemo)
+Members: 60, Questions: 6, Formats: repeated, factored, json
+repeated     2283 bytes, ~570 tokens
+factored     1846 bytes, ~461 tokens
+json         8001 bytes, ~2000 tokens
+
+  PASS region_mid           repeated   [exact] expected="us-east" got="us-east"
+  PASS region_mid           factored   [exact] expected="us-east" got="us-east"
+  PASS region_mid           json       [exact] expected="us-east" got="us-east"
+  PASS region_deep          repeated   [exact] expected="us-east" got="us-east"
+  PASS region_deep          factored   [exact] expected="us-east" got="us-east"
+  PASS region_deep          json       [exact] expected="us-east" got="us-east"
+  PASS region_first         repeated   [exact] expected="us-east" got="us-east"
+  PASS region_first         factored   [exact] expected="us-east" got="us-east"
+  PASS region_first         json       [exact] expected="us-east" got="us-east"
+  PASS count                repeated   [exact] expected="60" got="60"
+  PASS count                factored   [exact] expected="60" got="60"
+  PASS count                json       [exact] expected="60" got="60"
+  PASS dept_mid             repeated   [exact] expected="Sales" got="Sales"
+  PASS dept_mid             factored   [exact] expected="Sales" got="Sales"
+  PASS dept_mid             json       [exact] expected="Sales" got="Sales"
+  PASS dept_deep            repeated   [exact] expected="Finance" got="Finance"
+  PASS dept_deep            factored   [exact] expected="Finance" got="Finance"
+  PASS dept_deep            json       [exact] expected="Finance" got="Finance"
+
+=== Summary ===
+repeated   100.0% 6/6
+factored   100.0% 6/6
+json       100.0% 6/6
+Log: results/comprehension/constcol-60members-openai-mistralai_mistral-nemo-2026-09-30-195655.log

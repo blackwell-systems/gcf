@@ -98,7 +98,11 @@ reintroduces pointer indirection (the comprehension failure the safe tier exists
 and affix-factoring adds reconstruction load. So cardinality-driven selection is gated behind
 the lossy opt-in and never runs in the safe router. The one comprehension-safe case is a
 near-constant column (a single value across every row) factored to one declaration: that is
-lossless and legible, and may be used in the safe tier.
+lossless and legible, and belongs in the safe tier. **Measured 2026-09-30:** factored vs repeated
+read 100% / 100% across 5 models including the weak ones (command-r, mistral-nemo, llama-8b) that
+cratered on keyed-map, pooled region questions 24/24 both forms. A single global constant is one
+fact a model applies to all rows, not a per-row reference lookup, which is exactly why it is safe
+where the index/affix techniques are not. Summary `eval/results/constant-column-comprehension.json`.
 
 ## Multi-turn stability (hard constraint)
 

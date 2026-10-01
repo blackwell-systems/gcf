@@ -1,0 +1,65 @@
+{
+  "study": "near-constant-column factoring comprehension",
+  "date": "2026-09-30",
+  "members": 60,
+  "temperature": 0.2,
+  "arms": [
+    "repeated",
+    "factored",
+    "json"
+  ],
+  "note": "A column holding one value across every row, factored to a single declaration vs repeated per row. Tests whether a model reads the constant correctly when stated once.",
+  "finding": "100% on both forms across all 5 models incl. the weak ones (command-r, mistral-nemo, llama-8b) that cratered on keyed-map. A single global constant is one fact applied to all rows, not a per-row reference indirection. Safe for the SAFE auto tier.",
+  "pooled_region_questions": {
+    "repeated": "24/24",
+    "factored": "24/24",
+    "both_pct": 100
+  },
+  "results": [
+    {
+      "model": "cohere/command-r-08-2024",
+      "runs": 2,
+      "repeated": 100.0,
+      "factored": 100.0,
+      "json": 83.3,
+      "region_repeated": "6/6",
+      "region_factored": "6/6"
+    },
+    {
+      "model": "google/gemini-3.8-flash",
+      "runs": 1,
+      "repeated": 100.0,
+      "factored": 100.0,
+      "json": 100.0,
+      "region_repeated": "3/3",
+      "region_factored": "3/3"
+    },
+    {
+      "model": "meta-llama/llama-3.1-8b-instruct",
+      "runs": 2,
+      "repeated": 100.0,
+      "factored": 100.0,
+      "json": 91.7,
+      "region_repeated": "6/6",
+      "region_factored": "6/6"
+    },
+    {
+      "model": "meta-llama/llama-3.3-70b-instruct",
+      "runs": 1,
+      "repeated": 100.0,
+      "factored": 100.0,
+      "json": 100.0,
+      "region_repeated": "3/3",
+      "region_factored": "3/3"
+    },
+    {
+      "model": "mistralai/mistral-nemo",
+      "runs": 2,
+      "repeated": 100.0,
+      "factored": 100.0,
+      "json": 100.0,
+      "region_repeated": "6/6",
+      "region_factored": "6/6"
+    }
+  ]
+}
