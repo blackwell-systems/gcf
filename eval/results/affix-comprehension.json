@@ -1,0 +1,32 @@
+{
+  "study": "affix / template-factoring comprehension — FRONTIER-ONLY / DEGRADES",
+  "date": "2026-09-30",
+  "arms": [
+    "flat (full value in the cell)",
+    "affix (shared prefix+suffix declared once in the header; cell carries only the varying middle)",
+    "json"
+  ],
+  "members": [60, 200],
+  "temperature": 0.2,
+  "affix_pattern": "email = \"acct-\" + <middle> + \"@team.example.com\"",
+  "note": "Affix factoring declares a column's shared prefix/suffix once and carries only the varying middle per row. Big lossless token win (affix written once not N times) and beats whole-value interning (bpp) because the values are DISTINCT. It was classed as reconstruction/reference indirection in ENCODE-AUTO-DESIGN.md and gated frontier-only BY ANALOGY to keyed-map/dictionary, never directly measured. This harness measures it on a high-cardinality email column with a both-sided affix; the varying middle is a deterministic token NOT derivable from the id, so the model must fetch the middle and reassemble. Returning the bare middle (no reconstruction) or the wrong middle is a FAIL.",
+  "finding": "FRONTIER-ONLY / DEGRADES. Affix factoring degrades the reconstructed field on 4 of 5 models. Pooled affix-field (email) accuracy across 10 runs: affix 43.3% vs flat 90.0% vs json 90.0% (-46.7pp on the factored field vs flat). Per-model affix-vs-flat delta on email: command-r -1, mistral-nemo -1 to -2, llama-3.1-8b -3 (TOTAL COLLAPSE, 0/3 both sizes), gemma-3-12b 0 to -1 (only model that nearly holds), llama-3.3-70b -1. The decisive failure mode is affix-exclusive: the model applies the affix correctly (wraps prefix+suffix) but substitutes the id or row-number for the real middle, yielding a well-formed, confidently-WRONG value (e.g. expected acct-xnm59@team.example.com, got acct-u0200@team.example.com). This is reconstruction indirection: reassembling a value from a distant header rule is a lookup weak models fail, same family as keyed-map / dictionary / enum. Token win is real (-37% vs flat, -76% vs json) but paid for with silent corruption on most models. NOT safe-tier: gated frontier-only / AllowLossyGrammar, never auto-selected. Confirms the prior by-analogy classification with direct measurement.",
+  "measurement_hygiene": "Two failure modes were separated. (1) Prefix-drop (model returns middle+suffix, drops 'acct-'): this appears in FLAT too for mistral-nemo, i.e. some models treat 'acct-' as a droppable label even when read verbatim, which depresses that model's ABSOLUTE flat baseline. The honest metric is therefore the affix-vs-flat DELTA, which controls for it. (2) Wrong-middle reconstruction is affix-only and unambiguous, and is the signal the verdict rests on. The json count/row noise (llama-8b count=40 on a 200-row array) is the known weak-model long-array counting failure, unrelated.",
+  "pooled_email_field": {
+    "flat": 90.0,
+    "affix": 43.3,
+    "json": 90.0,
+    "affix_delta_vs_flat": -46.7
+  },
+  "tokens": {
+    "n60":  {"flat": 884,  "affix": 564,  "json": 2298, "affix_vs_flat": "-36%"},
+    "n200": {"flat": 2911, "affix": 1822, "json": 7651, "affix_vs_flat": "-37%"}
+  },
+  "results_email_field_x_of_3": [
+    {"model": "cohere/command-r-08-2024",        "flat": [3, 3], "affix": [2, 2], "json": [3, 3]},
+    {"model": "mistralai/mistral-nemo",          "flat": [1, 2], "affix": [0, 0], "json": [3, 3], "note": "flat baseline depressed by prefix-drop; use delta"},
+    {"model": "meta-llama/llama-3.1-8b-instruct","flat": [3, 3], "affix": [0, 0], "json": [3, 2], "note": "total collapse; always substitutes the id for the middle"},
+    {"model": "google/gemma-3-12b-it",           "flat": [3, 3], "affix": [3, 2], "json": [2, 3], "note": "only model that nearly holds"},
+    {"model": "meta-llama/llama-3.3-70b-instruct","flat": [3, 3], "affix": [2, 2], "json": [3, 3]}
+  ]
+}

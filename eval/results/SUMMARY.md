@@ -281,6 +281,27 @@ format: the tabular grammar is robust to column order, so the encoder should NOT
 which would only complicate multi-turn pack_root/delta stability for no gain. Not adopted into
 `EncodeAuto`. Logs `results/comprehension/colorder-*.log`; summary `results/column-ordering-NEGATIVE.json`.
 
+### Affix / template factoring (high-cardinality compression) — FRONTIER-ONLY / DEGRADES
+
+Tested affix factoring: for a high-cardinality column whose values share a prefix/suffix (emails,
+URLs, SKUs), declare the affix once in the header and carry only the varying middle per row
+(`email=affix("acct-","@team.example.com")`, cell = middle only). Big lossless token win that also
+beats whole-value interning (bpp) because the values are distinct. It was gated frontier-only BY
+ANALOGY to keyed-map/dictionary; this measures it directly on a both-sided email affix, middle token
+NOT derivable from the id. Result: **degrades the reconstructed field on 4 of 5 models.** Pooled
+affix-field accuracy over 10 runs: **affix 43.3% vs flat 90.0% vs json 90.0%** (-46.7pp vs flat).
+Per-model affix-vs-flat delta: command-r -1, mistral-nemo -1 to -2, llama-8b **-3 (total collapse,
+0/3)**, gemma-12b 0 to -1 (only near-hold), llama-70b -1. The decisive, affix-exclusive failure mode:
+the model applies the affix correctly but substitutes the id/row-number for the real middle, yielding
+a well-formed confidently-WRONG value (expected `acct-xnm59@...`, got `acct-u0200@...`). Reconstruction
+indirection: reassembling from a distant header rule is a lookup weak models fail, same family as
+keyed-map/dictionary. Token win is real (-37% vs flat, -76% vs json) but paid for with silent
+corruption on most models (banked tokens by being wrong, same shape as bpp). NOT safe-tier: gated
+frontier-only / `AllowLossyGrammar`, never auto-selected. Hygiene: a separate prefix-drop mode
+(model drops `acct-` even in flat on mistral-nemo) depresses that model's absolute flat baseline, so
+the affix-vs-flat DELTA is the honest metric; the wrong-middle mode the verdict rests on is
+affix-only. Logs `results/comprehension/affix-*.log`; summary `results/affix-comprehension.json`.
+
 ### Methodology notes
 
 - OpenAI runs used default temperature (non-zero). This introduces variance across runs but reflects real-world usage. Future runs should set `temperature: 0` for tighter confidence intervals.

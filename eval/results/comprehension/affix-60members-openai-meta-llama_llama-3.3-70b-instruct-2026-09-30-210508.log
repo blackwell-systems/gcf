@@ -1,0 +1,29 @@
+Affix / Template-Factoring Comprehension Eval
+Backend: openai (meta-llama/llama-3.3-70b-instruct)
+Members: 60, Questions: 5, Formats: flat, affix, json
+affix: email = "acct-" + <middle> + "@team.example.com"
+flat       3536 bytes, ~884 tokens
+affix      2257 bytes, ~564 tokens
+json       9195 bytes, ~2298 tokens
+
+  PASS email_early  flat   [exact] expected="acct-fpb00@team.example.com" got="acct-fpb00@team.example.com"
+  FAIL email_early  affix  [got "acct-u0001@team.example.com"] expected="acct-fpb00@team.example.com" got="acct-u0001@team.example.com"
+  PASS email_early  json   [exact] expected="acct-fpb00@team.example.com" got="acct-fpb00@team.example.com"
+  PASS email_mid    flat   [exact] expected="acct-wfh30@team.example.com" got="acct-wfh30@team.example.com"
+  PASS email_mid    affix  [exact] expected="acct-wfh30@team.example.com" got="acct-wfh30@team.example.com"
+  PASS email_mid    json   [exact] expected="acct-wfh30@team.example.com" got="acct-wfh30@team.example.com"
+  PASS email_deep   flat   [exact] expected="acct-xnm59@team.example.com" got="acct-xnm59@team.example.com"
+  PASS email_deep   affix  [exact] expected="acct-xnm59@team.example.com" got="acct-xnm59@team.example.com"
+  PASS email_deep   json   [exact] expected="acct-xnm59@team.example.com" got="acct-xnm59@team.example.com"
+  PASS name_ctrl    flat   [exact] expected="Member 0031" got="Member 0031"
+  PASS name_ctrl    affix  [exact] expected="Member 0031" got="Member 0031"
+  PASS name_ctrl    json   [exact] expected="Member 0031" got="Member 0031"
+  PASS count        flat   [exact] expected="60" got="60"
+  PASS count        affix  [exact] expected="60" got="60"
+  PASS count        json   [exact] expected="60" got="60"
+
+=== Summary ===
+flat     100.0% 5/5  (affix-field email 3/3)
+affix    80.0% 4/5  (affix-field email 2/3)
+json     100.0% 5/5  (affix-field email 3/3)
+Log: results/comprehension/affix-60members-openai-meta-llama_llama-3.3-70b-instruct-2026-09-30-210508.log

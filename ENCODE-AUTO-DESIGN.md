@@ -116,7 +116,7 @@ whole payload:
 |---|---|---|
 | Low cardinality (few distinct values, high repetition) | **value-grouping (columnar RLE):** cluster rows under the value as a group subheader, members bare | **SAFE** (measured) |
 | Low cardinality, alternatively | dictionary / enum: declare the value set once, reference by index | lossy (reference indirection) |
-| High cardinality with shared structure (distinct values, common prefix or suffix) | affix / template factoring: declare the affix once, carry only the varying middle | lossy |
+| High cardinality with shared structure (distinct values, common prefix or suffix) | affix / template factoring: declare the affix once, carry only the varying middle | lossy (reconstruction indirection, **measured**) |
 | High cardinality, unstructured | leave inline; nothing to exploit | n/a |
 
 A low-cardinality column has **two** techniques, and they land in different tiers, which is the
@@ -135,6 +135,15 @@ legible, safe-tier. **Measured 2026-09-30:** factored vs repeated 100% / 100% ac
 including the weak ones (command-r, mistral-nemo, llama-8b) that cratered on keyed-map
 (`eval/results/constant-column-comprehension.json`). A single global constant is one fact applied
 to all rows, not a per-row lookup, which is why it is safe where index/affix are not.
+
+**Affix factoring measured 2026-09-30 (closes the by-analogy gap).** A both-sided email affix
+(`acct-` + middle + `@team.example.com`, middle not derivable from the id) degraded the reconstructed
+field on 4 of 5 models: pooled affix 43.3% vs flat 90.0% vs json 90.0% (-46.7pp vs flat); llama-8b
+collapsed to 0/3 (always substituting the id for the middle), only gemma-12b nearly held. The
+affix-exclusive failure mode is the predicted one: the model wraps the affix correctly but picks the
+WRONG middle, producing a well-formed confidently-wrong value (`acct-u0200@...` for
+`acct-xnm59@...`). Token win is real (-37% vs flat) but banked by being silently wrong, same shape as
+bpp. So affix stays lossy / frontier-only, never safe-router (`eval/results/affix-comprehension.json`).
 
 **Adding exceptions breaks it.** A *near*-constant column (a default plus a sparse overrides list)
 is NOT safe-tier. The overrides are read correctly (pooled 96%, both forms), but the exceptions

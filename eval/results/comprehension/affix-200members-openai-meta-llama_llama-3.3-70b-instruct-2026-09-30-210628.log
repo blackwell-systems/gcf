@@ -1,0 +1,29 @@
+Affix / Template-Factoring Comprehension Eval
+Backend: openai (meta-llama/llama-3.3-70b-instruct)
+Members: 200, Questions: 5, Formats: flat, affix, json
+affix: email = "acct-" + <middle> + "@team.example.com"
+flat      11647 bytes, ~2911 tokens
+affix      7288 bytes, ~1822 tokens
+json      30605 bytes, ~7651 tokens
+
+  PASS email_early  flat   [exact] expected="acct-fpb00@team.example.com" got="acct-fpb00@team.example.com"
+  FAIL email_early  affix  [got "acct-u0001@team.example.com"] expected="acct-fpb00@team.example.com" got="acct-u0001@team.example.com"
+  PASS email_early  json   [exact] expected="acct-fpb00@team.example.com" got="acct-fpb00@team.example.com"
+  PASS email_mid    flat   [exact] expected="acct-pxm00@team.example.com" got="acct-pxm00@team.example.com"
+  FAIL email_mid    affix  [got "acct-u0101@team.example.com"] expected="acct-pxm00@team.example.com" got="acct-u0101@team.example.com"
+  PASS email_mid    json   [exact] expected="acct-pxm00@team.example.com" got="acct-pxm00@team.example.com"
+  PASS email_deep   flat   [exact] expected="acct-sdl99@team.example.com" got="acct-sdl99@team.example.com"
+  FAIL email_deep   affix  [got "acct-u0200@team.example.com"] expected="acct-sdl99@team.example.com" got="acct-u0200@team.example.com"
+  FAIL email_deep   json   [got "sdl99@team.example.com"] expected="acct-sdl99@team.example.com" got="sdl99@team.example.com"
+  PASS name_ctrl    flat   [exact] expected="Member 0101" got="Member 0101"
+  PASS name_ctrl    affix  [exact] expected="Member 0101" got="Member 0101"
+  PASS name_ctrl    json   [exact] expected="Member 0101" got="Member 0101"
+  PASS count        flat   [exact] expected="200" got="200"
+  PASS count        affix  [exact] expected="200" got="200"
+  PASS count        json   [exact] expected="200" got="200"
+
+=== Summary ===
+flat     100.0% 5/5  (affix-field email 3/3)
+affix    40.0% 2/5  (affix-field email 0/3)
+json     80.0% 4/5  (affix-field email 2/3)
+Log: results/comprehension/affix-200members-openai-meta-llama_llama-3.3-70b-instruct-2026-09-30-210628.log
