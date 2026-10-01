@@ -1047,9 +1047,11 @@ A field in the tabular field union (Section 7.4.3) is a **constant column** when
 
 A field that is a nested value in any record (an attachment `^`/`^{fields}`, a flattened `>` path column per Section 7.4.6, or an array) is never a constant column: only scalar leaves are factored.
 
-A buffered encoder MUST factor every constant column, except that **at least one per-record (bare) field MUST remain** so the rows retain a line representation. If every field in the union is constant (the array is N identical objects), the encoder MUST leave the last field in union order unfactored and emit it as an ordinary repeated column. (The key column of a keyed map, Section 7.2a, is per-member distinct and is never constant; constant-column factoring of keyed-map value fields is not defined in this version and MUST NOT be emitted.)
+A buffered encoder MUST factor every constant column of an eligible array (see the scope below), except that **at least one per-record (bare) field MUST remain** so the rows retain a line representation. If every field in the union is constant (the array is N identical objects), the encoder MUST leave the last field in union order unfactored and emit it as an ordinary repeated column. (The key column of a keyed map, Section 7.2a, is per-member distinct and is never constant; constant-column factoring of keyed-map value fields is not defined in this version and MUST NOT be emitted.)
 
 The two-record minimum mirrors the keyed-table minimum (Section 7.2a.1): a single-record array factors to a header carrying the only row's values and an empty row, which has no line representation, so factoring a one-record array is never performed.
+
+**Scope (encoder).** In this version, factoring applies to **top-level tabular arrays**: the root array (Section 7.1) and a named array that is the value of an object key (Section 7.3). Nested tabular arrays in attachment position (`.field [N]{...}`, Section 7.4.4) and expanded-item position (`@N [M]{...}`, Section 7.6) are emitted flat (not factored), because factoring interacts with the shared-array-schema reuse those positions rely on (Section 7.4.5.3). This is an encoder-scope restriction only: **decoders MUST accept factored columns in any tabular position**, since a factored header is self-describing and a future version may widen the encoder scope. A decoder therefore never rejects a factored nested array.
 
 ##### 7.4.7.2 Header
 
@@ -1322,7 +1324,7 @@ The field declaration in tabular headers MUST follow the field union computation
 
 #### Constant-column factoring
 
-Canonical buffered encoders MUST factor constant columns in tabular arrays per Section 7.4.7 (retaining at least one per-record column), declaring each at its field-union position as `name=value`. This is part of canonical tabular output. Value-grouping (Section 7.4.8) is never canonical; it is an opt-in producer choice carried explicitly by the `group=` clause, and the flat form remains the single canonical encoding.
+Canonical buffered encoders MUST factor constant columns in top-level tabular arrays (root and named) per Section 7.4.7 (retaining at least one per-record column), declaring each at its field-union position as `name=value`; nested-attachment and expanded-item tabular arrays are emitted flat in this version (Section 7.4.7.1 scope). This is part of canonical tabular output. Value-grouping (Section 7.4.8) is never canonical; it is an opt-in producer choice carried explicitly by the `group=` clause, and the flat form remains the single canonical encoding.
 
 #### Container selection
 
