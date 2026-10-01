@@ -176,3 +176,80 @@ superset.
 Spec note (profile selection rules + Target knob table) -> conformance fixtures for the
 classifier decision table -> Go implementation (`EncodeAuto` over existing encoders) -> port
 to the other SDKs. No SDK-first.
+
+## Appendix A: draft decision table (from existing data, 2026-09-30)
+
+Derived from runs already on disk, no new measurement. Sources cited per row.
+
+### Tiers (from the comprehension tables)
+
+| Tier | Models measured | Generic acc (GCF) | Note |
+|---|---|---|---|
+| frontier | Opus 4.6, Sonnet 4.6, Haiku 4.5, GPT-5.5, Grok, Gemini 2.5 Pro / 3.1 Pro / 3.5 Flash | 100% | at ceiling; knobs free and unneeded |
+| mid | Gemini 2.5 Flash, Mistral Medium, LLaMA 3.3 70B, LLaMA 4 Maverick, DeepSeek V3, GPT-4o-mini | ~65-95% | formats separate; knobs start paying |
+| small | LLaMA 3.1 8B, Mistral Small, Nova Micro/Lite, gemma-3-4b, Gemini Flash Lite | ~50-65% | knobs matter most |
+| below floor | Granite 4.0 Micro (31%), Qwen 3.6 35B (25%) | <35% | capacity gone; format cannot rescue; out of scope |
+
+Source: `eval/results/SUMMARY.md`, `docs/guide/small-models.md`.
+
+### Axis 1: payload shape -> grammar
+
+| Shape | Grammar | Evidence |
+|---|---|---|
+| array of `{id, kind, qualified_name}` + edges | graph | graph comprehension GCF 91.2 avg vs TOON 68.8 / JSON 54.1, leads every model (SUMMARY) |
+| array of records (flat or nested) | generic | generic comprehension 100% all frontier; GCF >= JSON on 17/19 models (SUMMARY) |
+| object of uniform-valued entries | keyed-map | token-optimal for the shape; comprehension NOT separately measured (see Appendix B) |
+| scalars / irregular | generic (fallback) | robust default, never degrades on any shape |
+
+Shape almost always dictates the profile, so Axis 1 is near-deterministic; the data confirms
+each profile is comprehension-safe rather than choosing between two profiles for one payload.
+
+### Axis 2: consumer tier -> knob set
+
+| Knob | frontier | mid | small | Evidence |
+|---|---|---|---|---|
+| flatten nested | on | off* | off* | open-weight regress 8-23% flattened vs nested; proprietary frontier 0 (`flatten-experiment`, 19 models) |
+| per-group counts | positional | labeled | labeled | +34pp weak/mid (11pp at 15 sym to 56pp at 500); labeled +14pp over positional, up to +29-40pp on nova-micro/llama-8b (`graph-trailer-counts/FINDINGS`) |
+| delta re-anchor | off / long | 15 | 15 (or shorter) | rescues weak models to full-resend quality; llama-3.3-70b deep drift (turns 41-50) closed (`generic-delta-comprehension/DEPTH-FINDINGS`) |
+
+**\*flatten keys on open-weight, not size.** The regression was measured on open-weight models;
+proprietary frontier show zero. The real rule is "flatten off for open-weight (mid and small),
+on for proprietary frontier." So this knob wants an open-weight bit in the tier declaration,
+not just a size bucket.
+
+### Known exceptions and gaps
+
+- flatten-off counter-cases: Qwen 3.6 35B and Kimi K2.7 read the flatter layout slightly
+  better. A per-model override table may be warranted.
+- keyed-map comprehension is inferred, not measured (Appendix B closes this).
+- Cardinality thresholds (lossy tier) remain unmeasured, off the safe path, deferred.
+
+## Appendix B: keyed-map comprehension run (closes Appendix A gap)
+
+A keyed-map **token** benchmark exists (`eval/keyed-map-benchmark.mjs`,
+`eval/results/keyed-map-benchmark.json`); its **comprehension** has never been measured. Axis 1
+lists keyed-map as a safe grammar on inference alone. This run confirms or demotes it.
+
+**Question.** On data expressible as both keyed-map and generic tabular, does the keyed-map
+grammar read as accurately as generic, across tiers, especially on small/open models?
+
+**Fixture.** A map of uniform-valued entries (id -> same-shape record), the natural keyed-map
+shape (lookup tables, config maps, per-key metadata). The same data encoded three ways:
+keyed-map, generic tabular, JSON. Deterministic ground truth.
+
+**Arms.** keyed-map vs generic vs JSON (TOON optional for context). All cold, no primer.
+
+**Models.** Non-reasoning instruct across tiers (reuse the generic-comprehension set): at least
+one frontier, Gemini 2.5 Flash, LLaMA 3.3 70B, LLaMA 3.1 8B, Mistral Small, Nova Micro. temp 0.2.
+
+**Questions.** Lookup by key, field extraction, count/filter, deterministic answers, bucketed
+correct/wrong/none, blank-gated.
+
+**Decision rule (pre-registered).** keyed-map stays an Axis-1 safe grammar only if it does not
+regress against generic on any tier (and no regress vs JSON). If it regresses on small/open
+models, it is demoted from the safe router to a tier-gated token optimization (same status as
+flatten): kept for frontier, off for the tiers where it reads worse.
+
+**Evidence bar.** Same as the producer-side aids: tier x size, n>=3, non-reasoning models,
+token cost paired to the accuracy delta, negative result documented not discarded. Harness:
+reuse `TestGenericComprehension` with a keyed-map arm, the lowest-cost path.
