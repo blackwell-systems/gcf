@@ -1,8 +1,22 @@
 # Value-grouping (columnar RLE): spec draft
 
-Status: draft, pre-merge. Comprehension-backed and scale-confirmed
-(`eval/results/columnar-rle-comprehension.json`): dept-of-member grouped 100% at N=60 and N=200.
-Ready to reconcile into SPEC.md Section 7. Author: Dayna Blackwell.
+Status: RECONCILED into SPEC.md Section 7.4.8 (v3.6.0), 2026-09-30. Superseded by the spec.
+Comprehension-backed and scale-confirmed (`eval/results/columnar-rle-comprehension.json`):
+dept-of-member grouped 100% at N=60 and N=200. Author: Dayna Blackwell.
+
+**Redesign on reconciliation (after adversarial spec review):** the draft's "lossless only for
+non-semantic order" was not decoder-verifiable (silent order loss, no rule violated). The shipped
+§7.4.8 requires an explicit `@`-marked key column (the §10a.1 identity marker) whose uniqueness the
+decoder enforces, so losslessness is a decoder-checkable keyed-set property. The grouping column now
+stays in the field declaration at its union position (named by `group={col}`, cell omitted from
+rows), so key order round-trips with no `@index` (the draft's open question is resolved by dropping
+it). Subheader form is `{col}={value} [{count}]` (matches the comprehension-tested form and
+disambiguates from inline-array headers). Grouped rows carry no attachments in v1; grouping is
+forbidden in streaming and delta sections. See SPEC.md §7.4.8 for the normative text.
+
+---
+
+(Original draft below, retained for history.)
 
 ## Motivation
 

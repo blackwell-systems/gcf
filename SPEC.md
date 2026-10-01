@@ -2,9 +2,9 @@
 
 ## Graph Compact Format: A Token-Optimized Wire Format for LLM Interactions
 
-**Version:** 3.5.3
+**Version:** 3.6.0
 
-**Date:** 2026-08-06
+**Date:** 2026-09-30
 
 **Status:** Stable (see Section 19 for status lifecycle)
 
@@ -356,11 +356,21 @@ object-section      = "##" SP key LF indented-object-body
 indented-object-body = *( INDENT object-member )
 
 ; --- Generic arrays ---
-named-array         = inline-array / array-block
+named-array         = inline-array / array-block / grouped-block
 anonymous-array     = anonymous-inline-array / anonymous-array-block
+                    / anonymous-grouped-block
 anonymous-inline-array = "##" SP count-bracket ":" [ SP scalar-list ] LF
 anonymous-array-block = "##" SP count-bracket [ field-decl ] LF array-body
 array-block         = "##" SP key SP count-bracket [ field-decl ] LF array-body
+; --- Grouped tabular (value-grouping, Section 7.4.8): field-decl MUST carry one
+;     "@" key field and MUST NOT list the grouping column's per-row cell ---
+grouped-block       = "##" SP key SP count-bracket field-decl SP group-clause LF
+                      grouped-body
+anonymous-grouped-block = "##" SP count-bracket field-decl SP group-clause LF
+                      grouped-body
+group-clause        = "group=" field-name
+grouped-body        = 1*( group-subheader 1*tabular-row )
+group-subheader     = field-name "=" scalar SP "[" count "]" LF
 anonymous-keyed-block = "##" SP keyed-bracket field-decl LF tabular-body
 keyed-block         = "##" SP key SP keyed-bracket field-decl LF tabular-body
 inline-array        = key count-bracket ":" [ SP scalar-list ] LF
@@ -393,7 +403,11 @@ inline-object-attachment = scalar *( "|" scalar ) LF
 count-bracket       = "[" count-or-deferred "]"
 count-or-deferred   = count / "?"
 keyed-bracket       = "[" count-or-deferred ":" "]"
-field-decl          = "{" field-name *( "," field-name ) "}"
+field-decl          = "{" field-entry *( "," field-entry ) "}"
+field-entry         = [ "@" ] field-name [ "=" scalar ]
+                    ; leading "@" marks the identity/key column (delta Section 10a,
+                    ; grouped Section 7.4.8); "=scalar" marks a constant column
+                    ; (Section 7.4.7). Both are context-constrained by those sections.
 scalar-list         = scalar *( "," scalar )
 
 ; --- Scalars (Section 2) ---
@@ -665,7 +679,7 @@ A `[{count}:]` header MUST declare at least two fields (the key column plus at l
 One row per member, in input order (Section 7.11): `{keyvalue}|{v1}|{v2}|...`
 
 - **Cell 0** is the member key, an ordinary scalar cell governed by Sections 2.4 and 2.1. Because JSON keys are strings, the Section 2.4 quoting obligation already forces quoting of any key that would otherwise decode as a non-string (numeric-like, `-`, `true`, `~`, `^`, empty, leading `#`/`@`/`.`, or containing `|`), so cell 0 round-trips as a string with no keyed-map-specific rule. Duplicate member keys are an error.
-- **Cells 1..M** use the full Section 7.4 tabular row grammar: scalars directly; `-` for null and `~` for absent (Section 7.4.2); nested values via `^`/`^{fields}` attachments (Sections 7.4.4, 7.4.5) or `>` flattened path columns (Section 7.4.6). For token efficiency the encoder MUST select the smallest valid form per field and MAY reuse shared schemas (Section 7.4.5.3). A row carrying one or more attachment cells takes the `@{id}` prefix required by Section 7.4.4, where the id is the member's zero-based emission index; the key remains cell 0.
+- **Cells 1..M** use the full Section 7.4 tabular row grammar: scalars directly; `-` for null and `~` for absent (Section 7.4.2); nested values via `^`/`^{fields}` attachments (Sections 7.4.4, 7.4.5) or `>` flattened path columns (Section 7.4.6). For token efficiency the encoder MUST select the smallest valid form per field and MAY reuse shared schemas (Section 7.4.5.3). A row carrying one or more attachment cells takes the `@{id}` prefix required by Section 7.4.4, where the id is the member's zero-based emission index; the key remains cell 0. Constant-column factoring (Section 7.4.7) and value-grouping (Section 7.4.8) do not apply to keyed-map value fields in this version; keyed-map value cells are always per-member.
 
 Example:
 
@@ -741,6 +755,8 @@ Example:
 2|Bob Jones|Sales|72000
 3|Carol Wu|Marketing|85000
 ```
+
+A field declaration entry may also carry a constant value (`name=value`) when the field is identical across every record (Section 7.4.7), and a keyed-set array may carry a `group={col}` clause that clusters the records by one low-cardinality column (Section 7.4.8).
 
 #### 7.4.2 Null versus missing
 
@@ -998,6 +1014,182 @@ Bob|bob@co.com
 
 Both are valid. Flattening produces fewer lines and tokens. Decoders MUST accept both forms.
 
+#### 7.4.7 Constant-column factoring
+
+When a field holds the identical scalar value in every record of a tabular array, that value is factored out of the rows and declared once in the field declaration as `name=value`. The rows then carry cells only for the remaining (per-record) fields. This is lossless and preserves field order; it is a column-level analogue of the way a keyed table factors shared fields into one header (Section 7.2a).
+
+```
+## members [4]{id,name,region=us-east,level}
+u1|Alice|3
+u2|Bob|1
+u3|Carol|4
+u4|Dave|2
+```
+
+decodes to
+
+```json
+[
+  {"id": "u1", "name": "Alice", "region": "us-east", "level": 3},
+  {"id": "u2", "name": "Bob", "region": "us-east", "level": 1},
+  {"id": "u3", "name": "Carol", "region": "us-east", "level": 4},
+  {"id": "u4", "name": "Dave", "region": "us-east", "level": 2}
+]
+```
+
+##### 7.4.7.1 Selection
+
+A field in the tabular field union (Section 7.4.3) is a **constant column** when all of the following hold:
+
+1. the array has at least two records;
+2. the field is **present** in every record (never absent `~`, Section 7.4.2) with a value that is a scalar leaf (a Section 2 scalar, or null);
+3. that value is byte-identical across every record under canonical scalar formatting (Section 2.3.1). Explicit null in every record is a constant column with value null; the field being absent in any record disqualifies it (absent is not a value).
+
+A field that is a nested value in any record (an attachment `^`/`^{fields}`, a flattened `>` path column per Section 7.4.6, or an array) is never a constant column: only scalar leaves are factored.
+
+A buffered encoder MUST factor every constant column, except that **at least one per-record (bare) field MUST remain** so the rows retain a line representation. If every field in the union is constant (the array is N identical objects), the encoder MUST leave the last field in union order unfactored and emit it as an ordinary repeated column. (The key column of a keyed map, Section 7.2a, is per-member distinct and is never constant; constant-column factoring of keyed-map value fields is not defined in this version and MUST NOT be emitted.)
+
+The two-record minimum mirrors the keyed-table minimum (Section 7.2a.1): a single-record array factors to a header carrying the only row's values and an empty row, which has no line representation, so factoring a one-record array is never performed.
+
+##### 7.4.7.2 Header
+
+A constant column is declared in the field declaration as `name=value` at the field's position in the Section 7.4.3 union order:
+
+```
+field-entry = field-name [ "=" const-value ]
+```
+
+- `field-name` uses the common key grammar (Section 2a), bare or quoted. The `=` that introduces a constant value is the first unquoted `=` after the (possibly quoted) field name; because a bare key cannot contain `=` (Section 2a.1), an unquoted `=` is unambiguous. A field name that itself contains `=` is quoted (`"a=b"`), so its characters are not confused with the constant-value separator.
+- `const-value` is a scalar under the Section 2 precedence rules: `-` decodes as null, a number grammar match decodes as a number, `true`/`false` as boolean, otherwise a string. It is never the absent marker `~` (a row-cell-only token, Section 2.1); a constant column is present in every record by definition. The encoder MUST quote the value per the Section 2.4 obligation, and additionally MUST quote it when it contains `,` or `}` (the active field-declaration delimiters). A constant null is written `region=-`; the string `"-"` is written `region="-"`; the empty string is written `region=""` (a bare empty value is never emitted).
+- Within a field declaration, `,` and `}` are structural only **outside** quoted field names and quoted constant values. A parser MUST consume a complete quoted-string (Section 2.2) for a quoted name or value before resuming the delimiter scan, so a constant value containing `,` or `}` (for example `region="a}b"`) does not prematurely terminate the declaration. This mirrors the field-name rule of Section 2a.3.
+- Constant and per-record fields may interleave in any union-order arrangement; the declaration preserves the Section 7.4.3 order exactly.
+
+##### 7.4.7.3 Rows
+
+Each row carries one cell per **per-record (bare)** field, in union order, skipping constant columns. The row cell count equals the number of bare fields. Row grammar is otherwise unchanged (Section 7.4), including `@{id}` prefixes for rows bearing attachments: a constant column is a scalar leaf and never has an attachment, so attachment bodies and the `@{id}` rule apply only to the bare columns.
+
+##### 7.4.7.4 Decoder
+
+A decoder MUST support constant-column factoring. For each field-declaration entry, an unquoted `=` marks a constant column: the text before it is the field name (Section 2a), the text after it is the constant value (Section 2 scalar). Entries without an unquoted `=` are per-record fields.
+
+For each record, the decoder reconstructs keys in declaration order: a constant column contributes its declared value for every record; a per-record field consumes the next row cell left-to-right. A decoder MUST reject:
+
+- a row whose cell count does not match the number of per-record (bare) fields;
+- a field declaration in which every field is constant (no bare column remains), since such rows cannot be represented;
+- a constant column whose declared value is an attachment marker (`^`, `^{fields}`) or any non-scalar form;
+- a constant column whose value token is a bare `~` (the absent marker is a row-cell-only token, Section 2.1, with no meaning in a field declaration);
+- a field entry with an empty bare value (`name=` immediately followed by `,` or `}`; the empty string is always quoted, Section 2.4) or an empty unquoted name (`=value`; an empty key is always quoted, Section 2a.1);
+- a constant-column entry in the key-column position of a keyed map (Section 7.2a), which is not defined.
+
+Round-trip: `decode(encode(x)) == x`. Because the declaration carries each constant field at its union position and the decoder inserts it there for every record, field order and values are preserved exactly.
+
+##### 7.4.7.5 Interaction with delta and count
+
+Constant-column status is a property of the data, so it can change between turns of a delta or session (Section 10a): a column constant in one snapshot may gain a differing value in the next and move from the header to a per-record column, or vice versa. This is an ordinary structural difference the delta expresses through the re-sent header and rows; the member count (Section 13) is unaffected, since factoring changes columns, not the number or identity of records.
+
+In a delta payload (Section 10a) the `## added` and `## changed` sections are tabular arrays, so an encoder MUST factor their constant columns per this section, and a `## added`/`## changed` header MAY therefore carry `name=value` constant entries; the enumerated delta header grammar (Section 10a.2) is not closed against them. The identity (`@`-marked) column has unique values (Section 10a.1) and is therefore never a constant column and never factored; a `## removed` line carries only the identity value and is not subject to factoring. `pack_root` (Section 10a.3) is computed from decoded records and is unaffected by whether a column is factored.
+
+##### 7.4.7.6 Versioning
+
+Constant-column factoring is added in v3.6.0. The `name=value` field-declaration entry uses an unquoted `=`, which was invalid in a field name before v3.6.0 (Section 2a.1), so no conformant pre-v3.6.0 payload is reinterpreted and existing output is unaffected. A pre-v3.6.0 decoder rejects the unquoted `=` as an invalid field name, so decoders MUST be updated to read v3.6.0 output. Additive under the Stable lifecycle (Section 19).
+
+#### 7.4.8 Value-grouping (keyed-set run clustering)
+
+When a tabular array models a **keyed set** (its records are identified by a unique key and its order is not semantic) and one field is low-cardinality, the array MAY be emitted **grouped** by that field: records are clustered by the field's value, the value is written once per cluster in a subheader, and the cluster's records follow as rows with that field's cell omitted. This factors a repeated column the way Section 7.4.7 does, but per cluster rather than globally. Grouping requires an explicit key column (Section 7.4.8.1) so the result is a decoder-verifiable set, and it reorders records, so it is optional and never canonical (Section 7.4.8.6).
+
+```
+## members [6]{@id,name,dept,level} group=dept
+dept=Sales [2]
+u1|Alice|3
+u4|Dave|2
+dept=Engineering [3]
+u2|Bob|1
+u3|Carol|4
+u6|Frank|5
+dept=Support [1]
+u5|Eve|2
+```
+
+decodes to the following set of six records, keyed by `id` (shown in grouped emission order; because the array models a keyed set, element order is not significant):
+
+```json
+[
+  {"id": "u1", "name": "Alice", "dept": "Sales", "level": 3},
+  {"id": "u4", "name": "Dave", "dept": "Sales", "level": 2},
+  {"id": "u2", "name": "Bob", "dept": "Engineering", "level": 1},
+  {"id": "u3", "name": "Carol", "dept": "Engineering", "level": 4},
+  {"id": "u6", "name": "Frank", "dept": "Engineering", "level": 5},
+  {"id": "u5", "name": "Eve", "dept": "Support", "level": 2}
+]
+```
+
+##### 7.4.8.1 Key column (required)
+
+A grouped section MUST declare exactly one **key column**, marked by a leading `@` on its field name in the field declaration, with the identity-column semantics of Section 10a.1. The key column:
+
+- is an ordinary per-record column, carrying one cell per row;
+- has a value present in every record and **unique** across all records; a decoder MUST reject duplicate key values;
+- is never the grouping column and never a constant column (a unique column is never constant).
+
+The key column makes "this array is a keyed set, its order is not semantic" explicit in the wire and decoder-enforceable: because the keys are unique, the decoded records form a set keyed by that column, and `decode(encode(x)) == x` holds as that keyed set (Section 7.4.8.5). An array with no natural unique key is not eligible for value-grouping and uses the flat form (Sections 7.4.1-7.4.6). As with Section 10a.1, a decoder strips the `@` marker to obtain the field name; the `@`-marked field name was invalid in a non-delta tabular header before v3.6.0.
+
+##### 7.4.8.2 Header
+
+```
+## {name} [{count}]{fields} group={col}
+```
+
+- `{fields}` lists every field in Section 7.4.3 union order, with exactly one field marked as the key column by a leading `@` (Section 7.4.8.1), and MAY contain constant-column entries (Section 7.4.7). The grouping column appears in `{fields}` at its union position like any other field; only its per-row cell is omitted from the rows (its value comes from the subheader). Because the grouping column keeps its declared position, record key order round-trips with no position index.
+- `group=` introduces the grouping clause, written after the `}` of the field declaration and separated from it by a single space, and names the grouping column. `{col}` uses the common key grammar (Section 2a, quoted if needed) and runs to the end of the header line. It MUST name a field present in `{fields}`, MUST NOT name the `@` key column, and MUST NOT name a constant column. This clause was invalid in a tabular header before v3.6.0.
+
+##### 7.4.8.3 Body
+
+The body is a sequence of groups. Each group is one subheader line followed by exactly its declared count of records:
+
+```
+{col}={group-value} [{group-count}]
+{row}
+...
+```
+
+- The subheader repeats the grouping column name, `=`, the group value, a single space, and the record count in brackets (for example `dept=Sales [2]`). The leading `{col}` MUST equal the header `group=` column. `{group-value}` is the grouping column's value for every record in the group, a scalar governed by Sections 2.1 and 2.4 (quoted when its bare form would be ambiguous): a null group is `-`, the string `"-"` is `"-"`. The group value runs from the first unquoted `=` to the final ` [` that begins the count.
+- `{group-count}` uses the count grammar (Section 4); `0` is not permitted (a group names at least one record) and it is the exact number of records in the group.
+- Each row carries one cell per **per-record** field in union order, omitting the grouping column and any constant columns; the key-column cell is included. Row grammar is otherwise Section 7.4.
+- Records in a grouped section MUST NOT carry attachments (`^`/`^{fields}`, Section 7.4.4) in this version: the per-record fields are scalars or flattened `>` path columns (Section 7.4.6). A tabular array that needs attachment rows uses the flat form. (This keeps the row-ID `@{id}` prefix, which indexes attachment bodies by array position, out of the reordered grouped body, where it would conflict with the `@` key column as record identity.)
+- Group values MUST be distinct across subheaders (each value names exactly one group); within a group, records are distinct by their unique key.
+
+The structure is strictly subheader-then-count-records: a decoder reads a subheader and then consumes exactly `{group-count}` records before expecting the next subheader, so a record line is never distinguished from a subheader by its content.
+
+##### 7.4.8.4 Decoder
+
+A decoder MUST support value-grouping. It parses `group={col}`, confirms `{col}` is a non-key, non-constant field in `{fields}`, then for each group reads the subheader (confirming the subheader's leading column name equals `{col}`) and consumes exactly `{group-count}` records. For each record it maps the row cells to the per-record fields in union order (skipping the grouping column and any constant columns), takes the grouping column's value from the subheader and constant values from the header, and reconstructs the record's keys in full declared order (the `@` stripped from the key field name). The reconstructed array is the concatenation of groups in emission order, as a set keyed by the `@` column.
+
+A decoder MUST reject:
+
+- a group whose record count does not match its declared `{group-count}`, or a `{group-count}` of zero;
+- a document where the sum of group counts does not equal the section count `[{count}]` (Section 13);
+- a subheader whose leading column name does not equal the header `group=` column;
+- a `group=` clause naming a field absent from `{fields}`, the key column, or a constant column;
+- duplicate group values;
+- duplicate key-column values (Section 7.4.8.1);
+- other than exactly one `@` key column;
+- an attachment cell in any grouped record.
+
+##### 7.4.8.5 Losslessness, order, delta, and streaming
+
+Value-grouping reorders records into clusters, so it does not preserve array element order. It is lossless as the **keyed set** the `@` column defines: `decode(encode(x)) == x` as a set of records keyed by the identity column, a property the decoder enforces by rejecting duplicate keys. A producer selects value-grouping only for an array it models as a keyed set; the key column records that choice in the wire, so there is no silent order loss. A consumer that needs element order uses the flat form (Sections 7.4.1-7.4.6), which is the only form that preserves it.
+
+Value-grouping MUST NOT be used:
+
+- **in streaming mode** (Section 8): clustering requires the complete record set before the first subheader, which defeats the zero-buffering model. A streaming tabular section MUST NOT carry a `group=` clause.
+- **in delta sections** (Section 10a): `## added`, `## changed`, and `## removed` are already set-semantic and keyed by the identity column, and `pack_root` (Section 10a.3) is order-independent, so grouping adds nothing and MUST NOT be emitted there.
+
+##### 7.4.8.6 Selection and versioning
+
+Value-grouping is never canonical. The flat tabular array (Sections 7.4.1-7.4.6) is the canonical form; value-grouping is emitted only when a producer (or the opt-in classifier) selects it for an eligible keyed set. Both forms decode to the same keyed set, and the `group=` clause carries the choice explicitly in the wire, so the flat form remains the single canonical encoding.
+
+Value-grouping is added in v3.6.0. The `group=` header clause, the `@`-marked key column in a non-delta header, and the `{col}={value} [{count}]` subheader were invalid before v3.6.0, so existing output is unaffected and a pre-v3.6.0 decoder rejects them; decoders MUST be updated to read grouped sections. Additive under the Stable lifecycle (Section 19).
+
 ### 7.5 Primitive array encoding (inline)
 
 Arrays where every element is a primitive (string, number, boolean, null) are encoded inline:
@@ -1128,6 +1320,10 @@ Canonical encoders MUST emit object keys in the order they appear in the input v
 
 The field declaration in tabular headers MUST follow the field union computation (Section 7.4.3): first object's keys in input order, then newly observed keys in first-observed order.
 
+#### Constant-column factoring
+
+Canonical buffered encoders MUST factor constant columns in tabular arrays per Section 7.4.7 (retaining at least one per-record column), declaring each at its field-union position as `name=value`. This is part of canonical tabular output. Value-grouping (Section 7.4.8) is never canonical; it is an opt-in producer choice carried explicitly by the `group=` clause, and the flat form remains the single canonical encoding.
+
 #### Container selection
 
 Canonical buffered encoders MUST select array container encoding using Section 7.3 rules, and MUST encode an eligible object whose values are all objects as a keyed table using Section 7.2a. The selection is deterministic: same input produces the same encoding form, and for each keyed-map value field the encoder MUST select the smallest valid Section 7.4 form.
@@ -1192,6 +1388,8 @@ This is the sole exception to the buffered all-object tabular requirement: an al
 The streaming header MUST format the section name and every declared field name with the same quoting rules as a buffered tabular header (Section 2.4): a name is quoted when it would otherwise decode as a non-string or collide with structural syntax, and bare otherwise. A streaming encoder MUST NOT emit a raw, unquoted field name; a name containing a delimiter (`,` or `|`), a quote, or other structural characters would split the field declaration or produce an invalid header. This is the same obligation the buffered tabular header satisfies (Sections 7.4.3, 7.11).
 
 Because a streaming tabular row carries only flat columns (a streaming section has no per-row attachment mechanism), a streaming value field name MUST NOT contain the `>` character. A `>`-containing column is a flattened path (Section 7.4.6.2), which a stream cannot represent; the buffered path routes such a field to an attachment (Section 7.4.6.1), but a streaming section has no such fallback. A streaming encoder given a value field name containing `>` MUST reject it with an error.
+
+A streaming tabular section MUST NOT carry a `group=` clause (value-grouping, Section 7.4.8): clustering requires the complete record set before the first subheader, which a stream does not have, so grouping is a buffered-only form.
 
 ### 8.4 Trailer summary
 
@@ -1632,6 +1830,15 @@ For inline primitive arrays (`name[N]: val1,val2,...`):
 
 Count validation applies recursively. A tabular row containing a nested array with its own count bracket MUST have that nested count validated independently.
 
+### 13.5 Grouped tabular sections
+
+For a value-grouped tabular section (`group=`, Section 7.4.8):
+- Each group subheader declares `[{group-count}]`; exactly that many records MUST follow before the next subheader or the section end.
+- `{group-count}` MUST be at least 1 (an empty group is never emitted).
+- The sum of all group counts MUST equal the section's declared `[N]`.
+- A mismatch at either level is an error; decoders MUST reject it.
+- Constant columns (Section 7.4.7) reduce the per-row cell count but do not change the record (data-item) count.
+
 ## 14. Token Savings Analysis
 
 *This section is informative.*
@@ -1876,7 +2083,7 @@ This specification follows a three-stage lifecycle:
 | **Stable** | The grammar is frozen. No breaking changes. Additive extensions only. Implementations may depend on stability for production use. |
 | **Frozen** | No changes of any kind. The specification is archived. |
 
-Current status: **Stable** (v3.5.3 designated 2026-08-14; v3.5.2 2026-08-10; v3.5.1 2026-08-09; v3.5.0 2026-08-06).
+Current status: **Stable** (v3.6.0 designated 2026-09-30; v3.5.3 2026-08-14; v3.5.2 2026-08-10; v3.5.1 2026-08-09; v3.5.0 2026-08-06).
 
 ### 19.3 Version history
 
@@ -1887,6 +2094,8 @@ Since v3.0 the specification has grown additively only (Stable: no breaking chan
 **v3.4.1** added a trailing `distance` field to the graph delta `## added` line (Section 10.1), so a consumer can reconstruct the new snapshot and verify `new_root` (`pack_root` includes distance; Sections 10.2, 10.4). A delta-only line-form correction.
 
 **v3.5.0** added keyed-tabular map encoding (Section 7.2a): a JSON object whose values are all objects forming a losslessly-tabular set is encoded with the shared value fields declared once and one `key|values` row per member, marked by `[N:]`, first-class in nested (Sections 7.4.4, 7.6) and streaming (`[?:]`, Section 8) positions and reusing generic delta (Section 10a) unchanged with the map key as the delta identity. This changes the canonical output for such maps from per-key section blocks to a keyed table. Existing payloads are unaffected (the `[N:]` marker was previously an invalid count; all other constructs decode identically); a pre-v3.5 decoder rejects `[N:]`, so decoders MUST be updated to read v3.5 map output. Additive under the Stable lifecycle. v3.5.0 also canonicalizes negative zero to `0` for both integer and floating-point values (Section 2.3.1, superseding the prior sign-preserving guidance, since `-0` and `0` denote the same value and integer negative zero is not representable in most language number models), specifies that a buffered graph header omits zero-valued `budget`, `tokens`, and `edges` (Sections 3.2, 16.1), and states that structural tokens and delimiters are matched at the Unicode scalar (code point) level rather than grapheme clusters (Section 1).
+
+**v3.6.0** adds two tabular column optimizations to the generic profile. **Constant-column factoring** (Section 7.4.7): when a field holds the identical scalar value in every record of a tabular array, the value is declared once in the field declaration as `name=value` and omitted from the rows. It is mandatory canonical (the buffered encoder MUST factor constant columns, at least one bare column retained), lossless, and comprehension-safe (measured 100% across the model tiers in `eval/results/constant-column-comprehension.json`). This changes the canonical output for tabular arrays that contain a constant column. **Value-grouping** (Section 7.4.8): an opt-in form that clusters a keyed set's records by one low-cardinality column, written as a `group={col}` header clause with per-group `{col}={value} [{count}]` subheaders. It requires an explicit `@`-marked key column (the Section 10a.1 identity marker) whose uniqueness the decoder enforces, so losslessness is a decoder-verifiable keyed-set property rather than an unverifiable order precondition; the grouping column keeps its declared position (its per-row cell is omitted), so key order round-trips without a position index. It reorders records, so it is opt-in and the flat form remains canonical. Both use header syntax (an unquoted `=` in a field entry, a `group=` clause after `}`) that was invalid before v3.6.0, so existing payloads are unaffected and a pre-v3.6.0 decoder rejects the new forms; decoders MUST be updated to read v3.6.0 output. Additive under the Stable lifecycle. Affix/template factoring and whitespace-maximal encoding were evaluated and deliberately NOT adopted into the canonical format: both degrade comprehension on non-frontier models (`eval/results/affix-comprehension.json`), so they remain out-of-spec encoder options, never canonical or auto-selected.
 
 **v3.5.3** (normative) specifies the canonical numeric domain (Section 2.3.2) as signed `int64` for integers and IEEE-754 double for non-integers. Earlier versions left the numeric domain implementation-defined, so handling of integers beyond the double-exact range (above 2^53) followed each host language's numeric type. This version defines exact `int64` handling uniformly across the fleet: decoders parse integer literals into an exact `int64`-capable type and return an out-of-range error outside `int64`; encoders return an out-of-range error for host integers outside `int64`. Values beyond `int64`, including unsigned-64 identifiers and exact decimals, are modelled as strings. The wire grammar is unchanged. Canonical number formatting (Section 2.3.1) is aligned to the domain: the plain-decimal upper bound for a double moves from 1e21 to 2^53, so a double at or above 2^53 (every such double is integer-valued) is emitted in exponent notation instead of as a bare-integer token, keeping bare tokens unambiguously `int64` and decodable by a binary64-integer host (JavaScript) under its default policy; this changes the byte output only for doubles in [2^53, 1e21). Because it changes value handling (an implementation-defined domain becomes a specified one), it is normative rather than a clarification like v3.5.2, and is gated at this version boundary. Accordingly, a v3.5.3 decoder returning an out-of-range error for a payload that an earlier, implementation-defined decoder accepted is correct behaviour at that boundary, not a regression. The domain is the closed interval `[-2^63, 2^63-1]` (asymmetric: `-2^63` valid, `-2^63-1` and `2^63` out of range), enforced fleet-wide on the interval bounds rather than magnitude. The 2^53 boundary is JavaScript-local (its `number` precision limit, not the domain), applies to both signs (magnitude above 2^53-1), and is handled by a documented SDK policy that defaults to an out-of-range error rather than silent approximation. Boundary conformance fixtures pin both edges, at both signs (including `-2^63` and `-2^63-1`).
 
