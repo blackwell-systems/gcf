@@ -1,0 +1,33 @@
+Column-Ordering Comprehension Eval
+Backend: openai (cohere/command-r-08-2024)
+Members: 200, Questions: 6, Formats: baseline, salient_first, json
+baseline order:      id,name,dept,level,status,region,email,joined,lastSeen,plan,score,tier
+salient_first order: id,tier,name,dept,level,status,region,email,joined,lastSeen,plan,score
+baseline        21573 bytes, ~5393 tokens
+salient_first   21573 bytes, ~5393 tokens
+json            66085 bytes, ~16521 tokens
+
+  PASS tier_early     baseline       [exact] expected="bronze" got="bronze"
+  PASS tier_early     salient_first  [exact] expected="bronze" got="bronze"
+  PASS tier_early     json           [exact] expected="bronze" got="bronze"
+  PASS tier_mid       baseline       [exact] expected="bronze" got="bronze"
+  PASS tier_mid       salient_first  [exact] expected="bronze" got="bronze"
+  PASS tier_mid       json           [exact] expected="bronze" got="bronze"
+  PASS tier_deep      baseline       [exact] expected="diamond" got="diamond"
+  PASS tier_deep      salient_first  [exact] expected="diamond" got="diamond"
+  PASS tier_deep      json           [exact] expected="diamond" got="diamond"
+  PASS name_ctrl      baseline       [exact] expected="Member 0101" got="Member 0101"
+  PASS name_ctrl      salient_first  [exact] expected="Member 0101" got="Member 0101"
+  PASS name_ctrl      json           [exact] expected="Member 0101" got="Member 0101"
+  PASS score_ctrl     baseline       [exact] expected="1" got="1"
+  PASS score_ctrl     salient_first  [exact] expected="1" got="1"
+  PASS score_ctrl     json           [exact] expected="1" got="1"
+  PASS count          baseline       [exact] expected="200" got="200"
+  PASS count          salient_first  [exact] expected="200" got="200"
+  PASS count          json           [exact] expected="200" got="200"
+
+=== Summary ===
+baseline       100.0% 6/6  (relocated-field tier 3/3)
+salient_first  100.0% 6/6  (relocated-field tier 3/3)
+json           100.0% 6/6  (relocated-field tier 3/3)
+Log: results/comprehension/colorder-200members-openai-cohere_command-r-08-2024-2026-09-30-205445.log

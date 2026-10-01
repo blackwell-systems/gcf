@@ -154,6 +154,17 @@ reorders rows, so it is lossless only when array order is not semantic (keyed se
 decoder support (a real grammar extension, not a decoder-ignored aid). Spec draft:
 `VALUE-GROUPING-DRAFT.md`. This is the one cardinality-driven technique eligible for the safe tier.
 
+**Column ordering has no comprehension effect (tested, not adopted).** The hypothesis was that
+relocating a frequently-queried column adjacent to the id anchor would lift weak-model positional
+reads at zero token cost. It does not: moving a field from column 12 to column 2 (N=200, 12 columns,
+byte-identical) left the relocated field at 3/3 on every model in every format
+(`eval/results/column-ordering-NEGATIVE.json`). Models resolve a positional cell by its
+header-declared position regardless of distance from the anchor, because column position is local
+positional structure with no indirection. So the router does NOT reorder columns: there is no gain,
+and reordering would only risk multi-turn pack_root/delta stability. (Same through-line as above:
+local positional structure is safe; this just confirms it is also insensitive to position *within*
+the row.)
+
 ## Multi-turn stability (hard constraint)
 
 `pack_root`, delta, and session dedup assume a stable grammar across turns. If `EncodeAuto`

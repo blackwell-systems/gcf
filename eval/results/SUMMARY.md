@@ -261,6 +261,26 @@ convention-knowledge gap (explaining it does nothing) but a deeper execution/tok
 primers do not promote a frontier-only grammar to safe, routing (tier-gating) is the only fix.
 Documented negative. Summary `results/primer-comprehension-NEGATIVE.json`.
 
+### Column ordering (presentation-only reorder) — NEGATIVE
+
+Tested whether relocating a frequently-queried column adjacent to the id anchor lifts weak-model
+retrieval. In a generic tabular array the field order is declared once in the header and rows are
+positional, so reading a value means mapping a column position back to the header; the hypothesis
+was that a weak model counts positions less reliably the farther the column sits from column 1,
+so moving it next to the anchor should help at zero token cost (same bytes, permuted header + rows).
+A/B moved one field (`tier`) from the last column to column 2, all else held constant. Ran N=60/8-col
+(near ceiling, no headroom) then N=200/12-col to widen the distance; both forms byte-identical (21573
+bytes). Result: **the relocated field scored 3/3 on every model in every format** (command-r,
+mistral-nemo, llama-8b, gemma-12b, llama-70b) — zero lift from the move. The only sub-100 cell was
+llama-8b dropping one question under the reordered form, and that was the `score` distance control
+(far in both orders), with baseline answering it correctly: single-question noise, if anything weak
+evidence against reordering. Models resolve a positional cell by its header-declared position
+regardless of distance from the anchor, because column position is pure local positional structure
+with no indirection (consistent with the keyed-map / value-grouping through-line). Favorable for the
+format: the tabular grammar is robust to column order, so the encoder should NOT reorder columns,
+which would only complicate multi-turn pack_root/delta stability for no gain. Not adopted into
+`EncodeAuto`. Logs `results/comprehension/colorder-*.log`; summary `results/column-ordering-NEGATIVE.json`.
+
 ### Methodology notes
 
 - OpenAI runs used default temperature (non-zero). This introduces variance across runs but reflects real-world usage. Future runs should set `temperature: 0` for tighter confidence intervals.

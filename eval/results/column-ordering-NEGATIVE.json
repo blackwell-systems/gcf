@@ -1,0 +1,65 @@
+{
+  "study": "column ordering (presentation-only reorder) — NEGATIVE",
+  "date": "2026-09-30",
+  "arms": [
+    "baseline (queried field 'tier' in the LAST column, far from the id anchor)",
+    "salient_first (queried field 'tier' moved to column 2, adjacent to the id anchor)",
+    "json"
+  ],
+  "members": 200,
+  "columns": 12,
+  "temperature": 0.2,
+  "note": "In a GCF generic tabular array the field order is declared once in the header and every row is positional, so reading a value means mapping a column position back to the header. Hypothesis: a weak model counts positions less reliably the farther the queried column sits from the id anchor (column 1), so relocating a frequently-queried column adjacent to the anchor should lift retrieval at zero token cost (same bytes, permuted header + rows). A/B moves one field ('tier') from column 12 to column 2, holding all else constant. Ran at N=60/8-col first (near ceiling, no headroom), then N=200/12-col to widen the distance. Both forms are byte-identical (21573 bytes).",
+  "finding": "NEGATIVE / no-op. At N=200/12-col the relocated field 'tier' scored 3/3 on EVERY model in EVERY format — moving it from column 12 to column 2 produced zero lift. The only sub-100 cell was llama-3.1-8b dropping one question under salient_first, and that was the 'score' distance control (far in both orders), with baseline answering it correctly; single-question noise, if anything weak evidence against reordering. Models resolve a positional cell by its header-declared position regardless of distance from the anchor, because column position is pure local positional structure with no indirection. Consistent with the through-line (local structure safe, reference indirection not). This is a favorable result for the format: the tabular grammar is robust to column order, so the encoder should NOT reorder columns — doing so would only complicate multi-turn pack_root/delta stability for no comprehension gain. Not adopted into EncodeAuto.",
+  "pooled": {
+    "baseline": 100.0,
+    "salient_first": 96.7,
+    "lift": -3.3,
+    "relocated_field_tier_baseline": 100.0,
+    "relocated_field_tier_salient_first": 100.0,
+    "relocated_field_lift": 0.0
+  },
+  "results": [
+    {
+      "model": "cohere/command-r-08-2024",
+      "baseline": 100.0,
+      "salient_first": 100.0,
+      "json": 100.0,
+      "tier_baseline": "3/3",
+      "tier_salient_first": "3/3"
+    },
+    {
+      "model": "mistralai/mistral-nemo",
+      "baseline": 100.0,
+      "salient_first": 100.0,
+      "json": 100.0,
+      "tier_baseline": "3/3",
+      "tier_salient_first": "3/3"
+    },
+    {
+      "model": "meta-llama/llama-3.1-8b-instruct",
+      "baseline": 100.0,
+      "salient_first": 83.3,
+      "json": 83.3,
+      "tier_baseline": "3/3",
+      "tier_salient_first": "3/3",
+      "note": "salient_first miss was on the 'score' distance control (far in both orders), not the relocated field; baseline answered it correctly."
+    },
+    {
+      "model": "google/gemma-3-12b-it",
+      "baseline": 100.0,
+      "salient_first": 100.0,
+      "json": 100.0,
+      "tier_baseline": "3/3",
+      "tier_salient_first": "3/3"
+    },
+    {
+      "model": "meta-llama/llama-3.3-70b-instruct",
+      "baseline": 100.0,
+      "salient_first": 100.0,
+      "json": 100.0,
+      "tier_baseline": "3/3",
+      "tier_salient_first": "3/3"
+    }
+  ]
+}

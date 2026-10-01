@@ -1,0 +1,9 @@
+Column-Ordering Comprehension Eval
+Backend: openai (meta-llama/llama-3.3-70b-instruct)
+Members: 60, Questions: 6, Formats: baseline, salient_first, json
+baseline order:      id,name,dept,level,status,region,score,tier
+salient_first order: id,tier,name,dept,level,status,region,score
+baseline         3339 bytes, ~834 tokens
+salient_first    3339 bytes, ~834 tokens
+json            12159 bytes, ~3039 tokens
+
