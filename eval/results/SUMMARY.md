@@ -249,6 +249,18 @@ grammar extension, not a decoder-ignored aid). Harness `gcf-go/eval/columnar_rle
 logs `results/comprehension/rle-*.log`; summary `results/columnar-rle-comprehension.json`; spec draft
 `VALUE-GROUPING-DRAFT.md`.
 
+### Format primer (producer aid) — NEGATIVE
+
+Tested whether a one-line prose explainer of the keyed-table header, prepended to keyed-map (the
+grammar that cratered weak models), rescues weak-model comprehension. 8 runs, arms keyed-map (cold)
+/ keyed-map-primed / generic. Result: **+0.0 lift on every model** (command-r 56.2/56.2,
+mistral-nemo 62.5/62.5, llama-8b 68.8/68.8, llama-70b 87.5/87.5, gemini 100/100); both cold and
+primed still trail generic (pooled 70.3 vs generic 85.9). The primer was present (+220 bytes, ~55
+tokens) and changed zero answers. So the weak-model deficit on harder grammars is not a
+convention-knowledge gap (explaining it does nothing) but a deeper execution/tokenization limit;
+primers do not promote a frontier-only grammar to safe, routing (tier-gating) is the only fix.
+Documented negative. Summary `results/primer-comprehension-NEGATIVE.json`.
+
 ### Methodology notes
 
 - OpenAI runs used default temperature (non-zero). This introduces variance across runs but reflects real-world usage. Future runs should set `temperature: 0` for tighter confidence intervals.

@@ -1,0 +1,50 @@
+{
+  "study": "format primer (producer aid) \u2014 NEGATIVE",
+  "date": "2026-09-30",
+  "arms": [
+    "keyed-map (cold)",
+    "keyed-map-primed",
+    "generic"
+  ],
+  "members": 60,
+  "temperature": 0.2,
+  "note": "A one-line format explainer prepended to keyed-map (the grammar that cratered weak models), to test whether priming rescues weak-model comprehension.",
+  "finding": "NEGATIVE / dropped. Primer lift +0.0 on every model (identical scores cold vs primed); both still trail generic. Primer was verified present (+220 bytes). Explaining the format changes zero answers, so the weak-model deficit is not a convention-knowledge gap but a deeper execution/tokenization limit. Primers do NOT promote a frontier-only grammar to safe. Costs ~55 tokens for no gain.",
+  "pooled": {
+    "cold": 70.3,
+    "primed": 70.3,
+    "lift": 0.0
+  },
+  "results": [
+    {
+      "model": "cohere/command-r-08-2024",
+      "cold": 56.2,
+      "primed": 56.2,
+      "generic": 87.5
+    },
+    {
+      "model": "google/gemini-3.8-flash",
+      "cold": 100.0,
+      "primed": 100.0,
+      "generic": 100.0
+    },
+    {
+      "model": "meta-llama/llama-3.1-8b-instruct",
+      "cold": 68.8,
+      "primed": 68.8,
+      "generic": 75.0
+    },
+    {
+      "model": "meta-llama/llama-3.3-70b-instruct",
+      "cold": 87.5,
+      "primed": 87.5,
+      "generic": 100.0
+    },
+    {
+      "model": "mistralai/mistral-nemo",
+      "cold": 62.5,
+      "primed": 62.5,
+      "generic": 81.2
+    }
+  ]
+}
