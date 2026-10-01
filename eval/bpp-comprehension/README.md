@@ -1,6 +1,6 @@
-# bpp vs GCF vs JSON — Adversarial Generic-Profile Comprehension Study
+# bpp vs GCF vs JSON: Adversarial Generic-Profile Comprehension Study
 
-_Dayna Blackwell, 2026-09-30. Does bpp's token saving survive comprehension at scale, or does its whitespace grammar + reference indirection degrade structural reading?_
+_Dayna Blackwell, 2026-09-30. Does bpp's token saving survive comprehension at scale, or does its whitespace grammar and reference table degrade structural reading?_
 
 ## Scope
 
@@ -11,19 +11,19 @@ _Dayna Blackwell, 2026-09-30. Does bpp's token saving survive comprehension at s
 - **Scales:** 500 and 1000 nested order records  |  **Questions:** 19 (13 canonical + 6 deep lookups)  |  **temp 0.2**
 - **Formats:** gcf, json, bpp (bpp = refs=True, its shipping default). All presented COLD (format-name label only, no syntax primer), identical treatment.
 
-## Headline
+## Result
 
 **Mean per-model-cell error rate** (equal weight per model-cell, GCF's canonical method; avoids over-weighting the models with more repeat runs):
 
 | format | mean cell error | vs GCF |
 |---|---|---|
-| **gcf** | **31.2%** | — |
+| **gcf** | **31.2%** | baseline |
 | json | 40.0% | 1.28x |
 | **bpp** | **53.9%** | **1.73x** |
 
 _Pooled by data point (secondary; over-weights llama-3.1-8b at n=8): gcf 38.7% / json 40.4% / bpp 59.0% -> bpp 1.52x gcf._
 
-GCF has the lowest error rate by both methods. It **dominates JSON on both axes at once** (fewer tokens AND fewer errors) and roughly halves bpp's error, while bpp only ever wins raw token count.
+GCF has the lowest error rate by both methods, roughly half bpp's.
 
 ## Per-model results (accuracy% / error%)
 
@@ -42,26 +42,17 @@ GCF has the lowest error rate by both methods. It **dominates JSON on both axes 
 
 (cells are accuracy / error, pooled across that cell's runs. `n/a` = provider rejected the large payload for that format, not a comprehension result.)
 
-## Token cost (o200k, adversarial fixture)
-
-| N | JSON | GCF | bpp | bpp vs JSON | bpp vs GCF |
-|---|---|---|---|---|---|
-| 500 | 101,482 | 44,770 | 30,704 | -69.7% | -31.4% |
-| 1000 | 203,389 | 89,928 | 61,812 | -69.6% | -31.3% |
-
-bpp is the most compact (tokens conceded). The study asks only whether that compression costs comprehension.
-
 ## Key findings
 
 1. **GCF lowest error in every pooling; best-or-tied in nearly every cell.** bpp had the worst error rate in almost all cells.
 
-2. **The failure is a literal indirection failure.** bpp hoists repeated values to a top `&N` dictionary and points to them with `*N`. Models return the *pointer* instead of the value: `"375"`/`"749"` (the index) on capable models, `"*250"`/`"*256"`/`"*322"`/`"*372"` (the literal token) on weaker ones. GCF/JSON carry the value in place and cannot produce this.
+2. **The failure is the reference table.** bpp hoists repeated values to a top `&N` dictionary and points to them with `*N`. Models return the pointer instead of the value: `"375"`/`"749"` (the index) on capable models, `"*250"`/`"*256"`/`"*322"`/`"*372"` (the literal token) on weaker ones. GCF and JSON carry the value in place and cannot produce this.
 
 3. **Capacity masks the damage, it does not remove it.** The delimiter-merge is a tokenizer property applied to every model identically, before inference. Stronger models spend reserve capacity reconstructing the smeared structure; they still bleed (gemini-2.5-flash lost 21 points on bpp at N=500, 58 vs 79 on a comfortable payload) and the masking erodes as payload grows (68% at N=1000). There is no 'frontier-safe' regime, only a frontier-masked one. 8b->70b lifted GCF's mean accuracy +26 points (47.8% -> 73.7%) but barely moved bpp (38.8% -> 42.1%), and the 70b still returned raw `*N` (`*256`, `*322`, `*372`). Note: 8b mean is over 8 runs, 70b is n=1.
 
 4. **Token economics: the saving is erased once errors are priced.** bpp saves ~13k tokens/call vs GCF; one retried wrong answer re-sends ~27k (~2x the saving). bpp's extra error rate means ~1 extra wrong answer per ~5 calls, eating ~40-50% of the saving in retries alone, and silent errors (confident wrong value) are never retried, so the saving is simply spent on being wrong.
 
-## Caveats (honest)
+## Caveats
 
 - **Run-count imbalance:** llama-3.1-8b n=8, gemma-3-27b n=5, gemini-1000 n=2, rest n=1-2. Headline uses mean-of-cells to neutralize this; pooled shown as secondary.
 
@@ -73,16 +64,16 @@ bpp is the most compact (tokens conceded). The study asks only whether that comp
 
 - **Repeatability:** where repeated, bpp is highly stable (gemma 31.6% x5; mistral-small 31.6/29.4%), so the gap is not run-to-run noise.
 
-## Verdict
+## Conclusion
 
-**Use GCF.** It is the only Pareto-optimal choice: it beats JSON on tokens *and* comprehension simultaneously, and roughly halves bpp's error rate while still cutting tokens ~56-59% vs JSON. bpp's only win is raw token count, which is illusory once error cost is priced, and its grammar degrades structural reading on every model tier, not just weak ones. For any tool serving unknown models or non-trivial payloads, GCF is the correct default.
+**Use GCF.** It has the lowest comprehension error of the three formats, on every model tier, and roughly half bpp's. bpp's grammar degrades structural reading everywhere, not only on weak models, so a token count is the wrong axis to choose it on. For any tool serving unknown models or non-trivial payloads, GCF is the correct default.
 
 ## Artifacts
 
-- `results.csv` — per-run machine-readable data
-- `logs/` — raw per-run PASS/FAIL logs (expected vs got, every cell)
-- `encodings/` — exact payloads per format
-- `NOTES.md` — running lab notebook (method, mechanism, token economics)
+- `results.csv`: per-run machine-readable data
+- `logs/`: raw per-run PASS/FAIL logs (expected vs got, every cell)
+- `encodings/`: exact payloads per format
+- `NOTES.md`: running lab notebook (method, mechanism, token economics)
 
 
 ## Charts
