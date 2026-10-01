@@ -1,0 +1,18 @@
+{
+  "name": "018_decode_group_value_with_pipe",
+  "description": "A group value containing a pipe is quoted and round-trips as that value",
+  "operation": "decode",
+  "input": "GCF profile=generic\n## [2]{@id,g,x} group=g\ng=\"a|b\" [1]\nu1|1\ng=east [1]\nu2|2\n",
+  "expected": [
+    {
+      "id": "u1",
+      "g": "a|b",
+      "x": 1
+    },
+    {
+      "id": "u2",
+      "g": "east",
+      "x": 2
+    }
+  ]
+}

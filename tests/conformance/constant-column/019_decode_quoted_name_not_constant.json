@@ -1,0 +1,16 @@
+{
+  "name": "019_decode_quoted_name_not_constant",
+  "description": "A quoted field name containing = with varying values stays a normal column, not a constant",
+  "operation": "decode",
+  "input": "GCF profile=generic\n## [2]{\"a=b\",x}\n1|9\n2|8\n",
+  "expected": [
+    {
+      "a=b": 1,
+      "x": 9
+    },
+    {
+      "a=b": 2,
+      "x": 8
+    }
+  ]
+}

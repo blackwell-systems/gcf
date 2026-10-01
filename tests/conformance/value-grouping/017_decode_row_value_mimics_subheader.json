@@ -1,0 +1,18 @@
+{
+  "name": "017_decode_row_value_mimics_subheader",
+  "description": "A per-record cell whose value looks like a subheader is data; structure is subheader-then-count-records",
+  "operation": "decode",
+  "input": "GCF profile=generic\n## [2]{@id,dept,note} group=dept\ndept=Sales [2]\nu1|dept=Other [9]\nu2|x\n",
+  "expected": [
+    {
+      "id": "u1",
+      "dept": "Sales",
+      "note": "dept=Other [9]"
+    },
+    {
+      "id": "u2",
+      "dept": "Sales",
+      "note": "x"
+    }
+  ]
+}

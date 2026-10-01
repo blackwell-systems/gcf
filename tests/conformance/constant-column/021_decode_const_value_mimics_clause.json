@@ -1,0 +1,18 @@
+{
+  "name": "021_decode_const_value_mimics_clause",
+  "description": "A constant value that looks like a group clause is plain string data, not a clause",
+  "operation": "decode",
+  "input": "GCF profile=generic\n## [2]{id,note=\"group=x\",v}\nu1|1\nu2|2\n",
+  "expected": [
+    {
+      "id": "u1",
+      "note": "group=x",
+      "v": 1
+    },
+    {
+      "id": "u2",
+      "note": "group=x",
+      "v": 2
+    }
+  ]
+}

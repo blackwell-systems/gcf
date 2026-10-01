@@ -1,0 +1,16 @@
+{
+  "name": "020_decode_quoted_name_then_constant",
+  "description": "A quoted field name containing = followed by a constant value: the separator is the first UNQUOTED =",
+  "operation": "decode",
+  "input": "GCF profile=generic\n## [2]{\"a=b\"=5,x}\n1\n2\n",
+  "expected": [
+    {
+      "a=b": 5,
+      "x": 1
+    },
+    {
+      "a=b": 5,
+      "x": 2
+    }
+  ]
+}
