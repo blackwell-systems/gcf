@@ -141,6 +141,29 @@ Full results: `gcf-go/eval/results/v3/comprehension/flatten-experiment/README.md
 | Gemini 2.5 Pro | 1 | **100%** | 76.9% | 58.3% | +23.1 vs TOON |
 | Gemini 3.1 Pro | 1 | **100%** | 76.9% | 46.2% | +23.1 vs TOON |
 
+### Keyed-map runs (header-marker check, 60 members)
+
+GCF's keyed-map body is byte-identical to the tabular body; only the header differs
+(`## [N:]{key,...}` vs `## name [N]{id,...}`). This run isolates whether the keyed header reads
+as well as the tabular one. 6 models, 8 questions, temp 0.2, arms keyed-map / generic / json.
+
+| Model | keyed-map | generic | keyed vs generic |
+|-------|-----------|---------|------------------|
+| DeepSeek V3 | 100% | 100% | 0 |
+| Gemini 2.5 Flash | 100% | 100% | 0 |
+| Gemma 3 27B | 87.5% | 87.5% | 0 |
+| LLaMA 3.3 70B | 87.5% | 100% | **-12.5** |
+| LLaMA 3.1 8B | 50.0% | 75.0% | **-25.0** |
+| Mistral Small 3.2 24B | 100% | 100% | 0 |
+
+keyed-map ties generic on 4 of 6 models and regresses on both Llama models; it never beats
+generic. The keyed header (`[N:]{key,...}`, anonymous, generic `key` column) is less
+self-describing than the tabular header (named entity + explicit `id`), and weaker models lean
+on that grounding. Direction for `EncodeAuto`: keyed-map is a frontier-only / tier-gated grammar,
+the router uses tabular for open-weight. Caveat: n=8, single run. Harness
+`gcf-go/eval/keyed_map_comprehension_test.go`; logs `results/comprehension/keyedmap-*.log`;
+summary `results/keyed-map-comprehension.json`. See `ENCODE-AUTO-DESIGN.md` Appendix B.
+
 ### Methodology notes
 
 - OpenAI runs used default temperature (non-zero). This introduces variance across runs but reflects real-world usage. Future runs should set `temperature: 0` for tighter confidence intervals.

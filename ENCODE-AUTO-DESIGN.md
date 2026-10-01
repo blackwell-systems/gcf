@@ -198,7 +198,7 @@ Source: `eval/results/SUMMARY.md`, `docs/guide/small-models.md`.
 |---|---|---|
 | array of `{id, kind, qualified_name}` + edges | graph | graph comprehension GCF 91.2 avg vs TOON 68.8 / JSON 54.1, leads every model (SUMMARY) |
 | array of records (flat or nested) | generic | generic comprehension 100% all frontier; GCF >= JSON on 17/19 models (SUMMARY) |
-| object of uniform-valued entries | keyed-map | token-optimal for the shape; comprehension NOT separately measured (see Appendix B) |
+| object of uniform-valued entries | keyed-map (frontier only) / generic (open-weight) | measured (Appendix B): ties generic on frontier, regresses on open-weight Llama; tier-gated, not auto-safe below frontier |
 | scalars / irregular | generic (fallback) | robust default, never degrades on any shape |
 
 Shape almost always dictates the profile, so Axis 1 is near-deterministic; the data confirms
@@ -221,7 +221,8 @@ not just a size bucket.
 
 - flatten-off counter-cases: Qwen 3.6 35B and Kimi K2.7 read the flatter layout slightly
   better. A per-model override table may be warranted.
-- keyed-map comprehension is inferred, not measured (Appendix B closes this).
+- keyed-map comprehension: measured (Appendix B). Result: ties generic on frontier, regresses
+  on open-weight Llama, so demoted to a frontier-only tier-gated grammar in Axis 1.
 - Cardinality thresholds (lossy tier) remain unmeasured, off the safe path, deferred.
 
 ## Appendix B: keyed-map comprehension run (closes Appendix A gap)
@@ -253,3 +254,28 @@ flatten): kept for frontier, off for the tiers where it reads worse.
 **Evidence bar.** Same as the producer-side aids: tier x size, n>=3, non-reasoning models,
 token cost paired to the accuracy delta, negative result documented not discarded. Harness:
 reuse `TestGenericComprehension` with a keyed-map arm, the lowest-cost path.
+
+### Result (2026-09-30)
+
+Ran keyed-map vs generic (tabular) vs json, 60 members, 8 questions, temp 0.2, 6 models.
+Harness `TestKeyedMapComprehension` (`gcf-go/eval/keyed_map_comprehension_test.go`); logs in
+`eval/results/comprehension/keyedmap-*.log`; summary `eval/results/keyed-map-comprehension.json`.
+
+| model | keyed-map | generic | keyed vs generic |
+|---|---|---|---|
+| deepseek-v3 | 100 | 100 | 0 |
+| gemini-2.5-flash | 100 | 100 | 0 |
+| gemma-3-27b | 87.5 | 87.5 | 0 |
+| llama-3.1-8b | 50.0 | 75.0 | **-25** |
+| llama-3.3-70b | 87.5 | 100 | **-12.5** |
+| mistral-small | 100 | 100 | 0 |
+
+keyed-map ties generic on 4 of 6 and regresses on both Llama models; it never beats generic.
+Likely cause: the bodies are byte-identical, but the keyed header (`[N:]{key,...}`, anonymous,
+generic `key` column) is less self-describing than the tabular header (named entity + explicit
+`id`), and weaker models lean on that grounding.
+
+**Decision (per the pre-registered rule):** keyed-map is **demoted from the safe auto-router to
+a tier-gated optimization**. It stays eligible on `frontier`, where it ties; the router uses the
+tabular/generic form for open-weight (`mixed`/`small`). Caveat: n=8 questions, single run; the
+direction is clear, confirm magnitudes with more runs before hardening.
