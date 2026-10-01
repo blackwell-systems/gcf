@@ -155,6 +155,22 @@ Spec-first, measure-first (same discipline as every other GCF feature):
 - Auto-selecting lossy or comprehension-degrading grammars. Explicit, gated, never silent.
 - Replacing the explicit per-profile encoders. `EncodeAuto` sits above them; they stay.
 
+## Placement
+
+The classifier is SDK library code, shared by `EncodeAuto` and the CLI, implemented in gcf-go
+first. It is surfaced as a `gcf analyze` subcommand in each SDK's existing CLI (next to
+`encode` / `decode` / `stats`); the subcommand prints the classifier's report and owns no logic.
+
+Because every SDK ships a CLI, the classification must be identical across SDKs: the same input
+must yield the same recommendation everywhere, or `analyze` becomes a source of disagreement
+rather than guidance. So the shape-to-grammar decision table and the cardinality thresholds are
+spec'd and conformance-tested like the rest of the format.
+
+`gcf stats` (token counts and savings) stays a separate command. `gcf analyze` is the
+classification-and-recommendation report (shape, recommended grammar, per-column cardinality,
+estimated tokens per technique, comprehension-risk flag), and may include the stats numbers as a
+superset.
+
 ## Order of work (if approved)
 
 Spec note (profile selection rules + Target knob table) -> conformance fixtures for the
