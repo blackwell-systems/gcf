@@ -112,11 +112,16 @@ Inside the lossy tier, the compression technique can be chosen per column from t
 cardinality (distinct values relative to row count), rather than applying one scheme to the
 whole payload:
 
-| Column signal | Technique |
-|---|---|
-| Low cardinality (few distinct values, high repetition) | dictionary / enum: declare the value set once, reference by index |
-| High cardinality with shared structure (distinct values, common prefix or suffix) | affix / template factoring: declare the affix once, carry only the varying middle |
-| High cardinality, unstructured | leave inline; nothing to exploit |
+| Column signal | Technique | Tier |
+|---|---|---|
+| Low cardinality (few distinct values, high repetition) | **value-grouping (columnar RLE):** cluster rows under the value as a group subheader, members bare | **SAFE** (measured) |
+| Low cardinality, alternatively | dictionary / enum: declare the value set once, reference by index | lossy (reference indirection) |
+| High cardinality with shared structure (distinct values, common prefix or suffix) | affix / template factoring: declare the affix once, carry only the varying middle | lossy |
+| High cardinality, unstructured | leave inline; nothing to exploit | n/a |
+
+A low-cardinality column has **two** techniques, and they land in different tiers, which is the
+key result: value-grouping (local positional hierarchy) is comprehension-safe, dictionary/enum
+(reference by index) is not. See the value-grouping result below and `VALUE-GROUPING-DRAFT.md`.
 
 Picking the smaller technique per column dominates applying any single scheme uniformly,
 because each column's structure is different.
@@ -138,6 +143,16 @@ mistral-nemo 83->67; every failure a default row returning an exception value; f
 near-constant-with-exceptions is frontier-only / tier-gated, like keyed-map
 (`eval/results/near-constant-column-comprehension.json`). The safe-tier factoring is fully-constant
 columns only.
+
+**Value-grouping (columnar RLE) is the safe low-cardinality compression.** Grouping rows under a
+low-card column (value as a group subheader, members bare) is comprehension-safe at both N=60 and
+N=200: dept-of-member grouped 100% including command-r and mistral-nemo, with -8.8% / -14.6% token
+savings at N=60 / N=500 (`eval/results/columnar-rle-comprehension.json`). It holds where
+dictionary/enum fails because the group is a **local positional hierarchy** (a member sits
+physically under its header, read by proximity), not a distant reference. Constraint: grouping
+reorders rows, so it is lossless only when array order is not semantic (keyed sets); it also needs
+decoder support (a real grammar extension, not a decoder-ignored aid). Spec draft:
+`VALUE-GROUPING-DRAFT.md`. This is the one cardinality-driven technique eligible for the safe tier.
 
 ## Multi-turn stability (hard constraint)
 

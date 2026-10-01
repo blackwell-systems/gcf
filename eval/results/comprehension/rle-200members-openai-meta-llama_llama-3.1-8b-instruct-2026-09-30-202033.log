@@ -1,0 +1,31 @@
+Columnar RLE (value-grouping) Comprehension Eval
+Backend: openai (meta-llama/llama-3.1-8b-instruct)
+Members: 200, Questions: 6, Formats: flat, grouped, json
+flat         5857 bytes, ~1464 tokens
+grouped      4219 bytes, ~1054 tokens
+json        21221 bytes, ~5305 tokens
+
+  PASS dept_first     flat     [exact] expected="Operations" got="Operations"
+  PASS dept_first     grouped  [exact] expected="Operations" got="Operations"
+  PASS dept_first     json     [exact] expected="Operations" got="Operations"
+  PASS dept_mid       flat     [exact] expected="Sales" got="Sales"
+  PASS dept_mid       grouped  [exact] expected="Sales" got="Sales"
+  PASS dept_mid       json     [exact] expected="Sales" got="\"Sales\""
+  PASS dept_deep      flat     [exact] expected="Finance" got="Finance"
+  PASS dept_deep      grouped  [exact] expected="Finance" got="Finance"
+  PASS dept_deep      json     [exact] expected="Finance" got="\"Finance\""
+  FAIL count_eng      flat     [got "44"] expected="40" got="44"
+  PASS count_eng      grouped  [exact] expected="40" got="40"
+  FAIL count_eng      json     [got "34"] expected="40" got="34"
+  PASS level_mid      flat     [exact] expected="1" got="1"
+  PASS level_mid      grouped  [exact] expected="1" got="1"
+  PASS level_mid      json     [exact] expected="1" got="1"
+  PASS count          flat     [exact] expected="200" got="200"
+  FAIL count          grouped  [got "80"] expected="200" got="80"
+  FAIL count          json     [got "100"] expected="200" got="100"
+
+=== Summary ===
+flat       83.3% 5/6  (dept-of-member 3/3)
+grouped    83.3% 5/6  (dept-of-member 3/3)
+json       66.7% 4/6  (dept-of-member 3/3)
+Log: results/comprehension/rle-200members-openai-meta-llama_llama-3.1-8b-instruct-2026-09-30-202033.log

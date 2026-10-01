@@ -222,6 +222,33 @@ same weak models). The exceptions list is the hazard; a single global constant i
 `gcf-go/eval/near_constant_column_comprehension_test.go`; logs `results/comprehension/nearconst-*.log`;
 summary `results/near-constant-column-comprehension.json`.
 
+### Columnar RLE / value-grouping (safe-tier compression, N=60 and N=200)
+
+Roadmap "value-grouping for low-cardinality columns": group rows under a low-card column (dept),
+emit the value once as a group subheader, members bare. "dept of member X" is the discriminator
+(grouped form requires scanning up to the member's group header). Arms flat / grouped / json,
+weak models repeated.
+
+| Model | flat / grouped (N=200) | dept-of-member grouped (N=60 / N=200) |
+|-------|------------------------|---------------------------------------|
+| gemini-3.8-flash | 100% / 100% | 3/3 / 3/3 |
+| LLaMA 3.3 70B | 100% / 100% | 3/3 / 3/3 |
+| LLaMA 3.1 8B | 83% / 83% | 6/6 / 6/6 |
+| command-r | 83% / 100% | 6/6 / 6/6 |
+| mistral-nemo | 83% / 92% | 6/6 / 6/6 |
+
+Pooled dept-of-member: grouped 24/24 at N=60 AND 24/24 at N=200 (100% both scales). The group-header
+scan holds even with ~40-deep groups and even on command-r and mistral-nemo, the models that cratered
+on keyed-map (-25, -19). Grouping is a LOCAL positional hierarchy (a member sits physically under its
+header, read by proximity), not a distant reference lookup, which is why it is safe where keyed-map /
+index / affix indirection is not. Only grouped failures are on the total-count question (sum of group
+headers); per-group counts become trivial. Token savings -8.8% / -14.6% at N=60 / N=500. So columnar
+RLE is the one cardinality-driven compression eligible for the SAFE tier. Constraints (for the spec):
+it reorders rows (lossless only for non-semantic-order keyed sets) and needs decoder support (a
+grammar extension, not a decoder-ignored aid). Harness `gcf-go/eval/columnar_rle_comprehension_test.go`;
+logs `results/comprehension/rle-*.log`; summary `results/columnar-rle-comprehension.json`; spec draft
+`VALUE-GROUPING-DRAFT.md`.
+
 ### Methodology notes
 
 - OpenAI runs used default temperature (non-zero). This introduces variance across runs but reflects real-world usage. Future runs should set `temperature: 0` for tighter confidence intervals.
