@@ -1,0 +1,37 @@
+Keyed-Map Comprehension Eval
+Backend: openai (mistralai/mistral-nemo)
+Members: 60, Questions: 8, Formats: keyed-map, generic, json
+keyed-map    2674 bytes, ~668 tokens
+generic      2680 bytes, ~670 tokens
+json         7832 bytes, ~1958 tokens
+
+  FAIL count                keyed-map  [got "80"] expected="60" got="80"
+  PASS count                generic    [exact] expected="60" got="60"
+  PASS count                json       [exact] expected="60" got="60"
+  PASS dept_first           keyed-map  [exact] expected="Sales" got="Sales"
+  PASS dept_first           generic    [exact] expected="Sales" got="Sales"
+  PASS dept_first           json       [exact] expected="Sales" got="Sales"
+  FAIL level_mid            keyed-map  [got "3"] expected="1" got="3"
+  FAIL level_mid            generic    [got "2"] expected="1" got="2"
+  PASS level_mid            json       [exact] expected="1" got="1"
+  PASS region_deep          keyed-map  [exact] expected="ap-south" got="ap-south"
+  PASS region_deep          generic    [exact] expected="ap-south" got="ap-south"
+  PASS region_deep          json       [exact] expected="ap-south" got="ap-south"
+  PASS name_mid             keyed-map  [exact] expected="Member 0031" got="Member 0031"
+  PASS name_mid             generic    [exact] expected="Member 0031" got="Member 0031"
+  PASS name_mid             json       [exact] expected="Member 0031" got="Member 0031"
+  FAIL count_eng            keyed-map  [got "2"] expected="12" got="2"
+  PASS count_eng            generic    [exact] expected="12" got="12"
+  FAIL count_eng            json       [got "20"] expected="12" got="20"
+  FAIL count_active         keyed-map  [got "16"] expected="30" got="16"
+  PASS count_active         generic    [exact] expected="30" got="30"
+  PASS count_active         json       [exact] expected="30" got="30"
+  PASS level_deep           keyed-map  [exact] expected="5" got="5"
+  PASS level_deep           generic    [exact] expected="5" got="5"
+  PASS level_deep           json       [exact] expected="5" got="5"
+
+=== Summary ===
+keyed-map  50.0% 4/8
+generic    87.5% 7/8
+json       87.5% 7/8
+Log: results/comprehension/keyedmap-60members-openai-mistralai_mistral-nemo-2026-09-30-194304.log

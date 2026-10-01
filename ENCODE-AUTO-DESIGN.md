@@ -198,7 +198,7 @@ Source: `eval/results/SUMMARY.md`, `docs/guide/small-models.md`.
 |---|---|---|
 | array of `{id, kind, qualified_name}` + edges | graph | graph comprehension GCF 91.2 avg vs TOON 68.8 / JSON 54.1, leads every model (SUMMARY) |
 | array of records (flat or nested) | generic | generic comprehension 100% all frontier; GCF >= JSON on 17/19 models (SUMMARY) |
-| object of uniform-valued entries | keyed-map (frontier only) / generic (open-weight) | measured (Appendix B): ties generic on frontier, regresses on open-weight Llama; tier-gated, not auto-safe below frontier |
+| object of uniform-valued entries | keyed-map (frontier only) / generic (open-weight) | measured (Appendix B, 23 runs): ties generic at ceiling on capable models, regresses on open-weight (command-r -25, mistral-nemo -19, llama-70b -9; pooled -9.3pp); tier-gated, not auto-safe below frontier |
 | scalars / irregular | generic (fallback) | robust default, never degrades on any shape |
 
 Shape almost always dictates the profile, so Axis 1 is near-deterministic; the data confirms
@@ -221,8 +221,9 @@ not just a size bucket.
 
 - flatten-off counter-cases: Qwen 3.6 35B and Kimi K2.7 read the flatter layout slightly
   better. A per-model override table may be warranted.
-- keyed-map comprehension: measured (Appendix B). Result: ties generic on frontier, regresses
-  on open-weight Llama, so demoted to a frontier-only tier-gated grammar in Axis 1.
+- keyed-map comprehension: measured (Appendix B, 23 runs). Result: ties generic at ceiling on
+  capable models, regresses on open-weight (command-r -25, mistral-nemo -19, llama-70b -9;
+  pooled -9.3pp), so tier-gated frontier-only in Axis 1.
 - Cardinality thresholds (lossy tier) remain unmeasured, off the safe path, deferred.
 
 ## Appendix B: keyed-map comprehension run (closes Appendix A gap)
@@ -257,25 +258,36 @@ reuse `TestGenericComprehension` with a keyed-map arm, the lowest-cost path.
 
 ### Result (2026-09-30)
 
-Ran keyed-map vs generic (tabular) vs json, 60 members, 8 questions, temp 0.2, 6 models.
-Harness `TestKeyedMapComprehension` (`gcf-go/eval/keyed_map_comprehension_test.go`); logs in
+keyed-map vs generic (tabular) vs json, 60 members, 8 questions, temp 0.2, **23 runs across 11
+models** (the open-weight models that showed an effect were repeated to n=4). Harness
+`TestKeyedMapComprehension` (`gcf-go/eval/keyed_map_comprehension_test.go`); logs in
 `eval/results/comprehension/keyedmap-*.log`; summary `eval/results/keyed-map-comprehension.json`.
 
-| model | keyed-map | generic | keyed vs generic |
-|---|---|---|---|
-| deepseek-v3 | 100 | 100 | 0 |
-| gemini-2.5-flash | 100 | 100 | 0 |
-| gemma-3-27b | 87.5 | 87.5 | 0 |
-| llama-3.1-8b | 50.0 | 75.0 | **-25** |
-| llama-3.3-70b | 87.5 | 100 | **-12.5** |
-| mistral-small | 100 | 100 | 0 |
+| model | runs | keyed-map | generic | keyed vs generic |
+|---|---|---|---|---|
+| command-r | 4 | 53.1 | 78.1 | **-25.0** |
+| mistral-nemo | 4 | 62.5 | 81.2 | **-18.7** |
+| llama-3.3-70b | 4 | 87.5 | 96.9 | **-9.4** |
+| llama-3.1-8b | 4 | 71.9 | 75.0 | -3.1 (tied) |
+| deepseek-v3 | 1 | 100 | 100 | 0 |
+| gemini-2.5-flash | 1 | 100 | 100 | 0 |
+| gemini-3.5-flash-lite | 1 | 100 | 100 | 0 |
+| gemini-3.8-flash | 1 | 100 | 100 | 0 |
+| gemma-3-27b | 1 | 87.5 | 87.5 | 0 |
+| gemma-3-12b | 1 | 100 | 87.5 | +12.5 (outlier) |
+| mistral-small | 1 | 100 | 100 | 0 |
 
-keyed-map ties generic on 4 of 6 and regresses on both Llama models; it never beats generic.
-Likely cause: the bodies are byte-identical, but the keyed header (`[N:]{key,...}`, anonymous,
-generic `key` column) is less self-describing than the tabular header (named entity + explicit
-`id`), and weaker models lean on that grounding.
+Pooled per-run: keyed-map 77.7 / generic 87.0, **-9.3pp**. keyed-map ties generic at ceiling on
+every capable model and regresses on open-weight, large and replicated on command-r (-25, n=4)
+and mistral-nemo (-19, n=4), smaller on llama-3.3-70b (-9, n=4), tied on llama-3.1-8b. It never
+beats generic except one gemma-3-12b outlier (the "flatter helps" quirk also seen with Qwen/Kimi).
+The bodies are byte-identical, so this is purely the keyed header (`[N:]{key,...}`, anonymous,
+generic `key` column) being less self-describing than the tabular header (named entity + explicit
+`id`); weaker readers lean on that grounding.
 
-**Decision (per the pre-registered rule):** keyed-map is **demoted from the safe auto-router to
-a tier-gated optimization**. It stays eligible on `frontier`, where it ties; the router uses the
-tabular/generic form for open-weight (`mixed`/`small`). Caveat: n=8 questions, single run; the
-direction is clear, confirm magnitudes with more runs before hardening.
+Note: an earlier single-run read showed -25 on llama-3.1-8b, which **did not replicate** (tied
+over 4 runs). The command-r and mistral-nemo deficits **did** replicate at n=4. Repeats mattered.
+
+**Decision (per the pre-registered rule):** keyed-map regresses on open-weight, so it is
+**tier-gated in `EncodeAuto`**, eligible on `frontier` (where it ties), with the router using the
+tabular/generic form for open-weight (`mixed`/`small`). Not auto-safe below frontier.

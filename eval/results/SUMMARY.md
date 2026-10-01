@@ -144,25 +144,35 @@ Full results: `gcf-go/eval/results/v3/comprehension/flatten-experiment/README.md
 ### Keyed-map runs (header-marker check, 60 members)
 
 GCF's keyed-map body is byte-identical to the tabular body; only the header differs
-(`## [N:]{key,...}` vs `## name [N]{id,...}`). This run isolates whether the keyed header reads
-as well as the tabular one. 6 models, 8 questions, temp 0.2, arms keyed-map / generic / json.
+(`## [N:]{key,...}` vs `## name [N]{id,...}`). This isolates whether the keyed header reads
+as well as the tabular one. 23 runs, 11 models, 8 questions, temp 0.2, arms keyed-map / generic /
+json (open-weight models that showed an effect repeated to n=4).
 
-| Model | keyed-map | generic | keyed vs generic |
-|-------|-----------|---------|------------------|
-| DeepSeek V3 | 100% | 100% | 0 |
-| Gemini 2.5 Flash | 100% | 100% | 0 |
-| Gemma 3 27B | 87.5% | 87.5% | 0 |
-| LLaMA 3.3 70B | 87.5% | 100% | **-12.5** |
-| LLaMA 3.1 8B | 50.0% | 75.0% | **-25.0** |
-| Mistral Small 3.2 24B | 100% | 100% | 0 |
+| Model | runs | keyed-map | generic | keyed vs generic |
+|-------|------|-----------|---------|------------------|
+| command-r | 4 | 53.1% | 78.1% | **-25.0** |
+| mistral-nemo | 4 | 62.5% | 81.2% | **-18.7** |
+| LLaMA 3.3 70B | 4 | 87.5% | 96.9% | **-9.4** |
+| LLaMA 3.1 8B | 4 | 71.9% | 75.0% | -3.1 (tied) |
+| DeepSeek V3 | 1 | 100% | 100% | 0 |
+| Gemini 2.5 Flash | 1 | 100% | 100% | 0 |
+| Gemini 3.5 Flash Lite | 1 | 100% | 100% | 0 |
+| Gemini 3.8 Flash | 1 | 100% | 100% | 0 |
+| Gemma 3 27B | 1 | 87.5% | 87.5% | 0 |
+| Gemma 3 12B | 1 | 100% | 87.5% | +12.5 (outlier) |
+| Mistral Small 3.2 24B | 1 | 100% | 100% | 0 |
 
-keyed-map ties generic on 4 of 6 models and regresses on both Llama models; it never beats
-generic. The keyed header (`[N:]{key,...}`, anonymous, generic `key` column) is less
-self-describing than the tabular header (named entity + explicit `id`), and weaker models lean
-on that grounding. Direction for `EncodeAuto`: keyed-map is a frontier-only / tier-gated grammar,
-the router uses tabular for open-weight. Caveat: n=8, single run. Harness
-`gcf-go/eval/keyed_map_comprehension_test.go`; logs `results/comprehension/keyedmap-*.log`;
-summary `results/keyed-map-comprehension.json`. See `ENCODE-AUTO-DESIGN.md` Appendix B.
+Pooled per-run: keyed-map 77.7% / generic 87.0%, **-9.3pp**. keyed-map ties generic at ceiling on
+every capable model and regresses on open-weight, large and replicated on command-r (-25, n=4) and
+mistral-nemo (-19, n=4), smaller on llama-3.3-70b (-9, n=4), tied on llama-3.1-8b. It never beats
+generic except one gemma-3-12b outlier (the "flatter helps" quirk also seen with Qwen/Kimi). The
+keyed header (`[N:]{key,...}`, anonymous, generic `key` column) is less self-describing than the
+tabular header (named entity + explicit `id`), and weaker readers lean on that grounding. An early
+single-run -25 on llama-3.1-8b did NOT replicate (tied over 4 runs); the command-r and mistral-nemo
+deficits DID. Direction for `EncodeAuto`: keyed-map is frontier-only / tier-gated, the router uses
+tabular for open-weight. Harness `gcf-go/eval/keyed_map_comprehension_test.go`; logs
+`results/comprehension/keyedmap-*.log`; summary `results/keyed-map-comprehension.json`. See
+`ENCODE-AUTO-DESIGN.md` Appendix B.
 
 ### Methodology notes
 

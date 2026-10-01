@@ -4,128 +4,107 @@
   "question_count": 8,
   "members": 60,
   "temperature": 0.2,
-  "runs_per_model": 1,
+  "total_runs": 23,
   "arms": [
     "keyed-map",
     "generic",
     "json"
   ],
-  "note": "GCF keyed-map and tabular bodies are byte-identical; only the header differs ([N:]{key,...} vs name [N]{id,...}). This isolates the header-marker effect.",
-  "finding": "keyed-map ties generic on 4 of 6 models and regresses on both Llama models (-25pp 8b, -12.5pp 70b); never beats generic. Demoted from the safe auto-router to a tier-gated optimization: keep for frontier, use tabular for open-weight.",
-  "caveat": "n=8 questions, single run per model; direction clear, magnitudes noisy.",
+  "note": "GCF keyed-map and tabular bodies are byte-identical; only the header differs ([N:]{key,...} vs name [N]{id,...}). Isolates the header-marker effect.",
+  "pooled_per_run": {
+    "keyed_map": 77.7,
+    "generic": 87.0,
+    "gap_pp": -9.3
+  },
+  "finding": "keyed-map ties generic at ceiling on capable models (deepseek, gemini 2.5/3.5-lite/3.8, mistral-small) but regresses on open-weight: command-r -25pp (n=4), mistral-nemo -19pp (n=4), llama-3.3-70b -9pp (n=4), llama-3.1-8b tied (n=4). One outlier (gemma-3-12b +12.5, flatter-helps). Pooled -9.3pp. The identical body means this is purely the keyed header being less self-describing (anonymous, generic 'key' column vs named entity + explicit id) for weaker readers.",
+  "decision": "keyed-map is tier-gated in EncodeAuto: eligible on frontier (ties), the router uses tabular/generic for open-weight. Not auto-safe below frontier.",
   "results": [
     {
+      "model": "cohere/command-r-08-2024",
+      "runs": 4,
+      "keyed_map": 53.1,
+      "generic": 78.1,
+      "json": 75.0,
+      "keyed_vs_generic_pp": -25.0
+    },
+    {
+      "model": "meta-llama/llama-3.1-8b-instruct",
+      "runs": 4,
+      "keyed_map": 71.9,
+      "generic": 75.0,
+      "json": 62.5,
+      "keyed_vs_generic_pp": -3.1
+    },
+    {
+      "model": "meta-llama/llama-3.3-70b-instruct",
+      "runs": 4,
+      "keyed_map": 87.5,
+      "generic": 96.9,
+      "json": 100.0,
+      "keyed_vs_generic_pp": -9.4
+    },
+    {
+      "model": "mistralai/mistral-nemo",
+      "runs": 4,
+      "keyed_map": 62.5,
+      "generic": 81.2,
+      "json": 78.1,
+      "keyed_vs_generic_pp": -18.7
+    },
+    {
       "model": "deepseek/deepseek-chat",
-      "keyed-map": {
-        "acc": 100.0,
-        "correct": 8,
-        "total": 8
-      },
-      "generic": {
-        "acc": 100.0,
-        "correct": 8,
-        "total": 8
-      },
-      "json": {
-        "acc": 100.0,
-        "correct": 8,
-        "total": 8
-      },
+      "runs": 1,
+      "keyed_map": 100.0,
+      "generic": 100.0,
+      "json": 100.0,
       "keyed_vs_generic_pp": 0.0
     },
     {
       "model": "google/gemini-2.5-flash",
-      "keyed-map": {
-        "acc": 100.0,
-        "correct": 8,
-        "total": 8
-      },
-      "generic": {
-        "acc": 100.0,
-        "correct": 8,
-        "total": 8
-      },
-      "json": {
-        "acc": 100.0,
-        "correct": 8,
-        "total": 8
-      },
+      "runs": 1,
+      "keyed_map": 100.0,
+      "generic": 100.0,
+      "json": 100.0,
       "keyed_vs_generic_pp": 0.0
+    },
+    {
+      "model": "google/gemini-3.5-flash-lite",
+      "runs": 1,
+      "keyed_map": 100.0,
+      "generic": 100.0,
+      "json": 100.0,
+      "keyed_vs_generic_pp": 0.0
+    },
+    {
+      "model": "google/gemini-3.8-flash",
+      "runs": 1,
+      "keyed_map": 100.0,
+      "generic": 100.0,
+      "json": 100.0,
+      "keyed_vs_generic_pp": 0.0
+    },
+    {
+      "model": "google/gemma-3-12b-it",
+      "runs": 1,
+      "keyed_map": 100.0,
+      "generic": 87.5,
+      "json": 100.0,
+      "keyed_vs_generic_pp": 12.5
     },
     {
       "model": "google/gemma-3-27b-it",
-      "keyed-map": {
-        "acc": 87.5,
-        "correct": 7,
-        "total": 8
-      },
-      "generic": {
-        "acc": 87.5,
-        "correct": 7,
-        "total": 8
-      },
-      "json": {
-        "acc": 100.0,
-        "correct": 8,
-        "total": 8
-      },
+      "runs": 1,
+      "keyed_map": 87.5,
+      "generic": 87.5,
+      "json": 100.0,
       "keyed_vs_generic_pp": 0.0
     },
     {
-      "model": "meta-llama/llama-3.1-8b-instruct",
-      "keyed-map": {
-        "acc": 50.0,
-        "correct": 4,
-        "total": 8
-      },
-      "generic": {
-        "acc": 75.0,
-        "correct": 6,
-        "total": 8
-      },
-      "json": {
-        "acc": 50.0,
-        "correct": 4,
-        "total": 8
-      },
-      "keyed_vs_generic_pp": -25.0
-    },
-    {
-      "model": "meta-llama/llama-3.3-70b-instruct",
-      "keyed-map": {
-        "acc": 87.5,
-        "correct": 7,
-        "total": 8
-      },
-      "generic": {
-        "acc": 100.0,
-        "correct": 8,
-        "total": 8
-      },
-      "json": {
-        "acc": 100.0,
-        "correct": 8,
-        "total": 8
-      },
-      "keyed_vs_generic_pp": -12.5
-    },
-    {
       "model": "mistralai/mistral-small-3.2-24b-instruct",
-      "keyed-map": {
-        "acc": 100.0,
-        "correct": 8,
-        "total": 8
-      },
-      "generic": {
-        "acc": 100.0,
-        "correct": 8,
-        "total": 8
-      },
-      "json": {
-        "acc": 87.5,
-        "correct": 7,
-        "total": 8
-      },
+      "runs": 1,
+      "keyed_map": 100.0,
+      "generic": 100.0,
+      "json": 87.5,
       "keyed_vs_generic_pp": 0.0
     }
   ]

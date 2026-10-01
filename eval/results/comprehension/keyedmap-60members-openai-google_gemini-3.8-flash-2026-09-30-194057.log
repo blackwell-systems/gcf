@@ -1,0 +1,37 @@
+Keyed-Map Comprehension Eval
+Backend: openai (google/gemini-3.8-flash)
+Members: 60, Questions: 8, Formats: keyed-map, generic, json
+keyed-map    2674 bytes, ~668 tokens
+generic      2680 bytes, ~670 tokens
+json         7832 bytes, ~1958 tokens
+
+  PASS count                keyed-map  [exact] expected="60" got="60"
+  PASS count                generic    [exact] expected="60" got="60"
+  PASS count                json       [exact] expected="60" got="60"
+  PASS dept_first           keyed-map  [exact] expected="Sales" got="Sales"
+  PASS dept_first           generic    [exact] expected="Sales" got="Sales"
+  PASS dept_first           json       [exact] expected="Sales" got="Sales"
+  PASS level_mid            keyed-map  [exact] expected="1" got="1"
+  PASS level_mid            generic    [exact] expected="1" got="1"
+  PASS level_mid            json       [exact] expected="1" got="1"
+  PASS region_deep          keyed-map  [exact] expected="ap-south" got="ap-south"
+  PASS region_deep          generic    [exact] expected="ap-south" got="ap-south"
+  PASS region_deep          json       [exact] expected="ap-south" got="ap-south"
+  PASS name_mid             keyed-map  [exact] expected="Member 0031" got="Member 0031"
+  PASS name_mid             generic    [exact] expected="Member 0031" got="Member 0031"
+  PASS name_mid             json       [exact] expected="Member 0031" got="Member 0031"
+  PASS count_eng            keyed-map  [exact] expected="12" got="12"
+  PASS count_eng            generic    [exact] expected="12" got="12"
+  PASS count_eng            json       [contains] expected="12" got="12) has dept \"Engineering\""
+  PASS count_active         keyed-map  [exact] expected="30" got="30"
+  PASS count_active         generic    [exact] expected="30" got="30"
+  PASS count_active         json       [exact] expected="30" got="30"
+  PASS level_deep           keyed-map  [exact] expected="5" got="5"
+  PASS level_deep           generic    [exact] expected="5" got="5"
+  PASS level_deep           json       [exact] expected="5" got="5"
+
+=== Summary ===
+keyed-map  100.0% 8/8
+generic    100.0% 8/8
+json       100.0% 8/8
+Log: results/comprehension/keyedmap-60members-openai-google_gemini-3.8-flash-2026-09-30-194057.log
