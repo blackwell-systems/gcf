@@ -1,0 +1,20 @@
+{
+  "name": "004_multiple_constants",
+  "description": "Two constant columns both factor, preserving union order",
+  "operation": "encode",
+  "input": [
+    {
+      "id": "u1",
+      "a": "k",
+      "b": "m",
+      "v": 1
+    },
+    {
+      "id": "u2",
+      "a": "k",
+      "b": "m",
+      "v": 2
+    }
+  ],
+  "expected": "GCF profile=generic\n## [2]{id,a=k,b=m,v}\nu1|1\nu2|2\n"
+}

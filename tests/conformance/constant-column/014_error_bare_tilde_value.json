@@ -1,0 +1,7 @@
+{
+  "name": "014_error_bare_tilde_value",
+  "description": "A bare ~ constant value (absent marker in a field decl) is rejected",
+  "operation": "error",
+  "input": "GCF profile=generic\n## [2]{id,r=~}\nu1\nu2\n",
+  "expectedError": "invalid_const_value"
+}

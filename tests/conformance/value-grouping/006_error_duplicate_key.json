@@ -1,0 +1,7 @@
+{
+  "name": "006_error_duplicate_key",
+  "description": "Duplicate key-column value across records is rejected",
+  "operation": "error",
+  "input": "GCF profile=generic\n## [2]{@id,dept,x} group=dept\ndept=Sales [2]\nu1|1\nu1|2\n",
+  "expectedError": "duplicate_key"
+}

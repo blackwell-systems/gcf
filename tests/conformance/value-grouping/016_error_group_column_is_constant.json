@@ -1,0 +1,7 @@
+{
+  "name": "016_error_group_column_is_constant",
+  "description": "group= naming a constant column is rejected",
+  "operation": "error",
+  "input": "GCF profile=generic\n## [2]{@id,dept=Sales,x} group=dept\ndept=Sales [2]\nu1|1\nu2|2\n",
+  "expectedError": "invalid_group_header"
+}

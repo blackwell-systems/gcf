@@ -1,0 +1,18 @@
+{
+  "name": "003_constant_first_column",
+  "description": "A constant column in the first union position keeps its position",
+  "operation": "encode",
+  "input": [
+    {
+      "region": "eu",
+      "id": "u1",
+      "x": 1
+    },
+    {
+      "region": "eu",
+      "id": "u2",
+      "x": 2
+    }
+  ],
+  "expected": "GCF profile=generic\n## [2]{region=eu,id,x}\nu1|1\nu2|2\n"
+}

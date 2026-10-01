@@ -1,0 +1,7 @@
+{
+  "name": "015_error_empty_value",
+  "description": "A bare empty constant value (name=) is rejected; the empty string is always quoted",
+  "operation": "error",
+  "input": "GCF profile=generic\n## [2]{id,r=}\nu1\nu2\n",
+  "expectedError": "invalid_const_value"
+}

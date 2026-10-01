@@ -1,0 +1,18 @@
+{
+  "name": "002_null_constant",
+  "description": "A column that is null in every record factors as field=-",
+  "operation": "encode",
+  "input": [
+    {
+      "id": "u1",
+      "note": null,
+      "x": 1
+    },
+    {
+      "id": "u2",
+      "note": null,
+      "x": 2
+    }
+  ],
+  "expected": "GCF profile=generic\n## [2]{id,note=-,x}\nu1|1\nu2|2\n"
+}

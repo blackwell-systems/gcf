@@ -1,0 +1,20 @@
+{
+  "name": "004_decode_with_constant_column",
+  "description": "Value-grouping composes with constant-column factoring on a different field",
+  "operation": "decode",
+  "input": "GCF profile=generic\n## [2]{@id,region=us,dept,x} group=dept\ndept=Sales [1]\nu1|1\ndept=Ops [1]\nu2|2\n",
+  "expected": [
+    {
+      "id": "u1",
+      "region": "us",
+      "dept": "Sales",
+      "x": 1
+    },
+    {
+      "id": "u2",
+      "region": "us",
+      "dept": "Ops",
+      "x": 2
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "name": "016_error_empty_name",
+  "description": "A field entry with an empty unquoted name (=value) is rejected",
+  "operation": "error",
+  "input": "GCF profile=generic\n## [2]{id,=us}\nu1\nu2\n",
+  "expectedError": "malformed_header_field"
+}

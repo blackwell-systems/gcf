@@ -1,0 +1,44 @@
+{
+  "name": "001_decode_basic",
+  "description": "Decode a grouped keyed set; the grouping column value comes from each subheader",
+  "operation": "decode",
+  "input": "GCF profile=generic\n## [6]{@id,name,dept,level} group=dept\ndept=Sales [2]\nu1|Alice|3\nu4|Dave|2\ndept=Engineering [3]\nu2|Bob|1\nu3|Carol|4\nu6|Frank|5\ndept=Support [1]\nu5|Eve|2\n",
+  "expected": [
+    {
+      "id": "u1",
+      "name": "Alice",
+      "dept": "Sales",
+      "level": 3
+    },
+    {
+      "id": "u4",
+      "name": "Dave",
+      "dept": "Sales",
+      "level": 2
+    },
+    {
+      "id": "u2",
+      "name": "Bob",
+      "dept": "Engineering",
+      "level": 1
+    },
+    {
+      "id": "u3",
+      "name": "Carol",
+      "dept": "Engineering",
+      "level": 4
+    },
+    {
+      "id": "u6",
+      "name": "Frank",
+      "dept": "Engineering",
+      "level": 5
+    },
+    {
+      "id": "u5",
+      "name": "Eve",
+      "dept": "Support",
+      "level": 2
+    }
+  ]
+}

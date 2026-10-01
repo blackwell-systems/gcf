@@ -1,0 +1,18 @@
+{
+  "name": "012_decode_order_preserved",
+  "description": "A constant column at its union position reconstructs keys in declaration order",
+  "operation": "decode",
+  "input": "GCF profile=generic\n## [2]{region=eu,id,x}\nu1|1\nu2|2\n",
+  "expected": [
+    {
+      "region": "eu",
+      "id": "u1",
+      "x": 1
+    },
+    {
+      "region": "eu",
+      "id": "u2",
+      "x": 2
+    }
+  ]
+}

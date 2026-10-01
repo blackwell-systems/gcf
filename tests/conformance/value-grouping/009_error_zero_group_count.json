@@ -1,0 +1,7 @@
+{
+  "name": "009_error_zero_group_count",
+  "description": "A zero group count is rejected (a group names at least one record)",
+  "operation": "error",
+  "input": "GCF profile=generic\n## [1]{@id,dept,x} group=dept\ndept=Sales [0]\ndept=Ops [1]\nu1|1\n",
+  "expectedError": "invalid_count"
+}

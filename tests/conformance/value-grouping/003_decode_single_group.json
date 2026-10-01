@@ -1,0 +1,23 @@
+{
+  "name": "003_decode_single_group",
+  "description": "All records in one group",
+  "operation": "decode",
+  "input": "GCF profile=generic\n## [3]{@id,status,code} group=status\nstatus=ok [3]\nu1|200\nu2|200\nu3|204\n",
+  "expected": [
+    {
+      "id": "u1",
+      "status": "ok",
+      "code": 200
+    },
+    {
+      "id": "u2",
+      "status": "ok",
+      "code": 200
+    },
+    {
+      "id": "u3",
+      "status": "ok",
+      "code": 204
+    }
+  ]
+}

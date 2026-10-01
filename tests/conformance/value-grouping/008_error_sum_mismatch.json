@@ -1,0 +1,7 @@
+{
+  "name": "008_error_sum_mismatch",
+  "description": "Sum of group counts not equal to section count is rejected",
+  "operation": "error",
+  "input": "GCF profile=generic\n## [3]{@id,dept,x} group=dept\ndept=Sales [1]\nu1|1\ndept=Ops [1]\nu2|2\n",
+  "expectedError": "count_mismatch"
+}

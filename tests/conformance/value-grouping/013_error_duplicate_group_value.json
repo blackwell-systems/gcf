@@ -1,0 +1,7 @@
+{
+  "name": "013_error_duplicate_group_value",
+  "description": "Two subheaders with the same group value are rejected",
+  "operation": "error",
+  "input": "GCF profile=generic\n## [2]{@id,dept,x} group=dept\ndept=Sales [1]\nu1|1\ndept=Sales [1]\nu2|2\n",
+  "expectedError": "duplicate_group"
+}

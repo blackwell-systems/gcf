@@ -1,0 +1,7 @@
+{
+  "name": "011_error_group_column_is_key",
+  "description": "group= naming the key column is rejected",
+  "operation": "error",
+  "input": "GCF profile=generic\n## [1]{@id,dept,x} group=id\nid=u1 [1]\nSales|1\n",
+  "expectedError": "invalid_group_header"
+}

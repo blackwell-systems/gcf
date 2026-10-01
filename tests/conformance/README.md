@@ -35,7 +35,10 @@ Error fixtures normally use a JSON string in `input`. The malformed UTF-8 fixtur
 | `streaming-v2/` | 3 | Deferred counts and summary trailers |
 | `whitespace/` | 3 | Comments, blank lines, and CRLF |
 | `errors-v2/` | 35 | Generic, header, Unicode, attachment, count, and graph errors |
-| **Total** | **133** | |
+| `constant-column/` | 18 | Constant-column factoring (`name=value`): encode, decode, quoting, all-constant edge, rejects (Section 7.4.7) |
+| `value-grouping/` | 16 | Value-grouping (`group=`): keyed-set decode, constant composition, and header/count/key rejects (Section 7.4.8) |
+
+The per-directory counts above are indicative and may lag; runners auto-discover every `*.json` fixture under this tree, so the authoritative total is the file count (315 at v3.6.0).
 
 ## Fixture Examples
 

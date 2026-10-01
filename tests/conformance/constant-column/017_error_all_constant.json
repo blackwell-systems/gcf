@@ -1,0 +1,7 @@
+{
+  "name": "017_error_all_constant",
+  "description": "A field declaration with no bare column (every field constant) is rejected",
+  "operation": "error",
+  "input": "GCF profile=generic\n## [2]{a=1,b=2}\n\n\n",
+  "expectedError": "no_bare_column"
+}

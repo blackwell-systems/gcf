@@ -1,0 +1,12 @@
+{
+  "name": "009_single_record_not_factored",
+  "description": "A one-record array is below the two-record minimum and is not factored",
+  "operation": "encode",
+  "input": [
+    {
+      "id": "u1",
+      "r": "a"
+    }
+  ],
+  "expected": "GCF profile=generic\n## [1]{id,r}\nu1|a\n"
+}

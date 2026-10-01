@@ -1,0 +1,18 @@
+{
+  "name": "006_value_quoting_comma",
+  "description": "A constant value containing a comma is quoted",
+  "operation": "encode",
+  "input": [
+    {
+      "id": "u1",
+      "tag": "a,b",
+      "v": 1
+    },
+    {
+      "id": "u2",
+      "tag": "a,b",
+      "v": 2
+    }
+  ],
+  "expected": "GCF profile=generic\n## [2]{id,tag=\"a,b\",v}\nu1|1\nu2|2\n"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "018_error_row_width_mismatch",
+  "description": "A row whose cell count does not match the number of bare fields is rejected",
+  "operation": "error",
+  "input": "GCF profile=generic\n## [2]{id,r=k,x}\nu1|1\nu2|1|2\n",
+  "expectedError": "row_width_mismatch"
+}

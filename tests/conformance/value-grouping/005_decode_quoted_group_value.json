@@ -1,0 +1,18 @@
+{
+  "name": "005_decode_quoted_group_value",
+  "description": "A grouping value needing quotes round-trips",
+  "operation": "decode",
+  "input": "GCF profile=generic\n## [2]{@id,region,x} group=region\nregion=\"North, West\" [1]\nu1|1\nregion=east [1]\nu2|2\n",
+  "expected": [
+    {
+      "id": "u1",
+      "region": "North, West",
+      "x": 1
+    },
+    {
+      "id": "u2",
+      "region": "east",
+      "x": 2
+    }
+  ]
+}

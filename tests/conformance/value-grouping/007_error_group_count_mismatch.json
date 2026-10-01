@@ -1,0 +1,7 @@
+{
+  "name": "007_error_group_count_mismatch",
+  "description": "A group whose row count does not match its declared count is rejected",
+  "operation": "error",
+  "input": "GCF profile=generic\n## [2]{@id,dept,x} group=dept\ndept=Sales [2]\nu1|1\n",
+  "expectedError": "count_mismatch"
+}

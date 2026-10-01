@@ -1,0 +1,7 @@
+{
+  "name": "015_error_two_key_columns",
+  "description": "A grouped section with more than one @ key column is rejected",
+  "operation": "error",
+  "input": "GCF profile=generic\n## [1]{@id,@dept,x} group=x\nx=1 [1]\nu1|Sales\n",
+  "expectedError": "invalid_group_header"
+}

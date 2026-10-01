@@ -1,0 +1,7 @@
+{
+  "name": "012_error_subheader_column_mismatch",
+  "description": "A subheader whose column name differs from group= is rejected",
+  "operation": "error",
+  "input": "GCF profile=generic\n## [1]{@id,dept,x} group=dept\nregion=Sales [1]\nu1|1\n",
+  "expectedError": "invalid_group_header"
+}

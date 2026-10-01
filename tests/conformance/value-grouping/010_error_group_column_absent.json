@@ -1,0 +1,7 @@
+{
+  "name": "010_error_group_column_absent",
+  "description": "group= naming a field absent from the declaration is rejected",
+  "operation": "error",
+  "input": "GCF profile=generic\n## [1]{@id,dept,x} group=zzz\ndept=Sales [1]\nu1|1\n",
+  "expectedError": "invalid_group_header"
+}

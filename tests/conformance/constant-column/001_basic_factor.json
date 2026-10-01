@@ -1,0 +1,32 @@
+{
+  "name": "001_basic_factor",
+  "description": "A column identical across all records is factored into the field decl as name=value",
+  "operation": "encode",
+  "input": [
+    {
+      "id": "u1",
+      "name": "Alice",
+      "region": "us-east",
+      "level": 3
+    },
+    {
+      "id": "u2",
+      "name": "Bob",
+      "region": "us-east",
+      "level": 1
+    },
+    {
+      "id": "u3",
+      "name": "Carol",
+      "region": "us-east",
+      "level": 4
+    },
+    {
+      "id": "u4",
+      "name": "Dave",
+      "region": "us-east",
+      "level": 2
+    }
+  ],
+  "expected": "GCF profile=generic\n## [4]{id,name,region=us-east,level}\nu1|Alice|3\nu2|Bob|1\nu3|Carol|4\nu4|Dave|2\n"
+}

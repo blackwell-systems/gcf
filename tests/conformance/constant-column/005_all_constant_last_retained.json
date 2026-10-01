@@ -1,0 +1,16 @@
+{
+  "name": "005_all_constant_last_retained",
+  "description": "When every field is constant, the last union field stays a bare column so rows exist",
+  "operation": "encode",
+  "input": [
+    {
+      "a": 1,
+      "b": 2
+    },
+    {
+      "a": 1,
+      "b": 2
+    }
+  ],
+  "expected": "GCF profile=generic\n## [2]{a=1,b}\n2\n2\n"
+}

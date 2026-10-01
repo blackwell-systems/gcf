@@ -1,0 +1,16 @@
+{
+  "name": "008_varying_not_factored",
+  "description": "A column that varies is not factored (encoder factors only true constants)",
+  "operation": "encode",
+  "input": [
+    {
+      "id": "u1",
+      "r": "a"
+    },
+    {
+      "id": "u2",
+      "r": "b"
+    }
+  ],
+  "expected": "GCF profile=generic\n## [2]{id,r}\nu1|a\nu2|b\n"
+}
