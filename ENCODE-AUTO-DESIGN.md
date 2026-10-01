@@ -18,28 +18,55 @@ owns the grammars; this document plus those fixtures own the routing. Prerequisi
 routes to must exist in all SDKs first (v3.6.0 across the fleet), since a cross-SDK classifier is
 meaningless before then.
 
-## Problem
+## Purpose
 
-GCF already has several grammars (generic, graph, keyed-map) and several measured
-producer-side knobs for weak consumers (flatten on/off, positional vs labeled counts,
-delta re-anchor, see `docs/guide/small-models.md`). Today the caller must know which
-profile to call and which knobs to set. Two different decisions are tangled together and
-both are pushed onto the user.
+GCF already has several grammars (generic, graph, keyed-map) and several grammar elements that
+today are **opt-in configuration**: the producer-side aids for weak consumers (flatten on/off,
+positional vs labeled counts, delta re-anchor; see `docs/guide/small-models.md`) and the opt-in
+grammars (value-grouping, and the frontier-only forms). Each is a toggle the caller must know
+about and set by hand, usually by guessing.
 
-**The entire auto system is opt-in.** `EncodeAuto` is a separate entry point. `EncodeGeneric`,
-the graph encoder, and every existing API are unchanged and remain the default path; existing
-callers see no difference. Nothing is classified or routed unless a caller explicitly chooses
-`EncodeAuto`. Within it, the aggressive grammars are a further opt-in on top (see below), so
-there are two opt-in layers: choosing auto at all, and allowing lossy grammars inside it.
+The comprehension study measured exactly what the caller is guessing at: for each element, the
+**regime** in which it is a net comprehension-per-token win, and the regimes in which it is
+neutral or harmful. A regime is a point in (payload shape x consumer model/tier); the study
+produced, in effect, an element-by-regime effect matrix.
 
-They are not the same kind of decision, and that distinction is the whole design:
+**`EncodeAuto` exists to execute that matrix.** It takes each grammar element that is an opt-in
+toggle today and applies it automatically in exactly the regime where measurement proved it most
+effective, and withholds it everywhere else. The previously manual "which flags do I set for my
+situation" becomes dynamic, measurement-driven application. Nothing fires on a heuristic or on
+token count alone: an element is applied only where it was measured to be a comprehension-per-token
+win. This is automation of the comprehension program, not a new policy layered on top of it.
 
-- **Which grammar fits the data** is a property of the payload. The encoder can see the
-  payload, so it can decide this.
-- **Which knobs help the reader** is a property of the consumer model, not the payload.
-  The encoder cannot see the model, so it cannot decide this. The caller must declare it.
+Each element carries a **proven-effective predicate** over the regime coordinates, and `EncodeAuto`
+applies every element whose predicate the current regime satisfies, co-applying those that compose
+(constant-column factoring and value-grouping already compose, Sections 7.4.7-7.4.8). From the
+measured results:
 
-`EncodeAuto` separates these into two axes with two sources of truth, and routes.
+- **constant-column factoring**: safe in every regime, so always on (already mandatory canonical, Section 7.4.7).
+- **value-grouping**: shape = keyed set, safe across tiers, so applied whenever the shape fits (Section 7.4.8).
+- **keyed-map, near-constant-with-exceptions, affix**: frontier-only regime, so applied only when the declared model clears the bar.
+- **column ordering, format primer**: measured no effect, so never applied.
+
+**The entire system is opt-in.** `EncodeAuto` is a separate entry point. `EncodeGeneric`, the graph
+encoder, and every existing API are unchanged and remain the default path; existing callers see no
+difference. Nothing is classified or applied unless a caller explicitly chooses `EncodeAuto`. Within
+it, the comprehension-degrading (lossy) elements are a further explicit opt-in on top, so there are
+two opt-in layers: choosing auto at all, and allowing lossy elements inside it.
+
+## The two regime coordinates
+
+A regime has two coordinates with two different sources of truth, which is why the encoder decides
+one and must be told the other:
+
+- **Payload shape** is a property of the data. The encoder sees the payload, so it infers which
+  elements the shape even admits (a keyed set admits value-grouping; a constant column admits
+  factoring).
+- **Consumer model/tier** is a property of the reader, not the payload. The encoder cannot see the
+  model, so the caller declares it; this gates the elements whose effective-regime is frontier-only.
+
+An element is applied iff both coordinates place the current payload inside that element's measured
+effective-regime. The two axes below give the mechanism for evaluating each coordinate.
 
 ## Two axes
 
