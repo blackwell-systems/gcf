@@ -97,12 +97,19 @@ Caveat, and it is the reason this is lossy-tier only: every reference-by-index t
 reintroduces pointer indirection (the comprehension failure the safe tier exists to avoid),
 and affix-factoring adds reconstruction load. So cardinality-driven selection is gated behind
 the lossy opt-in and never runs in the safe router. The one comprehension-safe case is a
-near-constant column (a single value across every row) factored to one declaration: that is
-lossless and legible, and belongs in the safe tier. **Measured 2026-09-30:** factored vs repeated
-read 100% / 100% across 5 models including the weak ones (command-r, mistral-nemo, llama-8b) that
-cratered on keyed-map, pooled region questions 24/24 both forms. A single global constant is one
-fact a model applies to all rows, not a per-row reference lookup, which is exactly why it is safe
-where the index/affix techniques are not. Summary `eval/results/constant-column-comprehension.json`.
+**fully-constant** column (one value across every row) factored to a single declaration: lossless,
+legible, safe-tier. **Measured 2026-09-30:** factored vs repeated 100% / 100% across 5 models,
+including the weak ones (command-r, mistral-nemo, llama-8b) that cratered on keyed-map
+(`eval/results/constant-column-comprehension.json`). A single global constant is one fact applied
+to all rows, not a per-row lookup, which is why it is safe where index/affix are not.
+
+**Adding exceptions breaks it.** A *near*-constant column (a default plus a sparse overrides list)
+is NOT safe-tier. The overrides are read correctly (pooled 96%, both forms), but the exceptions
+list makes weak models misattribute override values to **default** rows (command-r 100->83,
+mistral-nemo 83->67; every failure a default row returning an exception value; frontier 100%). So
+near-constant-with-exceptions is frontier-only / tier-gated, like keyed-map
+(`eval/results/near-constant-column-comprehension.json`). The safe-tier factoring is fully-constant
+columns only.
 
 ## Multi-turn stability (hard constraint)
 

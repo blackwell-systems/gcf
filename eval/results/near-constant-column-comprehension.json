@@ -1,0 +1,79 @@
+{
+  "study": "near-constant-column (with exceptions) factoring comprehension",
+  "date": "2026-09-30",
+  "members": 60,
+  "temperature": 0.2,
+  "arms": [
+    "repeated",
+    "factored",
+    "json"
+  ],
+  "note": "A column mostly one value with per-row overrides on every 10th row. Factored form declares the default + a sparse exceptions list; rows drop the column. Tests whether models honor overrides AND do not misapply them to default rows.",
+  "finding": "Exceptions are read correctly (pooled 23/24=96% both forms; weak command-r/mistral-nemo 6/6 in factored). BUT the exceptions list causes weak models to misattribute override values to DEFAULT rows: command-r 100->83, mistral-nemo 83->67, all failures on default rows returning an exception value. Frontier (gemini-3.8-flash, llama-3.3-70b) handles it 100%. So near-constant-with-exceptions is NOT safe-tier; frontier-only/tier-gated. CONTRAST: fully-constant factoring (constant-column-comprehension.json) was 100% safe on these same weak models. The exceptions list is what reintroduces the weak-model hazard.",
+  "pooled_exception_rows": {
+    "repeated": "23/24",
+    "factored": "23/24"
+  },
+  "results": [
+    {
+      "model": "cohere/command-r-08-2024",
+      "runs": 2,
+      "repeated": 100.0,
+      "factored": 83.3,
+      "exceptions_rep": "6/6",
+      "exceptions_fac": "6/6",
+      "factored_default_misattributions": 2,
+      "floor": false
+    },
+    {
+      "model": "google/gemini-3.8-flash",
+      "runs": 1,
+      "repeated": 100.0,
+      "factored": 100.0,
+      "exceptions_rep": "3/3",
+      "exceptions_fac": "3/3",
+      "factored_default_misattributions": 0,
+      "floor": false
+    },
+    {
+      "model": "ibm-granite/granite-4.0-h-micro",
+      "runs": 1,
+      "repeated": 100.0,
+      "factored": 66.7,
+      "exceptions_rep": "3/3",
+      "exceptions_fac": "2/3",
+      "factored_default_misattributions": 1,
+      "floor": true
+    },
+    {
+      "model": "meta-llama/llama-3.1-8b-instruct",
+      "runs": 2,
+      "repeated": 91.7,
+      "factored": 91.7,
+      "exceptions_rep": "5/6",
+      "exceptions_fac": "5/6",
+      "factored_default_misattributions": 0,
+      "floor": false
+    },
+    {
+      "model": "meta-llama/llama-3.3-70b-instruct",
+      "runs": 1,
+      "repeated": 100.0,
+      "factored": 100.0,
+      "exceptions_rep": "3/3",
+      "exceptions_fac": "3/3",
+      "factored_default_misattributions": 0,
+      "floor": false
+    },
+    {
+      "model": "mistralai/mistral-nemo",
+      "runs": 2,
+      "repeated": 83.3,
+      "factored": 66.7,
+      "exceptions_rep": "6/6",
+      "exceptions_fac": "6/6",
+      "factored_default_misattributions": 4,
+      "floor": false
+    }
+  ]
+}

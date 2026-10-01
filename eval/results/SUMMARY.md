@@ -197,6 +197,31 @@ cardinality technique eligible for the SAFE auto tier; dictionary/affix stay los
 Harness `gcf-go/eval/constant_column_comprehension_test.go`; logs
 `results/comprehension/constcol-*.log`; summary `results/constant-column-comprehension.json`.
 
+### Near-constant-column WITH exceptions (the "near" case, 60 members)
+
+Extends the constant-column study to the real near-constant case: a column mostly one value with
+per-row overrides (every 10th row). Factored form declares the default + a sparse exceptions list;
+rows drop the column. 9 runs (incl. a Granite floor anchor, excluded), weak models repeated to n=2.
+
+| Model | overall rep/fac | exception rows (overrides) rep vs fac | factored default misattributions |
+|-------|-----------------|---------------------------------------|----------------------------------|
+| gemini-3.8-flash | 100% / 100% | 3/3 vs 3/3 | 0 |
+| LLaMA 3.3 70B | 100% / 100% | 3/3 vs 3/3 | 0 |
+| LLaMA 3.1 8B | 91.7% / 91.7% | 5/6 vs 5/6 | 0 |
+| command-r | 100% / 83.3% | 6/6 vs 6/6 | 2 |
+| mistral-nemo | 83.3% / 66.7% | 6/6 vs 6/6 | 4 |
+| granite-4.0-micro [floor] | 100% / 66.7% | 3/3 vs 2/3 | (floor, excluded) |
+
+Pooled exception rows (excl. floor): repeated 23/24, factored 23/24 (96% both). The overrides are
+read correctly, even by the weak models that failed keyed-map. BUT the exceptions list makes weak
+models misattribute override values to **default** rows: command-r and mistral-nemo's factored
+failures are all default rows returning an exception value (`eu-west`/`ap-south` instead of
+`us-east`). Frontier handles it 100%. So near-constant-with-exceptions is NOT safe-tier
+(frontier-only / tier-gated), while **fully-constant factoring is** (previous section, 100% on the
+same weak models). The exceptions list is the hazard; a single global constant is not. Harness
+`gcf-go/eval/near_constant_column_comprehension_test.go`; logs `results/comprehension/nearconst-*.log`;
+summary `results/near-constant-column-comprehension.json`.
+
 ### Methodology notes
 
 - OpenAI runs used default temperature (non-zero). This introduces variance across runs but reflects real-world usage. Future runs should set `temperature: 0` for tighter confidence intervals.
