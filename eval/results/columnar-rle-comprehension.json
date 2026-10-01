@@ -1,0 +1,63 @@
+{
+  "study": "columnar RLE / value-grouping comprehension",
+  "date": "2026-09-30",
+  "members": 60,
+  "temperature": 0.2,
+  "arms": [
+    "flat",
+    "grouped",
+    "json"
+  ],
+  "token_savings_vs_flat": {
+    "N60": "-8.8%",
+    "N500": "-14.6%"
+  },
+  "note": "Group rows under a low-cardinality column (dept), emit the value once as a group subheader, members listed bare. 'dept of member X' is the discriminator (grouped form requires scanning up to the group header).",
+  "finding": "COMPREHENSION-SAFE. dept-of-member: flat 24/24, grouped 24/24 (100% both), including command-r and mistral-nemo (6/6 grouped) that cratered on keyed-map and near-constant-exceptions. Grouping is a LOCAL, positional hierarchy (member sits physically under its header, read by proximity), not a distant reference lookup, which is why it is safe where *N / exception-list indirection is not. Only wrinkle: the TOTAL count question is harder grouped (must sum group headers) on weak models, but per-group counts become trivial. Token savings -8.8%/-14.6% at N=60/500. SAFE-TIER eligible.",
+  "pooled_dept_of_member": {
+    "flat": "24/24",
+    "grouped": "24/24"
+  },
+  "results": [
+    {
+      "model": "cohere/command-r-08-2024",
+      "runs": 2,
+      "flat": 83.3,
+      "grouped": 100.0,
+      "dept_of_member_flat": "6/6",
+      "dept_of_member_grouped": "6/6"
+    },
+    {
+      "model": "google/gemini-3.8-flash",
+      "runs": 1,
+      "flat": 100.0,
+      "grouped": 100.0,
+      "dept_of_member_flat": "3/3",
+      "dept_of_member_grouped": "3/3"
+    },
+    {
+      "model": "meta-llama/llama-3.1-8b-instruct",
+      "runs": 2,
+      "flat": 83.3,
+      "grouped": 83.3,
+      "dept_of_member_flat": "6/6",
+      "dept_of_member_grouped": "6/6"
+    },
+    {
+      "model": "meta-llama/llama-3.3-70b-instruct",
+      "runs": 1,
+      "flat": 100.0,
+      "grouped": 100.0,
+      "dept_of_member_flat": "3/3",
+      "dept_of_member_grouped": "3/3"
+    },
+    {
+      "model": "mistralai/mistral-nemo",
+      "runs": 2,
+      "flat": 91.7,
+      "grouped": 83.3,
+      "dept_of_member_flat": "6/6",
+      "dept_of_member_grouped": "6/6"
+    }
+  ]
+}

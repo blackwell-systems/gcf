@@ -1,0 +1,31 @@
+Columnar RLE (value-grouping) Comprehension Eval
+Backend: openai (google/gemini-3.8-flash)
+Members: 60, Questions: 6, Formats: flat, grouped, json
+flat         1796 bytes, ~449 tokens
+grouped      1419 bytes, ~354 tokens
+json         6381 bytes, ~1595 tokens
+
+  PASS dept_first     flat     [exact] expected="Operations" got="Operations"
+  PASS dept_first     grouped  [exact] expected="Operations" got="Operations"
+  PASS dept_first     json     [exact] expected="Operations" got="Operations"
+  PASS dept_mid       flat     [exact] expected="Sales" got="Sales"
+  PASS dept_mid       grouped  [exact] expected="Sales" got="Sales"
+  PASS dept_mid       json     [exact] expected="Sales" got="Sales"
+  PASS dept_deep      flat     [exact] expected="Finance" got="Finance"
+  PASS dept_deep      grouped  [exact] expected="Finance" got="Finance"
+  PASS dept_deep      json     [exact] expected="Finance" got="Finance"
+  PASS count_eng      flat     [exact] expected="12" got="12"
+  PASS count_eng      grouped  [exact] expected="12" got="12"
+  PASS count_eng      json     [exact] expected="12" got="12"
+  PASS level_mid      flat     [exact] expected="1" got="1"
+  PASS level_mid      grouped  [exact] expected="1" got="1"
+  PASS level_mid      json     [exact] expected="1" got="1"
+  PASS count          flat     [exact] expected="60" got="60"
+  PASS count          grouped  [exact] expected="60" got="60"
+  PASS count          json     [exact] expected="60" got="60"
+
+=== Summary ===
+flat       100.0% 6/6  (dept-of-member 3/3)
+grouped    100.0% 6/6  (dept-of-member 3/3)
+json       100.0% 6/6  (dept-of-member 3/3)
+Log: results/comprehension/rle-60members-openai-google_gemini-3.8-flash-2026-09-30-201428.log
