@@ -55,6 +55,21 @@ Roster (by evidence maturity):
 - [ ] **Re-anchor "resend-quality for weak models"** — evidence from the delta depth study (`eval/generic-delta-comprehension`, DEPTH-FINDINGS): a periodic full re-anchor gives weak/context-limited models resend-quality without resend's context bulk. Already shipped as the non-normative re-anchor cadence (§10a.8); this is the same idea framed as a weak-consumer aid.
 - [ ] **`## _counts` metadata section** (also under Spec v1.5) — UNQUALIFIED: one model (GPT-5.4 +14pp). A heavier, top-of-payload version of labeled trailer counts. Must clear the harness (tier x size, n>=3) before it graduates from "under consideration."
 
+## Classification and routing (EncodeAuto)
+
+An opt-in encoder that classifies each payload and routes it to the best grammar instead of making the caller choose. Design: [`ENCODE-AUTO-DESIGN.md`](ENCODE-AUTO-DESIGN.md). Two axes with two sources of truth: payload shape (inferred from the data) selects the grammar; consumer tier (declared by the caller) selects the measured producer-side knobs above. Entirely opt-in and additive, a separate `EncodeAuto` entry point with every existing encoder unchanged and still the default; nothing routes unless it is called. The comprehension-degrading grammars are never auto-selected (the encoder cannot see the consumer model); they are reachable only through a further explicit, tier-gated opt-in.
+
+Same evidence bar as the producer-side aids: a routing choice ships only when the eval harness shows it is the comprehension-per-token winner for that (shape, tier).
+
+- [ ] **Shape classifier + decision table** (safe tier): graph / keyed-map / generic chosen by payload shape; generic stays the default and the fallback.
+- [ ] **Tier -> knob routing**: frontier / mixed / small map to the measured aids (flatten on/off, positional vs labeled counts, re-anchor cadence). Reuses the roster above rather than adding new knobs.
+- [ ] **Eval-derived routing table**: the (shape, tier) -> grammar table is generated from the comprehension harness, not hand-tuned, and regenerated as models and data change. Makes the router empirically grounded rather than heuristic.
+- [ ] **`gcf analyze`** (read-only advisor): reports detected shape, recommended grammar, per-column cardinality, estimated tokens per technique, and a comprehension-risk flag. Zero-risk first build; forces the classifier into existence without any routing commitment.
+- [ ] **Comprehension-floor dial**: the caller declares a minimum expected comprehension for its consumer and the router returns the smallest encoding that clears it. Generalizes the discrete tiers into a declarative constraint; needs the measured per-grammar comprehension curves as backing.
+- [ ] **Round-trip self-verify** (`Verified` mode): encode, decode, and compare before returning, guaranteeing no silent corruption from any technique the router chose. Cheap insurance, strongest once the lossy tier exists.
+- [ ] **Tokenizer-aware selection**: optional target-tokenizer input; pick the grammar and delimiter that tokenize best for that tokenizer. Opt-in (tokenizer-specific output is less portable). The direct generalization of the delimiter merge-rate study.
+- [ ] **Cardinality-driven per-column technique** (lossy tier only): dictionary/enum for low-cardinality columns, affix/template factoring for high-cardinality-structured columns, inline for unstructured. Overlaps the columnar-RLE item under Format extensions; both stay behind the lossy opt-in because reference-by-index reintroduces pointer indirection (the comprehension failure the safe tier avoids). The one safe case is factoring a near-constant column to a single declaration.
+
 ## Tooling
 
 - [ ] **Tree-sitter grammar** (`tree-sitter-gcf`): syntax highlighting for editors (VS Code, Neovim, Helix, Zed).
