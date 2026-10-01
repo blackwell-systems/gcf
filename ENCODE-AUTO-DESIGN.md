@@ -67,6 +67,34 @@ open-weight; labeled counts add up to +34pp; re-anchor rescues deep sessions). `
 is the current shipping default behavior. `mixed` is the safe choice when any traffic may
 hit a cheaper model.
 
+#### Exact model when known (the agentic case)
+
+Tiers are the coarse input. But an agentic application is usually the router, it chooses the
+endpoint, so it knows the exact model at call time and can declare it instead of a bucket. When
+it does, Axis 2 keys off the model, not the tier, which is strictly better:
+
+- It removes the averaging that makes tiers misleading. `small` lumps command-r (keyed-map ~53%)
+  with gemma-3-12b (keyed-map 100%); a tier default must take the worst case. A named model gets
+  its own measured profile: `command-r -> keyed-map off, near-constant-exceptions off`;
+  `gemma-3-12b -> keyed-map fine`; `qwen/kimi -> flatten on (flatter layout helps them)`.
+- It turns the per-model eval data into the routing table. The keyed-map, flatten, and
+  constant/near-constant studies (per model) become a **model-profile registry**:
+  `model -> {eligible grammars, knob set}`, eval-derived and regenerated as the studies grow.
+
+Precedence for the `Target` input:
+
+1. **Exact model declared** (agentic apps): look it up in the model-profile registry, apply its
+   measured profile. Most precise.
+2. **Tier only**: tier defaults (conservative / worst-case within the tier).
+3. **Nothing declared**: safe default (frontier knobs, generic shape), today's behavior.
+
+Caveat: a model absent from the registry (a new release, an obscure endpoint) falls back to the
+tier or the safe default; unknown-model fallback is safe by construction. The registry is
+eval-derived, so it needs the same periodic refresh as the decision table.
+
+This also sharpens the adoption story: an MCP gateway or agent framework that already routes to a
+known model passes it and gets per-model-optimal encoding for free, no tuning.
+
 ## Aggressive modes are never auto-selected
 
 Comprehension-degrading grammars (whitespace `sloppymode`, affix-factoring) are **not** on
@@ -135,7 +163,9 @@ type Tier int
 const ( Frontier Tier = iota; Mixed; Small )
 
 type AutoOptions struct {
-    Target Tier // default Frontier (current behavior)
+    Model  string // exact consumer model if known (agentic case); looked up in the model-profile
+                  // registry and preferred over Target. Empty = fall back to Target.
+    Target Tier   // coarse tier; used when Model is empty/unknown. Default Frontier (current behavior).
     // AllowLossyGrammar bool // reserved; gates aggressive modes, default false
 }
 
