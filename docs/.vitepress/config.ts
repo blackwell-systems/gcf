@@ -57,6 +57,7 @@ export default defineConfig({
       {
         text: 'Advanced',
         items: [
+          { text: 'Opt-in Encodings and Knobs', link: '/guide/opt-in-encodings' },
           { text: 'Streaming Encoding', link: '/guide/streaming' },
           { text: 'Session Deduplication', link: '/guide/sessions' },
           { text: 'Delta Encoding', link: '/guide/delta' },
