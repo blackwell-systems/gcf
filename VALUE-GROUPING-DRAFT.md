@@ -1,4 +1,4 @@
-# Value-grouping (columnar RLE) — spec draft
+# Value-grouping (columnar RLE): spec draft
 
 Status: draft, pre-merge. Comprehension-backed and scale-confirmed
 (`eval/results/columnar-rle-comprehension.json`): dept-of-member grouped 100% at N=60 and N=200.
