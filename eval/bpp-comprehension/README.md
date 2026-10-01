@@ -66,7 +66,7 @@ GCF has the lowest error rate by both methods, roughly half bpp's.
 
 ## Conclusion
 
-**Use GCF.** It has the lowest comprehension error of the three formats, on every model tier, and roughly half bpp's. bpp's grammar degrades structural reading everywhere, not only on weak models, so a token count is the wrong axis to choose it on. For any tool serving unknown models or non-trivial payloads, GCF is the correct default.
+GCF has the lowest comprehension error of the three formats, on every model tier, and about half bpp's. bpp's grammar degrades structural reading everywhere, not only on weak models, so for a tool serving unknown models or non-trivial payloads a token count is the wrong basis for the choice.
 
 ## Artifacts
 
