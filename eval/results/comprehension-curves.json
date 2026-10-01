@@ -1,0 +1,49 @@
+{
+  "study": "per-grammar comprehension curves (GCF, by tier)",
+  "date": "2026-09-30",
+  "note": "Mean GCF comprehension per grammar per tier, assembled from committed generic/graph/keyed-map studies. For the EncodeAuto comprehension-floor dial. Coverage uneven: graph has no small-tier data; keyed-map regression is model-specific not clean-tier (command-r/nemo crater, others ceiling).",
+  "curves": {
+    "generic": {
+      "frontier": [
+        97.0,
+        9
+      ],
+      "mid": [
+        79.6,
+        6
+      ],
+      "small": [
+        62.3,
+        4
+      ]
+    },
+    "graph": {
+      "frontier": [
+        91.8,
+        9
+      ],
+      "mid": [
+        85.5,
+        1
+      ],
+      "small": [
+        null,
+        0
+      ]
+    },
+    "keyed-map": {
+      "frontier": [
+        100,
+        3
+      ],
+      "mid": [
+        93.8,
+        2
+      ],
+      "small": [
+        79.2,
+        6
+      ]
+    }
+  }
+}
