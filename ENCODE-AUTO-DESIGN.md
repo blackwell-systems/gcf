@@ -1,6 +1,22 @@
 # EncodeAuto: payload classification and tier-aware routing (design)
 
-Status: design, pre-spec, pre-code. Author: Dayna Blackwell.
+Status: design, pre-code. Author: Dayna Blackwell.
+
+## Scope: this is not part of the wire specification
+
+EncodeAuto adds **no wire grammar**. It only selects among grammars the wire spec already
+defines (generic, graph, keyed-map, constant-column factoring §7.4.7, value-grouping §7.4.8);
+its output is ordinary GCF that any conformant decoder reads without knowing EncodeAuto exists.
+It therefore does **not** belong in `SPEC.md` and is never referenced as normative by it.
+
+What is shared across SDKs is a **classification contract**, not grammar: given a payload, every
+SDK's `EncodeAuto` / `gcf analyze` must return the same recommendation. That contract lives here
+(the decision table, cardinality thresholds, and model-profile registry below) and is enforced by
+a dedicated **classification conformance fixture** kind (`payload -> {recommended grammar, detected
+shape, per-column cardinality, risk flag}`), separate from the wire-format fixtures. The wire spec
+owns the grammars; this document plus those fixtures own the routing. Prerequisite: the grammars it
+routes to must exist in all SDKs first (v3.6.0 across the fleet), since a cross-SDK classifier is
+meaningless before then.
 
 ## Problem
 

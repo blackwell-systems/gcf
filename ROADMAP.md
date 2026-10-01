@@ -62,6 +62,8 @@ An opt-in encoder that classifies each payload and routes it to the best grammar
 
 Same evidence bar as the producer-side aids: a routing choice ships only when the eval harness shows it is the comprehension-per-token winner for that (shape, tier).
 
+**Not a wire-spec feature.** EncodeAuto adds no wire grammar; it only selects among grammars `SPEC.md` already defines, and its output is ordinary GCF. It therefore lives as a classification contract (decision table + cardinality thresholds + model-profile registry in `ENCODE-AUTO-DESIGN.md`) enforced by a dedicated classification-fixture kind, not in the wire spec. Prerequisite: the grammars it routes to (constant-column factoring and value-grouping, v3.6.0) must land in all SDKs before a cross-SDK classifier is meaningful.
+
 - [ ] **Shape classifier + decision table** (safe tier): graph / keyed-map / generic chosen by payload shape; generic stays the default and the fallback.
 - [ ] **Tier -> knob routing**: frontier / mixed / small map to the measured aids (flatten on/off, positional vs labeled counts, re-anchor cadence). Reuses the roster above rather than adding new knobs.
 - [ ] **Eval-derived routing table**: the (shape, tier) -> grammar table is generated from the comprehension harness, not hand-tuned, and regenerated as models and data change. Makes the router empirically grounded rather than heuristic.
