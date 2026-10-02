@@ -6,7 +6,7 @@
 
 ## Summary
 
-- Fixtures: **281** across 22 directories, 16 operations
+- Fixtures: **320** across 24 directories, 16 operations
 - Section 16.5 conditions covered: **31/31**
 - Uncovered (known gaps, tracked below): **0**
 - Uncovered (unexpected, fails the build): **0**
@@ -21,7 +21,7 @@
 | Header | First line does not begin with GCF | `missing_header` | covered | `errors-v2/021_missing_header.json` |
 | Header | Header has no profile= field | `missing_profile` | covered | `errors-v2/001_missing_profile.json` |
 | Header | profile value is not generic or graph | `unknown_profile` | covered | `errors-v2/002_unknown_profile.json` |
-| Header | Key-value pair missing = | `malformed_header_field` | covered | `errors-v2/023_malformed_header_field.json` |
+| Header | Key-value pair missing = | `malformed_header_field` | covered | `constant-column/016_error_empty_name.json`, `errors-v2/023_malformed_header_field.json` |
 | Header | Same header key appears more than once | `duplicate_header_field` | covered | `errors-v2/018_duplicate_header_field.json` |
 | Scalar | Quoted string missing closing " | `unterminated_quote` | covered | `errors-v2/009_unterminated_quote.json` |
 | Scalar | Escape sequence not in the defined set | `invalid_escape` | covered | `errors-v2/010_invalid_escape.json` |
@@ -30,11 +30,11 @@
 | Scalar | ^ or ^{fields} outside a row cell, or malformed inline decl | `invalid_attachment_marker` | covered | `errors-v2/004_caret_outside_tabular.json` |
 | Scalar | Literal/isolated/malformed surrogate | `invalid_surrogate` | covered | `errors-v2/015_isolated_surrogate.json`, `errors-v2/025_isolated_low_surrogate.json`, `errors-v2/026_malformed_surrogate_pair.json` |
 | Scalar | Malformed UTF-8 byte sequence | `invalid_utf8` | covered | `errors-v2/024_invalid_utf8.json` |
-| Structural | Same key twice in the same object scope | `duplicate_key` | covered | `errors-v2/005_duplicate_key.json` |
+| Structural | Same key twice in the same object scope | `duplicate_key` | covered | `errors-v2/005_duplicate_key.json`, `value-grouping/006_error_duplicate_key.json` |
 | Structural | Same field name twice in a tabular field declaration | `duplicate_field_name` | covered | `errors-v2/006_duplicate_field_name.json` |
-| Structural | Pipe-separated values do not match field count | `row_width_mismatch` | covered | `errors-v2/012_row_width_mismatch.json`, `keyed-map/025_error_row_width_mismatch.json` |
-| Structural | Number of data items does not match declared [count] | `count_mismatch` | covered | `errors-v2/013_count_mismatch.json`, `errors-v2/014_inline_count_mismatch.json`, `errors-v2/034_summary_count_arity.json`, `errors-v2/035_summary_count_mismatch.json`, `errors-v2/038_root_array_count_surplus.json`, `errors-v2/039_graph_edges_count_surplus.json`, `errors-v2/040_graph_edges_count_deficit.json`, `keyed-map/031_error_count_surplus.json`, `keyed-map/032_error_count_deficit.json` |
-| Structural | [count] is not 0, a no-leading-zero decimal, or ? | `invalid_count` | covered | `errors-v2/020_leading_zero_count.json` |
+| Structural | Pipe-separated values do not match field count | `row_width_mismatch` | covered | `constant-column/018_error_row_width_mismatch.json`, `errors-v2/012_row_width_mismatch.json`, `keyed-map/025_error_row_width_mismatch.json` |
+| Structural | Number of data items does not match declared [count] | `count_mismatch` | covered | `errors-v2/013_count_mismatch.json`, `errors-v2/014_inline_count_mismatch.json`, `errors-v2/034_summary_count_arity.json`, `errors-v2/035_summary_count_mismatch.json`, `errors-v2/038_root_array_count_surplus.json`, `errors-v2/039_graph_edges_count_surplus.json`, `errors-v2/040_graph_edges_count_deficit.json`, `keyed-map/031_error_count_surplus.json`, `keyed-map/032_error_count_deficit.json`, `value-grouping/007_error_group_count_mismatch.json`, `value-grouping/008_error_sum_mismatch.json` |
+| Structural | [count] is not 0, a no-leading-zero decimal, or ? | `invalid_count` | covered | `errors-v2/020_leading_zero_count.json`, `value-grouping/009_error_zero_group_count.json` |
 | Structural | Leading whitespace contains tab characters | `tab_indentation` | covered | `errors-v2/007_tab_indentation.json` |
 | Structural | Indentation increases by more than one level | `invalid_indent` | covered | `errors-v2/008_invalid_indent_jump.json` |
 | Structural | Expanded/tabular row ID != its zero-based item index | `invalid_item_id` | covered | `errors-v2/019_invalid_item_id.json` |
@@ -54,12 +54,12 @@
 
 | Operation | Fixtures | Required |
 |---|---|---|
-| `decode` | 32 | yes |
+| `decode` | 46 | yes |
 | `delta` | 2 | yes |
 | `delta-verify` | 1 | yes |
-| `encode` | 154 | yes |
+| `encode` | 163 | yes |
 | `encode-error` | 2 |  |
-| `error` | 47 | yes |
+| `error` | 63 | yes |
 | `generic-delta` | 2 | yes |
 | `generic-delta-decode` | 3 | yes |
 | `generic-delta-session` | 3 | yes |
@@ -94,12 +94,12 @@
 | 16.2 | Two-space indentation per nesting level | covered | `containers/` (9) |
 | 16.3 | Parse header/nodes/edges; kind expansion + unknown passthrough | covered | `graph-decode/` (4) |
 | 16.3 | Accept ? deferred count; summary metadata; counts positional|labeled | covered | `streaming-v2/` (13) |
-| 16.3 | Reject edges referencing undeclared symbol IDs | covered | op `error` (47) |
+| 16.3 | Reject edges referencing undeclared symbol IDs | covered | op `error` (63) |
 | 16.4 | Scalar grammar + full JSON string escapes; reject malformed UTF-8 | covered | `decode/` (7) |
 | 16.4 | Interpret - (null), ~ (absent), ^ / ^{fields} attachments | covered | `inline-schema/` (15) |
 | 16.4 | Keys bare+quoted; tabular headers; row-width validation | covered | `keys/` (15) |
 | 16.4 | Whitespace/indentation handling | covered | `whitespace/` (3) |
-| 16.4 | Count validation at every level | covered | op `error` (47) |
+| 16.4 | Count validation at every level | covered | op `error` (63) |
 | 16.4 | Round-trip invariant decode(encode(v)) == v (representative values) | covered | op `roundtrip` (8) |
 
 _`invariant` = mechanical scan below; `property` = verified by the SDK property / round-trip suites (not a single fixture)._
@@ -120,6 +120,7 @@ Scanned over every fixture `expected` output; a violation fails the build.
 |---|---|
 | `arrays` | 13 |
 | `attachments` | 7 |
+| `constant-column` | 21 |
 | `containers` | 9 |
 | `decode` | 7 |
 | `errors-v2` | 41 |
@@ -139,5 +140,6 @@ Scanned over every fixture `expected` output; a violation fails the build.
 | `roots` | 11 |
 | `scalar` | 31 |
 | `streaming-v2` | 13 |
+| `value-grouping` | 18 |
 | `whitespace` | 3 |
 
