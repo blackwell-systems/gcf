@@ -1,0 +1,16 @@
+{
+  "name": "022_encode_caret_brace_bare",
+  "description": "A constant value starting with ^{ but not a complete ^{fields} marker is a literal string, emitted bare (the encoder quotes only a complete ^{...})",
+  "operation": "encode",
+  "input": [
+    {
+      "X": "^{abc",
+      "y": 1
+    },
+    {
+      "X": "^{abc",
+      "y": 2
+    }
+  ],
+  "expected": "GCF profile=generic\n## [2]{X=^{abc,y}\n1\n2\n"
+}

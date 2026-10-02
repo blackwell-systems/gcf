@@ -1,0 +1,7 @@
+{
+  "name": "024_error_caret_marker",
+  "description": "A bare ^ constant value is the attachment marker form and is rejected (the string ^ is always quoted)",
+  "operation": "error",
+  "input": "GCF profile=generic\n## [2]{X=^,y}\n1\n2\n",
+  "expectedError": "invalid_const_value"
+}

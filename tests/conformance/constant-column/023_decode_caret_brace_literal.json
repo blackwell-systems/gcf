@@ -1,0 +1,16 @@
+{
+  "name": "023_decode_caret_brace_literal",
+  "description": "A bare ^{-prefixed constant value with no closing } decodes as the literal string, not an attachment marker",
+  "operation": "decode",
+  "input": "GCF profile=generic\n## [2]{X=^{abc,y}\n1\n2\n",
+  "expected": [
+    {
+      "X": "^{abc",
+      "y": 1
+    },
+    {
+      "X": "^{abc",
+      "y": 2
+    }
+  ]
+}

@@ -6,7 +6,7 @@
 
 ## Summary
 
-- Fixtures: **320** across 24 directories, 16 operations
+- Fixtures: **323** across 24 directories, 16 operations
 - Section 16.5 conditions covered: **31/31**
 - Uncovered (known gaps, tracked below): **0**
 - Uncovered (unexpected, fails the build): **0**
@@ -54,12 +54,12 @@
 
 | Operation | Fixtures | Required |
 |---|---|---|
-| `decode` | 46 | yes |
+| `decode` | 47 | yes |
 | `delta` | 2 | yes |
 | `delta-verify` | 1 | yes |
-| `encode` | 163 | yes |
+| `encode` | 164 | yes |
 | `encode-error` | 2 |  |
-| `error` | 63 | yes |
+| `error` | 64 | yes |
 | `generic-delta` | 2 | yes |
 | `generic-delta-decode` | 3 | yes |
 | `generic-delta-session` | 3 | yes |
@@ -94,12 +94,12 @@
 | 16.2 | Two-space indentation per nesting level | covered | `containers/` (9) |
 | 16.3 | Parse header/nodes/edges; kind expansion + unknown passthrough | covered | `graph-decode/` (4) |
 | 16.3 | Accept ? deferred count; summary metadata; counts positional|labeled | covered | `streaming-v2/` (13) |
-| 16.3 | Reject edges referencing undeclared symbol IDs | covered | op `error` (63) |
+| 16.3 | Reject edges referencing undeclared symbol IDs | covered | op `error` (64) |
 | 16.4 | Scalar grammar + full JSON string escapes; reject malformed UTF-8 | covered | `decode/` (7) |
 | 16.4 | Interpret - (null), ~ (absent), ^ / ^{fields} attachments | covered | `inline-schema/` (15) |
 | 16.4 | Keys bare+quoted; tabular headers; row-width validation | covered | `keys/` (15) |
 | 16.4 | Whitespace/indentation handling | covered | `whitespace/` (3) |
-| 16.4 | Count validation at every level | covered | op `error` (63) |
+| 16.4 | Count validation at every level | covered | op `error` (64) |
 | 16.4 | Round-trip invariant decode(encode(v)) == v (representative values) | covered | op `roundtrip` (8) |
 
 _`invariant` = mechanical scan below; `property` = verified by the SDK property / round-trip suites (not a single fixture)._
@@ -120,7 +120,7 @@ Scanned over every fixture `expected` output; a violation fails the build.
 |---|---|
 | `arrays` | 13 |
 | `attachments` | 7 |
-| `constant-column` | 21 |
+| `constant-column` | 24 |
 | `containers` | 9 |
 | `decode` | 7 |
 | `errors-v2` | 41 |
