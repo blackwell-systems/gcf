@@ -1,5 +1,14 @@
 # Changelog
 
+## v3.6.0 (2026-10-02)
+
+### Spec: constant-column factoring (Section 7.4.7) and value-grouping (Section 7.4.8)
+
+- Constant-column factoring: a column holding the same scalar in every record of a top-level tabular array is declared once in the field declaration as `name=value` and omitted from the rows. Mandatory canonical (changes canonical output for such arrays), lossless, and comprehension-safe (measured). Decoders MUST support it.
+- Value-grouping: an opt-in form that clusters a keyed set by one low-cardinality column, with an `@`-marked unique key column, a `group=<col>` header clause, and per-group `<col>=<value> [count]` subheaders. It reorders records (lossless as a keyed set), so it is never canonical. Decoders MUST support it.
+- Both use header syntax (an unquoted `=` in a field entry, a `group=` clause) that was invalid before v3.6.0, so existing payloads are unaffected and a pre-v3.6.0 decoder rejects the new forms; decoders MUST be updated (decoders-first on rollout). Additive under the Stable lifecycle.
+- 39 new conformance fixtures (323 total). Implemented across all seven SDKs; the tree-sitter-gcf grammar was updated. Affix/template factoring and whitespace-maximal encoding were evaluated and deliberately NOT adopted (both degrade comprehension on non-frontier models).
+
 ## v3.5.3 (2026-08-14)
 
 ### Spec: canonical int64 numeric domain (Section 2.3.2)

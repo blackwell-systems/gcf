@@ -200,7 +200,7 @@ Read the full argument in the [Tokenizer Analysis](https://gcformat.com/guide/to
 
 **Zero runtime dependencies. Permanently.** All seven implementations depend only on their language's standard library. No transitive dependencies. No supply chain risk. This is a permanent commitment: GCF will never take on external runtime dependencies. Apache-2.0 licensed. All implementations support both generic profile (`encodeGeneric`) and graph profile (`encode`). CLI included in the six original language SDKs. Syntax highlighting via tree-sitter (Neovim, Helix, Zed).
 
-**Specification:** [SPEC v3.5.1 Stable](SPEC.md) with 265 conformance fixtures, 43,000,000,000+ lossless round-trips verified across 5 formats and 6 languages. Seven implementations (Go v1.6.2, Swift v2.6.1, .NET v0.1.0, the rest v2.5.2). Cross-language conformance verified.
+**Specification:** [SPEC v3.6.0 Stable](SPEC.md) with 323 conformance fixtures, 43,000,000,000+ lossless round-trips verified across 5 formats and 6 languages. Seven implementations (Go v1.8.0, TypeScript v2.7.0, Python v2.8.0, Rust v3.1.0, Swift v2.8.0, Kotlin v2.7.0, .NET v1.1.0). Cross-language conformance verified.
 
 ## Documentation
 
