@@ -302,6 +302,7 @@ Smaller projects and community tools where GCF shows up — declared as a direct
 **Direct adopters (small / early):**
 
 - **[TimeLens / TimeScope](https://github.com/rifen/timescope)** — a cross-editor dev tool (VS Code + Neovim) that hovers integer durations in code and shows them as human-readable time. Declares `@blackwell-systems/gcf` as a direct dependency and emits GCF as the default output of its agent skill for token-efficient use in agentic loops (Pi, Antigravity, Claude Code), citing 50–90% token reduction vs JSON. Uses both the generic tabular profile (`encodeGeneric`) and the code-graph profile (symbols and edges). Independent third-party adoption.
+- **[Starlit Digital](https://github.com/Starlit-Digital)** ([sltd.ca](https://sltd.ca)): three open-source Go tools declare `github.com/blackwell-systems/gcf-go` v1.8.0 as a direct dependency and offer GCF alongside JSON for structured output. [bram](https://github.com/Starlit-Digital/bram), a local router for command-line AI tools, encodes with the generic profile (`EncodeGenericChecked`) behind `--format gcf`; [loom](https://github.com/Starlit-Digital/loom), a UI layout analyzer and translator for SwiftUI, WinUI XAML and Qt, emits complete generic GCF snapshots; and [clyde](https://github.com/Starlit-Digital/clyde), auditable local repository bundles for AI review, chooses JSON or GCF automatically for agent context. JSON stays the default in bram and loom. Independent third-party adoption.
 
 **Packaged & listed:**
 
