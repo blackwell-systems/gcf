@@ -223,7 +223,7 @@ Read the full argument in the [Tokenizer Analysis](https://gcformat.com/guide/to
 |---------|--|
 | **[Chrome DevTools MCP](https://github.com/ChromeDevTools/chrome-devtools-mcp)** | 47K★ · the Google Chrome DevTools team's MCP server; exposes live browser state (DOM, network, console, performance) to AI coding agents |
 | **[Speakeasy](https://speakeasy.com)** | OpenAPI tooling (customers include Google, Verizon, Mistral AI, DocuSign, Vercel); GCF is a native output format in their `oq` CLI |
-| **[OmniRoute](https://omniroute.online)** | 17K★ · AI gateway, registry, and proxy between AI clients and model providers; GCF vendored into its compression engine |
+| **[OmniRoute](https://omniroute.online)** | 80K+★ · AI gateway, registry, and proxy between AI clients and model providers; GCF vendored into its compression engine |
 | **[NetClaw](https://github.com/automateyournetwork/netclaw)** | 610★ · AI-powered network automation (113 skills, 66 MCP integrations); replaced TOON with GCF across every MCP server |
 | **[ctx](https://github.com/stevesolun/ctx)** | 552★ · real-time context selector for Claude Code; surfaces only the relevant tools from a 103K-node knowledge graph |
 | **[Lynkr](https://github.com/Fast-Editor/Lynkr)** | 531★ · local LLM gateway for AI coding clients; GCF as a drop-in tool-result compressor alongside TOON |
