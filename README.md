@@ -202,6 +202,8 @@ Read the full argument in the [Tokenizer Analysis](https://gcformat.com/guide/to
 
 **Specification:** [SPEC v3.6.0 Stable](SPEC.md) with 323 conformance fixtures, 43,000,000,000+ lossless round-trips verified across 5 formats and 6 languages. Seven implementations (Go v1.8.0, TypeScript v2.7.0, Python v2.8.0, Rust v3.1.0, Swift v2.8.0, Kotlin v2.7.0, .NET v1.1.0). Cross-language conformance verified.
 
+**Third-party implementations.** The implementations above are the only ones maintained by this project. Any GCF implementation not listed here is a third-party work: not endorsed, blessed, or verified by the maintainers, who accept no responsibility for its contents, correctness, or use. See [CONTRIBUTING.md](CONTRIBUTING.md) for the policy.
+
 ## Documentation
 
 **[gcformat.com](https://gcformat.com/)**
