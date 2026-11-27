@@ -1,12 +1,12 @@
-npm=553806
+npm=556684
 npm_n8n=806
-npm_proxy=5646
-npm_treesitter=2117
+npm_proxy=5671
+npm_treesitter=2125
 pypi=140256
 pypi_proxy=35705
 gh_go=55
 gh_proxy=358
-crates=3053
+crates=3073
 nuget=34080
 jetbrains=?
 vscode=248
